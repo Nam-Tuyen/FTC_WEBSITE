@@ -1,16 +1,18 @@
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
+import { Navigation } from "@/components/navigation"
 import { Target, Users, BookOpen, TrendingUp, Award, Network } from "lucide-react"
 import Image from "next/image"
 
 export default function ThongTinPage() {
   return (
     <div className="min-h-screen bg-background text-foreground">
+      <Navigation />
       {/* Animated Background */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute inset-0 bg-gradient-to-br from-background via-background to-primary/5"></div>
+        <div className="absolute inset-0 bg-gradient-to-br from-background via-background to-accent/5"></div>
         <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-accent/10 rounded-full blur-3xl animate-pulse"></div>
-        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-secondary/10 rounded-full blur-3xl animate-pulse delay-1000"></div>
+        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-accent/10 rounded-full blur-3xl animate-pulse delay-1000"></div>
       </div>
 
       <div className="relative z-10 container mx-auto px-4 py-20">
@@ -19,13 +21,13 @@ export default function ThongTinPage() {
           <Badge className="mb-6 px-6 py-2 text-lg bg-accent/20 text-accent border-accent/30">
             THÔNG TIN CÂU LẠC BỘ
           </Badge>
-          <h1 className="font-heading font-black text-4xl sm:text-5xl lg:text-7xl text-foreground mb-8 text-balance tracking-tight text-glow">
+          <h1 className="font-heading font-black text-4xl sm:text-5xl lg:text-7xl text-foreground mb-8 text-balance tracking-tight text-glow leading-[5.rem]">
             CÂU LẠC BỘ <br />
-            <span className="bg-gradient-to-r from-accent via-secondary to-accent bg-clip-text text-transparent animate-pulse">
+            <span className="bg-gradient-to-r from-accent via-accent to-accent bg-clip-text text-transparent animate-pulse">
               CÔNG NGHỆ - TÀI CHÍNH
             </span>
           </h1>
-          <p className="text-xl sm:text-2xl text-foreground/80 mb-8 max-w-4xl mx-auto text-pretty font-medium leading-relaxed">
+          <p className="text-xl text-foreground/80 mb-8 max-w-4xl mx-auto text-pretty font-medium leading-relaxed italic sm:text-3xl">
             Trường Đại học Kinh tế – Luật, ĐHQG-HCM
           </p>
         </div>
@@ -63,7 +65,7 @@ export default function ThongTinPage() {
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent"></div>
                 <div className="absolute bottom-4 left-4 right-4">
-                  <h3 className="text-lg font-bold text-foreground mb-2">TỌA ĐÀMBLOCKCHAIN VÀ AI</h3>
+                  <h3 className="text-lg font-bold text-foreground mb-2">TỌA ĐÀM BLOCKCHAIN VÀ AI</h3>
                   <p className="text-sm text-foreground/70">Con đường sự nghiệp trong kỷ nguyên số hóa</p>
                 </div>
               </div>
@@ -84,10 +86,6 @@ export default function ThongTinPage() {
                 Luật, ĐHQG-HCM. FTC được thành lập vào tháng 11/2020 dưới sự hướng dẫn của ThS. NCS Phan Huy Tâm (Giảng
                 viên Khoa Tài chính – Ngân hàng, Chủ nhiệm CLB) cùng đội ngũ sinh viên yêu thích lĩnh vực công nghệ tài
                 chính.
-              </p>
-              <p>
-                UEL là một trong tám đơn vị thành viên của ĐHQG-HCM, là trung tâm đào tạo và nghiên cứu đa ngành, đa
-                lĩnh vực, uy tín hàng đầu phía Nam trong các khối Kinh tế – Luật – Quản lý công.
               </p>
             </div>
           </CardContent>
@@ -119,7 +117,7 @@ export default function ThongTinPage() {
               </p>
               <p className="text-foreground/80">
                 Theo phương châm:{" "}
-                <span className="font-semibold text-secondary">Thống nhất – Vượt trội – Tiên phong</span>
+                <span className="font-semibold text-accent">Thống nhất – Vượt trội – Tiên phong</span>
               </p>
             </CardContent>
           </Card>
@@ -162,17 +160,12 @@ export default function ThongTinPage() {
         </Card>
 
         {/* Vision */}
-        <Card className="bg-gradient-to-r from-accent/10 to-secondary/10 border-accent/30 backdrop-blur-sm mb-12">
+        <Card className="bg-card/30 border-accent/20 backdrop-blur-sm mb-12">
           <CardContent className="p-8 text-center">
             <h2 className="text-3xl font-bold text-foreground mb-6">Tầm nhìn</h2>
             <div className="space-y-4 text-foreground/90 leading-relaxed max-w-4xl mx-auto">
               <p className="text-lg">
-                <span className="font-semibold text-accent">Đến 2030</span>, FTC trở thành cộng đồng sinh viên yêu thích
-                công nghệ tài chính lớn nhất Việt Nam
-              </p>
-              <p className="text-lg">
-                <span className="font-semibold text-secondary">Đến 2033</span>, mở rộng mạng lưới hợp tác sinh viên –
-                doanh nghiệp trong khu vực Đông Nam Á
+                <span className="text-accent font-medium"> FTC đặt mục tiêu trở thành cộng đồng sinh viên yêu thích công nghệ tài chính lớn nhất Việt Nam và mở rộng mạng lưới hợp tác sinh viên, doanh nghiệp trong khu vực Đông Nam Á
               </p>
             </div>
           </CardContent>
@@ -195,7 +188,7 @@ export default function ThongTinPage() {
                   </div>
                 </div>
                 <div className="flex gap-4">
-                  <div className="w-3 h-3 bg-secondary rounded-full mt-2 flex-shrink-0"></div>
+                  <div className="w-3 h-3 bg-accent rounded-full mt-2 flex-shrink-0"></div>
                   <div>
                     <h3 className="font-semibold text-foreground mb-2">Cuộc thi học thuật và dự án thực hành</h3>
                     <p className="text-foreground/80 text-sm leading-relaxed">
@@ -215,7 +208,7 @@ export default function ThongTinPage() {
                   </div>
                 </div>
                 <div className="flex gap-4">
-                  <div className="w-3 h-3 bg-secondary rounded-full mt-2 flex-shrink-0"></div>
+                  <div className="w-3 h-3 bg-accent rounded-full mt-2 flex-shrink-0"></div>
                   <div>
                     <h3 className="font-semibold text-foreground mb-2">Cộng đồng học thuật</h3>
                     <p className="text-foreground/80 text-sm leading-relaxed">
@@ -229,13 +222,6 @@ export default function ThongTinPage() {
         </Card>
 
         {/* Closing Statement */}
-        <Card className="bg-gradient-to-r from-primary/20 to-accent/20 border-accent/30 backdrop-blur-sm">
-          <CardContent className="p-8 text-center">
-            <h2 className="text-2xl font-bold text-foreground mb-4">
-              FTC – Nơi sinh viên UEL học sâu, làm thật, kết nối rộng để tạo giá trị cho bản thân và cộng đồng.
-            </h2>
-          </CardContent>
-        </Card>
       </div>
     </div>
   )
