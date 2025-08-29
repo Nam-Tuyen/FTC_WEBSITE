@@ -17,6 +17,9 @@ export default function OrganizationPage() {
             <br />
             <span className="bg-gradient-to-r from-accent to-accent bg-clip-text text-transparent leading-[5rem]">CÂU LẠC BỘ CÔNG NGHỆ TÀI CHÍNH</span>
           </h1>
+          <p className="text-xl text-foreground/80 max-w-3xl mx-auto text-pretty">
+            {""}
+          </p>
         </div>
       </section>
 
@@ -148,7 +151,7 @@ export default function OrganizationPage() {
                 <span className="font-semibold text-accent">Chuỗi phối hợp:</span> Học thuật cung cấp nội dung → Sự kiện vận hành → Truyền thông lan tỏa.
               </p>
               <p>
-                <span className="font-semibold text-accent">Bảo đảm nguồn lực:</span> Nhân sự phụ trách người – việc – văn hóa; Ban Tài chính cá nhân triển khai mảng giáo dục chuyên biệt, đóng góp nội dung và hoạt động cho toàn CLB.
+                <span className="font-semibold text-accent">Bảo đảm ngu���n lực:</span> Nhân sự phụ trách người – việc – văn hóa; Ban Tài chính cá nhân triển khai mảng giáo dục chuyên biệt, đóng góp nội dung và hoạt động cho toàn CLB.
               </p>
               <p>
                 <span className="font-semibold text-accent">Điều phối chung:</span> Ban Chủ nhiệm điều phối, phê duyệt và làm đầu mối đối ngoại cấp Câu lạc bộ.
@@ -169,7 +172,7 @@ export default function OrganizationPage() {
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button asChild size="lg" className="btn-futuristic">
-              <Link href="/ung-tuyen"> Tham gia ngay <ArrowRight className="ml-2 h-5 w-5" /></Link>
+              <Link href="/ung-tuyen">Tham gia ngay <ArrowRight className="ml-2 h-5 w-5" /></Link>
             </Button>
             <Button asChild variant="outline" size="lg" className="border-accent text-accent hover:bg-accent/10">
               <Link href="/hoat-dong">Hoạt động của câu lạc bộ</Link>

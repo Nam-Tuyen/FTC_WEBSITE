@@ -21,7 +21,7 @@ export default function ThongTinPage() {
           <Badge className="mb-6 px-6 py-2 text-lg bg-accent/20 text-accent border-accent/30">
             THÔNG TIN CÂU LẠC BỘ
           </Badge>
-          <h1 className="font-heading font-black text-4xl sm:text-5xl lg:text-7xl text-foreground mb-8 text-balance tracking-tight text-glow leading-[5.rem]">
+          <h1 className="font-heading font-black text-4xl sm:text-5xl lg:text-7xl text-foreground mb-8 text-balance tracking-tight text-glow leading-[5rem]">
             CÂU LẠC BỘ <br />
             <span className="bg-gradient-to-r from-accent via-accent to-accent bg-clip-text text-transparent animate-pulse">
               CÔNG NGHỆ - TÀI CHÍNH
@@ -86,6 +86,10 @@ export default function ThongTinPage() {
                 Luật, ĐHQG-HCM. FTC được thành lập vào tháng 11/2020 dưới sự hướng dẫn của ThS. NCS Phan Huy Tâm (Giảng
                 viên Khoa Tài chính – Ngân hàng, Chủ nhiệm CLB) cùng đội ngũ sinh viên yêu thích lĩnh vực công nghệ tài
                 chính.
+              </p>
+              <p>
+                UEL là một trong tám đơn vị thành viên của ĐHQG-HCM, là trung tâm đào tạo và nghiên cứu đa ngành, đa
+                lĩnh vực, uy tín hàng đầu phía Nam trong các khối Kinh tế – Luật – Quản lý công.
               </p>
             </div>
           </CardContent>
@@ -165,7 +169,12 @@ export default function ThongTinPage() {
             <h2 className="text-3xl font-bold text-foreground mb-6">Tầm nhìn</h2>
             <div className="space-y-4 text-foreground/90 leading-relaxed max-w-4xl mx-auto">
               <p className="text-lg">
-                <span className="text-accent font-medium"> FTC đặt mục tiêu trở thành cộng đồng sinh viên yêu thích công nghệ tài chính lớn nhất Việt Nam và mở rộng mạng lưới hợp tác sinh viên, doanh nghiệp trong khu vực Đông Nam Á
+                <span className="font-semibold text-accent">Đến 2030</span>, FTC trở thành cộng đồng sinh viên yêu thích
+                công nghệ tài chính lớn nhất Việt Nam
+              </p>
+              <p className="text-lg">
+                <span className="font-semibold text-accent">Đến 2033</span>, mở rộng mạng lưới hợp tác sinh viên –
+                doanh nghiệp trong khu vực Đông Nam Á
               </p>
             </div>
           </CardContent>
