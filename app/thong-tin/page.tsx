@@ -65,7 +65,7 @@ export default function ThongTinPage() {
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent"></div>
                 <div className="absolute bottom-4 left-4 right-4">
-                  <h3 className="text-lg font-bold text-foreground mb-2">TỌA Đ��MBLOCKCHAIN VÀ AI</h3>
+                  <h3 className="text-lg font-bold text-foreground mb-2">TỌA ĐÀM BLOCKCHAIN VÀ AI</h3>
                   <p className="text-sm text-foreground/70">Con đường sự nghiệp trong kỷ nguyên số hóa</p>
                 </div>
               </div>
@@ -212,7 +212,7 @@ export default function ThongTinPage() {
                   <div>
                     <h3 className="font-semibold text-foreground mb-2">Kết nối nghề nghiệp</h3>
                     <p className="text-foreground/80 text-sm leading-relaxed">
-                      Gặp gỡ chuyên gia, cố v��n; giới thiệu thực tập, ngày hội việc làm; tham quan doanh nghiệp.
+                      Gặp gỡ chuyên gia, cố vấn; giới thiệu thực tập, ngày hội việc làm; tham quan doanh nghiệp.
                     </p>
                   </div>
                 </div>
@@ -231,13 +231,6 @@ export default function ThongTinPage() {
         </Card>
 
         {/* Closing Statement */}
-        <Card className="bg-card/30 border-accent/20 backdrop-blur-sm">
-          <CardContent className="p-8 text-center">
-            <h2 className="text-2xl font-bold text-foreground mb-4">
-              FTC – Nơi sinh viên UEL học sâu, làm thật, kết nối rộng để tạo giá trị cho bản thân và cộng đồng.
-            </h2>
-          </CardContent>
-        </Card>
       </div>
     </div>
   )
