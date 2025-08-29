@@ -1,11 +1,13 @@
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
+import { Navigation } from "@/components/navigation"
 import { Target, Users, BookOpen, TrendingUp, Award, Network } from "lucide-react"
 import Image from "next/image"
 
 export default function ThongTinPage() {
   return (
     <div className="min-h-screen bg-background text-foreground">
+      <Navigation />
       {/* Animated Background */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none">
         <div className="absolute inset-0 bg-gradient-to-br from-background via-background to-accent/5"></div>
@@ -63,7 +65,7 @@ export default function ThongTinPage() {
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent"></div>
                 <div className="absolute bottom-4 left-4 right-4">
-                  <h3 className="text-lg font-bold text-foreground mb-2">TỌA ĐÀMBLOCKCHAIN VÀ AI</h3>
+                  <h3 className="text-lg font-bold text-foreground mb-2">TỌA Đ��MBLOCKCHAIN VÀ AI</h3>
                   <p className="text-sm text-foreground/70">Con đường sự nghiệp trong kỷ nguyên số hóa</p>
                 </div>
               </div>
@@ -138,7 +140,7 @@ export default function ThongTinPage() {
                   <BookOpen className="h-6 w-6 text-accent" />
                 </div>
                 <p className="text-foreground/90 leading-relaxed">
-                  Cập nh��t và truyền đạt kiến thức về tài chính định lượng, dữ liệu và sản phẩm số.
+                  Cập nhật và truyền đạt kiến thức về tài chính định lượng, dữ liệu và sản phẩm số.
                 </p>
               </div>
               <div className="space-y-3">
@@ -210,7 +212,7 @@ export default function ThongTinPage() {
                   <div>
                     <h3 className="font-semibold text-foreground mb-2">Kết nối nghề nghiệp</h3>
                     <p className="text-foreground/80 text-sm leading-relaxed">
-                      Gặp gỡ chuyên gia, cố vấn; giới thiệu thực tập, ngày hội việc làm; tham quan doanh nghiệp.
+                      Gặp gỡ chuyên gia, cố v��n; giới thiệu thực tập, ngày hội việc làm; tham quan doanh nghiệp.
                     </p>
                   </div>
                 </div>
