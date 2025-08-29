@@ -10,15 +10,15 @@ export default function OrganizationPage() {
       <Navigation />
 
       {/* Hero */}
-      <section className="py-16 px-4 sm:px-6 lg:px-8">
+      <section className="py-16 px-4 sm:px-6 lg:px-8 leading-9">
         <div className="max-w-7xl mx-auto text-center">
           <h1 className="font-heading font-bold text-4xl sm:text-5xl text-foreground mb-6 text-glow">
             CƠ CẤU CÁC BAN
             <br />
-            <span className="bg-gradient-to-r from-accent to-accent bg-clip-text text-transparent">CÂU LẠC BỘ CÔNG NGHỆ TÀI CHÍNH</span>
+            <span className="bg-gradient-to-r from-accent to-accent bg-clip-text text-transparent leading-[5rem]">CÂU LẠC BỘ CÔNG NGHỆ TÀI CHÍNH</span>
           </h1>
           <p className="text-xl text-foreground/80 max-w-3xl mx-auto text-pretty">
-            Mô hình tổ chức gồm Ban Chủ nhiệm và các ban chuyên môn phối hợp chặt chẽ để thực thi chiến lược "Giáo dục – Kết n��i – Chia sẻ".
+            Mô hình tổ chức gồm Ban Chủ nhiệm và các ban chuyên môn phối hợp chặt chẽ để thực thi chiến lược "Giáo dục – Kết nối – Chia sẻ".
           </p>
         </div>
       </section>
@@ -151,7 +151,7 @@ export default function OrganizationPage() {
                 <span className="font-semibold text-accent">Chuỗi phối hợp:</span> Học thuật cung cấp nội dung → Sự kiện vận hành → Truyền thông lan tỏa.
               </p>
               <p>
-                <span className="font-semibold text-accent">Bảo đảm nguồn lực:</span> Nhân sự phụ trách người – việc – văn hóa; Ban Tài chính cá nhân triển khai mảng giáo dục chuyên biệt, đóng góp nội dung và hoạt động cho toàn CLB.
+                <span className="font-semibold text-accent">Bảo đảm ngu���n lực:</span> Nhân sự phụ trách người – việc – văn hóa; Ban Tài chính cá nhân triển khai mảng giáo dục chuyên biệt, đóng góp nội dung và hoạt động cho toàn CLB.
               </p>
               <p>
                 <span className="font-semibold text-accent">Điều phối chung:</span> Ban Chủ nhiệm điều phối, phê duyệt và làm đầu mối đối ngoại cấp Câu lạc bộ.
@@ -165,17 +165,17 @@ export default function OrganizationPage() {
       <section className="py-16 px-4 sm:px-6 lg:px-8">
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="font-heading font-bold text-3xl sm:text-4xl text-foreground mb-4">
-            Tham gia đội ngũ FTC
+            Tham gia đội câu lạc bộ FTC
           </h2>
           <p className="text-lg text-foreground/80 mb-8">
             Trở thành một phần của cộng đồng Công nghệ – Tài chính để học sâu – làm thật – kết nối rộng.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button asChild size="lg" className="btn-futuristic">
-              <Link href="/ung-tuyen">Ứng tuyển ngay <ArrowRight className="ml-2 h-5 w-5" /></Link>
+              <Link href="/ung-tuyen">Tham gia ngay <ArrowRight className="ml-2 h-5 w-5" /></Link>
             </Button>
             <Button asChild variant="outline" size="lg" className="border-accent text-accent hover:bg-accent/10">
-              <Link href="/hoat-dong">Xem hoạt động</Link>
+              <Link href="/hoat-dong">Hoạt động của câu lạc bộ</Link>
             </Button>
           </div>
         </div>
