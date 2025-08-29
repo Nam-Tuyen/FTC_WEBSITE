@@ -138,7 +138,7 @@ export default function ThongTinPage() {
                   <BookOpen className="h-6 w-6 text-accent" />
                 </div>
                 <p className="text-foreground/90 leading-relaxed">
-                  Cập nhật và truyền đạt kiến thức về tài chính định lượng, dữ liệu và sản phẩm số.
+                  Cập nh��t và truyền đạt kiến thức về tài chính định lượng, dữ liệu và sản phẩm số.
                 </p>
               </div>
               <div className="space-y-3">
@@ -162,7 +162,7 @@ export default function ThongTinPage() {
         </Card>
 
         {/* Vision */}
-        <Card className="bg-gradient-to-r from-accent/10 to-accent/10 border-accent/30 backdrop-blur-sm mb-12">
+        <Card className="bg-card/30 border-accent/20 backdrop-blur-sm mb-12">
           <CardContent className="p-8 text-center">
             <h2 className="text-3xl font-bold text-foreground mb-6">Tầm nhìn</h2>
             <div className="space-y-4 text-foreground/90 leading-relaxed max-w-4xl mx-auto">
@@ -229,7 +229,7 @@ export default function ThongTinPage() {
         </Card>
 
         {/* Closing Statement */}
-        <Card className="bg-gradient-to-r from-accent/20 to-accent/10 border-accent/30 backdrop-blur-sm">
+        <Card className="bg-card/30 border-accent/20 backdrop-blur-sm">
           <CardContent className="p-8 text-center">
             <h2 className="text-2xl font-bold text-foreground mb-4">
               FTC – Nơi sinh viên UEL học sâu, làm thật, kết nối rộng để tạo giá trị cho bản thân và cộng đồng.
