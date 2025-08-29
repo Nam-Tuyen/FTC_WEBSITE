@@ -21,13 +21,13 @@ export default function ThongTinPage() {
           <Badge className="mb-6 px-6 py-2 text-lg bg-accent/20 text-accent border-accent/30">
             THÔNG TIN CÂU LẠC BỘ
           </Badge>
-          <h1 className="font-heading font-black text-4xl sm:text-5xl lg:text-7xl text-foreground mb-8 text-balance tracking-tight text-glow">
+          <h1 className="font-heading font-black text-4xl sm:text-5xl lg:text-7xl text-foreground mb-8 text-balance tracking-tight text-glow leading-[5rem]">
             CÂU LẠC BỘ <br />
             <span className="bg-gradient-to-r from-accent via-accent to-accent bg-clip-text text-transparent animate-pulse">
               CÔNG NGHỆ - TÀI CHÍNH
             </span>
           </h1>
-          <p className="text-xl sm:text-2xl text-foreground/80 mb-8 max-w-4xl mx-auto text-pretty font-medium leading-relaxed">
+          <p className="text-xl text-foreground/80 mb-8 max-w-4xl mx-auto text-pretty font-medium leading-relaxed italic sm:text-3xl">
             Trường Đại học Kinh tế – Luật, ĐHQG-HCM
           </p>
         </div>
