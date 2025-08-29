@@ -1,311 +1,179 @@
 import { Navigation } from "@/components/navigation"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
-import { Mail, Linkedin, Github, Users, Target, Briefcase } from "lucide-react"
-
-const leadership = [
-  {
-    id: 1,
-    name: "Nguyễn Minh Anh",
-    position: "Chủ tịch",
-    department: "Ban Chủ nhiệm",
-    bio: "Sinh viên năm 4 ngành Công nghệ Thông tin, có 3 năm kinh nghiệm trong lĩnh vực fintech và blockchain.",
-    image: "/club-president-professional-portrait.png",
-    email: "president@fintechclub.vn",
-    linkedin: "linkedin.com/in/nguyen-minh-anh",
-    github: "github.com/minhanh-nguyen",
-    achievements: ["Giải nhất Hackathon FinTech 2023", "Chứng chỉ Blockchain Developer"],
-  },
-  {
-    id: 2,
-    name: "Trần Thị Hương",
-    position: "Phó Chủ tịch",
-    department: "Ban Chủ nhiệm",
-    bio: "Chuyên gia về AI và Machine Learning trong tài chính, có kinh nghiệm làm việc tại các startup fintech.",
-    image: "/club-vice-president-professional-portrait.png",
-    email: "vicepresident@fintechclub.vn",
-    linkedin: "linkedin.com/in/tran-thi-huong",
-    github: "github.com/huong-tran",
-    achievements: ["Giải ba AI in Finance Competition", "Chứng chỉ AWS Machine Learning"],
-  },
-]
-
-const departments = [
-  {
-    id: 1,
-    name: "Ban Kỹ thuật",
-    description: "Phát triển các dự án công nghệ, ứng dụng fintech và nghiên cứu công nghệ mới",
-    icon: Target,
-    color: "bg-primary/10 text-primary",
-    members: [
-      {
-        name: "Lê Văn Đức",
-        position: "Trưởng ban",
-        image: "/tech-lead-developer-portrait.png",
-        specialties: ["Blockchain", "Smart Contracts", "DeFi"],
-      },
-      {
-        name: "Phạm Thị Mai",
-        position: "Phó ban",
-        image: "/tech-deputy-developer-portrait.png",
-        specialties: ["Mobile Development", "Payment Integration", "API Design"],
-      },
-      {
-        name: "Hoàng Minh Tuấn",
-        position: "Thành viên",
-        image: "/tech-member-developer-portrait.png",
-        specialties: ["Frontend", "React", "TypeScript"],
-      },
-    ],
-  },
-  {
-    id: 2,
-    name: "Ban Truyền thông",
-    description: "Quản lý nội dung, marketing, social media và các hoạt động truyền thông của câu lạc bộ",
-    icon: Users,
-    color: "bg-accent/10 text-accent",
-    members: [
-      {
-        name: "Vũ Thị Lan",
-        position: "Trưởng ban",
-        image: "/marketing-lead-portrait.png",
-        specialties: ["Content Marketing", "Social Media", "Brand Strategy"],
-      },
-      {
-        name: "Đỗ Minh Khôi",
-        position: "Phó ban",
-        image: "/marketing-deputy-portrait.png",
-        specialties: ["Graphic Design", "Video Production", "Photography"],
-      },
-    ],
-  },
-  {
-    id: 3,
-    name: "Ban Sự kiện",
-    description: "Tổ chức các workshop, hackathon, seminar và các hoạt động giao lưu của câu lạc bộ",
-    icon: Briefcase,
-    color: "bg-chart-3/10 text-chart-3",
-    members: [
-      {
-        name: "Ngô Thành Long",
-        position: "Trưởng ban",
-        image: "/events-lead-organizer-portrait.png",
-        specialties: ["Event Planning", "Project Management", "Partnership"],
-      },
-      {
-        name: "Bùi Thị Hoa",
-        position: "Phó ban",
-        image: "/events-deputy-organizer-portrait.png",
-        specialties: ["Logistics", "Venue Management", "Catering"],
-      },
-    ],
-  },
-  {
-    id: 4,
-    name: "Ban Đối ngoại",
-    description: "Xây dựng mối quan hệ với các doanh nghiệp, tổ chức và tìm kiếm cơ hội hợp tác",
-    icon: Target,
-    color: "bg-chart-4/10 text-chart-4",
-    members: [
-      {
-        name: "Lý Minh Hải",
-        position: "Trưởng ban",
-        image: "/external-relations-lead-portrait.png",
-        specialties: ["Business Development", "Partnership", "Networking"],
-      },
-      {
-        name: "Trịnh Thị Thu",
-        position: "Phó ban",
-        image: "/external-relations-deputy-portrait.png",
-        specialties: ["Corporate Relations", "Sponsorship", "Communication"],
-      },
-    ],
-  },
-]
-
-const advisors = [
-  {
-    name: "TS. Nguyễn Văn Hùng",
-    position: "Cố vấn học thuật",
-    organization: "Đại học Bách Khoa Hà Nội",
-    image: "/academic-advisor-professor-portrait.png",
-    expertise: "Blockchain, Cryptocurrency, Financial Technology",
-  },
-  {
-    name: "Ông Trần Minh Quân",
-    position: "Cố vấn doanh nghiệp",
-    organization: "CEO - VietFintech Solutions",
-    image: "/business-advisor-ceo-portrait.png",
-    expertise: "Digital Banking, Payment Systems, Startup Strategy",
-  },
-]
+import { Shield, BookOpen, Briefcase, Users, Share2, Handshake, Settings, ArrowRight } from "lucide-react"
+import Link from "next/link"
 
 export default function OrganizationPage() {
   return (
     <div className="min-h-screen bg-background">
       <Navigation />
 
-      {/* Hero Section */}
-      <section className="py-16 px-4 sm:px-6 lg:px-8 bg-muted/30">
+      {/* Hero */}
+      <section className="py-16 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto text-center">
-          <h1 className="font-heading font-bold text-4xl sm:text-5xl text-foreground mb-6">
-            Cơ cấu <span className="text-primary">Tổ chức</span>
+          <h1 className="font-heading font-bold text-4xl sm:text-5xl text-foreground mb-6 text-glow">
+            Cơ cấu Câu lạc bộ Công nghệ – Tài chính (FTC)
           </h1>
-          <p className="text-xl text-muted-foreground max-w-3xl mx-auto text-pretty">
-            Đội ngũ lãnh đạo và các ban chức năng của Câu lạc bộ Công nghệ Tài chính, cùng nhau xây dựng cộng đồng
-            fintech mạnh mẽ
+          <p className="text-xl text-foreground/80 max-w-3xl mx-auto text-pretty">
+            Mô hình tổ chức gồm Ban Chủ nhiệm và các ban chuyên môn phối hợp chặt chẽ để thực thi chiến lược "Giáo dục – Kết nối – Chia sẻ".
           </p>
         </div>
       </section>
 
-      {/* Leadership Section */}
+      {/* Departments */}
+      <section className="py-8 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8">
+          {/* 1) Ban Chủ nhiệm */}
+          <Card className="bg-card/30 border-accent/20 backdrop-blur-sm">
+            <CardHeader className="pb-4">
+              <div className="flex items-center gap-3">
+                <Shield className="h-7 w-7 text-accent" />
+                <CardTitle className="text-2xl font-bold text-foreground">Ban Chủ nhiệm</CardTitle>
+              </div>
+            </CardHeader>
+            <CardContent className="pt-0 text-foreground/90 leading-relaxed space-y-3">
+              <p><span className="font-semibold text-accent">Thành phần:</span> Chủ nhiệm, Phó Chủ nhiệm.</p>
+              <p>
+                <span className="font-semibold text-accent">Chức n��ng:</span> Điều hành chung, hoạch định chiến lược; phê duyệt kế hoạch – ngân sách – nhân sự; đối ngoại cấp Câu lạc bộ.
+              </p>
+            </CardContent>
+          </Card>
+
+          {/* 2) Ban Học thuật */}
+          <Card className="bg-card/30 border-accent/20 backdrop-blur-sm">
+            <CardHeader className="pb-4">
+              <div className="flex items-center gap-3">
+                <BookOpen className="h-7 w-7 text-accent" />
+                <CardTitle className="text-2xl font-bold text-foreground">Ban Học thuật</CardTitle>
+              </div>
+            </CardHeader>
+            <CardContent className="pt-0 text-foreground/90 leading-relaxed">
+              <p className="mb-3"><span className="font-semibold text-accent">Chức năng:</span> Trung tâm nội dung chuyên môn Fintech.</p>
+              <ul className="list-disc pl-5 space-y-2">
+                <li>Thiết kế giáo trình nội bộ, tài liệu sự kiện, ấn phẩm học thuật.</li>
+                <li>Xây dựng nội dung workshop, tọa đàm, cuộc thi (đề bài, chấm điểm, cố vấn).</li>
+                <li>Tổ chức tập huấn kỹ năng (xử lý dữ liệu, SQL, phân tích – thuật toán giao dịch).</li>
+                <li>Đại diện CLB tham gia/thi đấu học thuật, công nghệ, đổi mới sáng tạo.</li>
+              </ul>
+            </CardContent>
+          </Card>
+
+          {/* 3) Ban Sự kiện */}
+          <Card className="bg-card/30 border-accent/20 backdrop-blur-sm">
+            <CardHeader className="pb-4">
+              <div className="flex items-center gap-3">
+                <Briefcase className="h-7 w-7 text-accent" />
+                <CardTitle className="text-2xl font-bold text-foreground">Ban Sự kiện</CardTitle>
+              </div>
+            </CardHeader>
+            <CardContent className="pt-0 text-foreground/90 leading-relaxed">
+              <p className="mb-3"><span className="font-semibold text-accent">Chức năng:</span> Lên kế hoạch và vận hành chương trình.</p>
+              <ul className="list-disc pl-5 space-y-2">
+                <li>Thiết kế concept, cấu trúc chương trình; kịch bản tổng, kịch bản MC.</li>
+                <li>Lập kế hoạch – timeline, điều phối hiện trường, hậu cần.</li>
+                <li>Soạn báo cáo tổng kết, đánh giá hiệu quả.</li>
+                <li>Quản lý hộp thư CLB và làm đầu mối liên hệ trong sự kiện.</li>
+              </ul>
+            </CardContent>
+          </Card>
+
+          {/* 4) Ban Truyền thông */}
+          <Card className="bg-card/30 border-accent/20 backdrop-blur-sm">
+            <CardHeader className="pb-4">
+              <div className="flex items-center gap-3">
+                <Share2 className="h-7 w-7 text-accent" />
+                <CardTitle className="text-2xl font-bold text-foreground">Ban Truyền thông</CardTitle>
+              </div>
+            </CardHeader>
+            <CardContent className="pt-0 text-foreground/90 leading-relaxed">
+              <p className="mb-3"><span className="font-semibold text-accent">Chức năng:</span> Hình ảnh – nội dung – kênh số của CLB.</p>
+              <ul className="list-disc pl-5 space-y-2">
+                <li>Quản trị fanpage/kênh chính thức, đảm bảo nhận diện nhất quán.</li>
+                <li>Sáng tạo nội dung, thiết kế ấn phẩm (bài viết, infographic, poster, video).</li>
+                <li>Chụp ảnh, ghi hình, lựa chọn tư liệu; xuất bản theo kế hoạch.</li>
+                <li>Phối hợp – kết nối truyền thông với đối tác, đơn vị đồng hành.</li>
+              </ul>
+            </CardContent>
+          </Card>
+
+          {/* 5) Ban Tài chính cá nhân */}
+          <Card className="bg-card/30 border-accent/20 backdrop-blur-sm">
+            <CardHeader className="pb-4">
+              <div className="flex items-center gap-3">
+                <Handshake className="h-7 w-7 text-accent" />
+                <CardTitle className="text-2xl font-bold text-foreground">Ban Tài chính cá nhân</CardTitle>
+              </div>
+            </CardHeader>
+            <CardContent className="pt-0 text-foreground/90 leading-relaxed">
+              <p className="mb-3"><span className="font-semibold text-accent">Chức năng:</span> Giáo dục tài chính cá nhân ứng dụng công nghệ.</p>
+              <ul className="list-disc pl-5 space-y-2">
+                <li>Trợ giảng qua boardgame MoneyWe; tổ chức workshop/talkshow chuyên đề.</li>
+                <li>Biên soạn chuỗi FTCCN Sharing (bài viết, công cụ hỗ trợ quản lý tài chính).</li>
+                <li>Phối hợp Học thuật tích hợp kiến thức Fintech vào nội dung tài chính cá nhân.</li>
+                <li>Kết nối hoạt động liên ban để phát triển kỹ năng mềm.</li>
+              </ul>
+            </CardContent>
+          </Card>
+
+          {/* 6) Ban Nhân sự */}
+          <Card className="bg-card/30 border-accent/20 backdrop-blur-sm">
+            <CardHeader className="pb-4">
+              <div className="flex items-center gap-3">
+                <Settings className="h-7 w-7 text-accent" />
+                <CardTitle className="text-2xl font-bold text-foreground">Ban Nhân sự</CardTitle>
+              </div>
+            </CardHeader>
+            <CardContent className="pt-0 text-foreground/90 leading-relaxed">
+              <p className="mb-3"><span className="font-semibold text-accent">Chức năng:</span> Văn hóa – nội quy – vận hành nguồn lực.</p>
+              <ul className="list-disc pl-5 space-y-2">
+                <li>Xây dựng nội quy, gìn giữ văn hóa FTC; chăm lo đời sống tinh thần.</li>
+                <li>Tuyển – phân công – theo dõi hiệu quả nhân sự cho từng chương trình.</li>
+                <li>Tổ chức gắn kết nội bộ (onboarding, teambuilding, mentoring).</li>
+                <li>Lập dự toán chi phí, theo dõi và quản lý quỹ minh bạch.</li>
+              </ul>
+            </CardContent>
+          </Card>
+        </div>
+      </section>
+
+      {/* Nguyên tắc phối hợp */}
+      <section className="py-8 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto">
+          <Card className="bg-card/30 border-accent/20 backdrop-blur-sm">
+            <CardHeader className="pb-2">
+              <CardTitle className="text-2xl font-bold text-foreground">Nguyên tắc phối hợp</CardTitle>
+            </CardHeader>
+            <CardContent className="pt-0 text-foreground/90 leading-relaxed space-y-3">
+              <p>
+                <span className="font-semibold text-accent">Chuỗi phối hợp:</span> Học thuật cung cấp nội dung → Sự kiện vận hành → Truyền thông lan tỏa.
+              </p>
+              <p>
+                <span className="font-semibold text-accent">Bảo đảm nguồn lực:</span> Nhân sự phụ trách người – việc – văn hóa; Ban Tài chính cá nhân triển khai mảng giáo dục chuyên biệt, đóng góp nội dung và hoạt động cho toàn CLB.
+              </p>
+              <p>
+                <span className="font-semibold text-accent">Điều phối chung:</span> Ban Chủ nhiệm điều phối, phê duyệt và làm đầu mối đối ngoại cấp Câu lạc bộ.
+              </p>
+            </CardContent>
+          </Card>
+        </div>
+      </section>
+
+      {/* CTA */}
       <section className="py-16 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto">
-          <h2 className="font-heading font-bold text-3xl text-foreground mb-8 text-center">Ban Chủ nhiệm</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-            {leadership.map((leader) => (
-              <Card key={leader.id} className="overflow-hidden hover:shadow-lg transition-shadow">
-                <div className="aspect-square overflow-hidden">
-                  <img
-                    src={leader.image || "/placeholder.svg"}
-                    alt={leader.name}
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-                <CardHeader className="text-center pb-3">
-                  <CardTitle className="text-xl font-heading">{leader.name}</CardTitle>
-                  <Badge className="mx-auto w-fit bg-primary text-primary-foreground">{leader.position}</Badge>
-                </CardHeader>
-                <CardContent className="pt-0">
-                  <p className="text-muted-foreground text-sm mb-4 text-center">{leader.bio}</p>
-
-                  <div className="space-y-2 mb-4">
-                    <h4 className="font-semibold text-sm">Thành tích nổi bật:</h4>
-                    <ul className="text-sm text-muted-foreground space-y-1">
-                      {leader.achievements.map((achievement, index) => (
-                        <li key={index} className="flex items-center">
-                          <div className="w-1.5 h-1.5 bg-primary rounded-full mr-2"></div>
-                          {achievement}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-
-                  <div className="flex justify-center space-x-3">
-                    <Button variant="outline" size="sm" asChild>
-                      <a href={`mailto:${leader.email}`}>
-                        <Mail className="h-4 w-4" />
-                      </a>
-                    </Button>
-                    <Button variant="outline" size="sm" asChild>
-                      <a href={`https://${leader.linkedin}`} target="_blank" rel="noopener noreferrer">
-                        <Linkedin className="h-4 w-4" />
-                      </a>
-                    </Button>
-                    <Button variant="outline" size="sm" asChild>
-                      <a href={`https://${leader.github}`} target="_blank" rel="noopener noreferrer">
-                        <Github className="h-4 w-4" />
-                      </a>
-                    </Button>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Departments Section */}
-      <section className="py-16 px-4 sm:px-6 lg:px-8 bg-muted/30">
-        <div className="max-w-7xl mx-auto">
-          <h2 className="font-heading font-bold text-3xl text-foreground mb-8 text-center">Các Ban Chức năng</h2>
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            {departments.map((dept) => (
-              <Card key={dept.id} className="hover:shadow-lg transition-shadow">
-                <CardHeader>
-                  <div className="flex items-center space-x-3 mb-3">
-                    <div className={`w-12 h-12 rounded-lg flex items-center justify-center ${dept.color}`}>
-                      <dept.icon className="h-6 w-6" />
-                    </div>
-                    <div>
-                      <CardTitle className="text-xl font-heading">{dept.name}</CardTitle>
-                      <Badge variant="secondary" className="mt-1">
-                        {dept.members.length} thành viên
-                      </Badge>
-                    </div>
-                  </div>
-                  <p className="text-muted-foreground text-sm">{dept.description}</p>
-                </CardHeader>
-                <CardContent className="pt-0">
-                  <div className="space-y-4">
-                    {dept.members.map((member, index) => (
-                      <div key={index} className="flex items-center space-x-3 p-3 bg-muted/50 rounded-lg">
-                        <img
-                          src={member.image || "/placeholder.svg"}
-                          alt={member.name}
-                          className="w-12 h-12 rounded-full object-cover"
-                        />
-                        <div className="flex-1">
-                          <h4 className="font-semibold text-sm">{member.name}</h4>
-                          <p className="text-xs text-muted-foreground mb-1">{member.position}</p>
-                          <div className="flex flex-wrap gap-1">
-                            {member.specialties.slice(0, 2).map((specialty, specIndex) => (
-                              <Badge key={specIndex} variant="outline" className="text-xs">
-                                {specialty}
-                              </Badge>
-                            ))}
-                          </div>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Advisors Section */}
-      <section className="py-16 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto">
-          <h2 className="font-heading font-bold text-3xl text-foreground mb-8 text-center">Ban Cố vấn</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-            {advisors.map((advisor, index) => (
-              <Card key={index} className="text-center hover:shadow-lg transition-shadow">
-                <CardContent className="pt-6">
-                  <img
-                    src={advisor.image || "/placeholder.svg"}
-                    alt={advisor.name}
-                    className="w-24 h-24 rounded-full object-cover mx-auto mb-4"
-                  />
-                  <h3 className="font-heading font-semibold text-lg mb-1">{advisor.name}</h3>
-                  <p className="text-primary font-medium text-sm mb-1">{advisor.position}</p>
-                  <p className="text-muted-foreground text-sm mb-3">{advisor.organization}</p>
-                  <p className="text-xs text-muted-foreground">{advisor.expertise}</p>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Join Us Section */}
-      <section className="py-16 px-4 sm:px-6 lg:px-8 bg-muted/30">
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="font-heading font-bold text-3xl sm:text-4xl text-foreground mb-4">
-            Tham gia đội ngũ của chúng tôi
+            Tham gia đội ngũ FTC
           </h2>
-          <p className="text-lg text-muted-foreground mb-8">
-            Chúng tôi luôn tìm kiếm những thành viên tài năng và đam mê để cùng xây dựng cộng đồng fintech
+          <p className="text-lg text-foreground/80 mb-8">
+            Trở thành một phần của cộng đồng Công nghệ – Tài chính để học sâu – làm thật – kết nối rộng.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button asChild size="lg">
-              <a href="/ung-tuyen">Ứng tuyển ngay</a>
+            <Button asChild size="lg" className="btn-futuristic">
+              <Link href="/ung-tuyen">Ứng tuyển ngay <ArrowRight className="ml-2 h-5 w-5" /></Link>
             </Button>
-            <Button asChild variant="outline" size="lg">
-              <a href="/hoat-dong">Xem hoạt động</a>
+            <Button asChild variant="outline" size="lg" className="border-accent text-accent hover:bg-accent/10">
+              <Link href="/hoat-dong">Xem hoạt động</Link>
             </Button>
           </div>
         </div>
