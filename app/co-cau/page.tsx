@@ -13,10 +13,12 @@ export default function OrganizationPage() {
       <section className="py-16 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto text-center">
           <h1 className="font-heading font-bold text-4xl sm:text-5xl text-foreground mb-6 text-glow">
-            Cơ cấu Câu lạc bộ Công nghệ – Tài chính (FTC)
+            CƠ CẤU CÁC BAN
+            <br />
+            <span className="bg-gradient-to-r from-accent to-accent bg-clip-text text-transparent">CÂU LẠC BỘ CÔNG NGHỆ TÀI CHÍNH</span>
           </h1>
           <p className="text-xl text-foreground/80 max-w-3xl mx-auto text-pretty">
-            Mô hình tổ chức gồm Ban Chủ nhiệm và các ban chuyên môn phối hợp chặt chẽ để thực thi chiến lược "Giáo dục – Kết nối – Chia sẻ".
+            Mô hình tổ chức gồm Ban Chủ nhiệm và các ban chuyên môn phối hợp chặt chẽ để thực thi chiến lược "Giáo dục – Kết n��i – Chia sẻ".
           </p>
         </div>
       </section>
@@ -35,7 +37,7 @@ export default function OrganizationPage() {
             <CardContent className="pt-0 text-foreground/90 leading-relaxed space-y-3">
               <p><span className="font-semibold text-accent">Thành phần:</span> Chủ nhiệm, Phó Chủ nhiệm.</p>
               <p>
-                <span className="font-semibold text-accent">Chức n��ng:</span> Điều hành chung, hoạch định chiến lược; phê duyệt kế hoạch – ngân sách – nhân sự; đối ngoại cấp Câu lạc bộ.
+                <span className="font-semibold text-accent">Chức năng:</span> Điều hành chung, hoạch định chiến lược; phê duyệt kế hoạch – ngân sách – nhân sự; đối ngoại cấp Câu lạc bộ.
               </p>
             </CardContent>
           </Card>
