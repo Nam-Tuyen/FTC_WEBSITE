@@ -8,9 +8,9 @@ export default function ThongTinPage() {
     <div className="min-h-screen bg-background text-foreground">
       {/* Animated Background */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute inset-0 bg-gradient-to-br from-background via-background to-primary/5"></div>
+        <div className="absolute inset-0 bg-gradient-to-br from-background via-background to-accent/5"></div>
         <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-accent/10 rounded-full blur-3xl animate-pulse"></div>
-        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-secondary/10 rounded-full blur-3xl animate-pulse delay-1000"></div>
+        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-accent/10 rounded-full blur-3xl animate-pulse delay-1000"></div>
       </div>
 
       <div className="relative z-10 container mx-auto px-4 py-20">
@@ -21,7 +21,7 @@ export default function ThongTinPage() {
           </Badge>
           <h1 className="font-heading font-black text-4xl sm:text-5xl lg:text-7xl text-foreground mb-8 text-balance tracking-tight text-glow">
             CÂU LẠC BỘ <br />
-            <span className="bg-gradient-to-r from-accent via-secondary to-accent bg-clip-text text-transparent animate-pulse">
+            <span className="bg-gradient-to-r from-accent via-accent to-accent bg-clip-text text-transparent animate-pulse">
               CÔNG NGHỆ - TÀI CHÍNH
             </span>
           </h1>
@@ -119,7 +119,7 @@ export default function ThongTinPage() {
               </p>
               <p className="text-foreground/80">
                 Theo phương châm:{" "}
-                <span className="font-semibold text-secondary">Thống nhất – Vượt trội – Tiên phong</span>
+                <span className="font-semibold text-accent">Thống nhất – Vượt trội – Tiên phong</span>
               </p>
             </CardContent>
           </Card>
@@ -162,7 +162,7 @@ export default function ThongTinPage() {
         </Card>
 
         {/* Vision */}
-        <Card className="bg-gradient-to-r from-accent/10 to-secondary/10 border-accent/30 backdrop-blur-sm mb-12">
+        <Card className="bg-gradient-to-r from-accent/10 to-accent/10 border-accent/30 backdrop-blur-sm mb-12">
           <CardContent className="p-8 text-center">
             <h2 className="text-3xl font-bold text-foreground mb-6">Tầm nhìn</h2>
             <div className="space-y-4 text-foreground/90 leading-relaxed max-w-4xl mx-auto">
@@ -171,7 +171,7 @@ export default function ThongTinPage() {
                 công nghệ tài chính lớn nhất Việt Nam
               </p>
               <p className="text-lg">
-                <span className="font-semibold text-secondary">Đến 2033</span>, mở rộng mạng lưới hợp tác sinh viên –
+                <span className="font-semibold text-accent">Đến 2033</span>, mở rộng mạng lưới hợp tác sinh viên –
                 doanh nghiệp trong khu vực Đông Nam Á
               </p>
             </div>
@@ -195,7 +195,7 @@ export default function ThongTinPage() {
                   </div>
                 </div>
                 <div className="flex gap-4">
-                  <div className="w-3 h-3 bg-secondary rounded-full mt-2 flex-shrink-0"></div>
+                  <div className="w-3 h-3 bg-accent rounded-full mt-2 flex-shrink-0"></div>
                   <div>
                     <h3 className="font-semibold text-foreground mb-2">Cuộc thi học thuật và dự án thực hành</h3>
                     <p className="text-foreground/80 text-sm leading-relaxed">
@@ -215,7 +215,7 @@ export default function ThongTinPage() {
                   </div>
                 </div>
                 <div className="flex gap-4">
-                  <div className="w-3 h-3 bg-secondary rounded-full mt-2 flex-shrink-0"></div>
+                  <div className="w-3 h-3 bg-accent rounded-full mt-2 flex-shrink-0"></div>
                   <div>
                     <h3 className="font-semibold text-foreground mb-2">Cộng đồng học thuật</h3>
                     <p className="text-foreground/80 text-sm leading-relaxed">
@@ -229,7 +229,7 @@ export default function ThongTinPage() {
         </Card>
 
         {/* Closing Statement */}
-        <Card className="bg-gradient-to-r from-primary/20 to-accent/20 border-accent/30 backdrop-blur-sm">
+        <Card className="bg-gradient-to-r from-accent/20 to-accent/10 border-accent/30 backdrop-blur-sm">
           <CardContent className="p-8 text-center">
             <h2 className="text-2xl font-bold text-foreground mb-4">
               FTC – Nơi sinh viên UEL học sâu, làm thật, kết nối rộng để tạo giá trị cho bản thân và cộng đồng.
