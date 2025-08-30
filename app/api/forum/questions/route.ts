@@ -1,4 +1,4 @@
-import { appendForumQuestion } from '@/lib/google-sheets'
+import { appendForumQuestion, getOrCreateSpreadsheetInFolder } from '@/lib/google-sheets'
 import { NextRequest, NextResponse } from 'next/server'
 
 const ALLOWED_CATEGORIES = [
@@ -29,9 +29,13 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Chủ đề không hợp lệ' }, { status: 400 })
     }
 
-    const spreadsheetId = process.env.GOOGLE_SHEET_ID
+    let spreadsheetId = process.env.GOOGLE_SHEET_ID
     if (!spreadsheetId) {
-      return NextResponse.json({ error: 'Thiếu cấu hình GOOGLE_SHEET_ID' }, { status: 500 })
+      const folderId = process.env.GOOGLE_DRIVE_FOLDER_ID
+      if (!folderId) {
+        return NextResponse.json({ error: 'Thiếu GOOGLE_SHEET_ID hoặc GOOGLE_DRIVE_FOLDER_ID' }, { status: 500 })
+      }
+      spreadsheetId = await getOrCreateSpreadsheetInFolder(folderId, 'FTC Forum Questions')
     }
 
     const sheetTitle = formatDateSheetTitle()
@@ -49,7 +53,7 @@ export async function POST(req: NextRequest) {
       questionId: questionId || '',
     })
 
-    return NextResponse.json({ ok: true, sheetTitle })
+    return NextResponse.json({ ok: true, sheetTitle, spreadsheetId })
   } catch (err: any) {
     return NextResponse.json({ error: err?.message || 'Unexpected error' }, { status: 500 })
   }
