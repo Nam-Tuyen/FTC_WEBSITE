@@ -1,167 +1,180 @@
-import { Navigation } from "@/components/navigation"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import {
-  MessageSquare,
-  Users,
-  Search,
-  Plus,
-  TrendingUp,
-  Code,
-  Briefcase,
-  Lightbulb,
-  HelpCircle,
-  Pin,
-  Heart,
-  Reply,
-} from "lucide-react"
+'use client'
 
-const categories = [
-  {
-    id: 1,
-    name: "Thảo luận chung",
-    description: "Thảo luận về các chủ đề fintech tổng quát",
-    icon: MessageSquare,
-    color: "bg-primary/10 text-primary",
-    threads: 45,
-    posts: 234,
-    lastActivity: "2 phút trước",
-  },
-  {
-    id: 2,
-    name: "Câu hỏi kỹ thuật",
-    description: "Hỏi đáp về lập trình, blockchain, AI trong fintech",
-    icon: Code,
-    color: "bg-accent/10 text-accent",
-    threads: 32,
-    posts: 156,
-    lastActivity: "15 phút trước",
-  },
-  {
-    id: 3,
-    name: "Cơ hội việc làm",
-    description: "Chia sẻ thông tin tuyển dụng và cơ hội nghề nghiệp",
-    icon: Briefcase,
-    color: "bg-chart-3/10 text-chart-3",
-    threads: 18,
-    posts: 67,
-    lastActivity: "1 giờ trước",
-  },
-  {
-    id: 4,
-    name: "Showcase dự án",
-    description: "Trình bày và thảo luận về các dự án fintech",
-    icon: Lightbulb,
-    color: "bg-chart-4/10 text-chart-4",
-    threads: 25,
-    posts: 89,
-    lastActivity: "3 giờ trước",
-  },
+import { useEffect, useMemo, useState } from 'react'
+import { Navigation } from '@/components/navigation'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { Badge } from '@/components/ui/badge'
+import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
+import { Textarea } from '@/components/ui/textarea'
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
+import { MessageSquare, Search, Plus, HelpCircle, Heart, Reply } from 'lucide-react'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
+
+type ReplyItem = {
+  id: string
+  authorId: string
+  authorName: string
+  content: string
+  createdAt: number
+}
+
+type QuestionItem = {
+  id: string
+  title: string
+  content: string
+  authorId: string
+  authorName: string
+  studentId: string
+  category: string
+  createdAt: number
+  likes: string[]
+  replies: ReplyItem[]
+}
+
+const STORAGE_KEYS = {
+  userId: 'forum.currentUserId',
+  userName: 'forum.currentUserName',
+  questions: 'forum.questions',
+}
+
+const CATEGORIES = [
+  'Hỏi đáp về câu lạc bộ',
+  'Hỏi đáp thông tin về ngành học',
+  'Thảo luận',
 ]
 
-const featuredThreads = [
-  {
-    id: 1,
-    title: "Xu hướng DeFi 2024: Những điều cần biết",
-    author: {
-      name: "Nguyễn Minh Anh",
-      avatar: "/forum-user-avatar-1.png",
-      role: "Chủ tịch CLB",
-    },
-    category: "Thảo luận chung",
-    replies: 23,
-    views: 156,
-    likes: 45,
-    lastReply: "5 phút trước",
-    isPinned: true,
-    excerpt:
-      "DeFi đang phát triển mạnh mẽ với nhiều xu hướng mới. Hãy cùng thảo luận về những cơ hội và thách thức trong năm 2024...",
-  },
-  {
-    id: 2,
-    title: "Cách tích hợp API thanh toán VNPay vào React app",
-    author: {
-      name: "Lê Văn Đức",
-      avatar: "/forum-user-avatar-2.png",
-      role: "Trưởng ban Kỹ thuật",
-    },
-    category: "Câu hỏi kỹ thuật",
-    replies: 12,
-    views: 89,
-    likes: 18,
-    lastReply: "1 giờ trước",
-    isPinned: false,
-    excerpt: "Mình đang gặp khó khăn khi tích hợp VNPay API. Có ai đã làm qua có thể chia sẻ kinh nghiệm không?",
-  },
-  {
-    id: 3,
-    title: "[Tuyển dụng] Frontend Developer - Startup Fintech",
-    author: {
-      name: "Trần Thị Hương",
-      avatar: "/forum-user-avatar-3.png",
-      role: "Phó Chủ tịch CLB",
-    },
-    category: "Cơ hội việc làm",
-    replies: 8,
-    views: 67,
-    likes: 12,
-    lastReply: "2 giờ trước",
-    isPinned: false,
-    excerpt:
-      "Startup fintech đang tìm Frontend Developer có kinh nghiệm React/Next.js. Lương hấp dẫn, môi trường năng động...",
-  },
-  {
-    id: 4,
-    title: "Demo: Ứng dụng quản lý chi tiêu cá nhân với AI",
-    author: {
-      name: "Phạm Thị Mai",
-      avatar: "/forum-user-avatar-4.png",
-      role: "Thành viên",
-    },
-    category: "Showcase dự án",
-    replies: 15,
-    views: 134,
-    likes: 28,
-    lastReply: "4 giờ trước",
-    isPinned: false,
-    excerpt:
-      "Mình vừa hoàn thành ứng dụng quản lý chi tiêu sử dụng AI để phân loại và dự đoán. Mọi người xem và góp ý nhé!",
-  },
-]
+function uuid() {
+  if (typeof crypto !== 'undefined' && 'randomUUID' in crypto) return crypto.randomUUID()
+  return `${Date.now()}-${Math.random().toString(16).slice(2)}`
+}
 
-const recentActivity = [
-  {
-    user: "Hoàng Minh Tuấn",
-    action: "đã trả lời trong",
-    thread: "Smart Contract Security Best Practices",
-    time: "2 phút trước",
-    avatar: "/forum-user-avatar-5.png",
-  },
-  {
-    user: "Vũ Thị Lan",
-    action: "đã tạo chủ đề mới",
-    thread: "Marketing Strategy cho FinTech Startup",
-    time: "15 phút trước",
-    avatar: "/forum-user-avatar-6.png",
-  },
-  {
-    user: "Đỗ Minh Khôi",
-    action: "đã like bài viết",
-    thread: "Blockchain trong Banking",
-    time: "30 phút trước",
-    avatar: "/forum-user-avatar-7.png",
-  },
-]
+function formatTime(ts: number) {
+  const diff = Math.floor((Date.now() - ts) / 1000)
+  if (diff < 60) return `${diff}s trước`
+  if (diff < 3600) return `${Math.floor(diff / 60)}m trước`
+  if (diff < 86400) return `${Math.floor(diff / 3600)}h trước`
+  return new Date(ts).toLocaleString()
+}
 
 export default function ForumPage() {
+  const [currentUserId, setCurrentUserId] = useState<string>('')
+  const [currentUserName, setCurrentUserName] = useState<string>('Nam Tuyen Le')
+  const [questions, setQuestions] = useState<QuestionItem[]>([])
+  const [search, setSearch] = useState('')
+
+  useEffect(() => {
+    const id = localStorage.getItem(STORAGE_KEYS.userId) || uuid()
+    const name = localStorage.getItem(STORAGE_KEYS.userName) || 'Nam Tuyen Le'
+    setCurrentUserId(id)
+    setCurrentUserName(name)
+    localStorage.setItem(STORAGE_KEYS.userId, id)
+    localStorage.setItem(STORAGE_KEYS.userName, name)
+
+    const saved = localStorage.getItem(STORAGE_KEYS.questions)
+    if (saved) {
+      try {
+        setQuestions(JSON.parse(saved))
+      } catch {
+        setQuestions([])
+      }
+    }
+  }, [])
+
+  useEffect(() => {
+    localStorage.setItem(STORAGE_KEYS.questions, JSON.stringify(questions))
+  }, [questions])
+
+  const filtered = useMemo(() => {
+    const q = search.trim().toLowerCase()
+    if (!q) return questions
+    return questions.filter((item) =>
+      [item.title, item.content, item.authorName, item.studentId, item.category].some((f) =>
+        f.toLowerCase().includes(q)
+      )
+    )
+  }, [questions, search])
+
+  async function handleCreateQuestion(data: {
+    title: string
+    content: string
+    studentId: string
+    category: string
+  }) {
+    const newId = uuid()
+    const newQ: QuestionItem = {
+      id: newId,
+      title: data.title,
+      content: data.content,
+      authorId: currentUserId,
+      authorName: currentUserName || 'Ẩn danh',
+      studentId: data.studentId,
+      category: data.category,
+      createdAt: Date.now(),
+      likes: [],
+      replies: [],
+    }
+
+    setQuestions((prev) => [newQ, ...prev])
+
+    try {
+      await Promise.allSettled([
+        fetch('/api/forum/questions', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            studentId: data.studentId,
+            name: currentUserName || '',
+            title: data.title,
+            content: data.content,
+            category: data.category,
+            questionId: newId,
+          }),
+        }),
+        fetch('/api/forum/notion/question', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            studentId: data.studentId,
+            name: currentUserName || '',
+            title: data.title,
+            content: data.content,
+            category: data.category,
+            questionId: newId,
+            authorId: currentUserId,
+          }),
+        }),
+      ])
+    } catch (e) {}
+  }
+
+  function handleToggleLike(qid: string) {
+    if (!currentUserId) return
+    setQuestions((prev) =>
+      prev.map((q) => {
+        if (q.id !== qid) return q
+        const has = q.likes.includes(currentUserId)
+        return { ...q, likes: has ? q.likes.filter((x) => x !== currentUserId) : [...q.likes, currentUserId] }
+      })
+    )
+  }
+
+  function handleAddReply(qid: string, content: string) {
+    if (!content.trim()) return
+    const reply: ReplyItem = {
+      id: uuid(),
+      authorId: currentUserId,
+      authorName: currentUserName || 'Ẩn danh',
+      content,
+      createdAt: Date.now(),
+    }
+    setQuestions((prev) => prev.map((q) => (q.id === qid ? { ...q, replies: [...q.replies, reply] } : q)))
+  }
+
   return (
     <div className="min-h-screen bg-background">
       <Navigation />
 
-      {/* Hero Section */}
       <section className="py-16 px-4 sm:px-6 lg:px-8 bg-muted/30">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-8">
@@ -173,177 +186,94 @@ export default function ForumPage() {
             </p>
           </div>
 
-          {/* Search and New Thread */}
-          <div className="flex flex-col sm:flex-row gap-4 max-w-2xl mx-auto">
+          <div className="flex flex-col sm:flex-row gap-4 max-w-3xl mx-auto">
             <div className="relative flex-1">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-              <Input placeholder="Tìm kiếm chủ đề, bài viết..." className="pl-10" />
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+              <Input
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                placeholder="Tìm kiếm câu hỏi, nội dung..."
+                className="pl-10"
+              />
             </div>
-            <Button className="sm:w-auto">
-              <Plus className="h-4 w-4 mr-2" />
-              Tạo chủ đề mới
-            </Button>
           </div>
         </div>
       </section>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
-          {/* Main Content */}
           <div className="lg:col-span-3 space-y-8">
-            {/* Categories */}
-            <section>
-              <h2 className="font-heading font-bold text-2xl text-foreground mb-6">Danh mục thảo luận</h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {categories.map((category) => (
-                  <Card key={category.id} className="hover:shadow-lg transition-shadow cursor-pointer">
-                    <CardContent className="p-6">
-                      <div className="flex items-start space-x-4">
-                        <div className={`w-12 h-12 rounded-lg flex items-center justify-center ${category.color}`}>
-                          <category.icon className="h-6 w-6" />
-                        </div>
-                        <div className="flex-1">
-                          <h3 className="font-heading font-semibold text-lg mb-1">{category.name}</h3>
-                          <p className="text-muted-foreground text-sm mb-3">{category.description}</p>
-                          <div className="flex items-center space-x-4 text-xs text-muted-foreground">
-                            <span>{category.threads} chủ đề</span>
-                            <span>{category.posts} bài viết</span>
-                            <span>Hoạt động: {category.lastActivity}</span>
-                          </div>
-                        </div>
-                      </div>
-                    </CardContent>
-                  </Card>
-                ))}
-              </div>
-            </section>
+            <AskQuestionCard
+              currentUserName={currentUserName}
+              onUpdateName={(name) => {
+                setCurrentUserName(name)
+                localStorage.setItem(STORAGE_KEYS.userName, name)
+              }}
+              onSubmit={handleCreateQuestion}
+            />
 
-            {/* Featured Threads */}
             <section>
-              <h2 className="font-heading font-bold text-2xl text-foreground mb-6">Chủ đề nổi bật</h2>
+              <h2 className="font-heading font-bold text-2xl text-foreground mb-6">Câu hỏi gần đây</h2>
               <div className="space-y-4">
-                {featuredThreads.map((thread) => (
-                  <Card key={thread.id} className="hover:shadow-lg transition-shadow cursor-pointer">
-                    <CardContent className="p-6">
-                      <div className="flex items-start space-x-4">
-                        <Avatar className="w-12 h-12">
-                          <AvatarImage src={thread.author.avatar || "/placeholder.svg"} alt={thread.author.name} />
-                          <AvatarFallback>{thread.author.name.charAt(0)}</AvatarFallback>
-                        </Avatar>
-                        <div className="flex-1">
-                          <div className="flex items-center space-x-2 mb-2">
-                            {thread.isPinned && <Pin className="h-4 w-4 text-primary" />}
-                            <h3 className="font-heading font-semibold text-lg hover:text-primary transition-colors">
-                              {thread.title}
-                            </h3>
-                          </div>
-                          <p className="text-muted-foreground text-sm mb-3 line-clamp-2">{thread.excerpt}</p>
-                          <div className="flex items-center justify-between">
-                            <div className="flex items-center space-x-4">
-                              <div className="flex items-center space-x-1">
-                                <span className="text-sm font-medium">{thread.author.name}</span>
-                                <Badge variant="secondary" className="text-xs">
-                                  {thread.author.role}
-                                </Badge>
-                              </div>
-                              <Badge variant="outline" className="text-xs">
-                                {thread.category}
-                              </Badge>
-                            </div>
-                            <div className="flex items-center space-x-4 text-sm text-muted-foreground">
-                              <div className="flex items-center space-x-1">
-                                <Reply className="h-4 w-4" />
-                                <span>{thread.replies}</span>
-                              </div>
-                              <div className="flex items-center space-x-1">
-                                <Users className="h-4 w-4" />
-                                <span>{thread.views}</span>
-                              </div>
-                              <div className="flex items-center space-x-1">
-                                <Heart className="h-4 w-4" />
-                                <span>{thread.likes}</span>
-                              </div>
-                              <span>{thread.lastReply}</span>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </CardContent>
-                  </Card>
+                {filtered.map((q) => (
+                  <QuestionCard
+                    key={q.id}
+                    q={q}
+                    onLike={() => handleToggleLike(q.id)}
+                    onReply={(content) => handleAddReply(q.id, content)}
+                  />
                 ))}
+                {filtered.length === 0 && (
+                  <Card>
+                    <CardContent className="p-6 text-sm text-muted-foreground">Không có kết quả phù hợp.</CardContent>
+                  </Card>
+                )}
               </div>
             </section>
           </div>
 
-          {/* Sidebar */}
           <div className="space-y-6">
-            {/* Forum Stats */}
             <Card>
               <CardHeader>
-                <CardTitle className="text-lg font-heading">Thống kê diễn đàn</CardTitle>
+                <CardTitle className="text-lg font-heading">Hồ sơ của bạn</CardTitle>
               </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="flex items-center justify-between">
-                  <span className="text-sm text-muted-foreground">Tổng chủ đề</span>
-                  <span className="font-semibold">120</span>
-                </div>
-                <div className="flex items-center justify-between">
-                  <span className="text-sm text-muted-foreground">Tổng bài viết</span>
-                  <span className="font-semibold">546</span>
-                </div>
-                <div className="flex items-center justify-between">
-                  <span className="text-sm text-muted-foreground">Thành viên tích cực</span>
-                  <span className="font-semibold">89</span>
-                </div>
-                <div className="flex items-center justify-between">
-                  <span className="text-sm text-muted-foreground">Hoạt động hôm nay</span>
-                  <span className="font-semibold">23</span>
-                </div>
+              <CardContent className="space-y-3">
+                <div className="text-sm text-muted-foreground">Tên hiển thị</div>
+                <Input
+                  value={currentUserName}
+                  onChange={(e) => {
+                    setCurrentUserName(e.target.value)
+                    localStorage.setItem(STORAGE_KEYS.userName, e.target.value)
+                  }}
+                  placeholder="Nhập tên của bạn"
+                />
+                <div className="text-xs text-muted-foreground">Tên này sẽ dùng để đăng câu hỏi và phản hồi.</div>
               </CardContent>
             </Card>
 
-            {/* Recent Activity */}
-            <Card>
-              <CardHeader>
-                <CardTitle className="text-lg font-heading">Hoạt động gần đây</CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                {recentActivity.map((activity, index) => (
-                  <div key={index} className="flex items-start space-x-3">
-                    <Avatar className="w-8 h-8">
-                      <AvatarImage src={activity.avatar || "/placeholder.svg"} alt={activity.user} />
-                      <AvatarFallback>{activity.user.charAt(0)}</AvatarFallback>
-                    </Avatar>
-                    <div className="flex-1">
-                      <p className="text-sm">
-                        <span className="font-medium">{activity.user}</span>{" "}
-                        <span className="text-muted-foreground">{activity.action}</span>{" "}
-                        <span className="font-medium hover:text-primary cursor-pointer">{activity.thread}</span>
-                      </p>
-                      <p className="text-xs text-muted-foreground">{activity.time}</p>
-                    </div>
-                  </div>
-                ))}
-              </CardContent>
-            </Card>
-
-            {/* Quick Actions */}
             <Card>
               <CardHeader>
                 <CardTitle className="text-lg font-heading">Hành động nhanh</CardTitle>
               </CardHeader>
               <CardContent className="space-y-3">
-                <Button variant="outline" className="w-full justify-start bg-transparent">
+                <Button
+                  variant="outline"
+                  className="w-full justify-start bg-transparent"
+                  onClick={() => {
+                    const el = document.getElementById('ask-question-form')
+                    el?.scrollIntoView({ behavior: 'smooth', block: 'center' })
+                  }}
+                >
                   <MessageSquare className="h-4 w-4 mr-2" />
-                  Tạo chủ đề mới
-                </Button>
-                <Button variant="outline" className="w-full justify-start bg-transparent">
-                  <HelpCircle className="h-4 w-4 mr-2" />
                   Đặt câu hỏi
                 </Button>
-                <Button variant="outline" className="w-full justify-start bg-transparent">
-                  <TrendingUp className="h-4 w-4 mr-2" />
-                  Xem xu hướng
+                <Button
+                  variant="outline"
+                  className="w-full justify-start bg-transparent"
+                  onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+                >
+                  <HelpCircle className="h-4 w-4 mr-2" />
+                  Lên đầu trang
                 </Button>
               </CardContent>
             </Card>
@@ -351,5 +281,188 @@ export default function ForumPage() {
         </div>
       </div>
     </div>
+  )
+}
+
+function AskQuestionCard({
+  currentUserName,
+  onUpdateName,
+  onSubmit,
+}: {
+  currentUserName: string
+  onUpdateName: (name: string) => void
+  onSubmit: (data: { title: string; content: string; studentId: string; category: string }) => void
+}) {
+  const [title, setTitle] = useState('')
+  const [content, setContent] = useState('')
+  const [studentId, setStudentId] = useState('')
+  const [category, setCategory] = useState<string>(CATEGORIES[0])
+  const [error, setError] = useState('')
+
+  function validate() {
+    if (!/^K\d{9}$/.test(studentId.trim())) {
+      setError('MSSV phải có dạng K#########')
+      return false
+    }
+    if (!title.trim() || !content.trim()) {
+      setError('Vui lòng nhập đầy đủ tiêu đề và nội dung')
+      return false
+    }
+    setError('')
+    return true
+  }
+
+  return (
+    <Card id="ask-question-form">
+      <CardHeader>
+        <CardTitle className="text-lg font-heading">Đặt câu hỏi</CardTitle>
+      </CardHeader>
+      <CardContent className="space-y-4">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+          <div className="md:col-span-1">
+            <label className="text-sm text-muted-foreground">Tên của bạn</label>
+            <Input value={currentUserName} onChange={(e) => onUpdateName(e.target.value)} placeholder="Tên hiển thị" />
+          </div>
+          <div className="md:col-span-1">
+            <label className="text-sm text-muted-foreground">Mã số sinh viên</label>
+            <Input value={studentId} onChange={(e) => setStudentId(e.target.value)} placeholder="K224141650" />
+          </div>
+          <div className="md:col-span-2">
+            <label className="text-sm text-muted-foreground">Tiêu đề</label>
+            <Input value={title} onChange={(e) => setTitle(e.target.value)} placeholder="Nhập tiêu đề câu hỏi" />
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+          <div className="md:col-span-3">
+            <label className="text-sm text-muted-foreground">Nội dung</label>
+            <Textarea
+              value={content}
+              onChange={(e) => setContent(e.target.value)}
+              placeholder="Mô tả chi tiết vấn đề, bối cảnh, bạn đã thử gì..."
+            />
+          </div>
+          <div className="md:col-span-1">
+            <label className="text-sm text-muted-foreground">Chủ đề</label>
+            <div>
+              <Select value={category} onValueChange={setCategory}>
+                <SelectTrigger className="w-full">
+                  <SelectValue placeholder="Chọn chủ đề" />
+                </SelectTrigger>
+                <SelectContent>
+                  {CATEGORIES.map((c) => (
+                    <SelectItem key={c} value={c}>
+                      {c}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+          </div>
+        </div>
+
+        {error && <div className="text-sm text-destructive">{error}</div>}
+
+        <div className="flex justify-end">
+          <Button
+            onClick={() => {
+              if (!validate()) return
+              onSubmit({ title: title.trim(), content: content.trim(), studentId: studentId.trim(), category })
+              setTitle('')
+              setContent('')
+              setStudentId('')
+              setCategory(CATEGORIES[0])
+            }}
+          >
+            <Plus className="h-4 w-4 mr-2" />
+            Đăng câu hỏi
+          </Button>
+        </div>
+      </CardContent>
+    </Card>
+  )
+}
+
+function QuestionCard({
+  q,
+  onLike,
+  onReply,
+}: {
+  q: QuestionItem
+  onLike: () => void
+  onReply: (content: string) => void
+}) {
+  const [reply, setReply] = useState('')
+
+  return (
+    <Card>
+      <CardContent className="p-6">
+        <div className="flex items-start gap-4">
+          <Avatar className="w-12 h-12">
+            <AvatarImage src={'/placeholder.svg'} alt={q.authorName} />
+            <AvatarFallback>{q.authorName.charAt(0)}</AvatarFallback>
+          </Avatar>
+          <div className="flex-1">
+            <div className="flex flex-wrap items-center gap-2 mb-1">
+              <h3 className="font-heading font-semibold text-lg">{q.title}</h3>
+              <Badge variant="outline" className="text-xs">{q.category}</Badge>
+              <span className="text-xs text-muted-foreground">{formatTime(q.createdAt)}</span>
+            </div>
+            <p className="text-sm text-muted-foreground mb-2 whitespace-pre-wrap">{q.content}</p>
+            <div className="text-xs text-muted-foreground mb-3">MSSV: {q.studentId}</div>
+
+            <div className="flex items-center gap-3 text-sm">
+              <button
+                className="inline-flex items-center gap-1 text-muted-foreground hover:text-primary transition-colors"
+                onClick={onLike}
+                aria-label="Thích câu hỏi"
+              >
+                <Heart className={`h-4 w-4 ${q.likes.length ? 'fill-primary text-primary' : ''}`} /> {q.likes.length}
+              </button>
+              <div className="inline-flex items-center gap-1 text-muted-foreground">
+                <Reply className="h-4 w-4" /> {q.replies.length}
+              </div>
+            </div>
+
+            <div className="mt-4 space-y-3">
+              {q.replies.map((r) => (
+                <div key={r.id} className="rounded-lg border p-3">
+                  <div className="flex items-center justify-between mb-1">
+                    <div className="text-sm font-medium">{r.authorName}</div>
+                    <div className="text-xs text-muted-foreground">{formatTime(r.createdAt)}</div>
+                  </div>
+                  <div className="text-sm text-muted-foreground whitespace-pre-wrap">{r.content}</div>
+                </div>
+              ))}
+            </div>
+
+            <div className="mt-4">
+              <div className="grid grid-cols-1 md:grid-cols-4 gap-3">
+                <div className="md:col-span-3">
+                  <Textarea
+                    value={reply}
+                    onChange={(e) => setReply(e.target.value)}
+                    placeholder="Viết phản hồi của bạn"
+                  />
+                </div>
+                <div className="md:col-span-1 flex md:block">
+                  <Button
+                    className="md:w-full ml-auto"
+                    onClick={() => {
+                      const c = reply.trim()
+                      if (!c) return
+                      onReply(c)
+                      setReply('')
+                    }}
+                  >
+                    Gửi phản hồi
+                  </Button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </CardContent>
+    </Card>
   )
 }
