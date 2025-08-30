@@ -34,8 +34,8 @@ export default function ActivitiesPage() {
           <h1 className="font-heading font-black text-5xl sm:text-6xl text-foreground mb-6 text-glow">
             HOẠT ĐỘNG <span className="bg-gradient-to-r from-accent to-accent bg-clip-text text-transparent">CÔNG NGHỆ</span>
           </h1>
-          <p className="text-xl text-foreground/80 max-w-4xl mx-auto text-pretty leading-relaxed italic">
-            Toàn cảnh hoạt động của Câu lạc bộ Công nghệ – Tài chính: học sâu – làm thật – kết nối rộng để tạo giá trị.
+          <p className="text-xl text-foreground/80 max-w-4xl mx-auto text-pretty leading-relaxed">
+            Toàn cảnh hoạt động của Câu lạc bộ Công nghệ – Tài chính (FTC): học sâu – làm thật – kết nối rộng để tạo giá trị.
           </p>
         </div>
       </section>

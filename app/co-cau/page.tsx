@@ -18,7 +18,7 @@ export default function OrganizationPage() {
             <span className="bg-gradient-to-r from-accent to-accent bg-clip-text text-transparent leading-[5rem]">CÂU LẠC BỘ CÔNG NGHỆ TÀI CHÍNH</span>
           </h1>
           <p className="text-xl text-foreground/80 max-w-3xl mx-auto text-pretty">
-            {""}
+            Mô hình tổ chức gồm Ban Chủ nhiệm và các ban chuyên môn phối hợp chặt chẽ để thực thi chiến lược "Giáo dục – Kết nối – Chia sẻ".
           </p>
         </div>
       </section>
