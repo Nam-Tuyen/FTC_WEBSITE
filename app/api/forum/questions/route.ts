@@ -1,6 +1,9 @@
 import { appendForumQuestion, getOrCreateSpreadsheetInFolder } from '@/lib/google-sheets'
 import { NextRequest, NextResponse } from 'next/server'
 
+export const runtime = 'nodejs'
+export const dynamic = 'force-dynamic'
+
 const ALLOWED_CATEGORIES = [
   'Hỏi đáp về câu lạc bộ',
   'Hỏi đáp thông tin về ngành học',
@@ -55,6 +58,7 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json({ ok: true, sheetTitle, spreadsheetId })
   } catch (err: any) {
+    console.error('Sheets API error:', err)
     return NextResponse.json({ error: err?.message || 'Unexpected error' }, { status: 500 })
   }
 }
