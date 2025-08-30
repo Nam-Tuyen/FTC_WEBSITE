@@ -1,6 +1,9 @@
-import { google, sheets_v4 } from 'googleapis'
+import { google, sheets_v4, drive_v3 } from 'googleapis'
 
-const SCOPES = ['https://www.googleapis.com/auth/spreadsheets']
+const SCOPES = [
+  'https://www.googleapis.com/auth/spreadsheets',
+  'https://www.googleapis.com/auth/drive.file',
+]
 
 type ServiceAccount = {
   client_email: string
@@ -35,6 +38,13 @@ export async function getSheetsClient() {
   return sheets
 }
 
+export async function getDriveClient() {
+  const { client_email, private_key } = loadServiceAccount()
+  const auth = new google.auth.JWT({ email: client_email, key: private_key, scopes: SCOPES })
+  const drive = google.drive({ version: 'v3', auth })
+  return drive
+}
+
 export async function ensureDailySheet(sheets: sheets_v4.Sheets, spreadsheetId: string, title: string) {
   const meta = await sheets.spreadsheets.get({ spreadsheetId })
   const exists = meta.data.sheets?.some((s) => s.properties?.title === title)
@@ -60,6 +70,29 @@ export async function ensureDailySheet(sheets: sheets_v4.Sheets, spreadsheetId: 
       },
     })
   }
+}
+
+export async function getOrCreateSpreadsheetInFolder(folderId: string, name: string) {
+  const drive = await getDriveClient()
+  const q = [
+    "mimeType='application/vnd.google-apps.spreadsheet'",
+    `'${folderId}' in parents`,
+    `name='${name.replace(/'/g, "\'")}'`,
+    'trashed=false',
+  ].join(' and ')
+  const list = await drive.files.list({ q, fields: 'files(id,name)' })
+  const existing = list.data.files?.[0]
+  if (existing?.id) return existing.id
+  const file = await drive.files.create({
+    requestBody: {
+      name,
+      mimeType: 'application/vnd.google-apps.spreadsheet',
+      parents: [folderId],
+    },
+    fields: 'id',
+  })
+  if (!file.data.id) throw new Error('Không tạo được Google Sheet')
+  return file.data.id
 }
 
 export async function appendForumQuestion(params: {
