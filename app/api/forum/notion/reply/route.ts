@@ -1,6 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createNotionReply } from '@/lib/notion'
 
+export const runtime = 'nodejs'
+export const dynamic = 'force-dynamic'
+
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json()
@@ -17,6 +20,7 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json({ ok: true, replyId })
   } catch (e: any) {
+    console.error('Notion reply API error:', e)
     return NextResponse.json({ error: e?.message || 'Unexpected error' }, { status: 500 })
   }
 }
