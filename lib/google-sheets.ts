@@ -41,29 +41,22 @@ export async function ensureDailySheet(sheets: sheets_v4.Sheets, spreadsheetId: 
   if (!exists) {
     await sheets.spreadsheets.batchUpdate({
       spreadsheetId,
+      requestBody: { requests: [{ addSheet: { properties: { title } } }] },
+    })
+    await sheets.spreadsheets.values.update({
+      spreadsheetId,
+      range: `${title}!A1:G1`,
+      valueInputOption: 'RAW',
       requestBody: {
-        requests: [
-          { addSheet: { properties: { title } } },
-          {
-            updateCells: {
-              start: { sheetId: undefined, rowIndex: 0, columnIndex: 0 },
-              rows: [
-                {
-                  values: [
-                    { userEnteredValue: { stringValue: 'Timestamp' } },
-                    { userEnteredValue: { stringValue: 'MSSV' } },
-                    { userEnteredValue: { stringValue: 'Tên' } },
-                    { userEnteredValue: { stringValue: 'Tiêu đề' } },
-                    { userEnteredValue: { stringValue: 'Nội dung' } },
-                    { userEnteredValue: { stringValue: 'Chủ đề' } },
-                    { userEnteredValue: { stringValue: 'ID Câu hỏi' } },
-                  ],
-                },
-              ],
-              fields: 'userEnteredValue',
-            },
-          },
-        ],
+        values: [[
+          'Timestamp',
+          'MSSV',
+          'Tên',
+          'Tiêu đề',
+          'Nội dung',
+          'Chủ đề',
+          'ID Câu hỏi',
+        ]],
       },
     })
   }
