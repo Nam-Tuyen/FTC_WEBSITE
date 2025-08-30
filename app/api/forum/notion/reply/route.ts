@@ -1,0 +1,22 @@
+import { NextRequest, NextResponse } from 'next/server'
+import { createNotionReply } from '@/lib/notion'
+
+export async function POST(req: NextRequest) {
+  try {
+    const body = await req.json()
+    const { questionPageId, content, authorName, authorId } = body || {}
+
+    if (!questionPageId || !content) return NextResponse.json({ error: 'Thiếu tham số' }, { status: 400 })
+
+    const replyId = await createNotionReply({
+      questionPageId,
+      content,
+      authorName: authorName || 'Ẩn danh',
+      authorId: authorId || 'unknown',
+    })
+
+    return NextResponse.json({ ok: true, replyId })
+  } catch (e: any) {
+    return NextResponse.json({ error: e?.message || 'Unexpected error' }, { status: 500 })
+  }
+}
