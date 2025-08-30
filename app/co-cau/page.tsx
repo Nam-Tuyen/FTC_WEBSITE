@@ -151,7 +151,7 @@ export default function OrganizationPage() {
                 <span className="font-semibold text-accent">Chuỗi phối hợp:</span> Học thuật cung cấp nội dung → Sự kiện vận hành → Truyền thông lan tỏa.
               </p>
               <p>
-                <span className="font-semibold text-accent">Bảo đảm ngu���n lực:</span> Nhân sự phụ trách người – việc – văn hóa; Ban Tài chính cá nhân triển khai mảng giáo dục chuyên biệt, đóng góp nội dung và hoạt động cho toàn CLB.
+                <span className="font-semibold text-accent">Bảo đảm nguồn lực:</span> Nhân sự phụ trách người – việc – văn hóa; Ban Tài chính cá nhân triển khai mảng giáo dục chuyên biệt, đóng góp nội dung và hoạt động cho toàn CLB.
               </p>
               <p>
                 <span className="font-semibold text-accent">Điều phối chung:</span> Ban Chủ nhiệm điều phối, phê duyệt và làm đầu mối đối ngoại cấp Câu lạc bộ.

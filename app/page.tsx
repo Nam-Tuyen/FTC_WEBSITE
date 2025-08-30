@@ -91,7 +91,7 @@ export default function HomePage() {
           <div className="text-center mb-16">
             <div className="inline-flex items-center px-4 py-2 rounded-full bg-accent/10 border border-accent/30 mb-6">
               <Brain className="h-4 w-4 text-accent mr-2" />
-              <span className="text-sm font-bold text-accent uppercase tracking-wider">Advanced Features</span>
+              <span className="text-sm font-bold text-accent uppercase tracking-wider">Lợi ích khi tham gia    </span>
             </div>
             <h2 className="font-heading font-black text-4xl sm:text-5xl text-foreground mb-6 text-glow">
               TẠI SAO CHỌN FTC?
@@ -167,13 +167,13 @@ export default function HomePage() {
         <div className="max-w-4xl mx-auto text-center relative z-10">
           <div className="inline-flex items-center px-6 py-3 rounded-full bg-accent/20 border border-accent/40 mb-8 glow">
             <Rocket className="h-5 w-5 text-accent mr-3" />
-            <span className="text-sm font-bold text-accent uppercase tracking-wider">Join The Revolution</span>
+            <span className="text-sm font-bold text-accent uppercase tracking-wider">Tham gia vào câu lạc bộ  </span>
           </div>
           <h2 className="font-heading font-black text-4xl sm:text-5xl text-foreground mb-6 text-glow">
-            KHỞI ĐẦU HÀNH TRÌNH FINTECH
+            THAM GIA ĐỂ TRỞ THÀNH FTCER  
           </h2>
           <p className="text-xl text-foreground/80 mb-12 font-medium leading-relaxed max-w-2xl mx-auto">
-            Trở thành một phần của cộng đồng tiên phong trong việc định hình tương lai của công nghệ tài chính
+            Đăng ký ngay hôm nay để khai phá tiềm năng, định hình chiến lược và bứt phá giới hạn bản thân.
           </p>
           <Button
             asChild
