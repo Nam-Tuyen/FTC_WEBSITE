@@ -118,21 +118,34 @@ export default function ForumPage() {
     setQuestions((prev) => [newQ, ...prev])
 
     try {
-      await fetch('/api/forum/questions', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          studentId: data.studentId,
-          name: currentUserName || '',
-          title: data.title,
-          content: data.content,
-          category: data.category,
-          questionId: newId,
+      await Promise.allSettled([
+        fetch('/api/forum/questions', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            studentId: data.studentId,
+            name: currentUserName || '',
+            title: data.title,
+            content: data.content,
+            category: data.category,
+            questionId: newId,
+          }),
         }),
-      })
-    } catch (e) {
-      // Silent fail for UX; data still in local state
-    }
+        fetch('/api/forum/notion/question', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            studentId: data.studentId,
+            name: currentUserName || '',
+            title: data.title,
+            content: data.content,
+            category: data.category,
+            questionId: newId,
+            authorId: currentUserId,
+          }),
+        }),
+      ])
+    } catch (e) {}
   }
 
   function handleToggleLike(qid: string) {
