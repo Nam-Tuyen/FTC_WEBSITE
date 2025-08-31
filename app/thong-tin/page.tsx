@@ -17,7 +17,7 @@ export default function ThongTinPage() {
       <div className="relative z-10 container mx-auto px-4 py-20">
         {/* Header Section */}
         <div className="text-center mb-16">
-          <h1 className="font-heading font-black text-4xl sm:text-5xl lg:text-7xl text-foreground mb-8 text-balance tracking-tight text-glow leading-[5rem]">
+          <h1 className="font-heading font-black text-4xl sm:text-5xl lg:text-7xl text-foreground mb-8 text-balance tracking-tight text-glow leading-[4.5.rem]">
             CÂU LẠC BỘ <br />
             <span className="bg-gradient-to-r from-accent via-accent to-accent bg-clip-text text-transparent animate-pulse">
               CÔNG NGHỆ - TÀI CHÍNH
