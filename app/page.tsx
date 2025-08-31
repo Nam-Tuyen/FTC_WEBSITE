@@ -29,7 +29,7 @@ export default function HomePage() {
           <div className="text-center">
             <div className="inline-flex items-center px-6 py-3 rounded-full bg-accent/20 border border-accent/40 mb-8 glow">
               <Zap className="h-5 w-5 text-accent mr-3 animate-pulse" />
-              <span className="text-sm font-bold text-accent uppercase tracking-wider">BẠN Đ�� SẴN SÀNG CHƯA?</span>
+              <span className="text-sm font-bold text-accent uppercase tracking-wider">BẠN ĐÃ SẴN SÀNG CHƯA?</span>
             </div>
 
             <h1 className="font-heading font-black text-5xl sm:text-6xl text-foreground mb-8 text-balance text-glow lg:text-7xl tracking-wide leading-[6. rem] leading-[4.5.rem]">
