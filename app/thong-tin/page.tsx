@@ -2,7 +2,6 @@ import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Navigation } from "@/components/navigation"
 import { Target, Users, BookOpen, TrendingUp, Award, Network } from "lucide-react"
-import Image from "next/image"
 
 export default function ThongTinPage() {
   return (
@@ -32,49 +31,8 @@ export default function ThongTinPage() {
           </p>
         </div>
 
-        {/* Hero Images */}
-        <div className="grid md:grid-cols-2 gap-8 mb-16">
-          <Card className="bg-card/50 border-accent/20 backdrop-blur-sm hover:bg-card/70 transition-all duration-300 group overflow-hidden">
-            <CardContent className="p-0">
-              <div className="relative overflow-hidden">
-                <Image
-                  src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/482266430_1041617031327391_4459620123367072825_n.jpg-RaWjvbXEsJhtThYouH797qRJwyhWFF.jpeg"
-                  alt="Cuộc thi ATTACKER 2024 - Chung kết cuộc thi tìm hiểu về Fintech"
-                  width={600}
-                  height={400}
-                  className="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-500"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent"></div>
-                <div className="absolute bottom-4 left-4 right-4">
-                  <h3 className="text-lg font-bold text-foreground mb-2">CUỘC THI ATTACKER 2024</h3>
-                  <p className="text-sm text-foreground/70">Chung kết cuộc thi tìm hiểu về Fintech</p>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card className="bg-card/50 border-accent/20 backdrop-blur-sm hover:bg-card/70 transition-all duration-300 group overflow-hidden">
-            <CardContent className="p-0">
-              <div className="relative overflow-hidden">
-                <Image
-                  src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/485306792_1049549157200845_3874215382928343520_n.jpg-U85q6reHFVluEm7M5BjSjpEYpaR8gz.jpeg"
-                  alt="Tọa đàm Blockchain và AI - Con đường sự nghiệp trong kỷ nguyên số hóa"
-                  width={600}
-                  height={400}
-                  className="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-500"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent"></div>
-                <div className="absolute bottom-4 left-4 right-4">
-                  <h3 className="text-lg font-bold text-foreground mb-2">TỌA ĐÀM BLOCKCHAIN VÀ AI</h3>
-                  <p className="text-sm text-foreground/70">Con đường sự nghiệp trong kỷ nguyên số hóa</p>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-        </div>
-
         {/* Introduction Section */}
-        <Card className="bg-card/30 border-accent/20 backdrop-blur-sm mb-12">
+        <Card className="bg-card/30 border-accent/20 backdrop-blur-sm shadow-md shadow-accent/10 -mt-px mb-12">
           <CardContent className="p-8">
             <div className="flex items-center gap-3 mb-6">
               <BookOpen className="h-8 w-8 text-accent" />
@@ -82,14 +40,7 @@ export default function ThongTinPage() {
             </div>
             <div className="space-y-4 text-foreground/90 leading-relaxed">
               <p>
-                Câu lạc bộ Công nghệ – Tài chính (FTC) trực thuộc Khoa Tài chính – Ngân hàng, Trường Đại học Kinh tế –
-                Luật, ĐHQG-HCM. FTC được thành lập vào tháng 11/2020 dưới sự hướng dẫn của ThS. NCS Phan Huy Tâm (Giảng
-                viên Khoa Tài chính – Ngân hàng, Chủ nhiệm CLB) cùng đội ngũ sinh viên yêu thích lĩnh vực công nghệ tài
-                chính.
-              </p>
-              <p>
-                UEL là một trong tám đơn vị thành viên của ĐHQG-HCM, là trung tâm đào tạo và nghiên cứu đa ngành, đa
-                lĩnh vực, uy tín hàng đầu phía Nam trong các khối Kinh tế – Luật – Quản lý công.
+                Câu lạc bộ Công nghệ và Tài chính FTC trực thuộc Khoa Tài chính và Ngân hàng, Trường Đại học Kinh tế và Luật, Đại học Quốc gia Thành phố Hồ Chí Minh, được thành lập vào tháng mười một năm 2020 dưới sự hướng dẫn của ThS. NCS Phan Huy Tâm, Giảng viên Khoa Tài chính v�� Ngân hàng, Chủ nhiệm câu lạc bộ, cùng đội ngũ sinh viên yêu thích lĩnh vực công nghệ tài chính. UEL là một trong tám đơn vị thành viên của Đại học Quốc gia Thành phố Hồ Chí Minh, là trung tâm đào tạo và nghiên cứu đa ngành, đa lĩnh vực, có uy tín hàng đầu phía Nam trong các khối Kinh tế, Luật, Quản lý công.
               </p>
             </div>
           </CardContent>
@@ -97,38 +48,33 @@ export default function ThongTinPage() {
 
         {/* Mission & Values */}
         <div className="grid md:grid-cols-2 gap-8 mb-12">
-          <Card className="bg-card/30 border-accent/20 backdrop-blur-sm">
+          <Card className="bg-card/30 border-accent/20 backdrop-blur-sm shadow-md shadow-accent/10">
             <CardContent className="p-8">
               <div className="flex items-center gap-3 mb-6">
                 <Target className="h-8 w-8 text-accent" />
                 <h2 className="text-2xl font-bold text-foreground">Sứ mệnh</h2>
               </div>
               <p className="text-foreground/90 leading-relaxed">
-                Mang lại giá trị thiết thực cho sinh viên thông qua hệ sinh thái học thuật – thực hành – kết nối nghề
-                nghiệp trong lĩnh vực công nghệ tài chính.
+                Mang lại giá trị thiết thực cho sinh viên thông qua hệ sinh thái học thuật, thực hành và kết nối nghề nghiệp trong lĩnh vực công nghệ tài chính.
               </p>
             </CardContent>
           </Card>
 
-          <Card className="bg-card/30 border-accent/20 backdrop-blur-sm">
+          <Card className="bg-card/30 border-accent/20 backdrop-blur-sm shadow-md shadow-accent/10">
             <CardContent className="p-8">
               <div className="flex items-center gap-3 mb-6">
                 <Award className="h-8 w-8 text-accent" />
                 <h2 className="text-2xl font-bold text-foreground">Giá trị cốt lõi</h2>
               </div>
-              <p className="text-foreground/90 leading-relaxed mb-4">
-                <span className="font-semibold text-accent">Giáo dục – Kết nối – Chia sẻ</span>
-              </p>
-              <p className="text-foreground/80">
-                Theo phương châm:{" "}
-                <span className="font-semibold text-accent">Thống nhất – Vượt trội – Tiên phong</span>
+              <p className="text-foreground/90 leading-relaxed">
+                Câu lạc bộ đề cao các giá trị cốt lõi giáo dục, kết nối, chia sẻ và hoạt động theo phương châm thống nhất, vượt trội, tiên phong.
               </p>
             </CardContent>
           </Card>
         </div>
 
         {/* Objectives */}
-        <Card className="bg-card/30 border-accent/20 backdrop-blur-sm mb-12">
+        <Card className="bg-card/30 border-accent/20 backdrop-blur-sm shadow-md shadow-accent/10 mb-12">
           <CardContent className="p-8">
             <div className="flex items-center gap-3 mb-6">
               <TrendingUp className="h-8 w-8 text-accent" />
@@ -164,64 +110,58 @@ export default function ThongTinPage() {
         </Card>
 
         {/* Vision */}
-        <Card className="bg-card/30 border-accent/20 backdrop-blur-sm mb-12">
+        <Card className="bg-card/30 border-accent/20 backdrop-blur-sm shadow-md shadow-accent/10 mb-12">
           <CardContent className="p-8 text-center">
             <h2 className="text-3xl font-bold text-foreground mb-6">Tầm nhìn</h2>
             <div className="space-y-4 text-foreground/90 leading-relaxed max-w-4xl mx-auto">
               <p className="text-lg">
-                <span className="font-semibold text-accent">Đến 2030</span>, FTC trở thành cộng đồng sinh viên yêu thích
-                công nghệ tài chính lớn nhất Việt Nam
-              </p>
-              <p className="text-lg">
-                <span className="font-semibold text-accent">Đến 2033</span>, mở rộng mạng lưới hợp tác sinh viên –
-                doanh nghiệp trong khu vực Đông Nam Á
+                FTC đặt mục tiêu trở thành cộng đồng sinh viên yêu thích công nghệ tài chính lớn nhất Việt Nam và mở rộng mạng lưới hợp tác giữa sinh viên và doanh nghiệp trong khu vực Đông Nam Á.
               </p>
             </div>
           </CardContent>
         </Card>
 
         {/* Activities */}
-        <Card className="bg-card/30 border-accent/20 backdrop-blur-sm mb-12">
+        <Card className="bg-card/30 border-accent/20 backdrop-blur-sm shadow-md shadow-accent/10 mb-12">
           <CardContent className="p-8">
             <h2 className="text-3xl font-bold text-foreground mb-8 text-center">Hoạt động tiêu biểu</h2>
             <div className="grid md:grid-cols-2 gap-8">
               <div className="space-y-6">
-                <div className="flex gap-4">
+                <div className="flex gap-4 group rounded-xl p-5 bg-card/40 border border-accent/15 hover:bg-card/60 transition-colors">
                   <div className="w-3 h-3 bg-accent rounded-full mt-2 flex-shrink-0"></div>
                   <div>
                     <h3 className="font-semibold text-foreground mb-2">Hội thảo, toạ đàm, chuyên đề</h3>
                     <p className="text-foreground/80 text-sm leading-relaxed">
-                      Xu hướng công nghệ tài chính, dữ liệu và trí tuệ nhân tạo trong tài chính, sản phẩm ngân hàng số,
-                      thị trường vốn, quản trị rủi ro…
+                      Các chủ đề trọng tâm gồm xu hướng công nghệ tài chính, ứng dụng dữ liệu và trí tuệ nhân tạo trong hoạt động tài chính, phát triển sản phẩm ngân hàng số, diễn biến thị trường vốn và các phương pháp quản trị rủi ro hiện đại.
                     </p>
                   </div>
                 </div>
-                <div className="flex gap-4">
+                <div className="flex gap-4 group rounded-xl p-5 bg-card/40 border border-accent/15 hover:bg-card/60 transition-colors">
                   <div className="w-3 h-3 bg-accent rounded-full mt-2 flex-shrink-0"></div>
                   <div>
                     <h3 className="font-semibold text-foreground mb-2">Cuộc thi học thuật và dự án thực hành</h3>
                     <p className="text-foreground/80 text-sm leading-relaxed">
-                      Thiết kế mô hình, xây dựng công cụ phân tích và thử nghiệm trên dữ liệu thực tế.
+                      Thiết kế mô hình, phát triển công cụ phân tích và kiểm thử trên dữ liệu thực tế.
                     </p>
                   </div>
                 </div>
               </div>
               <div className="space-y-6">
-                <div className="flex gap-4">
+                <div className="flex gap-4 group rounded-xl p-5 bg-card/40 border border-accent/15 hover:bg-card/60 transition-colors">
                   <div className="w-3 h-3 bg-accent rounded-full mt-2 flex-shrink-0"></div>
                   <div>
                     <h3 className="font-semibold text-foreground mb-2">Kết nối nghề nghiệp</h3>
                     <p className="text-foreground/80 text-sm leading-relaxed">
-                      Gặp gỡ chuyên gia, cố vấn; giới thiệu thực tập, ngày hội việc làm; tham quan doanh nghiệp.
+                      Kết nối và trao đổi cùng chuyên gia, người hướng dẫn, tiếp cận cơ hội thực tập và ngày hội việc làm, đồng thời tham quan doanh nghiệp để hiểu rõ môi trường làm việc thực tế.
                     </p>
                   </div>
                 </div>
-                <div className="flex gap-4">
+                <div className="flex gap-4 group rounded-xl p-5 bg-card/40 border border-accent/15 hover:bg-card/60 transition-colors">
                   <div className="w-3 h-3 bg-accent rounded-full mt-2 flex-shrink-0"></div>
                   <div>
                     <h3 className="font-semibold text-foreground mb-2">Cộng đồng học thuật</h3>
                     <p className="text-foreground/80 text-sm leading-relaxed">
-                      Nhóm nghiên cứu sinh viên, diễn đàn chia sẻ tài liệu, giờ lập trình, nhóm đọc tài liệu.
+                      Tổ chức nhóm nghiên cứu sinh viên, duy trì diễn đàn chia sẻ tài liệu, triển khai giờ lập trình định kỳ và nhóm đọc để củng cố nền tảng học thuật và học hỏi lẫn nhau.
                     </p>
                   </div>
                 </div>
@@ -230,7 +170,6 @@ export default function ThongTinPage() {
           </CardContent>
         </Card>
 
-        {/* Closing Statement */}
       </div>
     </div>
   )
