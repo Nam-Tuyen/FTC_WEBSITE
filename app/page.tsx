@@ -97,7 +97,7 @@ export default function HomePage() {
               TẠI SAO CHỌN CÂU LẠC BỘ CÔNG NGHỆ – TÀI CHÍNH?
             </h2>
             <p className="text-xl text-foreground/70 max-w-3xl mx-auto font-medium leading-relaxed">
-              Chúng tôi mang đến hệ sinh thái công nghệ tài chính hoàn chỉnh với những công cụ và cơ hội tiên tiến nhất
+              Câu lạc bộ mang đến môi trường gần gũi, đầy đủ công cụ hữu ích và nhiều cơ hội mới để bạn học hỏi, trải nghiệm và phát triển.
             </p>
           </div>
 
