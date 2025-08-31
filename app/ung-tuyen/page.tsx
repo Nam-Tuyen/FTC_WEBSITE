@@ -547,12 +547,12 @@ export default function ApplicationPage() {
                 </div>
               </section>
 
-              {/* 5) Bạn mu��n vào ban nào? */}
+              {/* 5) Bạn muốn vào ban nào? */}
               <section className="space-y-6">
                 <h2 className="text-xl font-semibold">5) Bạn muốn vào ban nào?</h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="space-y-2">
-                    <Label>Ban ch��nh muốn ứng tuyển *</Label>
+                    <Label>Ban bạn muốn ứng tuyển *</Label>
                     <Select value={form.primaryTeam} onValueChange={(v) => update("primaryTeam", v)}>
                       <SelectTrigger className="w-full">
                         <SelectValue placeholder="Chọn 1 ban" />
