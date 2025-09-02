@@ -225,10 +225,10 @@ Hoặc thử hỏi về các chủ đề khác mà tôi có thể hỗ trợ!`
             <Bot className="h-8 w-8 text-primary-foreground" />
           </div>
           <h1 className="font-heading font-bold text-4xl sm:text-5xl text-foreground mb-6">
-            AI <span className="text-primary">Chatbot</span>
+            AI <span className="bg-gradient-to-r from-accent via-secondary to-accent bg-clip-text text-transparent animate-pulse uppercase tracking-wide">CHATBOT</span>
           </h1>
           <p className="text-xl text-muted-foreground text-pretty">
-            Trợ lý AI thông minh giúp bạn tìm hiểu về câu lạc bộ và các kiến thức fintech
+            <em>Trợ lý AI thông minh giúp bạn tìm hiểu về câu lạc bộ và các kiến thức Fintech</em>
           </p>
         </div>
       </section>
