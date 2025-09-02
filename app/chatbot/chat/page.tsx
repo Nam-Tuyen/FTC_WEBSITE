@@ -1,132 +1,132 @@
 // app/chatbot/chat/page.tsx
-'use client';
+"use client"
 
-import type React from 'react';
-import { useEffect, useRef, useState } from 'react';
-import { Navigation } from '@/components/navigation';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Send, Bot, User, Sparkles, MessageSquare, HelpCircle, Zap } from 'lucide-react';
-import { getDefaultWelcomeMessage } from '@/lib/club-faq';
+import type React from "react"
+import { useEffect, useRef, useState } from "react"
+import { Navigation } from "@/components/navigation"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { Send, Bot, User, Sparkles, MessageSquare, HelpCircle, Zap } from "lucide-react"
+import { getDefaultWelcomeMessage } from "@/lib/club-faq"
 
 interface Message {
-  id: string;
-  content: string;
-  sender: 'user' | 'bot';
-  timestamp: Date;
+  id: string
+  content: string
+  sender: "user" | "bot"
+  timestamp: Date
 }
 
 const suggestedQuestions = [
-  'Câu lạc bộ có những hoạt động gì?',
-  'Làm thế nào để tham gia câu lạc bộ?',
-  'DeFi là gì và tại sao nó quan trọng?',
-  'Các ban trong câu lạc bộ làm gì?',
-  'Có cơ hội thực tập nào không?',
-  'Blockchain hoạt động như thế nào?',
-  'Thời gian sinh hoạt diễn ra vào khi nào?',
-  'Chi phí tham gia là bao nhiêu?',
-  'Cần kỹ năng gì để ứng tuyển?',
-  'Có cần kinh nghiệm trước không?',
-  'Câu lạc bộ có hỗ trợ dự án cá nhân không?',
-  'Làm sao liên hệ Ban Chủ nhiệm?',
-  'Các công cụ học tập được cung cấp là gì?',
-  'Có chương trình mentoring không?',
-];
+  "Câu lạc bộ có những hoạt động gì?",
+  "Làm thế nào để tham gia câu lạc bộ?",
+  "DeFi là gì và tại sao nó quan trọng?",
+  "Các ban trong câu lạc bộ làm gì?",
+  "Có cơ hội thực tập nào không?",
+  "Blockchain hoạt động như thế nào?",
+  "Thời gian sinh hoạt diễn ra vào khi nào?",
+  "Chi phí tham gia là bao nhiêu?",
+  "Cần kỹ năng gì để ứng tuyển?",
+  "Có cần kinh nghiệm trước không?",
+  "Câu lạc bộ có hỗ trợ dự án cá nhân không?",
+  "Làm sao liên hệ Ban Chủ nhiệm?",
+  "Các công cụ học tập được cung cấp là gì?",
+  "Có chương trình mentoring không?",
+]
 
 export default function ChatbotPage() {
   const [messages, setMessages] = useState<Message[]>([
     {
-      id: '1',
+      id: "1",
       content: getDefaultWelcomeMessage(),
-      sender: 'bot',
+      sender: "bot",
       timestamp: new Date(),
     },
-  ]);
-  const [inputValue, setInputValue] = useState('');
-  const [isTyping, setIsTyping] = useState(false);
-  const [hasMounted, setHasMounted] = useState(false);
-  const messagesEndRef = useRef<HTMLDivElement>(null);
+  ])
+  const [inputValue, setInputValue] = useState("")
+  const [isTyping, setIsTyping] = useState(false)
+  const [hasMounted, setHasMounted] = useState(false)
+  const messagesEndRef = useRef<HTMLDivElement>(null)
 
   const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-  };
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })
+  }
 
   useEffect(() => {
-    scrollToBottom();
-  }, [messages]);
+    scrollToBottom()
+  }, [messages])
 
   useEffect(() => {
-    setHasMounted(true);
-  }, []);
+    setHasMounted(true)
+  }, [])
 
   const handleSendMessage = async () => {
-    const text = inputValue.trim();
-    if (!text) return;
+    const text = inputValue.trim()
+    if (!text) return
 
     const userMessage: Message = {
       id: Date.now().toString(),
       content: text,
-      sender: 'user',
+      sender: "user",
       timestamp: new Date(),
-    };
+    }
 
     const history = messages.map((m) => ({
-      role: m.sender === 'bot' ? 'model' : 'user',
+      role: m.sender === "bot" ? "model" : "user",
       content: m.content,
-    }));
+    }))
 
-    setMessages((prev) => [...prev, userMessage]);
-    setInputValue('');
-    setIsTyping(true);
+    setMessages((prev) => [...prev, userMessage])
+    setInputValue("")
+    setIsTyping(true)
 
     try {
-      const res = await fetch('/api/chat/gemini', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+      const res = await fetch("/chatbot/api/chat/gemini", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ prompt: text, history }),
-      });
+      })
 
-      let reply = '';
+      let reply = ""
       if (res.ok) {
-        const data = await res.json();
-        reply = typeof data?.text === 'string' && data.text.trim() ? data.text : '';
+        const data = await res.json()
+        reply = typeof data?.text === "string" && data.text.trim() ? data.text : ""
       }
 
       const botMessage: Message = {
         id: (Date.now() + 1).toString(),
         content:
           reply ||
-          'Xin lỗi, hiện chưa có thông tin phù hợp. Bạn có thể gửi mail đến clbcongnghetaichinh@st.uel.edu.vn hoặc nhắn fanpage để được hỗ trợ nhanh hơn.',
-        sender: 'bot',
+          "Xin lỗi, hiện chưa có thông tin phù hợp. Bạn có thể gửi mail đến clbcongnghetaichinh@st.uel.edu.vn hoặc nhắn fanpage để được hỗ trợ nhanh hơn.",
+        sender: "bot",
         timestamp: new Date(),
-      };
+      }
 
-      setMessages((prev) => [...prev, botMessage]);
+      setMessages((prev) => [...prev, botMessage])
     } catch (e) {
       const botMessage: Message = {
         id: (Date.now() + 1).toString(),
-        content: 'Xin lỗi, hiện không thể kết nối tới AI. Vui lòng thử lại sau.',
-        sender: 'bot',
+        content: "Xin lỗi, hiện không thể kết nối tới AI. Vui lòng thử lại sau.",
+        sender: "bot",
         timestamp: new Date(),
-      };
-      setMessages((prev) => [...prev, botMessage]);
+      }
+      setMessages((prev) => [...prev, botMessage])
     } finally {
-      setIsTyping(false);
+      setIsTyping(false)
     }
-  };
+  }
 
   const handleSuggestedQuestion = (question: string) => {
-    setInputValue(question);
-  };
+    setInputValue(question)
+  }
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter' && !e.shiftKey) {
-      e.preventDefault();
-      handleSendMessage();
+    if (e.key === "Enter" && !e.shiftKey) {
+      e.preventDefault()
+      handleSendMessage()
     }
-  };
+  }
 
   return (
     <div className="min-h-screen gradient-bg">
@@ -149,7 +149,7 @@ export default function ChatbotPage() {
         </div>
       </section>
 
-        {/* Main layout */}
+      {/* Main layout */}
       <div className="max-w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 overflow-x-auto">
         <div className="min-w-[1200px] grid grid-cols-[1fr_minmax(720px,800px)_360px_1fr] grid-rows-[auto_auto] gap-8">
           {/* Chat Interface */}
@@ -166,7 +166,7 @@ export default function ChatbotPage() {
                   <div>
                     <CardTitle className="text-lg">FinTech AI Assistant</CardTitle>
                     <p className="text-sm text-muted-foreground flex items-center gap-2">
-                      Luôn sẵn sàng hỗ trợ bạn{' '}
+                      Luôn sẵn sàng hỗ trợ bạn{" "}
                       <span className="inline-flex items-center text-xs">
                         <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse mr-1" />
                         Online
@@ -181,10 +181,10 @@ export default function ChatbotPage() {
                 {messages.map((message) => (
                   <div
                     key={message.id}
-                    className={`flex ${message.sender === 'user' ? 'justify-end' : 'justify-start'}`}
+                    className={`flex ${message.sender === "user" ? "justify-end" : "justify-start"}`}
                   >
                     <div className="flex items-start space-x-2 max-w-[80%]">
-                      {message.sender === 'bot' && (
+                      {message.sender === "bot" && (
                         <Avatar className="w-8 h-8">
                           <AvatarFallback className="bg-primary text-primary-foreground">
                             <Bot className="h-4 w-4" />
@@ -193,22 +193,22 @@ export default function ChatbotPage() {
                       )}
                       <div
                         className={`rounded-2xl px-4 py-3 overflow-hidden break-words ${
-                          message.sender === 'user'
-                            ? 'bg-primary text-primary-foreground glow'
-                            : 'bg-secondary/20 text-foreground border border-accent/20'
+                          message.sender === "user"
+                            ? "bg-primary text-primary-foreground glow"
+                            : "bg-secondary/20 text-foreground border border-accent/20"
                         }`}
                       >
                         <p className="text-sm whitespace-pre-wrap break-words">{message.content}</p>
                         <p className="text-xs opacity-70 mt-1">
                           {hasMounted
-                            ? message.timestamp.toLocaleTimeString('vi-VN', {
-                                hour: '2-digit',
-                                minute: '2-digit',
+                            ? message.timestamp.toLocaleTimeString("vi-VN", {
+                                hour: "2-digit",
+                                minute: "2-digit",
                               })
-                            : ''}
+                            : ""}
                         </p>
                       </div>
-                      {message.sender === 'user' && (
+                      {message.sender === "user" && (
                         <Avatar className="w-8 h-8">
                           <AvatarFallback className="bg-accent text-accent-foreground">
                             <User className="h-4 w-4" />
@@ -326,9 +326,8 @@ export default function ChatbotPage() {
               </CardContent>
             </Card>
           </div>
-
         </div>
       </div>
     </div>
-  );
+  )
 }
