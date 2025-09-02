@@ -55,7 +55,7 @@ const skillsMulti = [
   "Sáng Tạo Nội Dung",
   "Viết Bài",
   "Thiết Kế Hình Ảnh",
-  "Quay–Chụp",
+  "Quay - chụp",
   "Dựng Video",
   "Phân Tích Dữ Liệu (Excel/SQL/Python)",
   "Trực Fanpage",
@@ -127,7 +127,7 @@ type FormState = {
   tools: string[]
   portfolioUrl: string
 
-  // 4) Trải nghiệm ho��t động
+  // 4) Trải nghiệm hoạt động
   clubExperience: string
   extroversion: string
   teamworkKey: string
@@ -234,7 +234,7 @@ export default function ApplicationPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     if (!requiredValid) {
-      alert("Vui lòng điền đ���y đủ các trường bắt buộc (*) và kiểm tra email trường (@…uel.edu.vn)")
+      alert("Vui lòng điền đầy đủ các trường bắt buộc (*) và kiểm tra email trường (@…uel.edu.vn)")
       return
     }
     try {
@@ -272,7 +272,7 @@ export default function ApplicationPage() {
 
       <section className="py-16 px-4 sm:px-6 lg:px-8 bg-muted/30">
         <div className="max-w-4xl mx-auto text-center">
-          <h1 className="font-heading font-bold text-4xl sm:text-5xl text-foreground mb-6">
+          <h1 className="font-heading font-bold text-4xl sm:text-5xl text-foreground mb-6 text-glow animate-pulse">
             ĐƠN ĐĂNG KÝ THAM GIA FTC
           </h1>
           <p className="text-2xl text-muted-foreground text-pretty italic">
@@ -446,7 +446,7 @@ export default function ApplicationPage() {
                 </div>
               </section>
 
-              {/* 2) Vì sao bạn ch���n FTC? */}
+              {/* 2) Vì sao bạn chọn FTC? */}
               <section className="space-y-6">
                 <h2 className="text-xl font-semibold">2) Vì sao bạn chọn FTC?</h2>
                 <div className="space-y-2">
@@ -616,7 +616,7 @@ export default function ApplicationPage() {
                 {form.primaryTeam === "tai-chinh-ca-nhan" && (
                   <div className="space-y-4">
                     <div className="space-y-2">
-                      <Label htmlFor="tccn_topic">Đề xuất chủ đề workshop “quản lý tiền cho sinh viên”</Label>
+                      <Label htmlFor="tccn_topic">Đề xuất chủ đề workshop “qu��n lý tiền cho sinh viên”</Label>
                       <Input id="tccn_topic" value={form.tccn_topic} onChange={(e) => update("tccn_topic", e.target.value)} />
                     </div>
                     <div className="space-y-2">
@@ -628,7 +628,7 @@ export default function ApplicationPage() {
                 {form.primaryTeam === "nhan-su" && (
                   <div className="space-y-4">
                     <div className="space-y-2">
-                      <Label htmlFor="nhanSu_conflict">Bạn sẽ xử lý thế nào khi đội 6–8 ngư���i có xung đột?</Label>
+                      <Label htmlFor="nhanSu_conflict">Bạn sẽ xử lý thế nào khi đội 6–8 người có xung đột?</Label>
                       <Textarea id="nhanSu_conflict" rows={5} value={form.nhanSu_conflict} onChange={(e) => update("nhanSu_conflict", e.target.value)} />
                     </div>
                     <div className="space-y-2">
