@@ -18,7 +18,7 @@ interface Message {
 }
 
 const suggestedQuestions = [
-  "Câu lạc bộ có những hoạt ��ộng gì?",
+  "Câu lạc bộ có những hoạt động gì?",
   "Làm thế nào để tham gia câu lạc bộ?",
   "DeFi là gì và tại sao nó quan trọng?",
   "Các ban trong câu lạc bộ làm gì?",
