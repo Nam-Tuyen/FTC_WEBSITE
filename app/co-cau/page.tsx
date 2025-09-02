@@ -1,6 +1,6 @@
 import { Navigation } from "@/components/navigation"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Shield, BookOpen, Briefcase, Share2, Handshake, Settings } from "lucide-react"
+import { Shield, BookOpen, Calendar, Megaphone, Wallet, Users, Handshake } from "lucide-react"
 
 export default function OrganizationPage() {
   return (
@@ -27,19 +27,19 @@ export default function OrganizationPage() {
       <section className="py-10 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            <Card className="bg-card/30 border-accent/20 backdrop-blur-sm ring-1 ring-accent/10 hover:ring-accent/30 transition">
+            <Card className="bg-card/30 border-accent/20 backdrop-blur-sm ring-1 ring-accent/10 hover:ring-accent/30 transition lg:col-span-3">
               <CardHeader className="pb-3">
                 <CardTitle className="text-2xl font-bold text-foreground flex items-center gap-3">
                   <Shield className="h-7 w-7 text-accent" /> Ban Chủ nhiệm
                 </CardTitle>
               </CardHeader>
               <CardContent className="pt-0 text-foreground/90 leading-relaxed">
-                <p><span className="font-semibold text-accent">Vai trò:</span> điều phối toàn diện hoạt động, định hình chiến lược phát triển, phê duyệt kế hoạch, ngân sách và nhân sự, đồng thời làm đầu mối đối ngoại của Câu lạc bộ.</p>
+                <p className="text-base">Điều phối toàn diện hoạt động, định hình chiến lược phát triển, phê duyệt kế hoạch, ngân sách và nhân sự, đồng thời làm đầu mối đối ngoại của Câu lạc bộ.</p>
               </CardContent>
             </Card>
 
-            <div className="lg:col-span-2 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-2 gap-6">
-              {/* Ban Học thuật */}
+            <div className="lg:col-span-3 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-2 gap-6">
+              {/* Ban H��c thuật */}
               <Card className="group h-full bg-card/30 border-accent/20 backdrop-blur-sm transition hover:-translate-y-0.5 ring-1 ring-accent/10 hover:ring-accent/30">
                 <CardHeader className="pb-3">
                   <div className="flex items-center gap-3">
@@ -48,11 +48,12 @@ export default function OrganizationPage() {
                   </div>
                 </CardHeader>
                 <CardContent className="pt-0 text-foreground/90 leading-relaxed">
-                  <p className="mb-3"><span className="font-semibold text-accent">Chức năng:</span> Phụ trách mảng kiến thức công nghệ tài chính của Câu lạc bộ, cập nhật tài liệu và biến kiến thức thành hoạt động dễ học, dễ áp dụng.</p>
+                  <p className="mb-3"><span className="font-semibold text-accent">Chức năng:</span></p>
+                  <p className="mb-3">Phụ trách mảng kiến thức công nghệ tài chính của Câu lạc bộ, cập nhật tài liệu và biến kiến thức thành hoạt động dễ học, dễ áp dụng.</p>
                   <p className="mb-2"><span className="font-semibold text-accent">Nhiệm vụ:</span></p>
                   <ul className="list-disc pl-5 space-y-2">
                     <li>Soạn giáo trình nội bộ, chuẩn bị tài liệu cho sự kiện và các ấn phẩm học thuật dùng chung.</li>
-                    <li>Lên nội dung cho buổi thực hành, tọa đàm, cuộc thi: đặt đề, xây tiêu chí chấm, đồng hành cùng đội thi.</li>
+                    <li><p>Lên nội dung cho buổi talkshowm workhop. Trong các cuộc thi học thuật: Ban có nhiệm vụ xây bộ đề, tiêu chí chấm và đồng hành cùng đội thi.</p></li>
                     <li>Tổ chức các buổi rèn kỹ năng như xử lý dữ liệu, SQL, phân tích và giao dịch theo thuật toán.</li>
                     <li>Đại diện Câu lạc bộ tham gia các sân chơi về học thuật, công nghệ và đổi mới sáng tạo.</li>
                   </ul>
@@ -63,7 +64,7 @@ export default function OrganizationPage() {
               <Card className="group h-full bg-card/30 border-accent/20 backdrop-blur-sm transition hover:-translate-y-0.5 ring-1 ring-accent/10 hover:ring-accent/30">
                 <CardHeader className="pb-3">
                   <div className="flex items-center gap-3">
-                    <Briefcase className="h-7 w-7 text-accent" />
+                    <Calendar className="h-7 w-7 text-accent" />
                     <CardTitle className="text-2xl font-bold text-foreground">Ban Sự kiện</CardTitle>
                   </div>
                 </CardHeader>
@@ -83,7 +84,7 @@ export default function OrganizationPage() {
               <Card className="group h-full bg-card/30 border-accent/20 backdrop-blur-sm transition hover:-translate-y-0.5 ring-1 ring-accent/10 hover:ring-accent/30">
                 <CardHeader className="pb-3">
                   <div className="flex items-center gap-3">
-                    <Share2 className="h-7 w-7 text-accent" />
+                    <Megaphone className="h-7 w-7 text-accent" />
                     <CardTitle className="text-2xl font-bold text-foreground">Ban Truyền thông</CardTitle>
                   </div>
                 </CardHeader>
@@ -103,7 +104,7 @@ export default function OrganizationPage() {
               <Card className="group h-full bg-card/30 border-accent/20 backdrop-blur-sm transition hover:-translate-y-0.5 ring-1 ring-accent/10 hover:ring-accent/30">
                 <CardHeader className="pb-3">
                   <div className="flex items-center gap-3">
-                    <Handshake className="h-7 w-7 text-accent" />
+                    <Wallet className="h-7 w-7 text-accent" />
                     <CardTitle className="text-2xl font-bold text-foreground">Ban Tài chính cá nhân</CardTitle>
                   </div>
                 </CardHeader>
@@ -123,12 +124,13 @@ export default function OrganizationPage() {
               <Card className="group h-full bg-card/30 border-accent/20 backdrop-blur-sm transition hover:-translate-y-0.5 ring-1 ring-accent/10 hover:ring-accent/30">
                 <CardHeader className="pb-3">
                   <div className="flex items-center gap-3">
-                    <Settings className="h-7 w-7 text-accent" />
+                    <Users className="h-7 w-7 text-accent" />
                     <CardTitle className="text-2xl font-bold text-foreground">Ban Nhân sự</CardTitle>
                   </div>
                 </CardHeader>
                 <CardContent className="pt-0 text-foreground/90 leading-relaxed">
-                  <p className="mb-3"><span className="font-semibold text-accent">Chức năng:</span> Xây dựng văn hóa, hoàn thiện nội quy và vận hành nguồn lực của Câu lạc bộ.</p>
+                  <p className="mb-3"><span className="font-semibold text-accent">Chức năng:</span></p>
+                  <p className="mb-3">Xây dựng văn hóa, hoàn thiện nội quy và vận hành nguồn lực của Câu lạc bộ.</p>
                   <p className="mb-2"><span className="font-semibold text-accent">Nhiệm vụ:</span></p>
                   <ul className="list-disc pl-5 space-y-2">
                     <li>Soạn và cập nhật nội quy, giữ gìn văn hóa FTC, chăm lo đời sống tinh thần cho thành viên.</li>
@@ -141,12 +143,15 @@ export default function OrganizationPage() {
               </Card>
             </div>
 
-            <Card className="bg-card/30 border-accent/20 backdrop-blur-sm ring-1 ring-accent/10 lg:col-span-1 text-center">
-              <CardHeader className="pb-2 text-center">
-                <CardTitle className="text-2xl font-bold text-foreground text-center">Nguyên tắc phối hợp</CardTitle>
+            <Card className="bg-card/30 border-accent/20 backdrop-blur-sm ring-1 ring-accent/10 lg:col-span-3">
+              <CardHeader className="pb-2">
+                <div className="flex items-center gap-3">
+                  <Handshake className="h-7 w-7 text-accent" />
+                  <CardTitle className="text-2xl font-bold text-foreground text-left">Nguyên tắc phối hợp</CardTitle>
+                </div>
               </CardHeader>
-              <CardContent className="pt-0 text-foreground/90 leading-relaxed text-center">
-                <p>
+              <CardContent className="pt-0 text-foreground/90 leading-relaxed text-left">
+                <p className="text-base leading-6">
                   Nguyên tắc phối hợp của Câu lạc bộ được vận hành theo chuỗi liên thông: Ban Học thuật xây dựng và bàn giao nội dung, Ban Sự kiện lập kế hoạch và tổ chức triển khai, còn Ban Truyền thông thiết kế ấn phẩm và lan tỏa thông tin. Song song đó, Ban Nhân sự bảo đảm bố trí con người, phân công công việc và gìn giữ văn hóa hoạt động, trong khi Ban Tài chính cá nhân phụ trách mảng giáo dục chuyên biệt về tài chính cá nhân và phối hợp nội dung khi cần. Tất cả được điều phối chung bởi Ban Chủ nhiệm với vai trò định hướng chiến lược, phê duyệt kế hoạch và làm đầu mối đối ngoại của Câu lạc bộ.
                 </p>
               </CardContent>
