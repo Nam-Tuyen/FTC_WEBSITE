@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
-import { Bot, MessageCircle, X, Send, User } from "lucide-react"
+import { Bot, MessageCircle, X, Send, User, Loader2 } from "lucide-react"
 
 interface Message {
   id: string
@@ -16,42 +16,55 @@ interface Message {
   timestamp: Date
 }
 
-const quickResponses = {
-  "xin chào": "Xin chào! Tôi có thể giúp gì cho bạn về Câu lạc bộ Công nghệ Tài chính?",
-  "câu lạc bộ": "Câu lạc bộ Công nghệ Tài chính là nơi kết nối những người đam mê fintech. Bạn muốn biết gì cụ thể?",
-  "tham gia":
-    "Để tham gia câu lạc bộ, bạn có thể điền đơn ứng tuyển tại trang Ứng tuyển. Tôi có thể hướng dẫn chi tiết hơn!",
-  "hoạt động": "Chúng tôi có workshop, hackathon, seminar và networking events. Xem chi tiết tại trang Hoạt động!",
-  default:
-    "Cảm ơn bạn đã liên hệ! Để được hỗ trợ tốt hơn, hãy truy cập trang Chatbot hoặc liên hệ president@fintechclub.vn",
-}
+type HistItem = { role: "user" | "model"; content: string }
 
 export function FloatingChatbot() {
   const [isOpen, setIsOpen] = useState(false)
   const [messages, setMessages] = useState<Message[]>([
     {
       id: "1",
-      content: "Xin chào! Tôi là AI Assistant của FinTech Club. Tôi có thể giúp gì cho bạn?",
+      content:
+        "Xin chào! Tôi là FTC AI Assistant. Tôi có thể giúp bạn về Câu lạc bộ Công nghệ Tài chính và các chủ đề Fintech. Bạn muốn hỏi gì?",
       sender: "bot",
       timestamp: new Date(),
     },
   ])
   const [inputValue, setInputValue] = useState("")
+  const [isLoading, setIsLoading] = useState(false)
 
-  const getBotResponse = (userMessage: string): string => {
-    const lowerMessage = userMessage.toLowerCase()
+  const getBotResponse = async (userMessage: string): Promise<string> => {
+    try {
+      // Build history for context (last 10 messages)
+      const history: HistItem[] = messages.slice(-10).map((msg) => ({
+        role: msg.sender === "user" ? "user" : "model",
+        content: msg.content,
+      }))
 
-    for (const [key, response] of Object.entries(quickResponses)) {
-      if (key !== "default" && lowerMessage.includes(key)) {
-        return response
+      const response = await fetch("/chatbot/api/chat/gemini", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          prompt: userMessage,
+          history: history,
+        }),
+      })
+
+      if (!response.ok) {
+        throw new Error("API request failed")
       }
-    }
 
-    return quickResponses.default
+      const data = await response.json()
+      return data.text || "Xin lỗi, tôi không thể trả lời câu hỏi này lúc này. Vui lòng thử lại sau."
+    } catch (error) {
+      console.error("Error calling Gemini API:", error)
+      return "Xin lỗi, có lỗi xảy ra. Vui lòng thử lại sau hoặc liên hệ clbcongnghetaichinh@st.uel.edu.vn"
+    }
   }
 
-  const handleSendMessage = () => {
-    if (!inputValue.trim()) return
+  const handleSendMessage = async () => {
+    if (!inputValue.trim() || isLoading) return
 
     const userMessage: Message = {
       id: Date.now().toString(),
@@ -61,18 +74,31 @@ export function FloatingChatbot() {
     }
 
     setMessages((prev) => [...prev, userMessage])
+    setInputValue("")
+    setIsLoading(true)
 
-    setTimeout(() => {
+    try {
+      const botResponse = await getBotResponse(inputValue)
+
       const botMessage: Message = {
         id: (Date.now() + 1).toString(),
-        content: getBotResponse(inputValue),
+        content: botResponse,
         sender: "bot",
         timestamp: new Date(),
       }
-      setMessages((prev) => [...prev, botMessage])
-    }, 1000)
 
-    setInputValue("")
+      setMessages((prev) => [...prev, botMessage])
+    } catch (error) {
+      const errorMessage: Message = {
+        id: (Date.now() + 1).toString(),
+        content: "Xin lỗi, có lỗi xảy ra. Vui lòng thử lại sau.",
+        sender: "bot",
+        timestamp: new Date(),
+      }
+      setMessages((prev) => [...prev, errorMessage])
+    } finally {
+      setIsLoading(false)
+    }
   }
 
   const handleKeyPress = (e: React.KeyboardEvent) => {
@@ -95,8 +121,8 @@ export function FloatingChatbot() {
                   </AvatarFallback>
                 </Avatar>
                 <div>
-                  <CardTitle className="text-sm">FinTech AI</CardTitle>
-                  <p className="text-xs text-muted-foreground">Online</p>
+                  <CardTitle className="text-sm">FTC AI Assistant</CardTitle>
+                  <p className="text-xs text-muted-foreground">{isLoading ? "Đang trả lời..." : "Online"}</p>
                 </div>
               </div>
               <Button variant="ghost" size="sm" onClick={() => setIsOpen(false)}>
@@ -117,7 +143,7 @@ export function FloatingChatbot() {
                     </Avatar>
                   )}
                   <div
-                    className={`rounded-lg px-3 py-2 text-xs ${
+                    className={`rounded-lg px-3 py-2 text-xs whitespace-pre-wrap ${
                       message.sender === "user" ? "bg-primary text-primary-foreground" : "bg-muted text-foreground"
                     }`}
                   >
@@ -133,6 +159,18 @@ export function FloatingChatbot() {
                 </div>
               </div>
             ))}
+            {isLoading && (
+              <div className="flex justify-start">
+                <div className="flex items-start space-x-2 max-w-[85%]">
+                  <Avatar className="w-6 h-6">
+                    <AvatarFallback className="bg-primary text-primary-foreground">
+                      <Loader2 className="h-3 w-3 animate-spin" />
+                    </AvatarFallback>
+                  </Avatar>
+                  <div className="rounded-lg px-3 py-2 text-xs bg-muted text-foreground">Đang suy nghĩ...</div>
+                </div>
+              </div>
+            )}
           </CardContent>
 
           <div className="border-t p-3">
@@ -143,9 +181,10 @@ export function FloatingChatbot() {
                 onKeyPress={handleKeyPress}
                 placeholder="Nhập tin nhắn..."
                 className="flex-1 text-sm"
+                disabled={isLoading}
               />
-              <Button size="sm" onClick={handleSendMessage} disabled={!inputValue.trim()}>
-                <Send className="h-3 w-3" />
+              <Button size="sm" onClick={handleSendMessage} disabled={!inputValue.trim() || isLoading}>
+                {isLoading ? <Loader2 className="h-3 w-3 animate-spin" /> : <Send className="h-3 w-3" />}
               </Button>
             </div>
           </div>
