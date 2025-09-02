@@ -24,6 +24,15 @@ const suggestedQuestions = [
   "Các ban trong câu lạc bộ làm gì?",
   "Có cơ hội thực tập nào không?",
   "Blockchain hoạt động như thế nào?",
+  // Bổ sung thêm câu hỏi để tăng chiều dài khung
+  "Thời gian sinh hoạt diễn ra vào khi nào?",
+  "Chi phí tham gia là bao nhiêu?",
+  "Cần kỹ năng gì để ứng tuyển?",
+  "Có cần kinh nghiệm trước không?",
+  "Câu lạc bộ có hỗ trợ dự án cá nhân không?",
+  "Làm sao liên hệ Ban Chủ nhiệm?",
+  "Các công cụ học tập được cung cấp là gì?",
+  "Có chương trình mentoring không?",
 ]
 
 const botResponses: { [key: string]: string } = {
@@ -71,7 +80,7 @@ Câu lạc bộ có workshop về DeFi hàng tháng!`,
 📢 **Ban Truyền thông**  
 - Quản lý social media
 - Tạo nội dung marketing
-- Thiết kế đồ họa
+- Thiết kế đồ h���a
 
 🎉 **Ban Sự kiện**
 - Tổ chức workshop, hackathon
@@ -124,6 +133,7 @@ export default function ChatbotPage() {
   ])
   const [inputValue, setInputValue] = useState("")
   const [isTyping, setIsTyping] = useState(false)
+  const [hasMounted, setHasMounted] = useState(false)
   const messagesEndRef = useRef<HTMLDivElement>(null)
 
   const scrollToBottom = () => {
@@ -133,6 +143,10 @@ export default function ChatbotPage() {
   useEffect(() => {
     scrollToBottom()
   }, [messages])
+
+  useEffect(() => {
+    setHasMounted(true)
+  }, [])
 
   const getBotResponse = (userMessage: string): string => {
     const lowerMessage = userMessage.toLowerCase()
@@ -152,7 +166,7 @@ export default function ChatbotPage() {
       return "Rất vui được giúp đỡ bạn! Nếu có thêm câu hỏi nào khác, đừng ngần ngại hỏi nhé! 😊"
     }
 
-    return `Tôi hiểu bạn đang hỏi về "${userMessage}". Hiện tại tôi chưa có thông tin chi tiết về vấn đề này. 
+    return `Tôi hiểu bạn đang hỏi về "${userMessage}". Hiện tại t��i chưa có thông tin chi tiết về vấn đề này. 
 
 Bạn có thể:
 📧 Liên hệ trực tiếp: president@fintechclub.vn
@@ -201,7 +215,7 @@ Hoặc thử hỏi về các chủ đề khác mà tôi có thể hỗ trợ!`
   }
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen gradient-bg">
       <Navigation />
 
       {/* Hero Section */}
@@ -219,12 +233,12 @@ Hoặc thử hỏi về các chủ đề khác mà tôi có thể hỗ trợ!`
         </div>
       </section>
 
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
+      <div className="max-w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 overflow-x-auto">
+        <div className="min-w-[1200px] grid grid-cols-[1fr_minmax(720px,800px)_360px_1fr] grid-rows-[auto_auto] gap-8">
           {/* Chat Interface */}
-          <div className="lg:col-span-3">
-            <Card className="h-[600px] flex flex-col">
-              <CardHeader className="border-b">
+          <div className="col-start-2 col-span-1 row-span-2">
+            <Card className="h-full flex flex-col bg-card/20 backdrop-blur-sm border-accent/20 ring-1 ring-accent/10 hover:border-accent/40 transition-all duration-500 hover:glow">
+              <CardHeader className="border-b border-accent/20">
                 <div className="flex items-center space-x-3">
                   <Avatar>
                     <AvatarImage src="/ai-chatbot-avatar.png" alt="AI Assistant" />
@@ -234,7 +248,7 @@ Hoặc thử hỏi về các chủ đề khác mà tôi có thể hỗ trợ!`
                   </Avatar>
                   <div>
                     <CardTitle className="text-lg">FinTech AI Assistant</CardTitle>
-                    <p className="text-sm text-muted-foreground">Luôn sẵn sàng hỗ trợ bạn</p>
+                    <p className="text-sm text-muted-foreground flex items-center gap-2">Luôn sẵn sàng hỗ trợ bạn <span className="inline-flex items-center text-xs"><span className="w-2 h-2 rounded-full bg-green-400 animate-pulse mr-1"></span>Online</span></p>
                   </div>
                 </div>
               </CardHeader>
@@ -255,16 +269,13 @@ Hoặc thử hỏi về các chủ đề khác mà tôi có thể hỗ trợ!`
                         </Avatar>
                       )}
                       <div
-                        className={`rounded-lg px-4 py-2 ${
-                          message.sender === "user" ? "bg-primary text-primary-foreground" : "bg-muted text-foreground"
+                        className={`rounded-2xl px-4 py-3 overflow-hidden break-words ${
+                          message.sender === "user" ? "bg-primary text-primary-foreground glow" : "bg-secondary/20 text-foreground border border-accent/20"
                         }`}
                       >
-                        <p className="text-sm whitespace-pre-line">{message.content}</p>
+                        <p className="text-sm whitespace-pre-wrap break-words">{message.content}</p>
                         <p className="text-xs opacity-70 mt-1">
-                          {message.timestamp.toLocaleTimeString("vi-VN", {
-                            hour: "2-digit",
-                            minute: "2-digit",
-                          })}
+                          {hasMounted ? message.timestamp.toLocaleTimeString("vi-VN", { hour: "2-digit", minute: "2-digit" }) : ""}
                         </p>
                       </div>
                       {message.sender === "user" && (
@@ -300,7 +311,7 @@ Hoặc thử hỏi về các chủ đề khác mà tôi có thể hỗ trợ!`
               </CardContent>
 
               {/* Input */}
-              <div className="border-t p-4">
+              <div className="border-t border-accent/20 p-4 bg-card/10 backdrop-blur-sm">
                 <div className="flex space-x-2">
                   <Input
                     value={inputValue}
@@ -309,7 +320,7 @@ Hoặc thử hỏi về các chủ đề khác mà tôi có thể hỗ trợ!`
                     placeholder="Nhập câu hỏi của bạn..."
                     className="flex-1"
                   />
-                  <Button onClick={handleSendMessage} disabled={!inputValue.trim()}>
+                  <Button onClick={handleSendMessage} disabled={!inputValue.trim()} className="glow">
                     <Send className="h-4 w-4" />
                   </Button>
                 </div>
@@ -318,32 +329,34 @@ Hoặc thử hỏi về các chủ đề khác mà tôi có thể hỗ trợ!`
           </div>
 
           {/* Sidebar */}
-          <div className="space-y-6">
+          <div className="col-start-3 col-span-1">
             {/* Suggested Questions */}
-            <Card>
+            <Card className="flex flex-col bg-card/20 backdrop-blur-sm border-accent/20 ring-1 ring-accent/10 hover:border-accent/40 transition-all duration-500 hover:glow">
               <CardHeader>
                 <CardTitle className="text-lg font-heading flex items-center">
                   <HelpCircle className="h-5 w-5 mr-2" />
                   Câu hỏi gợi ý
                 </CardTitle>
               </CardHeader>
-              <CardContent className="space-y-2">
+              <CardContent className="space-y-2 flex-1 overflow-y-auto">
                 {suggestedQuestions.map((question, index) => (
                   <Button
                     key={index}
                     variant="outline"
-                    className="w-full text-left justify-start h-auto p-3 bg-transparent"
+                    className="w-full text-left justify-start h-auto p-3 bg-transparent whitespace-normal break-words"
                     onClick={() => handleSuggestedQuestion(question)}
                   >
                     <MessageSquare className="h-4 w-4 mr-2 flex-shrink-0" />
-                    <span className="text-sm">{question}</span>
+                    <span className="text-sm break-words">{question}</span>
                   </Button>
                 ))}
               </CardContent>
             </Card>
 
-            {/* Features */}
-            <Card>
+          </div>
+
+          <div className="col-start-3 col-span-1 row-start-2">
+            <Card className="bg-card/20 backdrop-blur-sm border-accent/20 ring-1 ring-accent/10 hover:border-accent/40 transition-all duration-500 hover:glow">
               <CardHeader>
                 <CardTitle className="text-lg font-heading flex items-center">
                   <Sparkles className="h-5 w-5 mr-2" />
@@ -353,7 +366,7 @@ Hoặc thử hỏi về các chủ đề khác mà tôi có thể hỗ trợ!`
               <CardContent className="space-y-4">
                 <div className="flex items-start space-x-3">
                   <div className="w-8 h-8 bg-primary/10 rounded-lg flex items-center justify-center">
-                    <Bot className="h-4 w-4 text-primary" />
+                    <Bot className="h-4 w-4 text-accent" />
                   </div>
                   <div>
                     <h4 className="font-semibold text-sm">AI Thông minh</h4>
@@ -373,7 +386,7 @@ Hoặc thử hỏi về các chủ đề khác mà tôi có thể hỗ trợ!`
 
                 <div className="flex items-start space-x-3">
                   <div className="w-8 h-8 bg-chart-3/10 rounded-lg flex items-center justify-center">
-                    <MessageSquare className="h-4 w-4 text-chart-3" />
+                    <MessageSquare className="h-4 w-4 text-accent" />
                   </div>
                   <div>
                     <h4 className="font-semibold text-sm">Hỗ trợ 24/7</h4>
