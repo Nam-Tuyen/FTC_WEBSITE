@@ -3,6 +3,7 @@ import type { Metadata } from "next"
 import { Montserrat } from "next/font/google"
 import { Analytics } from "@vercel/analytics/next"
 import { Suspense } from "react"
+import Script from "next/script"
 import { FloatingChatbotGate } from "@/components/floating-chatbot-gate"
 import "./globals.css"
 
@@ -30,6 +31,22 @@ export default function RootLayout({
         <Suspense fallback={null}>{children}</Suspense>
         <FloatingChatbotGate />
         <Analytics />
+        {process.env.NODE_ENV === "development" && (
+          <Script id="suppress-clipboard-policy-error" strategy="afterInteractive">
+            {`
+              (function(){
+                try {
+                  window.addEventListener('unhandledrejection', function(e){
+                    var msg = String((e && e.reason && (e.reason.message || e.reason)) || '');
+                    if (msg.includes('Clipboard API has been blocked because of a permissions policy')) {
+                      e.preventDefault();
+                    }
+                  });
+                } catch(_) {}
+              })();
+            `}
+          </Script>
+        )}
       </body>
     </html>
   )
