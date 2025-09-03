@@ -63,6 +63,8 @@ export default function ForumPage() {
   const [currentStudentId, setCurrentStudentId] = useState<string>('')
   const [questions, setQuestions] = useState<QuestionItem[]>([])
   const [search, setSearch] = useState('')
+  const [page, setPage] = useState(1)
+  const pageSize = 6
 
   useEffect(() => {
     const id = localStorage.getItem(STORAGE_KEYS.userId) || uuid()
@@ -86,6 +88,10 @@ export default function ForumPage() {
     localStorage.setItem(STORAGE_KEYS.questions, JSON.stringify(questions))
   }, [questions])
 
+  useEffect(() => {
+    setPage(1)
+  }, [search])
+
   const filtered = useMemo(() => {
     const q = search.trim().toLowerCase()
     if (!q) return questions
@@ -95,6 +101,21 @@ export default function ForumPage() {
       )
     )
   }, [questions, search])
+
+  const sorted = useMemo(() => {
+    return [...filtered].sort((a, b) => {
+      const likeDiff = b.likes.length - a.likes.length
+      if (likeDiff !== 0) return likeDiff
+      return b.createdAt - a.createdAt
+    })
+  }, [filtered])
+
+  const totalPages = Math.max(1, Math.ceil(sorted.length / pageSize))
+  const pageSafe = Math.min(page, totalPages)
+  const paginated = useMemo(() => {
+    const start = (pageSafe - 1) * pageSize
+    return sorted.slice(start, start + pageSize)
+  }, [sorted, pageSafe, pageSize])
 
   async function handleCreateQuestion(data: {
     title: string
@@ -229,9 +250,9 @@ export default function ForumPage() {
             />
 
             <section>
-              <h2 className="font-heading font-bold text-2xl text-foreground mb-6 uppercase">Câu hỏi gần đây</h2>
+              <h2 className="font-heading font-bold text-2xl text-foreground mb-6 uppercase whitespace-nowrap">Câu hỏi gần đây</h2>
               <div className="space-y-4">
-                {filtered.map((q) => (
+                {paginated.map((q) => (
                   <QuestionCard
                     key={q.id}
                     q={q}
@@ -240,23 +261,37 @@ export default function ForumPage() {
                     onReply={(content, authorName) => handleAddReply(q.id, content, authorName)}
                   />
                 ))}
-                {filtered.length === 0 && (
+                {sorted.length === 0 && (
                   <Card>
                     <CardContent className="p-6 text-sm text-muted-foreground">Không có kết quả phù hợp.</CardContent>
                   </Card>
                 )}
               </div>
+
+              {totalPages > 1 && (
+                <div className="flex items-center justify-between mt-4">
+                  <div className="text-sm text-muted-foreground">Trang {pageSafe}/{totalPages}</div>
+                  <div className="inline-flex gap-2">
+                    <Button variant="outline" size="sm" disabled={pageSafe <= 1} onClick={() => setPage((p) => Math.max(1, p - 1))}>
+                      Trang trước
+                    </Button>
+                    <Button variant="outline" size="sm" disabled={pageSafe >= totalPages} onClick={() => setPage((p) => Math.min(totalPages, p + 1))}>
+                      Trang sau
+                    </Button>
+                  </div>
+                </div>
+              )}
             </section>
           </div>
 
           <div className="space-y-6">
             <Card>
               <CardHeader>
-                <CardTitle className="text-lg font-heading uppercase">Hồ sơ của bạn</CardTitle>
+                <CardTitle className="text-lg font-heading uppercase whitespace-nowrap">Hồ sơ của bạn</CardTitle>
               </CardHeader>
-              <CardContent className="space-y-3">
-                <div className="text-sm text-muted-foreground">Mã số sinh viên</div>
-                <Input
+              <CardContent className="space-y-2">
+                <div className="text-sm text-muted-foreground whitespace-nowrap">Mã số sinh viên</div>
+                <Input className="mt-1"
                   value={currentStudentId}
                   onChange={(e) => {
                     setCurrentStudentId(e.target.value)
@@ -269,7 +304,7 @@ export default function ForumPage() {
 
             <Card>
               <CardHeader>
-                <CardTitle className="text-lg font-heading uppercase">Hành động nhanh</CardTitle>
+                <CardTitle className="text-lg font-heading uppercase whitespace-nowrap">Hành động nhanh</CardTitle>
               </CardHeader>
               <CardContent className="space-y-3">
                 <Button
@@ -335,19 +370,19 @@ function AskQuestionCard({
   return (
     <Card id="ask-question-form">
       <CardHeader>
-        <CardTitle className="text-lg font-heading uppercase">Đặt câu hỏi</CardTitle>
+        <CardTitle className="text-lg font-heading uppercase whitespace-nowrap">Đặt câu hỏi</CardTitle>
       </CardHeader>
-      <CardContent className="space-y-4">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+      <CardContent className="space-y-3">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-3">
           <div className="md:col-span-2">
-            <label className="text-sm text-muted-foreground">Tiêu đề</label>
-            <Input value={title} onChange={(e) => setTitle(e.target.value)} placeholder="Nhập tiêu đề câu hỏi" />
+            <label className="text-sm text-muted-foreground whitespace-nowrap">Tiêu đề</label>
+            <Input className="mt-1" value={title} onChange={(e) => setTitle(e.target.value)} placeholder="Nhập tiêu đề câu hỏi" />
           </div>
           <div className="md:col-span-2">
-            <label className="text-sm text-muted-foreground">Chủ đề</label>
+            <label className="text-sm text-muted-foreground whitespace-nowrap">Chủ đề</label>
             <div>
               <Select value={category} onValueChange={setCategory}>
-                <SelectTrigger className="w-full">
+                <SelectTrigger className="w-full mt-1">
                   <SelectValue placeholder="Chọn chủ đề" />
                 </SelectTrigger>
                 <SelectContent>
@@ -364,7 +399,7 @@ function AskQuestionCard({
 
         <div>
           <label className="text-sm text-muted-foreground">Chế độ đăng</label>
-          <div className="mt-2 grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div className="mt-2 grid grid-cols-1 md:grid-cols-3 gap-3">
             <div className="flex items-center gap-2">
               <RadioGroup value={mode} onValueChange={(v) => setMode(v as 'anonymous' | 'mssv')} className="grid grid-cols-2 gap-4">
                 <div className="flex items-center gap-2">
@@ -379,8 +414,9 @@ function AskQuestionCard({
             </div>
             {mode === 'mssv' && (
               <div className="md:col-span-2">
-                <label className="text-sm text-muted-foreground">Mã số sinh viên</label>
+                <label className="text-sm text-muted-foreground whitespace-nowrap">Mã số sinh viên</label>
                 <Input
+                  className="mt-1"
                   value={studentId}
                   onChange={(e) => setStudentId(e.target.value)}
                   placeholder="K#########"
@@ -394,8 +430,9 @@ function AskQuestionCard({
         </div>
 
         <div>
-          <label className="text-sm text-muted-foreground">Nội dung</label>
+          <label className="text-sm text-muted-foreground whitespace-nowrap">Nội dung</label>
           <Textarea
+            className="mt-1"
             value={content}
             onChange={(e) => setContent(e.target.value)}
             placeholder="Mô tả chi tiết vấn đề, bối cảnh, bạn đã thử gì..."
