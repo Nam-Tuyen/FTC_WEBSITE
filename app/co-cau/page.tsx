@@ -54,7 +54,7 @@ export default function OrganizationPage() {
                   <ul className="list-disc pl-5 space-y-2">
                     <li>Soạn giáo trình nội bộ, chuẩn bị tài liệu cho sự kiện và các ấn phẩm học thuật dùng chung.</li>
                     <li><p>Lên nội dung cho buổi talkshow, workshop. Trong các cuộc thi học thuật: Ban có nhiệm vụ xây bộ đề, tiêu chí chấm và đồng hành cùng đội thi.</p></li>
-                    <li>Tổ chức các buổi rèn kỹ n��ng như xử lý dữ liệu, SQL, phân tích và giao dịch theo thuật toán.</li>
+                    <li>Tổ chức các buổi rèn kỹ năng như xử lý dữ liệu, SQL, phân tích và giao dịch theo thuật toán.</li>
                     <li>Đại diện Câu lạc bộ tham gia các sân chơi về học thuật, công nghệ và đổi mới sáng tạo.</li>
                   </ul>
                 </CardContent>
