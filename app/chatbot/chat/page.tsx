@@ -94,17 +94,6 @@ const lastSentRef = useRef<{ text: string; time: number }>({ text: "", time: 0 }
     setIsTyping(true)
 
     try {
-      const canned = suggestionAnswers[text]
-      if (canned) {
-        const botMessage: Message = {
-          id: (Date.now() + 1).toString(),
-          content: canned,
-          sender: "bot",
-          timestamp: new Date(),
-        }
-        setMessages((prev) => [...prev, botMessage])
-        return
-      }
       const res = await fetch("/api/chat/gemini", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
