@@ -49,15 +49,15 @@ export function Navigation() {
           </div>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:block">
-            <div className="ml-10 flex items-center space-x-1">
+          <div className="hidden md:block max-w-full">
+            <div className="ml-10 flex items-center space-x-1 overflow-x-auto no-scrollbar flex-nowrap">
               {navigationItems.map((item) => {
                 const IconComponent = item.icon
                 return (
                   <Link
                     key={item.name}
                     href={item.href}
-                    className="group relative px-4 py-3 rounded-lg text-sm font-medium transition-all duration-300 hover:bg-accent/10"
+                    className="group relative px-4 py-3 rounded-lg text-sm font-medium transition-all duration-300 hover:bg-accent/10 shrink-0"
                   >
                     <div className="flex items-center space-x-2">
                       <IconComponent className="h-4 w-4 text-accent group-hover:text-foreground transition-colors" />
