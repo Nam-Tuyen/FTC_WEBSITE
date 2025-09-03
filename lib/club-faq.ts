@@ -40,6 +40,18 @@ function scoreMatch(queryNorm: string, pattern: string) {
   return Math.round((hit / Math.max(words.length, 1)) * 80);
 }
 
+// ===== Club-related Detection =====
+const clubKeywords = [
+  'clb', 'cau lac bo', 'ftc', 'fintech club', 'uel', 'ung tuyen', 'tham gia',
+  'hoat dong', 'sinh hoat', 'ban', 'mentor', 'thuc tap', 'tuyen dung',
+  'su kien', 'chuong trinh', 'lien he', 'fanpage', 'email', 'moneywe'
+];
+
+export function isClubRelated(question: string): boolean {
+  const q = normalizeVi(question);
+  return clubKeywords.some((kw) => q.includes(normalizeVi(kw)));
+}
+
 // ===== FAQ Dataset (đã gộp & mở rộng pattern) =====
 const faq: ClubFaqItem[] = [
   // 1) Giới thiệu CLB
@@ -106,7 +118,7 @@ Thông báo chi tiết trên fanpage và website trước sự kiện ≥7 ngày
     answer:
 `💳 **Chi phí**: không thu phí thành viên bắt buộc.
 Một số chuyên đề có thể thu mức phí nhỏ để bù chi phí;
-thành viên tích cực thường được ưu tiên miễn/giảm.`,
+thành viên tích cực thường ��ược ưu tiên miễn/giảm.`,
   },
 
   // 7) Kỹ năng / yêu cầu
@@ -137,7 +149,7 @@ thực hành giao dịch theo thuật toán (kèm nguyên tắc quản trị r�
 Cơ hội xây hồ sơ năng lực, được giới thiệu thực tập.`,
   },
 
-  // 10) Cơ hội thực tập
+  // 10) C�� hội thực tập
   {
     patterns: ['thuc tap', 'co hoi thuc tap', 'tuyen dung', 'gioi thieu thuc tap', 'internship', 'career'],
     answer:

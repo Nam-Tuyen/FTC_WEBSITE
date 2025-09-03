@@ -1,6 +1,6 @@
 // /app/api/chat/gemini/route.ts
 import { NextResponse } from "next/server"
-import { matchClubFaq, shouldRouteToIndustry, getBotFallbackAnswer } from "@/lib/club-faq"
+import { matchClubFaq, shouldRouteToIndustry, getBotFallbackAnswer, isClubRelated } from "@/lib/club-faq"
 
 const GEMINI_ENDPOINT = "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent"
 
@@ -41,13 +41,16 @@ export async function POST(req: Request) {
       return NextResponse.json({ text: faqHit }, { status: 200 })
     }
 
-    // 2) Quyết định có cần route sang miền chuyên môn
-    const { yes, domain } = shouldRouteToIndustry(prompt)
+    // 2) Phân loại: câu hỏi liên quan CLB hay không
+    const club = isClubRelated(prompt)
+    const { domain } = shouldRouteToIndustry(prompt)
 
-    // 3) Không cần chuyên môn → trả fallback thân thiện
-    if (!yes) {
+    // 3) Câu hỏi liên quan CLB nhưng không khớp FAQ → trả lời fallback thân thiện (hướng dẫn liên hệ)
+    if (club) {
       return NextResponse.json({ text: getBotFallbackAnswer(prompt) }, { status: 200 })
     }
+
+    // 4) Không liên quan CLB → gọi Gemini để trả lời
 
     // 4) Gọi Gemini
     const apiKey =
