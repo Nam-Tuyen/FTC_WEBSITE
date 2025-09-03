@@ -44,6 +44,8 @@
   --font-sans: var(--font-montserrat);
   --font-mono: var(--font-montserrat);
   --font-serif: var(--font-montserrat);
+  --font-heading: var(--font-montserrat);
+  --font-body: var(--font-montserrat);
 
   /* Updated all text colors to bright white for better contrast */
   --color-foreground: #ffffff;
