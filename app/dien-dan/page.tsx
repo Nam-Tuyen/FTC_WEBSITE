@@ -250,7 +250,7 @@ export default function ForumPage() {
             />
 
             <section>
-              <h2 className="font-heading font-bold text-[25px] leading-10 text-foreground mb-6 uppercase whitespace-nowrap">Câu hỏi gần đây</h2>
+              <h2 className="font-heading font-bold text-[25px] leading-10 text-foreground mb-[30px] uppercase whitespace-nowrap">Câu hỏi gần đây</h2>
               <div className="space-y-4">
                 {paginated.map((q) => (
                   <QuestionCard
@@ -286,10 +286,10 @@ export default function ForumPage() {
 
           <div className="space-y-6">
             <Card>
-              <CardHeader>
+              <CardHeader className="px-[30px]">
                 <CardTitle className="text-[19px] leading-[35px] font-heading uppercase whitespace-nowrap text-center">Hồ sơ của bạn</CardTitle>
               </CardHeader>
-              <CardContent className="space-y-2">
+              <CardContent className="space-y-2 px-[30px]">
                 <div className="text-sm text-muted-foreground whitespace-nowrap"><p>Hãy nhập MSSV</p></div>
                 <Input className="mt-1"
                   value={currentStudentId}
@@ -303,10 +303,10 @@ export default function ForumPage() {
             </Card>
 
             <Card>
-              <CardHeader>
+              <CardHeader className="px-[30px]">
                 <CardTitle className="text-[19px] leading-[35px] font-heading uppercase whitespace-nowrap text-center">Hành động nhanh</CardTitle>
               </CardHeader>
-              <CardContent className="space-y-3">
+              <CardContent className="space-y-3 px-[30px]">
                 <Button
                   variant="outline"
                   className="w-full justify-start bg-transparent"
