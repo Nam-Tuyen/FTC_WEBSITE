@@ -23,7 +23,7 @@ const suggestedQuestions = [
   "Làm thế nào để tham gia câu lạc bộ?",
   "Các ban trong câu lạc bộ làm gì?",
   "Thời gian sinh hoạt diễn ra khi nào?",
-  "C��n kỹ năng gì để ứng tuyển?",
+  "Cần kỹ năng gì để ứng tuyển?",
 ]
 
 const suggestionAnswers: Record<string, string> = {
@@ -177,7 +177,7 @@ const lastSentRef = useRef<{ text: string; time: number }>({ text: "", time: 0 }
       </section>
 
       {/* Main layout */}
-      <div className="max-w-full mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-0 overflow-x-auto">
+      <div className="max-w-full mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-8 overflow-x-auto">
         <div className="min-w-[1200px] grid grid-cols-[1fr_minmax(720px,800px)_360px_1fr] grid-rows-[auto_auto] gap-8">
           {/* Chat Interface */}
           <div className="col-start-2 col-span-1 row-span-2">
@@ -204,7 +204,7 @@ const lastSentRef = useRef<{ text: string; time: number }>({ text: "", time: 0 }
               </CardHeader>
 
               {/* Messages */}
-              <CardContent className="flex-1 overflow-y-auto p-4 space-y-4">
+              <CardContent className="flex-1 overflow-y-auto p-4 space-y-4 max-h-[65vh]">
                 {messages.map((message) => (
                   <div
                     key={message.id}
@@ -347,7 +347,7 @@ const lastSentRef = useRef<{ text: string; time: number }>({ text: "", time: 0 }
                   </div>
                   <div>
                     <h4 className="font-semibold text-sm">Hỗ trợ 24/7</h4>
-                    <p className="text-xs text-muted-foreground">Luôn s��n sàng giúp đỡ</p>
+                    <p className="text-xs text-muted-foreground">Luôn sẵn sàng giúp đỡ</p>
                   </div>
                 </div>
               </CardContent>
