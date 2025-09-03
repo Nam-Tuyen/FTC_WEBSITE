@@ -47,7 +47,7 @@ export default function HomePage() {
                 size="lg"
                 className="btn-futuristic text-lg px-10 py-4 font-bold shadow-2xl hover:shadow-accent/50 transition-all duration-300"
               >
-                <Link href="/ung-tuyen">
+                <Link href="/thong-tin">
                   THÔNG TIN VỀ CÂU LẠC BỘ <ArrowRight className="ml-3 h-6 w-6" />
                 </Link>
               </Button>
@@ -113,7 +113,7 @@ export default function HomePage() {
                 icon: Database,
                 title: "DỰ ÁN THỰC TẾ",
                 description: "Thực hành trên dữ liệu và thị trường thực tế, rèn kỷ luật quản trị rủi ro, tư duy sản phẩm và cải tiến mô hình.",
-                gradient: "from-secondary/20 to-accent/20",
+                gradient: "from-accent/20 to-secondary/20",
               },
               {
                 icon: Rocket,
@@ -125,7 +125,7 @@ export default function HomePage() {
                 icon: Users,
                 title: "KỸ NĂNG & CỘNG ĐỒNG",
                 description: "Phát triển giao tiếp, làm việc nhóm, quản lý dự án, sáng tạo nội dung và truyền thông. Môi trường cởi mở, gắn kết, chia sẻ và hỗ trợ lẫn nhau.",
-                gradient: "from-secondary/20 to-accent/20",
+                gradient: "from-accent/20 to-secondary/20",
               },
             ].map((feature, index) => {
               const IconComponent = feature.icon
@@ -141,10 +141,11 @@ export default function HomePage() {
                     }}
                   ></div>
                   <CardContent className="relative z-10 p-8 text-center">
-                    <div
-                      className={`w-20 h-20 bg-gradient-to-br ${feature.gradient} rounded-2xl flex items-center justify-center mx-auto mb-6 glow group-hover:scale-110 transition-all duration-300`}
-                    >
-                      <IconComponent className="h-10 w-10 text-accent" />
+                    <div className="relative mb-6">
+                      <div className={`w-20 h-20 mx-auto bg-gradient-to-br ${feature.gradient} rounded-2xl flex items-center justify-center glow group-hover:scale-110 transition-all duration-300`}>
+                        <IconComponent className="h-10 w-10 text-accent" />
+                      </div>
+                      <div className="absolute inset-0 w-20 h-20 mx-auto border-2 border-accent/30 rounded-2xl animate-pulse"></div>
                     </div>
                     <h3 className="font-heading font-bold text-xl mb-4 text-foreground uppercase tracking-wide">
                       {feature.title}
