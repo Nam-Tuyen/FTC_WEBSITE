@@ -250,7 +250,7 @@ export default function ForumPage() {
             />
 
             <section>
-              <h2 className="font-heading font-bold text-2xl text-foreground mb-6 uppercase whitespace-nowrap">Câu hỏi gần đây</h2>
+              <h2 className="font-heading font-bold text-[25px] leading-10 text-foreground mb-6 uppercase whitespace-nowrap">Câu hỏi gần đây</h2>
               <div className="space-y-4">
                 {paginated.map((q) => (
                   <QuestionCard
@@ -287,10 +287,10 @@ export default function ForumPage() {
           <div className="space-y-6">
             <Card>
               <CardHeader>
-                <CardTitle className="text-lg font-heading uppercase whitespace-nowrap">Hồ sơ của bạn</CardTitle>
+                <CardTitle className="text-[19px] leading-[35px] font-heading uppercase whitespace-nowrap text-center">Hồ sơ của bạn</CardTitle>
               </CardHeader>
               <CardContent className="space-y-2">
-                <div className="text-sm text-muted-foreground whitespace-nowrap">Mã số sinh viên</div>
+                <div className="text-sm text-muted-foreground whitespace-nowrap"><p>Hãy nhập MSSV</p></div>
                 <Input className="mt-1"
                   value={currentStudentId}
                   onChange={(e) => {
@@ -304,7 +304,7 @@ export default function ForumPage() {
 
             <Card>
               <CardHeader>
-                <CardTitle className="text-lg font-heading uppercase whitespace-nowrap">Hành động nhanh</CardTitle>
+                <CardTitle className="text-[19px] leading-[35px] font-heading uppercase whitespace-nowrap text-center">Hành động nhanh</CardTitle>
               </CardHeader>
               <CardContent className="space-y-3">
                 <Button
@@ -494,7 +494,7 @@ function QuestionCard({
               <Badge variant="outline" className="text-xs">{q.category}</Badge>
               <span className="text-xs text-muted-foreground">{formatTime(q.createdAt)}</span>
             </div>
-            <p className="text-sm text-muted-foreground mb-2 whitespace-pre-wrap">{q.content}</p>
+            <p className="text-sm text-muted-foreground mb-2 whitespace-pre-wrap break-words">{q.content}</p>
             <div className="text-xs text-muted-foreground mb-3">MSSV: {authorDisplay}</div>
 
             <div className="flex items-center gap-3 text-sm">
@@ -517,7 +517,7 @@ function QuestionCard({
                     <div className="text-sm font-medium">{r.authorName}</div>
                     <div className="text-xs text-muted-foreground">{formatTime(r.createdAt)}</div>
                   </div>
-                  <div className="text-sm text-muted-foreground whitespace-pre-wrap">{r.content}</div>
+                  <div className="text-sm text-muted-foreground whitespace-pre-wrap break-words">{r.content}</div>
                 </div>
               ))}
             </div>
