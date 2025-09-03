@@ -64,7 +64,7 @@ const faq: ClubFaqItem[] = [
     answer:
 `👋 **CLB Công nghệ – Tài chính (FTC)** là cộng đồng sinh viên UEL yêu thích công nghệ tài chính.
 FTC thành lập 11/2020, trực thuộc Khoa Tài chính – Ngân hàng.
-Bọn mình tổ chức hội thảo, thực hành, dự án thực tế, nhóm nghiên cứu, giờ lập trình,
+Bọn mình tổ chức hội thảo, thực hành, dự án thực tế, nhóm nghi��n cứu, giờ lập trình,
 liên kết doanh nghiệp và tham quan đơn vị để bạn *học sâu – làm thật – kết nối rộng*.`,
   },
 
@@ -76,7 +76,7 @@ liên kết doanh nghiệp và tham quan đơn vị để bạn *học sâu – 
 • Workshop/Seminar: Blockchain, Data, AI ứng dụng trong tài chính
 • Hackathon/Mini-hack: xây sản phẩm trong thời gian ngắn
 • Dự án thực tế: làm sản phẩm/dashboards, collab doanh nghiệp
-• Mentoring: k��m cặp theo nhóm kỹ năng
+• Mentoring: kèm cặp theo nhóm kỹ năng
 • Networking/Company tour: kết nối chuyên gia & doanh nghiệp`,
   },
 
@@ -101,7 +101,7 @@ Yêu cầu: nhiệt huyết và tinh thần học hỏi – sẽ có người h�
 • *Sự kiện*: ý tưởng, kịch bản, vận hành chương trình, báo cáo.
 • *Truyền thông*: quản trị kênh, viết nội dung, thiết kế, ảnh/video.
 • *Tài chính cá nhân*: MoneyWe, chủ đề tài chính cá nhân ứng dụng công nghệ.
-• *Nhân sự*: nội quy, văn hóa, tuyển – ph��n công – đánh giá, minh bạch quỹ.`,
+• *Nhân sự*: nội quy, văn hóa, tuyển – phân công – đánh giá, minh bạch quỹ.`,
   },
 
   // 5) Lịch sinh hoạt
@@ -149,7 +149,7 @@ thực hành giao dịch theo thuật toán (kèm nguyên tắc quản trị r�
 Cơ hội xây hồ sơ năng lực, được giới thiệu thực tập.`,
   },
 
-  // 10) Cơ hội thực tập
+  // 10) Cơ hội th���c tập
   {
     patterns: ['thuc tap', 'co hoi thuc tap', 'tuyen dung', 'gioi thieu thuc tap', 'internship', 'career'],
     answer:
@@ -261,4 +261,62 @@ Bạn có thể:
 • Nhắn fanpage: ${FANPAGE_URL}
 • Thử đặt câu hỏi khác về thành viên, lịch sinh hoạt, học thuật, sự kiện, truyền thông, tài chính cá nhân, nhân sự…`
   );
+}
+
+// ====== APPEND BELOW (lib/club-faq.ts) ======
+/** Chuẩn hóa key tìm kiếm: bỏ dấu, thường hóa, giữ chữ & số, khoảng trắng đơn */
+export function toKey(s: string) {
+  return (s ?? '')
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/đ/g, 'd')
+    .replace(/[^a-z0-9\s]/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+/** Trả về block ngữ cảnh gọn dựa trên dữ liệu CLB sẵn có trong file này */
+export function buildClubContextBlock(userQuestion: string) {
+  const norm = (s: string) => (s ?? '').replace(/\uFFFD/g, '').normalize('NFC').trim();
+
+  const quickFacts: string[] = [
+    'FTC trực thuộc Khoa Tài chính – Ngân hàng, UEL',
+    'Thành lập 11/2020',
+  ];
+
+  const meta = [
+    'CLB Công nghệ – Tài chính (FTC) – trực thuộc Khoa Tài chính – Ngân hàng, UEL.',
+    'Tầm nhìn: Học sâu – làm thật – kết nối rộng trong FinTech.',
+    'Sứ mệnh: Xây cộng đồng sinh viên yêu công nghệ tài chính, thực chiến dự án, gắn kết doanh nghiệp.',
+    `Liên hệ: ${CONTACT_EMAIL}; Fanpage: ${FANPAGE_URL}`,
+  ].map(norm);
+
+  const activities = [
+    '• Workshop/Seminar Fintech, Blockchain, Data (theo học kỳ)',
+    '• Mini-hack/Hackathon (xây MVP 24–48h)',
+    '• Dự án nội bộ & hợp tác doanh nghiệp (dashboard, chatbot, RAG, dữ liệu)',
+    '• Mentoring & sinh hoạt chuyên môn',
+  ];
+
+  // (Đơn giản) Nếu lib đã có matchClubFaq trả về string, chèn 1 QA liên quan
+  let faqLines: string[] = [];
+  try {
+    const hit = matchClubFaq(userQuestion);
+    if (typeof hit === 'string' && hit.trim()) {
+      faqLines = ['FAQ liên quan:', norm(hit.trim())];
+    }
+  } catch {}
+
+  const hint = 'Nếu câu hỏi nói về CLB, trả lời dựa trên block ngữ cảnh này; thiếu dữ liệu thì n��i chưa có, đừng bịa.';
+
+  return [
+    '# NGỮ CẢNH CLB',
+    hint,
+    ...quickFacts.map(norm),
+    ...meta,
+    ...(faqLines.length ? faqLines : []),
+    'Hoạt động tiêu biểu:',
+    ...activities,
+  ].join('\n');
 }
