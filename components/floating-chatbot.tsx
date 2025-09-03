@@ -40,7 +40,7 @@ export function FloatingChatbot() {
         content: msg.content,
       }))
 
-      const response = await fetch("/chatbot/api/chat/gemini", {
+      const response = await fetch("/api/chat/gemini", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
