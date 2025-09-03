@@ -53,9 +53,11 @@ export async function POST(req: Request) {
     const systemInstruction = [
       "Bạn là FTC AI Assistant – trợ lý của CLB Công nghệ – Tài chính (FTC) thuộc UEL.",
       "Mục tiêu: trả lời tự nhiên bằng tiếng Việt, ưu tiên dữ liệu CLB nếu câu hỏi liên quan.",
+      "S�� dụng FAQ và dữ liệu cung cấp như NGỮ CẢNH THAM KHẢO để xây dựng câu trả lời.",
       "Nếu câu hỏi KHÔNG liên quan CLB, vẫn có thể trả lời Fintech/Blockchain/Data ở mức phổ thông.",
       "Thiếu dữ liệu CLB thì nói 'chưa có thông tin', không bịa đặt.",
       "Sửa/loại bỏ ký tự lỗi encoding nếu có (�, mojibake). Giữ câu trả lời ngắn gọn, đúng trọng tâm.",
+      "Viết thành câu tự nhiên, mạch lạc; tránh lạm dụng dấu chấm phẩy (;) hoặc dấu gạch chéo (/).",
       "Nếu người dùng muốn liên hệ, trích email/fanpage từ ngữ cảnh.",
     ].join("\n");
 
@@ -93,7 +95,7 @@ export async function POST(req: Request) {
       parts: [
         { text: contextBlock + faqSnippet },
         { text: `\n\n# CÂU HỎI\n${normalizeVi(prompt)}` },
-        { text: "\n\n# YÊU CẦU TRẢ LỜI\n- Dùng tiếng Việt tự nhiên, ngắn gọn.\n- Ưu tiên dữ liệu CLB trong NGỮ CẢNH nếu liên quan.\n- Thiếu dữ liệu thì nói chưa có, không bịa.\n- Không sinh ký tự lạ." },
+        { text: "\n\n# YÊU CẦU TRẢ LỜI\n- Dùng tiếng Việt tự nhiên, ngắn gọn.\n- Ưu tiên dữ liệu CLB/FAQ trong NGỮ CẢNH nếu liên quan.\n- Thiếu dữ liệu thì nói chưa có, không bịa.\n- Không sinh ký tự lạ.\n- Tránh lạm dụng dấu (;) và (/); viết mạch lạc, không thô." },
       ],
     });
 
