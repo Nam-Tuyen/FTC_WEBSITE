@@ -1,11 +1,11 @@
 // app/api/chat/gemini/route.ts
 import { NextResponse } from "next/server";
 import {
-  matchClubFaq,
-  getBotFallbackAnswer,
+  FTCKB,
+  buildSystemInstructionFromKB,
+  buildContextFromKB,
   normalizeVi,
-  buildClubContextBlock,
-} from "@/lib/club-faq";
+} from "@/lib/kb/ftc";
 
 const GEMINI_MODEL = process.env.GEMINI_MODEL || "gemini-1.5-pro";
 const GEMINI_ENDPOINT =
@@ -15,8 +15,6 @@ export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
 type HistItem = { role: "user" | "model"; content: string };
-
-const cleanText = (s: string) => (s ?? "").replace(/\uFFFD/g, "").normalize("NFC").trim();
 
 export async function POST(req: Request) {
   try {
@@ -29,58 +27,34 @@ export async function POST(req: Request) {
       return NextResponse.json({ text: "Câu hỏi không hợp lệ." }, { status: 400 });
     }
 
-    // CORS base headers
     const baseHeaders = {
       "Access-Control-Allow-Origin": "*",
       "Access-Control-Allow-Methods": "POST, OPTIONS",
       "Access-Control-Allow-Headers": "Content-Type",
     } as const;
 
-    // 1) Chuẩn bị gọi Gemini
     const apiKey =
       process.env.GEMINI_API_KEY ??
       process.env.GOOGLE_API_KEY ?? "";
 
     if (!apiKey) {
       console.warn("[gemini] Missing GEMINI_API_KEY/GOOGLE_API_KEY (returning fallback)");
-      return new NextResponse(JSON.stringify({ text: getBotFallbackAnswer(prompt) }), {
-        status: 200,
-        headers: baseHeaders,
-      });
+      return new NextResponse(JSON.stringify({
+        text: "Xin lỗi, hiện chưa có khóa API. Vui lòng liên hệ quản trị viên để cấp GEMINI_API_KEY.",
+        source: req.headers.get("x-debug") === "1" ? "fallback" : undefined,
+      }), { status: 200, headers: baseHeaders });
     }
 
-    // 2) System instruction + club context + history
-    const systemInstruction = [
-      "Bạn là FTC AI Assistant – trợ lý của CLB Công nghệ – Tài chính (FTC) thuộc UEL.",
-      "Mục tiêu: trả lời tự nhiên bằng tiếng Việt, ưu tiên dữ liệu CLB nếu câu hỏi liên quan.",
-      "Sử dụng FAQ và dữ liệu cung cấp như NGỮ CẢNH THAM KHẢO để xây dựng câu trả lời.",
-      "Nếu câu hỏi KHÔNG liên quan CLB, vẫn có thể trả lời Fintech/Blockchain/Data ở mức phổ thông.",
-      "Thiếu dữ liệu CLB thì nói 'chưa có thông tin', không bịa đặt.",
-      "Sửa/loại bỏ ký tự lỗi encoding nếu có (�, mojibake). Giữ câu trả lời ngắn gọn, đúng trọng tâm.",
-      "Viết thành câu tự nhiên, mạch lạc; tránh lạm dụng dấu chấm phẩy (;) hoặc dấu gạch chéo (/).",
-      "Nếu người dùng muốn liên hệ, trích email/fanpage từ ngữ cảnh.",
-    ].join("\n");
-
-    const contextBlock = buildClubContextBlock(prompt);
-
-    // (tuỳ) FAQ snippet đưa vào ngữ cảnh, không trả sớm
-    let faqSnippet = "";
-    try {
-      const hit = matchClubFaq?.(prompt);
-      if (typeof hit === "string" && hit.trim()) {
-        faqSnippet = `\n\n# FAQ LIÊN QUAN\n${normalizeVi(hit.trim())}\n`;
-      }
-    } catch {}
+    // ====== LUÔN DÙNG GEMINI ======
+    const systemInstruction = buildSystemInstructionFromKB(FTCKB);
+    const contextBlock = buildContextFromKB(FTCKB, prompt);
 
     const contents: Array<{ role: "user" | "model"; parts: { text: string }[] }> = [];
 
-    // Tiêm systemInstruction như 1 phần nội dung (phòng backend bỏ qua field systemInstruction)
-    contents.push({
-      role: "user",
-      parts: [{ text: systemInstruction }],
-    });
+    // Tiêm systemInstruction vào contents để chắc mô hình luôn "thấy"
+    contents.push({ role: "user", parts: [{ text: systemInstruction }] });
 
-    // Lịch sử gần đây
+    // Lịch sử gần đây (tối đa 8)
     if (Array.isArray(history)) {
       for (const h of history.slice(-8)) {
         if (h?.role === "user" || h?.role === "model") {
@@ -89,13 +63,13 @@ export async function POST(req: Request) {
       }
     }
 
-    // Câu hỏi hiện tại + context CLB + yêu cầu trả lời
+    // Câu hỏi hiện tại + context
     contents.push({
       role: "user",
       parts: [
-        { text: contextBlock + faqSnippet },
+        { text: contextBlock },
         { text: `\n\n# CÂU HỎI\n${normalizeVi(prompt)}` },
-        { text: "\n\n# YÊU CẦU TRẢ LỜI\n- Dùng tiếng Việt tự nhiên, ngắn gọn.\n- Ưu tiên dữ liệu CLB/FAQ trong NGỮ CẢNH nếu liên quan.\n- Thiếu dữ liệu thì nói chưa có, không bịa.\n- Không sinh ký tự lạ.\n- Tránh lạm dụng dấu (;) và (/); viết mạch lạc, không thô." },
+        { text: "\n\n# YÊU CẦU TRẢ LỜI\n- Dùng tiếng Việt tự nhiên, ngắn gọn, đúng trọng tâm.\n- Ưu tiên dữ liệu CLB trong NGỮ CẢNH nếu liên quan.\n- Thiếu dữ liệu thì nói chưa có, không bịa.\n- Không sinh ký tự lạ (�)." },
       ],
     });
 
@@ -121,10 +95,10 @@ export async function POST(req: Request) {
     if (!r.ok) {
       const errText = await r.text().catch(() => "");
       console.error("[gemini] HTTP", r.status, errText);
-      return new NextResponse(JSON.stringify({ text: getBotFallbackAnswer(prompt) }), {
-        status: 200,
-        headers: baseHeaders,
-      });
+      return new NextResponse(JSON.stringify({
+        text: "Xin lỗi, hệ thống đang bận hoặc API gặp sự cố. Vui lòng thử lại sau.",
+        source: req.headers.get("x-debug") === "1" ? "fallback" : undefined,
+      }), { status: 200, headers: baseHeaders });
     }
 
     const data = await r.json().catch(() => ({}));
@@ -135,7 +109,10 @@ export async function POST(req: Request) {
     const clean = normalizeVi(outText);
 
     return new NextResponse(
-      JSON.stringify({ text: clean || getBotFallbackAnswer(prompt) }),
+      JSON.stringify({
+        text: clean,
+        source: req.headers.get("x-debug") === "1" ? "gemini" : undefined,
+      }),
       {
         status: 200,
         headers: {
