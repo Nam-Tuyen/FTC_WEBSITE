@@ -11,6 +11,7 @@ const nextConfig = {
   },
   // Allow loading assets when embedded in external preview iframes (e.g., Builder.io)
   allowedDevOrigins: [
+    "*",
     "*.fly.dev",
     "unhappy-bar.info",
     "trusty-fuel.org",
