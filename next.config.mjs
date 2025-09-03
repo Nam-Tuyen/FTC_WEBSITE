@@ -9,7 +9,9 @@ const nextConfig = {
   images: {
     unoptimized: true,
   },
-  allowedDevOrigins: ["*.fly.dev"],
+  // Allow loading assets when embedded in external preview iframes (e.g., Builder.io)
+  // Wildcards are safe in dev-only setting
+  allowedDevOrigins: ["*", "*.info", "*.fly.dev"],
 }
 
 export default nextConfig
