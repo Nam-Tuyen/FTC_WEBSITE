@@ -81,5 +81,12 @@
   "packageManager": "pnpm@10.15.0",
   "engines": {
     "node": ">=18 <=22"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "esbuild",
+      "sharp",
+      "@tailwindcss/oxide"
+    ]
   }
 }
