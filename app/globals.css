@@ -99,7 +99,15 @@
 body {
   color: #ffffff;
   background-color: #003663;
-  font-family: var(--font-montserrat), sans-serif;
+  font-family: var(--font-montserrat), system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+}
+
+/* Font utilities to ensure consistent typography across the app */
+.font-heading {
+  font-family: var(--font-heading), var(--font-montserrat), system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+}
+.font-body {
+  font-family: var(--font-body), var(--font-montserrat), system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
 }
 
 h1,
