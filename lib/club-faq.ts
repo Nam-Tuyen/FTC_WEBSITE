@@ -19,15 +19,7 @@ export const FANPAGE_URL = 'https://www.facebook.com/clbfintechuel';
 
 // ===== Utils =====
 export function normalizeVi(s: string) {
-  return s
-    .toLowerCase()
-    .normalize('NFD')
-    .replace(/[\u0300-\u036f]/g, '')
-    .replace(/[đĐ]/g, 'd')
-    // Cho phép 1 số ký tự phổ biến trong câu hỏi
-    .replace(/[^a-z0-9\s?.,:;!@#$\/+()_-]/g, ' ')
-    .replace(/\s+/g, ' ')
-    .trim();
+  return (s ?? "").replace(/\uFFFD/g, "").normalize("NFC").trim();
 }
 
 function scoreMatch(queryNorm: string, pattern: string) {
@@ -48,8 +40,8 @@ const clubKeywords = [
 ];
 
 export function isClubRelated(question: string): boolean {
-  const q = normalizeVi(question);
-  return clubKeywords.some((kw) => q.includes(normalizeVi(kw)));
+  const q = toKey(question);
+  return clubKeywords.some((kw) => q.includes(toKey(kw)));
 }
 
 // ===== FAQ Dataset (đã gộp & mở rộng pattern) =====
@@ -64,7 +56,7 @@ const faq: ClubFaqItem[] = [
     answer:
 `👋 **CLB Công nghệ – Tài chính (FTC)** là cộng đồng sinh viên UEL yêu thích công nghệ tài chính.
 FTC thành lập 11/2020, trực thuộc Khoa Tài chính – Ngân hàng.
-Bọn mình tổ chức hội thảo, thực hành, dự án thực tế, nhóm nghi��n cứu, giờ lập trình,
+Bọn mình tổ chức hội thảo, thực hành, dự án thực tế, nhóm nghiên cứu, giờ lập trình,
 liên kết doanh nghiệp và tham quan đơn vị để bạn *học sâu – làm thật – kết nối rộng*.`,
   },
 
@@ -75,7 +67,7 @@ liên kết doanh nghiệp và tham quan đơn vị để bạn *học sâu – 
 `🎯 **Hoạt động tiêu biểu**:
 • Workshop/Seminar: Blockchain, Data, AI ứng dụng trong tài chính
 • Hackathon/Mini-hack: xây sản phẩm trong thời gian ngắn
-• Dự án thực tế: làm sản phẩm/dashboards, collab doanh nghiệp
+• Dự án thực t���: làm sản phẩm/dashboards, collab doanh nghiệp
 • Mentoring: kèm cặp theo nhóm kỹ năng
 • Networking/Company tour: kết nối chuyên gia & doanh nghiệp`,
   },
@@ -100,7 +92,7 @@ Yêu cầu: nhiệt huyết và tinh thần học hỏi – sẽ có người h�
 • *Học thuật*: nội dung Fintech, dữ liệu, SQL, phân tích, thuật toán.
 • *Sự kiện*: ý tưởng, kịch bản, vận hành chương trình, báo cáo.
 • *Truyền thông*: quản trị kênh, viết nội dung, thiết kế, ảnh/video.
-• *Tài chính cá nhân*: MoneyWe, chủ đề tài chính cá nhân ứng dụng công nghệ.
+• *Tài chính cá nhân*: MoneyWe, chủ đề tài chính cá nhân ứng d��ng công nghệ.
 • *Nhân sự*: nội quy, văn hóa, tuyển – phân công – đánh giá, minh bạch quỹ.`,
   },
 
@@ -149,7 +141,7 @@ thực hành giao dịch theo thuật toán (kèm nguyên tắc quản trị r�
 Cơ hội xây hồ sơ năng lực, được giới thiệu thực tập.`,
   },
 
-  // 10) Cơ hội th���c tập
+  // 10) Cơ hội thực tập
   {
     patterns: ['thuc tap', 'co hoi thuc tap', 'tuyen dung', 'gioi thieu thuc tap', 'internship', 'career'],
     answer:
@@ -170,7 +162,7 @@ Bạn có thể nhắn trực tiếp fanpage “FTC – Câu lạc bộ Công ng
 
 // ===== FAQ Matcher =====
 export function matchClubFaq(userText: string): string | null {
-  const q = normalizeVi(userText);
+  const q = toKey(userText);
   let best = { idx: -1, score: 0 };
   faq.forEach((item, i) => {
     let s = 0;
@@ -200,7 +192,7 @@ const industryKeywords = [
 ];
 
 export function shouldRouteToIndustry(question: string): { yes: boolean; domain?: IndustryDomain } {
-  const q = normalizeVi(question);
+  const q = toKey(question);
 
   // Có chứa bất kỳ keyword nào?
   const yes = industryKeywords.some((kw) => q.includes(normalizeVi(kw)));
@@ -242,7 +234,7 @@ Tôi có thể giúp bạn:
 }
 
 export function getBotFallbackAnswer(raw: string) {
-  const q = normalizeVi(raw);
+  const q = toKey(raw);
   const isGreeting = ['xin chao', 'chao', 'hello', 'hi'].some((g) => q.includes(g));
   const isThanks = ['cam on', 'thank', 'thanks', 'merci'].some((t) => q.includes(t));
 
@@ -308,7 +300,7 @@ export function buildClubContextBlock(userQuestion: string) {
     }
   } catch {}
 
-  const hint = 'Nếu câu hỏi nói về CLB, trả lời dựa trên block ngữ cảnh này; thiếu dữ liệu thì n��i chưa có, đừng bịa.';
+  const hint = 'Nếu câu hỏi nói về CLB, trả lời dựa trên block ngữ cảnh này; thiếu dữ liệu thì nói chưa có, đừng bịa.';
 
   return [
     '# NGỮ CẢNH CLB',
