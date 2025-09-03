@@ -10,6 +10,7 @@ import { Textarea } from '@/components/ui/textarea'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { MessageSquare, Search, Plus, HelpCircle, Heart, Reply } from 'lucide-react'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
+import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
 
 type ReplyItem = {
   id: string
@@ -34,7 +35,7 @@ type QuestionItem = {
 
 const STORAGE_KEYS = {
   userId: 'forum.currentUserId',
-  userName: 'forum.currentUserName',
+  studentId: 'forum.currentStudentId',
   questions: 'forum.questions',
 }
 
@@ -59,17 +60,17 @@ function formatTime(ts: number) {
 
 export default function ForumPage() {
   const [currentUserId, setCurrentUserId] = useState<string>('')
-  const [currentUserName, setCurrentUserName] = useState<string>('Nam Tuyen Le')
+  const [currentStudentId, setCurrentStudentId] = useState<string>('')
   const [questions, setQuestions] = useState<QuestionItem[]>([])
   const [search, setSearch] = useState('')
 
   useEffect(() => {
     const id = localStorage.getItem(STORAGE_KEYS.userId) || uuid()
-    const name = localStorage.getItem(STORAGE_KEYS.userName) || 'Nam Tuyen Le'
+    const sid = localStorage.getItem(STORAGE_KEYS.studentId) || ''
     setCurrentUserId(id)
-    setCurrentUserName(name)
+    setCurrentStudentId(sid)
     localStorage.setItem(STORAGE_KEYS.userId, id)
-    localStorage.setItem(STORAGE_KEYS.userName, name)
+    localStorage.setItem(STORAGE_KEYS.studentId, sid)
 
     const saved = localStorage.getItem(STORAGE_KEYS.questions)
     if (saved) {
@@ -102,12 +103,13 @@ export default function ForumPage() {
     category: string
   }) {
     const newId = uuid()
+    const authorName = data.studentId ? data.studentId : 'Ẩn danh'
     const newQ: QuestionItem = {
       id: newId,
       title: data.title,
       content: data.content,
       authorId: currentUserId,
-      authorName: currentUserName || 'Ẩn danh',
+      authorName,
       studentId: data.studentId,
       category: data.category,
       createdAt: Date.now(),
@@ -124,7 +126,7 @@ export default function ForumPage() {
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
             studentId: data.studentId,
-            name: currentUserName || '',
+            name: authorName,
             title: data.title,
             content: data.content,
             category: data.category,
@@ -136,7 +138,7 @@ export default function ForumPage() {
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
             studentId: data.studentId,
-            name: currentUserName || '',
+            name: authorName,
             title: data.title,
             content: data.content,
             category: data.category,
@@ -159,12 +161,12 @@ export default function ForumPage() {
     )
   }
 
-  function handleAddReply(qid: string, content: string) {
+  function handleAddReply(qid: string, content: string, authorName: string) {
     if (!content.trim()) return
     const reply: ReplyItem = {
       id: uuid(),
       authorId: currentUserId,
-      authorName: currentUserName || 'Ẩn danh',
+      authorName,
       content,
       createdAt: Date.now(),
     }
@@ -178,10 +180,10 @@ export default function ForumPage() {
       <section className="py-16 px-4 sm:px-6 lg:px-8 bg-muted/30">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-8">
-            <h1 className="font-heading font-bold text-4xl sm:text-5xl text-foreground mb-6">
+            <h1 className="font-heading font-bold text-4xl sm:text-5xl text-foreground mb-6 text-glow pulse uppercase">
               Diễn đàn <span className="text-primary">Thảo luận</span>
             </h1>
-            <p className="text-xl text-muted-foreground max-w-3xl mx-auto text-pretty">
+            <p className="text-xl text-muted-foreground max-w-3xl mx-auto text-pretty italic">
               Nơi cộng đồng fintech chia sẻ kiến thức, thảo luận xu hướng và kết nối với nhau
             </p>
           </div>
@@ -204,10 +206,10 @@ export default function ForumPage() {
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
           <div className="lg:col-span-3 space-y-8">
             <AskQuestionCard
-              currentUserName={currentUserName}
-              onUpdateName={(name) => {
-                setCurrentUserName(name)
-                localStorage.setItem(STORAGE_KEYS.userName, name)
+              currentStudentId={currentStudentId}
+              onUpdateStudentId={(sid) => {
+                setCurrentStudentId(sid)
+                localStorage.setItem(STORAGE_KEYS.studentId, sid)
               }}
               onSubmit={handleCreateQuestion}
             />
@@ -219,8 +221,9 @@ export default function ForumPage() {
                   <QuestionCard
                     key={q.id}
                     q={q}
+                    defaultStudentId={currentStudentId}
                     onLike={() => handleToggleLike(q.id)}
-                    onReply={(content) => handleAddReply(q.id, content)}
+                    onReply={(content, authorName) => handleAddReply(q.id, content, authorName)}
                   />
                 ))}
                 {filtered.length === 0 && (
@@ -238,16 +241,15 @@ export default function ForumPage() {
                 <CardTitle className="text-lg font-heading">Hồ sơ của bạn</CardTitle>
               </CardHeader>
               <CardContent className="space-y-3">
-                <div className="text-sm text-muted-foreground">Tên hiển thị</div>
+                <div className="text-sm text-muted-foreground">Mã số sinh viên</div>
                 <Input
-                  value={currentUserName}
+                  value={currentStudentId}
                   onChange={(e) => {
-                    setCurrentUserName(e.target.value)
-                    localStorage.setItem(STORAGE_KEYS.userName, e.target.value)
+                    setCurrentStudentId(e.target.value)
+                    localStorage.setItem(STORAGE_KEYS.studentId, e.target.value)
                   }}
-                  placeholder="Nhập tên của bạn"
+                  placeholder="K#########"
                 />
-                <div className="text-xs text-muted-foreground">Tên này sẽ dùng để đăng câu hỏi và phản hồi.</div>
               </CardContent>
             </Card>
 
@@ -285,12 +287,12 @@ export default function ForumPage() {
 }
 
 function AskQuestionCard({
-  currentUserName,
-  onUpdateName,
+  currentStudentId,
+  onUpdateStudentId,
   onSubmit,
 }: {
-  currentUserName: string
-  onUpdateName: (name: string) => void
+  currentStudentId: string
+  onUpdateStudentId: (sid: string) => void
   onSubmit: (data: { title: string; content: string; studentId: string; category: string }) => void
 }) {
   const [title, setTitle] = useState('')
@@ -298,15 +300,19 @@ function AskQuestionCard({
   const [studentId, setStudentId] = useState('')
   const [category, setCategory] = useState<string>(CATEGORIES[0])
   const [error, setError] = useState('')
+  const [mode, setMode] = useState<'anonymous' | 'mssv'>('anonymous')
 
   function validate() {
-    if (!/^K\d{9}$/.test(studentId.trim())) {
-      setError('MSSV phải có dạng K#########')
-      return false
-    }
     if (!title.trim() || !content.trim()) {
       setError('Vui lòng nhập đầy đủ tiêu đề và nội dung')
       return false
+    }
+    if (mode === 'mssv') {
+      const id = (studentId || currentStudentId).trim()
+      if (!/^K\d{9}$/.test(id)) {
+        setError('MSSV phải có dạng K#########')
+        return false
+      }
     }
     setError('')
     return true
@@ -319,30 +325,11 @@ function AskQuestionCard({
       </CardHeader>
       <CardContent className="space-y-4">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-          <div className="md:col-span-1">
-            <label className="text-sm text-muted-foreground">Tên của bạn</label>
-            <Input value={currentUserName} onChange={(e) => onUpdateName(e.target.value)} placeholder="Tên hiển thị" />
-          </div>
-          <div className="md:col-span-1">
-            <label className="text-sm text-muted-foreground">Mã số sinh viên</label>
-            <Input value={studentId} onChange={(e) => setStudentId(e.target.value)} placeholder="K224141650" />
-          </div>
           <div className="md:col-span-2">
             <label className="text-sm text-muted-foreground">Tiêu đề</label>
             <Input value={title} onChange={(e) => setTitle(e.target.value)} placeholder="Nhập tiêu đề câu hỏi" />
           </div>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-          <div className="md:col-span-3">
-            <label className="text-sm text-muted-foreground">Nội dung</label>
-            <Textarea
-              value={content}
-              onChange={(e) => setContent(e.target.value)}
-              placeholder="Mô tả chi tiết vấn đề, bối cảnh, bạn đã thử gì..."
-            />
-          </div>
-          <div className="md:col-span-1">
+          <div className="md:col-span-2">
             <label className="text-sm text-muted-foreground">Chủ đề</label>
             <div>
               <Select value={category} onValueChange={setCategory}>
@@ -361,17 +348,59 @@ function AskQuestionCard({
           </div>
         </div>
 
+        <div>
+          <label className="text-sm text-muted-foreground">Chế độ đăng</label>
+          <div className="mt-2 grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div className="flex items-center gap-2">
+              <RadioGroup value={mode} onValueChange={(v) => setMode(v as 'anonymous' | 'mssv')} className="grid grid-cols-2 gap-4">
+                <div className="flex items-center gap-2">
+                  <RadioGroupItem id="mode-anonymous" value="anonymous" />
+                  <label htmlFor="mode-anonymous" className="text-sm">Ẩn danh</label>
+                </div>
+                <div className="flex items-center gap-2">
+                  <RadioGroupItem id="mode-mssv" value="mssv" />
+                  <label htmlFor="mode-mssv" className="text-sm">MSSV</label>
+                </div>
+              </RadioGroup>
+            </div>
+            {mode === 'mssv' && (
+              <div className="md:col-span-2">
+                <label className="text-sm text-muted-foreground">Mã số sinh viên</label>
+                <Input
+                  value={studentId}
+                  onChange={(e) => setStudentId(e.target.value)}
+                  placeholder="K#########"
+                />
+                {!studentId && currentStudentId && (
+                  <div className="text-xs text-muted-foreground mt-1">Sẽ dùng MSSV đã lưu: {currentStudentId}</div>
+                )}
+              </div>
+            )}
+          </div>
+        </div>
+
+        <div>
+          <label className="text-sm text-muted-foreground">Nội dung</label>
+          <Textarea
+            value={content}
+            onChange={(e) => setContent(e.target.value)}
+            placeholder="Mô tả chi tiết vấn đề, bối cảnh, bạn đã thử gì..."
+          />
+        </div>
+
         {error && <div className="text-sm text-destructive">{error}</div>}
 
         <div className="flex justify-end">
           <Button
             onClick={() => {
               if (!validate()) return
-              onSubmit({ title: title.trim(), content: content.trim(), studentId: studentId.trim(), category })
+              const sid = mode === 'mssv' ? (studentId || currentStudentId).trim() : ''
+              onSubmit({ title: title.trim(), content: content.trim(), studentId: sid, category })
               setTitle('')
               setContent('')
               setStudentId('')
               setCategory(CATEGORIES[0])
+              setMode('anonymous')
             }}
           >
             <Plus className="h-4 w-4 mr-2" />
@@ -385,14 +414,20 @@ function AskQuestionCard({
 
 function QuestionCard({
   q,
+  defaultStudentId,
   onLike,
   onReply,
 }: {
   q: QuestionItem
+  defaultStudentId: string
   onLike: () => void
-  onReply: (content: string) => void
+  onReply: (content: string, authorName: string) => void
 }) {
   const [reply, setReply] = useState('')
+  const [replyMode, setReplyMode] = useState<'anonymous' | 'mssv'>('anonymous')
+  const [replyStudentId, setReplyStudentId] = useState('')
+
+  const authorDisplay = q.studentId ? q.studentId : 'Ẩn danh'
 
   return (
     <Card>
@@ -409,7 +444,7 @@ function QuestionCard({
               <span className="text-xs text-muted-foreground">{formatTime(q.createdAt)}</span>
             </div>
             <p className="text-sm text-muted-foreground mb-2 whitespace-pre-wrap">{q.content}</p>
-            <div className="text-xs text-muted-foreground mb-3">MSSV: {q.studentId}</div>
+            <div className="text-xs text-muted-foreground mb-3">MSSV: {authorDisplay}</div>
 
             <div className="flex items-center gap-3 text-sm">
               <button
@@ -436,7 +471,35 @@ function QuestionCard({
               ))}
             </div>
 
-            <div className="mt-4">
+            <div className="mt-4 space-y-2">
+              <div>
+                <label className="text-sm text-muted-foreground">Chế độ phản hồi</label>
+                <div className="mt-2 grid grid-cols-1 md:grid-cols-3 gap-3">
+                  <RadioGroup value={replyMode} onValueChange={(v) => setReplyMode(v as 'anonymous' | 'mssv')} className="grid grid-cols-2 gap-4">
+                    <div className="flex items-center gap-2">
+                      <RadioGroupItem id={`reply-anonymous-${q.id}`} value="anonymous" />
+                      <label htmlFor={`reply-anonymous-${q.id}`} className="text-sm">Ẩn danh</label>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <RadioGroupItem id={`reply-mssv-${q.id}`} value="mssv" />
+                      <label htmlFor={`reply-mssv-${q.id}`} className="text-sm">MSSV</label>
+                    </div>
+                  </RadioGroup>
+                  {replyMode === 'mssv' && (
+                    <div className="md:col-span-2">
+                      <Input
+                        value={replyStudentId}
+                        onChange={(e) => setReplyStudentId(e.target.value)}
+                        placeholder="K#########"
+                      />
+                      {!replyStudentId && defaultStudentId && (
+                        <div className="text-xs text-muted-foreground mt-1">Sẽ dùng MSSV đã lưu: {defaultStudentId}</div>
+                      )}
+                    </div>
+                  )}
+                </div>
+              </div>
+
               <div className="grid grid-cols-1 md:grid-cols-4 gap-3">
                 <div className="md:col-span-3">
                   <Textarea
@@ -451,8 +514,13 @@ function QuestionCard({
                     onClick={() => {
                       const c = reply.trim()
                       if (!c) return
-                      onReply(c)
+                      const sid = replyMode === 'mssv' ? (replyStudentId || defaultStudentId).trim() : ''
+                      if (replyMode === 'mssv' && !/^K\d{9}$/.test(sid)) return
+                      const authorName = sid ? sid : 'Ẩn danh'
+                      onReply(c, authorName)
                       setReply('')
+                      setReplyStudentId('')
+                      setReplyMode('anonymous')
                     }}
                   >
                     Gửi phản hồi
