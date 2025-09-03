@@ -32,7 +32,7 @@ export default function HomePage() {
               <span className="text-sm font-bold text-accent uppercase tracking-wider">BẠN ĐÃ SẴN SÀNG CHƯA?</span>
             </div>
 
-            <h1 className="font-heading font-black text-5xl sm:text-6xl text-foreground mb-8 text-balance text-glow lg:text-7xl tracking-wide leading-[6. rem] leading-[4.5.rem]">
+            <h1 className="font-heading font-black text-5xl sm:text-6xl text-foreground mb-8 text-balance text-glow lg:text-7xl tracking-wide leading-tight">
               CÂU LẠC BỘ <br />
               <span className="bg-gradient-to-r from-accent via-secondary to-accent bg-clip-text text-transparent animate-pulse">
                 CÔNG NGHỆ - TÀI CHÍNH
