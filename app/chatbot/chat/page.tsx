@@ -9,7 +9,7 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Send, Bot, User, Sparkles, MessageSquare, HelpCircle, Zap } from "lucide-react"
-import { getDefaultWelcomeMessage } from "@/lib/club-faq"
+import { getDefaultWelcomeMessage, CONTACT_EMAIL, FANPAGE_URL } from "@/lib/club-faq"
 
 interface Message {
   id: string
@@ -120,8 +120,7 @@ const lastSentRef = useRef<{ text: string; time: number }>({ text: "", time: 0 }
       const botMessage: Message = {
         id: (Date.now() + 1).toString(),
         content:
-          reply ||
-          "Xin lỗi, hiện chưa có thông tin phù hợp. Bạn có thể gửi mail đến clbcongnghetaichinh@st.uel.edu.vn hoặc nhắn fanpage để được hỗ trợ nhanh hơn.",
+          reply || `Xin lỗi, hiện chưa có thông tin phù hợp. Liên hệ: ${CONTACT_EMAIL} hoặc fanpage: ${FANPAGE_URL}.`,
         sender: "bot",
         timestamp: new Date(),
       }
