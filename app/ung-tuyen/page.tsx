@@ -616,7 +616,7 @@ export default function ApplicationPage() {
                 {form.primaryTeam === "tai-chinh-ca-nhan" && (
                   <div className="space-y-4">
                     <div className="space-y-2">
-                      <Label htmlFor="tccn_topic">Đề xuất chủ đề workshop “qu��n lý tiền cho sinh viên”</Label>
+                      <Label htmlFor="tccn_topic">Đề xuất chủ đề workshop “quản lý tiền cho sinh viên”</Label>
                       <Input id="tccn_topic" value={form.tccn_topic} onChange={(e) => update("tccn_topic", e.target.value)} />
                     </div>
                     <div className="space-y-2">
