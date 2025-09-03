@@ -76,7 +76,7 @@ liên kết doanh nghiệp và tham quan đơn vị để bạn *học sâu – 
 • Workshop/Seminar: Blockchain, Data, AI ứng dụng trong tài chính
 • Hackathon/Mini-hack: xây sản phẩm trong thời gian ngắn
 • Dự án thực tế: làm sản phẩm/dashboards, collab doanh nghiệp
-• Mentoring: kèm cặp theo nhóm kỹ năng
+• Mentoring: k��m cặp theo nhóm kỹ năng
 • Networking/Company tour: kết nối chuyên gia & doanh nghiệp`,
   },
 
@@ -101,7 +101,7 @@ Yêu cầu: nhiệt huyết và tinh thần học hỏi – sẽ có người h�
 • *Sự kiện*: ý tưởng, kịch bản, vận hành chương trình, báo cáo.
 • *Truyền thông*: quản trị kênh, viết nội dung, thiết kế, ảnh/video.
 • *Tài chính cá nhân*: MoneyWe, chủ đề tài chính cá nhân ứng dụng công nghệ.
-• *Nhân sự*: nội quy, văn hóa, tuyển – phân công – đánh giá, minh bạch quỹ.`,
+• *Nhân sự*: nội quy, văn hóa, tuyển – ph��n công – đánh giá, minh bạch quỹ.`,
   },
 
   // 5) Lịch sinh hoạt
@@ -118,7 +118,7 @@ Thông báo chi tiết trên fanpage và website trước sự kiện ≥7 ngày
     answer:
 `💳 **Chi phí**: không thu phí thành viên bắt buộc.
 Một số chuyên đề có thể thu mức phí nhỏ để bù chi phí;
-thành viên tích cực thường ��ược ưu tiên miễn/giảm.`,
+thành viên tích cực thường được ưu tiên miễn/giảm.`,
   },
 
   // 7) Kỹ năng / yêu cầu
@@ -149,7 +149,7 @@ thực hành giao dịch theo thuật toán (kèm nguyên tắc quản trị r�
 Cơ hội xây hồ sơ năng lực, được giới thiệu thực tập.`,
   },
 
-  // 10) C�� hội thực tập
+  // 10) Cơ hội thực tập
   {
     patterns: ['thuc tap', 'co hoi thuc tap', 'tuyen dung', 'gioi thieu thuc tap', 'internship', 'career'],
     answer:
