@@ -61,8 +61,8 @@ export function Navigation() {
                   >
                     <div className="flex items-center space-x-2">
                       <IconComponent className="h-4 w-4 text-accent group-hover:text-foreground transition-colors" />
-                      <span className="text-foreground/80 group-hover:text-foreground transition-colors uppercase tracking-wide">
-                        {item.name}
+                      <span className="text-foreground/80 group-hover:text-foreground transition-colors uppercase tracking-wide whitespace-nowrap">
+                        {item.name.toLocaleUpperCase("vi-VN")}
                       </span>
                     </div>
                     <div className="absolute bottom-0 left-0 w-0 h-0.5 bg-accent group-hover:w-full transition-all duration-300"></div>
@@ -117,8 +117,8 @@ export function Navigation() {
                   onClick={() => setIsOpen(false)}
                 >
                   <IconComponent className="h-5 w-5 text-accent group-hover:text-foreground transition-colors" />
-                  <span className="text-foreground/80 group-hover:text-foreground transition-colors uppercase tracking-wide">
-                    {item.name}
+                  <span className="text-foreground/80 group-hover:text-foreground transition-colors uppercase tracking-wide whitespace-nowrap">
+                    {item.name.toLocaleUpperCase("vi-VN")}
                   </span>
                   <div className="ml-auto opacity-0 group-hover:opacity-100 transition-opacity">
                     <div className="w-2 h-2 border-r-2 border-t-2 border-accent rotate-45"></div>
