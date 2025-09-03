@@ -1,28 +1,21 @@
+// app/api/chat/gemini/route.ts
 import { NextResponse } from "next/server";
 import {
   matchClubFaq,
-  shouldRouteToIndustry,
   getBotFallbackAnswer,
-  isClubRelated,
+  buildClubContextBlock,
 } from "@/lib/club-faq";
 
+const GEMINI_MODEL = process.env.GEMINI_MODEL || "gemini-1.5-pro";
 const GEMINI_ENDPOINT =
-  "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent";
+  `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent`;
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
 type HistItem = { role: "user" | "model"; content: string };
 
-function buildPrompt(userQuestion: string, domain?: string) {
-  return (
-    `Bạn là trợ lý AI cho Câu lạc bộ Công nghệ – Tài chính (FTC) – UEL.\n\n` +
-    `Ngữ cảnh: người hỏi là sinh viên/quan tâm Fintech. Trả lời súc tích, tiếng Việt, có cấu trúc gọn, ưu tiên hướng dẫn thực hành.\n` +
-    `Nếu câu hỏi mang tính chuyên môn ${domain ? `(${domain})` : ""}, hãy giải thích khái niệm và đưa ví dụ gần gũi.\n` +
-    `Không bịa đặt thông tin nội bộ. Nếu thiếu dữ liệu, nói rõ và đề xuất cách tìm hiểu tiếp.\n\n` +
-    `Câu hỏi người dùng: ${userQuestion}`
-  );
-}
+const cleanText = (s: string) => (s ?? "").replace(/\uFFFD/g, "").normalize("NFC").trim();
 
 export async function POST(req: Request) {
   try {
@@ -35,31 +28,25 @@ export async function POST(req: Request) {
       return NextResponse.json({ text: "Câu hỏi không hợp lệ." }, { status: 400 });
     }
 
+    // CORS base headers
     const baseHeaders = {
       "Access-Control-Allow-Origin": "*",
       "Access-Control-Allow-Methods": "POST, OPTIONS",
       "Access-Control-Allow-Headers": "Content-Type",
     } as const;
 
+    // 1) Ưu tiên FAQ nội bộ → trả ngay nếu khớp
     const faqHit = matchClubFaq(prompt);
-    if (faqHit) {
-      return new NextResponse(JSON.stringify({ text: faqHit }), {
-        status: 200,
-        headers: baseHeaders,
-      });
+    if (faqHit && typeof faqHit === "string" && faqHit.trim()) {
+      const clean = cleanText(faqHit);
+      return new NextResponse(JSON.stringify({ text: clean }), { status: 200, headers: baseHeaders });
     }
 
-    const club = isClubRelated(prompt);
-    const { domain } = shouldRouteToIndustry(prompt);
+    // 2) Chuẩn bị gọi Gemini
+    const apiKey =
+      process.env.GEMINI_API_KEY ??
+      process.env.GOOGLE_API_KEY ?? "";
 
-    if (club) {
-      return new NextResponse(JSON.stringify({ text: getBotFallbackAnswer(prompt) }), {
-        status: 200,
-        headers: baseHeaders,
-      });
-    }
-
-    const apiKey = process.env.GEMINI_API_KEY ?? process.env.GOOGLE_API_KEY;
     if (!apiKey) {
       console.warn("[gemini] Missing GEMINI_API_KEY/GOOGLE_API_KEY (returning fallback)");
       return new NextResponse(JSON.stringify({ text: getBotFallbackAnswer(prompt) }), {
@@ -68,30 +55,62 @@ export async function POST(req: Request) {
       });
     }
 
+    // 3) System instruction + club context + history
+    const systemInstruction = [
+      "Bạn là FTC AI Assistant – trợ lý của CLB Công nghệ – Tài chính (FTC) thuộc UEL.",
+      "Mục tiêu: trả lời tự nhiên bằng tiếng Việt, ưu tiên dữ liệu CLB nếu câu hỏi liên quan.",
+      "Nếu câu hỏi KHÔNG liên quan CLB, vẫn có thể trả lời Fintech/Blockchain/Data ở mức phổ thông.",
+      "Thiếu dữ liệu CLB thì nói 'chưa có thông tin', không bịa đặt.",
+      "Sửa/loại bỏ ký tự lỗi encoding nếu có (�, mojibake). Giữ câu trả lời ngắn gọn, đúng trọng tâm.",
+      "Nếu người dùng muốn liên hệ, trích email/fanpage từ ngữ cảnh.",
+    ].join("\n");
+
+    const contextBlock = buildClubContextBlock(prompt);
+
     const contents: Array<{ role: "user" | "model"; parts: { text: string }[] }> = [];
+
+    // Tiêm systemInstruction như 1 phần nội dung (phòng backend bỏ qua field systemInstruction)
+    contents.push({
+      role: "user",
+      parts: [{ text: systemInstruction }],
+    });
+
+    // Lịch sử gần đây
     if (Array.isArray(history)) {
       for (const h of history.slice(-8)) {
         if (h?.role === "user" || h?.role === "model") {
-          contents.push({ role: h.role, parts: [{ text: h.content }] });
+          contents.push({ role: h.role, parts: [{ text: cleanText(h.content) }] });
         }
       }
     }
-    contents.push({ role: "user", parts: [{ text: buildPrompt(prompt, domain) }] });
+
+    // Câu hỏi hiện tại + context CLB + yêu cầu trả lời
+    contents.push({
+      role: "user",
+      parts: [
+        { text: contextBlock },
+        { text: `\n\n# CÂU HỎI\n${cleanText(prompt)}` },
+        { text: "\n\n# YÊU CẦU TRẢ LỜI\n- Dùng tiếng Việt tự nhiên, ngắn gọn.\n- Ưu tiên dữ liệu CLB trong NGỮ CẢNH nếu liên quan.\n- Thiếu dữ liệu thì nói chưa có, không bịa.\n- Không sinh ký tự lạ." },
+      ],
+    });
+
+    const body = {
+      contents,
+      systemInstruction: { role: "system", parts: [{ text: systemInstruction }] },
+      generationConfig: { temperature: 0.6, topK: 32, topP: 0.95, maxOutputTokens: 1024 },
+      safetySettings: [
+        { category: "HARM_CATEGORY_DANGEROUS_CONTENT", threshold: "BLOCK_MEDIUM_AND_ABOVE" },
+        { category: "HARM_CATEGORY_HATE_SPEECH", threshold: "BLOCK_MEDIUM_AND_ABOVE" },
+        { category: "HARM_CATEGORY_HARASSMENT", threshold: "BLOCK_MEDIUM_AND_ABOVE" },
+        { category: "HARM_CATEGORY_SEXUALLY_EXPLICIT", threshold: "BLOCK_LOW_AND_ABOVE" },
+      ],
+    };
 
     const r = await fetch(`${GEMINI_ENDPOINT}?key=${apiKey}`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       cache: "no-store",
-      body: JSON.stringify({
-        contents,
-        generationConfig: { temperature: 0.4, topK: 32, topP: 0.95, maxOutputTokens: 1024 },
-        safetySettings: [
-          { category: "HARM_CATEGORY_DANGEROUS_CONTENT", threshold: "BLOCK_MEDIUM_AND_ABOVE" },
-          { category: "HARM_CATEGORY_HATE_SPEECH", threshold: "BLOCK_MEDIUM_AND_ABOVE" },
-          { category: "HARM_CATEGORY_HARASSMENT", threshold: "BLOCK_MEDIUM_AND_ABOVE" },
-          { category: "HARM_CATEGORY_SEXUALLY_EXPLICIT", threshold: "BLOCK_LOW_AND_ABOVE" },
-        ],
-      }),
+      body: JSON.stringify(body),
     });
 
     if (!r.ok) {
@@ -103,15 +122,23 @@ export async function POST(req: Request) {
       });
     }
 
-    const data = (await r.json().catch(() => ({}))) as any;
-    const text: string =
-      data?.candidates?.[0]?.content?.parts?.[0]?.text?.trim?.() ??
-      getBotFallbackAnswer(prompt);
+    const data = await r.json().catch(() => ({}));
+    const outText = ((data?.candidates?.[0]?.content?.parts ?? [])
+      .map((p: any) => p?.text || "")
+      .join("") || "").toString();
 
-    return new NextResponse(JSON.stringify({ text }), {
-      status: 200,
-      headers: baseHeaders,
-    });
+    const clean = cleanText(outText);
+
+    return new NextResponse(
+      JSON.stringify({ text: clean || getBotFallbackAnswer(prompt) }),
+      {
+        status: 200,
+        headers: {
+          ...baseHeaders,
+          "Content-Type": "application/json; charset=utf-8",
+        },
+      }
+    );
   } catch (e) {
     console.error("[gemini] Exception", e);
     return NextResponse.json(
