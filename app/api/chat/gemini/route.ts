@@ -42,6 +42,7 @@ export async function POST(req: Request) {
       return new NextResponse(JSON.stringify({
         text: "Xin lỗi, hiện chưa có khóa API. Vui lòng liên hệ quản trị viên để cấp GEMINI_API_KEY.",
         source: "fallback",
+        error: "missing_api_key",
       }), { status: 200, headers: baseHeaders });
     }
 
@@ -98,6 +99,7 @@ export async function POST(req: Request) {
       return new NextResponse(JSON.stringify({
         text: "Xin lỗi, hệ thống đang bận hoặc API gặp sự cố. Vui lòng thử lại sau.",
         source: "fallback",
+        error: `http_${r.status}${errText ? ": " + errText.slice(0, 200) : ""}`,
       }), { status: 200, headers: baseHeaders });
     }
 
@@ -124,7 +126,7 @@ export async function POST(req: Request) {
   } catch (e) {
     console.error("[gemini] Exception", e);
     return NextResponse.json(
-      { text: "Xin lỗi, hệ thống đang bận. Vui lòng thử lại sau.", source: "fallback" },
+      { text: "Xin lỗi, hệ thống đang bận. Vui lòng thử lại sau.", source: "fallback", error: (e as Error)?.message || "exception" },
       { status: 200 }
     );
   }
