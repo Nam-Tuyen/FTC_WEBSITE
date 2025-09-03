@@ -39,7 +39,7 @@ export default function OrganizationPage() {
             </Card>
 
             <div className="lg:col-span-3 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-2 gap-6">
-              {/* Ban H��c thuật */}
+              {/* Ban Học thuật */}
               <Card className="group h-full bg-card/30 border-accent/20 backdrop-blur-sm transition hover:-translate-y-0.5 ring-1 ring-accent/10 hover:ring-accent/30">
                 <CardHeader className="pb-3">
                   <div className="flex items-center gap-3">
@@ -53,8 +53,8 @@ export default function OrganizationPage() {
                   <p className="mb-2"><span className="font-semibold text-accent">Nhiệm vụ:</span></p>
                   <ul className="list-disc pl-5 space-y-2">
                     <li>Soạn giáo trình nội bộ, chuẩn bị tài liệu cho sự kiện và các ấn phẩm học thuật dùng chung.</li>
-                    <li><p>Lên nội dung cho buổi talkshowm workhop. Trong các cuộc thi học thuật: Ban có nhiệm vụ xây bộ đề, tiêu chí chấm và đồng hành cùng đội thi.</p></li>
-                    <li>Tổ chức các buổi rèn kỹ năng như xử lý dữ liệu, SQL, phân tích và giao dịch theo thuật toán.</li>
+                    <li><p>Lên nội dung cho buổi talkshow, workshop. Trong các cuộc thi học thuật: Ban có nhiệm vụ xây bộ đề, tiêu chí chấm và đồng hành cùng đội thi.</p></li>
+                    <li>Tổ chức các buổi rèn kỹ n��ng như xử lý dữ liệu, SQL, phân tích và giao dịch theo thuật toán.</li>
                     <li>Đại diện Câu lạc bộ tham gia các sân chơi về học thuật, công nghệ và đổi mới sáng tạo.</li>
                   </ul>
                 </CardContent>
