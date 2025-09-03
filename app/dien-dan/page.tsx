@@ -215,7 +215,7 @@ export default function ForumPage() {
             />
 
             <section>
-              <h2 className="font-heading font-bold text-2xl text-foreground mb-6">Câu hỏi gần đây</h2>
+              <h2 className="font-heading font-bold text-2xl text-foreground mb-6 uppercase">Câu hỏi gần đây</h2>
               <div className="space-y-4">
                 {filtered.map((q) => (
                   <QuestionCard
@@ -238,7 +238,7 @@ export default function ForumPage() {
           <div className="space-y-6">
             <Card>
               <CardHeader>
-                <CardTitle className="text-lg font-heading">Hồ sơ của bạn</CardTitle>
+                <CardTitle className="text-lg font-heading uppercase">Hồ sơ của bạn</CardTitle>
               </CardHeader>
               <CardContent className="space-y-3">
                 <div className="text-sm text-muted-foreground">Mã số sinh viên</div>
@@ -255,7 +255,7 @@ export default function ForumPage() {
 
             <Card>
               <CardHeader>
-                <CardTitle className="text-lg font-heading">Hành động nhanh</CardTitle>
+                <CardTitle className="text-lg font-heading uppercase">Hành động nhanh</CardTitle>
               </CardHeader>
               <CardContent className="space-y-3">
                 <Button
@@ -321,7 +321,7 @@ function AskQuestionCard({
   return (
     <Card id="ask-question-form">
       <CardHeader>
-        <CardTitle className="text-lg font-heading">Đặt câu hỏi</CardTitle>
+        <CardTitle className="text-lg font-heading uppercase">Đặt câu hỏi</CardTitle>
       </CardHeader>
       <CardContent className="space-y-4">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
