@@ -28,7 +28,7 @@ export default function RootLayout({
     <html lang="vi">
       <body className={`${montserrat.className} ${montserrat.variable}`}>
         <Suspense fallback={null}>{children}</Suspense>
-        <FloatingChatbot />
+        <FloatingChatbotGate />
         <Analytics />
       </body>
     </html>
