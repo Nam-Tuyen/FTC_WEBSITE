@@ -7,7 +7,7 @@ import {
   normalizeVi,
 } from "@/lib/kb/ftc";
 
-const GEMINI_MODEL = process.env.GEMINI_MODEL || "gemini-1.5-pro";
+const GEMINI_MODEL = process.env.GEMINI_MODEL || "gemini-2.5-flash";
 const GEMINI_ENDPOINT =
   `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent`;
 
@@ -77,7 +77,7 @@ export async function POST(req: Request) {
     const body = {
       contents,
       systemInstruction: { role: "system", parts: [{ text: systemInstruction }] },
-      generationConfig: { temperature: 0.6, topK: 32, topP: 0.95, maxOutputTokens: 1024 },
+      generationConfig: { temperature: 0.6, topK: 32, topP: 0.95, maxOutputTokens: 1024, responseMimeType: "text/markdown" },
       safetySettings: [
         { category: "HARM_CATEGORY_DANGEROUS_CONTENT", threshold: "BLOCK_MEDIUM_AND_ABOVE" },
         { category: "HARM_CATEGORY_HATE_SPEECH", threshold: "BLOCK_MEDIUM_AND_ABOVE" },
@@ -99,6 +99,7 @@ export async function POST(req: Request) {
       return new NextResponse(JSON.stringify({
         text: "Xin lỗi, hệ thống đang bận hoặc API gặp sự cố. Vui lòng thử lại sau.",
         source: "fallback",
+        model: GEMINI_MODEL,
         error: `http_${r.status}${errText ? ": " + errText.slice(0, 200) : ""}`,
       }), { status: 200, headers: baseHeaders });
     }
