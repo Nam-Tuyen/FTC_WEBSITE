@@ -3,6 +3,7 @@ import { NextResponse } from "next/server";
 import {
   matchClubFaq,
   getBotFallbackAnswer,
+  normalizeVi,
   buildClubContextBlock,
 } from "@/lib/club-faq";
 
@@ -35,14 +36,7 @@ export async function POST(req: Request) {
       "Access-Control-Allow-Headers": "Content-Type",
     } as const;
 
-    // 1) Ưu tiên FAQ nội bộ → trả ngay nếu khớp
-    const faqHit = matchClubFaq(prompt);
-    if (faqHit && typeof faqHit === "string" && faqHit.trim()) {
-      const clean = cleanText(faqHit);
-      return new NextResponse(JSON.stringify({ text: clean }), { status: 200, headers: baseHeaders });
-    }
-
-    // 2) Chuẩn bị gọi Gemini
+    // 1) Chuẩn bị gọi Gemini
     const apiKey =
       process.env.GEMINI_API_KEY ??
       process.env.GOOGLE_API_KEY ?? "";
@@ -55,7 +49,7 @@ export async function POST(req: Request) {
       });
     }
 
-    // 3) System instruction + club context + history
+    // 2) System instruction + club context + history
     const systemInstruction = [
       "Bạn là FTC AI Assistant – trợ lý của CLB Công nghệ – Tài chính (FTC) thuộc UEL.",
       "Mục tiêu: trả lời tự nhiên bằng tiếng Việt, ưu tiên dữ liệu CLB nếu câu hỏi liên quan.",
@@ -66,6 +60,15 @@ export async function POST(req: Request) {
     ].join("\n");
 
     const contextBlock = buildClubContextBlock(prompt);
+
+    // (tuỳ) FAQ snippet đưa vào ngữ cảnh, không trả sớm
+    let faqSnippet = "";
+    try {
+      const hit = matchClubFaq?.(prompt);
+      if (typeof hit === "string" && hit.trim()) {
+        faqSnippet = `\n\n# FAQ LIÊN QUAN\n${normalizeVi(hit.trim())}\n`;
+      }
+    } catch {}
 
     const contents: Array<{ role: "user" | "model"; parts: { text: string }[] }> = [];
 
@@ -79,7 +82,7 @@ export async function POST(req: Request) {
     if (Array.isArray(history)) {
       for (const h of history.slice(-8)) {
         if (h?.role === "user" || h?.role === "model") {
-          contents.push({ role: h.role, parts: [{ text: cleanText(h.content) }] });
+          contents.push({ role: h.role, parts: [{ text: normalizeVi(h.content) }] });
         }
       }
     }
@@ -88,8 +91,8 @@ export async function POST(req: Request) {
     contents.push({
       role: "user",
       parts: [
-        { text: contextBlock },
-        { text: `\n\n# CÂU HỎI\n${cleanText(prompt)}` },
+        { text: contextBlock + faqSnippet },
+        { text: `\n\n# CÂU HỎI\n${normalizeVi(prompt)}` },
         { text: "\n\n# YÊU CẦU TRẢ LỜI\n- Dùng tiếng Việt tự nhiên, ngắn gọn.\n- Ưu tiên dữ liệu CLB trong NGỮ CẢNH nếu liên quan.\n- Thiếu dữ liệu thì nói chưa có, không bịa.\n- Không sinh ký tự lạ." },
       ],
     });
@@ -127,7 +130,7 @@ export async function POST(req: Request) {
       .map((p: any) => p?.text || "")
       .join("") || "").toString();
 
-    const clean = cleanText(outText);
+    const clean = normalizeVi(outText);
 
     return new NextResponse(
       JSON.stringify({ text: clean || getBotFallbackAnswer(prompt) }),
