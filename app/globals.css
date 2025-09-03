@@ -381,3 +381,12 @@ select {
     text-shadow: 0 0 15px #00bfff;
   }
 }
+
+/* Utility: hide scrollbars (used for horizontal nav scrolling) */
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
