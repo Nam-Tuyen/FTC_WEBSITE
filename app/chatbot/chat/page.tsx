@@ -31,7 +31,7 @@ const suggestedQuestions = [
   "Có cần kinh nghiệm trước không?",
   "Câu lạc bộ có hỗ trợ dự án cá nhân không?",
   "Làm sao liên hệ Ban Chủ nhiệm?",
-  "Các công cụ học tập được cung cấp là gì?",
+  "Các công cụ h��c tập được cung cấp là gì?",
   "Có chương trình mentoring không?",
 ]
 
@@ -82,7 +82,7 @@ export default function ChatbotPage() {
     setIsTyping(true)
 
     try {
-      const res = await fetch("/chatbot/api/chat/gemini", {
+      const res = await fetch("/api/chat/gemini", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ prompt: text, history }),
