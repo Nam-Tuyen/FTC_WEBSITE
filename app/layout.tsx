@@ -3,7 +3,7 @@ import type { Metadata } from "next"
 import { Montserrat } from "next/font/google"
 import { Analytics } from "@vercel/analytics/next"
 import { Suspense } from "react"
-import { FloatingChatbot } from "@/components/floating-chatbot"
+import { FloatingChatbotGate } from "@/components/floating-chatbot-gate"
 import "./globals.css"
 
 const montserrat = Montserrat({
