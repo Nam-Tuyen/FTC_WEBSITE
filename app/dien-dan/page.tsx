@@ -119,6 +119,12 @@ export default function ForumPage() {
 
     setQuestions((prev) => [newQ, ...prev])
 
+    const hasValidMssv = !!data.studentId && /^K\d{9}$/.test(data.studentId)
+
+    if (!hasValidMssv) {
+      return
+    }
+
     try {
       await Promise.allSettled([
         fetch('/api/forum/questions', {
