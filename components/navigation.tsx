@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useRef } from "react"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Menu, X, Zap, Shield, Cpu, Info } from "lucide-react"
@@ -19,6 +19,7 @@ const navigationItems = [
 
 export function Navigation() {
   const [isOpen, setIsOpen] = useState(false)
+  const menuScrollRef = useRef<HTMLDivElement | null>(null)
 
   return (
     <nav className="gradient-bg border-b border-accent/30 sticky top-0 z-50 backdrop-blur-md">
@@ -97,7 +98,15 @@ export function Navigation() {
         <div
           className={`md:hidden transition-all duration-300 overflow-hidden ${isOpen ? "max-h-[70vh] opacity-100" : "max-h-0 opacity-0"}`}
         >
-          <div className="px-2 pt-4 pb-6 space-y-2 bg-card/50 backdrop-blur-md rounded-xl mt-4 border border-accent/20 glow overflow-y-auto overscroll-contain max-h-[60vh] pr-1">
+          <div
+            ref={menuScrollRef}
+            onWheel={(e) => {
+              if (!menuScrollRef.current) return
+              e.preventDefault()
+              menuScrollRef.current.scrollTop += e.deltaY * 2
+            }}
+            className="px-2 pt-4 pb-6 space-y-2 bg-card/50 backdrop-blur-md rounded-xl mt-4 border border-accent/20 glow overflow-y-auto overscroll-contain max-h-[60vh] pr-1"
+          >
             {navigationItems.map((item) => {
               const IconComponent = item.icon
               return (
