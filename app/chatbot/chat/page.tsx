@@ -23,7 +23,7 @@ const suggestedQuestions = [
   "Làm thế nào để tham gia câu lạc bộ?",
   "Các ban trong câu lạc bộ làm gì?",
   "Thời gian sinh hoạt diễn ra khi nào?",
-  "Cần kỹ năng gì để ứng tuyển?",
+  "C��n kỹ năng gì để ứng tuyển?",
 ]
 
 const suggestionAnswers: Record<string, string> = {
@@ -52,6 +52,8 @@ export default function ChatbotPage() {
   const [isTyping, setIsTyping] = useState(false)
   const [hasMounted, setHasMounted] = useState(false)
   const messagesEndRef = useRef<HTMLDivElement>(null)
+const isSendingRef = useRef(false)
+const lastSentRef = useRef<{ text: string; time: number }>({ text: "", time: 0 })
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })
@@ -68,6 +70,12 @@ export default function ChatbotPage() {
   const handleSendMessage = async () => {
     const text = inputValue.trim()
     if (!text) return
+
+    if (isSendingRef.current) return
+    const now = Date.now()
+    if (lastSentRef.current.text === text && now - lastSentRef.current.time < 800) return
+    lastSentRef.current = { text, time: now }
+    isSendingRef.current = true
 
     const userMessage: Message = {
       id: Date.now().toString(),
@@ -86,6 +94,17 @@ export default function ChatbotPage() {
     setIsTyping(true)
 
     try {
+      const canned = suggestionAnswers[text]
+      if (canned) {
+        const botMessage: Message = {
+          id: (Date.now() + 1).toString(),
+          content: canned,
+          sender: "bot",
+          timestamp: new Date(),
+        }
+        setMessages((prev) => [...prev, botMessage])
+        return
+      }
       const res = await fetch("/api/chat/gemini", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -118,6 +137,7 @@ export default function ChatbotPage() {
       setMessages((prev) => [...prev, botMessage])
     } finally {
       setIsTyping(false)
+      isSendingRef.current = false
     }
   }
 
@@ -127,7 +147,10 @@ export default function ChatbotPage() {
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter" && !e.shiftKey) {
+      // @ts-expect-error - browser nativeEvent
+      if (e.nativeEvent?.isComposing) return
       e.preventDefault()
+      e.stopPropagation()
       handleSendMessage()
     }
   }
@@ -154,11 +177,11 @@ export default function ChatbotPage() {
       </section>
 
       {/* Main layout */}
-      <div className="max-w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 overflow-x-auto">
+      <div className="max-w-full mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-0 overflow-x-auto">
         <div className="min-w-[1200px] grid grid-cols-[1fr_minmax(720px,800px)_360px_1fr] grid-rows-[auto_auto] gap-8">
           {/* Chat Interface */}
           <div className="col-start-2 col-span-1 row-span-2">
-            <Card className="h-full flex flex-col bg-card/20 backdrop-blur-sm border-accent/20 ring-1 ring-accent/10 hover:border-accent/40 transition-all duration-500 hover:glow">
+            <Card className="h-full min-h-[70vh] flex flex-col bg-card/20 backdrop-blur-sm border-accent/20 ring-1 ring-accent/10 hover:border-accent/40 transition-all duration-500 hover:glow">
               <CardHeader className="border-b border-accent/20">
                 <div className="flex items-center space-x-3">
                   <Avatar>
@@ -246,7 +269,7 @@ export default function ChatbotPage() {
               </CardContent>
 
               {/* Input */}
-              <div className="border-t border-accent/20 p-4 bg-card/10 backdrop-blur-sm">
+              <div className="border-t border-accent/20 p-4 bg-card/10 backdrop-blur-sm sticky bottom-0 mt-auto">
                 <div className="flex space-x-2">
                   <Input
                     value={inputValue}
@@ -324,7 +347,7 @@ export default function ChatbotPage() {
                   </div>
                   <div>
                     <h4 className="font-semibold text-sm">Hỗ trợ 24/7</h4>
-                    <p className="text-xs text-muted-foreground">Luôn sẵn sàng giúp đỡ</p>
+                    <p className="text-xs text-muted-foreground">Luôn s��n sàng giúp đỡ</p>
                   </div>
                 </div>
               </CardContent>
