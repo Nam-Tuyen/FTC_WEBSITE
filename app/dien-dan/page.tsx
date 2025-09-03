@@ -126,33 +126,41 @@ export default function ForumPage() {
     }
 
     try {
-      await Promise.allSettled([
-        fetch('/api/forum/questions', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            studentId: data.studentId,
-            name: authorName,
-            title: data.title,
-            content: data.content,
-            category: data.category,
-            questionId: newId,
-          }),
-        }),
-        fetch('/api/forum/notion/question', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            studentId: data.studentId,
-            name: authorName,
-            title: data.title,
-            content: data.content,
-            category: data.category,
-            questionId: newId,
-            authorId: currentUserId,
-          }),
-        }),
-      ])
+      const tasks: Promise<any>[] = []
+      tasks.push((async () => {
+        try {
+          await fetch('/api/forum/questions', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              studentId: data.studentId,
+              name: authorName,
+              title: data.title,
+              content: data.content,
+              category: data.category,
+              questionId: newId,
+            }),
+          })
+        } catch (_) {}
+      })())
+      tasks.push((async () => {
+        try {
+          await fetch('/api/forum/notion/question', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              studentId: data.studentId,
+              name: authorName,
+              title: data.title,
+              content: data.content,
+              category: data.category,
+              questionId: newId,
+              authorId: currentUserId,
+            }),
+          })
+        } catch (_) {}
+      })())
+      await Promise.allSettled(tasks)
     } catch (e) {}
   }
 
