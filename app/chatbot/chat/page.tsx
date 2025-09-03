@@ -21,19 +21,23 @@ interface Message {
 const suggestedQuestions = [
   "Câu lạc bộ có những hoạt động gì?",
   "Làm thế nào để tham gia câu lạc bộ?",
-  "DeFi là gì và tại sao nó quan trọng?",
   "Các ban trong câu lạc bộ làm gì?",
-  "Có cơ hội thực tập nào không?",
-  "Blockchain hoạt động như thế nào?",
-  "Thời gian sinh hoạt diễn ra vào khi nào?",
-  "Chi phí tham gia là bao nhiêu?",
+  "Thời gian sinh hoạt diễn ra khi nào?",
   "Cần kỹ năng gì để ứng tuyển?",
-  "Có cần kinh nghiệm trước không?",
-  "Câu lạc bộ có hỗ trợ dự án cá nhân không?",
-  "Làm sao liên hệ Ban Chủ nhiệm?",
-  "Các công cụ h��c tập được cung cấp là gì?",
-  "Có chương trình mentoring không?",
 ]
+
+const suggestionAnswers: Record<string, string> = {
+  "Câu lạc bộ có những hoạt động gì?":
+    "FTC tổ chức: 1) Workshop/Tech-talk Fintech, 2) Cuộc thi/Thử thách công nghệ, 3) Dự án nội bộ (data, blockchain, web/app), 4) Hoạt động gắn kết và mentoring. Xem mục Hoạt động để biết lịch chi tiết.",
+  "Làm thế nào để tham gia câu lạc bộ?":
+    "Vào trang Ứng tuyển, điền biểu mẫu theo hướng dẫn và hoàn tất phỏng vấn ngắn. Khi có đợt mở đơn, thông báo sẽ đăng trên website/fanpage.",
+  "Các ban trong câu lạc bộ làm gì?":
+    "CLB có các ban: Học thuật (nội dung/giảng dạy), Sự kiện (tổ chức), Truyền thông (hình ảnh/nội dung), Tài chính cá nhân (giáo dục tài chính), Nhân sự (văn hóa & vận hành).",
+  "Thời gian sinh hoạt diễn ra khi nào?":
+    "Sinh hoạt định kỳ buổi tối trong tuần hoặc cuối tuần (tùy giai đoạn). Lịch cụ thể sẽ thông báo trước trên nhóm nội bộ/website.",
+  "Cần kỹ năng gì để ứng tuyển?":
+    "Cần tinh thần chủ động học, kỹ năng cơ bản về công nghệ/kinh tế tùy vị trí; biết Git/Excel/Python/Thiết kế là lợi thế. Đọc kỹ mô tả ở trang Ứng tuyển.",
+}
 
 export default function ChatbotPage() {
   const [messages, setMessages] = useState<Message[]>([
