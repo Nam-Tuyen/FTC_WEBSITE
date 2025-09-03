@@ -331,7 +331,7 @@ const lastSentRef = useRef<{ text: string; time: number }>({ text: "", time: 0 }
                 </div>
 
                 <div className="flex items-start space-x-3">
-                  <div className="w-8 h-8 bg-accent/10 rounded-lg flex items-center justify-center">
+                  <div className="w-8 h-8 bg-primary/10 rounded-lg flex items-center justify-center">
                     <Zap className="h-4 w-4 text-accent" />
                   </div>
                   <div>
@@ -341,7 +341,7 @@ const lastSentRef = useRef<{ text: string; time: number }>({ text: "", time: 0 }
                 </div>
 
                 <div className="flex items-start space-x-3">
-                  <div className="w-8 h-8 bg-chart-3/10 rounded-lg flex items-center justify-center">
+                  <div className="w-8 h-8 bg-primary/10 rounded-lg flex items-center justify-center">
                     <MessageSquare className="h-4 w-4 text-accent" />
                   </div>
                   <div>
