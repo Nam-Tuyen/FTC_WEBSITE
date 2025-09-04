@@ -1,4 +1,6 @@
-import { google, sheets_v4, drive_v3 } from 'googleapis'
+import 'server-only'
+import { google } from 'googleapis'
+import type { sheets_v4 } from 'googleapis'
 
 const SCOPES = [
   'https://www.googleapis.com/auth/spreadsheets',
@@ -12,17 +14,12 @@ type ServiceAccount = {
 
 function loadServiceAccount(): ServiceAccount {
   const b64 = process.env.GOOGLE_SERVICE_ACCOUNT_JSON_BASE64
-  const keyFile = process.env.GOOGLE_SERVICE_ACCOUNT_KEY_FILE
   if (b64) {
     const json = Buffer.from(b64, 'base64').toString('utf-8')
     const parsed = JSON.parse(json)
     return { client_email: parsed.client_email, private_key: parsed.private_key }
   }
-  if (keyFile) {
-    // eslint-disable-next-line @typescript-eslint/no-var-requires
-    const parsed = require(keyFile)
-    return { client_email: parsed.client_email, private_key: parsed.private_key }
-  }
+
   const client_email = process.env.GOOGLE_CLIENT_EMAIL
   const private_key = process.env.GOOGLE_PRIVATE_KEY?.replace(/\\n/g, '\n')
   if (!client_email || !private_key) {
@@ -77,7 +74,7 @@ export async function getOrCreateSpreadsheetInFolder(folderId: string, name: str
   const q = [
     "mimeType='application/vnd.google-apps.spreadsheet'",
     `'${folderId}' in parents`,
-    `name='${name.replace(/'/g, "\'")}'`,
+    `name='${name.replace(/'/g, "\\'")}'`,
     'trashed=false',
   ].join(' and ')
   const list = await drive.files.list({ q, fields: 'files(id,name)' })
