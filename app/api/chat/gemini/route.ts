@@ -1,3 +1,5 @@
+import { matchSuggestedQuestion, buildGroundedPrompt } from '@/lib/faq-grounding'
+
 export const runtime = 'edge';
 export const dynamic = 'force-dynamic';
 
@@ -26,9 +28,12 @@ export async function POST(req: Request) {
     }
 
     const model = process.env.GEMINI_MODEL || 'gemini-1.5-flash';
-    const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
 
-    const body = { contents: [{ parts: [{ text: prompt || 'Hello from Vercel + Gemini' }] }] };
+    const { matched } = matchSuggestedQuestion(prompt || '');
+    const contentText = matched ? buildGroundedPrompt(prompt || '') : (prompt || 'Hello from Vercel + Gemini');
+
+    const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
+    const body = { contents: [{ parts: [{ text: contentText }] }] };
 
     const r = await fetch(url, {
       method: 'POST',
@@ -42,10 +47,13 @@ export async function POST(req: Request) {
     }
 
     const text = extractTextFromGemini(data);
-    return new Response(JSON.stringify({ text, source: 'gemini', model, raw: data }), {
-      status: 200,
-      headers: { 'Content-Type': 'application/json' },
-    });
+    return new Response(
+      JSON.stringify({ text, source: 'gemini', model, raw: data, grounded: Boolean(matched) }),
+      {
+        status: 200,
+        headers: { 'Content-Type': 'application/json' },
+      }
+    );
   } catch (e: any) {
     return new Response(JSON.stringify({ error: true, message: e?.message || 'Unknown error' }), { status: 500 });
   }
