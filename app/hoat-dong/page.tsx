@@ -1,20 +1,75 @@
 import { Navigation } from "@/components/navigation"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
-import {
-  BookOpen,
-  Trophy,
-  Briefcase,
-  Users,
-  Share2,
-  Handshake,
-  Settings,
-  BarChart3,
-  Rocket,
-  ArrowRight,
-} from "lucide-react"
+import { Rocket, ArrowRight } from "lucide-react"
 import Link from "next/link"
+
+const IMAGES = {
+  attacker:
+    "https://cdn.builder.io/api/v1/image/assets%2Fa0639610e72c4f2e81f569a8823b8f03%2F9feb8cd50fe2408b95de0441ea04b6db?format=webp&width=800",
+  talkshow:
+    "https://cdn.builder.io/api/v1/image/assets%2Fa0639610e72c4f2e81f569a8823b8f03%2Fd9bc07b1b20f473fa7c4e67dfe0f4171?format=webp&width=800",
+  company:
+    "https://cdn.builder.io/api/v1/image/assets%2Fa0639610e72c4f2e81f569a8823b8f03%2Fc58c8142a48b4cf19cdaaa97a4ff29b7?format=webp&width=800",
+  training:
+    "https://cdn.builder.io/api/v1/image/assets%2Fa0639610e72c4f2e81f569a8823b8f03%2F0b7e7e182b494380baf0cadf0a930bb2?format=webp&width=800",
+  workshop:
+    "https://cdn.builder.io/api/v1/image/assets%2Fa0639610e72c4f2e81f569a8823b8f03%2F17ac3fbb64b248ffa3a7092b52cc2091?format=webp&width=800",
+  trip:
+    "https://cdn.builder.io/api/v1/image/assets%2Fa0639610e72c4f2e81f569a8823b8f03%2Fb6bc0875a1644767a21595c092d93438?format=webp&width=800",
+}
+
+const activities = [
+  {
+    title: "Cuộc thi ATTACKER",
+    body:
+      "ATTACKER là cuộc thi học thuật thường niên do FTC tổ chức, thu hút đông đảo sinh viên yêu thích và đam mê công nghệ tài chính. Mỗi mùa thi mang đến một chủ đề mới gắn liền với các xu hướng công nghệ hiện đại, giúp thí sinh rèn luyện tư duy sáng tạo, trải nghiệm thực tế và chinh phục những giải thưởng giá trị. Năm 2025, ATTACKER đã bước vào vòng 3 và đang diễn ra vô cùng kịch tính.",
+    img: IMAGES.attacker,
+    alt: "Cuộc thi ATTACKER của FTC",
+  },
+  {
+    title: "Talkshow chuyên đề",
+    body:
+      "Hằng năm, FTC tổ chức nhiều buổi Talkshow xoay quanh các chủ đề FinTech và công nghệ số. Đây là cơ hội để sinh viên giao lưu, lắng nghe chia sẻ từ các chuyên gia đầu ngành và đặt câu hỏi trực tiếp. Một số chương trình tiêu biểu có thể kể đến như: Blockchain & AI: Con đường sự nghiệp trong kỷ nguyên số hóa; Chứng khoán thời công nghệ – Tư duy tiếp cận phù hợp.",
+    img: IMAGES.talkshow,
+    alt: "Talkshow chuyên đề FinTech",
+  },
+  {
+    title: "Tham quan doanh nghiệp",
+    body:
+      "FTC hợp tác cùng nhiều doanh nghiệp để tổ chức chương trình tham quan thực tế. Tiêu biểu là chuyến tham quan VNG, nơi các thành viên có cơ hội trải nghiệm môi trường làm việc, tìm hiểu hoạt động công ty và khám phá tiềm năng nghề nghiệp trong lĩnh vực công nghệ tài chính.",
+    img: IMAGES.company,
+    alt: "Chương trình tham quan doanh nghiệp",
+  },
+  {
+    title: "FTC Training & Sharing",
+    body:
+      "Là một câu lạc bộ học thuật, FTC đặc biệt chú trọng hoạt động training nội bộ và chia sẻ kiến thức. Thành viên sẽ được trang bị kiến thức FinTech từ cơ bản đến nâng cao, rèn luyện kỹ năng nghề nghiệp và giải đáp thắc mắc về cơ hội việc làm trong ngành. Ngoài ra, fanpage FTC cũng thường xuyên đăng tải các bài viết hữu ích phục vụ cộng đồng sinh viên.",
+    img: IMAGES.training,
+    alt: "FTC Training & Sharing",
+  },
+  {
+    title: "Career Day",
+    body:
+      "Chuỗi sự kiện Web3 Career Innovation gồm ba hoạt động chính: talkshow, doanh nghiệp đặt booth và phỏng vấn trực tiếp. Chương trình hướng đến việc giúp sinh viên tiếp cận công nghệ Blockchain & Web3, thay đổi góc nhìn tiêu cực về Crypto và mở ra cơ hội nghề nghiệp sáng tạo trong lĩnh vực tài chính – công nghệ.",
+    img: undefined,
+    alt: "Career Day Web3 Career Innovation",
+  },
+  {
+    title: "Workshop chuyên sâu",
+    body:
+      "FTC phối hợp cùng các đối tác để tổ chức các buổi workshop và tập huấn. Đây là dịp để sinh viên vừa nâng cao kiến thức chuyên môn, vừa rèn kỹ năng quản lý – tổ chức sự kiện. Hoạt động nổi bật là Workshop Training: VC Selection Criteria, thuộc chuỗi sự kiện ATTACKER 2025, mang đến cái nhìn toàn diện về cách quỹ đầu tư mạo hiểm lựa chọn dự án khởi nghiệp.",
+    img: IMAGES.workshop,
+    alt: "Workshop chuyên sâu của FTC",
+  },
+  {
+    title: "FTC Trip",
+    body:
+      "Bên cạnh các hoạt động học thuật, FTC còn tổ chức các chuyến đi gắn kết cộng đồng. FTC Trip là hoạt động thường niên được mong chờ nhất, nơi các thành viên và cựu thành viên cùng nhau tham gia những chuyến đi “chữa lành”, xả stress và tạo kỷ niệm đáng nhớ. Ngoài ra, còn có nhiều mini trip định kỳ hàng tháng hoặc hàng quý giúp các thành viên kết nối chặt chẽ hơn.",
+    img: IMAGES.trip,
+    alt: "FTC Trip gắn kết cộng đồng",
+  },
+]
 
 export default function ActivitiesPage() {
   return (
@@ -32,147 +87,45 @@ export default function ActivitiesPage() {
             <span className="text-sm font-bold text-accent uppercase tracking-wider">FTC Activities</span>
           </div>
           <h1 className="font-heading font-black text-5xl sm:text-6xl text-foreground mb-6 text-glow">
-            HOẠT ĐỘNG <span className="bg-gradient-to-r from-accent to-accent bg-clip-text text-transparent">CÔNG NGHỆ</span>
+            HOẠT ĐỘNG <span className="bg-gradient-to-r from-accent to-accent bg-clip-text text-transparent">CÂU LẠC BỘ</span>
           </h1>
           <p className="text-xl text-foreground/80 max-w-4xl mx-auto text-pretty leading-relaxed">
-            Toàn cảnh hoạt động của Câu lạc bộ Công nghệ – Tài chính (FTC): học sâu – làm thật – kết nối rộng để tạo giá trị.
+            FTC không chỉ là nơi học tập về công nghệ tài chính mà còn là cộng đồng năng động với nhiều hoạt động đa dạng, mang lại kiến thức, kỹ năng và cơ hội kết nối thực tế cho sinh viên.
           </p>
         </div>
       </section>
 
       <section className="py-16 px-4 sm:px-6 lg:px-8 relative">
-        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8">
-          {/* 1) Đào tạo – học thuật */}
-          <Card className="bg-card/30 border-accent/20 backdrop-blur-sm">
-            <CardHeader className="pb-4">
-              <div className="flex items-center gap-3">
-                <BookOpen className="h-7 w-7 text-accent" />
-                <CardTitle className="text-2xl font-bold text-foreground">Đào tạo – học thuật</CardTitle>
-              </div>
-            </CardHeader>
-            <CardContent className="pt-0 space-y-3 text-foreground/90 leading-relaxed">
-              <p>Chuỗi nền tảng Fintech: tổng quan công nghệ tài chính, Blockchain, tiền mã hóa.</p>
-              <p>Chuyên đề kỹ thuật: xử lý dữ liệu, SQL cho phân tích, phân tích thuật toán giao dịch.</p>
-              <p>Mời chuyên gia/đơn vị hàng đầu đào tạo thực chiến, cung cấp tài liệu học thuật chuẩn hóa.</p>
-            </CardContent>
-          </Card>
+        <div className="max-w-7xl mx-auto space-y-10">
+          {activities.map((item, idx) => (
+            <Card key={item.title} className="bg-card/30 border-accent/20 backdrop-blur-sm">
+              <CardHeader className="pb-0">
+                <CardTitle className="text-2xl font-bold text-foreground">{item.title}</CardTitle>
+              </CardHeader>
+              <CardContent className="pt-6">
+                <div className={`grid grid-cols-1 md:grid-cols-2 gap-8 items-start ${idx % 2 === 1 ? "md:[&>div:first-child]:order-2" : ""}`}>
+                  {item.img ? (
+                    <div className="rounded-xl overflow-hidden border border-accent/20 glow">
+                      <img
+                        src={item.img}
+                        alt={item.alt}
+                        loading="lazy"
+                        className="w-full h-64 md:h-full object-cover"
+                      />
+                    </div>
+                  ) : (
+                    <div className="rounded-xl border border-accent/20 bg-accent/10 h-64 md:h-full flex items-center justify-center text-accent text-center px-6">
+                      <p>Vui lòng cung cấp ảnh minh họa cho hoạt động này để hiển thị đầy đủ.</p>
+                    </div>
+                  )}
 
-          {/* 2) Cuộc thi ATTACKER – Algorithmic Trading */}
-          <Card className="bg-card/30 border-accent/20 backdrop-blur-sm">
-            <CardHeader className="pb-4">
-              <div className="flex items-center gap-3">
-                <Trophy className="h-7 w-7 text-accent" />
-                <CardTitle className="text-2xl font-bold text-foreground">Cuộc thi ATTACKER – Algorithmic Trading</CardTitle>
-              </div>
-            </CardHeader>
-            <CardContent className="pt-0 space-y-3 text-foreground/90 leading-relaxed">
-              <p>Sân chơi học thuật về giao dịch thuật toán, áp dụng cho thị trường chứng khoán Việt Nam.</p>
-              <p>Vòng chung kết cấp vốn 50 triệu đồng/đội để giao dịch thực tế trong 30 ngày.</p>
-              <p>Sau 3 mùa: gần 2.000 thí sinh từ ~50 trường; nhiều ý tưởng được BGK gợi ý hợp tác, ươm mầm startup.</p>
-            </CardContent>
-          </Card>
-
-          {/* 3) Trải nghiệm doanh nghiệp – thực tế nghề nghiệp */}
-          <Card className="bg-card/30 border-accent/20 backdrop-blur-sm">
-            <CardHeader className="pb-4">
-              <div className="flex items-center gap-3">
-                <Briefcase className="h-7 w-7 text-accent" />
-                <CardTitle className="text-2xl font-bold text-foreground">Trải nghiệm doanh nghiệp – thực tế nghề nghiệp</CardTitle>
-              </div>
-            </CardHeader>
-            <CardContent className="pt-0 space-y-3 text-foreground/90 leading-relaxed">
-              <p>Tham quan doanh nghiệp công nghệ/tài chính (ví dụ: VNG, Metub…).</p>
-              <p>Trao đổi tuyển dụng, quy trình làm việc, định hướng kỹ năng; hỗ trợ kiến tập/thực tập theo chuẩn học phần.</p>
-            </CardContent>
-          </Card>
-
-          {/* 4) Kết nối nghề nghiệp – hệ sinh thái đổi mới sáng tạo */}
-          <Card className="bg-card/30 border-accent/20 backdrop-blur-sm">
-            <CardHeader className="pb-4">
-              <div className="flex items-center gap-3">
-                <Users className="h-7 w-7 text-accent" />
-                <CardTitle className="text-2xl font-bold text-foreground">Kết nối nghề nghiệp – hệ sinh thái đổi mới sáng tạo</CardTitle>
-              </div>
-            </CardHeader>
-            <CardContent className="pt-0 space-y-3 text-foreground/90 leading-relaxed">
-              <p>Sự kiện lớn: Web3 Career Innovation (thu hút 3.000+ sinh viên) về xu hướng nghề nghiệp Web3/Blockchain.</p>
-              <p>Talkshow định hướng nhân lực thời chuyển đổi số; kết nối mentor – cố vấn; ngày hội việc làm, networking.</p>
-            </CardContent>
-          </Card>
-
-          {/* 5) Cộng đồng học thuật & chia sẻ */}
-          <Card className="bg-card/30 border-accent/20 backdrop-blur-sm">
-            <CardHeader className="pb-4">
-              <div className="flex items-center gap-3">
-                <Share2 className="h-7 w-7 text-accent" />
-                <CardTitle className="text-2xl font-bold text-foreground">Cộng đồng học thuật & chia sẻ</CardTitle>
-              </div>
-            </CardHeader>
-            <CardContent className="pt-0 space-y-3 text-foreground/90 leading-relaxed">
-              <p>Nhóm nghiên cứu sinh viên, diễn đàn tài liệu, coding hour, reading group.</p>
-              <p>Chuỗi FTCCN Sharing: nội dung thực tiễn về quản lý tài chính cá nhân và công cụ công nghệ hỗ trợ.</p>
-            </CardContent>
-          </Card>
-
-          {/* 6) Hợp tác doanh nghiệp – tài trợ */}
-          <Card className="bg-card/30 border-accent/20 backdrop-blur-sm">
-            <CardHeader className="pb-4">
-              <div className="flex items-center gap-3">
-                <Handshake className="h-7 w-7 text-accent" />
-                <CardTitle className="text-2xl font-bold text-foreground">Hợp tác doanh nghiệp – tài trợ</CardTitle>
-              </div>
-            </CardHeader>
-            <CardContent className="pt-0 space-y-3 text-foreground/90 leading-relaxed">
-              <p>Kết nối 50+ doanh nghiệp/đơn vị đồng hành (chứng khoán, công nghệ, dữ liệu…).</p>
-              <p>Phối hợp tổ chức sự kiện, học bổng, tài trợ cuộc thi; xây dựng cầu nối sinh viên – nhà tuyển dụng.</p>
-            </CardContent>
-          </Card>
-
-          {/* 7) Tổ chức – vận hành (các ban chuyên môn) */}
-          <Card className="bg-card/30 border-accent/20 backdrop-blur-sm">
-            <CardHeader className="pb-4">
-              <div className="flex items-center gap-3">
-                <Settings className="h-7 w-7 text-accent" />
-                <CardTitle className="text-2xl font-bold text-foreground">Tổ chức – vận hành (các ban chuyên môn)</CardTitle>
-              </div>
-            </CardHeader>
-            <CardContent className="pt-0 space-y-3 text-foreground/90 leading-relaxed">
-              <p>Ban Học thuật: thiết kế nội dung, tài liệu, đại diện CLB dự thi học thuật/công nghệ.</p>
-              <p>Ban Sự kiện: lên ý tưởng, kịch bản, điều phối, MC; quản trị thư điện tử đối ngoại.</p>
-              <p>Ban Truyền thông: quản lý fanpage, sáng tạo nội dung/đồ họa/video, chụp ảnh – ghi hình, liên kết truyền thông.</p>
-              <p>Ban Tài chính cá nhân: trợ giảng qua boardgame MoneyWe; viết nội dung, tổ chức workshop/talkshow.</p>
-              <p>Ban Nhân sự: xây dựng văn hóa – nội quy; phân công nhân sự; hậu cần chương trình; theo dõi quỹ minh bạch.</p>
-            </CardContent>
-          </Card>
-
-          {/* 8) Kết quả tiêu biểu */}
-          <Card className="bg-card/30 border-accent/20 backdrop-blur-sm">
-            <CardHeader className="pb-4">
-              <div className="flex items-center gap-3">
-                <BarChart3 className="h-7 w-7 text-accent" />
-                <CardTitle className="text-2xl font-bold text-foreground">Kết quả tiêu biểu</CardTitle>
-              </div>
-            </CardHeader>
-            <CardContent className="pt-0 text-foreground/90 leading-relaxed">
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-6">
-                <div className="rounded-lg bg-accent/10 border border-accent/20 p-4 text-center">
-                  <div className="text-3xl font-extrabold text-accent">~35</div>
-                  <div className="text-sm text-foreground/80">chương trình trong 4 năm</div>
+                  <div className="text-foreground/90 leading-relaxed text-pretty">
+                    <p>{item.body}</p>
+                  </div>
                 </div>
-                <div className="rounded-lg bg-accent/10 border border-accent/20 p-4 text-center">
-                  <div className="text-3xl font-extrabold text-accent">3.000+</div>
-                  <div className="text-sm text-foreground/80">sinh viên cộng đồng</div>
-                </div>
-                <div className="rounded-lg bg-accent/10 border border-accent/20 p-4 text-center">
-                  <div className="text-3xl font-extrabold text-accent">52</div>
-                  <div className="text-sm text-foreground/80">tổ chức đồng hành</div>
-                </div>
-              </div>
-              <p>
-                FTC hướng tới <span className="font-semibold text-accent">“Giáo dục – Kết nối – Chia sẻ”</span>: học sâu – làm thật – kết nối rộng, bệ phóng để ý tưởng đổi mới của sinh viên thành sản phẩm và cơ hội nghề nghiệp.
-              </p>
-            </CardContent>
-          </Card>
+              </CardContent>
+            </Card>
+          ))}
         </div>
       </section>
 
