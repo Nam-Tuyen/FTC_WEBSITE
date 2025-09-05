@@ -242,22 +242,21 @@ const lastSentRef = useRef<{ text: string; time: number }>({ text: "", time: 0 }
                         </Avatar>
                       )}
                       <div
-                        className={`rounded-2xl px-4 py-3 overflow-hidden break-words ${
-                          message.sender === "user"
-                            ? "bg-primary text-primary-foreground glow"
-                            : "bg-secondary/20 text-foreground border border-accent/20"
-                        }`}
-                      >
-                        <p className="text-sm whitespace-pre-wrap break-words">{message.content}</p>
-                        <p className="text-xs opacity-70 mt-1">
-                          {hasMounted
-                            ? message.timestamp.toLocaleTimeString("vi-VN", {
-                                hour: "2-digit",
-                                minute: "2-digit",
-                              })
-                            : ""}
-                        </p>
-                      </div>
+                    className={`rounded-2xl px-4 py-3 overflow-hidden break-words ${
+                      message.sender === "user"
+                        ? "bg-primary text-primary-foreground glow"
+                        : "bg-secondary/20 text-foreground border border-accent/20"
+                    }`}
+                    dangerouslySetInnerHTML={{ __html: formatMessageContent(message.content) }}
+                  />
+                  <p className="text-xs opacity-70 mt-1">
+                    {hasMounted
+                      ? message.timestamp.toLocaleTimeString("vi-VN", {
+                          hour: "2-digit",
+                          minute: "2-digit",
+                        })
+                      : ""}
+                  </p>
                       {message.sender === "user" && (
                         <Avatar className="w-8 h-8">
                           <AvatarFallback className="bg-accent text-accent-foreground">
@@ -360,7 +359,7 @@ const lastSentRef = useRef<{ text: string; time: number }>({ text: "", time: 0 }
                   </div>
                   <div>
                     <h4 className="font-semibold text-sm">Phản hồi nhanh</h4>
-                    <p className="text-xs text-muted-foreground">Trả lời trong vài gi��y</p>
+                    <p className="text-xs text-muted-foreground">Trả lời trong vài giây</p>
                   </div>
                 </div>
 
