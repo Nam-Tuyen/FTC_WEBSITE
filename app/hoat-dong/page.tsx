@@ -95,33 +95,39 @@ export default function ActivitiesPage() {
 
       <section className="py-12 px-4 sm:px-6 lg:px-8 relative">
         <div className="max-w-7xl mx-auto space-y-8">
-          {activities.map((item, idx) => (
-            <Card key={item.title} className="bg-card/30 border-accent/20 backdrop-blur-sm">
-              <CardHeader className="pb-0">
-                <CardTitle className="text-2xl font-bold text-foreground text-center uppercase">{item.title}</CardTitle>
-              </CardHeader>
-              <CardContent className="pt-6 text-center">
-                <div
-                  className={`grid gap-6 items-center justify-items-center ${item.img ? "grid-cols-1 md:grid-cols-2" : "grid-cols-1"} ${idx % 2 === 1 && item.img ? "md:[&>div:first-child]:order-2" : ""}`}
-                >
-                  {item.img && (
-                    <div className="rounded-xl overflow-hidden border border-accent/20 glow w-full max-w-xl">
-                      <img
-                        src={item.img}
-                        alt={item.alt}
-                        loading="lazy"
-                        className="w-full h-64 md:h-56 object-cover"
-                      />
-                    </div>
-                  )}
+          {activities.map((item, idx) => {
+            const isEven = idx % 2 === 1
+            return (
+              <Card
+                key={item.title}
+                className="bg-card/30 border-accent/20 backdrop-blur-sm hover:shadow-2xl transition-transform duration-300 hover:-translate-y-1"
+              >
+                <CardHeader className="pb-0">
+                  <CardTitle className="text-2xl font-bold text-foreground text-center uppercase">{item.title}</CardTitle>
+                </CardHeader>
+                <CardContent className="pt-6 text-center">
+                  <div
+                    className={`grid gap-6 items-center justify-items-center ${item.img ? "grid-cols-1 md:grid-cols-2" : "grid-cols-1"}`}
+                  >
+                    {item.img && (
+                      <div className={`rounded-xl overflow-hidden border border-accent/20 glow w-full max-w-xl ${isEven ? "md:order-2" : "md:order-1"}`}>
+                        <img
+                          src={item.img}
+                          alt={item.alt}
+                          loading="lazy"
+                          className={`w-full h-64 md:h-56 object-cover ${item.rotate ? "rotate-180" : ""}`}
+                        />
+                      </div>
+                    )}
 
-                  <div className="text-foreground/90 leading-relaxed text-pretty max-w-2xl">
-                    <p className="text-center">{item.body}</p>
+                    <div className={`text-foreground/90 leading-relaxed text-pretty max-w-2xl ${isEven ? "md:order-1" : "md:order-2"}`}>
+                      <p className="text-center">{item.body}</p>
+                    </div>
                   </div>
-                </div>
-              </CardContent>
-            </Card>
-          ))}
+                </CardContent>
+              </Card>
+            )
+          })}
         </div>
       </section>
 
