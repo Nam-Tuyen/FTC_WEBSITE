@@ -103,8 +103,10 @@ export default function ActivitiesPage() {
                 <CardTitle className="text-2xl font-bold text-foreground">{item.title}</CardTitle>
               </CardHeader>
               <CardContent className="pt-6">
-                <div className={`grid grid-cols-1 md:grid-cols-2 gap-8 items-start ${idx % 2 === 1 ? "md:[&>div:first-child]:order-2" : ""}`}>
-                  {item.img ? (
+                <div
+                  className={`grid gap-8 items-start ${item.img ? "grid-cols-1 md:grid-cols-2" : "grid-cols-1"} ${idx % 2 === 1 && item.img ? "md:[&>div:first-child]:order-2" : ""}`}
+                >
+                  {item.img && (
                     <div className="rounded-xl overflow-hidden border border-accent/20 glow">
                       <img
                         src={item.img}
@@ -112,10 +114,6 @@ export default function ActivitiesPage() {
                         loading="lazy"
                         className="w-full h-64 md:h-full object-cover"
                       />
-                    </div>
-                  ) : (
-                    <div className="rounded-xl border border-accent/20 bg-accent/10 h-64 md:h-full flex items-center justify-center text-accent text-center px-6">
-                      <p>Vui lòng cung cấp ảnh minh họa cho hoạt động này để hiển thị đầy đủ.</p>
                     </div>
                   )}
 
