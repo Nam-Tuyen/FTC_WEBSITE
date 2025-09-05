@@ -181,9 +181,8 @@ export function FloatingChatbot() {
                     className={`rounded-lg px-3 py-2 text-xs whitespace-pre-wrap ${
                       message.sender === "user" ? "bg-primary text-primary-foreground" : "bg-muted text-foreground"
                     }`}
-                  >
-                    {message.content}
-                  </div>
+                    dangerouslySetInnerHTML={{ __html: formatMessageContent(message.content) }}
+                  />
                   {message.sender === "user" && (
                     <Avatar className="w-6 h-6">
                       <AvatarFallback className="bg-accent text-accent-foreground">
