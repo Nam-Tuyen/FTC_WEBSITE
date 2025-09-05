@@ -78,49 +78,45 @@ export default function ActivitiesPage() {
     <div className="min-h-screen gradient-bg">
       <Navigation />
 
-      <section className="relative py-24 px-4 sm:px-6 lg:px-8 overflow-hidden">
+      <section className="relative py-20 px-4 sm:px-6 lg:px-8 overflow-hidden">
         <div className="absolute inset-0">
           <div className="absolute top-10 right-10 w-64 h-64 bg-accent/10 rounded-full blur-3xl animate-pulse"></div>
           <div className="absolute bottom-10 left-10 w-80 h-80 bg-accent/10 rounded-full blur-3xl animate-pulse delay-1000"></div>
         </div>
         <div className="max-w-7xl mx-auto text-center relative z-10">
-          <div className="inline-flex items-center px-6 py-3 rounded-full bg-accent/20 border border-accent/40 mb-8 glow">
-            <Rocket className="h-5 w-5 text-accent mr-3 animate-pulse" />
-            <span className="text-sm font-bold text-accent uppercase tracking-wider">FTC Activities</span>
-          </div>
-          <h1 className="font-heading font-black text-5xl sm:text-6xl text-foreground mb-6 text-glow">
+          <h1 className="font-heading font-extrabold text-5xl sm:text-6xl text-foreground mb-6 text-glow pulse">
             HOẠT ĐỘNG <span className="bg-gradient-to-r from-accent to-accent bg-clip-text text-transparent">CÂU LẠC BỘ</span>
           </h1>
-          <p className="text-xl text-foreground/80 max-w-4xl mx-auto text-pretty leading-relaxed">
+          <p className="text-xl text-foreground/80 max-w-4xl mx-auto text-pretty leading-relaxed italic">
             FTC không chỉ là nơi học tập về công nghệ tài chính mà còn là cộng đồng năng động với nhiều hoạt động đa dạng, mang lại kiến thức, kỹ năng và cơ hội kết nối thực tế cho sinh viên.
           </p>
         </div>
       </section>
 
-      <section className="py-16 px-4 sm:px-6 lg:px-8 relative">
-        <div className="max-w-7xl mx-auto space-y-10">
+      <section className="py-12 px-4 sm:px-6 lg:px-8 relative">
+        <div className="max-w-7xl mx-auto space-y-8">
           {activities.map((item, idx) => (
             <Card key={item.title} className="bg-card/30 border-accent/20 backdrop-blur-sm">
               <CardHeader className="pb-0">
-                <CardTitle className="text-2xl font-bold text-foreground">{item.title}</CardTitle>
+                <CardTitle className="text-2xl font-bold text-foreground text-center uppercase">{item.title}</CardTitle>
               </CardHeader>
-              <CardContent className="pt-6">
+              <CardContent className="pt-6 text-center">
                 <div
-                  className={`grid gap-8 items-start ${item.img ? "grid-cols-1 md:grid-cols-2" : "grid-cols-1"} ${idx % 2 === 1 && item.img ? "md:[&>div:first-child]:order-2" : ""}`}
+                  className={`grid gap-6 items-center justify-items-center ${item.img ? "grid-cols-1 md:grid-cols-2" : "grid-cols-1"} ${idx % 2 === 1 && item.img ? "md:[&>div:first-child]:order-2" : ""}`}
                 >
                   {item.img && (
-                    <div className="rounded-xl overflow-hidden border border-accent/20 glow">
+                    <div className="rounded-xl overflow-hidden border border-accent/20 glow w-full max-w-xl">
                       <img
                         src={item.img}
                         alt={item.alt}
                         loading="lazy"
-                        className="w-full h-64 md:h-full object-cover"
+                        className="w-full h-64 md:h-56 object-cover"
                       />
                     </div>
                   )}
 
-                  <div className="text-foreground/90 leading-relaxed text-pretty">
-                    <p>{item.body}</p>
+                  <div className="text-foreground/90 leading-relaxed text-pretty max-w-2xl">
+                    <p className="text-center">{item.body}</p>
                   </div>
                 </div>
               </CardContent>
@@ -129,43 +125,6 @@ export default function ActivitiesPage() {
         </div>
       </section>
 
-      <section className="py-24 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
-        <div className="absolute inset-0">
-          <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-r from-accent/20 via-transparent to-accent/20"></div>
-          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] border border-accent/10 rounded-full animate-pulse"></div>
-        </div>
-        <div className="max-w-4xl mx-auto text-center relative z-10">
-          <div className="inline-flex items-center px-6 py-3 rounded-full bg-accent/20 border border-accent/40 mb-8 glow">
-            <Rocket className="h-5 w-5 text-accent mr-3" />
-            <span className="text-sm font-bold text-accent uppercase tracking-wider">Tham gia cùng FTC</span>
-          </div>
-          <h2 className="font-heading font-black text-4xl sm:text-5xl text-foreground mb-6 text-glow">
-            Sẵn sàng học sâu – làm thật – kết nối rộng
-          </h2>
-          <p className="text-xl text-foreground/80 mb-12 leading-relaxed max-w-2xl mx-auto">
-            Trở thành một phần của cộng đồng Công nghệ – Tài chính để phát triển kỹ năng, mở rộng mạng lưới và tạo ra giá trị thực.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-6 justify-center">
-            <Button
-              asChild
-              size="lg"
-              className="btn-futuristic text-lg px-10 py-4 font-bold shadow-2xl hover:shadow-accent/50 transition-all duration-300"
-            >
-              <Link href="/ung-tuyen">
-                TRỞ THÀNH THÀNH VIÊN <ArrowRight className="ml-3 h-5 w-5" />
-              </Link>
-            </Button>
-            <Button
-              asChild
-              variant="outline"
-              size="lg"
-              className="text-lg px-10 py-4 bg-transparent font-bold border-2 border-accent text-accent hover:bg-accent/10 hover:glow transition-all duration-300"
-            >
-              <Link href="/dien-dan">THAM GIA THẢO LUẬN</Link>
-            </Button>
-          </div>
-        </div>
-      </section>
     </div>
   )
 }
