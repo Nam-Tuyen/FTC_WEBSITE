@@ -31,7 +31,7 @@ const activities = [
   {
     title: "Talkshow chuyên đề",
     body:
-      "Hằng năm, FTC tổ chức nhiều buổi Talkshow xoay quanh các chủ đề FinTech và công nghệ số. Đây là cơ hội để sinh viên giao lưu, lắng nghe chia sẻ từ các chuyên gia đầu ngành và đặt câu hỏi trực tiếp. Một số chương trình tiêu biểu có thể kể đến như: Blockchain & AI: Con đường sự nghiệp trong kỷ nguyên số hóa; Chứng khoán thời công nghệ – Tư duy tiếp cận phù hợp.",
+      "Hằng năm, FTC tổ chức nhiều buổi Talkshow xoay quanh các chủ đề FinTech và công nghệ số. Đây là cơ hội để sinh viên giao lưu, lắng nghe chia sẻ từ các chuyên gia ��ầu ngành và đặt câu hỏi trực tiếp. Một số chương trình tiêu biểu có thể kể đến như: Blockchain & AI: Con đường sự nghiệp trong kỷ nguyên số hóa; Chứng khoán thời công nghệ – Tư duy tiếp cận phù hợp.",
     img: IMAGES.talkshow,
     alt: "Talkshow chuyên đề FinTech",
     rotate: true,
@@ -84,10 +84,10 @@ export default function ActivitiesPage() {
           <div className="absolute bottom-10 left-10 w-80 h-80 bg-accent/10 rounded-full blur-3xl animate-pulse delay-1000"></div>
         </div>
         <div className="max-w-7xl mx-auto text-center relative z-10">
-          <h1 className="font-heading font-extrabold text-5xl sm:text-6xl text-foreground mb-6 text-glow pulse">
+          <h1 className="font-heading font-extrabold text-[30px] text-foreground mb-6 text-glow pulse leading-tight">
             HOẠT ĐỘNG <span className="bg-gradient-to-r from-accent to-accent bg-clip-text text-transparent">CÂU LẠC BỘ</span>
           </h1>
-          <p className="text-xl text-foreground/80 max-w-4xl mx-auto text-pretty leading-relaxed italic">
+          <p className="text-[18px] text-foreground/80 max-w-4xl mx-auto text-pretty leading-relaxed italic">
             FTC không chỉ là nơi học tập về công nghệ tài chính mà còn là cộng đồng năng động với nhiều hoạt động đa dạng, mang lại kiến thức, kỹ năng và cơ hội kết nối thực tế cho sinh viên.
           </p>
         </div>
