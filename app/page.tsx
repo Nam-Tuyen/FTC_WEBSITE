@@ -62,7 +62,7 @@ export default function HomePage() {
         <div className="max-w-7xl mx-auto relative z-10">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
             {[
-              { number: "30+", label: "THÀNH VIÊN", icon: Users },
+              { number: "100+", label: "THÀNH VIÊN", icon: Users },
               { number: "+10", label: "DỰ ÁN", icon: Rocket },
               { number: "50+", label: "ĐỐI TÁC", icon: Globe },
               { number: "100+", label: "SỰ KIỆN", icon: Zap },
@@ -117,7 +117,7 @@ export default function HomePage() {
               },
               {
                 icon: Rocket,
-                title: "NGHỀ NGHIỆP & HỒ SƠ THÀNH TÍCH",
+                title: "NGH�� NGHIỆP & HỒ SƠ THÀNH TÍCH",
                 description: "Tham quan doanh nghiệp, ngày hội việc làm, thực tập và xây dựng hồ sơ học thuật. Giúp tăng năng lực ứng tuyển và kết nối với đơn vị tuyển dụng.",
                 gradient: "from-accent/20 to-secondary/20",
               },
