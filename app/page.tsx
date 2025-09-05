@@ -168,7 +168,7 @@ export default function HomePage() {
         <div className="max-w-4xl mx-auto text-center relative z-10">
           <div className="inline-flex items-center px-6 py-3 rounded-full bg-accent/20 border border-accent/40 mb-8 glow">
             <Rocket className="h-5 w-5 text-accent mr-3" />
-            <span className="text-sm font-bold text-accent uppercase tracking-wider">Tham gia v��o câu lạc bộ  </span>
+            <span className="text-sm font-bold text-accent uppercase tracking-wider">Tham gia vào câu lạc bộ  </span>
           </div>
           <h2 className="font-heading font-black text-4xl sm:text-5xl text-foreground mb-6 text-glow">
             THAM GIA ĐỂ TRỞ THÀNH FTCER  
