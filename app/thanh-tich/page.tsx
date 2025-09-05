@@ -139,66 +139,6 @@ export default function AchievementsPage() {
         </div>
       </section>
 
-      <section className="py-20 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto">
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {achievements.map((achievement, index) => (
-              <Card
-                key={achievement.id}
-                className="relative group bg-card/20 backdrop-blur-sm border-accent/20 hover:border-accent/40 transition-all duration-500 hover:glow overflow-hidden"
-              >
-                <div className="absolute inset-0 bg-gradient-to-br from-accent/5 to-secondary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                <div className="relative z-10">
-                  <div className="aspect-video overflow-hidden relative">
-                    <img
-                      src={achievement.image || "/placeholder.svg"}
-                      alt={achievement.title}
-                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                    <div className="absolute top-4 right-4">
-                      <div className="w-12 h-12 bg-accent/20 backdrop-blur-sm rounded-xl flex items-center justify-center border border-accent/30">
-                        <achievement.icon className="h-6 w-6 text-accent" />
-                      </div>
-                    </div>
-                  </div>
-                  <CardHeader className="pb-3">
-                    <div className="flex items-center justify-between mb-3">
-                      <Badge
-                        variant="secondary"
-                        className="bg-accent/20 text-accent border-accent/30 font-bold uppercase tracking-wide"
-                      >
-                        {achievement.category}
-                      </Badge>
-                      <span className="text-xs text-foreground/60 font-mono">{achievement.date}</span>
-                    </div>
-                    <CardTitle className="text-xl font-heading font-bold text-foreground group-hover:text-accent transition-colors duration-300">
-                      {achievement.title}
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent className="pt-0">
-                    <p className="text-foreground/70 text-[18px] italic mb-6 line-clamp-3 leading-relaxed">
-                      {achievement.description}
-                    </p>
-                    <div className="flex flex-wrap gap-2">
-                      {achievement.tags.map((tag, tagIndex) => (
-                        <Badge
-                          key={tagIndex}
-                          variant="outline"
-                          className="text-xs bg-accent/10 border-accent/30 text-accent hover:bg-accent/20 transition-colors"
-                        >
-                          {tag}
-                        </Badge>
-                      ))}
-                    </div>
-                  </CardContent>
-                </div>
-              </Card>
-            ))}
-          </div>
-        </div>
-      </section>
     </div>
   )
 }
