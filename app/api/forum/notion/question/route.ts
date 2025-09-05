@@ -6,7 +6,8 @@ export const dynamic = 'force-dynamic'
 
 export async function POST(req: NextRequest) {
   try {
-    const body = await req.json()
+    const cloned = (req as any).clone ? (req as any).clone() : req
+    const body = await cloned.json()
     const { studentId, name, title, content, category, questionId, authorId } = body || {}
 
     if (!studentId || !/^K\d{9}$/.test(studentId)) return NextResponse.json({ error: 'MSSV không hợp lệ' }, { status: 400 })
