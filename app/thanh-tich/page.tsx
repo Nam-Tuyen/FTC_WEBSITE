@@ -130,6 +130,44 @@ export default function AchievementsPage() {
         </div>
       </section>
 
+      <section className="py-12 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+          <div>
+            <h2 className="font-heading font-extrabold text-3xl text-foreground mb-4 text-glow">Thành tích của Câu lạc bộ Công nghệ Tài chính (FTC)</h2>
+            <p className="text-[18px] text-foreground/80 mb-4">Niềm tự hào của tuổi trẻ UEL</p>
+            <p className="text-foreground/90 mb-4 leading-relaxed text-justify">
+              Câu lạc bộ Công nghệ Tài chính (FTC) luôn gắn liền hành trình phát triển của tuổi trẻ Trường Đại học Kinh tế ��� Luật với những trải nghiệm đáng nhớ và thành tích nổi bật. Trong năm học 2024 – 2025, FTC đã vinh dự được Ban Cán sự Đoàn Đại học Quốc gia TP.HCM trao tặng Giấy khen vì những đóng góp tích cực trong công tác Đoàn và phong trào thanh niên. Đây là sự ghi nhận xứng đáng cho một tập thể giàu nhiệt huyết, sáng tạo và đoàn kết.
+            </p>
+            <p className="text-foreground/90 mb-6 leading-relaxed text-justify">
+              FTC không chỉ tổ chức các hoạt động học thuật và ngoại khóa bổ ích mà còn tạo dựng một môi trường rèn luyện, kết nối và lan tỏa tinh thần tích cực. Thành tích này là minh chứng rõ nét cho tinh thần cống hiến và trách nhiệm của tuổi trẻ Kinh tế – Luật, đồng thời khẳng định vai trò của FTC trong việc nuôi dưỡng và phát triển thế hệ sinh viên năng động.
+            </p>
+          </div>
+          <div className="w-full rounded-xl overflow-hidden border border-accent/20 bg-card/10 p-6 flex items-center justify-center">
+            <img src="https://cdn.builder.io/api/v1/image/assets%2Fa0639610e72c4f2e81f569a8823b8f03%2F4540def63fb249718e9bbaf2d10ebfdc?format=webp&width=1200" alt="Giấy khen ĐHQG" className="w-full h-auto object-contain max-h-[420px]" />
+          </div>
+        </div>
+      </section>
+
+      <section className="py-12 px-4 sm:px-6 lg:px-8 bg-card/5">
+        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+          <div className="order-2 lg:order-1">
+            <img src="https://cdn.builder.io/api/v1/image/assets%2Fa0639610e72c4f2e81f569a8823b8f03%2Ff2b809cb40ef46d9867dc037c5d33b65?format=webp&width=1200" alt="I-Star Top10" className="w-full h-auto object-contain max-h-[420px] rounded-xl border border-accent/20 bg-card/10 p-4" />
+          </div>
+          <div className="order-1 lg:order-2">
+            <h3 className="font-heading font-extrabold text-3xl text-foreground mb-4 text-glow">Dấu ấn tại Giải thưởng I-Star</h3>
+            <p className="text-foreground/90 mb-4 leading-relaxed text-justify">
+              Một trong những thành tích đáng tự hào khác của FTC là được vinh danh trong Top 10 tổ chức, cá nhân tiêu biểu Nhóm 4 (các tổ chức, cá nhân hỗ trợ khởi nghiệp) tại Giải thưởng Đổi mới sáng tạo và Khởi nghiệp TP.HCM (I-Star). Đây là giải thưởng uy tín do Ủy ban Nhân dân TP.HCM chủ trì và Sở Khoa học và Công nghệ TP.HCM tổ chức thường niên, nhằm tôn vinh các tập thể, cá nhân có đóng góp xuất sắc cho phong trào đổi mới sáng tạo và khởi nghiệp.
+            </p>
+            <p className="text-foreground/90 mb-4 leading-relaxed text-justify">
+              Thành tích này khẳng định những nỗ lực bền bỉ của FTC trong việc xây dựng một hệ sinh thái học thuật – thực tiễn, nơi sinh viên có thể nuôi dưỡng ý tưởng, triển khai dự án và phát triển tinh thần khởi nghiệp. Với định hướng “bệ phóng cho những ý tưởng đổi mới”, FTC đã và đang triển khai nhiều chương trình thiết thực như các cuộc thi học thuật, các buổi đào tạo, workshop, talkshow… nhằm giúp sinh viên tiếp cận kiến thức chuyên sâu về công nghệ tài chính và khởi nghiệp sáng tạo.
+            </p>
+            <p className="text-foreground/90 leading-relaxed text-justify">
+              Khẳng định bản lĩnh tiên phong: Những thành tích mà FTC đã đạt được không chỉ là sự công nhận từ các tổ chức uy tín mà còn là minh chứng cho tinh thần trách nhiệm, sự nỗ lực và sáng tạo của tập thể câu lạc bộ. Đây cũng ch��nh là nền tảng để FTC tiếp tục phát huy sức trẻ, đổi mới và khẳng định bản lĩnh trong hành trình học tập, nghiên cứu và khởi nghiệp của sinh viên UEL nói riêng và cộng đồng sinh viên TP.HCM nói chung.
+            </p>
+          </div>
+        </div>
+      </section>
+
       <section className="py-20 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
@@ -194,45 +232,6 @@ export default function AchievementsPage() {
                 </div>
               </Card>
             ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="py-24 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
-        <div className="absolute inset-0">
-          <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-r from-accent/20 via-transparent to-secondary/20"></div>
-          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] border border-accent/10 rounded-full animate-pulse"></div>
-        </div>
-        <div className="max-w-4xl mx-auto text-center relative z-10">
-          <div className="inline-flex items-center px-6 py-3 rounded-full bg-accent/20 border border-accent/40 mb-8 glow">
-            <Target className="h-5 w-5 text-accent mr-3" />
-            <span className="text-sm font-bold text-accent uppercase tracking-wider">Join The Legacy</span>
-          </div>
-          <h2 className="font-heading font-black text-4xl sm:text-5xl text-foreground mb-6 text-glow">
-            TẠO NÊN THÀNH TÍCH TIẾP THEO
-          </h2>
-          <p className="text-xl text-foreground/80 mb-12 leading-relaxed max-w-2xl mx-auto">
-            Tham gia cùng chúng tôi để viết tiếp câu chuyện thành công của
-            <span className="text-accent font-bold"> cộng đồng FinTech tiên phong</span>
-          </p>
-          <div className="flex flex-col sm:flex-row gap-6 justify-center">
-            <Button
-              asChild
-              size="lg"
-              className="btn-futuristic text-lg px-10 py-4 font-bold shadow-2xl hover:shadow-accent/50 transition-all duration-300"
-            >
-              <Link href="/ung-tuyen">
-                THAM GIA NGAY <ArrowRight className="ml-3 h-5 w-5" />
-              </Link>
-            </Button>
-            <Button
-              asChild
-              variant="outline"
-              size="lg"
-              className="text-lg px-10 py-4 bg-transparent font-bold border-2 border-accent text-accent hover:bg-accent/10 hover:glow transition-all duration-300"
-            >
-              <Link href="/hoat-dong">XEM HOẠT ĐỘNG</Link>
-            </Button>
           </div>
         </div>
       </section>
