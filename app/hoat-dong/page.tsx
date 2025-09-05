@@ -46,7 +46,7 @@ const activities = [
   {
     title: "FTC Training & Sharing",
     body:
-      "Là một câu lạc bộ học thuật, FTC đặc biệt chú trọng hoạt động training nội bộ và chia sẻ kiến thức. Thành viên sẽ được trang bị kiến thức FinTech từ cơ bản đến nâng cao, rèn luyện kỹ năng nghề nghiệp và giải đáp thắc mắc về cơ hội việc làm trong ngành. Ngoài ra, fanpage FTC cũng thường xuyên đăng tải các bài viết hữu ích phục vụ cộng đồng sinh viên.",
+      "Là một câu lạc bộ học thuật, FTC đặc biệt chú trọng hoạt động training nội bộ và chia sẻ kiến thức. Thành viên s��� được trang bị kiến thức FinTech từ cơ bản đến nâng cao, rèn luyện kỹ năng nghề nghiệp và giải đáp thắc mắc về cơ hội việc làm trong ngành. Ngoài ra, fanpage FTC cũng thường xuyên đăng tải các bài viết hữu ích phục vụ cộng đồng sinh viên.",
     img: IMAGES.training,
     alt: "FTC Training & Sharing",
   },
@@ -60,7 +60,7 @@ const activities = [
   {
     title: "WORKSHOP CHUYÊN SÂU",
     body:
-      "FTC phối hợp cùng các đối tác để tổ chức các buổi workshop và tập huấn. Đây là dịp để sinh viên vừa nâng cao kiến thức chuyên môn, vừa rèn kỹ năng quản lý – tổ chức sự kiện. Hoạt động nổi bật là Workshop Training: VC Selection Criteria, thuộc chuỗi sự kiện ATTACKER 2025, mang đến cái nhìn toàn diện về cách qu��� đầu tư mạo hiểm lựa chọn dự án khởi nghiệp.",
+      "FTC phối hợp cùng các đối tác để tổ chức các buổi workshop và tập huấn. Đây là dịp để sinh viên vừa nâng cao kiến thức chuyên môn, vừa rèn kỹ năng quản lý – tổ chức sự kiện. Hoạt động nổi bật là Workshop Training: VC Selection Criteria, thuộc chuỗi sự kiện ATTACKER 2025, mang đến cái nhìn toàn diện về cách quỹ đầu tư mạo hiểm lựa chọn dự án khởi nghiệp.",
     img: IMAGES.workshop,
     alt: "Workshop chuyên sâu của FTC",
   },
@@ -84,7 +84,7 @@ export default function ActivitiesPage() {
           <div className="absolute bottom-10 left-10 w-80 h-80 bg-accent/10 rounded-full blur-3xl animate-pulse delay-1000"></div>
         </div>
         <div className="max-w-7xl mx-auto text-center relative z-10">
-          <h1 className="font-heading font-extrabold text-[30px] text-foreground mb-6 text-glow pulse leading-tight">
+          <h1 className="font-heading font-extrabold text-4xl sm:text-5xl lg:text-6xl text-foreground mb-6 text-glow pulse">
             HOẠT ĐỘNG <span className="bg-gradient-to-r from-accent to-accent bg-clip-text text-transparent">CÂU LẠC BỘ</span>
           </h1>
           <p className="text-[18px] text-foreground/80 max-w-4xl mx-auto text-pretty leading-relaxed italic">
