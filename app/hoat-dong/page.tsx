@@ -31,7 +31,7 @@ const activities = [
   {
     title: "Talkshow chuyên đề",
     body:
-      "Hằng năm, FTC tổ chức nhiều buổi Talkshow xoay quanh các chủ đề FinTech và công nghệ số. Đây là cơ hội để sinh viên giao lưu, lắng nghe chia sẻ từ các chuyên gia đầu ngành và đặt câu hỏi trực tiếp. Một số chương trình tiêu biểu có thể kể đến như: Blockchain & AI: Con đường sự nghiệp trong kỷ nguyên số hóa; Chứng khoán thời công nghệ – Tư duy tiếp cận phù hợp.",
+      "Hằng năm, FTC tổ chức nhiều buổi Talkshow xoay quanh các chủ đề FinTech và công nghệ số. Đây là cơ hội để sinh viên giao lưu, lắng nghe chia sẻ từ các chuyên gia đầu ngành và đặt câu hỏi trực tiếp. Một s��� chương trình tiêu biểu có thể kể đến như: Blockchain & AI: Con đường sự nghiệp trong kỷ nguyên số hóa; Chứng khoán thời công nghệ – Tư duy tiếp cận phù hợp.",
     img: IMAGES.talkshow,
     alt: "Talkshow chuyên đề FinTech",
     rotate: true,
@@ -46,7 +46,7 @@ const activities = [
   {
     title: "FTC Training & Sharing",
     body:
-      "Là một câu lạc bộ học thuật, FTC đặc biệt chú trọng hoạt động training nội bộ và chia sẻ kiến thức. Thành viên sẽ được trang bị kiến thức FinTech từ cơ bản đến nâng cao, rèn luyện kỹ năng nghề nghiệp và giải đáp thắc mắc về cơ hội việc làm trong ngành. Ngoài ra, fanpage FTC cũng thường xuyên đăng tải các bài viết h���u ích phục vụ cộng đồng sinh viên.",
+      "Là một câu lạc bộ học thuật, FTC đặc biệt chú trọng hoạt động training nội bộ và chia sẻ kiến thức. Thành viên sẽ được trang bị kiến thức FinTech từ cơ bản đến nâng cao, rèn luyện kỹ năng nghề nghiệp và giải đáp thắc mắc về cơ hội việc làm trong ngành. Ngoài ra, fanpage FTC cũng thường xuyên đăng tải các bài viết hữu ích phục vụ cộng đồng sinh viên.",
     img: IMAGES.training,
     alt: "FTC Training & Sharing",
   },
