@@ -46,7 +46,7 @@ const activities = [
   {
     title: "FTC Training & Sharing",
     body:
-      "Là một câu lạc bộ học thuật, FTC đặc biệt chú trọng hoạt động training nội bộ và chia sẻ kiến thức. Thành viên s��� được trang bị kiến thức FinTech từ cơ bản đến nâng cao, rèn luyện kỹ năng nghề nghiệp và giải đáp thắc mắc về cơ hội việc làm trong ngành. Ngoài ra, fanpage FTC cũng thường xuyên đăng tải các bài viết hữu ích phục vụ cộng đồng sinh viên.",
+      "Là một câu lạc bộ học thuật, FTC đặc biệt chú trọng hoạt động training nội bộ và chia sẻ kiến thức. Thành viên sẽ được trang bị kiến thức FinTech từ cơ bản đến nâng cao, rèn luyện kỹ năng nghề nghiệp và giải đáp thắc mắc về cơ hội việc làm trong ngành. Ngoài ra, fanpage FTC cũng thường xuyên đăng tải các bài viết hữu ích phục vụ cộng đồng sinh viên.",
     img: IMAGES.training,
     alt: "FTC Training & Sharing",
   },
@@ -103,7 +103,7 @@ export default function ActivitiesPage() {
                 className="bg-card/30 border-accent/20 backdrop-blur-sm hover:shadow-2xl transition-transform duration-300 hover:-translate-y-1"
               >
                 <CardHeader className="pb-0">
-                  <CardTitle className="text-[30px] font-bold text-foreground text-center uppercase">{item.title}</CardTitle>
+                  <CardTitle className="text-2xl font-bold text-foreground text-center uppercase">{item.title}</CardTitle>
                 </CardHeader>
                 <CardContent className="pt-6">
                   <div
