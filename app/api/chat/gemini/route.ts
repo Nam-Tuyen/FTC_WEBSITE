@@ -34,15 +34,28 @@ export async function POST(req: Request) {
     const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
     const body = { contents: [{ parts: [{ text: contentText }] }] };
 
-    const r = await fetch(url, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(body),
-    });
+    let r
+    let data = {}
+    try {
+      r = await fetch(url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(body),
+        // keep redirects manual to detect issues
+        redirect: 'follow',
+      })
+    } catch (networkErr: any) {
+      return new Response(JSON.stringify({ error: true, message: 'Network error when calling Gemini API', details: String(networkErr?.message || networkErr) }), { status: 502, headers: { 'Content-Type': 'application/json' } })
+    }
 
-    const data = await r.json().catch(() => ({}));
-    if (!r.ok) {
-      return new Response(JSON.stringify({ error: true, status: r.status, data }), { status: 500 });
+    try {
+      data = await r.json().catch(() => ({}))
+    } catch (e) {
+      data = {}
+    }
+
+    if (!r || !r.ok) {
+      return new Response(JSON.stringify({ error: true, status: r?.status || 500, data }), { status: 502, headers: { 'Content-Type': 'application/json' } })
     }
 
     const text = extractTextFromGemini(data);
