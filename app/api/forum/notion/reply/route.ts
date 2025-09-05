@@ -6,7 +6,8 @@ export const dynamic = 'force-dynamic'
 
 export async function POST(req: NextRequest) {
   try {
-    const body = await req.json()
+    const cloned = (req as any).clone ? (req as any).clone() : req
+    const body = await cloned.json()
     const { questionPageId, content, authorName, authorId } = body || {}
 
     if (!questionPageId || !content) return NextResponse.json({ error: 'Thiếu tham số' }, { status: 400 })
