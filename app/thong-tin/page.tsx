@@ -2,7 +2,7 @@ import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Navigation } from "@/components/navigation"
 import { Button } from "@/components/ui/button"
-import { Target, Users, BookOpen, TrendingUp, Award, Network, Facebook } from "lucide-react"
+import { Target, Users, BookOpen, TrendingUp, Award, Network, Facebook, Instagram } from "lucide-react"
 
 export default function ThongTinPage() {
   return (
@@ -27,14 +27,24 @@ export default function ThongTinPage() {
           <p className="text-xl text-foreground/80 mb-8 max-w-4xl mx-auto text-pretty font-medium leading-relaxed italic sm:text-3xl">
             Trường Đại học Kinh tế – Luật, ĐHQG-HCM
           </p>
-          <div className="flex justify-center mb-16">
+          <div className="flex justify-center mb-16 space-x-4">
             <Button
               asChild
               size="lg"
-              className="btn-futuristic text-lg px-10 py-4 font-bold shadow-2xl hover:shadow-accent/50 transition-all duration-300"
+              className="btn-futuristic text-lg px-6 py-3 font-bold shadow-2xl hover:shadow-accent/50 transition-all duration-300"
             >
               <a href="https://www.facebook.com/clbfintechuel" target="_blank" rel="noopener noreferrer">
                 FANPAGE CÂU LẠC BỘ <Facebook className="ml-3 h-6 w-6" />
+              </a>
+            </Button>
+
+            <Button
+              asChild
+              size="lg"
+              className="btn-futuristic text-lg px-6 py-3 font-bold shadow-2xl hover:shadow-accent/50 transition-all duration-300"
+            >
+              <a href="https://www.instagram.com/ftcers/" target="_blank" rel="noopener noreferrer">
+                INSTAGRAM CÂU LẠC BỘ <Instagram className="ml-3 h-6 w-6" />
               </a>
             </Button>
           </div>
@@ -49,7 +59,7 @@ export default function ThongTinPage() {
             </div>
             <div className="space-y-4 text-foreground/90 leading-relaxed">
               <p>
-                Câu lạc bộ Công nghệ và Tài chính FTC trực thuộc Khoa Tài chính và Ngân hàng, Trường Đại học Kinh tế và Luật, Đại học Quốc gia Thành phố Hồ Chí Minh, được thành lập vào tháng mười một năm 2020 dưới sự hướng dẫn của ThS. NCS Phan Huy Tâm, Giảng viên Khoa Tài chính - Ngân hàng, Chủ nhiệm câu lạc bộ, cùng đội ngũ sinh viên yêu thích lĩnh vực công nghệ tài chính. UEL là một trong tám đơn vị thành viên của Đại học Quốc gia Thành phố Hồ Chí Minh, là trung tâm đào tạo và nghiên cứu đa ngành, đa lĩnh vực, có uy tín hàng đầu phía Nam trong các khối Kinh tế, Luật, Quản lý công.
+                Câu lạc bộ Công nghệ và Tài chính FTC trực thuộc Khoa Tài chính và Ngân hàng, Trường Đại học Kinh tế và Luật, Đại học Quốc gia Thành phố Hồ Chí Minh, được thành lập vào tháng mười một năm 2020 dưới sự hướng dẫn của ThS. NCS Phan Huy Tâm, Giảng viên Khoa Tài chính - Ngân hàng, Chủ nhiệm câu lạc bộ, cùng đội ngũ sinh viên yêu thích lĩnh vực công nghệ tài chính. UEL là một trong tám đơn vị thành viên của Đại h���c Quốc gia Thành phố Hồ Chí Minh, là trung tâm đào tạo và nghiên cứu đa ngành, đa lĩnh vực, có uy tín hàng đầu phía Nam trong các khối Kinh tế, Luật, Quản lý công.
               </p>
             </div>
           </CardContent>
