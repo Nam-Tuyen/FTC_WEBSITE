@@ -110,7 +110,7 @@ export default function AchievementsPage() {
               Câu lạc bộ Công nghệ Tài chính (FTC) luôn gắn liền hành trình phát triển của tuổi trẻ Trường Đại học Kinh tế – Luật với những trải nghiệm đáng nhớ và thành tích nổi bật. Trong năm học 2024 – 2025, FTC đã vinh dự được Ban Cán sự Đoàn Đại học Quốc gia TP.HCM trao tặng Giấy khen vì những đóng góp tích cực trong công tác Đoàn và phong trào thanh niên. Đây là sự ghi nhận xứng đáng cho một tập thể giàu nhiệt huyết, sáng tạo và đoàn kết.
             </p>
             <p className="text-foreground/90 mb-6 leading-relaxed text-justify">
-              FTC không chỉ tổ chức các hoạt động học thuật và ngoại khóa bổ ích mà còn tạo dựng một môi trường rèn luyện, kết nối và lan tỏa tinh thần tích cực. Thành tích này là minh chứng rõ nét cho tinh thần cống hiến và trách nhiệm của tuổi trẻ Kinh tế – Luật, đồng thời khẳng định vai trò của FTC trong việc nuôi dưỡng và phát triển thế hệ sinh viên năng động.
+              FTC không chỉ tổ chức các hoạt động học thuật và ngoại khóa bổ ích mà còn tạo dựng một môi trường rèn luyện, kết nối và lan tỏa tinh thần tích cực. Thành tích này là minh chứng rõ nét cho tinh thần cống hiến và trách nhiệm của tuổi trẻ Kinh tế – Luật, đồng thời khẳng định vai trò của FTC trong việc nuôi dưỡng và phát triển th�� hệ sinh viên năng động.
             </p>
           </div>
           <div className="w-full rounded-xl overflow-hidden border border-accent/20 bg-card/10 p-6 flex items-center justify-center">
@@ -127,7 +127,7 @@ export default function AchievementsPage() {
           <div className="order-1 lg:order-2">
             <h3 className="font-heading font-extrabold text-3xl text-foreground mb-4 text-glow">Dấu ấn tại Giải thưởng I-Star</h3>
             <p className="text-foreground/90 mb-4 leading-relaxed text-justify">
-              Một trong những thành tích đáng tự hào khác của FTC là được vinh danh trong Top 10 tổ chức, cá nhân tiêu biểu Nhóm 4 (các tổ chức, cá nhân hỗ trợ khởi nghiệp) tại Giải thưởng Đổi mới sáng tạo và Khởi nghiệp TP.HCM (I-Star). Đây là giải thưởng uy tín do Ủy ban Nhân dân TP.HCM chủ trì và Sở Khoa học và Công nghệ TP.HCM tổ chức thường niên, nhằm tôn vinh các tập thể, cá nhân có đóng góp xuất sắc cho phong trào đổi mới sáng tạo và khởi nghiệp.
+              Một trong nh��ng thành tích đáng tự hào khác của FTC là được vinh danh trong Top 10 tổ chức, cá nhân tiêu biểu Nhóm 4 (các tổ chức, cá nhân hỗ trợ khởi nghiệp) tại Giải thưởng Đổi mới sáng tạo và Khởi nghiệp TP.HCM (I-Star). Đây là giải thưởng uy tín do Ủy ban Nhân dân TP.HCM chủ trì và Sở Khoa học và Công nghệ TP.HCM tổ chức thường niên, nhằm tôn vinh các tập thể, cá nhân có đóng góp xuất sắc cho phong trào đổi mới sáng tạo và khởi nghiệp.
             </p>
             <p className="text-foreground/90 mb-4 leading-relaxed text-justify">
               Thành tích này khẳng định những nỗ lực bền bỉ của FTC trong việc xây dựng một hệ sinh thái học thuật – thực tiễn, nơi sinh viên có thể nuôi dưỡng ý tưởng, triển khai dự án và phát triển tinh thần khởi nghiệp. Với định hướng “bệ phóng cho những ý tưởng đổi mới”, FTC đã và đang triển khai nhiều chương trình thiết thực như các cuộc thi học thuật, các buổi đào tạo, workshop, talkshow… nhằm giúp sinh viên tiếp cận kiến thức chuyên sâu về công nghệ tài chính và khởi nghiệp sáng tạo.
@@ -141,13 +141,6 @@ export default function AchievementsPage() {
 
       <section className="py-20 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16">
-            <div className="inline-flex items-center px-4 py-2 rounded-full bg-accent/10 border border-accent/30 mb-6">
-              <Zap className="h-4 w-4 text-accent mr-2" />
-              <span className="text-sm font-bold text-accent uppercase tracking-wider">Achievement Gallery</span>
-            </div>
-            <h2 className="font-heading font-black text-4xl text-foreground mb-4 text-glow">HÀNH TRÌNH CHINH PHỤC</h2>
-          </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {achievements.map((achievement, index) => (
