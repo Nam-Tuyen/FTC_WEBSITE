@@ -32,7 +32,7 @@ const achievements = [
     id: 3,
     title: "500+ Thành viên Tích cực",
     description:
-      "Câu lạc bộ đã phát triển thành cộng đồng với hơn 500 thành viên tích cực từ các trường đại học và doanh nghiệp.",
+      "Câu lạc bộ đã phát triển thành cộng đồng với h��n 500 thành viên tích cực từ các trường đại học và doanh nghiệp.",
     date: "Tháng 12, 2023",
     category: "Cộng đồng",
     icon: Users,
@@ -123,6 +123,10 @@ export default function AchievementsPage() {
         </div>
       </section>
 
+      <div className="max-w-7xl mx-auto">
+        <div className="h-px bg-accent/20 w-40 mx-auto rounded-full my-8 glow" />
+      </div>
+
       <section className="py-12 px-4 sm:px-6 lg:px-8 bg-card/5">
         <div className="max-w-7xl mx-auto flex flex-col items-center text-center gap-8">
           <h2 className="font-heading font-extrabold text-[35px] text-foreground uppercase mb-2 text-glow">DẤU ẤN TẠI GIẢI THƯỞNG I-STAR</h2>
@@ -141,7 +145,7 @@ export default function AchievementsPage() {
               công nghệ tài chính và khởi nghiệp sáng tạo.
             </p>
             <p className="text-[18px] text-foreground/90 leading-relaxed text-justify">
-              Khẳng định bản lĩnh tiên phong: Những thành tích mà FTC đã đạt được không chỉ là sự công nhận từ các tổ chức uy tín mà còn là minh chứng cho tinh thần trách nhiệm, sự nỗ lực và sáng tạo của tập thể câu lạc bộ. Đây cũng chính là nền tảng để FTC tiếp tục phát huy sức trẻ, đổi mới và khẳng định bản lĩnh trong hành trình học tập, nghiên cứu và khởi nghiệp của sinh viên UEL nói riêng và cộng đồng sinh viên TP.HCM nói chung.
+              Khẳng định bản lĩnh tiên phong: Những thành tích mà FTC đã đạt được không chỉ là sự công nhận từ các tổ chức uy tín mà còn là minh chứng cho tinh thần trách nhiệm, sự nỗ lực và sáng tạo của tập thể câu lạc bộ. Đây cũng chính là nền tảng để FTC tiếp tục phát huy sức trẻ, đổi mới và khẳng định bản lĩnh trong hành trình học tập, nghiên cứu và khởi nghiệp của sinh viên UEL nói riêng và cộng đ���ng sinh viên TP.HCM nói chung.
             </p>
           </div>
 
