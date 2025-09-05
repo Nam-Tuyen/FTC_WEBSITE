@@ -92,41 +92,12 @@ export default function AchievementsPage() {
           <div className="absolute bottom-10 left-10 w-80 h-80 bg-secondary/10 rounded-full blur-3xl animate-pulse delay-1000"></div>
         </div>
         <div className="max-w-7xl mx-auto text-center relative z-10">
-          <div className="inline-flex items-center px-6 py-3 rounded-full bg-accent/20 border border-accent/40 mb-8 glow">
-            <Trophy className="h-5 w-5 text-accent mr-3 animate-pulse" />
-            <span className="text-sm font-bold text-accent uppercase tracking-wider">Hall of Fame</span>
-          </div>
-          <h1 className="font-heading font-black text-5xl sm:text-6xl text-foreground mb-6 text-glow">
-            THÀNH TÍCH{" "}
-            <span className="bg-gradient-to-r from-accent to-secondary bg-clip-text text-transparent">NỔI BẬT</span>
+          <h1 className="font-heading font-extrabold text-4xl sm:text-5xl lg:text-6xl text-foreground mb-6 text-glow pulse">
+            THÀNH TÍCH <span className="bg-gradient-to-r from-accent to-secondary bg-clip-text text-transparent">NỔI BẬT</span>
           </h1>
-          <p className="text-xl text-foreground/80 max-w-4xl mx-auto text-pretty leading-relaxed">
-            Những cột mốc quan trọng và thành tựu đáng tự hào trong hành trình chinh phục
-            <span className="text-accent font-bold"> công nghệ tài chính tiên tiến</span>
+          <p className="text-[18px] italic text-foreground/80 max-w-4xl mx-auto leading-relaxed">
+            Những cột mốc quan trọng và thành tựu đáng tự hào trong hành trình chinh phục công nghệ tài chính tiên tiến
           </p>
-        </div>
-      </section>
-
-      <section className="py-16 px-4 sm:px-6 lg:px-8 relative">
-        <div className="absolute inset-0 bg-card/10 backdrop-blur-sm"></div>
-        <div className="max-w-7xl mx-auto relative z-10">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-            {stats.map((stat, index) => (
-              <Card
-                key={index}
-                className="relative group bg-card/20 backdrop-blur-sm border-accent/20 hover:border-accent/40 transition-all duration-500 hover:glow overflow-hidden"
-              >
-                <div className="absolute inset-0 bg-gradient-to-br from-accent/10 to-secondary/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                <CardContent className="relative z-10 text-center p-8">
-                  <div className="w-16 h-16 bg-gradient-to-br from-accent/20 to-secondary/20 rounded-2xl flex items-center justify-center mx-auto mb-4 glow group-hover:scale-110 transition-all duration-300">
-                    <stat.icon className="h-8 w-8 text-accent" />
-                  </div>
-                  <div className="text-4xl font-heading font-black text-accent mb-2 text-glow">{stat.value}</div>
-                  <div className="text-sm font-bold text-foreground/80 uppercase tracking-widest">{stat.label}</div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
         </div>
       </section>
 
@@ -136,7 +107,7 @@ export default function AchievementsPage() {
             <h2 className="font-heading font-extrabold text-3xl text-foreground mb-4 text-glow">Thành tích của Câu lạc bộ Công nghệ Tài chính (FTC)</h2>
             <p className="text-[18px] text-foreground/80 mb-4">Niềm tự hào của tuổi trẻ UEL</p>
             <p className="text-foreground/90 mb-4 leading-relaxed text-justify">
-              Câu lạc bộ Công nghệ Tài chính (FTC) luôn gắn liền hành trình phát triển của tuổi trẻ Trường Đại học Kinh tế ��� Luật với những trải nghiệm đáng nhớ và thành tích nổi bật. Trong năm học 2024 – 2025, FTC đã vinh dự được Ban Cán sự Đoàn Đại học Quốc gia TP.HCM trao tặng Giấy khen vì những đóng góp tích cực trong công tác Đoàn và phong trào thanh niên. Đây là sự ghi nhận xứng đáng cho một tập thể giàu nhiệt huyết, sáng tạo và đoàn kết.
+              Câu lạc bộ Công nghệ Tài chính (FTC) luôn gắn liền hành trình phát triển của tuổi trẻ Trường Đại học Kinh tế – Luật với những trải nghiệm đáng nhớ và thành tích nổi bật. Trong năm học 2024 – 2025, FTC đã vinh dự được Ban Cán sự Đoàn Đại học Quốc gia TP.HCM trao tặng Giấy khen vì những đóng góp tích cực trong công tác Đoàn và phong trào thanh niên. Đây là sự ghi nhận xứng đáng cho một tập thể giàu nhiệt huyết, sáng tạo và đoàn kết.
             </p>
             <p className="text-foreground/90 mb-6 leading-relaxed text-justify">
               FTC không chỉ tổ chức các hoạt động học thuật và ngoại khóa bổ ích mà còn tạo dựng một môi trường rèn luyện, kết nối và lan tỏa tinh thần tích cực. Thành tích này là minh chứng rõ nét cho tinh thần cống hiến và trách nhiệm của tuổi trẻ Kinh tế – Luật, đồng thời khẳng định vai trò của FTC trong việc nuôi dưỡng và phát triển thế hệ sinh viên năng động.
@@ -162,7 +133,7 @@ export default function AchievementsPage() {
               Thành tích này khẳng định những nỗ lực bền bỉ của FTC trong việc xây dựng một hệ sinh thái học thuật – thực tiễn, nơi sinh viên có thể nuôi dưỡng ý tưởng, triển khai dự án và phát triển tinh thần khởi nghiệp. Với định hướng “bệ phóng cho những ý tưởng đổi mới”, FTC đã và đang triển khai nhiều chương trình thiết thực như các cuộc thi học thuật, các buổi đào tạo, workshop, talkshow… nhằm giúp sinh viên tiếp cận kiến thức chuyên sâu về công nghệ tài chính và khởi nghiệp sáng tạo.
             </p>
             <p className="text-foreground/90 leading-relaxed text-justify">
-              Khẳng định bản lĩnh tiên phong: Những thành tích mà FTC đã đạt được không chỉ là sự công nhận từ các tổ chức uy tín mà còn là minh chứng cho tinh thần trách nhiệm, sự nỗ lực và sáng tạo của tập thể câu lạc bộ. Đây cũng ch��nh là nền tảng để FTC tiếp tục phát huy sức trẻ, đổi mới và khẳng định bản lĩnh trong hành trình học tập, nghiên cứu và khởi nghiệp của sinh viên UEL nói riêng và cộng đồng sinh viên TP.HCM nói chung.
+              Khẳng định bản lĩnh tiên phong: Những thành tích mà FTC đã đạt được không chỉ là sự công nhận từ các tổ chức uy tín mà còn là minh chứng cho tinh thần trách nhiệm, sự nỗ lực và sáng tạo của tập thể câu lạc bộ. Đây cũng chính là nền tảng để FTC tiếp tục phát huy sức trẻ, đổi mới và khẳng định bản lĩnh trong hành trình học tập, nghiên cứu và khởi nghiệp của sinh viên UEL nói riêng và cộng đồng sinh viên TP.HCM nói chung.
             </p>
           </div>
         </div>
