@@ -1,6 +1,5 @@
 import { matchSuggestedQuestion, buildGroundedPrompt } from '@/lib/faq-grounding'
 
-export const runtime = 'edge';
 export const dynamic = 'force-dynamic';
 
 function extractTextFromGemini(data: any) {
