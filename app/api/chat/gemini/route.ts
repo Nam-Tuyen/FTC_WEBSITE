@@ -19,7 +19,9 @@ function extractTextFromGemini(data: any) {
 
 export async function POST(req: Request) {
   try {
-    const { prompt } = await req.json();
+    // Clone request before reading body to avoid 'body stream already read' in dev overlay
+    const clonedReq = req.clone ? req.clone() : req
+    const { prompt } = await clonedReq.json();
 
     const apiKey = process.env.GEMINI_API_KEY || process.env.GOOGLE_API_KEY;
     if (!apiKey) {
