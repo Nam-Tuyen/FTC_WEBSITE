@@ -1,8 +1,5 @@
 import { Navigation } from "@/components/navigation"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { Rocket, ArrowRight } from "lucide-react"
-import Link from "next/link"
 
 const IMAGES = {
   attacker:
@@ -67,7 +64,7 @@ const activities = [
   {
     title: "FTC Trip",
     body:
-      "Bên cạnh các hoạt động học thuật, FTC còn tổ chức các chuyến đi gắn kết cộng đồng. FTC Trip là hoạt động thường niên được mong chờ nhất, nơi các thành viên và cựu thành viên cùng nhau tham gia những chuyến đi “chữa lành”, xả stress và tạo kỷ niệm đáng nhớ. Ngoài ra, còn có nhiều mini trip định kỳ hàng tháng hoặc hàng quý giúp các thành viên kết nối chặt chẽ hơn.",
+      "Bên cạnh các hoạt động học thuật, FTC còn tổ chức các chuyến đi g���n kết cộng đồng. FTC Trip là hoạt động thường niên được mong chờ nhất, nơi các thành viên và cựu thành viên cùng nhau tham gia những chuyến đi “chữa lành”, xả stress và tạo kỷ niệm đáng nhớ. Ngoài ra, còn có nhiều mini trip định kỳ hàng tháng hoặc hàng quý giúp các thành viên kết nối chặt chẽ hơn.",
     img: IMAGES.trip,
     alt: "FTC Trip gắn kết cộng đồng",
   },
