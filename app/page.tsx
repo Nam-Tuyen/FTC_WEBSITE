@@ -117,7 +117,7 @@ export default function HomePage() {
               },
               {
                 icon: Rocket,
-                title: "NGH�� NGHIỆP & HỒ SƠ THÀNH TÍCH",
+                title: "NGHỀ NGHIỆP & HỒ SƠ THÀNH TÍCH",
                 description: "Tham quan doanh nghiệp, ngày hội việc làm, thực tập và xây dựng hồ sơ học thuật. Giúp tăng năng lực ứng tuyển và kết nối với đơn vị tuyển dụng.",
                 gradient: "from-accent/20 to-secondary/20",
               },
