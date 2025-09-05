@@ -1,7 +1,8 @@
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Navigation } from "@/components/navigation"
-import { Target, Users, BookOpen, TrendingUp, Award, Network } from "lucide-react"
+import { Button } from "@/components/ui/button"
+import { Target, Users, BookOpen, TrendingUp, Award, Network, Facebook } from "lucide-react"
 
 export default function ThongTinPage() {
   return (
@@ -26,6 +27,17 @@ export default function ThongTinPage() {
           <p className="text-xl text-foreground/80 mb-8 max-w-4xl mx-auto text-pretty font-medium leading-relaxed italic sm:text-3xl">
             Trường Đại học Kinh tế – Luật, ĐHQG-HCM
           </p>
+          <div className="flex justify-center mb-16">
+            <Button
+              asChild
+              size="lg"
+              className="btn-futuristic text-lg px-10 py-4 font-bold shadow-2xl hover:shadow-accent/50 transition-all duration-300"
+            >
+              <a href="https://www.facebook.com/clbfintechuel" target="_blank" rel="noopener noreferrer">
+                FANPAGE CÂU LẠC BỘ <Facebook className="ml-3 h-6 w-6" />
+              </a>
+            </Button>
+          </div>
         </div>
 
         {/* Introduction Section */}
