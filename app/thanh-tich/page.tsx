@@ -145,7 +145,7 @@ export default function AchievementsPage() {
               công nghệ tài chính và khởi nghiệp sáng tạo.
             </p>
             <p className="text-[18px] text-foreground/90 leading-relaxed text-justify">
-              Khẳng định bản lĩnh tiên phong: Những thành tích mà FTC đã đạt được không chỉ là sự công nhận từ các tổ chức uy tín mà còn là minh chứng cho tinh thần trách nhiệm, sự nỗ lực và sáng tạo của tập thể câu lạc bộ. Đây cũng chính là nền tảng để FTC tiếp tục phát huy sức trẻ, đổi mới và kh��ng định bản lĩnh trong hành trình học tập, nghiên cứu và khởi nghiệp của sinh viên UEL nói riêng và cộng đồng sinh viên TP.HCM nói chung.
+              Khẳng định bản lĩnh tiên phong: Những thành tích mà FTC đã đạt được không chỉ là sự công nhận từ các tổ chức uy tín mà còn là minh chứng cho tinh thần trách nhiệm, sự nỗ lực và sáng tạo của tập thể câu lạc bộ. Đây cũng chính là nền tảng để FTC tiếp tục phát huy sức trẻ, đổi mới và khẳng định bản lĩnh trong hành trình học tập, nghiên cứu và khởi nghiệp của sinh viên UEL nói riêng và cộng đồng sinh viên TP.HCM nói chung.
             </p>
           </div>
 
