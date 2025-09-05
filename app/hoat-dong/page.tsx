@@ -54,11 +54,11 @@ const activities = [
     title: "Career Day",
     body:
       "Chuỗi sự kiện Web3 Career Innovation gồm ba hoạt động chính: talkshow, doanh nghiệp đặt booth và phỏng vấn trực tiếp. Chương trình hướng đến việc giúp sinh viên tiếp cận công nghệ Blockchain & Web3, thay đổi góc nhìn tiêu cực về Crypto và mở ra cơ hội nghề nghiệp sáng tạo trong lĩnh vực tài chính – công nghệ.",
-    img: undefined,
+    img: IMAGES.career,
     alt: "Career Day Web3 Career Innovation",
   },
   {
-    title: "Workshop chuyên sâu",
+    title: "WORKSHOP CHUYÊN SÂU",
     body:
       "FTC phối hợp cùng các đối tác để tổ chức các buổi workshop và tập huấn. Đây là dịp để sinh viên vừa nâng cao kiến thức chuyên môn, vừa rèn kỹ năng quản lý – tổ chức sự kiện. Hoạt động nổi bật là Workshop Training: VC Selection Criteria, thuộc chuỗi sự kiện ATTACKER 2025, mang đến cái nhìn toàn diện về cách quỹ đầu tư mạo hiểm lựa chọn dự án khởi nghiệp.",
     img: IMAGES.workshop,
