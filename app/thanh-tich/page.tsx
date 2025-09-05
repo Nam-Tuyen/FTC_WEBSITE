@@ -109,7 +109,7 @@ export default function AchievementsPage() {
               Câu lạc bộ Công nghệ Tài chính (FTC) luôn gắn liền hành trình phát triển của tuổi trẻ Trường Đại học Kinh tế – Luật với những trải nghiệm đáng nhớ và thành tích nổi bật. Trong năm học 2024 – 2025, FTC đã vinh dự được Ban Cán sự Đoàn Đại học Quốc gia TP.HCM trao tặng Giấy khen vì những đóng góp tích cực trong công tác Đoàn và phong trào thanh niên. Đây là sự ghi nhận xứng đáng cho một tập thể gi��u nhiệt huyết, sáng tạo và đoàn kết.
             </p>
             <p className="text-[18px] text-foreground/90 mb-6 leading-relaxed text-justify">
-              FTC không chỉ tổ chức các hoạt động học thuật và ngoại khóa bổ ích mà còn tạo dựng một môi trường rèn luyện, kết nối và lan tỏa tinh thần tích cực. Thành tích này là minh chứng rõ nét cho tinh thần cống hiến và trách nhiệm của tuổi trẻ Kinh tế – Luật, đồng thời khẳng định vai trò của FTC trong việc nuôi dưỡng và phát triển thế hệ sinh viên năng động.
+              FTC không chỉ tổ chức các hoạt động học thuật và ngoại kh��a bổ ích mà còn tạo dựng một môi trường rèn luyện, kết nối và lan tỏa tinh thần tích cực. Thành tích này là minh chứng rõ nét cho tinh thần cống hiến và trách nhiệm của tuổi trẻ Kinh tế – Luật, đồng thời khẳng định vai trò của FTC trong việc nuôi dưỡng và phát triển thế hệ sinh viên năng động.
             </p>
           </div>
 
@@ -124,10 +124,17 @@ export default function AchievementsPage() {
           <h2 className="font-heading font-extrabold text-[35px] text-foreground uppercase mb-2 text-glow">DẤU ẤN TẠI GIẢI THƯỞNG I-STAR</h2>
           <div className="max-w-4xl">
             <p className="text-[18px] text-foreground/90 mb-4 leading-relaxed text-justify">
-              Một trong những thành tích đáng tự hào khác của FTC là được vinh danh trong Top 10 tổ chức, cá nhân tiêu biểu Nhóm 4 (các tổ chức, cá nhân hỗ trợ khởi nghiệp) tại Giải thưởng Đổi mới sáng tạo và Khởi nghiệp TP.HCM (I-Star). Đây là giải thưởng uy tín do Ủy ban Nhân dân TP.HCM chủ trì và Sở Khoa học và Công nghệ TP.HCM tổ chức thường niên, nhằm tôn vinh các tập thể, cá nhân có đóng góp xuất sắc cho phong trào đổi mới sáng tạo và khởi nghiệp.
+              Một trong những thành tích đ��ng tự hào khác của FTC là được vinh danh trong Top 10 tổ chức, cá nhân tiêu biểu Nhóm 4 (các tổ chức, cá nhân hỗ trợ khởi nghiệp) tại Giải thưởng Đổi mới sáng tạo và Khởi nghiệp TP.HCM (I-Star). Đây là giải thưởng uy tín do Ủy ban Nhân dân TP.HCM chủ trì và Sở Khoa học và Công nghệ TP.HCM tổ chức thường niên, nhằm tôn vinh các tập thể, cá nhân có đóng góp xuất sắc cho phong trào đổi mới sáng tạo và khởi nghiệp.
             </p>
             <p className="text-[18px] text-foreground/90 mb-4 leading-relaxed text-justify">
-              Thành tích này khẳng định những nỗ lực bền bỉ của FTC trong việc xây dựng một hệ sinh thái học thuật – thực tiễn, nơi sinh viên có thể nuôi dưỡng ý tưởng, triển khai dự án và phát triển tinh thần khởi nghiệp. Với định hướng “bệ phóng cho những ý tưởng đổi mới”, FTC đã và đang triển khai nhiều chương trình thiết th���c như các cuộc thi học thuật, các buổi đào tạo, workshop, talkshow… nhằm giúp sinh viên tiếp cận kiến thức chuyên sâu về công nghệ tài chính và khởi nghiệp sáng tạo.
+              Thành tích này khẳng định những nỗ lực bền bỉ của FTC trong
+              việc xây dựng một hệ sinh thái học thuật. Nơi sinh viên có thể
+              nuôi dưỡng ý tưởng, triển khai dự án và phát triển tinh thần
+              khởi nghiệp. Với định hướng “bệ phóng cho những ý tưởng đổi
+              mới”, FTC đã và đang triển khai nhiều chương trình thiết thực
+              như các cuộc thi học thuật, các buổi đào tạo, workshop,
+              talkshow… nhằm giúp sinh viên tiếp cận kiến thức chuyên sâu về
+              công nghệ tài chính và khởi nghiệp sáng tạo.
             </p>
             <p className="text-[18px] text-foreground/90 leading-relaxed text-justify">
               Khẳng định bản lĩnh tiên phong: Những thành tích mà FTC đã đạt được không chỉ là sự công nhận từ các tổ chức uy tín mà còn là minh chứng cho tinh thần trách nhiệm, sự nỗ lực và sáng tạo của tập thể câu lạc bộ. Đây cũng chính là nền tảng để FTC tiếp tục phát huy sức trẻ, đổi mới và khẳng định bản lĩnh trong hành trình học tập, nghiên cứu và khởi nghiệp của sinh viên UEL nói riêng và cộng đồng sinh viên TP.HCM nói chung.
