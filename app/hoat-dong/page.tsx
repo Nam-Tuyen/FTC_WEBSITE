@@ -34,6 +34,7 @@ const activities = [
       "Hằng năm, FTC tổ chức nhiều buổi Talkshow xoay quanh các chủ đề FinTech và công nghệ số. Đây là cơ hội để sinh viên giao lưu, lắng nghe chia sẻ từ các chuyên gia đầu ngành và đặt câu hỏi trực tiếp. Một số chương trình tiêu biểu có thể kể đến như: Blockchain & AI: Con đường sự nghiệp trong kỷ nguyên số hóa; Chứng khoán thời công nghệ – Tư duy tiếp cận phù hợp.",
     img: IMAGES.talkshow,
     alt: "Talkshow chuyên đề FinTech",
+    rotate: true,
   },
   {
     title: "Tham quan doanh nghiệp",
