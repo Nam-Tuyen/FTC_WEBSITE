@@ -31,7 +31,7 @@ const activities = [
   {
     title: "Talkshow chuyên đề",
     body:
-      "Hằng năm, FTC tổ chức nhiều buổi Talkshow xoay quanh các chủ đề FinTech và công nghệ số. Đây là cơ hội để sinh viên giao lưu, lắng nghe chia sẻ từ các chuyên gia ��ầu ngành và đặt câu hỏi trực tiếp. Một số chương trình tiêu biểu có thể kể đến như: Blockchain & AI: Con đường sự nghiệp trong kỷ nguyên số hóa; Chứng khoán thời công nghệ – Tư duy tiếp cận phù hợp.",
+      "Hằng năm, FTC tổ chức nhiều buổi Talkshow xoay quanh các chủ đề FinTech và công nghệ số. Đây là cơ hội để sinh viên giao lưu, lắng nghe chia sẻ từ các chuyên gia đầu ngành và đặt câu hỏi trực tiếp. Một số chương trình tiêu biểu có thể kể đến như: Blockchain & AI: Con đường sự nghiệp trong kỷ nguyên số hóa; Chứng khoán thời công nghệ – Tư duy tiếp cận phù hợp.",
     img: IMAGES.talkshow,
     alt: "Talkshow chuyên đề FinTech",
     rotate: true,
@@ -60,7 +60,7 @@ const activities = [
   {
     title: "WORKSHOP CHUYÊN SÂU",
     body:
-      "FTC phối hợp cùng các đối tác để tổ chức các buổi workshop và tập huấn. Đây là dịp để sinh viên vừa nâng cao kiến thức chuyên môn, vừa rèn kỹ năng quản lý – tổ chức sự kiện. Hoạt động nổi bật là Workshop Training: VC Selection Criteria, thuộc chuỗi sự kiện ATTACKER 2025, mang đến cái nhìn toàn diện về cách quỹ đầu tư mạo hiểm lựa chọn dự án khởi nghiệp.",
+      "FTC phối hợp cùng các đối tác để tổ chức các buổi workshop và tập huấn. Đây là dịp để sinh viên vừa nâng cao kiến thức chuyên môn, vừa rèn kỹ năng quản lý – tổ chức sự kiện. Hoạt động nổi bật là Workshop Training: VC Selection Criteria, thuộc chuỗi sự kiện ATTACKER 2025, mang đến cái nhìn toàn diện về cách qu��� đầu tư mạo hiểm lựa chọn dự án khởi nghiệp.",
     img: IMAGES.workshop,
     alt: "Workshop chuyên sâu của FTC",
   },
@@ -103,9 +103,9 @@ export default function ActivitiesPage() {
                 className="bg-card/30 border-accent/20 backdrop-blur-sm hover:shadow-2xl transition-transform duration-300 hover:-translate-y-1"
               >
                 <CardHeader className="pb-0">
-                  <CardTitle className="text-2xl font-bold text-foreground text-center uppercase">{item.title}</CardTitle>
+                  <CardTitle className="text-[30px] font-bold text-foreground text-center uppercase">{item.title}</CardTitle>
                 </CardHeader>
-                <CardContent className="pt-6 text-center">
+                <CardContent className="pt-6">
                   <div
                     className={`grid gap-6 items-center justify-items-center ${item.img ? "grid-cols-1 md:grid-cols-2" : "grid-cols-1"}`}
                   >
@@ -121,7 +121,7 @@ export default function ActivitiesPage() {
                     )}
 
                     <div className={`text-foreground/90 leading-relaxed text-pretty max-w-2xl ${isEven ? "md:order-1" : "md:order-2"}`}>
-                      <p className="text-center">{item.body}</p>
+                      <p className="text-justify mx-auto">{item.body}</p>
                     </div>
                   </div>
                 </CardContent>
