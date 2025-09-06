@@ -34,7 +34,7 @@ export default function OrganizationPage() {
                 </CardTitle>
               </CardHeader>
               <CardContent className="pt-0 text-foreground/90 leading-relaxed">
-                <p className="text-base">Điều phối toàn diện hoạt động, định hình chiến lược phát triển, phê duyệt kế hoạch, ngân sách và nhân sự. Đồng thời làm đầu mối đối ngoại của Câu lạc bộ.</p>
+                <p className="text-base">Điều phối toàn diện hoạt động, định hình chiến lược phát triển, phê duyệt kế hoạch, ngân sách và nhân sự. Đồng thời phụ trách mảng đối ngoại của Câu lạc bộ.</p>
               </CardContent>
             </Card>
 
