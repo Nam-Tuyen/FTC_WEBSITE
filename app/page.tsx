@@ -35,7 +35,7 @@ export default function HomePage() {
             <h1 className="font-heading font-black text-5xl sm:text-6xl text-foreground mb-8 text-balance text-glow lg:text-7xl tracking-wide leading-tight">
               CÂU LẠC BỘ <br />
               <span className="bg-gradient-to-r from-accent via-secondary to-accent bg-clip-text text-transparent animate-pulse">
-                CÔNG NGHỆ - TÀI CHÍNH
+                CÔNG NGHỆ TÀI CHÍNH
               </span>
             </h1>
             <p className="text-xl sm:text-2xl text-foreground/80 mb-12 max-w-4xl mx-auto text-pretty font-medium leading-relaxed">
@@ -94,7 +94,7 @@ export default function HomePage() {
               <span className="text-sm font-bold text-accent uppercase tracking-wider">Lợi ích khi tham gia    </span>
             </div>
             <h2 className="font-heading font-black text-[70px] leading-[100px] text-foreground mb-6 text-glow">
-              TẠI SAO CHỌN CÂU LẠC BỘ CÔNG NGHỆ – TÀI CHÍNH?
+              TẠI SAO CHỌN CÂU LẠC BỘ CÔNG NGHỆ TÀI CHÍNH?
             </h2>
             <p className="text-xl text-foreground/70 max-w-3xl mx-auto font-medium leading-relaxed">
               Câu lạc bộ mang đến môi trường gần gũi, đầy đủ công cụ hữu ích và nhiều cơ hội mới để bạn học hỏi, trải nghiệm và phát triển.
@@ -168,13 +168,13 @@ export default function HomePage() {
         <div className="max-w-4xl mx-auto text-center relative z-10">
           <div className="inline-flex items-center px-6 py-3 rounded-full bg-accent/20 border border-accent/40 mb-8 glow">
             <Rocket className="h-5 w-5 text-accent mr-3" />
-            <span className="text-sm font-bold text-accent uppercase tracking-wider">Tham gia vào câu lạc bộ  </span>
+            <span className="text-sm font-bold text-accent uppercase tracking-wider">Tham gia câu lạc bộ </span>
           </div>
           <h2 className="font-heading font-black text-4xl sm:text-5xl text-foreground mb-6 text-glow">
             THAM GIA ĐỂ TRỞ THÀNH FTCER  
           </h2>
           <p className="text-xl text-foreground/80 mb-12 font-medium leading-relaxed max-w-2xl mx-auto">
-            Đăng ký ngay hôm nay để cùng FTC khám phá bản thân, học điều mới, tham gia hoạt động thực tế và kết nối với cộng đồng bạn bè chung đam mê.
+            Đăng ký ngay hôm nay để cùng FTC khám phá bản thân, học điều mới, tham gia hoạt động thực tế và kết nối với cộng đồng FINTECH.
           </p>
           <Button
             asChild
@@ -194,7 +194,7 @@ export default function HomePage() {
 
           <div className="border-t border-border mt-8 pt-8 text-center">
             <p className="text-muted-foreground font-medium">
-              <em>©2025. Câu lạc bộ Công nghệ - Tài chính</em>
+              <em>©2025. Câu lạc bộ Công nghệ tài chính</em>
             </p>
           </div>
         </div>
