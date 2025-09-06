@@ -91,13 +91,19 @@ FTC tổ chức talkshow, workshop và lớp bồi dưỡng về Fintech, AI tro
 Bạn vào mục Ứng tuyển trên website, chọn Bắt đầu ngay hôm nay và điền form. Hãy chọn ban mong muốn, Ban Nhân sự sẽ liên hệ, định hướng và thông báo các bước tiếp theo. Nếu cần hỗ trợ nhanh, vui lòng gửi email hoặc nhắn fanpage của FTC.
 
 3) Các ban trong câu lạc bộ làm gì?
-Ban Chủ nhiệm định hướng chiến lược, điều phối hoạt động và đối ngoại. Ban Học thuật xây dựng nội dung Fintech, soạn giáo trình và tổ chức rèn kỹ năng như xử lý dữ liệu, SQL và phân tích giao dịch. Ban Sự kiện lập kế hoạch, viết kịch bản, điều phối chương trình và tổng kết báo cáo. Ban Truyền thông quản trị kênh chính thức, sản xuất bài viết, đồ họa, video và lưu trữ tư liệu. Ban Tài chính cá nhân phụ trách giáo dục tài chính cá nhân, triển khai MoneyWe và chuỗi FTCCN Sharing. Ban Nhân sự xây văn hóa, tuyển chọn và phân công nhân sự, theo dõi hiệu quả và quản lý quỹ.
+Ban Điều hành định hướng chiến lược, điều phối hoạt động và đối ngoại. Ban Học thuật xây dựng nội dung Fintech, soạn giáo trình và tổ chức rèn kỹ năng như xử lý dữ liệu, SQL và phân tích giao dịch. Ban Sự kiện lập kế hoạch, viết kịch bản, điều phối chương trình và tổng kết báo cáo. Ban Truyền thông quản trị kênh chính thức, sản xuất bài viết, đồ họa, video và lưu trữ tư liệu. Ban Tài chính cá nhân phụ trách giáo dục tài chính cá nhân, triển khai MoneyWe và chuỗi FTCCN Sharing. Ban Nhân sự xây văn hóa, tuyển chọn và phân công nhân sự, theo dõi hiệu quả và quản lý quỹ.
 
 4) Thời gian sinh hoạt diễn ra khi nào?
 CLB sinh hoạt định kỳ qua các buổi talkshow, workshop và hoạt động nội bộ. Lịch cụ thể được công bố tại mục Hoạt động và trên các kênh chính thức, đồng thời gửi qua email cho ứng viên sau khi đăng ký.
 
 5) Cần kỹ năng gì để ứng tuyển?
 Câu lạc bộ ưu tiên tinh thần ham học, chủ động và cam kết thời gian, cùng kỹ năng giao tiếp, làm việc nhóm và quản lý thời gian. Ứng viên có lợi thế khi biết Excel hoặc Google Sheets, SQL hay Python đối với Ban Học thuật, có khả năng lập kế hoạch và điều phối đối với Ban Sự kiện, viết và thiết kế nội dung hoặc quay dựng video đối với Ban Truyền thông, nắm kiến thức tài chính cá nhân đối với Ban Tài chính cá nhân, và có kỹ năng tổ chức, phỏng vấn và vận hành đối với Ban Nhân sự.
+
+6) Câu lạc bộ có bao nhiêu ban tất cả?
+Câu lạc bộ có tất cả 5 ban bao gồm: Ban Học thuật, Ban Sự kiện, Ban Truyền thông, Ban Nhân sự và Ban Tài chính cá nhân.
+
+7) Hoạt động FTC trip có gì vui?
+Với phương châm làm hết mình và chơi hết mình câu lạc bộ luôn định kì hằng năm tổ chức các chuyến đi chơi để gắn kết giữa các thành viên và xả stress sau một thời gian dài hoạt động mệt mỏi.
 `.trim();
 
 const FTC_RULES = `
