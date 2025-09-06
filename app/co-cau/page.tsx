@@ -30,11 +30,11 @@ export default function OrganizationPage() {
             <Card className="bg-card/30 border-accent/20 backdrop-blur-sm ring-1 ring-accent/10 hover:ring-accent/30 transition lg:col-span-3">
               <CardHeader className="pb-3">
                 <CardTitle className="text-2xl font-bold text-foreground flex items-center gap-3">
-                  <Shield className="h-7 w-7 text-accent" /> Ban Chủ nhiệm
+                  <Shield className="h-7 w-7 text-accent" /> Ban Điều hành
                 </CardTitle>
               </CardHeader>
               <CardContent className="pt-0 text-foreground/90 leading-relaxed">
-                <p className="text-base">Điều phối toàn diện hoạt động, định hình chiến lược phát triển, phê duyệt kế hoạch, ngân sách và nhân sự, đồng thời làm đầu mối đối ngoại của Câu lạc bộ.</p>
+                <p className="text-base">Điều phối toàn diện hoạt động, định hình chiến lược phát triển, phê duyệt kế hoạch, ngân sách và nhân sự. Đồng thời làm đầu mối đối ngoại của Câu lạc bộ.</p>
               </CardContent>
             </Card>
 
@@ -152,7 +152,7 @@ export default function OrganizationPage() {
               </CardHeader>
               <CardContent className="pt-0 text-foreground/90 leading-relaxed text-left">
                 <p className="text-base leading-6">
-                  Nguyên tắc phối hợp của Câu lạc bộ được vận hành theo chuỗi liên thông: Ban Học thuật xây dựng và bàn giao nội dung, Ban Sự kiện lập kế hoạch và tổ chức triển khai, còn Ban Truyền thông thiết kế ấn phẩm và lan tỏa thông tin. Song song đó, Ban Nhân sự bảo đảm bố trí con người, phân công công việc và gìn giữ văn hóa hoạt động, trong khi Ban Tài chính cá nhân phụ trách mảng giáo dục chuyên biệt về tài chính cá nhân và phối hợp nội dung khi cần. Tất cả được điều phối chung bởi Ban Chủ nhiệm với vai trò định hướng chiến lược, phê duyệt kế hoạch và làm đầu mối đối ngoại của Câu lạc bộ.
+                  Nguyên tắc phối hợp của Câu lạc bộ được vận hành theo cấu trúc như sau: Ban Học thuật xây dựng và bàn giao nội dung, Ban Sự kiện lập kế hoạch và tổ chức triển khai còn Ban Truyền thông thiết kế ấn phẩm và lan tỏa thông tin. Song song đó, Ban Nhân sự bảo đảm bố trí con người, phân công công việc và gìn giữ văn hóa hoạt động trong khi Ban Tài chính cá nhân phụ trách mảng giáo dục chuyên biệt về tài chính cá nhân và phối hợp nội dung khi cần. Tất cả được điều phối chung bởi Ban Điều hành với vai trò định hướng chiến lược, phê duyệt kế hoạch và phụ trách mảng đối ngoại của Câu lạc bộ.
                 </p>
               </CardContent>
             </Card>
