@@ -67,7 +67,7 @@ liên kết doanh nghiệp và tham quan đơn vị để bạn *học sâu – 
 `🎯 **Hoạt động tiêu biểu**:
 • Workshop/Seminar: Blockchain, Data, AI ứng dụng trong tài chính
 • Hackathon/Mini-hack: xây sản phẩm trong thời gian ngắn
-• Dự án thực t���: làm sản phẩm/dashboards, collab doanh nghiệp
+• Dự án thực tế: làm sản phẩm/dashboards, collab doanh nghiệp
 • Mentoring: kèm cặp theo nhóm kỹ năng
 • Networking/Company tour: kết nối chuyên gia & doanh nghiệp`,
   },
@@ -92,7 +92,7 @@ Yêu cầu: nhiệt huyết và tinh thần học hỏi – sẽ có người h�
 • *Học thuật*: nội dung Fintech, dữ liệu, SQL, phân tích, thuật toán.
 • *Sự kiện*: ý tưởng, kịch bản, vận hành chương trình, báo cáo.
 • *Truyền thông*: quản trị kênh, viết nội dung, thiết kế, ảnh/video.
-• *Tài chính cá nhân*: MoneyWe, chủ đề tài chính cá nhân ứng d��ng công nghệ.
+• *Tài chính cá nhân*: MoneyWe, chủ đề tài chính cá nhân ứng dụng công nghệ.
 • *Nhân sự*: nội quy, văn hóa, tuyển – phân công – đánh giá, minh bạch quỹ.`,
   },
 
