@@ -121,29 +121,35 @@ export async function POST(req: Request) {
     const clubContext = buildClubContextBlock(message);
     const backendContext = await fetchBackendContext();
 
-    // If client requested club-only mode OR the question clearly matches club FAQ, answer using club dataset without calling Gemini
-    if ((typeof (history as any).mode !== 'undefined' && (history as any).mode === 'club') || false) {
-      // This branch kept for future use; prefer using explicit mode from parseRequest
-    }
-
-    // If mode is 'club', return deterministic club answer using matchClubFaq
-    if (mode === 'club') {
-      const hit = matchClubFaq(message)
-      const answer = hit && typeof hit === 'string' && hit.trim() ? hit : 'Thông tin hiện chưa có trong dữ liệu FTC.'
-      return new Response(JSON.stringify({ response: answer, source: 'club', backendContext: backendContext, showCitations }), { headers: { 'Content-Type': 'application/json' } })
-    }
-
-    // Otherwise (mode domain/auto), assemble prompt
-    let prompt = '';
+    // If the question is clearly about the club (suggested FAQ or club match), attempt to answer from club data without calling Gemini
     if (suggested.matched || clubMatch) {
-      // If suggested or club-related, use strict grounding rules from buildGroundedPrompt
-      prompt = await buildGroundedPrompt(message);
-      // append backend context as additional info (non-authoritative)
-      if (backendContext) prompt += `\n\n[BACKEND_DATA]\n${backendContext}`;
-    } else {
-      // For industry or general questions, include club context as reference but allow external knowledge
-      prompt = `You are FTC assistant. Before answering, consult the official FTC context below for any club-related facts. Use external knowledge for industry questions.\n\n[CLUB_CONTEXT]\n${clubContext}\n\n[BACKEND_DATA]\n${backendContext}\n\n[USER_QUESTION]\n${message}\n\nRespond in Vietnamese, concise, friendly.`
+      // First try official FAQ
+      let answer: string | null = null
+      try {
+        const hit = matchClubFaq(message)
+        if (typeof hit === 'string' && hit.trim()) answer = hit
+      } catch (e) {}
+
+      // If no FAQ hit, try to find relevant snippet in the knowledge base summary
+      if (!answer) {
+        const q = message.toLowerCase()
+        const idx = backendContext.toLowerCase().indexOf(q.split(' ')[0] || '')
+        if (idx >= 0) {
+          const snippet = backendContext.slice(Math.max(0, idx - 200), Math.min(backendContext.length, idx + 600))
+          answer = `Thông tin tham khảo từ dữ liệu CLB: ${snippet}`
+        }
+      }
+
+      if (!answer) answer = 'Thông tin hiện chưa có trong dữ liệu FTC.'
+
+      return new Response(JSON.stringify({ response: answer, source: 'club' }), { headers: { 'Content-Type': 'application/json' } })
     }
+
+    // Otherwise assemble prompt for Gemini and include a summarized knowledge-base context to reduce prompt size but keep coverage
+    let prompt = '';
+    // buildGroundedPrompt already includes FTC official QA; for non-club questions we will append a KB summary
+    const kbSummary = backendContext.slice(0, 4000) // pre-trim summary
+    prompt = `You are FTC assistant. Use the official FTC context when answering club-related aspects. For industry questions, you may use external knowledge.\n\n[KB_SUMMARY]\n${kbSummary}\n\n[CLUB_CONTEXT]\n${clubContext}\n\n[USER_QUESTION]\n${message}\n\nPlease answer in Vietnamese, concisely and in friendly tone.`
 
     // Call Gemini with grounded prompt
     let attempts = 0;
