@@ -97,9 +97,28 @@ export async function POST(req: Request) {
     const clubContext = buildClubContextBlock(message);
     const backendContext = await fetchBackendContext();
 
-    // Assemble prompt
-    let prompt = '';
+    // If client requested club-only mode OR the question clearly matches club FAQ, answer using club dataset without calling Gemini
+    if ((typeof (history as any).mode !== 'undefined' && (history as any).mode === 'club') || false) {
+      // This branch kept for future use; prefer using explicit mode from parseRequest
+    }
 
+    // parseRequest provided mode and showCitations
+    const reqMeta: any = {};
+    try {
+      const parsed = await parseRequest(req)
+      reqMeta.mode = parsed.mode
+      reqMeta.showCitations = parsed.showCitations
+    } catch (e) {}
+
+    // If mode is 'club', return deterministic club answer using matchClubFaq
+    if (reqMeta.mode === 'club') {
+      const hit = matchClubFaq(message)
+      const answer = hit && typeof hit === 'string' && hit.trim() ? hit : 'Thông tin hiện chưa có trong dữ liệu FTC.'
+      return new Response(JSON.stringify({ response: answer, source: 'club', backendContext: backendContext }), { headers: { 'Content-Type': 'application/json' } })
+    }
+
+    // Otherwise (mode domain/auto), assemble prompt
+    let prompt = '';
     if (suggested.matched || clubMatch) {
       // If suggested or club-related, use strict grounding rules from buildGroundedPrompt
       prompt = await buildGroundedPrompt(message);
@@ -110,7 +129,7 @@ export async function POST(req: Request) {
       prompt = `You are FTC assistant. Before answering, consult the official FTC context below for any club-related facts. Use external knowledge for industry questions.\n\n[CLUB_CONTEXT]\n${clubContext}\n\n[BACKEND_DATA]\n${backendContext}\n\n[USER_QUESTION]\n${message}\n\nRespond in Vietnamese, concise, friendly.`
     }
 
-    // Always call Gemini but with grounded prompt
+    // Call Gemini with grounded prompt
     let attempts = 0;
     const maxAttempts = 3;
     while (attempts < maxAttempts) {
@@ -141,7 +160,8 @@ export async function POST(req: Request) {
             response: text,
             source: 'gemini',
             model: MODEL_NAME,
-            grounded: suggested.matched || !!clubMatch
+            grounded: suggested.matched || !!clubMatch,
+            backendContext
           }),
           { headers: { 'Content-Type': 'application/json' } }
         );
