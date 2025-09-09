@@ -302,37 +302,18 @@ export default function ChatbotPage() {
               </CardContent>
 
               {/* Input */}
-              <div className="border-t border-accent/20 p-4 bg-card/10 backdrop-blur-sm sticky bottom-0 mt-auto">
+              <div className="border-t border-accent/20 pt-4 px-4 pb-0 bg-card/10 backdrop-blur-sm sticky bottom-0 mt-auto">
                 <div className="flex space-x-2">
                   <Input
                     value={inputValue}
                     onChange={(e) => setInputValue(e.target.value)}
                     onKeyDown={handleKeyDown}
                     placeholder="Nhập câu hỏi của bạn..."
-                    className="flex-1"
+                    className="flex-1 w-full"
                   />
                   <Button onClick={handleSendMessage} disabled={!inputValue.trim()} className="glow">
                     <Send className="h-4 w-4" />
                   </Button>
-                </div>
-
-                {/* Mode selector placed under input as requested */}
-                <div className="mt-3 flex items-center gap-4">
-                  <Label className="text-sm">Chọn chế độ:</Label>
-                  <RadioGroup value={mode} onValueChange={(v) => setMode(v as any)} className="flex items-center gap-4">
-                    <div className="flex items-center gap-1">
-                      <RadioGroupItem value="club" />
-                      <span className="text-sm">Hỏi về câu lạc bộ</span>
-                    </div>
-                    <div className="flex items-center gap-1">
-                      <RadioGroupItem value="domain" />
-                      <span className="text-sm">Hỏi về ngành</span>
-                    </div>
-                    <div className="flex items-center gap-1">
-                      <RadioGroupItem value="auto" />
-                      <span className="text-sm">Tự động</span>
-                    </div>
-                  </RadioGroup>
                 </div>
               </div>
             </Card>
