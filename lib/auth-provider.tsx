@@ -29,11 +29,21 @@ export function AuthProvider({
   const [error, setError] = useState<Error | null>(null)
 
   useEffect(() => {
+    // If Supabase not configured, skip auth initialization
+    if (!supabase) {
+      console.warn('Supabase not configured. AuthProvider disabled.')
+      setLoading(false)
+      return
+    }
+
     // Check active sessions and sets the user
     supabase.auth.getSession().then(({ data: { session } }) => {
       if (session) {
         setUser(session.user)
       }
+      setLoading(false)
+    }).catch(err => {
+      console.error('Error getting session:', err)
       setLoading(false)
     })
 
@@ -48,7 +58,7 @@ export function AuthProvider({
     })
 
     return () => {
-      subscription.unsubscribe()
+      try { subscription.unsubscribe() } catch (e) { /* ignore */ }
     }
   }, [])
 
