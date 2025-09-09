@@ -183,8 +183,7 @@ export async function POST(req: Request) {
             source: 'gemini',
             model: MODEL_NAME,
             grounded: suggested.matched || !!clubMatch,
-            backendContext,
-            showCitations
+            backendContext
           }),
           { headers: { 'Content-Type': 'application/json' } }
         );
