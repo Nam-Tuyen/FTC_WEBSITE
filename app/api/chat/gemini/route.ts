@@ -51,6 +51,9 @@ async function parseRequest(req: Request) {
   }
 }
 
+import fs from 'fs'
+import path from 'path'
+
 async function fetchBackendContext() {
   // Fetch useful backend data: recent forum questions and recruitment info
   const parts: string[] = [];
@@ -74,6 +77,29 @@ async function fetchBackendContext() {
     parts.push(`status: ${status}`);
     parts.push(`formUrl: ${RECRUITMENT_CONFIG.formUrl}`);
   } catch (e) {}
+
+  // Read all files under backend/data/knowledge_base and include their contents
+  try {
+    const kbDir = path.resolve(process.cwd(), 'backend', 'data', 'knowledge_base')
+    const files = await fs.promises.readdir(kbDir)
+    const kbParts: string[] = []
+    for (const f of files) {
+      const full = path.join(kbDir, f)
+      const stat = await fs.promises.stat(full)
+      if (stat.isFile() && f.endsWith('.py')) {
+        const txt = await fs.promises.readFile(full, 'utf-8')
+        kbParts.push(`--- ${f} ---`)
+        // include the full file content as context; strip non-ascii control chars
+        kbParts.push(txt.replace(/\r/g, '').trim())
+      }
+    }
+    if (kbParts.length) {
+      parts.push('[KNOWLEDGE_BASE]')
+      parts.push(...kbParts)
+    }
+  } catch (e) {
+    // ignore if folder not present
+  }
 
   return parts.join('\n')
 }
