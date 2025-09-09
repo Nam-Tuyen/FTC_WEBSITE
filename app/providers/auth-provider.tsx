@@ -1,12 +1,11 @@
 'use client'
 
-import { createContext, useContext, useState, useEffect } from 'react'
+import { createContext, useContext, useState, useEffect, useRef } from 'react'
 import { AuthError, createClient, Session, User } from '@supabase/supabase-js'
 
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-)
+// Lazily create the Supabase client on the client side to avoid
+// throwing during server-side imports when env vars are not present.
+// The client is stored in a ref and created inside useEffect.
 
 interface AuthContextType {
   user: User | null
