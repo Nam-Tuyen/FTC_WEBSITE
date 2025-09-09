@@ -63,6 +63,7 @@ export function AuthProvider({
   }, [])
 
   const signIn = async (email: string, password: string) => {
+    if (!supabase) throw new Error('Supabase not configured')
     try {
       setError(null)
       const { error } = await supabase.auth.signInWithPassword({ email, password })
@@ -74,6 +75,7 @@ export function AuthProvider({
   }
 
   const signUp = async (email: string, password: string) => {
+    if (!supabase) throw new Error('Supabase not configured')
     try {
       setError(null)
       const { error } = await supabase.auth.signUp({ email, password })
@@ -85,6 +87,7 @@ export function AuthProvider({
   }
 
   const signOut = async () => {
+    if (!supabase) throw new Error('Supabase not configured')
     try {
       setError(null)
       const { error } = await supabase.auth.signOut()
