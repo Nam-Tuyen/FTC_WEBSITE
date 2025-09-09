@@ -29,7 +29,7 @@ const suggestedQuestions = [
 ]
 
 const suggestionAnswers: Record<string, string> = {
-  "Câu lạc bộ có những hoạt động gì?":
+  "Câu lạc bộ có những hoạt động g��?":
     "FTC tổ chức: 1) Workshop/Tech-talk Fintech, 2) Cuộc thi/Thử thách công nghệ, 3) Dự án nội bộ (data, blockchain, web/app), 4) Hoạt động gắn kết và mentoring. Xem mục Hoạt động để biết lịch chi tiết.",
   "Làm thế nào để tham gia câu lạc bộ?":
     "Vào trang Ứng tuyển, điền biểu mẫu theo hướng dẫn và hoàn tất phỏng vấn ngắn. Khi có đợt mở đơn, thông báo sẽ đăng trên website/fanpage.",
@@ -280,16 +280,6 @@ export default function ChatbotPage() {
                         }`}
                         dangerouslySetInnerHTML={{ __html: formatMessageContent(message.content) }}
                       />
-                      {message.citations && message.citations.length > 0 && (
-                        <div className="mt-2 text-xs text-muted-foreground bg-background/20 p-2 rounded-md border border-primary/10">
-                          <div className="font-semibold text-[12px] mb-1">Trích dẫn backend:</div>
-                          <ul className="list-disc pl-4">
-                            {message.citations.map((c, i) => (
-                              <li key={i}>{c}</li>
-                            ))}
-                          </ul>
-                        </div>
-                      )}
                       <p className="text-xs opacity-70 mt-1">
                         {hasMounted
                           ? message.timestamp.toLocaleTimeString("vi-VN", {
