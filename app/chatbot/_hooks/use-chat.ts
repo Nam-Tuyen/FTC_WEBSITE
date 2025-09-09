@@ -26,7 +26,7 @@ export function useChat() {
   const lastSentRef = { current: { text: "", time: 0 } }
 
   // Listen for suggested question selections from other components
-  React.useEffect(() => {
+  useEffect(() => {
     function onSelect(e: any) {
       try {
         const q = e?.detail
