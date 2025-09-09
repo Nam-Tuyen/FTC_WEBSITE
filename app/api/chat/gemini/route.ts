@@ -145,7 +145,7 @@ async function fetchBackendContext() {
 export async function POST(req: Request) {
   try {
     // Validate request
-    const { message, history } = await parseRequest(req);
+    const { message, history, mode } = await parseRequest(req);
     if (!message) {
       return new Response(
         JSON.stringify({ error: true, message: 'Message cannot be empty' }),
