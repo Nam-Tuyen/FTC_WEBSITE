@@ -31,7 +31,11 @@ export function SuggestedQuestions({ onSelect }: SuggestedQuestionsProps) {
             key={index}
             variant="outline"
             className="w-full text-left justify-start h-auto p-3 bg-transparent whitespace-normal break-words"
-            onClick={() => onSelect(question)}
+            onClick={() => {
+            // notify chat to fill input
+            try { window.dispatchEvent(new CustomEvent('chat:selectQuestion', { detail: question })) } catch (_) {}
+            onSelect(question)
+          }}
           >
             <MessageSquare className="h-4 w-4 mr-2 flex-shrink-0" />
             <span className="text-sm break-words">{question}</span>
