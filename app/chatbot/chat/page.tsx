@@ -96,7 +96,7 @@ export default function ChatbotPage() {
       const res = await fetch("/api/chat/gemini", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ message: text, history, mode }),
+        body: JSON.stringify({ message: text, history }),
       })
 
       let reply = ""
