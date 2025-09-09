@@ -41,7 +41,10 @@ async function parseRequest(req: Request) {
       throw new Error('Invalid history format');
     }
 
-    return { message: body.message.trim(), history };
+    const mode = body.mode === 'club' ? 'club' : (body.mode === 'domain' ? 'domain' : 'auto')
+    const showCitations = !!body.showCitations
+
+    return { message: body.message.trim(), history, mode, showCitations };
   } catch (error) {
     throw new Error('Invalid request body');
   }
