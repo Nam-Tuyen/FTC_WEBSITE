@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import type { KeyboardEvent } from "react"
 import { getDefaultWelcomeMessage, CONTACT_EMAIL, FANPAGE_URL } from "@/lib/club-faq"
 import type { Message } from "@/app/chatbot/_lib/types"
