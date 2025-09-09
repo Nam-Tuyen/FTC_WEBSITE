@@ -141,6 +141,7 @@ export default function ChatbotPage() {
   }
 
   const handleSuggestedQuestion = (question: string) => {
+    setMode('club')
     setInputValue(question)
   }
 
