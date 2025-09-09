@@ -33,8 +33,8 @@ const suggestionAnswers: Record<string, string> = {
   "Làm thế nào để tham gia câu lạc bộ?":
     "Vào trang Ứng tuyển, điền biểu mẫu theo hướng dẫn và hoàn tất phỏng vấn ngắn. Khi có đợt mở đơn, thông báo sẽ đăng trên website/fanpage.",
   "Các ban trong câu lạc bộ làm gì?":
-    "CLB c�� các ban: Học thuật (nội dung/giảng dạy), Sự kiện (tổ chức), Truyền thông (hình ảnh/nội dung), Tài chính cá nhân (giáo dục tài chính), Nhân sự (văn hóa & vận hành).",
-  "Thời gian sinh hoạt diễn ra khi nào?":
+    "CLB có các ban: Học thuật (nội dung/giảng dạy), Sự kiện (tổ chức), Truyền thông (hình ảnh/nội dung), Tài chính cá nhân (giáo dục tài chính), Nhân sự (văn hóa & vận hành).",
+  "Thời gian sinh hoạt diễn ra khi n��o?":
     "Sinh hoạt định kỳ buổi tối trong tuần hoặc cuối tuần (tùy giai đoạn). Lịch cụ thể sẽ thông báo trước trên nhóm nội bộ/website.",
   "Cần kỹ năng gì để ứng tuyển?":
     "Cần tinh thần chủ động học, kỹ năng cơ bản về công nghệ/kinh tế tùy vị trí; biết Git/Excel/Python/Thiết kế là lợi thế. Đọc kỹ mô tả ở trang Ứng tuyển.",
@@ -192,19 +192,25 @@ export default function ChatbotPage() {
     <div className="min-h-screen gradient-bg">
       <Navigation />
 
-      {/* Hero Section */}
-      <section className="py-16 px-4 sm:px-6 lg:px-8 bg-muted/30">
-        <div className="max-w-4xl mx-auto text-center">
+      {/* Hero Section (styled like Hoạt động) */}
+      <section className="relative min-h-[60vh] flex items-center justify-center py-16 px-4 sm:px-6 lg:px-8">
+        <div className="absolute inset-0 overflow-hidden">
+          <div className="absolute top-1/4 -right-1/4 w-2/3 h-2/3 bg-gradient-to-br from-primary/20 via-accent/20 to-transparent rounded-full blur-3xl animate-float" />
+          <div className="absolute -bottom-1/4 -left-1/4 w-2/3 h-2/3 bg-gradient-to-tr from-accent/20 via-primary/20 to-transparent rounded-full blur-3xl animate-float-reverse" />
+        </div>
+
+        <div className="relative max-w-5xl mx-auto text-center space-y-6">
           <div className="w-16 h-16 bg-primary rounded-full flex items-center justify-center mx-auto mb-6">
             <Bot className="h-8 w-8 text-primary-foreground" />
           </div>
-          <h1 className="font-heading font-bold text-4xl sm:text-5xl text-foreground mb-6">
-            <span className="bg-gradient-to-r from-accent via-secondary to-accent bg-clip-text text-transparent animate-pulse uppercase tracking-wide">
+          <h1 className="relative text-4xl sm:text-5xl lg:text-6xl font-extrabold inline-block">
+            <span className="absolute inset-0 bg-gradient-to-r from-primary to-accent opacity-50 blur-2xl animate-pulse"></span>
+            <span className="relative bg-gradient-to-r from-primary to-accent text-transparent bg-clip-text animate-text-shine">
               AI CHATBOT
             </span>
           </h1>
-          <p className="text-xl text-muted-foreground text-pretty">
-            <em>Trợ lý AI giúp bạn tìm hiểu về câu lạc bộ và các kiến thức Fintech</em>
+          <p className="text-xl sm:text-2xl text-muted-foreground leading-relaxed max-w-3xl mx-auto italic">
+            Trợ lý AI giúp bạn tìm hiểu về câu lạc bộ và các kiến thức Fintech
           </p>
         </div>
       </section>
