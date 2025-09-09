@@ -21,9 +21,21 @@ export function useChat() {
   ])
   const [inputValue, setInputValue] = useState("")
   const [isTyping, setIsTyping] = useState(false)
-  
+
   const isSendingRef = { current: false }
   const lastSentRef = { current: { text: "", time: 0 } }
+
+  // Listen for suggested question selections from other components
+  React.useEffect(() => {
+    function onSelect(e: any) {
+      try {
+        const q = e?.detail
+        if (typeof q === 'string') setInputValue(q)
+      } catch (err) {}
+    }
+    window.addEventListener('chat:selectQuestion', onSelect as EventListener)
+    return () => window.removeEventListener('chat:selectQuestion', onSelect as EventListener)
+  }, [])
 
   const handleSendMessage = async () => {
     const text = inputValue.trim()
