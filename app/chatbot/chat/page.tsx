@@ -201,7 +201,7 @@ export default function ChatbotPage() {
             </span>
           </h1>
           <p className="text-xl text-muted-foreground text-pretty">
-            <em>Tr��� lý AI giúp bạn tìm hiểu về câu lạc bộ và các kiến thức Fintech</em>
+            <em>Trợ lý AI giúp bạn tìm hiểu về câu lạc bộ và các kiến thức Fintech</em>
           </p>
         </div>
       </section>
