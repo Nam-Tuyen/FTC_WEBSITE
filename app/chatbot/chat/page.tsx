@@ -37,7 +37,7 @@ const suggestionAnswers: Record<string, string> = {
   "Các ban trong câu lạc bộ làm gì?":
     "CLB có các ban: Học thuật (nội dung/giảng dạy), Sự kiện (tổ chức), Truyền thông (hình ảnh/nội dung), Tài chính cá nhân (giáo dục tài chính), Nhân sự (văn hóa & vận hành).",
   "Thời gian sinh hoạt diễn ra khi nào?":
-    "Sinh hoạt định kỳ buổi tối trong tuần hoặc cu���i tuần (tùy giai đoạn). Lịch cụ thể sẽ thông báo trước trên nhóm nội bộ/website.",
+    "Sinh hoạt định kỳ buổi tối trong tuần hoặc cuối tuần (tùy giai đoạn). Lịch cụ thể sẽ thông báo trước trên nhóm nội bộ/website.",
   "Cần kỹ năng gì để ứng tuyển?":
     "Cần tinh thần chủ động học, kỹ năng cơ bản về công nghệ/kinh tế tùy vị trí; biết Git/Excel/Python/Thiết kế là lợi thế. Đọc kỹ mô tả ở trang Ứng tuyển.",
 }
@@ -229,13 +229,34 @@ export default function ChatbotPage() {
                   </Avatar>
                   <div>
                     <CardTitle className="text-lg">FinTech AI Assistant</CardTitle>
-                    <p className="text-sm text-muted-foreground flex items-center gap-2">
-                      Luôn sẵn sàng hỗ trợ bạn{" "}
-                      <span className="inline-flex items-center text-xs">
-                        <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse mr-1" />
-                        Online
-                      </span>
-                    </p>
+                    <div className="flex items-center gap-4 mt-1">
+                      <p className="text-sm text-muted-foreground flex items-center gap-2">
+                        Luôn sẵn sàng hỗ trợ bạn
+                        <span className="inline-flex items-center text-xs">
+                          <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse mr-1" />
+                          Online
+                        </span>
+                      </p>
+
+                      <div className="ml-4 flex items-center gap-3">
+                        <Label className="text-xs">Chế độ:</Label>
+                        <RadioGroup value={mode} onValueChange={(v) => setMode(v as any)} className="flex items-center gap-2">
+                          <div className="flex items-center gap-1">
+                            <RadioGroupItem value="club" />
+                            <span className="text-xs">Hỏi về câu lạc bộ</span>
+                          </div>
+                          <div className="flex items-center gap-1">
+                            <RadioGroupItem value="domain" />
+                            <span className="text-xs">Hỏi về ngành</span>
+                          </div>
+                        </RadioGroup>
+                      </div>
+
+                      <div className="ml-4 flex items-center gap-2">
+                        <Checkbox checked={showCitations} onCheckedChange={(v: any) => setShowCitations(!!v)} />
+                        <Label className="text-xs">Hiển thị trích dẫn backend</Label>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </CardHeader>
