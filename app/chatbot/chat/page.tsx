@@ -233,7 +233,7 @@ export default function ChatbotPage() {
                     </AvatarFallback>
                   </Avatar>
                   <div>
-                    <CardTitle className="text-lg">FinTech AI Assistant</CardTitle>
+                    <CardTitle className="text-lg">Chọn chủ đề để hỏi:</CardTitle>
                     <div className="flex items-center gap-4 mt-1">
                       <p className="text-sm text-muted-foreground flex items-center gap-2">
                         Luôn sẵn sàng hỗ trợ bạn
