@@ -17,7 +17,6 @@ interface Message {
   sender: "user" | "bot"
   timestamp: Date
   source?: string
-  citations?: string[]
 }
 
 const suggestedQuestions = [
