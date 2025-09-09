@@ -14,6 +14,8 @@ interface Message {
   content: string
   sender: "user" | "bot"
   timestamp: Date
+  source?: string
+  citations?: string[]
 }
 
 const suggestedQuestions = [
@@ -25,7 +27,7 @@ const suggestedQuestions = [
 ]
 
 const suggestionAnswers: Record<string, string> = {
-  "Câu lạc bộ có những hoạt động gì?":
+  "Câu lạc bộ có nh���ng hoạt động gì?":
     "FTC tổ chức: 1) Workshop/Tech-talk Fintech, 2) Cuộc thi/Thử thách công nghệ, 3) Dự án nội bộ (data, blockchain, web/app), 4) Hoạt động gắn kết và mentoring. Xem mục Hoạt động để biết lịch chi tiết.",
   "Làm thế nào để tham gia câu lạc bộ?":
     "Vào trang Ứng tuyển, điền biểu mẫu theo hướng dẫn và hoàn tất phỏng vấn ngắn. Khi có đợt mở đơn, thông báo sẽ đăng trên website/fanpage.",
