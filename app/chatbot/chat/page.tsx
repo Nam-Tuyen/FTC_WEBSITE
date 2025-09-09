@@ -33,7 +33,7 @@ const suggestionAnswers: Record<string, string> = {
   "Làm thế nào để tham gia câu lạc bộ?":
     "Vào trang Ứng tuyển, điền biểu mẫu theo hướng dẫn và hoàn tất phỏng vấn ngắn. Khi có đợt mở đơn, thông báo sẽ đăng trên website/fanpage.",
   "Các ban trong câu lạc bộ làm gì?":
-    "CLB có các ban: Học thuật (nội dung/giảng dạy), Sự kiện (tổ chức), Truyền thông (hình ảnh/nội dung), Tài chính cá nhân (giáo dục tài chính), Nhân sự (văn hóa & vận hành).",
+    "CLB c�� các ban: Học thuật (nội dung/giảng dạy), Sự kiện (tổ chức), Truyền thông (hình ảnh/nội dung), Tài chính cá nhân (giáo dục tài chính), Nhân sự (văn hóa & vận hành).",
   "Thời gian sinh hoạt diễn ra khi nào?":
     "Sinh hoạt định kỳ buổi tối trong tuần hoặc cuối tuần (tùy giai đoạn). Lịch cụ thể sẽ thông báo trước trên nhóm nội bộ/website.",
   "Cần kỹ năng gì để ứng tuyển?":
@@ -99,7 +99,7 @@ export default function ChatbotPage() {
       const res = await fetch("/api/chat/gemini", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ message: text, history }),
+        body: JSON.stringify({ message: text, history, mode }),
       })
 
       let reply = ""
