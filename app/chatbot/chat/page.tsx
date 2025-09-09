@@ -119,7 +119,6 @@ export default function ChatbotPage() {
         sender: "bot",
         timestamp: new Date(),
         source,
-        citations: backendContext ? backendContext.split('\n').slice(0,5) : undefined,
       }
 
       setMessages((prev) => [...prev, botMessage])
