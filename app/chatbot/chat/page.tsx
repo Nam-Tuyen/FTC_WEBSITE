@@ -50,7 +50,6 @@ export default function ChatbotPage() {
   const [inputValue, setInputValue] = useState("")
   const [isTyping, setIsTyping] = useState(false)
   const [hasMounted, setHasMounted] = useState(false)
-  const [mode, setMode] = useState<'auto' | 'club' | 'domain'>('auto')
   const messagesEndRef = useRef<HTMLDivElement>(null)
   const isSendingRef = useRef(false)
   const lastSentRef = useRef<{ text: string; time: number }>({ text: "", time: 0 })
