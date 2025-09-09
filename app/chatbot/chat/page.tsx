@@ -99,13 +99,17 @@ export default function ChatbotPage() {
       const res = await fetch("/api/chat/gemini", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ message: text, history }),
+        body: JSON.stringify({ message: text, history, mode, showCitations }),
       })
 
       let reply = ""
+      let backendContext: string | undefined
+      let source: string | undefined
       if (res.ok) {
         const data = await res.json()
         reply = typeof data?.response === "string" && data.response.trim() ? data.response : ""
+        backendContext = typeof data?.backendContext === 'string' ? data.backendContext : undefined
+        source = typeof data?.source === 'string' ? data.source : undefined
       }
 
       const botMessage: Message = {
@@ -114,6 +118,8 @@ export default function ChatbotPage() {
           reply || `Xin lỗi, hiện chưa có thông tin phù hợp. Liên hệ: ${CONTACT_EMAIL} hoặc fanpage: ${FANPAGE_URL}.`,
         sender: "bot",
         timestamp: new Date(),
+        source,
+        citations: backendContext ? backendContext.split('\n').slice(0,5) : undefined,
       }
 
       setMessages((prev) => [...prev, botMessage])
