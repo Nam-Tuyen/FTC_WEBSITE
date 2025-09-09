@@ -1,5 +1,7 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import { matchSuggestedQuestion, buildGroundedPrompt } from '@/lib/faq-grounding'
+import { matchClubFaq, buildClubContextBlock, shouldRouteToIndustry } from '@/lib/club-faq'
+import { RECRUITMENT_CONFIG } from '@/app/ung-tuyen/constants'
 
 export const dynamic = 'force-dynamic';
 export const maxDuration = 300; // 5 minutes timeout
@@ -14,7 +16,7 @@ const MODEL_NAME = "gemini-pro";
 
 // Initialize Gemini with validated API key
 const genAI = new GoogleGenerativeAI(GEMINI_API_KEY);
-const model = genAI.getGenerativeModel({ 
+const model = genAI.getGenerativeModel({
   model: MODEL_NAME,
   generationConfig: {
     temperature: 0.7,
@@ -29,7 +31,7 @@ async function parseRequest(req: Request) {
   try {
     const clonedReq = req.clone ? req.clone() : req;
     const body = await clonedReq.json();
-    
+
     if (!body.message || typeof body.message !== 'string') {
       throw new Error('Invalid message format');
     }
@@ -45,42 +47,69 @@ async function parseRequest(req: Request) {
   }
 }
 
+async function fetchBackendContext() {
+  // Fetch useful backend data: recent forum questions and recruitment info
+  const parts: string[] = [];
+  try {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL || ''}/api/forum/questions`);
+    if (res.ok) {
+      const qs = await res.json();
+      if (Array.isArray(qs) && qs.length) {
+        const top = qs.slice(0, 5).map((q: any) => `- ${q.title}: ${String(q.content || '').slice(0, 120).replace(/\n/g, ' ')}...`);
+        parts.push('[RECENT_FORUM_QUESTIONS]');
+        parts.push(...top);
+      }
+    }
+  } catch (e) {
+    // ignore
+  }
+
+  try {
+    const status = RECRUITMENT_CONFIG.getStatus();
+    parts.push('[RECRUITMENT]');
+    parts.push(`status: ${status}`);
+    parts.push(`formUrl: ${RECRUITMENT_CONFIG.formUrl}`);
+  } catch (e) {}
+
+  return parts.join('\n')
+}
+
 export async function POST(req: Request) {
   try {
     // Validate request
     const { message, history } = await parseRequest(req);
     if (!message) {
       return new Response(
-        JSON.stringify({ error: true, message: 'Message cannot be empty' }), 
+        JSON.stringify({ error: true, message: 'Message cannot be empty' }),
         { status: 400, headers: { 'Content-Type': 'application/json' } }
       );
     }
 
-    // Check for suggested questions first
-    try {
-      const suggestedResponse = await matchSuggestedQuestion(message);
-      if (suggestedResponse) {
-        return new Response(
-          JSON.stringify({ 
-            response: suggestedResponse,
-            source: 'faq',
-            model: 'static'
-          }), 
-          { headers: { 'Content-Type': 'application/json' } }
-        );
-      }
-    } catch (error) {
-      console.warn('Error checking suggested questions:', error);
-      // Continue with Gemini if FAQ check fails
+    // Determine type of question
+    const suggested = matchSuggestedQuestion(message);
+    const clubMatch = matchClubFaq(message);
+    const industry = shouldRouteToIndustry(message);
+
+    // Build grounding blocks
+    const clubContext = buildClubContextBlock(message);
+    const backendContext = await fetchBackendContext();
+
+    // Assemble prompt
+    let prompt = '';
+
+    if (suggested.matched || clubMatch) {
+      // If suggested or club-related, use strict grounding rules from buildGroundedPrompt
+      prompt = await buildGroundedPrompt(message);
+      // append backend context as additional info (non-authoritative)
+      if (backendContext) prompt += `\n\n[BACKEND_DATA]\n${backendContext}`;
+    } else {
+      // For industry or general questions, include club context as reference but allow external knowledge
+      prompt = `You are FTC assistant. Before answering, consult the official FTC context below for any club-related facts. Use external knowledge for industry questions.\n\n[CLUB_CONTEXT]\n${clubContext}\n\n[BACKEND_DATA]\n${backendContext}\n\n[USER_QUESTION]\n${message}\n\nRespond in Vietnamese, concise, friendly.`
     }
 
-    // Build prompt with context
-    const prompt = await buildGroundedPrompt(message);
-
-    // Start chat with retry mechanism
+    // Always call Gemini but with grounded prompt
     let attempts = 0;
     const maxAttempts = 3;
-    
     while (attempts < maxAttempts) {
       try {
         const chat = model.startChat({
@@ -105,12 +134,12 @@ export async function POST(req: Request) {
         }
 
         return new Response(
-          JSON.stringify({ 
+          JSON.stringify({
             response: text,
             source: 'gemini',
             model: MODEL_NAME,
-            grounded: true
-          }), 
+            grounded: suggested.matched || !!clubMatch
+          }),
           { headers: { 'Content-Type': 'application/json' } }
         );
       } catch (error: any) {
@@ -124,11 +153,11 @@ export async function POST(req: Request) {
     }
   } catch (error: any) {
     console.error('Error in chat route:', error);
-    
+
     // Determine appropriate error message and status
     let status = 500;
     let message = 'An unexpected error occurred';
-    
+
     if (error.message === 'Invalid request body' || error.message === 'Message cannot be empty') {
       status = 400;
       message = error.message;
@@ -140,12 +169,12 @@ export async function POST(req: Request) {
     }
 
     return new Response(
-      JSON.stringify({ 
-        error: true, 
+      JSON.stringify({
+        error: true,
         message,
         debug: process.env.NODE_ENV === 'development' ? error.message : undefined
-      }), 
-      { 
+      }),
+      {
         status,
         headers: { 'Content-Type': 'application/json' }
       }
