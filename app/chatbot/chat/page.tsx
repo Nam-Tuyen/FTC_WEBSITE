@@ -284,6 +284,16 @@ export default function ChatbotPage() {
                         }`}
                         dangerouslySetInnerHTML={{ __html: formatMessageContent(message.content) }}
                       />
+                      {message.citations && message.citations.length > 0 && (
+                        <div className="mt-2 text-xs text-muted-foreground bg-background/20 p-2 rounded-md border border-primary/10">
+                          <div className="font-semibold text-[12px] mb-1">Trích dẫn backend:</div>
+                          <ul className="list-disc pl-4">
+                            {message.citations.map((c, i) => (
+                              <li key={i}>{c}</li>
+                            ))}
+                          </ul>
+                        </div>
+                      )}
                       <p className="text-xs opacity-70 mt-1">
                         {hasMounted
                           ? message.timestamp.toLocaleTimeString("vi-VN", {
