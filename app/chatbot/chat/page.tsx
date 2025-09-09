@@ -257,6 +257,9 @@ export default function ChatbotPage() {
                         <Label className="text-xs">Hiển thị trích dẫn backend</Label>
                       </div>
                     </div>
+                    <div className="mt-2">
+                      <span className="text-xs text-muted-foreground">Grounding: <strong>Hybrid</strong> (mặc định)</span>
+                    </div>
                   </div>
                 </div>
               </CardHeader>
