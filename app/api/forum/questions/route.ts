@@ -1,27 +1,35 @@
-import { appendForumQuestion, getOrCreateSpreadsheetInFolder } from '@/lib/google-sheets'
-import { NextRequest, NextResponse } from 'next/server'
+import { NextResponse } from 'next/server';
+import { forumDB } from '@/lib/supabase';
 
-export const runtime = 'nodejs'
-export const dynamic = 'force-dynamic'
+export const dynamic = 'force-dynamic';
 
 const ALLOWED_CATEGORIES = [
-  'Hỏi đáp về câu lạc bộ',
-  'Hỏi đáp thông tin về ngành học',
-  'Thảo luận',
-]
+  'GENERAL',
+  'KNOWLEDGE',
+  'CAREER',
+  'TECHNICAL',
+  'EXPERIENCE',
+  'OTHER'
+] as const;
 
-function formatDateSheetTitle(d = new Date()) {
-  const y = d.getFullYear()
-  const m = `${d.getMonth() + 1}`.padStart(2, '0')
-  const day = `${d.getDate()}`.padStart(2, '0')
-  return `${y}-${m}-${day}`
+export async function GET(request: Request) {
+  const url = new URL(request.url);
+  const category = url.searchParams.get('category') as typeof ALLOWED_CATEGORIES[number] | null;
+  const search = url.searchParams.get('search');
+
+  try {
+    const questions = await forumDB.getQuestions()
+    return NextResponse.json(questions)
+  } catch (error) {
+    console.error('Error fetching questions:', error)
+    return NextResponse.json({ error: 'Failed to fetch questions' }, { status: 500 })
+  }
 }
 
-export async function POST(req: NextRequest) {
+export async function POST(request: Request) {
   try {
-    const cloned = (req as any).clone ? (req as any).clone() : req
-    const body = await cloned.json()
-    const { studentId, name, title, content, category, questionId } = body || {}
+    const body = await request.json()
+    const { studentId, name, title, content, category, isAnonymous = false } = body
 
     if (!studentId || !/^K\d{9}$/.test(studentId)) {
       return NextResponse.json({ error: 'MSSV không hợp lệ (định dạng K#########)' }, { status: 400 })
@@ -33,33 +41,21 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Chủ đề không hợp lệ' }, { status: 400 })
     }
 
-    let spreadsheetId = process.env.GOOGLE_SHEET_ID
-    if (!spreadsheetId) {
-      const folderId = process.env.GOOGLE_DRIVE_FOLDER_ID
-      if (!folderId) {
-        return NextResponse.json({ error: 'Thiếu GOOGLE_SHEET_ID hoặc GOOGLE_DRIVE_FOLDER_ID' }, { status: 500 })
-      }
-      spreadsheetId = await getOrCreateSpreadsheetInFolder(folderId, 'FTC Forum Questions')
-    }
-
-    const sheetTitle = formatDateSheetTitle()
-    const timestamp = new Date().toISOString()
-
-    await appendForumQuestion({
-      spreadsheetId,
-      sheetTitle,
-      timestamp,
-      studentId,
-      name: name || '',
+    const question = await forumDB.createQuestion({
       title,
       content,
       category,
-      questionId: questionId || '',
+      studentId,
+      authorName: name,
+      isAnonymous
     })
 
-    return NextResponse.json({ ok: true, sheetTitle, spreadsheetId })
-  } catch (err: any) {
-    console.error('Sheets API error:', err)
-    return NextResponse.json({ error: err?.message || 'Unexpected error' }, { status: 500 })
+    return NextResponse.json(question)
+  } catch (error: any) {
+    console.error('Error creating question:', error)
+    if (error.message === 'Unauthorized') {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+    }
+    return NextResponse.json({ error: 'Failed to create question' }, { status: 500 })
   }
 }

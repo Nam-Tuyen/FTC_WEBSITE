@@ -1,195 +1,250 @@
-import { Card, CardContent } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { Navigation } from "@/components/navigation"
+'use client'
+
 import { Button } from "@/components/ui/button"
+import { Navigation } from "@/components/navigation"
+import { Card, CardContent } from "@/components/ui/card"
 import { Target, Users, BookOpen, TrendingUp, Award, Network, Facebook, Instagram } from "lucide-react"
 
 export default function ThongTinPage() {
   return (
-    <div className="min-h-screen bg-background text-foreground">
+    <div className="min-h-screen bg-gradient-to-b from-background to-background/80 overflow-hidden">
       <Navigation />
-      {/* Animated Background */}
-      <div className="fixed inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute inset-0 bg-gradient-to-br from-background via-background to-accent/5"></div>
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-accent/10 rounded-full blur-3xl animate-pulse"></div>
-        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-accent/10 rounded-full blur-3xl animate-pulse delay-1000"></div>
-      </div>
 
-      <div className="relative z-10 container mx-auto px-4 py-20">
-        {/* Header Section */}
-        <div className="text-center mb-16">
-          <h1 className="font-heading font-black text-4xl sm:text-5xl lg:text-7xl text-foreground mb-8 text-balance tracking-tight text-glow leading-tight">
-            CÂU LẠC BỘ <br />
-            <span className="bg-gradient-to-r from-accent via-accent to-accent bg-clip-text text-transparent animate-pulse">
-              CÔNG NGHỆ TÀI CHÍNH
+      {/* Hero Section */}
+      <section className="relative min-h-[60vh] flex items-center justify-center py-16 px-4 sm:px-6 lg:px-8">
+        <div className="absolute inset-0 overflow-hidden">
+          <div className="absolute top-1/4 -right-1/4 w-2/3 h-2/3 bg-gradient-to-br from-primary/20 via-accent/20 to-transparent rounded-full blur-3xl animate-float" />
+          <div className="absolute -bottom-1/4 -left-1/4 w-2/3 h-2/3 bg-gradient-to-tr from-accent/20 via-primary/20 to-transparent rounded-full blur-3xl animate-float-reverse" />
+        </div>
+
+        <div className="relative max-w-5xl mx-auto text-center space-y-6">
+          <h1 className="relative text-4xl sm:text-5xl lg:text-6xl font-extrabold">
+            <span className="absolute inset-0 bg-gradient-to-r from-primary to-accent opacity-50 blur-2xl animate-pulse"></span>
+            <span className="relative bg-gradient-to-r from-primary to-accent text-transparent bg-clip-text animate-text-shine">
+              THÔNG TIN VỀ CÂU LẠC BỘ
             </span>
           </h1>
-          <p className="text-xl text-foreground/80 mb-8 max-w-4xl mx-auto text-pretty font-medium leading-relaxed italic sm:text-3xl">
+          <p className="text-xl sm:text-2xl text-muted-foreground leading-relaxed max-w-3xl mx-auto italic">
             Trường Đại học Kinh tế – Luật, ĐHQG-HCM
           </p>
-          <div className="flex justify-center mb-16 space-x-4">
-            <Button
-              asChild
-              size="lg"
-              className="btn-futuristic text-lg px-6 py-3 font-bold shadow-2xl hover:shadow-accent/50 transition-all duration-300"
+          <div className="flex justify-center gap-6 pt-4">
+            <a
+              href="https://www.facebook.com/clbfintechuel"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group relative px-8 py-3 bg-background/40 backdrop-blur-lg rounded-2xl border border-primary/10 hover:scale-105 transition-all duration-300"
             >
-              <a href="https://www.facebook.com/clbfintechuel" target="_blank" rel="noopener noreferrer">
-                FANPAGE CÂU LẠC BỘ <Facebook className="ml-3 h-6 w-6" />
-              </a>
-            </Button>
+              <div className="absolute inset-0 bg-gradient-to-r from-primary/10 to-accent/10 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity" />
+              <div className="relative flex items-center gap-3">
+                <span className="text-lg font-medium text-foreground">FANPAGE FTC</span>
+                <Facebook className="h-6 w-6 text-primary" />
+              </div>
+            </a>
 
-            <Button
-              asChild
-              size="lg"
-              className="btn-futuristic text-lg px-6 py-3 font-bold shadow-2xl hover:shadow-accent/50 transition-all duration-300"
+            <a
+              href="https://www.instagram.com/ftcers/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group relative px-8 py-3 bg-background/40 backdrop-blur-lg rounded-2xl border border-primary/10 hover:scale-105 transition-all duration-300"
             >
-              <a href="https://www.instagram.com/ftcers/" target="_blank" rel="noopener noreferrer">
-                INSTAGRAM CÂU LẠC BỘ <Instagram className="ml-3 h-6 w-6" />
-              </a>
-            </Button>
+              <div className="absolute inset-0 bg-gradient-to-r from-primary/10 to-accent/10 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity" />
+              <div className="relative flex items-center gap-3">
+                <span className="text-lg font-medium text-foreground">INSTAGRAM FTC</span>
+                <Instagram className="h-6 w-6 text-primary" />
+              </div>
+            </a>
           </div>
         </div>
+      </section>
 
-        {/* Introduction Section */}
-        <Card className="bg-card/30 border-accent/20 backdrop-blur-sm shadow-md shadow-accent/10 -mt-px mb-12">
-          <CardContent className="p-8">
-            <div className="flex items-center gap-3 mb-6">
-              <BookOpen className="h-8 w-8 text-accent" />
-              <h2 className="text-3xl font-bold text-foreground">Giới thiệu chung</h2>
-            </div>
-            <div className="space-y-4 text-foreground/90 leading-relaxed">
-              <p>
-                Câu lạc bộ Công nghệ tài chính FTC trực thuộc Khoa Tài chính và Ngân hàng, Trường Đại học Kinh tế và Luật, Đại học Quốc gia Thành phố Hồ Chí Minh, được thành lập vào tháng mười một năm 2020 dưới sự hướng dẫn của ThS. NCS Phan Huy Tâm (Giảng viên Khoa Tài chính - Ngân hàng) cùng đội ngũ sinh viên yêu thích lĩnh vực công nghệ tài chính. UEL là một trong tám đơn vị thành viên của Đại học Quốc gia Thành phố Hồ Chí Minh, là trung tâm đào tạo và nghiên cứu đa ngành, đa lĩnh vực, có uy tín hàng đầu phía Nam trong các khối Kinh tế, Luật, Quản lý công.
+      {/* Main Content */}
+      <section className="py-12 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-6xl mx-auto space-y-16">
+          {/* Giới thiệu chung */}
+          <div className="relative group">
+            <div className="absolute inset-0 bg-gradient-to-r from-primary/5 to-accent/5 rounded-3xl transform transition-all" />
+            <div className="relative bg-background/40 backdrop-blur-lg rounded-3xl border border-primary/10 p-8 space-y-6">
+              <div className="flex items-center gap-4 mb-6">
+                <div className="w-12 h-12 relative">
+                  <div className="absolute inset-0 bg-gradient-to-r from-primary/20 to-accent/20 rounded-xl blur-lg group-hover:blur-xl transition-all" />
+                  <div className="relative w-full h-full bg-background/50 rounded-xl flex items-center justify-center">
+                    <BookOpen className="h-6 w-6 text-primary" />
+                  </div>
+                </div>
+                <h2 className="text-3xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+                  GIỚI THIỆU CHUNG
+                </h2>
+              </div>
+              <p className="text-lg text-muted-foreground/90 leading-relaxed text-justify">
+                Câu lạc bộ Công nghệ tài chính FTC trực thuộc Khoa Tài chính và Ngân hàng, Trường Đại học Kinh tế và Luật, Đại học Quốc gia Thành phố Hồ Chí Minh, được thành lập vào tháng mười một năm 2020 dưới sự hướng dẫn của ThS. NCS Phan Huy Tâm (Giảng viên Khoa Tài chính - Ngân hàng) cùng đội ngũ sinh viên ngành công nghệ tài chính. UEL là một trong tám đơn vị thành viên của Đại học Quốc gia Thành phố Hồ Chí Minh, là trung tâm đào tạo và nghiên cứu đa ngành, đa lĩnh vực, có uy tín hàng đầu phía Nam trong các khối Kinh tế, Luật, Quản lý công.
               </p>
             </div>
-          </CardContent>
-        </Card>
+          </div>
 
-        {/* Mission & Values */}
-        <div className="grid md:grid-cols-2 gap-8 mb-12">
-          <Card className="bg-card/30 border-accent/20 backdrop-blur-sm shadow-md shadow-accent/10">
-            <CardContent className="p-8">
-              <div className="flex items-center gap-3 mb-6">
-                <Target className="h-8 w-8 text-accent" />
-                <h2 className="text-2xl font-bold text-foreground">Sứ mệnh</h2>
-              </div>
-              <p className="text-foreground/90 leading-relaxed">
-                Mang lại giá trị thiết thực cho sinh viên thông qua hệ sinh thái học thuật, thực hành và kết nối nghề nghiệp trong lĩnh vực công nghệ tài chính.
-              </p>
-            </CardContent>
-          </Card>
-
-          <Card className="bg-card/30 border-accent/20 backdrop-blur-sm shadow-md shadow-accent/10">
-            <CardContent className="p-8">
-              <div className="flex items-center gap-3 mb-6">
-                <Award className="h-8 w-8 text-accent" />
-                <h2 className="text-2xl font-bold text-foreground">Giá trị cốt lõi</h2>
-              </div>
-              <p className="text-foreground/90 leading-relaxed">
-                Câu lạc bộ đề cao các giá trị cốt lõi giáo dục, kết nối, chia sẻ và hoạt động theo phương châm thống nhất, vượt trội, tiên phong.
-              </p>
-            </CardContent>
-          </Card>
-        </div>
-
-        {/* Objectives */}
-        <Card className="bg-card/30 border-accent/20 backdrop-blur-sm shadow-md shadow-accent/10 mb-12">
-          <CardContent className="p-8">
-            <div className="flex items-center gap-3 mb-6">
-              <TrendingUp className="h-8 w-8 text-accent" />
-              <h2 className="text-3xl font-bold text-foreground">Mục tiêu hoạt động</h2>
-            </div>
-            <div className="grid md:grid-cols-3 gap-6">
-              <div className="space-y-3">
-                <div className="w-12 h-12 bg-accent/20 rounded-lg flex items-center justify-center">
-                  <BookOpen className="h-6 w-6 text-accent" />
+          {/* Sứ mệnh & Giá trị */}
+          <div className="grid md:grid-cols-2 gap-8">
+            {/* Sứ mệnh */}
+            <div className="relative group">
+              <div className="absolute inset-0 bg-gradient-to-r from-primary/5 to-accent/5 rounded-3xl transform transition-all" />
+              <div className="relative bg-background/40 backdrop-blur-lg rounded-3xl border border-primary/10 p-8 space-y-6">
+                <div className="flex items-center gap-4 mb-6">
+                  <div className="w-12 h-12 relative">
+                    <div className="absolute inset-0 bg-gradient-to-r from-primary/20 to-accent/20 rounded-xl blur-lg group-hover:blur-xl transition-all" />
+                    <div className="relative w-full h-full bg-background/50 rounded-xl flex items-center justify-center">
+                      <Target className="h-6 w-6 text-primary" />
+                    </div>
+                  </div>
+                  <h2 className="text-2xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+                    SỨ MỆNH
+                  </h2>
                 </div>
-                <p className="text-foreground/90 leading-relaxed">
-                  Cập nhật và truyền đạt kiến thức về tài chính định lượng, dữ liệu và sản phẩm số.
-                </p>
-              </div>
-              <div className="space-y-3">
-                <div className="w-12 h-12 bg-accent/20 rounded-lg flex items-center justify-center">
-                  <Network className="h-6 w-6 text-accent" />
-                </div>
-                <p className="text-foreground/90 leading-relaxed">
-                  Kết nối sinh viên với giảng viên, chuyên gia, doanh nghiệp và nhà tuyển dụng.
-                </p>
-              </div>
-              <div className="space-y-3">
-                <div className="w-12 h-12 bg-accent/20 rounded-lg flex items-center justify-center">
-                  <Users className="h-6 w-6 text-accent" />
-                </div>
-                <p className="text-foreground/90 leading-relaxed">
-                  Xây dựng cộng đồng học thuật cởi mở: cùng học, cùng làm, cùng chia sẻ.
+                <p className="text-lg text-muted-foreground/90 leading-relaxed text-justify">
+                  Mang lại giá trị thiết thực cho sinh viên thông qua hệ sinh thái học thuật, thực hành và kết nối nghề nghiệp trong lĩnh vực công nghệ tài chính.
                 </p>
               </div>
             </div>
-          </CardContent>
-        </Card>
 
-        {/* Vision */}
-        <Card className="bg-card/30 border-accent/20 backdrop-blur-sm shadow-md shadow-accent/10 mb-12">
-          <CardContent className="p-8 text-center">
-            <h2 className="text-3xl font-bold text-foreground mb-6">Tầm nhìn</h2>
-            <div className="space-y-4 text-foreground/90 leading-relaxed max-w-4xl mx-auto">
-              <p className="text-lg">
+            {/* Giá trị */}
+            <div className="relative group">
+              <div className="absolute inset-0 bg-gradient-to-r from-primary/5 to-accent/5 rounded-3xl transform transition-all" />
+              <div className="relative bg-background/40 backdrop-blur-lg rounded-3xl border border-primary/10 p-8 space-y-6">
+                <div className="flex items-center gap-4 mb-6">
+                  <div className="w-12 h-12 relative">
+                    <div className="absolute inset-0 bg-gradient-to-r from-primary/20 to-accent/20 rounded-xl blur-lg group-hover:blur-xl transition-all" />
+                    <div className="relative w-full h-full bg-background/50 rounded-xl flex items-center justify-center">
+                      <Award className="h-6 w-6 text-primary" />
+                    </div>
+                  </div>
+                  <h2 className="text-2xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+                    GIÁ TRỊ CỐT LÕI
+                  </h2>
+                </div>
+                <p className="text-lg text-muted-foreground/90 leading-relaxed text-justify">
+                  Câu lạc bộ đề cao các giá trị cốt lõi giáo dục, kết nối, chia sẻ và hoạt động theo phương châm thống nhất, vượt trội, tiên phong.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* Mục tiêu */}
+          <div className="relative group">
+            <div className="absolute inset-0 bg-gradient-to-r from-primary/5 to-accent/5 rounded-3xl transform transition-all" />
+            <div className="relative bg-background/40 backdrop-blur-lg rounded-3xl border border-primary/10 p-8 space-y-8">
+              <div className="flex items-center gap-4 mb-6">
+                <div className="w-12 h-12 relative">
+                  <div className="absolute inset-0 bg-gradient-to-r from-primary/20 to-accent/20 rounded-xl blur-lg group-hover:blur-xl transition-all" />
+                  <div className="relative w-full h-full bg-background/50 rounded-xl flex items-center justify-center">
+                    <TrendingUp className="h-6 w-6 text-primary" />
+                  </div>
+                </div>
+                <h2 className="text-3xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+                  MỤC TIÊU HOẠT ĐỘNG
+                </h2>
+              </div>
+              <div className="grid md:grid-cols-3 gap-8">
+                {[
+                  {
+                    icon: BookOpen,
+                    text: "Cập nhật và truyền đạt kiến thức về tài chính định lượng, dữ liệu và sản phẩm số.",
+                  },
+                  {
+                    icon: Network,
+                    text: "Kết nối sinh viên với giảng viên, chuyên gia, doanh nghiệp và nhà tuyển dụng.",
+                  },
+                  {
+                    icon: Users,
+                    text: "Xây dựng cộng đồng học thuật cởi mở: cùng học, cùng làm, cùng chia sẻ.",
+                  },
+                ].map((item, index) => (
+                  <div key={index} className="relative group">
+                    <div className="absolute inset-0 bg-gradient-to-r from-primary/5 to-accent/5 rounded-2xl transform transition-all" />
+                    <div className="relative p-6 bg-background/40 backdrop-blur-lg rounded-2xl border border-primary/10">
+                      <div className="w-12 h-12 mb-4 relative">
+                        <div className="absolute inset-0 bg-gradient-to-r from-primary/20 to-accent/20 rounded-xl blur-lg group-hover:blur-xl transition-all" />
+                        <div className="relative w-full h-full bg-background/50 rounded-xl flex items-center justify-center">
+                          <item.icon className="h-6 w-6 text-primary" />
+                        </div>
+                      </div>
+                      <p className="text-lg text-muted-foreground/90 leading-relaxed text-justify">{item.text}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          {/* Tầm nhìn */}
+          <div className="relative group">
+            <div className="absolute inset-0 bg-gradient-to-r from-primary/5 to-accent/5 rounded-3xl transform transition-all" />
+            <div className="relative bg-background/40 backdrop-blur-lg rounded-3xl border border-primary/10 p-8 space-y-6">
+              <h2 className="text-3xl font-bold text-center bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+                TẦM NHÌN
+              </h2>
+              <p className="text-lg text-muted-foreground/90 leading-relaxed text-center max-w-4xl mx-auto">
                 FTC đặt mục tiêu trở thành cộng đồng sinh viên yêu thích công nghệ tài chính lớn nhất Việt Nam và mở rộng mạng lưới hợp tác giữa sinh viên và doanh nghiệp trong khu vực Đông Nam Á.
               </p>
             </div>
-          </CardContent>
-        </Card>
+          </div>
 
-        {/* Activities */}
-        <Card className="bg-card/30 border-accent/20 backdrop-blur-sm shadow-md shadow-accent/10 mb-12">
-          <CardContent className="p-8">
-            <h2 className="text-3xl font-bold text-foreground mb-8 text-center">Hoạt động tiêu biểu</h2>
-            <div className="grid md:grid-cols-2 gap-8">
-              <div className="space-y-6">
-                <div className="flex gap-4 group rounded-xl p-5 bg-card/40 border border-accent/15 hover:bg-card/60 transition-colors">
-                  <div className="w-3 h-3 bg-accent rounded-full mt-2 flex-shrink-0"></div>
-                  <div>
-                    <h3 className="font-semibold text-foreground mb-2">Hội thảo, toạ đàm, chuyên đề</h3>
-                    <p className="text-foreground/80 text-sm leading-relaxed">
-                      Các chủ đề trọng tâm gồm xu hướng công nghệ tài chính, ứng dụng dữ liệu và trí tuệ nhân tạo trong hoạt động tài chính, phát triển sản phẩm ngân hàng số, diễn biến thị trường vốn và các phương pháp quản trị rủi ro hiện đại.
-                    </p>
+          {/* Hoạt động */}
+          <div className="relative group">
+            <div className="absolute inset-0 bg-gradient-to-r from-primary/5 to-accent/5 rounded-3xl transform transition-all" />
+            <div className="relative bg-background/40 backdrop-blur-lg rounded-3xl border border-primary/10 p-8 space-y-8">
+              <h2 className="text-3xl font-bold text-center bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+                HOẠT ĐỘNG TIÊU BIỂU
+              </h2>
+              <div className="grid md:grid-cols-2 gap-8">
+                {[
+                  {
+                    title: "Hội thảo, toạ đàm, chuyên đề",
+                    text: "Các chủ đề trọng tâm gồm xu hướng công nghệ tài chính, ứng dụng dữ liệu và trí tuệ nhân tạo trong hoạt động tài chính, phát triển sản phẩm ngân hàng số, diễn biến thị trường vốn và các phương pháp quản trị rủi ro hiện đại.",
+                  },
+                  {
+                    title: "Cuộc thi học thuật và dự án thực tế",
+                    text: "Thiết kế mô hình, phát triển công cụ phân tích và kiểm thử trên dữ liệu thực tế.",
+                  },
+                  {
+                    title: "Kết nối nghề nghiệp",
+                    text: "Kết nối và trao đổi cùng chuyên gia, người hướng dẫn, tiếp cận cơ hội thực tập và ngày hội việc làm, đồng thời tham quan doanh nghiệp để hiểu rõ môi trường làm việc thực tế.",
+                  },
+                  {
+                    title: "Cộng đồng học thuật",
+                    text: "Môi trường học tập và nghiên cứu cởi mở, thân thiện, khuyến khích sáng tạo và đổi mới.",
+                  },
+                ].map((item, index) => (
+                  <div key={index} className="relative group">
+                    <div className="absolute inset-0 bg-gradient-to-r from-primary/5 to-accent/5 rounded-2xl transform transition-all" />
+                    <div className="relative p-6 bg-background/40 backdrop-blur-lg rounded-2xl border border-primary/10 h-full">
+                      <div className="flex items-center gap-4 mb-4">
+                        <div className="w-2 h-2 bg-primary rounded-full mt-2" />
+                        <h3 className="text-xl font-bold text-foreground">{item.title}</h3>
+                      </div>
+                      <p className="text-lg text-muted-foreground/90 leading-relaxed pl-6 text-justify">{item.text}</p>
+                    </div>
                   </div>
-                </div>
-                <div className="flex gap-4 group rounded-xl p-5 bg-card/40 border border-accent/15 hover:bg-card/60 transition-colors">
-                  <div className="w-3 h-3 bg-accent rounded-full mt-2 flex-shrink-0"></div>
-                  <div>
-                    <h3 className="font-semibold text-foreground mb-2">Cuộc thi học thuật và dự án thực hành</h3>
-                    <p className="text-foreground/80 text-sm leading-relaxed">
-                      Thiết kế mô hình, phát triển công cụ phân tích và kiểm thử trên dữ liệu thực tế.
-                    </p>
-                  </div>
-                </div>
-              </div>
-              <div className="space-y-6">
-                <div className="flex gap-4 group rounded-xl p-5 bg-card/40 border border-accent/15 hover:bg-card/60 transition-colors">
-                  <div className="w-3 h-3 bg-accent rounded-full mt-2 flex-shrink-0"></div>
-                  <div>
-                    <h3 className="font-semibold text-foreground mb-2">Kết nối nghề nghiệp</h3>
-                    <p className="text-foreground/80 text-sm leading-relaxed">
-                      Kết nối và trao đổi cùng chuyên gia, người hướng dẫn, tiếp cận cơ hội thực tập và ngày hội việc làm, đồng thời tham quan doanh nghiệp để hiểu rõ môi trường làm việc thực tế.
-                    </p>
-                  </div>
-                </div>
-                <div className="flex gap-4 group rounded-xl p-5 bg-card/40 border border-accent/15 hover:bg-card/60 transition-colors">
-                  <div className="w-3 h-3 bg-accent rounded-full mt-2 flex-shrink-0"></div>
-                  <div>
-                    <h3 className="font-semibold text-foreground mb-2">Cộng đồng học thuật</h3>
-                    <p className="text-foreground/80 text-sm leading-relaxed">
-                      Tổ chức nhóm nghiên cứu sinh viên, duy trì diễn đàn chia sẻ tài liệu, triển khai giờ lập trình định kỳ và nhóm đọc để củng cố nền tảng học thuật và học hỏi lẫn nhau.
-                    </p>
-                  </div>
-                </div>
+                ))}
               </div>
             </div>
-          </CardContent>
-        </Card>
+          </div>
+        </div>
+      </section>
 
-      </div>
+      <style jsx global>{`
+        @keyframes float {
+          0%, 100% { transform: translate(0, 0) rotate(0deg); }
+          50% { transform: translate(-20px, 20px) rotate(5deg); }
+        }
+        @keyframes float-reverse {
+          0%, 100% { transform: translate(0, 0) rotate(0deg); }
+          50% { transform: translate(20px, -20px) rotate(-5deg); }
+        }
+        .animate-float {
+          animation: float 20s ease-in-out infinite;
+        }
+        .animate-float-reverse {
+          animation: float-reverse 20s ease-in-out infinite;
+        }
+      `}</style>
     </div>
   )
 }

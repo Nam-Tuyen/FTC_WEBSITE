@@ -1,12 +1,18 @@
-"use client"
+'use client'
 
-import { useState, useRef } from "react"
-import Link from "next/link"
-import { Button } from "@/components/ui/button"
-import { Menu, X, Zap, Shield, Cpu, Info } from "lucide-react"
-import Image from "next/image"
+import * as React from 'react'
+import Link from 'next/link'
+import { Button } from '@/components/ui/button'
+import { Menu, X, Zap, Shield, Cpu, Info } from 'lucide-react'
+import Image from 'next/image'
 
-const navigationItems = [
+interface NavigationItem {
+  name: string
+  href: string
+  icon: React.ComponentType<{ className?: string }>
+}
+
+const navigationItems: NavigationItem[] = [
   { name: "Trang chủ", href: "/", icon: Zap },
   { name: "Thông tin", href: "/thong-tin", icon: Info },
   { name: "Thành tích", href: "/thanh-tich", icon: Shield },
@@ -18,49 +24,55 @@ const navigationItems = [
 ]
 
 export function Navigation() {
-  const [isOpen, setIsOpen] = useState(false)
-  const menuScrollRef = useRef<HTMLDivElement | null>(null)
+  const [isOpen, setIsOpen] = React.useState(false)
+  const menuScrollRef = React.useRef<HTMLDivElement | null>(null)
+
+  const handleScroll = React.useCallback((e: React.WheelEvent) => {
+    if (!menuScrollRef.current) return
+    e.preventDefault()
+    menuScrollRef.current.scrollTop += e.deltaY * 2
+  }, [])
 
   return (
     <nav className="gradient-bg border-b border-accent/30 sticky top-0 z-50 backdrop-blur-md">
       <div className="absolute inset-0 bg-background/80 backdrop-blur-md"></div>
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-20">
+      <div className="relative w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex justify-between items-center h-16 sm:h-20">
           {/* Logo */}
           <div className="flex-shrink-0">
-            <Link href="/" className="flex items-center space-x-4 group">
+            <Link href="/" className="flex items-center space-x-2 sm:space-x-4 group">
               <div className="relative">
                 <Image
                   src="/ftc-logo.png"
                   alt="Financial Technology Club Logo"
-                  width={50}
-                  height={50}
-                  className="rounded-full glow transition-all duration-300 group-hover:scale-110"
+                  width={40}
+                  height={40}
+                  className="rounded-full glow transition-all duration-300 group-hover:scale-110 sm:w-[50px] sm:h-[50px]"
                 />
                 <div className="absolute inset-0 rounded-full border-2 border-accent animate-pulse opacity-50"></div>
               </div>
               <div className="flex flex-col">
-                <span className="font-heading text-foreground text-glow font-extrabold text-5xl tracking-wide">
+                <span className="font-heading text-foreground text-glow font-extrabold text-3xl sm:text-5xl tracking-wide">
                   FTC
                 </span>
-                <span className="text-xs text-accent font-medium tracking-wider uppercase">{""}</span>
+                <span className="text-[10px] sm:text-xs text-accent font-medium tracking-wider uppercase">{""}</span>
               </div>
             </Link>
           </div>
 
           {/* Desktop Navigation */}
           <div className="hidden md:block max-w-full">
-            <div className="ml-10 flex items-center space-x-1 overflow-x-auto no-scrollbar flex-nowrap">
+            <div className="ml-4 lg:ml-10 flex items-center space-x-1 overflow-x-auto no-scrollbar flex-nowrap">
               {navigationItems.map((item) => {
                 const IconComponent = item.icon
                 return (
                   <Link
                     key={item.name}
                     href={item.href}
-                    className="group relative px-4 py-3 rounded-lg text-sm font-medium transition-all duration-300 hover:bg-accent/10 shrink-0"
+                    className="group relative px-3 lg:px-4 py-2 lg:py-3 rounded-lg text-xs lg:text-sm font-medium transition-all duration-300 hover:bg-accent/10 shrink-0"
                   >
                     <div className="flex items-center space-x-2">
-                      <IconComponent className="h-4 w-4 text-accent group-hover:text-foreground transition-colors" />
+                      <IconComponent className="h-3.5 w-3.5 lg:h-4 lg:w-4 text-accent group-hover:text-foreground transition-colors" />
                       <span className="text-foreground/80 group-hover:text-foreground transition-colors uppercase tracking-wide whitespace-nowrap">
                         {item.name.toLocaleUpperCase("vi-VN")}
                       </span>
@@ -100,11 +112,7 @@ export function Navigation() {
         >
           <div
             ref={menuScrollRef}
-            onWheel={(e) => {
-              if (!menuScrollRef.current) return
-              e.preventDefault()
-              menuScrollRef.current.scrollTop += e.deltaY * 2
-            }}
+            onWheel={handleScroll}
             className="px-2 pt-4 pb-6 space-y-2 bg-card/50 backdrop-blur-md rounded-xl mt-4 border border-accent/20 glow overflow-y-auto overscroll-contain max-h-[60vh] pr-1"
           >
             {navigationItems.map((item) => {

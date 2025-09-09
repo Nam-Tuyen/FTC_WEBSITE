@@ -1,160 +1,116 @@
+'use client'
+
 import { Navigation } from "@/components/navigation"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { Button } from "@/components/ui/button"
-import { Trophy, Award, Users, Calendar, Star, Target, Zap, ArrowRight } from "lucide-react"
-import Link from "next/link"
-
-const achievements = [
-  {
-    id: 1,
-    title: "Giải Nhất Hackathon FinTech 2024",
-    description:
-      "Đội thi của câu lạc bộ đã giành giải nhất cuộc thi Hackathon FinTech quốc gia với ứng dụng thanh toán di động sáng tạo.",
-    date: "Tháng 3, 2024",
-    category: "Cuộc thi",
-    icon: Trophy,
-    image: "/fintech-hackathon-trophy-award-ceremony.png",
-    tags: ["Hackathon", "Giải nhất", "Thanh toán"],
-  },
-  {
-    id: 2,
-    title: "Chứng nhận Đối tác Chiến lược",
-    description:
-      "Được công nhận là đối tác chiến lược bởi Hiệp hội FinTech Việt Nam trong việc phát triển nhân lực công nghệ tài chính.",
-    date: "Tháng 1, 2024",
-    category: "Chứng nhận",
-    icon: Award,
-    image: "/partnership-certificate-fintech-vietnam.png",
-    tags: ["Đối tác", "Chứng nhận", "Hiệp hội"],
-  },
-  {
-    id: 3,
-    title: "500+ Thành viên Tích cực",
-    description:
-      "Câu lạc bộ đã phát triển thành cộng đồng với hơn 500 thành viên tích cực từ các trường đại học và doanh nghiệp.",
-    date: "Tháng 12, 2023",
-    category: "Cộng đồng",
-    icon: Users,
-    image: "/large-group-fintech-community-meeting.png",
-    tags: ["Thành viên", "Cộng đồng", "Phát triển"],
-  },
-  {
-    id: 4,
-    title: "Dự án Blockchain Banking",
-    description:
-      "Phát triển thành công ứng dụng ngân hàng số sử dụng công nghệ blockchain, được triển khai thí điểm tại 3 ngân hàng.",
-    date: "Tháng 10, 2023",
-    category: "Dự án",
-    icon: Target,
-    image: "/blockchain-banking-application-interface.png",
-    tags: ["Blockchain", "Ngân hàng", "Ứng dụng"],
-  },
-  {
-    id: 5,
-    title: "Giải Ba Cuộc thi AI trong Tài chính",
-    description:
-      "Đạt giải ba trong cuộc thi ứng dụng AI trong lĩnh vực tài chính với giải pháp phân tích rủi ro tín dụng thông minh.",
-    date: "Tháng 8, 2023",
-    category: "Cuộc thi",
-    icon: Star,
-    image: "/ai-finance-competition-award-ceremony.png",
-    tags: ["AI", "Giải ba", "Tín dụng"],
-  },
-  {
-    id: 6,
-    title: "Hội thảo Quốc tế FinTech",
-    description:
-      "Tổ chức thành công hội thảo quốc tế về FinTech với sự tham gia của hơn 1000 người và 50 diễn giả từ 15 qu��c gia.",
-    date: "Tháng 6, 2023",
-    category: "Sự kiện",
-    icon: Calendar,
-    image: "/international-fintech-conference-speakers-stage.png",
-    tags: ["Hội thảo", "Quốc tế", "Diễn giả"],
-  },
-]
-
-const stats = [
-  { label: "Giải thưởng", value: "15+", icon: Trophy },
-  { label: "Dự án hoàn thành", value: "25+", icon: Target },
-  { label: "Thành viên", value: "500+", icon: Users },
-  { label: "Đối tác", value: "30+", icon: Award },
-]
 
 export default function AchievementsPage() {
   return (
-    <div className="min-h-screen gradient-bg">
+    <div className="min-h-screen bg-gradient-to-b from-background to-background/80 overflow-hidden">
       <Navigation />
 
-      <section className="relative py-24 px-4 sm:px-6 lg:px-8 overflow-hidden">
-        <div className="absolute inset-0">
-          <div className="absolute top-10 right-10 w-64 h-64 bg-accent/10 rounded-full blur-3xl animate-pulse"></div>
-          <div className="absolute bottom-10 left-10 w-80 h-80 bg-secondary/10 rounded-full blur-3xl animate-pulse delay-1000"></div>
+      {/* Hero Section with Animated Background */}
+      <section className="relative min-h-[60vh] flex items-center justify-center py-16 px-4 sm:px-6 lg:px-8">
+        {/* Animated background elements */}
+        <div className="absolute inset-0 overflow-hidden">
+          <div
+            className="absolute top-1/4 -right-1/4 w-2/3 h-2/3 bg-gradient-to-br from-primary/20 via-accent/20 to-transparent rounded-full blur-3xl"
+            style={{ animation: "float 20s ease-in-out infinite" }}
+          />
+          <div
+            className="absolute -bottom-1/4 -left-1/4 w-2/3 h-2/3 bg-gradient-to-tr from-accent/20 via-primary/20 to-transparent rounded-full blur-3xl"
+            style={{ animation: "float 20s ease-in-out infinite reverse" }}
+          />
         </div>
-        <div className="max-w-7xl mx-auto text-center relative z-10">
-          <h1 className="font-heading font-extrabold text-4xl sm:text-5xl lg:text-6xl text-foreground mb-6 text-glow pulse">
-            THÀNH TÍCH <span className="bg-gradient-to-r from-accent to-secondary bg-clip-text text-transparent">NỔI BẬT</span>
+
+        <div className="relative max-w-5xl mx-auto text-center space-y-6">
+          <h1 className="relative text-4xl sm:text-5xl lg:text-6xl font-extrabold">
+            <span className="absolute inset-0 bg-gradient-to-r from-primary to-accent opacity-50 blur-2xl animate-pulse"></span>
+            <span className="relative bg-gradient-to-r from-primary to-accent text-transparent bg-clip-text animate-text-shine">
+              THÀNH TÍCH NỔI BẬT
+            </span>
           </h1>
-          <p className="text-[22px] italic text-foreground/80 max-w-4xl mx-auto leading-relaxed">
-            Những cột mốc quan trọng và thành tựu đáng tự hào trong hành trình chinh phục công nghệ tài chính tiên tiến
+          <p className="text-xl sm:text-2xl text-muted-foreground leading-relaxed max-w-3xl mx-auto italic">
+            Thành tích nổi bật của câu lạc bộ trong thời gian qua
           </p>
         </div>
       </section>
 
-      <div className="max-w-7xl mx-auto">
-        <div className="h-px bg-accent/20 w-48 sm:w-64 md:w-96 lg:w-[420px] mx-auto rounded-full my-8 glow" />
-      </div>
-
+      {/* Main Content Sections (giữ lại) */}
       <section className="py-12 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto flex flex-col items-center text-center gap-8">
-          <h2 className="font-heading font-extrabold text-[35px] text-foreground uppercase mb-2 text-glow">NIỀM TỰ HÀO CỦA TUỔI TRẺ UEL</h2>
-          <div className="max-w-4xl">
-            <p className="text-[20px] text-foreground/90 mb-4 leading-relaxed text-justify">
-              Câu lạc bộ Công nghệ tài chính (FTC) luôn gắn liền hành trình phát triển của tuổi trẻ Trường Đại học Kinh tế – Luật với những trải nghiệm đáng nhớ và thành tích nổi bật. Trong năm học 2024 – 2025, FTC đã vinh dự được Ban Cán sự Đoàn Đại học Quốc gia TP.HCM trao tặng Giấy khen vì những đóng góp tích cực trong công tác Đoàn và phong trào thanh niên. Đây là sự ghi nhận xứng đáng cho một tập thể giàu nhiệt huyết, sáng tạo và đoàn kết.
-            </p>
-            <p className="text-[20px] text-foreground/90 mb-6 leading-relaxed text-justify">
-              FTC không chỉ tổ chức các hoạt động học thuật và ngoại khóa bổ ích mà còn tạo dựng một môi trường rèn luyện, kết nối và lan tỏa tinh thần tích cực. Thành tích này là minh chứng rõ nét cho tinh thần cống hiến và trách nhiệm của tuổi trẻ Kinh tế – Luật, đồng thời khẳng định vai trò của FTC trong việc nuôi dưỡng và phát triển thế hệ sinh viên năng động.
-            </p>
+        <div className="max-w-6xl mx-auto space-y-16">
+          {/* Niềm Tự Hào Section */}
+          <div className="relative group">
+            <div className="absolute inset-0 bg-gradient-to-r from-primary/5 to-accent/5 rounded-3xl transform transition-all"></div>
+            <div className="relative bg-background/40 backdrop-blur-lg rounded-3xl border border-primary/10 p-8">
+              <div className="flex flex-col md:flex-row gap-8 items-center">
+                <div className="flex-1 space-y-6">
+                  <h3 className="text-2xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+                    NIỀM TỰ HÀO CỦA TUỔI TRẺ UEL
+                  </h3>
+                  <div className="space-y-4">
+                    <p className="text-lg text-muted-foreground/90 leading-relaxed text-justify">
+                      Câu lạc bộ Công nghệ tài chính (FTC) luôn gắn liền hành trình phát triển của tuổi trẻ Trường Đại học Kinh tế – Luật với những trải nghiệm đáng nhớ và thành tích nổi bật. Trong năm học 2024 – 2025, FTC đã vinh dự được Ban Cán sự Đoàn Đại học Quốc gia TP.HCM trao tặng Giấy khen vì những đóng góp tích cực trong công tác Đoàn và phong trào thanh niên.
+                    </p>
+                    <p className="text-lg text-muted-foreground/90 leading-relaxed text-justify">
+                      FTC không chỉ tổ chức các hoạt động học thuật và ngoại khóa bổ ích mà còn tạo dựng một môi trường rèn luyện, kết nối và lan tỏa tinh thần tích cực.
+                    </p>
+                  </div>
+                </div>
+                <div className="md:w-1/2 rounded-2xl overflow-hidden border border-primary/10 hover:shadow-lg transition-shadow duration-300">
+                  <img
+                    src="https://cdn.builder.io/api/v1/image/assets%2Fa0639610e72c4f2e81f569a8823b8f03%2F4540def63fb249718e9bbaf2d10ebfdc?format=webp&width=1600"
+                    alt="Giấy khen ĐHQG"
+                    className="w-full h-auto object-cover transform hover:scale-105 transition-transform duration-300"
+                  />
+                </div>
+              </div>
+            </div>
           </div>
 
-          <div className="w-full max-w-5xl rounded-xl overflow-hidden border border-accent/20 bg-card/10 p-6">
-            <img src="https://cdn.builder.io/api/v1/image/assets%2Fa0639610e72c4f2e81f569a8823b8f03%2F4540def63fb249718e9bbaf2d10ebfdc?format=webp&width=1600" alt="Giấy khen ĐHQG" className="w-full h-auto object-contain max-h-[720px]" />
+          {/* I-Star Section */}
+          <div className="relative group">
+            <div className="absolute inset-0 bg-gradient-to-r from-primary/5 to-accent/5 rounded-3xl transform transition-all"></div>
+            <div className="relative bg-background/40 backdrop-blur-lg rounded-3xl border border-primary/10 p-8">
+              <div className="flex flex-col md:flex-row-reverse gap-8 items-center">
+                <div className="flex-1 space-y-6">
+                  <h3 className="text-2xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+                    DẤU ẤN TẠI GIẢI THƯỞNG I-STAR
+                  </h3>
+                  <div className="space-y-4">
+                    <p className="text-lg text-muted-foreground/90 leading-relaxed text-justify">
+                      FTC vinh dự nằm trong Top 10 tổ chức, cá nhân tiêu biểu Nhóm 4 tại Giải thưởng Đổi mới sáng tạo và Khởi nghiệp TP.HCM (I-Star). Đây là giải thưởng uy tín do Ủy ban Nhân dân TP.HCM chủ trì và Sở Khoa học và Công nghệ TP.HCM tổ chức.
+                    </p>
+                    <p className="text-lg text-muted-foreground/90 leading-relaxed text-justify">
+                      Với định hướng "bệ phóng cho những ý tưởng đổi mới", FTC triển khai nhiều chương trình thiết thực như cuộc thi học thuật, đào tạo, workshop và talkshow để giúp sinh viên tiếp cận kiến thức chuyên sâu về công nghệ tài chính và khởi nghiệp sáng tạo.
+                    </p>
+                  </div>
+                </div>
+                <div className="md:w-1/2 rounded-2xl overflow-hidden border border-primary/10 hover:shadow-lg transition-shadow duration-300">
+                  <img
+                    src="https://cdn.builder.io/api/v1/image/assets%2Fa0639610e72c4f2e81f569a8823b8f03%2Ff2b809cb40ef46d9867dc037c5d33b65?format=webp&width=1600"
+                    alt="I-Star Top10"
+                    className="w-full h-auto object-cover transform hover:scale-105 transition-transform duration-300"
+                  />
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
-      <div className="max-w-7xl mx-auto">
-        <div className="h-px bg-accent/20 w-48 sm:w-64 md:w-96 lg:w-[420px] mx-auto rounded-full my-8 glow" />
-      </div>
-
-      <section className="py-12 px-4 sm:px-6 lg:px-8 bg-card/5">
-        <div className="max-w-7xl mx-auto flex flex-col items-center text-center gap-8">
-          <h2 className="font-heading font-extrabold text-[35px] text-foreground uppercase mb-2 text-glow">DẤU ẤN TẠI GIẢI THƯỞNG I-STAR</h2>
-          <div className="max-w-4xl">
-            <p className="text-[18px] text-foreground/90 mb-4 leading-relaxed text-justify">
-              Một trong những thành tích đáng tự hào khác của FTC là được vinh danh trong Top 10 tổ chức, cá nhân tiêu biểu Nhóm 4 (các tổ chức, cá nhân hỗ trợ khởi nghiệp) tại Giải thưởng Đổi mới sáng tạo và Khởi nghiệp TP.HCM (I-Star). Đây là giải thưởng uy tín do Ủy ban Nhân dân TP.HCM chủ trì và Sở Khoa học và Công nghệ TP.HCM tổ chức thường niên, nhằm tôn vinh các tập thể, cá nhân có đóng góp xuất sắc cho phong trào đổi mới sáng tạo và khởi nghiệp.
-            </p>
-            <p className="text-[18px] text-foreground/90 mb-4 leading-relaxed text-justify">
-              Thành tích này khẳng định những nỗ lực bền bỉ của FTC trong
-              việc xây dựng một hệ sinh thái học thuật. Nơi sinh viên có thể
-              nuôi dưỡng ý tưởng, triển khai dự án và phát triển tinh thần
-              khởi nghiệp. Với định hướng “bệ phóng cho những ý tưởng đổi
-              mới”, FTC đã và đang triển khai nhiều chương trình thiết thực
-              như các cuộc thi học thuật, các buổi đào tạo, workshop,
-              talkshow… nhằm giúp sinh viên tiếp cận kiến thức chuyên sâu về
-              công nghệ tài chính và khởi nghiệp sáng tạo.
-            </p>
-            <p className="text-[18px] text-foreground/90 leading-relaxed text-justify">
-              Khẳng định bản lĩnh tiên phong: Những thành tích mà FTC đã đạt được không chỉ là sự công nhận từ các tổ chức uy tín mà còn là minh chứng cho tinh thần trách nhiệm, sự nỗ lực và sáng tạo của tập thể câu lạc bộ. Đây cũng chính là nền tảng để FTC tiếp tục phát huy sức trẻ, đổi mới và khẳng định bản lĩnh trong hành trình học tập, nghiên cứu và khởi nghiệp của sinh viên UEL nói riêng và cộng đồng sinh viên TP.HCM nói chung.
-            </p>
-          </div>
-
-          <div className="w-full max-w-5xl rounded-xl overflow-hidden border border-accent/20 bg-card/10 p-6">
-            <img src="https://cdn.builder.io/api/v1/image/assets%2Fa0639610e72c4f2e81f569a8823b8f03%2Ff2b809cb40ef46d9867dc037c5d33b65?format=webp&width=1600" alt="I-Star Top10" className="w-full h-auto object-contain max-h-[720px] rounded-xl" />
-          </div>
-        </div>
-      </section>
-
+      {/* Global animations */}
+      <style jsx global>{`
+        @keyframes float {
+          0%, 100% { transform: translate(0, 0); }
+          50% { transform: translate(-20px, 20px); }
+        }
+        @keyframes shimmer {
+          to { background-position: 200% center; }
+        }
+        .animate-text-shine {
+          background-size: 200% auto;
+          animation: shimmer 3s linear infinite;
+        }
+      `}</style>
     </div>
   )
 }

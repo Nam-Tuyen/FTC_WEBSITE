@@ -1,74 +1,154 @@
+import { GoogleGenerativeAI } from "@google/generative-ai";
 import { matchSuggestedQuestion, buildGroundedPrompt } from '@/lib/faq-grounding'
 
 export const dynamic = 'force-dynamic';
+export const maxDuration = 300; // 5 minutes timeout
 
-function extractTextFromGemini(data: any) {
-  try {
-    const parts = data?.candidates?.[0]?.content?.parts;
-    if (Array.isArray(parts)) {
-      const txt = parts.map((p: any) => p?.text).filter(Boolean).join('\n').trim();
-      if (txt) return txt;
-    }
-    const txt2 = data?.candidates?.[0]?.text ?? data?.output_text ?? '';
-    if (txt2) return String(txt2);
-  } catch (e) {
-    // ignore
+// Validate environment variables
+const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
+if (!GEMINI_API_KEY) {
+  throw new Error('GEMINI_API_KEY is not configured in environment variables');
+}
+
+const MODEL_NAME = "gemini-pro";
+
+// Initialize Gemini with validated API key
+const genAI = new GoogleGenerativeAI(GEMINI_API_KEY);
+const model = genAI.getGenerativeModel({ 
+  model: MODEL_NAME,
+  generationConfig: {
+    temperature: 0.7,
+    topK: 40,
+    topP: 0.95,
+    maxOutputTokens: 1024,
   }
-  return '';
+});
+
+// Validate and parse request body
+async function parseRequest(req: Request) {
+  try {
+    const clonedReq = req.clone ? req.clone() : req;
+    const body = await clonedReq.json();
+    
+    if (!body.message || typeof body.message !== 'string') {
+      throw new Error('Invalid message format');
+    }
+
+    const history = body.history || [];
+    if (!Array.isArray(history)) {
+      throw new Error('Invalid history format');
+    }
+
+    return { message: body.message.trim(), history };
+  } catch (error) {
+    throw new Error('Invalid request body');
+  }
 }
 
 export async function POST(req: Request) {
   try {
-    // Clone request before reading body to avoid 'body stream already read' in dev overlay
-    const clonedReq = req.clone ? req.clone() : req
-    const { prompt } = await clonedReq.json();
-
-    const apiKey = process.env.GEMINI_API_KEY || process.env.GOOGLE_API_KEY;
-    if (!apiKey) {
-      return new Response(JSON.stringify({ error: 'Missing GEMINI_API_KEY' }), { status: 500 });
+    // Validate request
+    const { message, history } = await parseRequest(req);
+    if (!message) {
+      return new Response(
+        JSON.stringify({ error: true, message: 'Message cannot be empty' }), 
+        { status: 400, headers: { 'Content-Type': 'application/json' } }
+      );
     }
 
-    const model = process.env.GEMINI_MODEL || 'gemini-1.5-flash';
-
-    const { matched } = matchSuggestedQuestion(prompt || '');
-    const contentText = matched ? buildGroundedPrompt(prompt || '') : (prompt || 'Hello from Vercel + Gemini');
-
-    const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
-    const body = { contents: [{ parts: [{ text: contentText }] }] };
-
-    let r
-    let data = {}
+    // Check for suggested questions first
     try {
-      r = await fetch(url, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(body),
-        // keep redirects manual to detect issues
-        redirect: 'follow',
-      })
-    } catch (networkErr: any) {
-      return new Response(JSON.stringify({ error: true, message: 'Network error when calling Gemini API', details: String(networkErr?.message || networkErr) }), { status: 502, headers: { 'Content-Type': 'application/json' } })
+      const suggestedResponse = await matchSuggestedQuestion(message);
+      if (suggestedResponse) {
+        return new Response(
+          JSON.stringify({ 
+            response: suggestedResponse,
+            source: 'faq',
+            model: 'static'
+          }), 
+          { headers: { 'Content-Type': 'application/json' } }
+        );
+      }
+    } catch (error) {
+      console.warn('Error checking suggested questions:', error);
+      // Continue with Gemini if FAQ check fails
     }
 
-    try {
-      data = await r.json().catch(() => ({}))
-    } catch (e) {
-      data = {}
+    // Build prompt with context
+    const prompt = await buildGroundedPrompt(message);
+
+    // Start chat with retry mechanism
+    let attempts = 0;
+    const maxAttempts = 3;
+    
+    while (attempts < maxAttempts) {
+      try {
+        const chat = model.startChat({
+          history: history?.map((msg: any) => ({
+            role: msg.role === 'user' ? 'user' : 'model',
+            parts: msg.content,
+          })) || [],
+          generationConfig: {
+            temperature: 0.7,
+            topK: 40,
+            topP: 0.95,
+            maxOutputTokens: 1024,
+          },
+        });
+
+        const result = await chat.sendMessage(prompt);
+        const response = await result.response;
+        const text = response.text();
+
+        if (!text) {
+          throw new Error('Empty response from Gemini');
+        }
+
+        return new Response(
+          JSON.stringify({ 
+            response: text,
+            source: 'gemini',
+            model: MODEL_NAME,
+            grounded: true
+          }), 
+          { headers: { 'Content-Type': 'application/json' } }
+        );
+      } catch (error: any) {
+        attempts++;
+        if (attempts === maxAttempts) {
+          throw error;
+        }
+        // Wait before retrying (exponential backoff)
+        await new Promise(resolve => setTimeout(resolve, Math.pow(2, attempts) * 1000));
+      }
+    }
+  } catch (error: any) {
+    console.error('Error in chat route:', error);
+    
+    // Determine appropriate error message and status
+    let status = 500;
+    let message = 'An unexpected error occurred';
+    
+    if (error.message === 'Invalid request body' || error.message === 'Message cannot be empty') {
+      status = 400;
+      message = error.message;
+    } else if (error.message.includes('API key')) {
+      message = 'Configuration error - please contact support';
+    } else if (error.message.includes('SAFETY')) {
+      status = 400;
+      message = 'Content was filtered for safety reasons';
     }
 
-    if (!r || !r.ok) {
-      return new Response(JSON.stringify({ error: true, status: r?.status || 500, data }), { status: 502, headers: { 'Content-Type': 'application/json' } })
-    }
-
-    const text = extractTextFromGemini(data);
     return new Response(
-      JSON.stringify({ text, source: 'gemini', model, raw: data, grounded: Boolean(matched) }),
-      {
-        status: 200,
-        headers: { 'Content-Type': 'application/json' },
+      JSON.stringify({ 
+        error: true, 
+        message,
+        debug: process.env.NODE_ENV === 'development' ? error.message : undefined
+      }), 
+      { 
+        status,
+        headers: { 'Content-Type': 'application/json' }
       }
     );
-  } catch (e: any) {
-    return new Response(JSON.stringify({ error: true, message: e?.message || 'Unknown error' }), { status: 500 });
   }
 }

@@ -1,165 +1,225 @@
+'use client'
+
 import { Navigation } from "@/components/navigation"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Shield, BookOpen, Calendar, Megaphone, Wallet, Users, Handshake } from "lucide-react"
 
-export default function OrganizationPage() {
+export default function CoPage() {
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-gradient-to-b from-background to-background/80 overflow-hidden">
       <Navigation />
 
-      {/* Hero */}
-      <section className="relative py-16 sm:py-20 px-4 sm:px-6 lg:px-8 overflow-hidden gradient-bg">
-        <div className="absolute inset-0 pointer-events-none">
-          <div className="h-[300px] w-[300px] rounded-full bg-accent/20 blur-3xl absolute -top-10 -left-10" />
-          <div className="h-[260px] w-[260px] rounded-full bg-primary/20 blur-3xl absolute bottom-0 right-0" />
+      {/* Hero Section */}
+      <section className="relative min-h-[60vh] flex items-center justify-center py-16 px-4 sm:px-6 lg:px-8">
+        <div className="absolute inset-0 overflow-hidden">
+          <div className="absolute top-1/4 -right-1/4 w-2/3 h-2/3 bg-gradient-to-br from-primary/20 via-accent/20 to-transparent rounded-full blur-3xl animate-float" />
+          <div className="absolute -bottom-1/4 -left-1/4 w-2/3 h-2/3 bg-gradient-to-tr from-accent/20 via-primary/20 to-transparent rounded-full blur-3xl animate-float-reverse" />
         </div>
-        <div className="max-w-7xl mx-auto relative">
-          <div className="text-center space-y-4">
-            <h1 className="font-heading font-extrabold text-4xl sm:text-5xl lg:text-6xl text-foreground text-glow pulse">
-              DANH SÁCH CÁC BAN
-            </h1>
-          </div>
 
+        <div className="relative max-w-5xl mx-auto text-center space-y-6">
+          <h1 className="relative text-4xl sm:text-5xl lg:text-6xl font-extrabold">
+            <span className="absolute inset-0 bg-gradient-to-r from-primary to-accent opacity-50 blur-2xl animate-pulse"></span>
+            <span className="relative bg-gradient-to-r from-primary to-accent text-transparent bg-clip-text animate-text-shine">
+              CƠ CẤU TỔ CHỨC
+            </span>
+          </h1>
+          <p className="text-xl sm:text-2xl text-muted-foreground leading-relaxed max-w-3xl mx-auto italic">
+            Thành phần và vai trò của các ban trong câu lạc bộ 
+          </p>
         </div>
       </section>
 
-      {/* Structure map */}
-      <section className="py-10 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            <Card className="bg-card/30 border-accent/20 backdrop-blur-sm ring-1 ring-accent/10 hover:ring-accent/30 transition lg:col-span-3">
-              <CardHeader className="pb-3">
-                <CardTitle className="text-2xl font-bold text-foreground flex items-center gap-3">
-                  <Shield className="h-7 w-7 text-accent" /> Ban Điều hành
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="pt-0 text-foreground/90 leading-relaxed">
-                <p className="text-base">Điều phối toàn diện hoạt động, định hình chiến lược phát triển, phê duyệt kế hoạch, ngân sách và nhân sự. Đồng thời phụ trách mảng đối ngoại của Câu lạc bộ.</p>
-              </CardContent>
-            </Card>
-
-            <div className="lg:col-span-3 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-2 gap-6">
-              {/* Ban Học thuật */}
-              <Card className="group h-full bg-card/30 border-accent/20 backdrop-blur-sm transition hover:-translate-y-0.5 ring-1 ring-accent/10 hover:ring-accent/30">
-                <CardHeader className="pb-3">
-                  <div className="flex items-center gap-3">
-                    <BookOpen className="h-7 w-7 text-accent" />
-                    <CardTitle className="text-2xl font-bold text-foreground">Ban Học thuật</CardTitle>
+      {/* Main Content */}
+      <section className="py-12 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-6xl mx-auto space-y-16">
+          {/* Ban Điều Hành */}
+          <div className="relative group">
+            <div className="absolute inset-0 bg-gradient-to-r from-primary/5 to-accent/5 rounded-3xl transform transition-all" />
+            <div className="relative bg-background/40 backdrop-blur-lg rounded-3xl border border-primary/10 p-8 space-y-6">
+              <div className="flex items-center gap-4 mb-6">
+                <div className="w-12 h-12 relative">
+                  <div className="absolute inset-0 bg-gradient-to-r from-primary/20 to-accent/20 rounded-xl blur-lg group-hover:blur-xl transition-all" />
+                  <div className="relative w-full h-full bg-background/50 rounded-xl flex items-center justify-center">
+                    <Shield className="h-6 w-6 text-primary" />
                   </div>
-                </CardHeader>
-                <CardContent className="pt-0 text-foreground/90 leading-relaxed">
-                  <p className="mb-3"><span className="font-semibold text-accent">Chức năng:</span></p>
-                  <p className="mb-3">Phụ trách mảng kiến thức công nghệ tài chính của Câu lạc bộ, cập nhật tài liệu và biến kiến thức thành hoạt động dễ học, dễ áp dụng.</p>
-                  <p className="mb-2"><span className="font-semibold text-accent">Nhiệm vụ:</span></p>
-                  <ul className="list-disc pl-5 space-y-2">
-                    <li>Soạn giáo trình nội bộ, chuẩn bị tài liệu cho sự kiện và các ấn phẩm học thuật dùng chung.</li>
-                    <li><p>Lên nội dung cho buổi talkshow, workshop. Trong các cuộc thi học thuật: Ban có nhiệm vụ xây bộ đề, tiêu chí chấm và đồng hành cùng đội thi.</p></li>
-                    <li>Tổ chức các buổi rèn kỹ năng như xử lý dữ liệu, SQL, phân tích và giao dịch theo thuật toán.</li>
-                    <li>Đại diện Câu lạc bộ tham gia các sân chơi về học thuật, công nghệ và đổi mới sáng tạo.</li>
-                  </ul>
-                </CardContent>
-              </Card>
-
-              {/* Ban Sự kiện */}
-              <Card className="group h-full bg-card/30 border-accent/20 backdrop-blur-sm transition hover:-translate-y-0.5 ring-1 ring-accent/10 hover:ring-accent/30">
-                <CardHeader className="pb-3">
-                  <div className="flex items-center gap-3">
-                    <Calendar className="h-7 w-7 text-accent" />
-                    <CardTitle className="text-2xl font-bold text-foreground">Ban Sự kiện</CardTitle>
-                  </div>
-                </CardHeader>
-                <CardContent className="pt-0 text-foreground/90 leading-relaxed">
-                  <p className="mb-3"><span className="font-semibold text-accent">Chức năng:</span> Lên kế hoạch và tổ chức các chương trình của Câu lạc bộ, tập trung vào xây dựng kế hoạch, biên soạn kịch bản và tổng hợp báo cáo.</p>
-                  <p className="mb-2"><span className="font-semibold text-accent">Nhiệm vụ:</span></p>
-                  <ul className="list-disc pl-5 space-y-2">
-                    <li>Lên ý tưởng, thiết kế cấu trúc nội dung, soạn kịch bản tổng thể và kịch bản dẫn chương trình.</li>
-                    <li><p>Viết kế hoạch chương trình: mục tiêu, nội dung chính, tiến độ tổng, ngân sách dự kiến và checklist phối hợp giữa các ban.</p></li>
-                    <li>Soạn báo cáo tổng kết sau mỗi hoạt động, đánh giá hiệu quả và đề xuất cải tiến.</li>
-                    <li>Trao đổi và trả lời email hợp tác với các đơn vị bên ngoài, ghi nhận lịch làm việc và lưu trữ thông tin trao đổi.</li>
-                  </ul>
-                </CardContent>
-              </Card>
-
-              {/* Ban Truyền thông */}
-              <Card className="group h-full bg-card/30 border-accent/20 backdrop-blur-sm transition hover:-translate-y-0.5 ring-1 ring-accent/10 hover:ring-accent/30">
-                <CardHeader className="pb-3">
-                  <div className="flex items-center gap-3">
-                    <Megaphone className="h-7 w-7 text-accent" />
-                    <CardTitle className="text-2xl font-bold text-foreground">Ban Truyền thông</CardTitle>
-                  </div>
-                </CardHeader>
-                <CardContent className="pt-0 text-foreground/90 leading-relaxed">
-                  <p className="mb-3"><span className="font-semibold text-accent">Chức năng:</span> Phụ trách hình ảnh, nội dung và các kênh trực tuyến của Câu lạc bộ.</p>
-                  <p className="mb-2"><span className="font-semibold text-accent">Nhiệm vụ:</span></p>
-                  <ul className="list-disc pl-5 space-y-2">
-                    <li>Quản trị trang chính thức trên các nền tảng, giữ nhận diện thống nhất.</li>
-                    <li>Sáng tạo nội dung, thiết kế ấn phẩm: bài viết, đồ họa thông tin, áp phích, video.</li>
-                    <li>Chụp ảnh, ghi hình, chọn và lưu trữ tư liệu, lên lịch và xuất bản theo kế hoạch.</li>
-                    <li>Phối hợp truyền thông với đơn vị đồng hành và đối tác, bảo đảm thông tin chính xác và kịp thời.</li>
-                  </ul>
-                </CardContent>
-              </Card>
-
-              {/* Ban Tài chính cá nhân */}
-              <Card className="group h-full bg-card/30 border-accent/20 backdrop-blur-sm transition hover:-translate-y-0.5 ring-1 ring-accent/10 hover:ring-accent/30">
-                <CardHeader className="pb-3">
-                  <div className="flex items-center gap-3">
-                    <Wallet className="h-7 w-7 text-accent" />
-                    <CardTitle className="text-2xl font-bold text-foreground">Ban Tài chính cá nhân</CardTitle>
-                  </div>
-                </CardHeader>
-                <CardContent className="pt-0 text-foreground/90 leading-relaxed">
-                  <p className="mb-3"><span className="font-semibold text-accent">Chức năng:</span> Giáo dục tài chính cá nhân gắn với ứng dụng công nghệ.</p>
-                  <p className="mb-2"><span className="font-semibold text-accent">Nhiệm vụ:</span></p>
-                  <ul className="list-disc pl-5 space-y-2">
-                    <li>Hỗ trợ giảng dạy bằng trò chơi MoneyWe, tổ chức các buổi chuyên đề và tọa đàm về tài chính cá nhân.</li>
-                    <li>Biên soạn chuỗi FTCCN Sharing với bài viết hướng dẫn và bộ công cụ hỗ trợ quản lý chi tiêu, tiết kiệm, đầu tư.</li>
-                    <li>Phối hợp với Ban Học thuật để tích hợp kiến thức công nghệ tài chính vào nội dung tài chính cá nhân.</li>
-                    <li>Kết nối hoạt động giữa các ban nhằm bồi dưỡng kỹ năng mềm như giao tiếp, làm việc nhóm, thuyết trình và quản lý thời gian.</li>
-                  </ul>
-                </CardContent>
-              </Card>
-
-              {/* Ban Nhân sự */}
-              <Card className="group h-full bg-card/30 border-accent/20 backdrop-blur-sm transition hover:-translate-y-0.5 ring-1 ring-accent/10 hover:ring-accent/30">
-                <CardHeader className="pb-3">
-                  <div className="flex items-center gap-3">
-                    <Users className="h-7 w-7 text-accent" />
-                    <CardTitle className="text-2xl font-bold text-foreground">Ban Nhân sự</CardTitle>
-                  </div>
-                </CardHeader>
-                <CardContent className="pt-0 text-foreground/90 leading-relaxed">
-                  <p className="mb-3"><span className="font-semibold text-accent">Chức năng:</span></p>
-                  <p className="mb-3">Xây dựng văn hóa, hoàn thiện nội quy và vận hành nguồn lực của Câu lạc bộ.</p>
-                  <p className="mb-2"><span className="font-semibold text-accent">Nhiệm vụ:</span></p>
-                  <ul className="list-disc pl-5 space-y-2">
-                    <li>Soạn và cập nhật nội quy, giữ gìn văn hóa FTC, chăm lo đời sống tinh thần cho thành viên.</li>
-                    <li>Tuyển chọn, phân công nhân sự và theo dõi hiệu quả làm việc cho từng chương trình.</li>
-                    <li>Tổ chức hoạt động gắn kết nội bộ: định hướng thành viên mới, hoạt động gắn kết đội nhóm.</li>
-                    <li>Lập dự trù kinh phí cho từng hoạt động, lập dự toán tổng, theo dõi chi phí và quản lý quỹ minh bạch.</li>
-                    <li>Phối hợp các ban để cân đối nguồn lực theo kế hoạch và tiến độ.</li>
-                  </ul>
-                </CardContent>
-              </Card>
-            </div>
-
-            <Card className="bg-card/30 border-accent/20 backdrop-blur-sm ring-1 ring-accent/10 lg:col-span-3">
-              <CardHeader className="pb-2">
-                <div className="flex items-center gap-3">
-                  <Handshake className="h-7 w-7 text-accent" />
-                  <CardTitle className="text-2xl font-bold text-foreground text-left">Nguyên tắc phối hợp</CardTitle>
                 </div>
-              </CardHeader>
-              <CardContent className="pt-0 text-foreground/90 leading-relaxed text-left">
-                <p className="text-base leading-6">
-                  Nguyên tắc phối hợp của Câu lạc bộ được vận hành theo cấu trúc như sau: Ban Học thuật xây dựng và bàn giao nội dung, Ban Sự kiện lập kế hoạch và tổ chức triển khai còn Ban Truyền thông thiết kế ấn phẩm và lan tỏa thông tin. Song song đó, Ban Nhân sự bảo đảm bố trí con người, phân công công việc và gìn giữ văn hóa hoạt động trong khi Ban Tài chính cá nhân phụ trách mảng giáo dục chuyên biệt về tài chính cá nhân và phối hợp nội dung khi cần. Tất cả được điều phối chung bởi Ban Điều hành với vai trò định hướng chiến lược, phê duyệt kế hoạch và phụ trách mảng đối ngoại của Câu lạc bộ.
-                </p>
-              </CardContent>
-            </Card>
+                <h2 className="text-3xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+                  BAN ĐIỀU HÀNH
+                </h2>
+              </div>
+              
+              <div className="space-y-4">
+                <ul className="list-disc pl-5 space-y-2.5 text-lg text-muted-foreground/90">
+                  <li>Định hướng phát triển và đưa ra chiến lược dài hạn</li>
+                  <li>Điều phối và giám sát hoạt động của các ban, bảo đảm vận hành hiệu quả</li>
+                  <li>Phê duyệt kế hoạch, ngân sách và nhân sự</li>
+                  <li>Đại diện câu lạc bộ làm việc với các doanh nghiệp và đối tác</li>
+                </ul>
+              </div>
+            </div>
+          </div>
 
+          {/* Các Ban Chuyên Môn */}
+          <div className="relative group">
+            <div className="absolute inset-0 bg-gradient-to-r from-primary/5 to-accent/5 rounded-3xl transform transition-all" />
+            <div className="relative bg-background/40 backdrop-blur-lg rounded-3xl border border-primary/10 p-8 space-y-8">
+              <div className="flex items-center gap-4 mb-6">
+                <div className="w-12 h-12 relative">
+                  <div className="absolute inset-0 bg-gradient-to-r from-primary/20 to-accent/20 rounded-xl blur-lg group-hover:blur-xl transition-all" />
+                  <div className="relative w-full h-full bg-background/50 rounded-xl flex items-center justify-center">
+                    <Users className="h-6 w-6 text-primary" />
+                  </div>
+                </div>
+                <h2 className="text-3xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+                  CÁC BAN CHUYÊN MÔN
+                </h2>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                {/* Ban Học thuật */}
+                <div className="relative group">
+                  <div className="absolute inset-0 bg-gradient-to-r from-primary/5 to-accent/5 rounded-2xl transform transition-all" />
+                  <div className="relative p-6 bg-background/40 backdrop-blur-lg rounded-2xl border border-primary/10 h-full">
+                    <div className="flex items-center gap-3 mb-4">
+                      <BookOpen className="h-6 w-6 text-primary" />
+                      <h3 className="text-xl font-bold text-foreground">Ban Học thuật</h3>
+                    </div>
+                    <div className="space-y-4">
+                      <ul className="list-disc pl-5 space-y-2 text-lg text-muted-foreground/90">
+                        <li>Phụ trách nội dung chuyên môn cho các buổi workshop, talkshow</li>
+                        <li>Chuẩn bị câu hỏi cho các buổi tọa đàm và chuyên đề, xây dựng ngân hàng câu hỏi</li>
+                        <li>Ra đề và đánh giá đề cho cuộc thi ATTACKER</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Ban Sự kiện */}
+                <div className="relative group">
+                  <div className="absolute inset-0 bg-gradient-to-r from-primary/5 to-accent/5 rounded-2xl transform transition-all" />
+                  <div className="relative p-6 bg-background/40 backdrop-blur-lg rounded-2xl border border-primary/10 h-full">
+                    <div className="flex items-center gap-3 mb-4">
+                      <Calendar className="h-6 w-6 text-primary" />
+                      <h3 className="text-xl font-bold text-foreground">Ban Sự kiện</h3>
+                    </div>
+                    <div className="space-y-4">
+                      <ul className="list-disc pl-5 space-y-2 text-lg text-muted-foreground/90">
+                        <li>Viết kế hoạch, báo cáo và các giấy tờ liên quan tới câu lạc bộ</li>
+                        <li>Xây dựng kịch bản MC và timeline cho sự kiện</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Ban Truyền thông */}
+                <div className="relative group">
+                  <div className="absolute inset-0 bg-gradient-to-r from-primary/5 to-accent/5 rounded-2xl transform transition-all" />
+                  <div className="relative p-6 bg-background/40 backdrop-blur-lg rounded-2xl border border-primary/10 h-full">
+                    <div className="flex items-center gap-3 mb-4">
+                      <Megaphone className="h-6 w-6 text-primary" />
+                      <h3 className="text-xl font-bold text-foreground">Ban Truyền thông</h3>
+                    </div>
+                    <div className="space-y-4">
+                      <ul className="list-disc pl-5 space-y-2 text-lg text-muted-foreground/90">
+                        <li>Thiết kế ấn phẩm và truyền thông cho câu lạc bộ</li>
+                        <li>Quản lý các kênh truyền thông của câu lạc bộ và lên kế hoạch đăng bài truyền thông</li>
+                        <li>Phát triển hình ảnh và thương hiệu của câu lạc bộ</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Ban Tài chính cá nhân */}
+                <div className="relative group">
+                  <div className="absolute inset-0 bg-gradient-to-r from-primary/5 to-accent/5 rounded-2xl transform transition-all" />
+                  <div className="relative p-6 bg-background/40 backdrop-blur-lg rounded-2xl border border-primary/10 h-full">
+                    <div className="flex items-center gap-3 mb-4">
+                      <Wallet className="h-6 w-6 text-primary" />
+                      <h3 className="text-xl font-bold text-foreground">Ban Tài chính cá nhân</h3>
+                    </div>
+                    <div className="space-y-4">
+                      <ul className="list-disc pl-5 space-y-2 text-lg text-muted-foreground/90">
+                        <li>Tổ chức đào tạo, nâng cao hiểu biết tài chính cá nhân cho sinh viên</li>
+                        <li>Phát triển và cập nhật nội dung cho bộ bài MoneyWe</li>
+                        <li>Hỗ trợ giảng viên giảng dạy các môn học liên quan đến mảng tài chính cá nhân</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Ban Nhân sự */}
+                <div className="relative group">
+                  <div className="absolute inset-0 bg-gradient-to-r from-primary/5 to-accent/5 rounded-2xl transform transition-all" />
+                  <div className="relative p-6 bg-background/40 backdrop-blur-lg rounded-2xl border border-primary/10 h-full">
+                    <div className="flex items-center gap-3 mb-4">
+                      <Users className="h-6 w-6 text-primary" />
+                      <h3 className="text-xl font-bold text-foreground">Ban Nhân sự</h3>
+                    </div>
+                    <div className="space-y-4">
+                      <ul className="list-disc pl-5 space-y-2 text-lg text-muted-foreground/90">
+                        <li>Phân công công việc và quản lý tiến độ công việc</li>
+                        <li>Triển khai hoạt động gắn kết, gìn giữ văn hóa tổ chức</li>
+                        <li>Lập dự trù kinh phí cho từng hoạt động</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Nguyên tắc Phối hợp */}
+          <div className="relative group">
+            <div className="absolute inset-0 bg-gradient-to-r from-primary/5 to-accent/5 rounded-3xl transform transition-all" />
+            <div className="relative bg-background/40 backdrop-blur-lg rounded-3xl border border-primary/10 p-8 space-y-6">
+              <div className="flex items-center gap-4 mb-6">
+                <div className="w-12 h-12 relative">
+                  <div className="absolute inset-0 bg-gradient-to-r from-primary/20 to-accent/20 rounded-xl blur-lg group-hover:blur-xl transition-all" />
+                  <div className="relative w-full h-full bg-background/50 rounded-xl flex items-center justify-center">
+                    <Handshake className="h-6 w-6 text-primary" />
+                  </div>
+                </div>
+                <h2 className="text-3xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+                  NGUYÊN TẮC PHỐI HỢP
+                </h2>
+              </div>
+              
+              <div className="space-y-4">
+                <ul className="list-disc pl-5 space-y-2.5 text-lg text-muted-foreground/90">
+                  <li>Ban Học thuật chuẩn bị và bàn giao nội dung</li>
+                  <li>Ban Sự kiện lập kế hoạch và giải quyết các giấy tờ cần có để tổ chức sự kiện</li>
+                  <li>Ban Truyền thông thiết kế ấn phẩm và lên bài quảng bá sự kiện</li>
+                  <li>Ban Tài chính ccá nhân phụ trách mảng giáo dục tài chính cá nhân</li>
+                  <li>Ban Nhân sự bảo đảm nguồn lực được phân công hiệu quả và kịp tiến độ công việc đề ra</li>
+                </ul>
+              </div>
+            </div>
           </div>
         </div>
       </section>
+
+      <style jsx global>{`
+        @keyframes float {
+          0%, 100% { transform: translate(0, 0) rotate(0deg); }
+          50% { transform: translate(-20px, 20px) rotate(5deg); }
+        }
+        @keyframes float-reverse {
+          0%, 100% { transform: translate(0, 0) rotate(0deg); }
+          50% { transform: translate(20px, -20px) rotate(-5deg); }
+        }
+        .animate-float {
+          animation: float 20s ease-in-out infinite;
+        }
+        .animate-float-reverse {
+          animation: float-reverse 20s ease-in-out infinite;
+        }
+        @keyframes shimmer {
+          to { background-position: 200% center; }
+        }
+        .animate-text-shine {
+          background-size: 200% auto;
+          animation: shimmer 3s linear infinite;
+        }
+      `}</style>
     </div>
   )
 }

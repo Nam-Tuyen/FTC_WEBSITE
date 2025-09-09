@@ -1,7 +1,7 @@
 import { Navigation } from "@/components/navigation"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
-import { ArrowRight, Users, Code, Database, Shield, Zap, Brain, Rocket, Globe } from "lucide-react"
+import { ArrowRight, Users2, Code, Database, Shield, Zap, Brain, Rocket, Globe } from "lucide-react"
 import Link from "next/link"
 
 export default function HomePage() {
@@ -62,7 +62,7 @@ export default function HomePage() {
         <div className="max-w-7xl mx-auto relative z-10">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
             {[
-              { number: "100+", label: "THÀNH VIÊN", icon: Users },
+              { number: "100+", label: "THÀNH VIÊN", icon: Users2 },
               { number: "+10", label: "DỰ ÁN", icon: Rocket },
               { number: "50+", label: "ĐỐI TÁC", icon: Globe },
               { number: "100+", label: "SỰ KIỆN", icon: Zap },
@@ -122,7 +122,7 @@ export default function HomePage() {
                 gradient: "from-accent/20 to-secondary/20",
               },
               {
-                icon: Users,
+                icon: Users2,
                 title: "KỸ NĂNG & CỘNG ĐỒNG",
                 description: "Phát triển giao tiếp, làm việc nhóm, quản lý dự án, sáng tạo nội dung và truyền thông. Môi trường cởi mở, gắn kết, chia sẻ và hỗ trợ lẫn nhau.",
                 gradient: "from-accent/20 to-secondary/20",

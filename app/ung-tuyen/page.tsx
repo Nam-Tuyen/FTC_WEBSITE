@@ -1,688 +1,186 @@
 "use client"
 
-import { useMemo, useState } from "react"
+import { type NextPage } from "next"
 import { Navigation } from "@/components/navigation"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Textarea } from "@/components/ui/textarea"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Checkbox } from "@/components/ui/checkbox"
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
-import { CheckCircle, ArrowRight, ArrowLeft } from "lucide-react"
-import * as Popover from "@radix-ui/react-popover"
-import { DayPicker } from "react-day-picker"
-import { addMonths } from "date-fns"
-import "react-day-picker/dist/style.css"
+import { ApplicationDeadlineCheck } from "./countdown-timer"
+import { RECRUITMENT_CONFIG } from "./constants"
 
-const genderOptions = [
-  { value: "male", label: "Nam" },
-  { value: "female", label: "Nữ" },
-  { value: "other", label: "Khác" },
-  { value: "na", label: "Không muốn trả lời" },
-]
-
-const commuteOptions = [
-  { value: "walk", label: "Đi bộ" },
-  { value: "bike", label: "Xe đạp" },
-  { value: "motorbike", label: "Xe máy" },
-  { value: "bus", label: "Xe buýt" },
-  { value: "other", label: "Khác" },
-]
-
-const interestAreas = [
-  "\"Fintech\" nói chung",
-  "Giao dịch thuật toán",
-  "Dữ liệu & AI trong tài chính",
-  "Blockchain/Web3",
-  "Tài chính cá nhân số",
-  "Truyền thông – thiết kế",
-  "Tổ chức sự kiện",
-]
-
-const eventsInterested = [
-  "ATTACKER",
-  "Workshop/Talkshow",
-  "Tham quan doanh nghiệp",
-  "Ngày hội nghề nghiệp",
-]
-
-const skillsMulti = [
-  "Viết Email",
-  "Dẫn Chương Trình/MC",
-  "Dự Trù Kinh Phí",
-  "Sáng Tạo Nội Dung",
-  "Viết Bài",
-  "Thiết Kế Hình Ảnh",
-  "Quay - chụp",
-  "Dựng Video",
-  "Phân Tích Dữ Liệu (Excel/SQL/Python)",
-  "Trực Fanpage",
-  "Quản Lý Dự Án",
-  "Nghiên Cứu Học Thuật",
-]
-
-const toolsUsed = [
-  "Excel/Sheets",
-  "PowerPoint/Canva",
-  "Python/R",
-  "SQL",
-  "Power BI/Tableau",
-  "Figma",
-  "Premiere/CapCut",
-  "GitHub",
-  "Notion",
-  "Trello",
-]
-
-const teams = [
-  { value: "hoc-thuat", label: "Học thuật" },
-  { value: "su-kien", label: "Sự kiện" },
-  { value: "truyen-thong", label: "Truyền thông" },
-  { value: "tai-chinh-ca-nhan", label: "Tài chính cá nhân" },
-  { value: "nhan-su", label: "Nhân sự" },
-]
-
-function parseISODate(iso: string): Date | null {
-  if (!iso) return null
-  const parts = iso.split("-").map(Number)
-  if (parts.length !== 3) return null
-  const [y, m, d] = parts
-  if (!y || !m || !d) return null
-  const dt = new Date(y, m - 1, d)
-  return isNaN(dt.getTime()) ? null : dt
-}
-
-function formatDisplayFromISO(iso: string): string {
-  const d = parseISODate(iso)
-  if (!d) return ""
-  const dd = String(d.getDate()).padStart(2, "0")
-  const mm = String(d.getMonth() + 1).padStart(2, "0")
-  const yyyy = String(d.getFullYear())
-  return `${dd}/${mm}/${yyyy}`
-}
-
-type FormState = {
-  // 1) Thông tin cơ bản
-  fullName: string
-  dob: string
-  gender: string
-  studentId: string
-  classFacultyCourse: string
-  schoolEmail: string
-  phone: string
-  profileUrl: string
-  currentResidence: string
-  commute: string
-
-  // 2) Vì sao bạn chọn FTC?
-  whyFtc: string
-  interestAreas: string[]
-  interestedEvents: string[]
-
-  // 3) Kỹ năng & siêu năng lực
-  strengths: string
-  skills: string[]
-  tools: string[]
-  portfolioUrl: string
-
-  // 4) Trải nghiệm hoạt động
-  clubExperience: string
-  extroversion: string
-  teamworkKey: string
-  availability: string
-
-  // 5) Ban mong muốn
-  primaryTeam: string
-  secondaryTeam: string
-
-  // 6) Ban-specific
-  hocThuat_topics: string
-  hocThuat_training: string
-
-  suKien_timeline: string
-
-  truyenThong_links: string
-  truyenThong_process: string
-
-  tccn_topic: string
-  tccn_messages: string
-
-  nhanSu_conflict: string
-  nhanSu_bonding: string
-}
-
-export default function ApplicationPage() {
-  const [form, setForm] = useState<FormState>({
-    fullName: "",
-    dob: "",
-    gender: "",
-    studentId: "",
-    classFacultyCourse: "",
-    schoolEmail: "",
-    phone: "",
-    profileUrl: "",
-    currentResidence: "",
-    commute: "",
-
-    whyFtc: "",
-    interestAreas: [],
-    interestedEvents: [],
-
-    strengths: "",
-    skills: [],
-    tools: [],
-    portfolioUrl: "",
-
-    clubExperience: "",
-    extroversion: "",
-    teamworkKey: "",
-    availability: "",
-
-    primaryTeam: "",
-    secondaryTeam: "",
-
-    hocThuat_topics: "",
-    hocThuat_training: "",
-
-    suKien_timeline: "",
-
-    truyenThong_links: "",
-    truyenThong_process: "",
-
-    tccn_topic: "",
-    tccn_messages: "",
-
-    nhanSu_conflict: "",
-    nhanSu_bonding: "",
-  })
-
-  const update = (key: keyof FormState, value: any) => setForm((p) => ({ ...p, [key]: value }))
-  const toggleInArray = (key: keyof FormState, value: string) =>
-    setForm((p) => {
-      const arr = new Set<string>((p[key] as string[]) || [])
-      arr.has(value) ? arr.delete(value) : arr.add(value)
-      return { ...p, [key]: Array.from(arr) }
-    })
-  const [submitting, setSubmitting] = useState(false)
-
-  const requiredValid = useMemo(() => {
-    const emailOk = /@.+\.uel\.edu\.vn$/i.test(form.schoolEmail.trim())
-    return (
-      form.fullName.trim() !== "" &&
-      form.dob.trim() !== "" &&
-      form.studentId.trim() !== "" &&
-      form.classFacultyCourse.trim() !== "" &&
-      emailOk &&
-      form.phone.trim() !== "" &&
-      form.whyFtc.trim() !== "" &&
-      form.strengths.trim() !== "" &&
-      form.primaryTeam.trim() !== ""
-    )
-  }, [form])
-
-  const selectedDob = useMemo(() => parseISODate(form.dob), [form.dob])
-  const [openDOB, setOpenDOB] = useState(false)
-  const [calMonth, setCalMonth] = useState<Date>(selectedDob || new Date())
-  const onCalendarWheel: React.WheelEventHandler<HTMLDivElement> = (e) => {
-    e.preventDefault()
-    const step = e.deltaY > 0 ? 1 : -1
-    setCalMonth((m) => addMonths(m, step))
-  }
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    if (!requiredValid) {
-      alert("Vui lòng điền đầy đủ các trường bắt buộc (*) và kiểm tra email trường (@…uel.edu.vn)")
-      return
-    }
-    try {
-      setSubmitting(true)
-      console.log("Form submitted:", form)
-      const BASE = "https://script.google.com/macros/s/AKfycbyFci6Q6595TQuYe6LcWYpqTpR0E2vXTjSiXrguWzyTskpJi4L7-Cfbs16shvMmXIUCug/exec"
-      const response = await fetch(BASE, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(form),
-      })
-      console.log("Response status:", response.status)
-      console.log("Response headers:", Object.fromEntries(response.headers.entries()))
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`)
-      }
-      const result = await response.json()
-      console.log("Result:", result)
-      if (result.ok) {
-        alert("Đơn ứng tuyển đã được gửi thành công! Chúng tôi sẽ liên hệ với bạn sớm.")
-      } else {
-        throw new Error(result.error || "Unknown error occurred")
-      }
-    } catch (error) {
-      console.error("Submit error:", error)
-      alert("Có lỗi xảy ra khi gửi form. Vui lòng thử lại.")
-    } finally {
-      setSubmitting(false)
-    }
-  }
+const RecruitmentPage: NextPage = () => {
+  // Sử dụng getStatus để kiểm tra trạng thái
+  const status = RECRUITMENT_CONFIG.getStatus()
+  const isApplicationOpen = status === "OPEN"
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-gradient-to-b from-background to-background/80 overflow-hidden">
       <Navigation />
+      
+      {/* Hero Section with Animated Background */}
+      <section className="relative min-h-[80vh] flex items-center justify-center py-24 px-4 sm:px-6 lg:px-8">
+        {/* Animated background elements */}
+        <div className="absolute inset-0 overflow-hidden">
+          <div 
+            className="absolute top-1/4 -right-1/4 w-2/3 h-2/3 bg-gradient-to-br from-primary/20 via-accent/20 to-transparent rounded-full blur-3xl" 
+            style={{ animation: "float 20s ease-in-out infinite" }}
+          />
+          <div 
+            className="absolute -bottom-1/4 -left-1/4 w-2/3 h-2/3 bg-gradient-to-tr from-accent/20 via-primary/20 to-transparent rounded-full blur-3xl"
+            style={{ animation: "float 20s ease-in-out infinite reverse" }}
+          />
+          <div
+            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-[radial-gradient(ellipse_at_center,rgba(var(--primary-rgb),0.05),transparent)] pointer-events-none"
+            style={{ animation: "pulse 8s infinite" }}
+          />
+        </div>
 
-      <section className="py-16 px-4 sm:px-6 lg:px-8 bg-muted/30">
-        <div className="max-w-4xl mx-auto text-center">
-          <h1 className="font-heading font-bold text-4xl sm:text-5xl text-foreground mb-6 text-glow animate-pulse">
-            ĐƠN ĐĂNG KÝ THAM GIA FTC
-          </h1>
-          <p className="text-2xl text-muted-foreground text-pretty italic">
-            <em>Các bạn cứ trả lời thoải mái nhé!</em>
-          </p>
+        <div className="relative max-w-5xl mx-auto">
+          <div className="text-center space-y-8">
+            {/* Main Title with Co Cau Page Style */}
+            <h1 className="relative text-4xl sm:text-5xl lg:text-6xl font-extrabold inline-block">
+              <span className="absolute inset-0 bg-gradient-to-r from-primary to-accent opacity-50 blur-2xl animate-pulse"></span>
+              <span className="relative bg-gradient-to-r from-primary to-accent text-transparent bg-clip-text animate-text-shine">
+                GIA NHẬP CÂU LẠC BỘ FTC
+              </span>
+            </h1>
+            
+            {/* Simple Italicized Subtitle */}
+            <p className="text-xl sm:text-2xl text-muted-foreground leading-relaxed max-w-3xl mx-auto italic">
+              Chúng mình đang tìm kiếm những người bạn đam mê công nghệ và tài chính, 
+              sẵn sàng học hỏi và phát triển cùng FTC.
+            </p>
+
+            {/* Call to Action Section */}
+            <div className="mt-12 space-y-8">
+              {status === "OPEN" ? (
+                <>
+                  <a 
+                    href={RECRUITMENT_CONFIG.formUrl}
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="inline-block group"
+                  >
+                    <div className="relative">
+                      <div className="absolute -inset-1 bg-gradient-to-r from-primary to-accent rounded-lg blur-lg opacity-70 group-hover:opacity-100 transition duration-1000 group-hover:duration-200"></div>
+                      <Button 
+                        size="lg" 
+                        className="relative px-8 py-6 text-lg bg-background hover:bg-background/90 border-0 shadow-xl"
+                      >
+                        <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent font-semibold">
+                          Nộp đơn ngay
+                        </span>
+                      </Button>
+                    </div>
+                  </a>
+                  <ApplicationDeadlineCheck recruitmentStatus={status} />
+                </>
+              ) : (
+                <ApplicationDeadlineCheck recruitmentStatus={status} />
+              )}
+            </div>
+          </div>
         </div>
       </section>
 
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <Card>
-          <CardHeader>
-            <CardTitle className="text-3xl text-center font-heading"><p>MẪU ĐƠN ỨNG TUYỂN</p></CardTitle>
-          </CardHeader>
-          <CardContent>
-            <form onSubmit={handleSubmit} className="space-y-10">
-              {/* 1) Thông tin cơ bản */}
-              <section className="space-y-6">
-                <h2 className="text-xl font-semibold">1) Thông tin cơ bản</h2>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div className="space-y-2">
-                    <Label htmlFor="fullName">Họ và tên *</Label>
-                    <Input id="fullName" value={form.fullName} onChange={(e) => update("fullName", e.target.value)} placeholder="Nguyễn Văn A" />
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="dob">Ngày sinh (dd/mm/yyyy) *</Label>
-                    <Popover.Root open={openDOB} onOpenChange={(v) => { setOpenDOB(v); if (v && selectedDob) setCalMonth(selectedDob) }}>
-                      <Popover.Trigger asChild>
-                        <div>
-                          <Input
-                            id="dob"
-                            value={form.dob ? formatDisplayFromISO(form.dob) : ""}
-                            onClick={() => setOpenDOB(true)}
-                            readOnly
-                            placeholder="dd/mm/yyyy"
-                          />
-                        </div>
-                      </Popover.Trigger>
-                      <Popover.Content className="rounded-md border bg-popover p-1 shadow-md" sideOffset={6} align="start">
-                        <div onWheel={onCalendarWheel} className="select-none">
-                          <DayPicker
-                            mode="single"
-                            month={calMonth}
-                            onMonthChange={setCalMonth}
-                            selected={selectedDob || undefined}
-                            onSelect={(d) => {
-                              if (!d) return
-                              const iso = d.toISOString().slice(0, 10)
-                              update("dob", iso)
-                              setOpenDOB(false)
-                            }}
-                            captionLayout="dropdown"
-                            fromYear={1980}
-                            toYear={new Date().getFullYear()}
-                            numberOfMonths={1}
-                            showOutsideDays
-                            styles={{
-                              // Base
-                              root: { fontSize: "12px", color: "#fff" },
-                              months: { color: "#fff" },
-                              table: { color: "#fff" },
-                              head: { color: "#fff" },
-                              // Header / caption
-                              caption: { color: "#fff" },
-                              caption_label: { fontSize: "12px", color: "#fff" },
-                              caption_dropdowns: { color: "#fff", display: "flex", gap: 6 },
-                              caption_dropdown: { color: "#fff", background: "transparent", border: "1px solid rgba(255,255,255,0.3)", borderRadius: 6, padding: "2px 6px" },
-                              caption_dropdown_month: { color: "#fff" },
-                              caption_dropdown_year: { color: "#fff" },
-                              // Week header
-                              head_cell: { fontSize: "11px", padding: "4px 6px", color: "#fff" },
-                              // Days
-                              day: { width: 28, height: 28, margin: 2, padding: 0, lineHeight: "28px", color: "#fff", borderRadius: 6 },
-                              day_selected: { backgroundColor: "rgba(255,255,255,0.22)", color: "#fff" },
-                              day_today: { outline: "1px solid rgba(255,255,255,0.45)", borderRadius: 6 },
-                              day_outside: { color: "rgba(255,255,255,0.55)" },
-                              // Navigation
-                              nav: { color: "#fff" },
-                              nav_button: { width: 28, height: 28, color: "#fff" },
-                              nav_button_previous: { color: "#fff" },
-                              nav_button_next: { color: "#fff" },
-                            }}
-                          />
-                        </div>
-                      </Popover.Content>
-                      <style jsx global>{`
-                        /* Force white globally inside DayPicker root */
-                        .rdp-root,
-                        .rdp-root * {
-                          color: #fff !important;
-                        }
-                        .rdp-root svg,
-                        .rdp-root svg * {
-                          fill: #fff !important;
-                          stroke: #fff !important;
-                        }
-                        /* Specific elements for safety */
-                        .rdp-root .rdp-caption,
-                        .rdp-root .rdp-caption_label,
-                        .rdp-root .rdp-caption_dropdowns,
-                        .rdp-root .rdp-head_cell,
-                        .rdp-root .rdp-day,
-                        .rdp-root .rdp-day_button,
-                        .rdp-root .rdp-nav,
-                        .rdp-root .rdp-nav button,
-                        .rdp-root .rdp-nav button svg {
-                          color: #fff !important;
-                        }
-                        .rdp-root .rdp-caption_dropdowns select,
-                        .rdp-root .rdp-caption_dropdowns option {
-                          color: #fff !important;
-                          background: transparent;
-                          caret-color: #fff;
-                        }
-                      `}</style>
-                    </Popover.Root>
+      {/* Features Section with Modern Cards */}
+      <section className="relative py-24 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-background/80 to-background">
+        <div className="max-w-6xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {/* Feature 1: Networking */}
+            <div className="group relative">
+              <div className="absolute inset-0 bg-gradient-to-r from-primary/10 to-accent/10 rounded-2xl transform group-hover:scale-[1.02] transition-transform duration-500" />
+              <div className="relative p-8 bg-background/40 backdrop-blur-lg rounded-2xl border border-primary/10">
+                <div className="w-16 h-16 mb-6 relative">
+                  <div className="absolute inset-0 bg-gradient-to-r from-primary/20 to-accent/20 rounded-xl blur-lg group-hover:blur-xl transition-all"></div>
+                  <div className="relative w-full h-full bg-background/50 rounded-xl flex items-center justify-center">
+                    <svg 
+                      xmlns="http://www.w3.org/2000/svg" 
+                      className="h-8 w-8 text-primary group-hover:scale-110 transition-transform"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                    </svg>
                   </div>
                 </div>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                  <div className="space-y-2">
-                    <Label>Giới tính</Label>
-                    <Select value={form.gender} onValueChange={(v) => update("gender", v)}>
-                      <SelectTrigger className="w-full">
-                        <SelectValue placeholder="Chọn giới tính" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        {genderOptions.map((o) => (
-                          <SelectItem key={o.value} value={o.value}>{o.label}</SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="studentId">MSSV *</Label>
-                    <Input id="studentId" value={form.studentId} onChange={(e) => update("studentId", e.target.value)} />
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="classFacultyCourse">Lớp*</Label>
-                    <Input id="classFacultyCourse" value={form.classFacultyCourse} onChange={(e) => update("classFacultyCourse", e.target.value)} />
-                  </div>
-                </div>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div className="space-y-2">
-                    <Label htmlFor="schoolEmail">Email trường (@…uel.edu.vn) *</Label>
-                    <Input id="schoolEmail" type="email" value={form.schoolEmail} onChange={(e) => update("schoolEmail", e.target.value)} placeholder="mssv@st.uel.edu.vn" aria-invalid={form.schoolEmail !== "" && !/@.+\.uel\.edu\.vn$/i.test(form.schoolEmail)} />
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="phone">Số điện thoại *</Label>
-                    <Input id="phone" value={form.phone} onChange={(e) => update("phone", e.target.value)} placeholder="0xxxxxxxxx" />
-                  </div>
-                </div>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div className="space-y-2">
-                    <Label htmlFor="profileUrl">Link Facebook/LinkedIn</Label>
-                    <Input id="profileUrl" type="url" value={form.profileUrl} onChange={(e) => update("profileUrl", e.target.value)} placeholder="https://facebook.com/... hoặc LinkedIn" />
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="currentResidence">Nơi ở hiện tại</Label>
-                    <Input id="currentResidence" value={form.currentResidence} onChange={(e) => update("currentResidence", e.target.value)} placeholder="Địa chỉ thường trú" />
-                  </div>
-                </div>
-                <div className="space-y-2">
-                  <Label>Phương tiện di chuyển</Label>
-                  <RadioGroup value={form.commute} onValueChange={(v) => update("commute", v)} className="grid grid-cols-2 md:grid-cols-5 gap-3">
-                    {commuteOptions.map((o) => (
-                      <label key={o.value} className="flex items-center gap-2 cursor-pointer">
-                        <RadioGroupItem id={`commute-${o.value}`} value={o.value} />
-                        <span className="text-sm">{o.label}</span>
-                      </label>
-                    ))}
-                  </RadioGroup>
-                </div>
-              </section>
-
-              {/* 2) Vì sao bạn chọn FTC? */}
-              <section className="space-y-6">
-                <h2 className="text-xl font-semibold">2) Vì sao bạn chọn FTC?</h2>
-                <div className="space-y-2">
-                  <Label htmlFor="whyFtc">Điều gì khiến bạn muốn vào FTC? Bạn mong chờ gì trong 6 tháng tới? *</Label>
-                  <Textarea id="whyFtc" rows={5} value={form.whyFtc} onChange={(e) => update("whyFtc", e.target.value)} placeholder="Chia sẻ kỳ vọng và lý do của bạn..." />
-                </div>
-                <div className="space-y-2">
-                  <Label>Bạn hứng thú mảng nào? (có thể chọn nhiều đáp án)</Label>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                    {interestAreas.map((area) => (
-                      <label key={area} className="flex items-center gap-2 cursor-pointer">
-                        <Checkbox checked={form.interestAreas.includes(area)} onCheckedChange={() => toggleInArray("interestAreas", area)} />
-                        <span className="text-sm">{area}</span>
-                      </label>
-                    ))}
-                  </div>
-                </div>
-                <div className="space-y-2">
-                  <Label>Sự kiện bạn muốn tham gia tổ chức (có thể chọn nhiều đáp án)</Label>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                    {eventsInterested.map((ev) => (
-                      <label key={ev} className="flex items-center gap-2 cursor-pointer">
-                        <Checkbox checked={form.interestedEvents.includes(ev)} onCheckedChange={() => toggleInArray("interestedEvents", ev)} />
-                        <span className="text-sm">{ev}</span>
-                      </label>
-                    ))}
-                  </div>
-                </div>
-              </section>
-
-              {/* 3) Kỹ năng & “siêu năng lực” */}
-              <section className="space-y-6">
-                <h2 className="text-xl font-semibold">3) Kỹ năng & “siêu năng lực” của bạn</h2>
-                <div className="space-y-2">
-                  <Label htmlFor="strengths">Điểm mạnh của bạn là gì? Bạn muốn cải thiện điều gì? *</Label>
-                  <Textarea id="strengths" rows={5} value={form.strengths} onChange={(e) => update("strengths", e.target.value)} placeholder="Chia sẻ thật lòng nhé!" />
-                </div>
-                <div className="space-y-2">
-                  <Label>Bạn làm tốt những việc nào? (có thể chọn nhiều đáp án)</Label>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                    {skillsMulti.map((s) => (
-                      <label key={s} className="flex items-center gap-2 cursor-pointer">
-                        <Checkbox checked={form.skills.includes(s)} onCheckedChange={() => toggleInArray("skills", s)} />
-                        <span className="text-sm">{s}</span>
-                      </label>
-                    ))}
-                  </div>
-                </div>
-                <div className="space-y-2">
-                  <Label>Bạn đã dùng công cụ nào? (có thể chọn nhiều đáp án)</Label>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                    {toolsUsed.map((t) => (
-                      <label key={t} className="flex items-center gap-2 cursor-pointer">
-                        <Checkbox checked={form.tools.includes(t)} onCheckedChange={() => toggleInArray("tools", t)} />
-                        <span className="text-sm">{t}</span>
-                      </label>
-                    ))}
-                  </div>
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="portfolioUrl">Link sản phẩm/portfolio (nếu có)</Label>
-                  <Input id="portfolioUrl" type="url" value={form.portfolioUrl} onChange={(e) => update("portfolioUrl", e.target.value)} placeholder="https://..." />
-                </div>
-              </section>
-
-              {/* 4) Trải nghiệm hoạt động */}
-              <section className="space-y-6">
-                <h2 className="text-xl font-semibold">4) Trải nghiệm hoạt động</h2>
-                <div className="space-y-2">
-                  <Label htmlFor="clubExperience">Bạn từng tham gia CLB/đội nhóm nào chưa? Kể 1 trải nghiệm vui hoặc đáng nhớ nhé!</Label>
-                  <Textarea id="clubExperience" rows={5} value={form.clubExperience} onChange={(e) => update("clubExperience", e.target.value)} />
-                </div>
-                <div className="space-y-2">
-                  <Label>Bạn thấy mình hướng ngoại tới mức nào? (1–5)</Label>
-                  <RadioGroup value={form.extroversion} onValueChange={(v) => update("extroversion", v)} className="flex items-center gap-4">
-                    {["1","2","3","4","5"].map((n) => (
-                      <label key={n} className="flex items-center gap-2 cursor-pointer">
-                        <RadioGroupItem id={`ext-${n}`} value={n} />
-                        <span>{n}</span>
-                      </label>
-                    ))}
-                  </RadioGroup>
-                </div>
-                <div className="space-y-2">
-                  <Label>Theo bạn, điều gì quyết định làm việc nhóm hiệu quả?</Label>
-                  <RadioGroup value={form.teamworkKey} onValueChange={(v) => update("teamworkKey", v)} className="grid grid-cols-1 md:grid-cols-3 gap-3">
-                    {["Kỷ luật","Giao tiếp","Cam kết","Tôn trọng","Trách nhiệm","Tập trung kết quả"].map((k) => (
-                      <label key={k} className="flex items-center gap-2 cursor-pointer">
-                        <RadioGroupItem id={`tw-${k}`} value={k} />
-                        <span className="text-sm">{k}</span>
-                      </label>
-                    ))}
-                  </RadioGroup>
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="availability">Thời gian bạn có thể tham gia (giờ/tuần, khung giờ rảnh)</Label>
-                  <Textarea id="availability" rows={4} value={form.availability} onChange={(e) => update("availability", e.target.value)} placeholder="Ví dụ: 6–8 giờ/tuần, tối T2–T5" />
-                </div>
-              </section>
-
-              {/* 5) Bạn muốn vào ban nào? */}
-              <section className="space-y-6">
-                <h2 className="text-xl font-semibold">5) Bạn muốn vào ban nào?</h2>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div className="space-y-2">
-                    <Label>Ban bạn muốn ứng tuyển *</Label>
-                    <Select value={form.primaryTeam} onValueChange={(v) => update("primaryTeam", v)}>
-                      <SelectTrigger className="w-full">
-                        <SelectValue placeholder="Chọn 1 ban" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        {teams.map((t) => (
-                          <SelectItem key={t.value} value={t.value}>{t.label}</SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                  </div>
-                  <div className="space-y-2">
-                    <Label>Ban phụ (nếu muốn thử thêm)</Label>
-                    <Select value={form.secondaryTeam} onValueChange={(v) => update("secondaryTeam", v)}>
-                      <SelectTrigger className="w-full">
-                        <SelectValue placeholder="Chọn 1 ban (không bắt buộc)" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        {teams.map((t) => (
-                          <SelectItem key={t.value} value={t.value}>{t.label}</SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                  </div>
-                </div>
-              </section>
-
-              {/* 6) Câu hỏi bổ sung theo ban */}
-              <section className="space-y-6">
-                <h2 className="text-xl font-semibold">6) Câu hỏi bổ sung theo ban</h2>
-                {form.primaryTeam === "hoc-thuat" && (
-                  <div className="space-y-4">
-                    <div className="space-y-2">
-                      <Label htmlFor="hocThuat_topics">Nêu 2–3 chủ đề bạn muốn xây nội dung trong học kỳ này</Label>
-                      <Textarea id="hocThuat_topics" rows={4} value={form.hocThuat_topics} onChange={(e) => update("hocThuat_topics", e.target.value)} />
-                    </div>
-                    <div className="space-y-2">
-                      <Label htmlFor="hocThuat_training"><p>Phác thảo 1 buổi training (mục tiêu → nội dung chính → “đem về” cho người học)</p></Label>
-                      <Textarea id="hocThuat_training" rows={5} value={form.hocThuat_training} onChange={(e) => update("hocThuat_training", e.target.value)} />
-                    </div>
-                  </div>
-                )}
-                {form.primaryTeam === "su-kien" && (
-                  <div className="space-y-2">
-                    <Label htmlFor="suKien_timeline">Lập timeline ngắn cho 1 workshop 100 người (các mốc chính và đầu việc quan trọng)</Label>
-                    <Textarea id="suKien_timeline" rows={5} value={form.suKien_timeline} onChange={(e) => update("suKien_timeline", e.target.value)} />
-                  </div>
-                )}
-                {form.primaryTeam === "truyen-thong" && (
-                  <div className="space-y-4">
-                    <div className="space-y-2">
-                      <Label htmlFor="truyenThong_links">Gửi 1–2 sản phẩm bạn từng làm hoặc link bài viết</Label>
-                      <Input id="truyenThong_links" value={form.truyenThong_links} onChange={(e) => update("truyenThong_links", e.target.value)} placeholder="URL cách nhau bởi dấu phẩy" />
-                    </div>
-                    <div className="space-y-2">
-                      <Label htmlFor="truyenThong_process">Mô tả nhanh quy trình làm 1 bài đăng chuẩn</Label>
-                      <Textarea id="truyenThong_process" rows={5} value={form.truyenThong_process} onChange={(e) => update("truyenThong_process", e.target.value)} />
-                    </div>
-                  </div>
-                )}
-                {form.primaryTeam === "tai-chinh-ca-nhan" && (
-                  <div className="space-y-4">
-                    <div className="space-y-2">
-                      <Label htmlFor="tccn_topic">Đề xuất chủ đề workshop “quản lý tiền cho sinh viên”</Label>
-                      <Input id="tccn_topic" value={form.tccn_topic} onChange={(e) => update("tccn_topic", e.target.value)} />
-                    </div>
-                    <div className="space-y-2">
-                      <Label htmlFor="tccn_messages">3 thông điệp cốt lõi</Label>
-                      <Textarea id="tccn_messages" rows={4} value={form.tccn_messages} onChange={(e) => update("tccn_messages", e.target.value)} />
-                    </div>
-                  </div>
-                )}
-                {form.primaryTeam === "nhan-su" && (
-                  <div className="space-y-4">
-                    <div className="space-y-2">
-                      <Label htmlFor="nhanSu_conflict">Bạn sẽ xử lý thế nào khi đội 6–8 người có xung đột?</Label>
-                      <Textarea id="nhanSu_conflict" rows={5} value={form.nhanSu_conflict} onChange={(e) => update("nhanSu_conflict", e.target.value)} />
-                    </div>
-                    <div className="space-y-2">
-                      <Label htmlFor="nhanSu_bonding">Gợi ý 1 hoạt động gắn kết đơn giản mà vui</Label>
-                      <Textarea id="nhanSu_bonding" rows={4} value={form.nhanSu_bonding} onChange={(e) => update("nhanSu_bonding", e.target.value)} />
-                    </div>
-                  </div>
-                )}
-              </section>
-
-              <div className="flex justify-between pt-2">
-                <Button type="button" variant="outline" onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })} className="bg-transparent">
-                  <ArrowLeft className="h-4 w-4 mr-2" />
-                  Lên đầu trang
-                </Button>
-                <Button type="submit" disabled={!requiredValid || submitting} className="bg-primary hover:bg-primary/90">
-                  Gửi đơn
-                  <ArrowRight className="h-4 w-4 ml-2" />
-                </Button>
+                <h3 className="text-xl font-bold mb-3 bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">NETWORKING</h3>
+                <p className="text-muted-foreground/80">
+                  Kết nối với cộng đồng sinh viên và chuyên gia trong lĩnh vực Fintech
+                </p>
               </div>
-            </form>
-          </CardContent>
-        </Card>
+            </div>
 
-        <div className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-6">
-          <Card className="text-center p-6">
-            <CardContent className="pt-6">
-              <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mx-auto mb-4">
-                <CheckCircle className="h-6 w-6 text-primary" />
+            {/* Feature 2: Learning */}
+            <div className="group relative">
+              <div className="absolute inset-0 bg-gradient-to-r from-primary/10 to-accent/10 rounded-2xl transform group-hover:scale-[1.02] transition-transform duration-500" />
+              <div className="relative p-8 bg-background/40 backdrop-blur-lg rounded-2xl border border-primary/10">
+                <div className="w-16 h-16 mb-6 relative">
+                  <div className="absolute inset-0 bg-gradient-to-r from-primary/20 to-accent/20 rounded-xl blur-lg group-hover:blur-xl transition-all"></div>
+                  <div className="relative w-full h-full bg-background/50 rounded-xl flex items-center justify-center">
+                    <svg 
+                      xmlns="http://www.w3.org/2000/svg" 
+                      className="h-8 w-8 text-primary group-hover:scale-110 transition-transform"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />
+                    </svg>
+                  </div>
+                </div>
+                <h3 className="text-xl font-bold mb-3 bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">HỌC TẬP & PHÁT TRIỂN</h3>
+                <p className="text-muted-foreground/80">
+                  Cơ hội học hỏi qua các workshop, training và dự án thực tế
+                </p>
               </div>
-              <h3 className="font-heading font-semibold text-lg mb-2">Trải nghiệm vui</h3>
-              <p className="text-muted-foreground text-sm">Gắn kết, học hỏi, và làm dự án thực tế cùng team</p>
-            </CardContent>
-          </Card>
-          <Card className="text-center p-6">
-            <CardContent className="pt-6">
-              <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mx-auto mb-4">
-                <CheckCircle className="h-6 w-6 text-primary" />
+            </div>
+
+            {/* Feature 3: Career */}
+            <div className="group relative">
+              <div className="absolute inset-0 bg-gradient-to-r from-primary/10 to-accent/10 rounded-2xl transform group-hover:scale-[1.02] transition-transform duration-500" />
+              <div className="relative p-8 bg-background/40 backdrop-blur-lg rounded-2xl border border-primary/10">
+                <div className="w-16 h-16 mb-6 relative">
+                  <div className="absolute inset-0 bg-gradient-to-r from-primary/20 to-accent/20 rounded-xl blur-lg group-hover:blur-xl transition-all"></div>
+                  <div className="relative w-full h-full bg-background/50 rounded-xl flex items-center justify-center">
+                    <svg 
+                      xmlns="http://www.w3.org/2000/svg" 
+                      className="h-8 w-8 text-primary group-hover:scale-110 transition-transform"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                    </svg>
+                  </div>
+                </div>
+                <h3 className="text-xl font-bold mb-3 bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">CƠ HỘI NGHỀ NGHIỆP</h3>
+                <p className="text-muted-foreground/80">
+                  Tiếp cận với các cơ hội thực tập và việc làm trong ngành Fintech
+                </p>
               </div>
-              <h3 className="font-heading font-semibold text-lg mb-2">Cơ hội phát triển</h3>
-              <p className="text-muted-foreground text-sm">Workshop, talkshow, mentoring từ anh chị đi trước</p>
-            </CardContent>
-          </Card>
-          <Card className="text-center p-6">
-            <CardContent className="pt-6">
-              <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mx-auto mb-4">
-                <CheckCircle className="h-6 w-6 text-primary" />
-              </div>
-              <h3 className="font-heading font-semibold text-lg mb-2">Kết nối ngành</h3>
-              <p className="text-muted-foreground text-sm">Tiếp cận doanh nghiệp và cơ hội thực tập trong lĩnh vực</p>
-            </CardContent>
-          </Card>
+            </div>
+          </div>
         </div>
-      </div>
+      </section>
+
+      {/* Add animation keyframes */}
+      <style jsx global>{`
+        @keyframes float {
+          0%, 100% { transform: translate(0, 0); }
+          50% { transform: translate(-20px, 20px); }
+        }
+        @keyframes pulse {
+          0%, 100% { opacity: 0.4; }
+          50% { opacity: 0.7; }
+        }
+        @keyframes shimmer {
+          to {
+            background-position: 200% center;
+          }
+        }
+      `}</style>
     </div>
   )
 }
+
+export default RecruitmentPage

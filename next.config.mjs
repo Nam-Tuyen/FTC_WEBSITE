@@ -9,25 +9,16 @@ const nextConfig = {
   images: {
     unoptimized: true,
   },
-  // Allow loading assets when embedded in external preview iframes (e.g., Builder.io)
-  allowedDevOrigins: [
-    "*",
-    "*.fly.dev",
-    "unhappy-bar.info",
-    "trusty-fuel.org",
-    "*.info",
-    "*.org"
-  ],
-  async headers() {
+  poweredByHeader: false,
+  reactStrictMode: true,
+  async rewrites() {
     return [
       {
-        source: '/:path*',
-        headers: [
-          { key: 'Permissions-Policy', value: 'clipboard-read=(self), clipboard-write=(self)' },
-        ],
-      },
+        source: "/api/:path*",
+        destination: "http://localhost:5000/api/:path*"
+      }
     ]
-  },
+  }
 }
 
 export default nextConfig
