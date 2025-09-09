@@ -232,19 +232,6 @@ export default function ChatbotPage() {
                         </span>
                       </p>
 
-                      <div className="ml-4 flex items-center gap-3">
-                        <Label className="text-xs">Chế độ:</Label>
-                        <RadioGroup value={mode} onValueChange={(v) => setMode(v as any)} className="flex items-center gap-2">
-                          <div className="flex items-center gap-1">
-                            <RadioGroupItem value="club" />
-                            <span className="text-xs">Hỏi về câu lạc bộ</span>
-                          </div>
-                          <div className="flex items-center gap-1">
-                            <RadioGroupItem value="domain" />
-                            <span className="text-xs">Hỏi về ngành</span>
-                          </div>
-                        </RadioGroup>
-                      </div>
 
                     </div>
                   </div>
