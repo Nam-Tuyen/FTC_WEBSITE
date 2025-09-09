@@ -102,19 +102,11 @@ export async function POST(req: Request) {
       // This branch kept for future use; prefer using explicit mode from parseRequest
     }
 
-    // parseRequest provided mode and showCitations
-    const reqMeta: any = {};
-    try {
-      const parsed = await parseRequest(req)
-      reqMeta.mode = parsed.mode
-      reqMeta.showCitations = parsed.showCitations
-    } catch (e) {}
-
     // If mode is 'club', return deterministic club answer using matchClubFaq
-    if (reqMeta.mode === 'club') {
+    if (mode === 'club') {
       const hit = matchClubFaq(message)
       const answer = hit && typeof hit === 'string' && hit.trim() ? hit : 'Thông tin hiện chưa có trong dữ liệu FTC.'
-      return new Response(JSON.stringify({ response: answer, source: 'club', backendContext: backendContext }), { headers: { 'Content-Type': 'application/json' } })
+      return new Response(JSON.stringify({ response: answer, source: 'club', backendContext: backendContext, showCitations }), { headers: { 'Content-Type': 'application/json' } })
     }
 
     // Otherwise (mode domain/auto), assemble prompt
