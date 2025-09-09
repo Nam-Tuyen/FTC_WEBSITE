@@ -162,17 +162,45 @@ export async function POST(req: Request) {
     const clubContext = buildClubContextBlock(message);
     const backendContext = await fetchBackendContext();
 
-    // If the question is clearly about the club (suggested FAQ or club match), attempt to answer from club data without calling Gemini
-    if (suggested.matched || clubMatch) {
-      // First try official FAQ
+    // Sanitizer: remove markdown-like marks and special sequences while preserving Vietnamese letters and basic punctuation
+    function sanitizeText(raw: string) {
+      if (!raw) return raw
+      let out = String(raw)
+
+      // Remove code blocks and inline code
+      out = out.replace(/```[\s\S]*?```/g, ' ')
+      out = out.replace(/`([^`]*)`/g, '$1')
+
+      // Remove emphasis markers like ****, **, __, ~~
+      out = out.replace(/\*{1,}|_{1,2}|~{2,}/g, '')
+
+      // Remove any remaining undesirable repeated special characters, keep letters, numbers, common punctuation
+      out = out.replace(/[^\p{L}\p{N}\s\.,;:?!()\-\—'"%]/gu, ' ')
+
+      // Collapse repeated punctuation and whitespace
+      out = out.replace(/\.{2,}/g, '.')
+      out = out.replace(/\s{2,}/g, ' ')
+
+      return out.trim()
+    }
+
+    // Mode handling: club (force KB), domain (force Gemini), auto (decide)
+    if (mode === 'club') {
+      const hit = matchClubFaq(message)
+      const raw = hit && typeof hit === 'string' && hit.trim() ? hit : 'Thông tin hiện chưa có trong dữ liệu FTC.'
+      const answer = sanitizeText(raw)
+      return new Response(JSON.stringify({ response: answer, source: 'club' }), { headers: { 'Content-Type': 'application/json' } })
+    }
+
+    if (mode === 'auto' && (suggested.matched || clubMatch)) {
+      // Prefer KB answers in auto mode when question matches club
       let answer: string | null = null
       try {
         const hit = matchClubFaq(message)
         if (typeof hit === 'string' && hit.trim()) answer = hit
       } catch (e) {}
 
-      // If no FAQ hit, try to find relevant snippet in the knowledge base summary
-      if (!answer) {
+      if (!answer && backendContext) {
         const q = message.toLowerCase()
         const idx = backendContext.toLowerCase().indexOf(q.split(' ')[0] || '')
         if (idx >= 0) {
@@ -181,9 +209,8 @@ export async function POST(req: Request) {
         }
       }
 
-      if (!answer) answer = 'Thông tin hiện chưa có trong dữ li���u FTC.'
-
-      return new Response(JSON.stringify({ response: answer, source: 'club' }), { headers: { 'Content-Type': 'application/json' } })
+      if (!answer) answer = 'Thông tin hiện chưa có trong dữ liệu FTC.'
+      return new Response(JSON.stringify({ response: sanitizeText(answer), source: 'club' }), { headers: { 'Content-Type': 'application/json' } })
     }
 
     // Otherwise assemble prompt for Gemini and include a summarized knowledge-base context to reduce prompt size but keep coverage
