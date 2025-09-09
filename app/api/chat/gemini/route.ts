@@ -75,24 +75,63 @@ async function fetchBackendContext() {
     parts.push(`formUrl: ${RECRUITMENT_CONFIG.formUrl}`);
   } catch (e) {}
 
-  // Read all files under backend/data/knowledge_base and include their contents
+  // Read all files under backend/data/knowledge_base and build a heuristic summary (cacheable)
   try {
     const kbDir = path.resolve(process.cwd(), 'backend', 'data', 'knowledge_base')
+    const cacheFile = path.join(kbDir, '.kb_summary.txt')
+
+    // Use cache if present and recent (24h)
+    try {
+      const s = await fs.promises.stat(cacheFile)
+      const age = Date.now() - s.mtime.getTime()
+      if (age < 24 * 60 * 60 * 1000) {
+        const cached = await fs.promises.readFile(cacheFile, 'utf-8')
+        parts.push('[KNOWLEDGE_BASE_SUMMARY]')
+        parts.push(cached.trim())
+        // return early using cache
+        return parts.join('\n')
+      }
+    } catch (e) {
+      // no cache or unreadable
+    }
+
     const files = await fs.promises.readdir(kbDir)
-    const kbParts: string[] = []
+    const summaries: string[] = []
     for (const f of files) {
       const full = path.join(kbDir, f)
       const stat = await fs.promises.stat(full)
       if (stat.isFile() && f.endsWith('.py')) {
         const txt = await fs.promises.readFile(full, 'utf-8')
-        kbParts.push(`--- ${f} ---`)
-        // include the full file content as context; strip non-ascii control chars
-        kbParts.push(txt.replace(/\r/g, '').trim())
+        // Heuristic: extract triple-quoted blocks and long comment/paragraph lines
+        const triples: string[] = []
+        const tripleRe = /"""([\s\S]*?)"""/g
+        let m: RegExpExecArray | null
+        while ((m = tripleRe.exec(txt)) !== null) {
+          const block = m[1].replace(/\s+/g, ' ').trim()
+          if (block.length > 30) triples.push(block)
+        }
+        // fallback: collect long lines
+        const longLines = txt.split(/\r?\n/).map(l => l.trim()).filter(l => l.length > 40).slice(0, 5)
+        const top = triples.length ? triples.slice(0,3) : longLines
+        if (top.length) {
+          summaries.push(`--- ${f} ---`)
+          summaries.push(...top.map(s => s.replace(/\s+/g, ' ').trim()))
+        }
       }
     }
-    if (kbParts.length) {
-      parts.push('[KNOWLEDGE_BASE]')
-      parts.push(...kbParts)
+
+    const joined = summaries.join('\n').trim()
+    if (joined) {
+      // limit size
+      const limited = joined.slice(0, 15000)
+      parts.push('[KNOWLEDGE_BASE_SUMMARY]')
+      parts.push(limited)
+      // write cache (best-effort)
+      try {
+        await fs.promises.writeFile(cacheFile, limited, 'utf-8')
+      } catch (e) {
+        // ignore cache write errors
+      }
     }
   } catch (e) {
     // ignore if folder not present
@@ -140,7 +179,7 @@ export async function POST(req: Request) {
         }
       }
 
-      if (!answer) answer = 'Thông tin hiện chưa có trong dữ liệu FTC.'
+      if (!answer) answer = 'Thông tin hiện chưa có trong dữ li���u FTC.'
 
       return new Response(JSON.stringify({ response: answer, source: 'club' }), { headers: { 'Content-Type': 'application/json' } })
     }
