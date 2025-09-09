@@ -199,19 +199,22 @@ export default function ChatbotPage() {
           <div className="absolute -bottom-1/4 -left-1/4 w-2/3 h-2/3 bg-gradient-to-tr from-accent/20 via-primary/20 to-transparent rounded-full blur-3xl animate-float-reverse" />
         </div>
 
-        <div className="relative max-w-5xl mx-auto text-center space-y-6">
+        <div className="relative max-w-[1103px] mx-auto text-center space-y-6">
           <div className="w-16 h-16 bg-primary rounded-full flex items-center justify-center mx-auto mb-6">
             <Bot className="h-8 w-8 text-primary-foreground" />
           </div>
           <h1 className="relative text-4xl sm:text-5xl lg:text-6xl font-extrabold inline-block">
             <span className="absolute inset-0 bg-gradient-to-r from-primary to-accent opacity-50 blur-2xl animate-pulse"></span>
             <span className="relative bg-gradient-to-r from-primary to-accent text-transparent bg-clip-text animate-text-shine">
-              AI CHATBOT
+              <p>FTC CHATBOT</p>
             </span>
           </h1>
-          <p className="text-xl sm:text-2xl text-muted-foreground leading-relaxed max-w-3xl mx-auto italic">
-            Trợ lý AI giúp bạn tìm hiểu về câu lạc bộ và các kiến thức Fintech
-          </p>
+          <div className="text-xl font-normal italic leading-relaxed max-w-[768px] mx-auto">
+            <p>
+              Giúp bạn tìm hiểu thông tin về câu lạc bộ và kiến thức trong
+              lĩnh vực Fintech
+            </p>
+          </div>
         </div>
       </section>
 
