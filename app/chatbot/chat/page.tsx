@@ -252,13 +252,6 @@ export default function ChatbotPage() {
                         </RadioGroup>
                       </div>
 
-                      <div className="ml-4 flex items-center gap-2">
-                        <Checkbox checked={showCitations} onCheckedChange={(v: any) => setShowCitations(!!v)} />
-                        <Label className="text-xs">Hiển thị trích dẫn backend</Label>
-                      </div>
-                    </div>
-                    <div className="mt-2">
-                      <span className="text-xs text-muted-foreground">Grounding: <strong>Hybrid</strong> (mặc định)</span>
                     </div>
                   </div>
                 </div>
