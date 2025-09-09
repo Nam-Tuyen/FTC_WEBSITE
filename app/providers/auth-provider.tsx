@@ -21,28 +21,49 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [session, setSession] = useState<Session | null>(null)
   const [loading, setLoading] = useState(true)
 
+  const supabaseRef = useRef<any>(null)
+
   useEffect(() => {
     let mounted = true
 
+    const url = process.env.NEXT_PUBLIC_SUPABASE_URL
+    const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+
+    if (!url || !key) {
+      console.warn('Supabase env vars missing. Auth features disabled.')
+      // If no supabase config provided, don't attempt auth actions
+      setLoading(false)
+      return
+    }
+
+    // Lazily create the client for the browser
+    supabaseRef.current = createClient(url, key)
+
     // Get session from storage
     const getSession = async () => {
-      const { data: { session }, error } = await supabase.auth.getSession()
-      
-      if (mounted) {
-        if (error) {
-          console.error('Error getting session:', error.message)
-        } else {
-          setSession(session)
-          setUser(session?.user ?? null)
+      try {
+        const { data: { session }, error } = await supabaseRef.current.auth.getSession()
+        if (mounted) {
+          if (error) {
+            console.error('Error getting session:', error.message)
+          } else {
+            setSession(session)
+            setUser(session?.user ?? null)
+          }
+          setLoading(false)
         }
-        setLoading(false)
+      } catch (err) {
+        if (mounted) {
+          console.error('Failed to get session:', err)
+          setLoading(false)
+        }
       }
     }
 
     getSession()
 
     // Listen for auth changes
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+    const { data: { subscription } } = supabaseRef.current.auth.onAuthStateChange((_event: any, session: any) => {
       if (mounted) {
         setSession(session)
         setUser(session?.user ?? null)
@@ -52,18 +73,26 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
     return () => {
       mounted = false
-      subscription.unsubscribe()
+      try { subscription.unsubscribe() } catch (e) { /* ignore */ }
     }
   }, [])
 
   const value = {
     user,
     session,
-    signOut: () => supabase.auth.signOut(),
+    signOut: async () => {
+      if (!supabaseRef.current) {
+        console.warn('signOut called but Supabase is not configured.')
+        return { error: null }
+      }
+      return supabaseRef.current.auth.signOut()
+    },
     signInWithGithub: async () => {
-      const { error } = await supabase.auth.signInWithOAuth({
-        provider: 'github'
-      })
+      if (!supabaseRef.current) {
+        console.warn('signInWithGithub called but Supabase is not configured.')
+        return
+      }
+      const { error } = await supabaseRef.current.auth.signInWithOAuth({ provider: 'github' })
       if (error) {
         console.error('Error signing in with Github:', error.message)
       }
