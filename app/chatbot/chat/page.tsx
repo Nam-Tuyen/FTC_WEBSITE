@@ -330,7 +330,7 @@ export default function ChatbotPage() {
 
                 {/* Mode selector placed under input */}
                 <div className="mt-3 flex items-center gap-6 justify-start">
-                  <Label className="text-sm">Chế độ trả lời:</Label>
+                  <Label className="text-sm">Chọn chủ đề để hỏi:</Label>
                   <RadioGroup value={mode} onValueChange={(v) => setMode(v as any)} className="flex items-center gap-4">
                     <div className="flex items-center gap-2">
                       <RadioGroupItem value="club" id="mode-club" />
