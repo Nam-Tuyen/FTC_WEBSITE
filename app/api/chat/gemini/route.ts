@@ -245,9 +245,10 @@ export async function POST(req: Request) {
           throw new Error('Empty response from Gemini');
         }
 
+        const sanitized = sanitizeText(text)
         return new Response(
           JSON.stringify({
-            response: text,
+            response: sanitized,
             source: 'gemini',
             model: MODEL_NAME,
             grounded: suggested.matched || !!clubMatch,
