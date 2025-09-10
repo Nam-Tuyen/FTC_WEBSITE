@@ -18,6 +18,7 @@ import { Sidebar } from './components/sections/sidebar'
 import { SearchBar } from './components/cards/search-bar'
 import { AskQuestionCard } from './components/cards/ask-question-card'
 import { QuestionCard } from './components/cards/question-card'
+import { SidebarWidgets } from './components/sidebar-widgets'
 
 // Import types and utils
 import { CATEGORIES, STORAGE_KEYS, QuestionItem, Reply, ForumCategory } from './types'
