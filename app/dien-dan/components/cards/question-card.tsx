@@ -9,7 +9,7 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Heart, Reply } from 'lucide-react'
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
 import { uuid, formatTime } from '../../utils'
-import { QuestionItem } from '../../types'
+import { QuestionItem, CATEGORIES } from '../../types'
 
 interface QuestionCardProps {
   q: QuestionItem
@@ -48,7 +48,7 @@ export function QuestionCard({
           <div className="flex-1">
             <div className="flex flex-wrap items-center gap-2 mb-1">
               <h3 className="font-heading font-semibold text-lg bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">{q.title}</h3>
-              <Badge variant="outline" className="text-xs">{q.category}</Badge>
+              <Badge variant="outline" className="text-xs">{CATEGORIES[q.category] ?? q.category}</Badge>
               <span className="text-xs text-muted-foreground">{formatTime(q.createdAt)}</span>
             </div>
             <p className="text-sm text-muted-foreground mb-2 whitespace-pre-wrap break-words">{q.content}</p>
