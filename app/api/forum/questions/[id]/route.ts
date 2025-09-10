@@ -39,6 +39,8 @@ export async function PATCH(req: Request, { params }: { params: { id: string } }
     return NextResponse.json({ error: 'No valid fields' }, { status: 400 })
   }
 
+  if (!supabase) return NextResponse.json({ error: 'Supabase not configured' }, { status: 500 })
+
   const { data, error } = await (supabase as any)
     .from('questions')
     .update(update)
@@ -53,6 +55,8 @@ export async function PATCH(req: Request, { params }: { params: { id: string } }
 export async function DELETE(_: Request, { params }: { params: { id: string } }) {
   const p = IdParams.safeParse(params)
   if (!p.success) return NextResponse.json({ error: 'Invalid id' }, { status: 400 })
+
+  if (!supabase) return NextResponse.json({ error: 'Supabase not configured' }, { status: 500 })
 
   const { error } = await (supabase as any).from('questions').delete().eq('id', p.data.id)
   if (error) return NextResponse.json({ error: error.message }, { status: 500 })
