@@ -3,7 +3,7 @@
 import * as React from 'react'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
-import { Menu, X, Zap, Shield, Cpu, Info } from 'lucide-react'
+import { Menu, X, Zap, Shield, Cpu, Info, Bot } from 'lucide-react'
 import Image from 'next/image'
 
 interface NavigationItem {
@@ -20,7 +20,7 @@ const navigationItems: NavigationItem[] = [
   { name: "Cơ cấu", href: "/co-cau", icon: Shield },
   { name: "Diễn đàn", href: "/dien-dan", icon: Zap },
   { name: "Ứng tuyển", href: "/ung-tuyen", icon: Cpu },
-  { name: "Chatbot", href: "/chatbot", icon: Zap },
+  { name: "Chatbot", href: "/chatbot", icon: Bot },
 ]
 
 export function Navigation() {

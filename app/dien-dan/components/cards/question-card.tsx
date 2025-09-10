@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Card, CardContent } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
@@ -28,6 +28,12 @@ export function QuestionCard({
   const [reply, setReply] = useState('')
   const [replyMode, setReplyMode] = useState<'anonymous' | 'mssv'>('anonymous')
   const [replyStudentId, setReplyStudentId] = useState('')
+
+  useEffect(() => {
+    if (replyMode === 'mssv' && !replyStudentId && defaultStudentId) {
+      setReplyStudentId(defaultStudentId)
+    }
+  }, [replyMode, defaultStudentId, replyStudentId])
 
   const authorDisplay = q.studentId ? q.studentId : 'Ẩn danh'
 

@@ -21,6 +21,7 @@ export function useChat() {
   ])
   const [inputValue, setInputValue] = useState("")
   const [isTyping, setIsTyping] = useState(false)
+  const [mode, setMode] = useState<'auto' | 'club' | 'domain'>('auto')
 
   const isSendingRef = { current: false }
   const lastSentRef = { current: { text: "", time: 0 } }
@@ -67,9 +68,10 @@ export function useChat() {
       const res = await fetch("/api/chat/gemini", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ 
-          message: text, 
-          history
+        body: JSON.stringify({
+          message: text,
+          history,
+          mode: mode === 'club' ? 'club' : (mode === 'domain' ? 'domain' : 'auto')
         }),
       })
 
@@ -119,5 +121,7 @@ export function useChat() {
     setInputValue,
     handleSendMessage,
     handleKeyDown,
+    mode,
+    setMode,
   }
 }

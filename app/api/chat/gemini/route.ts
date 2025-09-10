@@ -1,5 +1,4 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
-import { GoogleGenerativeAI } from "@google/generative-ai";
 import { matchSuggestedQuestion, buildGroundedPrompt } from '@/lib/faq-grounding'
 import { matchClubFaq, buildClubContextBlock, shouldRouteToIndustry } from '@/lib/club-faq'
 import { RECRUITMENT_CONFIG } from '@/app/ung-tuyen/constants'
@@ -186,10 +185,24 @@ export async function POST(req: Request) {
 
     // Mode handling: club (force KB), domain (force Gemini), auto (decide)
     if (mode === 'club') {
-      const hit = matchClubFaq(message)
-      const raw = hit && typeof hit === 'string' && hit.trim() ? hit : 'Thông tin hiện chưa có trong dữ liệu FTC.'
-      const answer = sanitizeText(raw)
-      return new Response(JSON.stringify({ response: answer, source: 'club' }), { headers: { 'Content-Type': 'application/json' } })
+      // Try direct club FAQ match first, then fallback to backend knowledge base summary
+      let answer: string | null = null
+      try {
+        const hit = matchClubFaq(message)
+        if (typeof hit === 'string' && hit.trim()) answer = hit
+      } catch (e) {}
+
+      if (!answer && backendContext) {
+        const q = message.toLowerCase()
+        const idx = backendContext.toLowerCase().indexOf(q.split(' ')[0] || '')
+        if (idx >= 0) {
+          const snippet = backendContext.slice(Math.max(0, idx - 200), Math.min(backendContext.length, idx + 600))
+          answer = `Thông tin tham khảo từ dữ liệu CLB: ${snippet}`
+        }
+      }
+
+      if (!answer) answer = 'Thông tin hiện chưa có trong dữ liệu FTC.'
+      return new Response(JSON.stringify({ response: sanitizeText(answer), source: 'club', backendContext }), { headers: { 'Content-Type': 'application/json' } })
     }
 
     if (mode === 'auto' && (suggested.matched || clubMatch)) {

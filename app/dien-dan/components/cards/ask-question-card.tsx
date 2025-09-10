@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -26,6 +26,13 @@ export function AskQuestionCard({
   const [category, setCategory] = useState<keyof typeof CATEGORIES>('CLUB')
   const [error, setError] = useState('')
   const [mode, setMode] = useState<'anonymous' | 'mssv'>('anonymous')
+
+  useEffect(() => {
+    // When switching to mssv mode, auto-fill from currentStudentId if available
+    if (mode === 'mssv' && !studentId && currentStudentId) {
+      setStudentId(currentStudentId)
+    }
+  }, [mode, currentStudentId, studentId])
 
   function validate() {
     if (!title.trim() || !content.trim()) {

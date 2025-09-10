@@ -1,27 +1,16 @@
 "use client"
 
 import { Bot } from "lucide-react"
-import PropTypes from "prop-types"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { ChatInput } from "./chat-input"
 import { ChatMessage } from "./chat-message"
 import { useChat } from "../_hooks/use-chat"
 import { useChatScroll } from "../_hooks/use-chat-scroll"
-
-import { FC } from 'react'
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { Bot } from "lucide-react"
 import type { Message } from "@/app/chatbot/_lib/types"
-import { ChatInput } from "./chat-input"
-import { ChatMessage } from "./chat-message"
-import { useChat } from "@/app/chatbot/_hooks/use-chat"
-import { useChatScroll } from "@/app/chatbot/_hooks/use-chat-scroll"
-import '../types/react'
 
 export function ChatInterface() {
-  const { messages, isTyping, inputValue, setInputValue, handleSendMessage, handleKeyDown } = useChat()
+  const { messages, isTyping, inputValue, setInputValue, handleSendMessage, handleKeyDown, mode, setMode } = useChat()
   const messagesEndRef = useChatScroll(messages)
 
   return (
@@ -36,7 +25,7 @@ export function ChatInterface() {
 
       <CardHeader className="relative z-10 border-b border-accent/20">
         <div className="flex items-center space-x-3">
-          <Avatar>
+            <Avatar>
             <AvatarImage src="/ai-chatbot-avatar.png" alt="AI Assistant" />
             <AvatarFallback className="bg-primary text-primary-foreground">
               <Bot className="h-5 w-5" />
@@ -82,12 +71,37 @@ export function ChatInterface() {
         <div ref={messagesEndRef} />
       </CardContent>
 
-      <ChatInput
-        value={inputValue}
-        onChange={setInputValue}
-        onSend={handleSendMessage}
-        onKeyDown={handleKeyDown}
-      />
+      <div className="border-t border-accent/20 p-0 bg-gradient-to-r from-background/80 via-accent/5 to-background/80 backdrop-blur-md sticky bottom-0 mt-auto">
+        <ChatInput
+          value={inputValue}
+          onChange={setInputValue}
+          onSend={handleSendMessage}
+          onKeyDown={handleKeyDown}
+        />
+        <div className="max-w-full px-4 py-3 flex items-center justify-center gap-3 bg-card/40 border-t border-accent/10">
+          <span className="text-sm text-muted-foreground mr-2">Chế độ:</span>
+          <div className="inline-flex rounded-md bg-card/50 p-0.5 border border-accent/10">
+            <button
+              onClick={() => setMode('club')}
+              className={`px-3 py-1 text-xs rounded-md transition-colors duration-200 ${mode === 'club' ? 'bg-accent/20 text-foreground' : 'hover:bg-accent/10 text-muted-foreground'}`}
+            >
+              Hỏi về câu lạc bộ
+            </button>
+            <button
+              onClick={() => setMode('domain')}
+              className={`px-3 py-1 text-xs rounded-md transition-colors duration-200 ${mode === 'domain' ? 'bg-accent/20 text-foreground' : 'hover:bg-accent/10 text-muted-foreground'}`}
+            >
+              Hỏi về ngành
+            </button>
+            <button
+              onClick={() => setMode('auto')}
+              className={`px-3 py-1 text-xs rounded-md transition-colors duration-200 ${mode === 'auto' ? 'bg-accent/20 text-foreground' : 'hover:bg-accent/10 text-muted-foreground'}`}
+            >
+              Tự động
+            </button>
+          </div>
+        </div>
+      </div>
     </Card>
   )
 }
