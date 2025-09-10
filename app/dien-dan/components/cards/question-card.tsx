@@ -52,7 +52,7 @@ export function QuestionCard({ q, children, onLike, onReply, defaultStudentId }:
             <button onClick={onLike} className="inline-flex items-center gap-2 hover:text-rose-600 transition-colors">
               <Heart className={`w-4 h-4 ${q.likes.length ? 'fill-rose-600 text-rose-600' : ''}`} /> <span>{likes}</span>
             </button>
-            <button className="inline-flex items-center gap-2 hover:text-primary transition-colors">Share</button>
+            <button className="inline-flex items-center gap-2 hover:text-primary transition-colors">CHIA SẺ</button>
           </div>
 
           {onReply && (
