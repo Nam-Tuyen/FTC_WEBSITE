@@ -27,6 +27,13 @@ export function AskQuestionCard({
   const [error, setError] = useState('')
   const [mode, setMode] = useState<'anonymous' | 'mssv'>('anonymous')
 
+  useEffect(() => {
+    // When switching to mssv mode, auto-fill from currentStudentId if available
+    if (mode === 'mssv' && !studentId && currentStudentId) {
+      setStudentId(currentStudentId)
+    }
+  }, [mode, currentStudentId, studentId])
+
   function validate() {
     if (!title.trim() || !content.trim()) {
       setError('Vui lòng nhập đầy đủ tiêu đề và nội dung')
