@@ -3,7 +3,7 @@
 import * as React from 'react'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
-import { Menu, X, Zap, Shield, Cpu, Info } from 'lucide-react'
+import { Menu, X, Zap, Shield, Cpu, Info, Bot } from 'lucide-react'
 import Image from 'next/image'
 
 interface NavigationItem {
