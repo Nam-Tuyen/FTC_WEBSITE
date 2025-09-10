@@ -8,6 +8,7 @@ export function useChat() {
   const [messages, setMessages] = useState([])
   const [isTyping, setIsTyping] = useState(false)
   const [inputValue, setInputValue] = useState("")
+  const [mode, setMode] = useState('auto')
   const abortControllerRef = useRef(null)
 
   const handleSendMessage = useCallback(async () => {
@@ -36,7 +37,7 @@ export function useChat() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ message: userMessage.content }),
+        body: JSON.stringify({ message: userMessage.content, mode }),
         signal: abortControllerRef.current.signal,
       })
 
@@ -73,7 +74,7 @@ export function useChat() {
     } finally {
       setIsTyping(false)
     }
-  }, [inputValue])
+  }, [inputValue, mode])
 
   const handleKeyDown = useCallback(
     (event) => {
@@ -92,5 +93,7 @@ export function useChat() {
     setInputValue,
     handleSendMessage,
     handleKeyDown,
+    mode,
+    setMode,
   }
 }
