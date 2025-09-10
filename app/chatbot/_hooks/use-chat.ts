@@ -21,7 +21,7 @@ export function useChat() {
   ])
   const [inputValue, setInputValue] = useState("")
   const [isTyping, setIsTyping] = useState(false)
-  const [mode, setMode] = useState<'auto' | 'club' | 'domain'>('auto')
+  // Mode selection has been removed as we now always use the knowledge base
 
   const isSendingRef = { current: false }
   const lastSentRef = { current: { text: "", time: 0 } }
@@ -70,8 +70,7 @@ export function useChat() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           message: text,
-          history,
-          mode: mode === 'club' ? 'club' : (mode === 'domain' ? 'domain' : 'auto')
+          history
         }),
       })
 
@@ -121,7 +120,5 @@ export function useChat() {
     setInputValue,
     handleSendMessage,
     handleKeyDown,
-    mode,
-    setMode,
   }
 }

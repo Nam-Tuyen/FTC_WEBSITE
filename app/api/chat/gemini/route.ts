@@ -1,7 +1,6 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
-import { matchSuggestedQuestion, buildGroundedPrompt } from '@/lib/faq-grounding'
-import { matchClubFaq, buildClubContextBlock, shouldRouteToIndustry } from '@/lib/club-faq'
-import { RECRUITMENT_CONFIG } from '@/app/ung-tuyen/constants'
+import path from 'path';
+import fs from 'fs';
 
 export const dynamic = 'force-dynamic';
 export const maxDuration = 300; // 5 minutes timeout
@@ -143,176 +142,97 @@ async function fetchBackendContext() {
   return parts.join('\n')
 }
 
+// Load knowledge base content
+async function loadKnowledgeBase() {
+  const parts: string[] = [];
+
+  // Read all files under backend/data/knowledge_base
+  try {
+    const kbDir = path.resolve(process.cwd(), 'backend', 'data', 'knowledge_base')
+    const files = await fs.promises.readdir(kbDir)
+    
+    for (const file of files) {
+      if (file.endsWith('.txt')) {
+        try {
+          const content = await fs.promises.readFile(path.join(kbDir, file), 'utf-8')
+          parts.push(content.trim())
+        } catch (e) {
+          console.error(`Error reading file ${file}:`, e)
+        }
+      }
+    }
+  } catch (e) {
+    console.error('Error reading knowledge base:', e)
+  }
+
+  return parts.join('\n\n')
+}
+
 export async function POST(req: Request) {
   try {
-    // Validate request
-    const { message, history, mode } = await parseRequest(req);
-    if (!message) {
-      return new Response(
-        JSON.stringify({ error: true, message: 'Message cannot be empty' }),
-        { status: 400, headers: { 'Content-Type': 'application/json' } }
-      );
+    // Parse request
+    const { message, history } = await req.json();
+    if (!message || typeof message !== 'string') {
+      return new Response('Invalid message', { status: 400 })
     }
 
-    // Determine type of question
-    const suggested = matchSuggestedQuestion(message);
-    const clubMatch = matchClubFaq(message);
-    const industry = shouldRouteToIndustry(message);
-
-    // Build grounding blocks
-    const clubContext = buildClubContextBlock(message);
-    const backendContext = await fetchBackendContext();
-
-    // Sanitizer: remove markdown-like marks and special sequences while preserving Vietnamese letters and basic punctuation
-    function sanitizeText(raw: string) {
-      if (!raw) return raw
-      let out = String(raw)
-
-      // Remove code blocks and inline code
-      out = out.replace(/```[\s\S]*?```/g, ' ')
-      out = out.replace(/`([^`]*)`/g, '$1')
-
-      // Remove emphasis markers like ****, **, __, ~~
-      out = out.replace(/\*{1,}|_{1,2}|~{2,}/g, '')
-
-      // Remove any remaining undesirable repeated special characters, keep letters, numbers, common punctuation
-      out = out.replace(/[^\p{L}\p{N}\s\.,;:?!()\-—'"%]/gu, ' ')
-
-      // Collapse repeated punctuation and whitespace
-      out = out.replace(/\.{2,}/g, '.')
-      out = out.replace(/\s{2,}/g, ' ')
-
-      return out.trim()
-    }
-
-    // Mode handling: club (force KB), domain (force Gemini), auto (decide)
-    if (mode === 'club') {
-      // Try direct club FAQ match first, then fallback to backend knowledge base summary
-      let answer: string | null = null
-      try {
-        const hit = matchClubFaq(message)
-        if (typeof hit === 'string' && hit.trim()) answer = hit
-      } catch (e) {}
-
-      if (!answer && backendContext) {
-        const q = message.toLowerCase()
-        const idx = backendContext.toLowerCase().indexOf(q.split(' ')[0] || '')
-        if (idx >= 0) {
-          const snippet = backendContext.slice(Math.max(0, idx - 200), Math.min(backendContext.length, idx + 600))
-          answer = `Thông tin tham khảo từ dữ liệu CLB: ${snippet}`
-        }
-      }
-
-      if (!answer) answer = 'Thông tin hiện chưa có trong dữ liệu FTC.'
-      return new Response(JSON.stringify({ response: sanitizeText(answer), source: 'club', backendContext }), { headers: { 'Content-Type': 'application/json' } })
-    }
-
-    if (mode === 'auto' && (suggested.matched || clubMatch)) {
-      // Prefer KB answers in auto mode when question matches club
-      let answer: string | null = null
-      try {
-        const hit = matchClubFaq(message)
-        if (typeof hit === 'string' && hit.trim()) answer = hit
-      } catch (e) {}
-
-      if (!answer && backendContext) {
-        const q = message.toLowerCase()
-        const idx = backendContext.toLowerCase().indexOf(q.split(' ')[0] || '')
-        if (idx >= 0) {
-          const snippet = backendContext.slice(Math.max(0, idx - 200), Math.min(backendContext.length, idx + 600))
-          answer = `Thông tin tham khảo từ dữ liệu CLB: ${snippet}`
-        }
-      }
-
-      if (!answer) answer = 'Thông tin hiện chưa có trong dữ liệu FTC.'
-      return new Response(JSON.stringify({ response: sanitizeText(answer), source: 'club' }), { headers: { 'Content-Type': 'application/json' } })
-    }
-
-    // Otherwise assemble prompt for Gemini and include a summarized knowledge-base context to reduce prompt size but keep coverage
-    let prompt = '';
-    // buildGroundedPrompt already includes FTC official QA; for non-club questions we will append a KB summary
-    const kbSummary = backendContext.slice(0, 4000) // pre-trim summary
-    prompt = `You are FTC assistant. Use the official FTC context when answering club-related aspects. For industry questions, you may use external knowledge.\n\n[KB_SUMMARY]\n${kbSummary}\n\n[CLUB_CONTEXT]\n${clubContext}\n\n[USER_QUESTION]\n${message}\n\nPlease answer in Vietnamese, concisely and in friendly tone.`
-
-    // Initialize Gemini model for this request
-    const model = initGemini()
+    // Initialize Gemini
+    const model = initGemini();
     if (!model) {
-      return new Response(JSON.stringify({ error: true, message: 'GEMINI_API_KEY is not configured' }), { status: 500, headers: { 'Content-Type': 'application/json' } })
+      return new Response('AI service unavailable', { status: 503 })
     }
 
-    // Call Gemini with grounded prompt
-    let attempts = 0;
-    const maxAttempts = 3;
-    while (attempts < maxAttempts) {
-      try {
-        const chat = model.startChat({
-          history: history?.map((msg: any) => ({
-            role: msg.role === 'user' ? 'user' : 'model',
-            parts: msg.content,
-          })) || [],
-          generationConfig: {
-            temperature: 0.7,
-            topK: 40,
-            topP: 0.95,
-            maxOutputTokens: 1024,
-          },
-        });
+    // Load knowledge base
+    const knowledgeBase = await loadKnowledgeBase();
 
-        const result = await chat.sendMessage(prompt);
-        const response = await result.response;
-        const text = response.text();
+    // Build prompt with knowledge base context
+    const prompt = `Bạn là trợ lý AI cho Câu lạc bộ Công nghệ – Tài chính (FTC) – UEL.
+Vai trò của bạn là cố vấn cho tân sinh viên và trả lời các câu hỏi về CLB.
 
-        if (!text) {
-          throw new Error('Empty response from Gemini');
-        }
+Thông tin tham khảo từ knowledge base:
+${knowledgeBase}
 
-        const sanitized = sanitizeText(text)
-        return new Response(
-          JSON.stringify({
-            response: sanitized,
-            source: 'gemini',
-            model: MODEL_NAME,
-            grounded: suggested.matched || !!clubMatch,
-            backendContext
-          }),
-          { headers: { 'Content-Type': 'application/json' } }
-        );
-      } catch (error: any) {
-        attempts++;
-        if (attempts === maxAttempts) {
-          throw error;
-        }
-        // Wait before retrying (exponential backoff)
-        await new Promise(resolve => setTimeout(resolve, Math.pow(2, attempts) * 1000));
+Dựa vào thông tin trên, hãy trả lời câu hỏi sau một cách súc tích bằng tiếng Việt.
+Nếu không có thông tin liên quan trong knowledge base, hãy trả lời dựa trên kiến thức chung về fintech và câu lạc bộ sinh viên.
+Trả lời cần phải:
+- Ngắn gọn, dễ hiểu
+- Có cấu trúc rõ ràng (sử dụng gạch đầu dòng nếu cần)
+- Thân thiện, phù hợp với tân sinh viên
+- Tập trung vào thông tin thực tế và hữu ích
+
+Câu hỏi: ${message}
+
+Trả lời:`;
+
+    // Generate response
+    const result = await model.generateContent({
+      contents: [{ role: 'user', parts: [{ text: prompt }] }],
+      generationConfig: {
+        temperature: 0.7,
+        topK: 40,
+        topP: 0.95,
+        maxOutputTokens: 1024,
       }
-    }
+    });
+
+    const answer = result.response?.text?.trim() || 'Xin lỗi, không thể tạo câu trả lời. Vui lòng thử lại.';
+
+    return new Response(JSON.stringify({ 
+      response: answer,
+      source: 'knowledge_base' 
+    }), { 
+      headers: { 'Content-Type': 'application/json' } 
+    })
+
   } catch (error: any) {
-    console.error('Error in chat route:', error);
-
-    // Determine appropriate error message and status
-    let status = 500;
-    let message = 'An unexpected error occurred';
-
-    if (error.message === 'Invalid request body' || error.message === 'Message cannot be empty') {
-      status = 400;
-      message = error.message;
-    } else if (error.message.includes('API key')) {
-      message = 'Configuration error - please contact support';
-    } else if (error.message.includes('SAFETY')) {
-      status = 400;
-      message = 'Content was filtered for safety reasons';
-    }
-
-    return new Response(
-      JSON.stringify({
-        error: true,
-        message,
-        debug: process.env.NODE_ENV === 'development' ? error.message : undefined
-      }),
-      {
-        status,
-        headers: { 'Content-Type': 'application/json' }
-      }
-    );
+    console.error('Error in chat route:', error)
+    return new Response(JSON.stringify({
+      error: true,
+      message: 'Internal server error',
+      debug: process.env.NODE_ENV === 'development' ? error.message : undefined
+    }), { 
+      status: 500,
+      headers: { 'Content-Type': 'application/json' } 
+    })
   }
 }

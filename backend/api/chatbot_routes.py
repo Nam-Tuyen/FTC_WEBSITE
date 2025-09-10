@@ -3,13 +3,9 @@ Routes for chatbot functionality
 """
 from flask import Blueprint, request, jsonify
 from services.gemini_service import GeminiService
-from services.club_knowledge import ClubKnowledgeService
-from services.question_classifier import QuestionClassifier
 
 chatbot = Blueprint('chatbot', __name__)
 gemini_service = GeminiService()
-knowledge_service = ClubKnowledgeService()
-classifier = QuestionClassifier()
 
 @chatbot.route('/chat', methods=['POST'])
 def chat():
@@ -20,18 +16,12 @@ def chat():
 
     user_message = data['message']
     
-    # Classify the question type
-    question_type = classifier.classify(user_message)
-    
-    # Get relevant context based on question type
-    context = knowledge_service.get_context(question_type, user_message)
-    
-    # Generate response using Gemini
-    response = gemini_service.generate_response(user_message, context)
+    # Generate response using Gemini with knowledge base
+    response = gemini_service.generate_response(user_message)
     
     return jsonify({
         'response': response,
-        'type': question_type
+        'type': 'general'  # Type is always general since we removed mode selection
     })
 
 @chatbot.route('/feedback', methods=['POST'])
