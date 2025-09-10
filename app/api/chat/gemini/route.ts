@@ -174,7 +174,7 @@ export async function POST(req: Request) {
       out = out.replace(/\*{1,}|_{1,2}|~{2,}/g, '')
 
       // Remove any remaining undesirable repeated special characters, keep letters, numbers, common punctuation
-      out = out.replace(/[^\p{L}\p{N}\s\.,;:?!()\-\—'"%]/gu, ' ')
+      out = out.replace(/[^\p{L}\p{N}\s\.,;:?!()\-—'"%]/gu, ' ')
 
       // Collapse repeated punctuation and whitespace
       out = out.replace(/\.{2,}/g, '.')
