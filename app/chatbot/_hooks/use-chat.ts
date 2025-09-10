@@ -65,9 +65,13 @@ export function useChat() {
     setIsTyping(true)
 
     try {
-      const res = await fetch("/api/chat/gemini", {
+      const FLASK_API_URL = process.env.NEXT_PUBLIC_FLASK_API_URL || 'http://localhost:5000'
+      const res = await fetch(`${FLASK_API_URL}/api/chat`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { 
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*"
+        },
         body: JSON.stringify({
           message: text,
           history

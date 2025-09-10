@@ -79,9 +79,6 @@ export function ChatInterface() {
           onKeyDown={handleKeyDown}
         />
         {/* Mode selection removed as we now always use knowledge base */}
-            </button>
-          </div>
-        </div>
       </div>
     </Card>
   )
