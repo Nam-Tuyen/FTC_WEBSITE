@@ -4,7 +4,6 @@ import { useState, useEffect } from 'react'
 import { Card, CardContent } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Heart, Reply } from 'lucide-react'
@@ -96,13 +95,10 @@ export function QuestionCard({
                   </RadioGroup>
                   {replyMode === 'mssv' && (
                     <div className="md:col-span-2">
-                      <Input
-                        value={replyStudentId}
-                        onChange={(e) => setReplyStudentId(e.target.value)}
-                        placeholder="K#########"
-                      />
-                      {!replyStudentId && defaultStudentId && (
-                        <div className="text-xs text-muted-foreground mt-1">Sẽ dùng MSSV đã lưu: {defaultStudentId}</div>
+                      {defaultStudentId ? (
+                        <div className="text-xs text-muted-foreground">Sẽ dùng MSSV đã lưu: {defaultStudentId}</div>
+                      ) : (
+                        <div className="text-xs text-muted-foreground">Chưa có MSSV đã lưu</div>
                       )}
                     </div>
                   )}
