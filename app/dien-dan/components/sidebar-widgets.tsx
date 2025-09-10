@@ -68,7 +68,7 @@ export function SidebarWidgets({ currentStudentId, setCurrentStudentId }: { curr
     <div draggable onDragStart={(e) => onDragStart(e, order.indexOf('actions'))} onDragOver={onDragOver} onDrop={(e) => onDrop(e, order.indexOf('actions'))}>
       <Card className="widget-card overflow-hidden rounded-xl">
         <CardHeader className="px-3 py-2 bg-transparent">
-          <CardTitle className="text-sm font-medium">Hành động nhanh</CardTitle>
+          <CardTitle className="text-sm font-medium uppercase tracking-wide">HÀNH ĐỘNG NHANH</CardTitle>
         </CardHeader>
 
         <CardContent className="px-3 py-3">
