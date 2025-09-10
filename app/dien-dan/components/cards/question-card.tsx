@@ -30,38 +30,41 @@ export function QuestionCard({ q, children, onLike, onReply, defaultStudentId }:
   }
 
   return (
-    <Card>
+    <Card className="shadow-sm">
       <CardHeader>
-        <CardTitle className="text-base">{q.title}</CardTitle>
+        <div className="flex items-center gap-3 w-full">
+          <CardTitle className="text-sm font-medium truncate">{q.title}</CardTitle>
+          <div className="text-xs text-muted-foreground">{CATEGORIES[q.category] ?? q.category}</div>
+          <div className="ml-auto text-xs text-muted-foreground">{created.toLocaleString()}</div>
+        </div>
       </CardHeader>
-      <CardContent className="space-y-3">
-        <div className="text-xs text-slate-500">Chủ đề: {CATEGORIES[q.category] ?? q.category} • {created.toLocaleString()}</div>
-        <p className="text-sm whitespace-pre-wrap">{q.content}</p>
+      <CardContent className="space-y-2 py-3">
+        <p className="text-sm whitespace-pre-wrap text-muted-foreground">{q.content}</p>
         <div className="flex items-center gap-4 text-sm text-slate-600">
           <button className="inline-flex items-center gap-1" onClick={onLike} aria-label="Like">
-            <Heart className="w-4 h-4" /> {likes}
+            <Heart className="w-4 h-4" /> <span className="text-xs">{likes}</span>
           </button>
-          <span className="inline-flex items-center gap-1"><MessageSquare className="w-4 h-4" /> {repliesCount}</span>
+          <span className="inline-flex items-center gap-1 text-xs text-muted-foreground"><MessageSquare className="w-4 h-4" /> {repliesCount}</span>
         </div>
 
         {children}
 
         {/* Reply box */}
         {onReply && (
-          <div className="mt-4 space-y-2">
-            <div className="flex items-center gap-4">
-              <label className="text-sm">Chế độ phản hồi</label>
+          <div className="mt-3 space-y-2">
+            <div className="flex items-center gap-3">
+              <label className="text-sm">Chế độ</label>
               <div className="flex items-center gap-2">
                 <label className="text-sm"><input type="radio" name={`reply-mode-${q.id}`} checked={replyMode === 'anonymous'} onChange={() => setReplyMode('anonymous')} /> Ẩn danh</label>
                 <label className="text-sm"><input type="radio" name={`reply-mode-${q.id}`} checked={replyMode === 'mssv'} onChange={() => setReplyMode('mssv')} /> MSSV</label>
               </div>
+              {replyMode === 'mssv' && (
+                <div className="text-xs text-muted-foreground ml-auto">{defaultStudentId ? `Sẽ dùng: ${defaultStudentId}` : 'Chưa có MSSV'}</div>
+              )}
             </div>
-            {replyMode === 'mssv' && (
-              <div className="text-xs text-muted-foreground">{defaultStudentId ? `Sẽ dùng MSSV đã lưu: ${defaultStudentId}` : 'Chưa có MSSV đã lưu'}</div>
-            )}
-            <textarea value={reply} onChange={(e) => setReply(e.target.value)} className="w-full p-2 border rounded-md" placeholder="Viết phản hồi của bạn" />
+            <textarea value={reply} onChange={(e) => setReply(e.target.value)} className="w-full p-2 border rounded-md text-sm" placeholder="Viết phản hồi của bạn" />
             <div className="flex justify-end">
-              <button className="px-3 py-2 bg-primary text-white rounded-md" onClick={sendReply}>Gửi phản hồi</button>
+              <button className="px-3 py-1 bg-primary text-white rounded-md text-sm" onClick={sendReply}>Gửi</button>
             </div>
           </div>
         )}
