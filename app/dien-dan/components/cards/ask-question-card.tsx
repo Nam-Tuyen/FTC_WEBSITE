@@ -58,22 +58,22 @@ export function AskQuestionCard({
   }
 
   return (
-    <Card id="ask-question-form" className="group relative">
+    <Card id="ask-question-form" className="group relative transition-transform hover:shadow-lg hover:-translate-y-1">
       <div className="absolute inset-0 bg-gradient-to-r from-primary/10 to-accent/10 rounded-2xl transform group-hover:scale-[1.02] transition-transform duration-500" />
       <CardHeader>
-        <CardTitle className="text-2xl font-heading whitespace-nowrap">Đặt câu hỏi</CardTitle>
+        <CardTitle className="text-base font-heading uppercase tracking-wide">ĐẶT CÂU HỎI</CardTitle>
       </CardHeader>
 
       <CardContent className="relative space-y-4 bg-background/40 backdrop-blur-lg rounded-2xl p-6">
         {/* Title */}
         <div className="space-y-1">
-          <label className="block text-sm font-medium text-muted-foreground">Tiêu đề</label>
+          <label className="block text-xs font-medium text-muted-foreground uppercase">TIÊU ĐỀ</label>
           <Input className="mt-1" value={title} onChange={(e) => setTitle(e.target.value)} placeholder="Nhập tiêu đề câu hỏi" />
         </div>
 
         {/* Category */}
         <div className="space-y-1">
-          <label className="block text-sm font-medium text-muted-foreground">Chủ đề</label>
+          <label className="block text-xs font-medium text-muted-foreground uppercase">CHỦ ĐỀ</label>
           <Select value={category} onValueChange={setCategory}>
             <SelectTrigger className="w-full mt-1">
               <SelectValue />
@@ -89,7 +89,7 @@ export function AskQuestionCard({
 
         {/* Posting mode */}
         <div className="space-y-1">
-          <label className="block text-sm font-medium text-muted-foreground">Chế độ đăng</label>
+          <label className="block text-xs font-medium text-muted-foreground uppercase">CHẾ ĐỘ ĐĂNG</label>
           <div className="flex items-center gap-6 mt-2">
             <label className="inline-flex items-center gap-2">
               <input type="radio" checked={mode === 'anonymous'} onChange={() => setMode('anonymous')} className="form-radio" />
@@ -111,7 +111,7 @@ export function AskQuestionCard({
 
         {/* Content */}
         <div className="space-y-1">
-          <label className="block text-sm font-medium text-muted-foreground">Nội dung</label>
+          <label className="block text-xs font-medium text-muted-foreground uppercase">NỘI DUNG</label>
           <Textarea
             className="mt-1 min-h-[140px]"
             value={content}
@@ -139,7 +139,7 @@ export function AskQuestionCard({
             <div className="absolute -inset-0.5 bg-gradient-to-r from-primary to-accent opacity-75 rounded-lg blur transition group-hover:opacity-100"></div>
             <div className="relative flex items-center">
               <Plus className="h-4 w-4 mr-2" />
-              Đăng câu hỏi
+              ĐĂNG CÂU HỎI
             </div>
           </Button>
         </div>
