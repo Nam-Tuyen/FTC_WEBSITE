@@ -1,5 +1,3 @@
-'use client'
-
 import { useState, useEffect } from 'react'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
@@ -8,6 +6,7 @@ import { Textarea } from '@/components/ui/textarea'
 import { Plus } from 'lucide-react'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from '@/components/ui/dialog'
 import { CATEGORIES } from '@/app/dien-dan/types'
 
 interface AskQuestionCardProps {
@@ -18,6 +17,7 @@ interface AskQuestionCardProps {
 
 export function AskQuestionCard({
   currentStudentId,
+  onUpdateStudentId,
   onSubmit,
 }: AskQuestionCardProps) {
   const [title, setTitle] = useState('')
@@ -26,9 +26,10 @@ export function AskQuestionCard({
   const [category, setCategory] = useState<keyof typeof CATEGORIES>('DISCUSSION')
   const [error, setError] = useState('')
   const [mode, setMode] = useState<'anonymous' | 'mssv'>('anonymous')
+  const [showProfileModal, setShowProfileModal] = useState(false)
+  const [modalInput, setModalInput] = useState(currentStudentId || '')
 
   useEffect(() => {
-    // When switching to mssv mode, auto-fill from currentStudentId if available
     if (mode === 'mssv' && !studentId && currentStudentId) {
       setStudentId(currentStudentId)
     }
@@ -40,9 +41,15 @@ export function AskQuestionCard({
       return false
     }
     if (mode === 'mssv') {
-      const id = (studentId || currentStudentId).trim()
+      const id = (studentId || currentStudentId || '').trim()
+      if (!id) {
+        setModalInput(currentStudentId || '')
+        setShowProfileModal(true)
+        return false
+      }
       if (!/^K\d{9}$/.test(id)) {
-        setError('MSSV phải có dạng K#########')
+        setModalInput(id)
+        setShowProfileModal(true)
         return false
       }
     }
@@ -71,6 +78,7 @@ export function AskQuestionCard({
                 </SelectTrigger>
                 <SelectContent>
                   {Object.entries(CATEGORIES).map(([key, label]) => (
+                    // @ts-ignore
                     <SelectItem key={key} value={key}>
                       {label}
                     </SelectItem>
@@ -142,6 +150,29 @@ export function AskQuestionCard({
             </div>
           </Button>
         </div>
+
+        <Dialog open={showProfileModal} onOpenChange={(v) => setShowProfileModal(v)}>
+          <DialogContent showCloseButton>
+            <DialogHeader>
+              <DialogTitle>Yêu cầu cập nhật hồ sơ</DialogTitle>
+            </DialogHeader>
+            <div className="space-y-2">
+              <p className="text-sm text-muted-foreground">Bạn đã chọn chế độ MSSV nhưng chưa có MSSV hợp lệ. Vui lòng nhập MSSV (dạng K#########) để tiếp tục.</p>
+              <Input value={modalInput} onChange={(e) => setModalInput(e.target.value)} placeholder="K#########" />
+            </div>
+            <DialogFooter>
+              <div className="flex justify-end gap-2">
+                <Button variant="outline" onClick={() => setShowProfileModal(false)}>Hủy</Button>
+                <Button onClick={() => {
+                  const v = (modalInput || '').trim()
+                  if (!/^K\d{9}$/.test(v)) return
+                  onUpdateStudentId(v)
+                  setShowProfileModal(false)
+                }}>Lưu MSSV</Button>
+              </div>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
       </CardContent>
     </Card>
   )
