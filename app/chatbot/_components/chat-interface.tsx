@@ -90,12 +90,37 @@ export function ChatInterface() {
         <div ref={messagesEndRef} />
       </CardContent>
 
-      <ChatInput
-        value={inputValue}
-        onChange={setInputValue}
-        onSend={handleSendMessage}
-        onKeyDown={handleKeyDown}
-      />
+      <div className="border-t border-accent/20 p-0 bg-gradient-to-r from-background/80 via-accent/5 to-background/80 backdrop-blur-md sticky bottom-0 mt-auto">
+        <ChatInput
+          value={inputValue}
+          onChange={setInputValue}
+          onSend={handleSendMessage}
+          onKeyDown={handleKeyDown}
+        />
+        <div className="max-w-full px-4 py-3 flex items-center justify-center gap-3 bg-card/40 border-t border-accent/10">
+          <span className="text-sm text-muted-foreground mr-2">Chế độ:</span>
+          <div className="inline-flex rounded-md bg-card/50 p-0.5 border border-accent/10">
+            <button
+              onClick={() => setMode('club')}
+              className={`px-3 py-1 text-xs rounded-md transition-colors duration-200 ${mode === 'club' ? 'bg-accent/20 text-foreground' : 'hover:bg-accent/10 text-muted-foreground'}`}
+            >
+              Hỏi về câu lạc bộ
+            </button>
+            <button
+              onClick={() => setMode('domain')}
+              className={`px-3 py-1 text-xs rounded-md transition-colors duration-200 ${mode === 'domain' ? 'bg-accent/20 text-foreground' : 'hover:bg-accent/10 text-muted-foreground'}`}
+            >
+              Hỏi về ngành
+            </button>
+            <button
+              onClick={() => setMode('auto')}
+              className={`px-3 py-1 text-xs rounded-md transition-colors duration-200 ${mode === 'auto' ? 'bg-accent/20 text-foreground' : 'hover:bg-accent/10 text-muted-foreground'}`}
+            >
+              Tự động
+            </button>
+          </div>
+        </div>
+      </div>
     </Card>
   )
 }
