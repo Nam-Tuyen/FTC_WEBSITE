@@ -1,9 +1,7 @@
 export const CATEGORIES = {
   CLUB: 'Câu lạc bộ',
-  FINTECH: 'Công nghệ Tài chính',
-  CAREER: 'Nghề nghiệp',
-  STUDY: 'Học tập',
-  GENERAL: 'Chung',
+  MAJOR: 'Chuyên ngành',
+  DISCUSSION: 'Thảo luận',
 } as const
 
 export const STORAGE_KEYS = {
