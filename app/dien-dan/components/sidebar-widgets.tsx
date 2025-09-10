@@ -39,7 +39,7 @@ export function SidebarWidgets({ currentStudentId, setCurrentStudentId }: { curr
 
   const ProfileCard = (
     <div draggable onDragStart={(e) => onDragStart(e, order.indexOf('profile'))} onDragOver={onDragOver} onDrop={(e) => onDrop(e, order.indexOf('profile'))}>
-      <Card className="widget-card overflow-hidden rounded-xl">
+      <Card className="widget-card overflow-hidden rounded-xl transition-shadow hover:shadow-lg">
         <CardHeader className="px-3 py-2 bg-transparent">
           <div className="flex items-center justify-between">
             <CardTitle className="text-sm font-medium uppercase tracking-wide">HỒ SƠ CỦA BẠN</CardTitle>
@@ -66,7 +66,7 @@ export function SidebarWidgets({ currentStudentId, setCurrentStudentId }: { curr
 
   const ActionsCard = (
     <div draggable onDragStart={(e) => onDragStart(e, order.indexOf('actions'))} onDragOver={onDragOver} onDrop={(e) => onDrop(e, order.indexOf('actions'))}>
-      <Card className="widget-card overflow-hidden rounded-xl">
+      <Card className="widget-card overflow-hidden rounded-xl transition-shadow hover:shadow-lg">
         <CardHeader className="px-3 py-2 bg-transparent">
           <CardTitle className="text-sm font-medium uppercase tracking-wide">HÀNH ĐỘNG NHANH</CardTitle>
         </CardHeader>
