@@ -4,6 +4,8 @@ Service để tương tác với Gemini API
 import google.generativeai as genai
 import logging
 from typing import List, Dict, Optional
+import os
+from pathlib import Path
 from config import Config
 
 logger = logging.getLogger(__name__)
@@ -23,81 +25,77 @@ class GeminiService:
         else:
             self.model = None
             logger.warning("Gemini API key không được cấu hình")
+            
+        # Load knowledge base
+        self.knowledge_base = self._load_knowledge_base()
+        
+    def _load_knowledge_base(self) -> str:
+        """Load toàn bộ dữ liệu từ knowledge base"""
+        kb_dir = Path(__file__).parent.parent / "data" / "knowledge_base"
+        content = []
+        
+        if kb_dir.exists():
+            for file in kb_dir.glob("*.txt"):
+                try:
+                    with open(file, "r", encoding="utf-8") as f:
+                        content.append(f.read())
+                except Exception as e:
+                    logger.error(f"Lỗi khi đọc file {file}: {e}")
+                    
+        return "\n\n".join(content)
     
     def is_available(self) -> bool:
         """Kiểm tra Gemini API có khả dụng không"""
         return self.model is not None
     
-    def build_prompt(self, user_question: str, domain: str = "fintech") -> str:
-        """Xây dựng prompt cho Gemini"""
-        return f"""
-Bạn là trợ lý AI cho Câu lạc bộ Công nghệ – Tài chính (FTC) – UEL.
+    def build_prompt(self, user_question: str) -> str:
+        """Xây dựng prompt cho Gemini với context từ knowledge base"""
+        base_prompt = f"""Bạn là trợ lý AI cho Câu lạc bộ Công nghệ – Tài chính (FTC) – UEL.
+Vai trò của bạn là cố vấn cho tân sinh viên và trả lời các câu hỏi về CLB.
 
-Ngữ cảnh: người hỏi là sinh viên/quan tâm Fintech. 
-Trả lời súc tích, tiếng Việt, có cấu trúc gọn (gạch đầu dòng khi phù hợp), 
-ưu tiên hướng dẫn thực hành.
+Thông tin tham khảo từ knowledge base:
+{self.knowledge_base}
 
-Nếu câu hỏi mang tính chuyên môn ({domain}), hãy giải thích khái niệm và 
-đưa ví dụ gần gũi, tránh phóng đại rủi ro/lợi ích.
+Dựa vào thông tin trên, hãy trả lời câu hỏi sau một cách súc tích bằng tiếng Việt.
+Nếu không có thông tin liên quan trong knowledge base, hãy trả lời dựa trên kiến thức chung về fintech và câu lạc bộ sinh viên.
+Trả lời cần phải:
+- Ngắn gọn, dễ hiểu
+- Có cấu trúc rõ ràng (sử dụng gạch đầu dòng nếu cần)
+- Thân thiện, phù hợp với tân sinh viên
+- Tập trung vào thông tin thực tế và hữu ích
 
-Không bịa đặt thông tin nội bộ. Nếu thiếu dữ liệu, nói rõ và đề xuất cách 
-tìm hiểu tiếp.
+Câu hỏi: {user_question}
 
-Câu hỏi người dùng: {user_question}
-"""
+Trả lời:"""
+        return base_prompt
     
     def generate_response(
         self, 
-        prompt: str, 
+        user_question: str,
         history: Optional[List[Dict[str, str]]] = None
     ) -> str:
-        """
-        Tạo phản hồi từ Gemini API
-        
-        Args:
-            prompt: Câu hỏi/prompt
-            history: Lịch sử hội thoại (optional)
-            
-        Returns:
-            Phản hồi từ AI
-        """
+        """Generate câu trả lời sử dụng Gemini API"""
         if not self.is_available():
-            return "Xin lỗi, dịch vụ AI hiện không khả dụng. Vui lòng thử lại sau."
-        
+            return "Xin lỗi, hiện tại tôi không thể trả lời do chưa kết nối được với Gemini API."
+            
         try:
-            # Xây dựng nội dung cho API
-            contents = []
+            prompt = self.build_prompt(user_question)
             
-            # Thêm lịch sử hội thoại nếu có
-            if history:
-                for item in history[-8:]:  # Chỉ lấy 8 tin nhắn gần nhất
-                    role = "user" if item.get("role") == "user" else "model"
-                    content = item.get("content", "")
-                    if content:
-                        contents.append({
-                            "role": role,
-                            "parts": [{"text": content}]
-                        })
+            # Generate response
+            response = self.model.generate_content(
+                prompt,
+                generation_config={
+                    "temperature": self.temperature,
+                    "max_output_tokens": self.max_tokens,
+                }
+            )
             
-            # Thêm câu hỏi hiện tại
-            contents.append({
-                "role": "user",
-                "parts": [{"text": prompt}]
-            })
+            # Clean and return response
+            return response.text.strip()
             
-            # Cấu hình generation
-            generation_config = {
-                "temperature": self.temperature,
-                "top_k": 32,
-                "top_p": 0.95,
-                "max_output_tokens": self.max_tokens,
-            }
-            
-            # Cấu hình an toàn
-            safety_settings = [
-                {
-                    "category": "HARM_CATEGORY_DANGEROUS_CONTENT",
-                    "threshold": "BLOCK_MEDIUM_AND_ABOVE"
+        except Exception as e:
+            logger.error(f"Lỗi khi tạo câu trả lời: {e}")
+            return "Xin lỗi, đã có lỗi xảy ra khi xử lý câu hỏi của bạn. Vui lòng thử lại sau."
                 },
                 {
                     "category": "HARM_CATEGORY_HATE_SPEECH", 

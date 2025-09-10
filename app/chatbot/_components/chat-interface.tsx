@@ -10,7 +10,7 @@ import { useChatScroll } from "../_hooks/use-chat-scroll"
 import type { Message } from "@/app/chatbot/_lib/types"
 
 export function ChatInterface() {
-  const { messages, isTyping, inputValue, setInputValue, handleSendMessage, handleKeyDown, mode, setMode } = useChat()
+  const { messages, isTyping, inputValue, setInputValue, handleSendMessage, handleKeyDown } = useChat()
   const messagesEndRef = useChatScroll(messages)
 
   return (
@@ -78,26 +78,7 @@ export function ChatInterface() {
           onSend={handleSendMessage}
           onKeyDown={handleKeyDown}
         />
-        <div className="max-w-full px-4 py-3 flex items-center justify-center gap-3 bg-card/40 border-t border-accent/10">
-          <span className="text-sm text-muted-foreground mr-2">Chế độ:</span>
-          <div className="inline-flex rounded-md bg-card/50 p-0.5 border border-accent/10">
-            <button
-              onClick={() => setMode('club')}
-              className={`px-3 py-1 text-xs rounded-md transition-colors duration-200 ${mode === 'club' ? 'bg-accent/20 text-foreground' : 'hover:bg-accent/10 text-muted-foreground'}`}
-            >
-              Hỏi về câu lạc bộ
-            </button>
-            <button
-              onClick={() => setMode('domain')}
-              className={`px-3 py-1 text-xs rounded-md transition-colors duration-200 ${mode === 'domain' ? 'bg-accent/20 text-foreground' : 'hover:bg-accent/10 text-muted-foreground'}`}
-            >
-              Hỏi về ngành
-            </button>
-            <button
-              onClick={() => setMode('auto')}
-              className={`px-3 py-1 text-xs rounded-md transition-colors duration-200 ${mode === 'auto' ? 'bg-accent/20 text-foreground' : 'hover:bg-accent/10 text-muted-foreground'}`}
-            >
-              Tự động
+        {/* Mode selection removed as we now always use knowledge base */}
             </button>
           </div>
         </div>
