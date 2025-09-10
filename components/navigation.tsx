@@ -20,7 +20,7 @@ const navigationItems: NavigationItem[] = [
   { name: "Cơ cấu", href: "/co-cau", icon: Shield },
   { name: "Diễn đàn", href: "/dien-dan", icon: Zap },
   { name: "Ứng tuyển", href: "/ung-tuyen", icon: Cpu },
-  { name: "Chatbot", href: "/chatbot", icon: Zap },
+  { name: "Chatbot", href: "/chatbot", icon: Bot },
 ]
 
 export function Navigation() {
