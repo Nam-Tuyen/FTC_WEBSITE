@@ -220,15 +220,21 @@ export function shouldRouteToIndustry(question: string): { yes: boolean; domain?
 // ===== Bot Messages =====
 export function getDefaultWelcomeMessage() {
   return (
-`Xin chào! Tôi là **FTC AI Assistant**.
+`Xin chào! Tôi là FTC AI Assistant.
 
 Tôi có thể giúp bạn:
+
 • Trả lời câu hỏi về câu lạc bộ
+
 • Giải thích khái niệm Fintech
+
 • Hướng dẫn tham gia hoạt động
+
 • Tìm thông tin trên website
 
+
 📮 Liên hệ: ${CONTACT_EMAIL}
+
 📘 Fanpage: ${FANPAGE_URL}`
   );
 }
