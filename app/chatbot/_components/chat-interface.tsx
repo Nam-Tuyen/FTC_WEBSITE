@@ -6,7 +6,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { ChatInput } from "./chat-input"
 import { ChatMessage } from "./chat-message"
 import { useChat } from "../_hooks/use-chat"
-import { useChatScroll } from "..//_hooks/use-chat-scroll"
+import { useChatScroll } from "../_hooks/use-chat-scroll"
 import type { Message } from "@/app/chatbot/_lib/types"
 import "../types/react"
 
