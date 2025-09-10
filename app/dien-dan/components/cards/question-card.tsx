@@ -30,7 +30,7 @@ export function QuestionCard({ q, children, onLike, onReply, defaultStudentId }:
   }
 
   return (
-    <article className="border-b border-slate-200 py-3">
+    <article className="border-b border-slate-200 py-3 transition-transform transform hover:-translate-y-1 hover:shadow-md bg-white/50 rounded-md">
       <div className="flex items-start gap-3">
         <div className="flex-shrink-0">
           <div className="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center text-sm font-medium text-slate-700">{String((q.authorName||'A').charAt(0)).toUpperCase()}</div>
