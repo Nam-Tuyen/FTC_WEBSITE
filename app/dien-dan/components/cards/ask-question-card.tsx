@@ -61,66 +61,59 @@ export function AskQuestionCard({
     <Card id="ask-question-form" className="group relative">
       <div className="absolute inset-0 bg-gradient-to-r from-primary/10 to-accent/10 rounded-2xl transform group-hover:scale-[1.02] transition-transform duration-500" />
       <CardHeader>
-        <CardTitle className="text-lg font-heading uppercase whitespace-nowrap">Đặt câu hỏi</CardTitle>
+        <CardTitle className="text-2xl font-heading whitespace-nowrap">Đặt câu hỏi</CardTitle>
       </CardHeader>
-      <CardContent className="relative space-y-3 bg-background/40 backdrop-blur-lg rounded-2xl">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-3">
-          <div className="md:col-span-2">
-            <label className="text-sm text-muted-foreground whitespace-nowrap">Tiêu đề</label>
-            <Input className="mt-1" value={title} onChange={(e) => setTitle(e.target.value)} placeholder="Nhập tiêu đề câu hỏi" />
-          </div>
-          <div className="md:col-span-2">
-            <label className="text-sm text-muted-foreground whitespace-nowrap">Chủ đề</label>
-            <div>
-              <Select value={category} onValueChange={setCategory}>
-                <SelectTrigger className="w-full mt-1">
-                  <SelectValue placeholder="Chọn chủ đề" />
-                </SelectTrigger>
-                <SelectContent>
-                  {Object.entries(CATEGORIES).map(([key, label]) => (
-                    // @ts-ignore
-                    <SelectItem key={key} value={key}>
-                      {label}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-          </div>
+
+      <CardContent className="relative space-y-4 bg-background/40 backdrop-blur-lg rounded-2xl p-6">
+        {/* Title */}
+        <div className="space-y-1">
+          <label className="block text-sm font-medium text-muted-foreground">Tiêu đề</label>
+          <Input className="mt-1" value={title} onChange={(e) => setTitle(e.target.value)} placeholder="Nhập tiêu đề câu hỏi" />
         </div>
 
-        <div>
-          <label className="text-sm text-muted-foreground">Chế độ đăng</label>
-          <div className="mt-2 grid grid-cols-1 md:grid-cols-3 gap-3">
-            <div className="flex items-center gap-2">
-              <RadioGroup value={mode} onValueChange={(v) => setMode(v as 'anonymous' | 'mssv')} className="grid grid-cols-2 gap-4">
-                <div className="flex items-center gap-2">
-                  <RadioGroupItem id="mode-anonymous" value="anonymous" />
-                  <label htmlFor="mode-anonymous" className="text-sm">Ẩn danh</label>
-                </div>
-                <div className="flex items-center gap-2">
-                  <RadioGroupItem id="mode-mssv" value="mssv" />
-                  <label htmlFor="mode-mssv" className="text-sm">MSSV</label>
-                </div>
-              </RadioGroup>
-            </div>
+        {/* Category */}
+        <div className="space-y-1">
+          <label className="block text-sm font-medium text-muted-foreground">Chủ đề</label>
+          <Select value={category} onValueChange={setCategory}>
+            <SelectTrigger className="w-full mt-1">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              {Object.entries(CATEGORIES).map(([key, label]) => (
+                // @ts-ignore
+                <SelectItem key={key} value={key}>{label}</SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
+
+        {/* Posting mode */}
+        <div className="space-y-1">
+          <label className="block text-sm font-medium text-muted-foreground">Chế độ đăng</label>
+          <div className="flex items-center gap-6 mt-2">
+            <label className="inline-flex items-center gap-2">
+              <input type="radio" checked={mode === 'anonymous'} onChange={() => setMode('anonymous')} className="form-radio" />
+              <span className="text-sm">Ẩn danh</span>
+            </label>
+            <label className="inline-flex items-center gap-2">
+              <input type="radio" checked={mode === 'mssv'} onChange={() => setMode('mssv')} className="form-radio" />
+              <span className="text-sm">MSSV</span>
+            </label>
+
             {mode === 'mssv' && (
-              <div className="md:col-span-2">
-                <label className="text-sm text-muted-foreground whitespace-nowrap">Mã số sinh viên</label>
-                {currentStudentId ? (
-                  <div className="mt-1 text-sm">{currentStudentId}</div>
-                ) : (
-                  <div className="mt-1 text-xs text-muted-foreground">Chưa có MSSV đã lưu</div>
-                )}
+              <div className="ml-4">
+                <label className="text-sm text-muted-foreground">Mã số sinh viên</label>
+                <div className="mt-1 text-sm">{currentStudentId || <span className="text-xs text-muted-foreground">Chưa có MSSV đã lưu</span>}</div>
               </div>
             )}
           </div>
         </div>
 
-        <div>
-          <label className="text-sm text-muted-foreground whitespace-nowrap">Nội dung</label>
+        {/* Content */}
+        <div className="space-y-1">
+          <label className="block text-sm font-medium text-muted-foreground">Nội dung</label>
           <Textarea
-            className="mt-1"
+            className="mt-1 min-h-[140px]"
             value={content}
             onChange={(e) => setContent(e.target.value)}
             placeholder="Mô tả chi tiết vấn đề, bối cảnh, bạn đã thử gì..."
