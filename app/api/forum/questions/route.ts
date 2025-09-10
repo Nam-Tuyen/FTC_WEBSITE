@@ -4,12 +4,9 @@ import { forumDB } from '@/lib/supabase';
 export const dynamic = 'force-dynamic';
 
 const ALLOWED_CATEGORIES = [
-  'GENERAL',
-  'KNOWLEDGE',
-  'CAREER',
-  'TECHNICAL',
-  'EXPERIENCE',
-  'OTHER'
+  'CLUB',
+  'MAJOR',
+  'DISCUSSION'
 ] as const;
 
 export async function GET(request: Request) {
