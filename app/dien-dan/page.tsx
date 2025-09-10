@@ -326,13 +326,13 @@ export default function ForumPage() {
             </section>
           </div>
 
-          <div className="space-y-6">
-            {/* Swap control */}
+          <aside className="space-y-6 lg:col-start-4 lg:col-span-1 lg:sticky lg:top-24">
+            {/* Right sticky utilities */}
             <SidebarWidgets
               currentStudentId={currentStudentId}
               setCurrentStudentId={(v:string)=>{ setCurrentStudentId(v); localStorage.setItem(STORAGE_KEYS.studentId, v)}}
             />
-          </div>
+          </aside>
 
           {/* inline component to allow swapping widgets */}
           <style jsx>{`
