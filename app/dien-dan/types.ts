@@ -1,9 +1,7 @@
 export const CATEGORIES = {
   CLUB: 'Câu lạc bộ',
-  FINTECH: 'Công nghệ Tài chính',
-  CAREER: 'Nghề nghiệp',
-  STUDY: 'Học tập',
-  GENERAL: 'Chung',
+  MAJOR: 'Ngành học',
+  DISCUSSION: 'Thảo luận',
 } as const
 
 export const STORAGE_KEYS = {
@@ -18,12 +16,14 @@ export interface QuestionItem {
   id: string
   title: string
   content: string
-  createdAt: number
+  createdAt: number | string
   category: ForumCategory
   studentId?: string
-  userId: string
-  likes: string[]
-  replies: Reply[]
+  userId?: string
+  likes: number | any[]
+  replies?: any[]
+  repliesCount?: number
+  authorName?: string
 }
 
 export interface Reply {
@@ -31,6 +31,7 @@ export interface Reply {
   content: string
   createdAt: number
   studentId?: string
-  userId: string
-  likes: string[]
+  userId?: string
+  likes?: any[]
+  authorName?: string
 }

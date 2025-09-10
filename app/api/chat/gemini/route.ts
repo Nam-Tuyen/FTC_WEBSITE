@@ -6,25 +6,27 @@ import { RECRUITMENT_CONFIG } from '@/app/ung-tuyen/constants'
 export const dynamic = 'force-dynamic';
 export const maxDuration = 300; // 5 minutes timeout
 
-// Validate environment variables
-const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
-if (!GEMINI_API_KEY) {
-  throw new Error('GEMINI_API_KEY is not configured in environment variables');
-}
-
 const MODEL_NAME = "gemini-pro";
 
-// Initialize Gemini with validated API key
-const genAI = new GoogleGenerativeAI(GEMINI_API_KEY);
-const model = genAI.getGenerativeModel({
-  model: MODEL_NAME,
-  generationConfig: {
-    temperature: 0.7,
-    topK: 40,
-    topP: 0.95,
-    maxOutputTokens: 1024,
+// Helper to initialize Gemini model at request time
+function initGemini() {
+  const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
+  if (!GEMINI_API_KEY) return null;
+  try {
+    const genAI = new GoogleGenerativeAI(GEMINI_API_KEY);
+    return genAI.getGenerativeModel({
+      model: MODEL_NAME,
+      generationConfig: {
+        temperature: 0.7,
+        topK: 40,
+        topP: 0.95,
+        maxOutputTokens: 1024,
+      }
+    });
+  } catch (e) {
+    return null;
   }
-});
+}
 
 // Validate and parse request body
 async function parseRequest(req: Request) {
@@ -231,6 +233,12 @@ export async function POST(req: Request) {
     // buildGroundedPrompt already includes FTC official QA; for non-club questions we will append a KB summary
     const kbSummary = backendContext.slice(0, 4000) // pre-trim summary
     prompt = `You are FTC assistant. Use the official FTC context when answering club-related aspects. For industry questions, you may use external knowledge.\n\n[KB_SUMMARY]\n${kbSummary}\n\n[CLUB_CONTEXT]\n${clubContext}\n\n[USER_QUESTION]\n${message}\n\nPlease answer in Vietnamese, concisely and in friendly tone.`
+
+    // Initialize Gemini model for this request
+    const model = initGemini()
+    if (!model) {
+      return new Response(JSON.stringify({ error: true, message: 'GEMINI_API_KEY is not configured' }), { status: 500, headers: { 'Content-Type': 'application/json' } })
+    }
 
     // Call Gemini with grounded prompt
     let attempts = 0;
