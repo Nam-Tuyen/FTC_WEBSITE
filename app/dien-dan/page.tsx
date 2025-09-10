@@ -246,11 +246,9 @@ export default function ForumPage() {
         <div className="relative max-w-5xl mx-auto">
           <div className="text-center space-y-8">
             {/* Main Title with Gradient Style */}
-            <h1 className="relative text-4xl sm:text-5xl lg:text-6xl font-extrabold inline-block">
-              <span className="absolute inset-0 bg-gradient-to-r from-primary to-accent opacity-50 blur-2xl animate-pulse"></span>
-              <span className="relative bg-gradient-to-r from-primary to-accent text-transparent bg-clip-text animate-text-shine">
-                DIỄN ĐÀN
-              </span>
+            <h1 className="relative text-2xl sm:text-3xl lg:text-4xl font-semibold inline-block uppercase tracking-wide">
+              <span className="absolute inset-0 bg-gradient-to-r from-primary to-accent opacity-40 blur-2xl transform-gpu"></span>
+              <span className="relative bg-gradient-to-r from-primary to-accent text-transparent bg-clip-text">DIỄN ĐÀN</span>
             </h1>
             
             {/* Simple Italicized Subtitle */}
@@ -292,7 +290,7 @@ export default function ForumPage() {
             />
 
             <section>
-              <h2 className="font-heading font-semibold text-2xl leading-8 text-foreground mb-6">Câu hỏi gần đây</h2>
+              <h2 className="font-heading font-semibold text-lg leading-6 text-foreground mb-4 uppercase tracking-wide">CÂU HỎI GẦN ĐÂY</h2>
               <div className="space-y-4">
                 {paginated.map((q) => (
                   <QuestionCard
