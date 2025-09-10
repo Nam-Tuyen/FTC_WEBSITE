@@ -9,6 +9,8 @@ export async function GET(_: Request, { params }: { params: { id: string } }) {
   const p = IdParams.safeParse(params)
   if (!p.success) return NextResponse.json({ error: 'Invalid id' }, { status: 400 })
 
+  if (!supabase) return NextResponse.json({ error: 'Supabase not configured' }, { status: 500 })
+
   const { data, error } = await (supabase as any)
     .from('questions')
     .select('*')
