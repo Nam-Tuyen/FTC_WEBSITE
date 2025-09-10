@@ -41,8 +41,10 @@ export function SidebarWidgets({ currentStudentId, setCurrentStudentId }: { curr
     <div draggable onDragStart={(e) => onDragStart(e, order.indexOf('profile'))} onDragOver={onDragOver} onDrop={(e) => onDrop(e, order.indexOf('profile'))}>
       <Card className="widget-card overflow-hidden rounded-xl transition-shadow hover:shadow-lg">
         <CardHeader className="px-3 py-2 bg-transparent">
-          <div className="flex items-center justify-between">
-            <CardTitle className="text-sm font-medium uppercase tracking-wide">HỒ SƠ CỦA BẠN</CardTitle>
+          <div className="flex items-center justify-between text-left">
+            <CardTitle className="text-sm font-medium uppercase tracking-wide text-left"> 
+              <p>HỒ SƠ NGƯỜI DÙNG</p>
+            </CardTitle>
             <button className="text-xs text-muted-foreground" onClick={() => { /* placeholder */ }}>{currentStudentId ? 'Chỉnh sửa' : 'Thêm'}</button>
           </div>
         </CardHeader>
@@ -56,7 +58,9 @@ export function SidebarWidgets({ currentStudentId, setCurrentStudentId }: { curr
                 placeholder="K#########"
                 className="h-9 text-sm"
               />
-              <div className="text-xs text-muted-foreground mt-2">MSSV giúp tăng độ tin cậy khi hỏi/đăng.</div>
+              <div className="text-xs text-muted-foreground mt-2 text-left">
+                <p>Người dùng c�� thể đăng bài và trả lời câu hỏi bằng mã số sinh viên hoặc ẩn danh</p>
+              </div>
             </div>
           </div>
         </CardContent>
@@ -66,23 +70,25 @@ export function SidebarWidgets({ currentStudentId, setCurrentStudentId }: { curr
 
   const ActionsCard = (
     <div draggable onDragStart={(e) => onDragStart(e, order.indexOf('actions'))} onDragOver={onDragOver} onDrop={(e) => onDrop(e, order.indexOf('actions'))}>
-      <Card className="widget-card overflow-hidden rounded-xl transition-shadow hover:shadow-lg">
+      <Card className="widget-card overflow-hidden rounded-xl transition-shadow hover:shadow-lg" style={{ backgroundColor: 'rgb(23, 67, 113)' }}>
         <CardHeader className="px-3 py-2 bg-transparent">
-          <CardTitle className="text-sm font-medium uppercase tracking-wide">HÀNH ĐỘNG NHANH</CardTitle>
+          <CardTitle className="text-[20px] font-semibold text-center uppercase tracking-wide">HÀNH ĐỘNG NHANH</CardTitle>
         </CardHeader>
 
+        <div className="px-3 pb-3 flex gap-2">
+          <Button variant="default" className="flex-1 flex items-center justify-center gap-2 h-9 uppercase text-sm" onClick={() => {
+            const el = document.getElementById('ask-question-form')
+            el?.scrollIntoView({ behavior: 'smooth', block: 'center' })
+          }}>
+            <MessageSquare className="mr-1" /> ĐẶT
+          </Button>
+          <Button variant="default" className="flex-1 flex items-center justify-center gap-2 h-9 uppercase text-sm" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
+            <HelpCircle className="mr-1" /> LÊN
+          </Button>
+        </div>
+
         <CardContent className="px-3 py-3">
-          <div className="grid grid-cols-2 gap-2">
-            <Button variant="outline" className="flex items-center justify-center text-sm h-9 uppercase tracking-wide hover:shadow-sm" onClick={() => {
-              const el = document.getElementById('ask-question-form')
-              el?.scrollIntoView({ behavior: 'smooth', block: 'center' })
-            }}>
-              <MessageSquare className="mr-2" /> ĐẶT
-            </Button>
-            <Button variant="outline" className="flex items-center justify-center text-sm h-9 uppercase tracking-wide hover:shadow-sm" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
-              <HelpCircle className="mr-2" /> LÊN
-            </Button>
-          </div>
+          <div className="grid grid-cols-2 gap-2" />
         </CardContent>
       </Card>
     </div>
@@ -93,7 +99,7 @@ export function SidebarWidgets({ currentStudentId, setCurrentStudentId }: { curr
   return (
     <div className="space-y-3">
       <div className="flex items-center justify-between">
-        <div className="text-sm text-muted-foreground uppercase tracking-wide">TIỆN ÍCH</div>
+        <div className="text-sm text-muted-foreground uppercase tracking-wide"><p><strong>TIỆN ÍCH</strong></p></div>
         <Button variant="ghost" size="sm" onClick={() => setOrder((s) => [...s].reverse())} className="px-2 py-1">
           <Shuffle />
         </Button>
