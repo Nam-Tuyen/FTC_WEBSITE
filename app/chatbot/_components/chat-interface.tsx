@@ -25,6 +25,14 @@ export function ChatInterface() {
 
       <CardHeader className="relative z-10 border-b border-accent/20">
         <div className="flex items-center space-x-3">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:space-x-4">
+            <div className="flex items-center space-x-2">
+              <label className="text-sm font-medium">Chế độ:</label>
+              <div className="inline-flex rounded-md bg-card/50 p-0.5 border border-accent/10">
+                <button data-mode="club" className="px-3 py-1 text-xs rounded-md transition-colors duration-200 hover:bg-accent/10" />
+              </div>
+            </div>
+          </div>
           <Avatar>
             <AvatarImage src="/ai-chatbot-avatar.png" alt="AI Assistant" />
             <AvatarFallback className="bg-primary text-primary-foreground">
