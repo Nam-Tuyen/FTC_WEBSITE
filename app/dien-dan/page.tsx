@@ -325,7 +325,7 @@ export default function ForumPage() {
           <div className="space-y-6">
             <Card>
               <CardHeader className="px-[30px]">
-                <CardTitle className="text-[19px] leading-[35px] font-heading uppercase whitespace-nowrap text-center">Hồ sơ của bạn</CardTitle>
+                <CardTitle className="text-[18px] leading-[28px] font-heading text-center">Hồ sơ của bạn</CardTitle>
               </CardHeader>
               <CardContent className="space-y-2 px-[30px]">
                 <div className="text-sm text-muted-foreground whitespace-nowrap"><p>Hãy nhập MSSV</p></div>
@@ -342,7 +342,7 @@ export default function ForumPage() {
 
             <Card>
               <CardHeader className="px-[30px]">
-                <CardTitle className="text-[19px] leading-[35px] font-heading uppercase whitespace-nowrap text-center">Hành động nhanh</CardTitle>
+                <CardTitle className="text-[18px] leading-[28px] font-heading text-center">Hành động nhanh</CardTitle>
               </CardHeader>
               <CardContent className="space-y-3 px-[30px]">
                 <Button
