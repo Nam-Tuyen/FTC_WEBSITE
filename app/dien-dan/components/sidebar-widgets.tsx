@@ -93,7 +93,7 @@ export function SidebarWidgets({ currentStudentId, setCurrentStudentId }: { curr
   return (
     <div className="space-y-3">
       <div className="flex items-center justify-between">
-        <div className="text-sm text-muted-foreground">Tiện ích</div>
+        <div className="text-sm text-muted-foreground uppercase tracking-wide">TIỆN ÍCH</div>
         <Button variant="ghost" size="sm" onClick={() => setOrder((s) => [...s].reverse())} className="px-2 py-1">
           <Shuffle />
         </Button>
