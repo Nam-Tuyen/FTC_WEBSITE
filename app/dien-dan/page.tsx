@@ -7,7 +7,7 @@ import { Navigation } from '@/components/navigation'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
-import { MessageSquare, HelpCircle, Search } from 'lucide-react'
+import { MessageSquare, HelpCircle, Search, Shuffle } from 'lucide-react'
 
 // Import custom components
 import { Hero } from './components/sections/hero'
