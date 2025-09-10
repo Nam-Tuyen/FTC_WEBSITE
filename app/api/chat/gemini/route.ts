@@ -6,25 +6,27 @@ import { RECRUITMENT_CONFIG } from '@/app/ung-tuyen/constants'
 export const dynamic = 'force-dynamic';
 export const maxDuration = 300; // 5 minutes timeout
 
-// Validate environment variables
-const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
-if (!GEMINI_API_KEY) {
-  throw new Error('GEMINI_API_KEY is not configured in environment variables');
-}
-
 const MODEL_NAME = "gemini-pro";
 
-// Initialize Gemini with validated API key
-const genAI = new GoogleGenerativeAI(GEMINI_API_KEY);
-const model = genAI.getGenerativeModel({
-  model: MODEL_NAME,
-  generationConfig: {
-    temperature: 0.7,
-    topK: 40,
-    topP: 0.95,
-    maxOutputTokens: 1024,
+// Helper to initialize Gemini model at request time
+function initGemini() {
+  const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
+  if (!GEMINI_API_KEY) return null;
+  try {
+    const genAI = new GoogleGenerativeAI(GEMINI_API_KEY);
+    return genAI.getGenerativeModel({
+      model: MODEL_NAME,
+      generationConfig: {
+        temperature: 0.7,
+        topK: 40,
+        topP: 0.95,
+        maxOutputTokens: 1024,
+      }
+    });
+  } catch (e) {
+    return null;
   }
-});
+}
 
 // Validate and parse request body
 async function parseRequest(req: Request) {
