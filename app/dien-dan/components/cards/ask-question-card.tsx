@@ -23,7 +23,7 @@ export function AskQuestionCard({
   const [title, setTitle] = useState('')
   const [content, setContent] = useState('')
   const [studentId, setStudentId] = useState('')
-  const [category, setCategory] = useState<keyof typeof CATEGORIES>('CLUB')
+  const [category, setCategory] = useState<keyof typeof CATEGORIES>('DISCUSSION')
   const [error, setError] = useState('')
   const [mode, setMode] = useState<'anonymous' | 'mssv'>('anonymous')
 
@@ -131,7 +131,7 @@ export function AskQuestionCard({
               setTitle('')
               setContent('')
               setStudentId('')
-                            setCategory('CLUB' as keyof typeof CATEGORIES)
+              setCategory('DISCUSSION' as keyof typeof CATEGORIES)
               setMode('anonymous')
             }}
           >
