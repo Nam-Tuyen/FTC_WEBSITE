@@ -42,7 +42,7 @@ export function SidebarWidgets({ currentStudentId, setCurrentStudentId }: { curr
       <Card className="widget-card overflow-hidden rounded-xl">
         <CardHeader className="px-3 py-2 bg-transparent">
           <div className="flex items-center justify-between">
-            <CardTitle className="text-sm font-medium">Hồ sơ của bạn</CardTitle>
+            <CardTitle className="text-sm font-medium uppercase tracking-wide">HỒ SƠ CỦA BẠN</CardTitle>
             <button className="text-xs text-muted-foreground" onClick={() => { /* placeholder */ }}>{currentStudentId ? 'Chỉnh sửa' : 'Thêm'}</button>
           </div>
         </CardHeader>
