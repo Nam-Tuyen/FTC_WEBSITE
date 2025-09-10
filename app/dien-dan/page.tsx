@@ -323,50 +323,19 @@ export default function ForumPage() {
           </div>
 
           <div className="space-y-6">
-            <Card>
-              <CardHeader className="px-[30px]">
-                <CardTitle className="text-[18px] leading-[28px] font-heading text-center">Hồ sơ của bạn</CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-2 px-[30px]">
-                <div className="text-sm text-muted-foreground whitespace-nowrap"><p>Hãy nhập MSSV</p></div>
-                <Input className="mt-1"
-                  value={currentStudentId}
-                  onChange={(e) => {
-                    setCurrentStudentId(e.target.value)
-                    localStorage.setItem(STORAGE_KEYS.studentId, e.target.value)
-                  }}
-                  placeholder="K#########"
-                />
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardHeader className="px-[30px]">
-                <CardTitle className="text-[18px] leading-[28px] font-heading text-center">Hành động nhanh</CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-3 px-[30px]">
-                <Button
-                  variant="outline"
-                  className="w-full justify-start bg-transparent"
-                  onClick={() => {
-                    const el = document.getElementById('ask-question-form')
-                    el?.scrollIntoView({ behavior: 'smooth', block: 'center' })
-                  }}
-                >
-                  <MessageSquare size={16} className="mr-2" />
-                  Đặt câu hỏi
-                </Button>
-                <Button
-                  variant="outline"
-                  className="w-full justify-start bg-transparent"
-                  onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-                >
-                  <HelpCircle size={16} className="mr-2" />
-                  Lên đầu trang
-                </Button>
-              </CardContent>
-            </Card>
+            {/* Swap control */}
+            <SidebarWidgets
+              currentStudentId={currentStudentId}
+              setCurrentStudentId={(v:string)=>{ setCurrentStudentId(v); localStorage.setItem(STORAGE_KEYS.studentId, v)}}
+            />
           </div>
+
+          {/* inline component to allow swapping widgets */}
+          <style jsx>{`
+            .widget-card { border-radius: 12px; box-shadow: 0 6px 18px rgba(13, 27, 62, 0.06); }
+          `}</style>
+
+
         </div>
       </div>
     </div>
