@@ -99,14 +99,10 @@ export function AskQuestionCard({
             {mode === 'mssv' && (
               <div className="md:col-span-2">
                 <label className="text-sm text-muted-foreground whitespace-nowrap">Mã số sinh viên</label>
-                <Input
-                  className="mt-1"
-                  value={studentId}
-                  onChange={(e) => setStudentId(e.target.value)}
-                  placeholder="K#########"
-                />
-                {!studentId && currentStudentId && (
-                  <div className="text-xs text-muted-foreground mt-1">Sẽ dùng MSSV đã lưu: {currentStudentId}</div>
+                {currentStudentId ? (
+                  <div className="mt-1 text-sm">{currentStudentId}</div>
+                ) : (
+                  <div className="mt-1 text-xs text-muted-foreground">Chưa có MSSV đã lưu</div>
                 )}
               </div>
             )}
