@@ -73,14 +73,14 @@ export function SidebarWidgets({ currentStudentId, setCurrentStudentId }: { curr
 
         <CardContent className="px-3 py-3">
           <div className="grid grid-cols-2 gap-2">
-            <Button variant="outline" className="flex items-center justify-center text-sm h-9" onClick={() => {
+            <Button variant="outline" className="flex items-center justify-center text-sm h-9 uppercase tracking-wide hover:shadow-sm" onClick={() => {
               const el = document.getElementById('ask-question-form')
               el?.scrollIntoView({ behavior: 'smooth', block: 'center' })
             }}>
-              <MessageSquare className="mr-2" /> Đặt
+              <MessageSquare className="mr-2" /> ĐẶT
             </Button>
-            <Button variant="outline" className="flex items-center justify-center text-sm h-9" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
-              <HelpCircle className="mr-2" /> Lên
+            <Button variant="outline" className="flex items-center justify-center text-sm h-9 uppercase tracking-wide hover:shadow-sm" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
+              <HelpCircle className="mr-2" /> LÊN
             </Button>
           </div>
         </CardContent>
