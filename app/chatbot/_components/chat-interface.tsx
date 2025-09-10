@@ -1,24 +1,14 @@
 "use client"
 
 import { Bot } from "lucide-react"
-import PropTypes from "prop-types"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { ChatInput } from "./chat-input"
 import { ChatMessage } from "./chat-message"
 import { useChat } from "../_hooks/use-chat"
-import { useChatScroll } from "../_hooks/use-chat-scroll"
-
-import { FC } from 'react'
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { Bot } from "lucide-react"
+import { useChatScroll } from "..//_hooks/use-chat-scroll"
 import type { Message } from "@/app/chatbot/_lib/types"
-import { ChatInput } from "./chat-input"
-import { ChatMessage } from "./chat-message"
-import { useChat } from "@/app/chatbot/_hooks/use-chat"
-import { useChatScroll } from "@/app/chatbot/_hooks/use-chat-scroll"
-import '../types/react'
+import "../types/react"
 
 export function ChatInterface() {
   const { messages, isTyping, inputValue, setInputValue, handleSendMessage, handleKeyDown } = useChat()
