@@ -10,7 +10,7 @@ import { useChatScroll } from "../_hooks/use-chat-scroll"
 import type { Message } from "@/app/chatbot/_lib/types"
 
 export function ChatInterface() {
-  const { messages, isTyping, inputValue, setInputValue, handleSendMessage, handleKeyDown } = useChat()
+  const { messages, isTyping, inputValue, setInputValue, handleSendMessage, handleKeyDown, mode, setMode } = useChat()
   const messagesEndRef = useChatScroll(messages)
 
   return (
