@@ -234,6 +234,12 @@ export async function POST(req: Request) {
     const kbSummary = backendContext.slice(0, 4000) // pre-trim summary
     prompt = `You are FTC assistant. Use the official FTC context when answering club-related aspects. For industry questions, you may use external knowledge.\n\n[KB_SUMMARY]\n${kbSummary}\n\n[CLUB_CONTEXT]\n${clubContext}\n\n[USER_QUESTION]\n${message}\n\nPlease answer in Vietnamese, concisely and in friendly tone.`
 
+    // Initialize Gemini model for this request
+    const model = initGemini()
+    if (!model) {
+      return new Response(JSON.stringify({ error: true, message: 'GEMINI_API_KEY is not configured' }), { status: 500, headers: { 'Content-Type': 'application/json' } })
+    }
+
     // Call Gemini with grounded prompt
     let attempts = 0;
     const maxAttempts = 3;
