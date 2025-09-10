@@ -29,6 +29,12 @@ export function QuestionCard({
   const [replyMode, setReplyMode] = useState<'anonymous' | 'mssv'>('anonymous')
   const [replyStudentId, setReplyStudentId] = useState('')
 
+  useEffect(() => {
+    if (replyMode === 'mssv' && !replyStudentId && defaultStudentId) {
+      setReplyStudentId(defaultStudentId)
+    }
+  }, [replyMode, defaultStudentId, replyStudentId])
+
   const authorDisplay = q.studentId ? q.studentId : 'Ẩn danh'
 
   return (
