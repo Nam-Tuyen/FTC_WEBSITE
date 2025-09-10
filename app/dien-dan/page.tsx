@@ -288,7 +288,7 @@ export default function ForumPage() {
             />
 
             <section>
-              <h2 className="font-heading font-bold text-[25px] leading-10 text-foreground mb-[30px] uppercase whitespace-nowrap">Câu hỏi gần đây</h2>
+              <h2 className="font-heading font-semibold text-2xl leading-8 text-foreground mb-6">Câu hỏi gần đây</h2>
               <div className="space-y-4">
                 {paginated.map((q) => (
                   <QuestionCard
@@ -372,4 +372,3 @@ export default function ForumPage() {
     </div>
   )
 }
-
