@@ -29,7 +29,18 @@ export function ChatInterface() {
             <div className="flex items-center space-x-2">
               <label className="text-sm font-medium">Chế độ:</label>
               <div className="inline-flex rounded-md bg-card/50 p-0.5 border border-accent/10">
-                <button data-mode="club" className="px-3 py-1 text-xs rounded-md transition-colors duration-200 hover:bg-accent/10" />
+                <button
+                  onClick={() => setMode('club')}
+                  className={`px-3 py-1 text-xs rounded-md transition-colors duration-200 ${mode === 'club' ? 'bg-accent/20 text-foreground' : 'hover:bg-accent/10 text-muted-foreground'}`}
+                >
+                  Hỏi về câu lạc bộ
+                </button>
+                <button
+                  onClick={() => setMode('domain')}
+                  className={`px-3 py-1 text-xs rounded-md transition-colors duration-200 ${mode === 'domain' ? 'bg-accent/20 text-foreground' : 'hover:bg-accent/10 text-muted-foreground'}`}
+                >
+                  Hỏi về ngành
+                </button>
               </div>
             </div>
           </div>
