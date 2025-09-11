@@ -29,7 +29,7 @@ const suggestedQuestions = [
 
 const suggestionAnswers: Record<string, string> = {
   "Câu lạc bộ có những hoạt động gì?":
-    "FTC tổ chức: 1) Workshop/Tech-talk Fintech, 2) Cuộc thi/Thử thách công nghệ, 3) Dự án nội bộ (data, blockchain, web/app), 4) Hoạt động gắn kết và mentoring. Xem mục Hoạt động để biết lịch chi tiết.",
+    "FTC tổ chức: 1) Workshop/Tech-talk Fintech, 2) Cuộc thi/Thử thách công nghệ, 3) Dự ��n nội bộ (data, blockchain, web/app), 4) Hoạt động gắn kết và mentoring. Xem mục Hoạt động để biết lịch chi tiết.",
   "Làm thế nào để tham gia câu lạc bộ?":
     "Vào trang Ứng tuyển, điền biểu mẫu theo hướng dẫn và hoàn tất phỏng vấn ngắn. Khi có đợt mở đơn, thông báo sẽ đăng trên website/fanpage.",
   "Các ban trong câu lạc bộ làm gì?":
@@ -232,7 +232,7 @@ export default function ChatbotPage() {
                     </AvatarFallback>
                   </Avatar>
                   <div>
-                    <CardTitle className="text-lg">Chọn chủ đề để hỏi:</CardTitle>
+                    <CardTitle className="text-lg">FTC AI Assistant</CardTitle>
                     <div className="flex items-center gap-4 mt-1">
                       <p className="text-sm text-muted-foreground flex items-center gap-2">
                         Luôn sẵn sàng hỗ trợ bạn
