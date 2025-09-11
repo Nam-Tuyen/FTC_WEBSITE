@@ -18,7 +18,7 @@ export default function ChatPage() {
     setLoading(true)
     try {
       const API = process.env.NEXT_PUBLIC_BACKEND_URL ?? ''
-      const endpoints = ['/api/chat', API ? `${API}/chat` : null].filter(Boolean) as string[]
+      const endpoints = ['/api/chat/gemini', API ? `${API}/chat` : null].filter(Boolean) as string[]
       let res: Response | null = null
       let lastErr: any = null
       for (const url of endpoints) {
@@ -63,7 +63,7 @@ export default function ChatPage() {
             <div className="text-lg font-semibold mb-2">FTC AI Assistant</div>
             <pre className="text-sm whitespace-pre-wrap">{preface || `Xin chào! Tôi là FTC AI Assistant.\n\nTôi có thể giúp bạn:\n• Trả lời câu hỏi về câu lạc bộ\n• Giải thích khái niệm Fintech\n• Hướng dẫn tham gia hoạt động\n• Tìm thông tin trên website\n\n📮 Liên hệ: clbcongnghetaichinh@st.uel.edu.vn\n📘 Fanpage: https://www.facebook.com/clbfintechuel`}</pre>
             <div className="mt-3 flex items-center gap-2 text-sm">
-              <label className="font-medium">Chế độ:</label>
+              <label className="font-medium">Ch��� độ:</label>
               <select className="border rounded-md px-2 py-1" value={mode} onChange={(e) => setMode(e.target.value as any)}>
                 <option value="club">Hỏi về câu lạc bộ</option>
                 <option value="major">Hỏi về ngành</option>
