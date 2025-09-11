@@ -170,15 +170,26 @@ async function loadKnowledgeBase() {
 export async function POST(req: Request) {
   try {
     // Parse request
-    const { message, history } = await req.json();
+    let parsedBody: any = null
+    try {
+      parsedBody = await req.json()
+    } catch (e) {
+      console.error('Failed to parse JSON body for /api/chat/gemini', e)
+      return new Response(JSON.stringify({ error: 'Invalid JSON body' }), { status: 400, headers: { 'Content-Type': 'application/json' } })
+    }
+
+    const { message, history } = parsedBody
+    console.log('[api/chat/gemini] incoming request, messageLength=', typeof message === 'string' ? message.length : 'none', 'historyLen=', Array.isArray(history) ? history.length : 0)
+
     if (!message || typeof message !== 'string') {
-      return new Response('Invalid message', { status: 400 })
+      return new Response(JSON.stringify({ error: 'Invalid message' }), { status: 400, headers: { 'Content-Type': 'application/json' } })
     }
 
     // Initialize Gemini
     const model = initGemini();
     if (!model) {
-      return new Response('AI service unavailable', { status: 503 })
+      console.error('[api/chat/gemini] GEMINI API not configured')
+      return new Response(JSON.stringify({ error: 'AI service unavailable', code: 'NO_GEMINI_KEY' }), { status: 503, headers: { 'Content-Type': 'application/json' } })
     }
 
     // Load knowledge base
