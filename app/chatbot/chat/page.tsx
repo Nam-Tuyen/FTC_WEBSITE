@@ -29,7 +29,7 @@ const suggestedQuestions = [
 
 const suggestionAnswers: Record<string, string> = {
   "Câu lạc bộ có những hoạt động gì?":
-    "FTC tổ chức: 1) Workshop/Tech-talk Fintech, 2) Cuộc thi/Thử thách công nghệ, 3) Dự án nội bộ (data, blockchain, web/app), 4) Hoạt động gắn kết và mentoring. Xem mục Hoạt động để biết lịch chi tiết.",
+    "FTC tổ chức: 1) Workshop/Tech-talk Fintech, 2) Cuộc thi/Thử thách công nghệ, 3) Dự ��n nội bộ (data, blockchain, web/app), 4) Hoạt động gắn kết và mentoring. Xem mục Hoạt động để biết lịch chi tiết.",
   "Làm thế nào để tham gia câu lạc bộ?":
     "Vào trang Ứng tuyển, điền biểu mẫu theo hướng dẫn và hoàn tất phỏng vấn ngắn. Khi có đợt mở đơn, thông báo sẽ đăng trên website/fanpage.",
   "Các ban trong câu lạc bộ làm gì?":
@@ -52,7 +52,6 @@ export default function ChatbotPage() {
   const [inputValue, setInputValue] = useState("")
   const [isTyping, setIsTyping] = useState(false)
   const [hasMounted, setHasMounted] = useState(false)
-  const [mode, setMode] = useState<'auto' | 'club' | 'domain'>('auto')
   const messagesEndRef = useRef<HTMLDivElement>(null)
   const isSendingRef = useRef(false)
   const lastSentRef = useRef<{ text: string; time: number }>({ text: "", time: 0 })
@@ -99,7 +98,7 @@ export default function ChatbotPage() {
       const res = await fetch("/api/chat/gemini", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ message: text, history, mode }),
+        body: JSON.stringify({ message: text, history }),
       })
 
       let reply = ""
@@ -233,7 +232,7 @@ export default function ChatbotPage() {
                     </AvatarFallback>
                   </Avatar>
                   <div>
-                    <CardTitle className="text-lg">Chọn chủ đề để hỏi:</CardTitle>
+                    <CardTitle className="text-lg">FTC AI Assistant</CardTitle>
                     <div className="flex items-center gap-4 mt-1">
                       <p className="text-sm text-muted-foreground flex items-center gap-2">
                         Luôn sẵn sàng hỗ trợ bạn
@@ -328,20 +327,6 @@ export default function ChatbotPage() {
                   </Button>
                 </div>
 
-                {/* Mode selector placed under input */}
-                <div className="mt-3 flex items-center gap-6 justify-start">
-                  <Label className="text-sm">Chọn chủ đề để hỏi:</Label>
-                  <RadioGroup value={mode} onValueChange={(v) => setMode(v as any)} className="flex items-center gap-4">
-                    <div className="flex items-center gap-2">
-                      <RadioGroupItem value="club" id="mode-club" />
-                      <label htmlFor="mode-club" className="text-sm">Hỏi về câu lạc bộ</label>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <RadioGroupItem value="domain" id="mode-domain" />
-                      <label htmlFor="mode-domain" className="text-sm">Hỏi về ngành</label>
-                    </div>
-                  </RadioGroup>
-                </div>
               </div>
             </Card>
           </div>

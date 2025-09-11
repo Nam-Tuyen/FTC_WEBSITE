@@ -6,7 +6,7 @@
 import React from 'react'
 import { Navigation } from "@/components/navigation"
 import { Bot } from "lucide-react"
-import { ChatInterface } from "./_components/chat-interface"
+import ChatInterface from "./_components/chat-interface"
 import { SuggestedQuestions } from "./_components/suggested-questions"
 import { FeaturesSidebar } from "./_components/features-sidebar"
 
@@ -16,44 +16,35 @@ export default function ChatbotPage() {
       <Navigation />
 
       {/* Hero Section */}
-      <section className="relative min-h-[60vh] flex items-center justify-center py-16 px-4 sm:px-6 lg:px-8">
-        <div className="absolute inset-0 overflow-hidden">
-          <div className="absolute top-1/4 -right-1/4 w-2/3 h-2/3 bg-gradient-to-br from-primary/20 via-accent/20 to-transparent rounded-full blur-3xl animate-float" />
-          <div className="absolute -bottom-1/4 -left-1/4 w-2/3 h-2/3 bg-gradient-to-tr from-accent/20 via-primary/20 to-transparent rounded-full blur-3xl animate-float-reverse" />
+      <section className="relative min-h-[48vh] flex items-center justify-center py-12">
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          <div className="absolute top-0 right-0 w-[40%] h-[60%] bg-gradient-to-br from-indigo-700/20 to-emerald-600/6 rounded-full blur-3xl transform translate-x-24 -translate-y-8" />
+          <div className="absolute bottom-0 left-0 w-[35%] h-[50%] bg-gradient-to-tr from-emerald-500/10 to-indigo-600/6 rounded-full blur-3xl -translate-x-24 translate-y-8" />
         </div>
 
-        <div className="relative max-w-4xl mx-auto text-center space-y-6">
-          <div className="w-16 h-16 bg-primary rounded-full flex items-center justify-center mx-auto mb-6">
-            <Bot className="h-8 w-8 text-primary-foreground" />
+        <div className="relative responsive-container text-center">
+          <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-tr from-indigo-600 to-emerald-500 rounded-full shadow-lg mb-6">
+            <Bot className="h-9 w-9 text-white" />
           </div>
-          <h1 className="relative text-4xl sm:text-5xl lg:text-6xl font-extrabold">
-            <span className="absolute inset-0 bg-gradient-to-r from-primary to-accent opacity-50 blur-2xl animate-pulse"></span>
-            <span className="relative bg-gradient-to-r from-primary to-accent text-transparent bg-clip-text animate-text-shine">
-              AI CHATBOT
-            </span>
+          <h1 className="relative" style={{letterSpacing: '-1.2px', position: 'relative', font: '800 48px/60px Inter, ui-sans-serif, system-ui, -apple-system'}}>
+            <div className="inline-block" style={{backgroundClip: 'text', backgroundImage: 'linear-gradient(to right, oklch(0.673 0.182 276.935) 0%, oklch(0.845 0.143 164.978) 100%)', fontFamily: 'Montserrat, "Montserrat Fallback", sans-serif', fontWeight: 800}}>
+              <p>TRỢ LÝ HỖ TRỢ </p>
+            </div>
           </h1>
-          <p className="text-xl text-muted-foreground text-pretty">
-            <em>Trợ lý AI giúp bạn tìm hiểu về câu lạc bộ và các kiến thức Fintech</em>
-          </p>
+          <div className="mt-3 text-sm sm:text-base text-muted-foreground max-w-2xl mx-auto">
+            <p>
+              Trợ lý AI thân thiện giúp tân sinh viên tìm hiểu thông tin về
+              câu lạc bộ và kiến thức về ngành công nghệ tài chính
+            </p>
+          </div>
         </div>
       </section>
 
       {/* Main layout */}
-      <div className="max-w-full mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-8 overflow-x-auto">
-        <div className="min-w-[1200px] grid grid-cols-[1fr_minmax(720px,800px)_360px_1fr] grid-rows-[auto_auto] gap-8">
-          {/* Chat Interface */}
-          <div className="col-start-2 col-span-1 row-span-2">
+      <div className="responsive-container pt-6 pb-12">
+        <div className="flex justify-center">
+          <div className="w-full max-w-[1200px]">
             <ChatInterface />
-          </div>
-
-          {/* Sidebar: Suggested Questions */}
-          <div className="col-start-3 col-span-1">
-            <SuggestedQuestions onSelect={() => {}} />
-          </div>
-
-          {/* Sidebar: Features */}
-          <div className="col-start-3 col-span-1 row-start-2">
-            <FeaturesSidebar />
           </div>
         </div>
       </div>

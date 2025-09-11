@@ -170,15 +170,26 @@ async function loadKnowledgeBase() {
 export async function POST(req: Request) {
   try {
     // Parse request
-    const { message, history } = await req.json();
+    let parsedBody: any = null
+    try {
+      parsedBody = await req.json()
+    } catch (e) {
+      console.error('Failed to parse JSON body for /api/chat/gemini', e)
+      return new Response(JSON.stringify({ error: 'Invalid JSON body' }), { status: 400, headers: { 'Content-Type': 'application/json' } })
+    }
+
+    const { message, history } = parsedBody
+    console.log('[api/chat/gemini] incoming request, messageLength=', typeof message === 'string' ? message.length : 'none', 'historyLen=', Array.isArray(history) ? history.length : 0)
+
     if (!message || typeof message !== 'string') {
-      return new Response('Invalid message', { status: 400 })
+      return new Response(JSON.stringify({ error: 'Invalid message' }), { status: 400, headers: { 'Content-Type': 'application/json' } })
     }
 
     // Initialize Gemini
     const model = initGemini();
     if (!model) {
-      return new Response('AI service unavailable', { status: 503 })
+      console.error('[api/chat/gemini] GEMINI API not configured')
+      return new Response(JSON.stringify({ error: 'AI service unavailable', code: 'NO_GEMINI_KEY' }), { status: 503, headers: { 'Content-Type': 'application/json' } })
     }
 
     // Load knowledge base
@@ -216,11 +227,31 @@ Trả lời:`;
 
     const answer = result.response?.text?.trim() || 'Xin lỗi, không thể tạo câu trả lời. Vui lòng thử lại.';
 
-    return new Response(JSON.stringify({ 
+    // Generate suggested follow-up questions (5) using Gemini, prefer knowledge base
+    let suggestions: string[] = [];
+    try {
+      const suggestionPrompt = `Bạn là cố vấn thân thiện cho tân sinh viên. Dựa trên thông tin từ knowledge base (nếu có) và câu trả lời vừa soạn ở trên, hãy tạo 5 câu hỏi gợi ý mà tân sinh viên có thể tiếp tục hỏi. Trả về một mảng JSON thuần gồm các chuỗi.`;
+      const sugResp = await model.generateContent({
+        contents: [{ role: 'user', parts: [{ text: suggestionPrompt }] }],
+        generationConfig: { temperature: 0.7, maxOutputTokens: 256 }
+      });
+      const rawSug = sugResp.response?.text?.trim?.() || '';
+      try {
+        const parsed = JSON.parse(rawSug);
+        if (Array.isArray(parsed)) suggestions = parsed.filter((x) => typeof x === 'string');
+      } catch (e) {
+        // ignore parse errors
+      }
+    } catch (e) {
+      // ignore suggestion generation errors
+    }
+
+    return new Response(JSON.stringify({
       response: answer,
-      source: 'knowledge_base' 
-    }), { 
-      headers: { 'Content-Type': 'application/json' } 
+      source: 'knowledge_base',
+      suggestions
+    }), {
+      headers: { 'Content-Type': 'application/json' }
     })
 
   } catch (error: any) {
