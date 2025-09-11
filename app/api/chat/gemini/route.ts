@@ -2,6 +2,7 @@ import { GoogleGenerativeAI } from "@google/generative-ai";
 
 export const dynamic = 'force-dynamic';
 export const maxDuration = 300; // 5 minutes timeout
+export const runtime = 'nodejs';
 
 const MODEL_NAME = "gemini-pro";
 
@@ -31,19 +32,15 @@ async function parseRequest(req: Request) {
     const clonedReq = req.clone ? req.clone() : req;
     const body = await clonedReq.json();
 
-    if (!body.message || typeof body.message !== 'string') {
+    const message = typeof body.message === 'string' ? body.message.trim() : '';
+    const history = Array.isArray(body.history) ? body.history : [];
+    const mode = body.mode === 'club' ? 'club' : (body.mode === 'domain' ? 'domain' : 'auto');
+
+    if (!message) {
+      throw new Error('Invalid message');
     }
 
-          // Mode removed, always use knowledge base
-          return { message: body.message.trim(), history };
-    const history = body.history || [];
-    if (!Array.isArray(history)) {
-      throw new Error('Invalid history format');
-    }
-
-    const mode = body.mode === 'club' ? 'club' : (body.mode === 'domain' ? 'domain' : 'auto')
-
-    return { message: body.message.trim(), history, mode };
+    return { message, history, mode };
   } catch (error) {
     throw new Error('Invalid request body');
   }
@@ -51,6 +48,7 @@ async function parseRequest(req: Request) {
 
 import fs from 'fs'
 import path from 'path'
+import { RECRUITMENT_CONFIG } from '../../../ung-tuyen/constants'
 
 async function fetchBackendContext() {
   // Fetch useful backend data: recent forum questions and recruitment info
