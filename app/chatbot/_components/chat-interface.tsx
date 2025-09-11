@@ -147,22 +147,6 @@ export default function ChatInterface() {
           </div>
         </div>
 
-        {/* Right column - info panel */}
-        <div className={`hidden lg:flex flex-col gap-4 ${showInfo ? '' : 'opacity-90'}`}>
-          <div className="rounded-2xl bg-gradient-to-b from-slate-900/60 to-slate-800/40 p-4 border border-slate-800 text-slate-200 shadow">
-            <div className="text-sm font-semibold mb-2">Thông tin nhanh</div>
-            <div className="text-xs text-slate-300">Fanpage: https://www.facebook.com/clbfintechuel</div>
-            <div className="text-xs text-slate-300 mt-2">Email: clbcongnghetaichinh@st.uel.edu.vn</div>
-          </div>
-
-          <div className="rounded-2xl bg-gradient-to-b from-slate-900/60 to-slate-800/40 p-4 border border-slate-800 text-slate-200 shadow">
-            <div className="text-sm font-semibold mb-2">Gợi ý tiếp theo</div>
-            <div className="flex flex-col gap-2 text-xs text-slate-300">
-              <button onClick={()=>handleSuggestion('Làm thế nào để ứng tuyển?')} className="text-left px-3 py-2 rounded hover:bg-slate-800/50">Làm thế nào để ứng tuyển?</button>
-              <button onClick={()=>handleSuggestion('Thời gian sinh hoạt khi nào?')} className="text-left px-3 py-2 rounded hover:bg-slate-800/50">Thời gian sinh hoạt khi nào?</button>
-            </div>
-          </div>
-        </div>
 
       </div>
     </div>
