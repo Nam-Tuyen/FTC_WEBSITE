@@ -87,8 +87,9 @@ export default function ChatInterface() {
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-4 w-28">
           <Avatar className="w-12 h-12 ring-1 ring-indigo-500/30 shadow-md overflow-hidden">
-                <AvatarImage src="/placeholder-logo.svg" alt="FTC" className="object-cover" />
-                <AvatarFallback className="bg-primary text-primary-foreground">FTC</AvatarFallback>
+                <AvatarFallback className="bg-gradient-to-tr from-indigo-600 to-emerald-500 text-white flex items-center justify-center">
+                  <Bot className="h-6 w-6" />
+                </AvatarFallback>
               </Avatar>
         </div>
 
