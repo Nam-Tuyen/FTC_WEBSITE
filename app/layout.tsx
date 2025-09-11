@@ -72,6 +72,16 @@ export default function RootLayout({
                       var msg = String((e && e.reason && (e.reason.message || e.reason)) || '');
                       if (msg.includes('Clipboard API has been blocked') || msg.includes('permissions policy') || msg.includes('NotAllowedError')) {
                         e.preventDefault();
+                        return
+                      }
+
+                      // Suppress noisy dev/preview network errors from HMR or third-party analytics (FullStory)
+                      if (msg.includes('Failed to fetch') || msg.includes('NetworkError') || msg.includes('ECONNREFUSED')) {
+                        // only suppress in development/preview to avoid masking production issues
+                        if (location && location.hostname && (location.hostname.endsWith('.fly.dev') || location.hostname === 'localhost' || location.hostname.includes('vercel'))) {
+                          console.warn('Suppressed dev network error:', msg)
+                          e.preventDefault()
+                        }
                       }
                     });
                   } catch(_) {}
