@@ -28,7 +28,7 @@ export default function ChatbotPage() {
           </div>
           <h1 className="relative" style={{letterSpacing: '-1.2px', position: 'relative', font: '800 48px/60px Inter, ui-sans-serif, system-ui, -apple-system'}}>
             <div className="inline-block" style={{backgroundClip: 'text', backgroundImage: 'linear-gradient(to right, oklch(0.673 0.182 276.935) 0%, oklch(0.845 0.143 164.978) 100%)', fontFamily: 'Montserrat, "Montserrat Fallback", sans-serif', fontWeight: 800}}>
-              FTC AI Chatbot
+              <p>TRỢ LÝ HỖ TRỢ </p>
             </div>
           </h1>
           <div className="mt-3 text-sm sm:text-base text-muted-foreground max-w-2xl mx-auto">
