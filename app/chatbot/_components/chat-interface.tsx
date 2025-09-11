@@ -58,7 +58,7 @@ export default function ChatInterface() {
 
         {/* Left column - quick nav */}
         <div className="hidden lg:flex flex-col gap-4">
-            <div className="rounded-2xl bg-gradient-to-b from-slate-900/60 to-slate-800/40 p-4 border border-slate-800 text-slate-200 shadow flex-1">
+            <div className="rounded-2xl bg-gradient-to-b from-slate-900 to-slate-800 p-4 border border-slate-800 text-slate-200 shadow flex-1">
             <div className="text-sm font-semibold mb-3" style={{textAlign: 'center'}}><p className="uppercase">CÂU HỎI GỢI Ý</p></div>
             <div className="grid gap-3">
               {SUGGESTED.map((q, i) => (
