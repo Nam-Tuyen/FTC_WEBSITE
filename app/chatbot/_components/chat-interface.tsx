@@ -110,11 +110,11 @@ export default function ChatInterface() {
         </div>
 
         {/* Input area */}
-        <div className="px-4 py-3 bg-white/80 border-t border-accent/10 flex items-center gap-3">
-          <button className="p-2 rounded-full hover:bg-muted/20"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" className="text-muted"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg></button>
-          <input id="chat-input" value={value} onChange={(e)=>setValue(e.target.value)} onKeyDown={handleKeyDown} placeholder="Nhập tin nhắn..." className="flex-1 rounded-full px-4 py-2 border border-accent/10 focus:outline-none focus:ring-2 focus:ring-accent/20" />
+        <div className="px-4 py-4 bg-background/80 border-t border-accent/10 flex items-center gap-3">
+          <button className="p-2 rounded-full hover:bg-muted/20" aria-label="attach"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" className="text-muted"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg></button>
+          <input id="chat-input" value={value} onChange={(e)=>setValue(e.target.value)} onKeyDown={handleKeyDown} placeholder="Nhập tin nhắn..." className="flex-1 rounded-full px-4 py-3 border border-accent/10 bg-background/60 text-foreground focus:outline-none focus:ring-2 focus:ring-accent/20" />
           <button onClick={(e)=>onSubmit(e)} disabled={isSending || loading} className="px-4 py-2 rounded-full bg-gradient-to-r from-primary to-accent text-primary-foreground shadow-md disabled:opacity-50 flex items-center gap-2">
-            <Send className="h-4 w-4" /> Gửi
+            <Send className="h-4 w-4" /> <span className="text-sm">Gửi</span>
           </button>
         </div>
       </div>
