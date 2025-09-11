@@ -56,8 +56,31 @@ export function FloatingChatbot() {
         throw new Error("API request failed")
       }
 
-      const data = await response.json()
-      return data.text || "Xin lỗi, tôi không thể trả lời câu hỏi này lúc này. Vui lòng thử lại sau."
+      let data: any = null
+      try {
+        data = await response.json()
+      } catch (err) {
+        // fallback to plain text
+        try {
+          const txt = await response.text()
+          data = { text: txt }
+        } catch (e) {
+          data = null
+        }
+      }
+
+      const candidate = data?.response ?? data?.reply ?? data?.text ?? data?.answer ?? data?.message ?? null
+      const text = typeof candidate === 'string' ? candidate.trim() : null
+
+      if (!text) {
+        // server returned empty response — provide helpful fallback
+        console.error('Empty or unexpected response from /api/chat/gemini:', data)
+        return 'Xin lỗi, hiện chưa có thông tin phù hợp. Vui lòng thử lại sau hoặc liên hệ: clbcongnghetaichinh@st.uel.edu.vn'
+      }
+
+      // Normalize whitespace and limit runaway repetitions
+      const normalized = text.replace(/\s+/g, ' ').replace(/(\b\w+\b)(?:\s+\1){2,}/gi, (m, w) => `${w} ${w}`)
+      return normalized
     } catch (error) {
       console.error("Error calling Gemini API:", error)
       return "Xin lỗi, có lỗi xảy ra. Vui lòng thử lại sau hoặc liên hệ clbcongnghetaichinh@st.uel.edu.vn"
