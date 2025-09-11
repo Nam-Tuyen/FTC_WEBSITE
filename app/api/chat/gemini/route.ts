@@ -11,10 +11,10 @@ const MODEL_NAME = "gemini-pro";
 
 // Helper to initialize Gemini model at request time
 function initGemini() {
-  const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
-  if (!GEMINI_API_KEY) return null;
+  const key = process.env.GEMINI_API_KEY || process.env.GOOGLE_API_KEY || process.env.NEXT_PUBLIC_GEMINI_API_KEY || process.env.NEXT_PUBLIC_GOOGLE_API_KEY
+  if (!key) return null;
   try {
-    const genAI = new GoogleGenerativeAI(GEMINI_API_KEY);
+    const genAI = new GoogleGenerativeAI(key);
     return genAI.getGenerativeModel({
       model: MODEL_NAME,
       generationConfig: {
@@ -25,6 +25,7 @@ function initGemini() {
       }
     });
   } catch (e) {
+    console.error('initGemini error:', e)
     return null;
   }
 }
@@ -48,10 +49,6 @@ async function parseRequest(req: Request) {
     throw new Error('Invalid request body');
   }
 }
-
-import fs from 'fs'
-import path from 'path'
-import { RECRUITMENT_CONFIG } from '../../../ung-tuyen/constants'
 
 async function fetchBackendContext() {
   // Fetch useful backend data: recent forum questions and recruitment info
