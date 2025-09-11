@@ -53,8 +53,8 @@ export default function ChatInterface() {
   }
 
   return (
-    <div className="min-h-[80vh] h-full flex items-center justify-center px-6 py-10">
-      <div className="w-full max-w-[1240px] h-[86vh] grid grid-cols-[240px_1fr_320px] gap-6">
+    <div className="min-h-screen flex items-center justify-center px-6 py-12">
+      <div className="w-full max-w-[1280px] h-[88vh] grid grid-cols-[220px_minmax(760px,1fr)_300px] gap-6 items-stretch">
 
         {/* Left column - quick nav */}
         <div className="hidden lg:flex flex-col gap-4">
@@ -100,7 +100,7 @@ export default function ChatInterface() {
 
           {/* Message area */}
           <div className="flex-1 overflow-hidden">
-            <div ref={containerRef} className="p-8 h-full overflow-y-auto flex flex-col gap-6">
+            <div ref={containerRef} className="p-8 h-full overflow-y-auto flex flex-col gap-5">
               {messages.map((m) => (
                 <div key={m.id} className={`flex items-end ${m.role === 'user' ? 'justify-end' : 'justify-start'}`}>
                   {m.role === 'assistant' && (
@@ -111,8 +111,8 @@ export default function ChatInterface() {
                     </div>
                   )}
 
-                  <div className={`max-w-[78%]`}> 
-                    <div className={`relative inline-block px-6 py-4 text-base leading-7 ${m.role === 'user' ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-3xl rounded-br-none shadow-xl' : 'bg-slate-700/90 text-white rounded-3xl rounded-bl-none shadow-sm'}`}>
+                  <div className={`max-w-[70%]`}> 
+                    <div className={`relative inline-block px-5 py-3 text-sm leading-6 ${m.role === 'user' ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-3xl rounded-br-none shadow-xl' : 'bg-slate-700/90 text-white rounded-3xl rounded-bl-none shadow-sm'}`}>
                       {m.role === 'user' ? (
                         <svg className="absolute -right-3 bottom-0" width="18" height="18" viewBox="0 0 10 10" xmlns="http://www.w3.org/2000/svg"><path d="M0 10 L10 0 L6 10 Z" fill="#3B82F6" /></svg>
                       ) : (
@@ -137,9 +137,9 @@ export default function ChatInterface() {
           </div>
 
           {/* Input */}
-          <div className="px-8 py-6 bg-[linear-gradient(180deg,rgba(255,255,255,0.02),transparent)] border-t border-slate-800">
+          <div className="px-8 py-4 bg-[linear-gradient(180deg,rgba(255,255,255,0.02),transparent)] border-t border-slate-800">
             <form className="flex items-center gap-4" onSubmit={onSubmit}>
-              <input id="chat-input" value={value} onChange={(e)=>setValue(e.target.value)} onKeyDown={handleKeyDown} placeholder="Nhập câu hỏi hoặc gõ @ để bắt đầu..." autoComplete="off" className="flex-1 rounded-full px-6 py-3 bg-slate-800/70 text-white placeholder-slate-400 border border-slate-700 focus:outline-none focus:ring-2 focus:ring-indigo-600/30" />
+              <input id="chat-input" value={value} onChange={(e)=>setValue(e.target.value)} onKeyDown={handleKeyDown} placeholder="Nhập câu hỏi hoặc gõ @ để bắt đầu..." autoComplete="off" className="flex-1 rounded-full px-5 py-2 bg-slate-800/70 text-white placeholder-slate-400 border border-slate-700 focus:outline-none focus:ring-2 focus:ring-indigo-600/30 text-sm" />
               <button type="submit" disabled={isSending || loading} className="flex items-center gap-3 px-6 py-3 rounded-full bg-gradient-to-r from-indigo-600 to-emerald-500 text-white shadow-xl disabled:opacity-50">
                 <Send className="h-5 w-5" /> <span className="text-sm font-semibold">Gửi</span>
               </button>
