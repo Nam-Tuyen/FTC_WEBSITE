@@ -22,7 +22,7 @@ export const viewport = {
 
 export const metadata: Metadata = {
   title: "Câu lạc bộ Công nghệ Tài chính",
-  description: "Website chính thức của Câu lạc bộ Công nghệ Tài chính - Nơi kết nối những người đam mê fintech",
+  description: "Website chính thức của Câu lạc bộ Công nghệ Tài chính - Nơi kết nối những ngư��i đam mê fintech",
   generator: "v0.app"
 }
 
@@ -84,6 +84,20 @@ export default function RootLayout({
                         }
                       }
                     });
+
+                    // Also catch global error events with network failure messages
+                    window.addEventListener('error', function(ev){
+                      try {
+                        var m = String((ev && ev.message) || '')
+                        if (m && (m.includes('Failed to fetch') || m.includes('NetworkError') || m.includes('ECONNREFUSED'))) {
+                          if (location && location.hostname && (location.hostname.endsWith('.fly.dev') || location.hostname === 'localhost' || location.hostname.includes('vercel'))) {
+                            console.warn('Suppressed dev runtime error:', m)
+                            ev.preventDefault && ev.preventDefault()
+                          }
+                        }
+                      } catch(_) {}
+                    });
+
                   } catch(_) {}
                 })();
               `}
