@@ -80,23 +80,32 @@ export default function ChatInterface() {
         {/* Center chat card */}
         <div className="rounded-3xl bg-gradient-to-b from-slate-900 to-slate-800 border border-slate-800 shadow-2xl overflow-hidden relative flex flex-col">
 
-          {/* Header */}
-          <div className="flex items-center justify-between gap-4 px-6 py-4 bg-[linear-gradient(90deg,rgba(255,255,255,0.02),transparent)] border-b border-slate-800">
-            <div className="flex items-center gap-4">
-              <Avatar className="w-12 h-12">
-                <AvatarFallback className="bg-primary text-primary-foreground"><Bot className="h-5 w-5" /></AvatarFallback>
-              </Avatar>
-              <div>
-                <div className="text-lg font-semibold">FTC Chatbot</div>
-                <div className="text-xs text-slate-300">Cố vấn tân sinh viên • {loading || isSending ? 'Đang soạn...' : 'Online'}</div>
-              </div>
-            </div>
+          {/* Header - centered uppercase title with effect */}
+    <div className="px-6 py-4 bg-[linear-gradient(90deg,rgba(255,255,255,0.02),transparent)] border-b border-slate-800">
+      <div className="flex items-center justify-between">
+        <div className="flex items-center gap-4 w-28">
+          <Avatar className="w-12 h-12">
+            <AvatarFallback className="bg-primary text-primary-foreground"><Bot className="h-5 w-5" /></AvatarFallback>
+          </Avatar>
+        </div>
 
-            <div className="flex items-center gap-3">
-              <button className="p-2 rounded-md hover:bg-slate-800/50"><Search className="h-4 w-4 text-slate-300" /></button>
-              <button onClick={() => setShowInfo((s) => !s)} className="p-2 rounded-md hover:bg-slate-800/50"><Settings className="h-4 w-4 text-slate-300" /></button>
-            </div>
-          </div>
+        <div className="flex-1 text-center">
+          <h2 className="text-base sm:text-lg md:text-2xl lg:text-3xl font-extrabold uppercase tracking-widest leading-tight bg-clip-text text-transparent bg-gradient-to-r from-indigo-400 via-emerald-300 to-indigo-200 animate-pulse">
+            FTC AI CHATBOT
+          </h2>
+          <div className="mt-1 text-xs text-slate-300">Cố vấn tân sinh viên • {loading || isSending ? 'Đang soạn...' : 'Online'}</div>
+        </div>
+
+        <div className="flex items-center gap-3 w-28 justify-end">
+          <button className="p-2 rounded-md hover:bg-slate-800/50"><Search className="h-4 w-4 text-slate-300" /></button>
+          <button onClick={() => setShowInfo((s) => !s)} className="p-2 rounded-md hover:bg-slate-800/50"><Settings className="h-4 w-4 text-slate-300" /></button>
+        </div>
+      </div>
+
+      <div className="mt-3 flex justify-center">
+        <div className="h-1 w-36 rounded-full bg-gradient-to-r from-indigo-500 to-emerald-400 animate-pulse" />
+      </div>
+    </div>
 
           {/* Message area */}
           <div className="flex-1 overflow-hidden">
