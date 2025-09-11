@@ -96,7 +96,7 @@ export default function ChatInterface() {
           <h2 className="text-base sm:text-lg md:text-2xl lg:text-3xl font-extrabold uppercase tracking-widest leading-tight bg-clip-text text-transparent bg-gradient-to-r from-indigo-400 via-emerald-300 to-indigo-200 animate-pulse" style={{fontWeight:800, letterSpacing: '3px'}}>
             <p>CHATBOT NHÀ ÉP</p>
           </h2>
-          <div className="mt-1 text-xs text-slate-300">Cố vấn tân sinh viên • {loading || isSending ? 'Đang soạn...' : 'Online'}</div>
+          <div className="mt-1 text-xs text-slate-300">Online</div>
         </div>
 
         <div className="flex items-center gap-3 w-28 justify-end">
