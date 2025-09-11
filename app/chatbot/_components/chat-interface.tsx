@@ -62,9 +62,19 @@ export default function ChatInterface() {
             <div className="rounded-2xl bg-gradient-to-b from-slate-900 to-slate-800 p-4 border border-slate-800 text-slate-200 shadow flex-1">
             <div className="text-sm font-semibold mb-3" style={{textAlign: 'center'}}><p className="uppercase">CÂU HỎI GỢI Ý</p></div>
             <div className="grid gap-3">
-              {SUGGESTED.map((q, i) => (
-                <button key={i} onClick={() => handleSuggestion(q)} className="text-left text-sm px-3 py-2 rounded-md bg-slate-800/50 hover:bg-slate-800/40 text-slate-100 shadow-sm text-left">{q}</button>
-              ))}
+              {SUGGESTED.map((q, i) => {
+                const selected = selectedSuggestion === i
+                return (
+                  <button
+                    key={i}
+                    onClick={() => { setSelectedSuggestion(i); handleSuggestion(q) }}
+                    aria-pressed={selected}
+                    className={`text-left text-sm px-3 py-2 rounded-md transition-all duration-150 ${selected ? 'bg-gradient-to-r from-indigo-600 to-emerald-500 text-white shadow-md' : 'bg-slate-800/50 hover:bg-slate-800/40 text-slate-100 shadow-sm'}`}
+                  >
+                    {q}
+                  </button>
+                )
+              })}
             </div>
           </div>
         </div>
