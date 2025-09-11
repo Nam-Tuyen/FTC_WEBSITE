@@ -41,19 +41,31 @@ export function FloatingChatbot() {
         content: msg.content,
       }))
 
-      const response = await fetch("/api/chat/gemini", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          prompt: userMessage,
-          history: history,
-        }),
-      })
+      const API = process.env.NEXT_PUBLIC_BACKEND_URL ?? ""
+      const endpoints = ["/api/chat/gemini", API ? `${API}/chat` : null].filter(Boolean) as string[]
+      let response: Response | null = null
+      let lastError: any = null
+      for (const url of endpoints) {
+        try {
+          response = await fetch(url, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ message: userMessage, history }),
+          })
+          if (!response.ok) {
+            const txt = await response.text().catch(() => null)
+            throw new Error(`Server ${response.status}: ${txt ?? response.statusText}`)
+          }
+          break
+        } catch (err) {
+          lastError = err
+          console.warn("Fetch to", url, "failed:", err)
+          response = null
+        }
+      }
 
-      if (!response.ok) {
-        throw new Error("API request failed")
+      if (!response) {
+        throw lastError || new Error("Failed to fetch")
       }
 
       let data: any = null
@@ -74,7 +86,7 @@ export function FloatingChatbot() {
 
       if (!text) {
         // server returned empty response — provide helpful fallback
-        console.error('Empty or unexpected response from /api/chat/gemini:', data)
+        console.error('Empty or unexpected response from chat endpoint:', data)
         return 'Xin lỗi, hiện chưa có thông tin phù hợp. Vui lòng thử lại sau hoặc liên hệ: clbcongnghetaichinh@st.uel.edu.vn'
       }
 

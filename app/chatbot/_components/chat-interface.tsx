@@ -101,8 +101,8 @@ export default function ChatInterface() {
         </div>
 
         <div className="flex items-center gap-3 w-28 justify-end">
-          <button className="p-2 rounded-md hover:bg-slate-800/50"><Search className="h-4 w-4 text-slate-300" /></button>
-          <button onClick={() => setShowInfo((s) => !s)} className="p-2 rounded-md hover:bg-slate-800/50"><Settings className="h-4 w-4 text-slate-300" /></button>
+          <button className="p-2 rounded-md hover:bg-slate-800/50" />
+          <button onClick={() => setShowInfo((s) => !s)} className="p-2 rounded-md hover:bg-slate-800/50" />
         </div>
       </div>
 

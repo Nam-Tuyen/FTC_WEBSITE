@@ -65,16 +65,38 @@ export function useChat() {
     setIsTyping(true)
 
     try {
-      const res = await fetch(`/api/chat/gemini`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ message: text, history }),
-      })
+      const API = process.env.NEXT_PUBLIC_BACKEND_URL ?? ""
+      const endpoints = ['/api/chat/gemini', API ? `${API}/chat` : null].filter(Boolean) as string[]
+      let res: Response | null = null
+      let lastErr: any = null
+      for (const url of endpoints) {
+        try {
+          res = await fetch(url, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ message: text, history }),
+          })
+          if (!res.ok) {
+            const txt = await res.text().catch(() => null)
+            console.warn('Server returned non-ok', url, res.status, txt)
+            throw new Error(`Server ${res.status}: ${txt ?? res.statusText}`)
+          }
+          break
+        } catch (err) {
+          lastErr = err
+          res = null
+        }
+      }
+
+      if (!res) throw lastErr || new Error('Failed to fetch')
 
       let reply = ""
-      if (res.ok) {
+      try {
         const data = await res.json()
         reply = data?.response ?? data?.reply ?? ""
+      } catch (err) {
+        console.warn('Failed parsing response JSON', err)
+        reply = ""
       }
 
       const botMessage: Message = {
@@ -87,6 +109,7 @@ export function useChat() {
 
       setMessages((prev) => [...prev, botMessage])
     } catch (e) {
+      console.error('Chat fetch error:', e)
       const botMessage: Message = {
         id: (Date.now() + 1).toString(),
         content: "Xin lỗi, hiện không thể kết nối tới AI. Vui lòng thử lại sau.",
