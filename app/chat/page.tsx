@@ -17,16 +17,37 @@ export default function ChatPage() {
   async function ask(q: string) {
     setLoading(true)
     try {
-      const res = await fetch('/api/chat', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ mode, message: q, history: messages }),
-      })
+      const API = process.env.NEXT_PUBLIC_BACKEND_URL ?? ''
+      const endpoints = ['/api/chat', API ? `${API}/chat` : null].filter(Boolean) as string[]
+      let res: Response | null = null
+      let lastErr: any = null
+      for (const url of endpoints) {
+        try {
+          res = await fetch(url, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ mode, message: q, history: messages }),
+          })
+          if (!res.ok) {
+            const txt = await res.text().catch(() => null)
+            console.warn('Server returned non-ok', url, res.status, txt)
+            throw new Error(`Server ${res.status}: ${txt ?? res.statusText}`)
+          }
+          break
+        } catch (err) {
+          lastErr = err
+          res = null
+        }
+      }
+
+      if (!res) throw lastErr || new Error('Failed to fetch')
+
       const data = await res.json()
       if (data.preface && !preface) setPreface(data.preface)
       if (data.reply) setMessages((m) => [...m, { role: 'user', content: q }, { role: 'assistant', content: data.reply }])
       else setMessages((m) => [...m, { role: 'user', content: q }, { role: 'assistant', content: 'Xin lỗi, hệ thống đang bận. Vui lòng thử lại.' }])
-    } catch {
+    } catch (err) {
+      console.error('Chat ask error:', err)
       setMessages((m) => [...m, { role: 'user', content: q }, { role: 'assistant', content: 'Đã xảy ra lỗi. Vui lòng thử lại.' }])
     } finally {
       setLoading(false)
