@@ -14,13 +14,14 @@ function withTimeout<T>(p: Promise<T>, ms = 20000): Promise<T> {
 export function useChat() {
   const [messages, setMessages] = useState<Msg[]>([])
   const [loading, setLoading] = useState(false)
+  const API = process.env.NEXT_PUBLIC_BACKEND_URL ?? "http://localhost:8000/api"
 
   async function send(content: string) {
     const user: Msg = { id: crypto.randomUUID(), role: "user", content }
-    setMessages((m: Msg[]) => [...m, user])
+    setMessages(m => [...m, user])
     setLoading(true)
     try {
-      const res = await withTimeout(fetch(`/api/chat/gemini`, {
+      const res = await withTimeout(fetch(`${API}/chat`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ message: content }),
@@ -28,19 +29,14 @@ export function useChat() {
 
       let text = "Xin lỗi, hiện chưa thể trả lời."
       try {
-        if (!res.ok) {
-          const txt = await res.text()
-          console.error('Server returned error for /api/chat/gemini', res.status, txt)
-          throw new Error(`Server ${res.status}: ${txt || res.statusText}`)
-        }
         const data = await res.json()
-        text = data?.response ?? data?.reply ?? data?.answer ?? text
+        text = data?.answer ?? text
       } catch (e) {
-        text = `Không đọc được phản hồi từ server. (${e?.message ?? 'unknown'})`
+        text = `Không đọc được phản hồi từ server. (status ${res.status})`
       }
 
       const bot: Msg = { id: crypto.randomUUID(), role: "assistant", content: text }
-      setMessages((m: Msg[]) => [...m, bot])
+      setMessages(m => [...m, bot])
     } catch (e: any) {
       const msg =
         e?.message === "timeout"
