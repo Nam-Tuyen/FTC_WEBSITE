@@ -3,9 +3,29 @@ Flask web application cho FTC Chatbot
 """
 import logging
 import colorlog
-from flask import Flask, request, jsonify, render_template_string
+from flask import Fla@app.route('/api/health', methods=['GET'])
+def health():
+    """Health check endpoint."""
+    return jsonify({
+        'status': 'healthy',
+        'gemini_available': gemini_service is not None and gemini_service.is_available()
+    })
+
+if __name__ == '__main__':
+    port = int(Config.FLASK_PORT)
+    debug = Config.FLASK_DEBUG
+    
+    logger.info(f"🚀 Khởi động FTC Chatbot API Server trên port {port}")
+    logger.info(f"📝 Debug mode: {'✅ Bật' if debug else '❌ Tắt'}")
+    logger.info(f"🤖 Gemini API: {'✅ Sẵn sàng' if gemini_service and gemini_service.is_available() else '❌ Không khả dụng'}")
+    
+    app.run(
+        host='0.0.0.0',
+        port=port,
+        debug=debug
+    ) jsonify
 from flask_cors import CORS
-from chatbot import FTCChatBot
+from services.gemini_service import GeminiService
 from config import Config
 
 # Cấu hình logging
@@ -25,79 +45,56 @@ logger = logging.getLogger(__name__)
 
 # Khởi tạo Flask app
 app = Flask(__name__)
-CORS(app)
 
-# Khởi tạo chatbot
+# Cấu hình CORS để cho phép frontend gọi API
+CORS(app, resources={
+    r"/api/*": {
+        "origins": "*",  # Trong production nên giới hạn origins cụ thể
+        "methods": ["GET", "POST", "OPTIONS"],
+        "allow_headers": ["Content-Type", "Authorization"]
+    }
+})
+
+# Khởi tạo services
 try:
     Config.validate()
-    chatbot = FTCChatBot()
-    logger.info("Chatbot đã được khởi tạo thành công")
+    gemini_service = GeminiService()
+    logger.info("✅ Gemini service đã được khởi tạo thành công")
 except Exception as e:
-    logger.error(f"Lỗi khởi tạo chatbot: {e}")
-    chatbot = None
+    logger.error(f"❌ Lỗi khởi tạo Gemini service: {e}")
+    gemini_service = None
 
-# HTML template cho giao diện web
-HTML_TEMPLATE = """
-<!DOCTYPE html>
-<html lang="vi">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FTC Chatbot</title>
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { 
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .container {
-            background: white;
-            border-radius: 20px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
-            width: 90%;
-            max-width: 800px;
-            height: 600px;
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
-        }
-        .header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 20px;
-            text-align: center;
-        }
-        .chat-area {
-            flex: 1;
-            padding: 20px;
-            overflow-y: auto;
-            background: #f8f9fa;
-        }
-        .message {
-            margin: 10px 0;
-            padding: 12px 16px;
-            border-radius: 18px;
-            max-width: 80%;
-            word-wrap: break-word;
-        }
-        .user-message {
-            background: #007bff;
-            color: white;
-            margin-left: auto;
-            text-align: right;
-        }
-        .bot-message {
-            background: white;
-            border: 1px solid #e9ecef;
-            margin-right: auto;
-        }
-        .input-area {
-            padding: 20px;
-            background: white;
+@app.route('/api/chat', methods=['POST'])
+def chat():
+    """Handle chat requests."""
+    try:
+        data = request.get_json()
+        if not data or 'message' not in data:
+            return jsonify({'error': 'No message provided'}), 400
+
+        user_message = data['message']
+        history = data.get('history', [])  # Optional chat history
+        
+        if not gemini_service:
+            return jsonify({
+                'error': True,
+                'response': 'Chatbot service hiện không khả dụng'
+            }), 503
+        
+        # Generate response using Gemini
+        response = gemini_service.generate_response(user_message, history)
+        
+        return jsonify({
+            'response': response,
+            'error': False
+        })
+
+    except Exception as e:
+        logger.error(f"Error in chat endpoint: {e}")
+        return jsonify({
+            'error': True,
+            'response': 'Có lỗi xảy ra khi xử lý yêu cầu'
+        }), 500
             border-top: 1px solid #e9ecef;
             display: flex;
             gap: 10px;

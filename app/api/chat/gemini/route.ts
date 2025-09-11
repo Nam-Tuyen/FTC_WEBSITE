@@ -1,6 +1,4 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
-import path from 'path';
-import fs from 'fs';
 
 export const dynamic = 'force-dynamic';
 export const maxDuration = 300; // 5 minutes timeout
@@ -34,9 +32,10 @@ async function parseRequest(req: Request) {
     const body = await clonedReq.json();
 
     if (!body.message || typeof body.message !== 'string') {
-      throw new Error('Invalid message format');
     }
 
+          // Mode removed, always use knowledge base
+          return { message: body.message.trim(), history };
     const history = body.history || [];
     if (!Array.isArray(history)) {
       throw new Error('Invalid history format');
