@@ -59,7 +59,7 @@ export default function ChatInterface() {
         {/* Left column - quick nav */}
         <div className="hidden lg:flex flex-col gap-4">
             <div className="rounded-2xl bg-gradient-to-b from-slate-900/60 to-slate-800/40 p-4 border border-slate-800 text-slate-200 shadow flex-1">
-            <div className="text-sm font-semibold mb-3">Câu hỏi gợi ý</div>
+            <div className="text-sm font-semibold mb-3" style={{textAlign: 'center'}}><p className="uppercase">CÂU HỎI GỢI Ý</p></div>
             <div className="grid gap-3">
               {SUGGESTED.map((q, i) => (
                 <button key={i} onClick={() => handleSuggestion(q)} className="text-left text-sm px-3 py-2 rounded-md bg-slate-800/50 hover:bg-slate-800/40 text-slate-100 shadow-sm text-left">{q}</button>
