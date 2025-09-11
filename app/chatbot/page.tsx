@@ -6,7 +6,7 @@
 import React from 'react'
 import { Navigation } from "@/components/navigation"
 import { Bot } from "lucide-react"
-import { ChatInterface } from "./_components/chat-interface"
+import ChatInterface from "./_components/chat-interface"
 import { SuggestedQuestions } from "./_components/suggested-questions"
 import { FeaturesSidebar } from "./_components/features-sidebar"
 
