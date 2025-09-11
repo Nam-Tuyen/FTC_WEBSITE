@@ -53,29 +53,29 @@ export default function ChatInterface() {
 
   return (
     <div className="min-h-[70vh] h-full flex items-center justify-center p-6">
-      <div className="w-[920px] h-[80vh] flex bg-slate-900 text-white rounded-3xl shadow-2xl overflow-hidden border border-slate-800">
+      <div className="w-full max-w-[1200px] h-[85vh] flex bg-slate-900 text-white rounded-3xl shadow-2xl overflow-hidden border border-slate-800">
 
-        {/* Left sidebar: suggestions & features */}
-        <aside className="w-80 bg-slate-850/80 border-r border-slate-800 p-5 hidden lg:flex flex-col">
-          <div className="text-sm font-semibold mb-3">Câu hỏi gợi ý</div>
-          <div className="flex-1 flex flex-col gap-3 overflow-auto">
-            {SUGGESTED.map((q, i) => (
-              <button key={i} onClick={() => handleSuggestion(q)} className="text-left text-sm px-3 py-2 rounded-lg hover:bg-slate-800/60 text-slate-100">{q}</button>
-            ))}
-          </div>
-
-          <div className="mt-4 pt-4 border-t border-slate-800 text-sm">
-            <div className="font-medium text-slate-100">Tính năng</div>
-            <ul className="mt-2 text-xs space-y-2 text-slate-300">
-              <li>AI Thông minh</li>
-              <li>Phản hồi nhanh</li>
-              <li>Hỗ trợ 24/7</li>
-            </ul>
-          </div>
-        </aside>
-
-        {/* Main chat area */}
+        {/* Centered chat area (focused) */}
         <div className="flex-1 flex flex-col">
+          {/* Header with suggestion chips */}
+          <div className="flex items-center gap-4 px-6 py-4 bg-gradient-to-r from-slate-800 to-slate-900 border-b border-slate-800">
+            <Avatar className="w-11 h-11">
+              <AvatarFallback className="bg-primary text-primary-foreground"><Bot className="h-5 w-5" /></AvatarFallback>
+            </Avatar>
+            <div className="flex-1">
+              <div className="text-xl font-semibold">FTC Chatbot</div>
+              <div className="text-xs text-slate-300">Cố vấn tân sinh viên • {loading || isSending ? 'Đang soạn...' : 'Online'}</div>
+            </div>
+            <div className="text-xs text-slate-400">UEL • FTC</div>
+          </div>
+
+          <div className="px-6 py-3 border-b border-slate-800 bg-slate-900">
+            <div className="flex gap-2 flex-wrap">
+              {SUGGESTED.map((q, i) => (
+                <button key={i} onClick={() => handleSuggestion(q)} className="text-sm px-3 py-1 rounded-full bg-slate-800/60 hover:bg-slate-800/40 text-slate-200">{q}</button>
+              ))}
+            </div>
+          </div>
           {/* Header */}
           <div className="flex items-center gap-4 px-6 py-4 bg-gradient-to-r from-slate-800 to-slate-900 border-b border-slate-800">
             <Avatar className="w-11 h-11">
