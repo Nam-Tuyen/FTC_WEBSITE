@@ -20,7 +20,7 @@ export function useChat() {
     setMessages((m: Msg[]) => [...m, user])
     setLoading(true)
     try {
-      const res = await withTimeout(fetch(`/api/chat`, {
+      const res = await withTimeout(fetch(`/api/chat/gemini`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ message: content }),
@@ -29,7 +29,7 @@ export function useChat() {
       let text = "Xin lỗi, hiện chưa thể trả lời."
       try {
         const data = await res.json()
-        text = data?.answer ?? text
+        text = data?.response ?? data?.reply ?? data?.answer ?? text
       } catch (e) {
         text = `Không đọc được phản hồi từ server. (status ${res.status})`
       }
