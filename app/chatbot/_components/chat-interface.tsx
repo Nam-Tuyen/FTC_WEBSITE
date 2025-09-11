@@ -52,10 +52,10 @@ export default function ChatInterface() {
   }
 
   return (
-    <div className="flex items-center justify-center p-6">
-      <div className="w-[420px] bg-[linear-gradient(180deg,#f7f9fc,rgba(255,255,255,0.6))] border border-accent/10 rounded-3xl shadow-2xl overflow-hidden">
+    <div className="h-full flex items-stretch justify-center p-6">
+      <div className="w-[420px] h-full flex flex-col bg-background/70 border border-accent/10 rounded-3xl shadow-2xl overflow-hidden">
         {/* Header (like Messenger/IG) */}
-        <div className="flex items-center gap-3 px-4 py-3 bg-white/70 border-b border-accent/10">
+        <div className="flex items-center gap-3 px-4 py-3 bg-background/80 border-b border-accent/10">
           <Avatar className="w-10 h-10">
             <AvatarFallback className="bg-primary text-primary-foreground">
               <Bot className="h-5 w-5" />
