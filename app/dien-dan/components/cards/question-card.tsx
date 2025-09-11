@@ -2,6 +2,7 @@ import React from 'react'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Heart, MessageSquare } from 'lucide-react'
 import { CATEGORIES } from '@/app/dien-dan/types'
+import moment from 'moment'
 
 export function QuestionCard({ q, children, onLike, onReply, defaultStudentId }: { q: any; children?: React.ReactNode; onLike?: () => void; onReply?: (content: string, authorName: string) => void; defaultStudentId?: string }) {
   const created = typeof q.createdAt === 'number' ? new Date(q.createdAt) : new Date(q.createdAt || Date.now())
@@ -29,8 +30,10 @@ export function QuestionCard({ q, children, onLike, onReply, defaultStudentId }:
     setReplyMode('anonymous')
   }
 
+  const formatTime = (time: any) => moment(time).format("DD/MM/YYYY HH:mm")
+
   return (
-    <article className="border-b border-slate-200 py-3 transition-transform transform hover:-translate-y-1 hover:shadow-md bg-white/50 rounded-md">
+    <article className="border-b border-slate-200 p-2 transition-transform transform hover:-translate-y-1 hover:shadow-md bg-white/50 rounded-md">
       <div className="flex items-start gap-3">
         <div className="flex-shrink-0">
           <div className="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center text-sm font-medium text-slate-700">{String((q.authorName||'A').charAt(0)).toUpperCase()}</div>
