@@ -71,7 +71,7 @@ export function Navigation() {
 
           {/* Desktop nav */}
           <div className="hidden md:block">
-            <div className="ml-4 lg:ml-10 flex items-center gap-3">
+            <div className="ml-4 lg:ml-10 flex items-center gap-3 flex-nowrap overflow-visible">
               {NAV.map(({ href, label, icon: Icon }) => {
                 const isActive = (() => {
                   try {
