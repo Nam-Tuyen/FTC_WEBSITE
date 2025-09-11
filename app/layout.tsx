@@ -33,6 +33,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="vi">
+      <head>
+        <link rel="icon" href="/placeholder-logo.svg" />
+      </head>
       <body className={`${montserrat.className} ${montserrat.variable}`}>
         <AuthProvider>
           <Suspense fallback={null}>{children}</Suspense>
