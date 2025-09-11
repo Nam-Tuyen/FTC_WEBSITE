@@ -64,7 +64,7 @@ export default function ChatInterface() {
             </Avatar>
             <div className="flex-1">
               <div className="text-xl font-semibold">FTC Chatbot</div>
-              <div className="text-xs text-slate-300">Cố vấn tân sinh viên • {loading || isSending ? 'Đang soạn...' : 'Online'}</div>
+              <div className="text-xs text-slate-300">Cố vấn tân sinh viên ��� {loading || isSending ? 'Đang soạn...' : 'Online'}</div>
             </div>
             <div className="text-xs text-slate-400">UEL • FTC</div>
           </div>
@@ -90,7 +90,7 @@ export default function ChatInterface() {
 
           {/* Messages */}
           <div className="flex-1 overflow-hidden bg-gradient-to-b from-slate-900 to-slate-800">
-            <div ref={containerRef} className="p-6 h-full overflow-y-auto space-y-6">
+            <div ref={containerRef} className="p-8 h-full overflow-y-auto space-y-8">
               {messages.map((m) => (
                 <div key={m.id} className={`flex items-end ${m.role === 'user' ? 'justify-end' : 'justify-start'}`}>
                   {m.role === 'assistant' && (
