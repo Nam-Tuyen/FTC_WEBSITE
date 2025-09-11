@@ -64,7 +64,7 @@ export default function ChatInterface() {
             </Avatar>
             <div className="flex-1">
               <div className="text-xl font-semibold">FTC Chatbot</div>
-              <div className="text-xs text-slate-300">Cố vấn tân sinh viên ��� {loading || isSending ? 'Đang soạn...' : 'Online'}</div>
+              <div className="text-xs text-slate-300">Cố vấn tân sinh viên • {loading || isSending ? 'Đang soạn...' : 'Online'}</div>
             </div>
             <div className="text-xs text-slate-400">UEL • FTC</div>
           </div>
@@ -127,11 +127,11 @@ export default function ChatInterface() {
           </div>
 
           {/* Input area */}
-          <div className="px-6 py-5 bg-slate-900 border-t border-slate-800">
+          <div className="px-8 py-6 bg-slate-900 border-t border-slate-800">
             <div className="flex items-center gap-4">
-              <input id="chat-input" value={value} onChange={(e)=>setValue(e.target.value)} onKeyDown={handleKeyDown} placeholder="Nhập câu hỏi hoặc gõ @ để bắt đầu..." autoComplete="off" className="flex-1 rounded-full px-6 py-3 bg-slate-800 text-white placeholder-slate-400 border border-slate-700 focus:outline-none focus:ring-2 focus:ring-primary/30" />
-              <button onClick={(e)=>onSubmit(e)} disabled={isSending || loading} className="flex items-center gap-2 px-6 py-3 rounded-full bg-gradient-to-r from-indigo-600 to-emerald-500 text-white shadow-md disabled:opacity-50">
-                <Send className="h-5 w-5" /> <span className="text-sm font-medium">Gửi</span>
+              <input id="chat-input" value={value} onChange={(e)=>setValue(e.target.value)} onKeyDown={handleKeyDown} placeholder="Nhập câu hỏi hoặc gõ @ để bắt đầu..." autoComplete="off" className="flex-1 rounded-full px-8 py-4 bg-slate-800 text-white placeholder-slate-400 border border-slate-700 focus:outline-none focus:ring-2 focus:ring-primary/30 text-base" />
+              <button onClick={(e)=>onSubmit(e)} disabled={isSending || loading} className="flex items-center gap-3 px-6 py-3 rounded-full bg-gradient-to-r from-indigo-600 to-emerald-500 text-white shadow-md disabled:opacity-50">
+                <Send className="h-5 w-5" /> <span className="text-sm font-semibold">Gửi</span>
               </button>
             </div>
           </div>
