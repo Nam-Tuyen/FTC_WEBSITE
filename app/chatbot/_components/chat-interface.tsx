@@ -117,8 +117,8 @@ export default function ChatInterface() {
                 <div key={m.id} className={`flex items-end ${m.role === 'user' ? 'justify-end' : 'justify-start'}`}>
                   {m.role === 'assistant' && (
                     <div className="mr-4">
-                      <Avatar className="w-10 h-10">
-                        <AvatarImage src="/placeholder-logo.svg" alt="FTC" />
+                      <Avatar className="w-10 h-10 ring-1 ring-indigo-400/25 shadow-sm overflow-hidden">
+                        <AvatarImage src="/placeholder-logo.svg" alt="FTC" className="object-cover" />
                         <AvatarFallback className="bg-primary text-primary-foreground">FTC</AvatarFallback>
                       </Avatar>
                     </div>
