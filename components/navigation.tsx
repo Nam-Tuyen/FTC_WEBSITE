@@ -35,6 +35,8 @@ export function Navigation() {
     setMounted(true)
   }, [])
 
+  const pathname = usePathname()
+
   const handleScroll = React.useCallback((e: React.WheelEvent) => {
     if (!menuScrollRef.current) return
     e.preventDefault()
