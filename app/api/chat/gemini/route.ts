@@ -11,7 +11,7 @@ const MODEL_NAME = "gemini-pro";
 
 // Helper to initialize Gemini model at request time
 function initGemini() {
-  const key = process.env.GEMINI_API_KEY || process.env.GOOGLE_API_KEY || process.env.NEXT_PUBLIC_GEMINI_API_KEY || process.env.NEXT_PUBLIC_GOOGLE_API_KEY
+  const key = process.env.GEMINI_API_KEY || process.env.GOOGLE_API_KEY
   if (!key) return null;
   try {
     const genAI = new GoogleGenerativeAI(key);
