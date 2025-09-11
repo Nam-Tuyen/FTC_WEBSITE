@@ -39,21 +39,10 @@ export default function ChatbotPage() {
       </section>
 
       {/* Main layout */}
-      <div className="max-w-full mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-8 overflow-x-auto">
-        <div className="min-w-[1200px] grid grid-cols-[1fr_minmax(720px,800px)_360px_1fr] grid-rows-[auto_auto] gap-8">
-          {/* Chat Interface */}
-          <div className="col-start-2 col-span-1 row-span-2">
+      <div className="max-w-full mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-12">
+        <div className="flex justify-center">
+          <div className="w-full max-w-[1100px]">
             <ChatInterface />
-          </div>
-
-          {/* Sidebar: Suggested Questions */}
-          <div className="col-start-3 col-span-1">
-            <SuggestedQuestions onSelect={() => {}} />
-          </div>
-
-          {/* Sidebar: Features */}
-          <div className="col-start-3 col-span-1 row-start-2">
-            <FeaturesSidebar />
           </div>
         </div>
       </div>
