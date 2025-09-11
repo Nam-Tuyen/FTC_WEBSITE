@@ -63,7 +63,7 @@ export function Navigation() {
                 <div className="absolute inset-0 rounded-full border-2 border-accent" aria-hidden="true" />
               </div>
               <div className="flex flex-col">
-                <span className="font-heading text-foreground font-extrabold tracking-wide leading-none">FTC</span>
+                <span className="font-heading text-foreground font-extrabold tracking-wide leading-none text-[28px]">FTC</span>
                 <span className="text-[10px] sm:text-xs text-accent tracking-wide">&nbsp;</span>
               </div>
             </Link>
