@@ -46,9 +46,31 @@ export default function RootLayout({
               {`
                 (function(){
                   try {
+                    // Wrap navigator.clipboard.writeText to avoid uncaught NotAllowedError in restricted iframes/previews
+                    try {
+                      const nav = window.navigator as any
+                      if (nav && nav.clipboard && typeof nav.clipboard.writeText === 'function') {
+                        const original = nav.clipboard.writeText.bind(nav.clipboard)
+                        nav.clipboard.writeText = async function(text: string) {
+                          try {
+                            return await original(text)
+                          } catch (e) {
+                            try {
+                              const msg = String((e && (e.message || e)) || '')
+                              if (msg.includes('Clipboard API has been blocked') || msg.includes('permissions policy') || msg.includes('NotAllowedError')) {
+                                // Swallow permission/NotAllowed errors in preview/dev to avoid noisy unhandledrejection
+                                return Promise.resolve()
+                              }
+                            } catch (_) {}
+                            return Promise.reject(e)
+                          }
+                        }
+                      }
+                    } catch (_) {}
+
                     window.addEventListener('unhandledrejection', function(e){
                       var msg = String((e && e.reason && (e.reason.message || e.reason)) || '');
-                      if (msg.includes('Clipboard API has been blocked because of a permissions policy')) {
+                      if (msg.includes('Clipboard API has been blocked') || msg.includes('permissions policy') || msg.includes('NotAllowedError')) {
                         e.preventDefault();
                       }
                     });
