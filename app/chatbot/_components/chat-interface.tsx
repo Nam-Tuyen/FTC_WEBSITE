@@ -52,70 +52,89 @@ export default function ChatInterface() {
   }
 
   return (
-    <div className="h-full flex items-stretch justify-center p-6">
-      <div className="w-[420px] h-full flex flex-col bg-background/70 border border-accent/10 rounded-3xl shadow-2xl overflow-hidden">
-        {/* Header (like Messenger/IG) */}
-        <div className="flex items-center gap-3 px-4 py-3 bg-background/80 border-b border-accent/10">
-          <Avatar className="w-10 h-10">
-            <AvatarFallback className="bg-primary text-primary-foreground">
-              <Bot className="h-5 w-5" />
-            </AvatarFallback>
-          </Avatar>
-          <div className="flex-1">
-            <div className="text-sm font-medium">FTC Chatbot</div>
-            <div className="text-xs text-muted-foreground">Cố vấn tân sinh viên • Online</div>
-          </div>
-          <div className="flex items-center gap-2">
-            <button className="p-2 rounded-full hover:bg-muted/30"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" className="text-muted"><path d="M12 5v14M5 12h14" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg></button>
-          </div>
-        </div>
+    <div className="min-h-[70vh] h-full flex items-center justify-center p-6">
+      <div className="w-[920px] h-[80vh] flex bg-slate-900 text-white rounded-3xl shadow-2xl overflow-hidden border border-slate-800">
 
-        {/* Messages area */}
-        <div className="flex-1 flex flex-col overflow-hidden bg-[url('/placeholder.svg')] bg-center/20 bg-no-repeat">
-          <div ref={containerRef} className="p-4 flex-1 overflow-y-auto space-y-4">
-            {messages.map((m) => (
-              <div key={m.id} className={`flex items-end ${m.role === "user" ? "justify-end" : "justify-start"}`}>
-                {m.role === "assistant" && (
-                  <div className="mr-3">
-                    <Avatar className="w-8 h-8">
-                      <AvatarFallback className="bg-primary text-primary-foreground"><Bot className="h-4 w-4" /></AvatarFallback>
-                    </Avatar>
-                  </div>
-                )}
-
-                <div className={`max-w-[78%]`}>
-                  <div className={`relative inline-block px-4 py-3 text-sm leading-6 ${m.role === "user" ? "bg-blue-600 text-white rounded-3xl rounded-br-none" : "bg-white/90 text-foreground rounded-3xl rounded-bl-none border border-accent/10"}`}>
-                    {/* bubble tail */}
-                    {m.role === "user" ? (
-                      <svg className="absolute -right-2 bottom-0" width="14" height="14" viewBox="0 0 10 10" xmlns="http://www.w3.org/2000/svg"><path d="M0 10 L10 0 L6 10 Z" fill="#1E90FF" /></svg>
-                    ) : (
-                      <svg className="absolute -left-2 bottom-0" width="14" height="14" viewBox="0 0 10 10" xmlns="http://www.w3.org/2000/svg"><path d="M10 10 L0 0 L4 10 Z" fill="#ffffff" /></svg>
-                    )}
-
-                    <div>{m.content}</div>
-                  </div>
-                  <div className="text-xs text-muted-foreground mt-1 ml-2">
-                    {typeof (m as any).timestamp !== 'undefined' ? new Date((m as any).timestamp).toLocaleTimeString('vi-VN',{hour:'2-digit', minute:'2-digit'}) : ''}
-                  </div>
-                </div>
-
-                {m.role === "user" && (
-                  <div className="ml-3 flex items-center justify-center">
-                    <div className="w-8 h-8 rounded-full bg-accent/10 flex items-center justify-center text-accent-foreground"><User className="h-4 w-4"/></div>
-                  </div>
-                )}
-              </div>
+        {/* Left sidebar: suggestions & features */}
+        <aside className="w-80 bg-slate-850/80 border-r border-slate-800 p-5 hidden lg:flex flex-col">
+          <div className="text-sm font-semibold mb-3">Câu hỏi gợi ý</div>
+          <div className="flex-1 flex flex-col gap-3 overflow-auto">
+            {SUGGESTED.map((q, i) => (
+              <button key={i} onClick={() => handleSuggestion(q)} className="text-left text-sm px-3 py-2 rounded-lg hover:bg-slate-800/60 text-slate-100">{q}</button>
             ))}
           </div>
-        </div>
 
-        {/* Input area */}
-        <div className="px-4 py-4 bg-background/80 border-t border-accent/10 flex items-center gap-3">
-          <button className="p-2 rounded-full hover:bg-muted/20" aria-label="attach"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" className="text-muted"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg></button>
-          <input id="chat-input" value={value} onChange={(e)=>setValue(e.target.value)} onKeyDown={handleKeyDown} placeholder="Nhập tin nhắn..." className="flex-1 rounded-full px-4 py-3 border border-accent/10 bg-background/60 text-foreground focus:outline-none focus:ring-2 focus:ring-accent/20" />
-          <button onClick={(e)=>onSubmit(e)} disabled={isSending || loading} className="px-4 py-2 rounded-full bg-gradient-to-r from-primary to-accent text-primary-foreground shadow-md disabled:opacity-50 flex items-center gap-2">
-            <Send className="h-4 w-4" /> <span className="text-sm">Gửi</span>
-          </button>
+          <div className="mt-4 pt-4 border-t border-slate-800 text-sm">
+            <div className="font-medium text-slate-100">Tính năng</div>
+            <ul className="mt-2 text-xs space-y-2 text-slate-300">
+              <li>AI Thông minh</li>
+              <li>Phản hồi nhanh</li>
+              <li>Hỗ trợ 24/7</li>
+            </ul>
+          </div>
+        </aside>
+
+        {/* Main chat area */}
+        <div className="flex-1 flex flex-col">
+          {/* Header */}
+          <div className="flex items-center gap-4 px-6 py-4 bg-gradient-to-r from-slate-800 to-slate-900 border-b border-slate-800">
+            <Avatar className="w-11 h-11">
+              <AvatarFallback className="bg-primary text-primary-foreground"><Bot className="h-5 w-5" /></AvatarFallback>
+            </Avatar>
+            <div className="flex-1">
+              <div className="text-xl font-semibold">FTC Chatbot</div>
+              <div className="text-xs text-slate-300">Cố vấn tân sinh viên • {loading || isSending ? 'Đang soạn...' : 'Online'}</div>
+            </div>
+            <div className="text-xs text-slate-400">UEL • FTC</div>
+          </div>
+
+          {/* Messages */}
+          <div className="flex-1 overflow-hidden bg-gradient-to-b from-slate-900 to-slate-800">
+            <div ref={containerRef} className="p-6 h-full overflow-y-auto space-y-6">
+              {messages.map((m) => (
+                <div key={m.id} className={`flex items-end ${m.role === 'user' ? 'justify-end' : 'justify-start'}`}>
+                  {m.role === 'assistant' && (
+                    <div className="mr-4">
+                      <Avatar className="w-9 h-9">
+                        <AvatarFallback className="bg-primary text-primary-foreground"><Bot className="h-4 w-4" /></AvatarFallback>
+                      </Avatar>
+                    </div>
+                  )}
+
+                  <div className={`max-w-[75%]`}> 
+                    <div className={`relative inline-block px-6 py-4 text-base leading-7 ${m.role === 'user' ? 'bg-blue-600 text-white rounded-2xl rounded-br-none shadow-lg' : 'bg-slate-700 text-white rounded-2xl rounded-bl-none shadow-sm'}`}>
+                      {m.role === 'user' ? (
+                        <svg className="absolute -right-3 bottom-0" width="18" height="18" viewBox="0 0 10 10" xmlns="http://www.w3.org/2000/svg"><path d="M0 10 L10 0 L6 10 Z" fill="#3B82F6" /></svg>
+                      ) : (
+                        <svg className="absolute -left-3 bottom-0" width="18" height="18" viewBox="0 0 10 10" xmlns="http://www.w3.org/2000/svg"><path d="M10 10 L0 0 L4 10 Z" fill="#374151" /></svg>
+                      )}
+
+                      <div className="whitespace-pre-wrap">{m.content}</div>
+                    </div>
+                    <div className="text-xs text-slate-400 mt-2 ml-2">
+                      {typeof (m as any).timestamp !== 'undefined' ? new Date((m as any).timestamp).toLocaleTimeString('vi-VN',{hour:'2-digit', minute:'2-digit'}) : ''}
+                    </div>
+                  </div>
+
+                  {m.role === 'user' && (
+                    <div className="ml-4 flex items-center justify-center">
+                      <div className="w-9 h-9 rounded-full bg-blue-600 flex items-center justify-center text-white"><User className="h-4 w-4"/></div>
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Input area */}
+          <div className="px-6 py-5 bg-slate-900 border-t border-slate-800">
+            <div className="flex items-center gap-4">
+              <input id="chat-input" value={value} onChange={(e)=>setValue(e.target.value)} onKeyDown={handleKeyDown} placeholder="Nhập câu hỏi hoặc gõ @ để bắt đầu..." autoComplete="off" className="flex-1 rounded-full px-6 py-3 bg-slate-800 text-white placeholder-slate-400 border border-slate-700 focus:outline-none focus:ring-2 focus:ring-primary/30" />
+              <button onClick={(e)=>onSubmit(e)} disabled={isSending || loading} className="flex items-center gap-2 px-6 py-3 rounded-full bg-gradient-to-r from-indigo-600 to-emerald-500 text-white shadow-md disabled:opacity-50">
+                <Send className="h-5 w-5" /> <span className="text-sm font-medium">Gửi</span>
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     </div>
