@@ -28,10 +28,15 @@ export function useChat() {
 
       let text = "Xin lỗi, hiện chưa thể trả lời."
       try {
+        if (!res.ok) {
+          const txt = await res.text()
+          console.error('Server returned error for /api/chat/gemini', res.status, txt)
+          throw new Error(`Server ${res.status}: ${txt || res.statusText}`)
+        }
         const data = await res.json()
         text = data?.response ?? data?.reply ?? data?.answer ?? text
       } catch (e) {
-        text = `Không đọc được phản hồi từ server. (status ${res.status})`
+        text = `Không đọc được phản hồi từ server. (${e?.message ?? 'unknown'})`
       }
 
       const bot: Msg = { id: crypto.randomUUID(), role: "assistant", content: text }
