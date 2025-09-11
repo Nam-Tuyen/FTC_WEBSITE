@@ -25,7 +25,7 @@ const NAV: NavigationItem[] = [
   { label: 'CHATBOT', href: '/chatbot', icon: Bot },
 ]
 
-export default function Navigation() {
+export function Navigation() {
   const [open, setOpen] = React.useState(false)
   const [mounted, setMounted] = React.useState(false)
   const menuScrollRef = React.useRef<HTMLDivElement | null>(null)
