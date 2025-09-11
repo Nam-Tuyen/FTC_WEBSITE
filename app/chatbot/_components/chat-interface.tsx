@@ -71,8 +71,8 @@ export default function ChatInterface() {
         </div>
 
         {/* Messages area */}
-        <div ref={containerRef} className="p-4 h-[60vh] overflow-y-auto bg-[url('/placeholder.svg')] bg-center/20 bg-no-repeat">
-          <div className="space-y-4">
+        <div className="flex-1 flex flex-col overflow-hidden bg-[url('/placeholder.svg')] bg-center/20 bg-no-repeat">
+          <div ref={containerRef} className="p-4 flex-1 overflow-y-auto space-y-4">
             {messages.map((m) => (
               <div key={m.id} className={`flex items-end ${m.role === "user" ? "justify-end" : "justify-start"}`}>
                 {m.role === "assistant" && (
