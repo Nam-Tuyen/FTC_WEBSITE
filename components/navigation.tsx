@@ -3,6 +3,7 @@
 "use client"
 import * as React from 'react'
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 import { Button } from '@/components/ui/button'
 import { Menu, X, Zap, Shield, Cpu, Info, Bot } from 'lucide-react'
 import Image from 'next/image'
@@ -68,15 +69,28 @@ export function Navigation() {
 
           {/* Desktop nav */}
           <div className="hidden md:block">
-            <div className="ml-4 lg:ml-10 flex items-center space-x-1">
-              {NAV.map(({ href, label, icon: Icon }) => (
-                <Link key={href} href={href} className="group relative px-3 lg:px-4 py-2 lg:py-3 rounded-lg text-xs lg:text-sm">
-                  <div className="flex items-center space-x-2">
-                    <Icon className="h-4 w-4 text-accent" aria-hidden="true" />
-                    <span className="text-foreground/80 group-hover:text-foreground transition-colors">{label}</span>
-                  </div>
-                </Link>
-              ))}
+            <div className="ml-4 lg:ml-10 flex items-center gap-3">
+              {NAV.map(({ href, label, icon: Icon }) => {
+                const isActive = (() => {
+                  try {
+                    if (!pathname) return false
+                    if (href === '/') return pathname === '/'
+                    return pathname.startsWith(href)
+                  } catch (_) { return false }
+                })()
+
+                return (
+                  <Link
+                    key={href}
+                    href={href}
+                    aria-current={isActive ? 'page' : undefined}
+                    className={`nav-link group inline-flex items-center gap-2 py-2 px-3 rounded-md transition-all duration-200 whitespace-nowrap ${isActive ? 'bg-accent/10 text-foreground shadow-sm' : 'text-foreground/80 hover:bg-accent/5'}`}
+                  >
+                    <Icon className="nav-icon h-4 w-4 text-accent" aria-hidden="true" />
+                    <span className="nav-label text-sm font-medium tracking-wide">{label}</span>
+                  </Link>
+                )
+              })}
             </div>
           </div>
 
