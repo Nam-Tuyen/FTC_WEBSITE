@@ -86,8 +86,8 @@ export default function ChatInterface() {
     <div className="px-6 py-4 bg-[linear-gradient(90deg,rgba(255,255,255,0.02),transparent)] border-b border-slate-800">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-4 w-28">
-          <Avatar className="w-12 h-12">
-                <AvatarImage src="/placeholder-logo.svg" alt="FTC" />
+          <Avatar className="w-12 h-12 ring-1 ring-indigo-500/30 shadow-md overflow-hidden">
+                <AvatarImage src="/placeholder-logo.svg" alt="FTC" className="object-cover" />
                 <AvatarFallback className="bg-primary text-primary-foreground">FTC</AvatarFallback>
               </Avatar>
         </div>
