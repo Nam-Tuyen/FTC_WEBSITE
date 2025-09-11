@@ -18,6 +18,7 @@ export default function ChatInterface() {
   const [value, setValue] = useState("")
   const [isSending, setIsSending] = useState(false)
   const [showInfo, setShowInfo] = useState(false)
+  const [selectedSuggestion, setSelectedSuggestion] = useState<number | null>(null)
   const containerRef = useRef<HTMLDivElement | null>(null)
 
   useEffect(() => {
