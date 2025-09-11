@@ -16,13 +16,13 @@ interface NavigationItem {
 
 // Static, deterministic labels to avoid SSR/CSR mismatch
 const NAV: NavigationItem[] = [
-  { label: 'TRANG CHỦ', href: '/', icon: Zap },
+  { label: 'TRANG CHỦ', href: '/', icon: Home },
   { label: 'THÔNG TIN', href: '/thong-tin', icon: Info },
-  { label: 'THÀNH TÍCH', href: '/thanh-tich', icon: Shield },
-  { label: 'HOẠT ĐỘNG', href: '/hoat-dong', icon: Cpu },
-  { label: 'CƠ CẤU', href: '/co-cau', icon: Shield },
-  { label: 'DIỄN ĐÀN', href: '/dien-dan', icon: Zap },
-  { label: 'ỨNG TUYỂN', href: '/ung-tuyen', icon: Cpu },
+  { label: 'THÀNH TÍCH', href: '/thanh-tich', icon: Award },
+  { label: 'HOẠT ĐỘNG', href: '/hoat-dong', icon: Calendar },
+  { label: 'CƠ CẤU', href: '/co-cau', icon: Users },
+  { label: 'DIỄN ĐÀN', href: '/dien-dan', icon: MessageSquare },
+  { label: 'ỨNG TUYỂN', href: '/ung-tuyen', icon: FileText },
   { label: 'CHATBOT', href: '/chatbot', icon: Bot },
 ]
 
