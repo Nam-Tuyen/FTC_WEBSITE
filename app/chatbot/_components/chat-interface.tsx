@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react"
 import { useChat } from "../_lib/use-chat"
-import { Avatar, AvatarFallback } from "@/components/ui/avatar"
+import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar"
 import { Send, Bot, User, Settings, Search } from "lucide-react"
 
 const SUGGESTED = [
@@ -58,20 +58,11 @@ export default function ChatInterface() {
 
         {/* Left column - quick nav */}
         <div className="hidden lg:flex flex-col gap-4">
-          <div className="rounded-2xl bg-gradient-to-b from-slate-900/60 to-slate-800/40 p-4 border border-slate-800 text-slate-200 shadow">
-            <div className="text-sm font-semibold mb-2">Nhanh</div>
-            <div className="flex flex-col gap-2">
-              <button className="flex items-center gap-3 px-3 py-2 rounded-md hover:bg-slate-800/50">🧭 Khám phá</button>
-              <button className="flex items-center gap-3 px-3 py-2 rounded-md hover:bg-slate-800/50">📚 Tài liệu</button>
-              <button className="flex items-center gap-3 px-3 py-2 rounded-md hover:bg-slate-800/50">📝 Tuyển dụng</button>
-            </div>
-          </div>
-
-          <div className="rounded-2xl bg-gradient-to-b from-slate-900/60 to-slate-800/40 p-4 border border-slate-800 text-slate-200 shadow flex-1">
+            <div className="rounded-2xl bg-gradient-to-b from-slate-900/60 to-slate-800/40 p-4 border border-slate-800 text-slate-200 shadow flex-1">
             <div className="text-sm font-semibold mb-3">Câu hỏi gợi ý</div>
-            <div className="flex flex-col gap-2 overflow-auto max-h-[56vh]">
+            <div className="grid gap-3">
               {SUGGESTED.map((q, i) => (
-                <button key={i} onClick={() => handleSuggestion(q)} className="text-left text-sm px-3 py-2 rounded-lg hover:bg-slate-800/50 text-slate-200">{q}</button>
+                <button key={i} onClick={() => handleSuggestion(q)} className="text-left text-sm px-3 py-2 rounded-md bg-slate-800/50 hover:bg-slate-800/40 text-slate-100 shadow-sm text-left">{q}</button>
               ))}
             </div>
           </div>
@@ -85,8 +76,9 @@ export default function ChatInterface() {
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-4 w-28">
           <Avatar className="w-12 h-12">
-            <AvatarFallback className="bg-primary text-primary-foreground"><Bot className="h-5 w-5" /></AvatarFallback>
-          </Avatar>
+                <AvatarImage src="/placeholder-logo.svg" alt="FTC" />
+                <AvatarFallback className="bg-primary text-primary-foreground">FTC</AvatarFallback>
+              </Avatar>
         </div>
 
         <div className="flex-1 text-center">
@@ -115,7 +107,8 @@ export default function ChatInterface() {
                   {m.role === 'assistant' && (
                     <div className="mr-4">
                       <Avatar className="w-10 h-10">
-                        <AvatarFallback className="bg-primary text-primary-foreground"><Bot className="h-5 w-5" /></AvatarFallback>
+                        <AvatarImage src="/placeholder-logo.svg" alt="FTC" />
+                        <AvatarFallback className="bg-primary text-primary-foreground">FTC</AvatarFallback>
                       </Avatar>
                     </div>
                   )}
