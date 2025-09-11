@@ -119,8 +119,9 @@ export default function ChatInterface() {
                   {m.role === 'assistant' && (
                     <div className="mr-4">
                       <Avatar className="w-10 h-10 ring-1 ring-indigo-400/25 shadow-sm overflow-hidden">
-                        <AvatarImage src="/placeholder-logo.svg" alt="FTC" className="object-cover" />
-                        <AvatarFallback className="bg-primary text-primary-foreground">FTC</AvatarFallback>
+                        <AvatarFallback className="bg-gradient-to-tr from-indigo-500 to-emerald-400 text-white flex items-center justify-center">
+                          <Bot className="h-4 w-4" />
+                        </AvatarFallback>
                       </Avatar>
                     </div>
                   )}
