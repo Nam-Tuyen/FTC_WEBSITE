@@ -1,4 +1,7 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
+import fs from 'fs'
+import path from 'path'
+import { RECRUITMENT_CONFIG } from '../../../ung-tuyen/constants'
 
 export const dynamic = 'force-dynamic';
 export const maxDuration = 300; // 5 minutes timeout
