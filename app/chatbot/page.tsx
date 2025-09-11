@@ -26,10 +26,17 @@ export default function ChatbotPage() {
           <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-tr from-indigo-600 to-emerald-500 rounded-full shadow-lg mb-6">
             <Bot className="h-9 w-9 text-white" />
           </div>
-          <h1 className="relative text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight leading-tight" style={{fontFamily: 'Inter, ui-sans-serif, system-ui, -apple-system'}}>
-            <span className="bg-clip-text text-transparent bg-gradient-to-r from-indigo-400 to-emerald-300">FTC AI Chatbot</span>
+          <h1 className="relative" style={{letterSpacing: '-1.2px', position: 'relative', font: '800 48px/60px Inter, ui-sans-serif, system-ui, -apple-system'}}>
+            <div className="inline-block" style={{backgroundClip: 'text', backgroundImage: 'linear-gradient(to right, oklch(0.673 0.182 276.935) 0%, oklch(0.845 0.143 164.978) 100%)', fontFamily: 'Montserrat, "Montserrat Fallback", sans-serif', fontWeight: 800}}>
+              FTC AI Chatbot
+            </div>
           </h1>
-          <p className="mt-3 text-sm sm:text-base text-muted-foreground max-w-2xl mx-auto">Trợ lý AI thân thiện giúp tân sinh viên tìm hiểu về câu lạc bộ, hoạt động và kiến thức Fintech.</p>
+          <div className="mt-3 text-sm sm:text-base text-muted-foreground max-w-2xl mx-auto">
+            <p>
+              Trợ lý AI thân thiện giúp tân sinh viên tìm hiểu thông tin về
+              câu lạc bộ và kiến thức về ngành công nghệ tài chính
+            </p>
+          </div>
         </div>
       </section>
 
