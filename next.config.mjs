@@ -12,12 +12,14 @@ const nextConfig = {
   poweredByHeader: false,
   reactStrictMode: true,
   async rewrites() {
-    return [
+    const backend = process.env.NEXT_PUBLIC_BACKEND_URL || process.env.BACKEND_URL
+    const enable = process.env.ENABLE_API_PROXY === 'true' && backend
+    return enable ? [
       {
         source: "/api/:path*",
-        destination: "http://localhost:5000/api/:path*"
+        destination: `${backend}/api/:path*`
       }
-    ]
+    ] : []
   }
 }
 
