@@ -88,7 +88,7 @@ export function Navigation() {
                     aria-current={isActive ? 'page' : undefined}
                     className={`nav-link group inline-flex items-center gap-2 py-2 px-3 rounded-md transition-all duration-200 whitespace-nowrap ${isActive ? 'bg-accent/10 text-foreground shadow-sm' : 'text-foreground/80 hover:bg-accent/5'}`}
                   >
-                    <Icon className="nav-icon h-4 w-4 text-accent" aria-hidden="true" />
+                    <Icon className="nav-icon h-5 w-5 text-accent" aria-hidden="true" />
                     <span className="nav-label text-sm font-medium tracking-wide">{label}</span>
                   </Link>
                 )
@@ -116,7 +116,7 @@ export function Navigation() {
             <div className="px-2 pt-4 pb-6 space-y-2 rounded-xl mt-4 border border-accent/20 bg-card/50">
               {NAV.map(({ href, label, icon: Icon }) => (
                 <Link key={href} href={href} className="group flex items-center space-x-3 px-4 py-3 rounded-lg text-base" onClick={() => setOpen(false)}>
-                  <Icon className="h-5 w-5 text-accent" aria-hidden="true" />
+                  <Icon className="h-6 w-6 text-accent" aria-hidden="true" />
                   <span className="text-foreground/80">{label}</span>
                 </Link>
               ))}
