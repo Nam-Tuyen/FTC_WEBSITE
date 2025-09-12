@@ -36,14 +36,14 @@ export function Hero({ search, onSearchChange }: HeroProps) {
             </span>
           </h1>
 
-          <p className="text-xl sm:text-2xl text-muted-foreground leading-relaxed max-w-3xl mx-auto italic">
+          <p className="text-xl sm:text-2xl text-slate-300 leading-relaxed max-w-3xl mx-auto italic">
             Nơi cộng đồng fintech chia sẻ kiến thức, thảo luận xu hướng và kết nối với nhau
           </p>
 
           <div className="relative max-w-3xl mx-auto mt-12">
             <div className="relative">
               <div className="absolute -inset-1 bg-gradient-to-r from-primary/20 to-accent/20 rounded-lg blur opacity-75" />
-              <div className="relative bg-background/40 backdrop-blur-sm rounded-lg">
+              <div className="relative bg-slate-800/40 backdrop-blur-sm rounded-lg">
                 <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
                 <Input
                   value={search}
