@@ -75,7 +75,7 @@ export function QuestionCard({ q, children, onLike, onReply, defaultStudentId }:
                   <div className="text-xs text-muted-foreground ml-auto">{defaultStudentId ? `Sẽ dùng: ${defaultStudentId}` : 'Chưa có MSSV'}</div>
                 )}
               </div>
-              <textarea value={reply} onChange={(e) => setReply(e.target.value)} className="w-full p-3 border rounded-md text-sm" placeholder="Viết phản hồi của bạn" />
+              <textarea value={reply} onChange={(e) => setReply(e.target.value)} className="w-full p-3 border border-slate-600 rounded-md text-sm bg-slate-700 text-slate-100" placeholder="Viết phản hồi của bạn" />
               <div className="flex justify-end mt-2">
                 <button className="px-4 py-2 bg-gradient-to-r from-primary to-accent text-white rounded-lg" onClick={sendReply}>Gửi</button>
               </div>
