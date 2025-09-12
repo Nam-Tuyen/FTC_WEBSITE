@@ -31,7 +31,7 @@ export function QuestionCard({ q, children, onLike, onReply, defaultStudentId }:
   const formatTime = (time: any) => moment(time).fromNow()
 
   return (
-    <article className="group relative border border-transparent hover:border-primary/30 hover:shadow-lg transition p-4 rounded-xl bg-gradient-to-br from-white/60 to-white/40">
+    <article className="group relative border border-transparent hover:border-primary/30 hover:shadow-lg transition p-4 rounded-xl bg-gradient-to-br from-slate-800/60 to-slate-800/40 text-slate-100">
       <div className="absolute left-0 top-0 bottom-0 w-1 rounded-l-xl bg-gradient-to-b from-primary to-accent" />
       <div className="flex gap-4">
         <div className="flex-shrink-0">
