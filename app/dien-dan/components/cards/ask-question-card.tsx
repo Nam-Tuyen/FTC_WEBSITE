@@ -68,85 +68,119 @@ export function AskQuestionCard({
   }
 
   return (
-    <Card id="ask-question-form" className="relative overflow-hidden rounded-2xl border border-transparent hover:shadow-2xl transition">
-      <div className="absolute -inset-1 bg-gradient-to-r from-primary/10 to-accent/10 blur-lg" />
-      <CardHeader className="relative p-6">
-        <CardTitle className="text-lg font-semibold">Đặt câu hỏi</CardTitle>
-        <p className="text-sm text-muted-foreground mt-1">Chia sẻ câu hỏi của bạn với cộng đồng FTC</p>
-      </CardHeader>
+    <div id="ask-question-form" className="p-6 border-b border-border/50">
+      <div className="flex gap-4">
+        <div className="flex-shrink-0">
+          <div className="w-12 h-12 rounded-full bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center text-foreground font-semibold border border-border/30">
+            {currentStudentId ? currentStudentId.charAt(0).toUpperCase() : '?'}
+          </div>
+        </div>
+        
+        <div className="flex-1 space-y-4">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div className="md:col-span-2">
+              <Input 
+                value={title} 
+                onChange={(e) => setTitle(e.target.value)} 
+                placeholder="Bạn đang thắc mắc điều gì?" 
+                className="text-lg border-0 bg-transparent p-0 placeholder:text-muted-foreground focus-visible:ring-0 font-medium"
+              />
+            </div>
 
-      <CardContent className="relative p-6 bg-slate-800/60 backdrop-blur-sm rounded-b-2xl text-slate-100">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <div className="md:col-span-2">
-            <label className="block text-xs text-muted-foreground">Tiêu đề</label>
-            <Input value={title} onChange={(e) => setTitle(e.target.value)} placeholder="Tiêu đề ngắn gọn" className="mt-2 bg-slate-700 text-slate-100 border-slate-600" />
+            <div>
+              <Select value={category} onValueChange={setCategory}>
+                <SelectTrigger className="border-border/50 rounded-full">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  {Object.entries(CATEGORIES).map(([key, label]) => (
+                    // @ts-ignore
+                    <SelectItem key={key} value={key}>{label}</SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
           </div>
 
           <div>
-            <label className="block text-xs text-muted-foreground">Chủ đề</label>
-            <Select value={category} onValueChange={setCategory}>
-              <SelectTrigger className="w-full mt-2">
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                {Object.entries(CATEGORIES).map(([key, label]) => (
-                  // @ts-ignore
-                  <SelectItem key={key} value={key}>{label}</SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </div>
-        </div>
-
-        <div className="mt-4">
-          <label className="block text-xs text-muted-foreground">Nội dung</label>
-          <Textarea value={content} onChange={(e) => setContent(e.target.value)} placeholder="M�� tả chi tiết, kèm bối cảnh và bước bạn đã thử" className="mt-2 min-h-[140px] bg-slate-700 text-slate-100 border-slate-600" />
-        </div>
-
-        <div className="mt-4 flex items-center gap-4">
-          <div className="flex items-center gap-3">
-            <label className="text-sm">Chế độ</label>
-            <div className="inline-flex items-center gap-3">
-              <label className="inline-flex items-center gap-2"><input type="radio" checked={mode === 'anonymous'} onChange={() => setMode('anonymous')} /> <span className="text-sm">Ẩn danh</span></label>
-              <label className="inline-flex items-center gap-2"><input type="radio" checked={mode === 'mssv'} onChange={() => setMode('mssv')} /> <span className="text-sm">MSSV</span></label>
-            </div>
+            <Textarea 
+              value={content} 
+              onChange={(e) => setContent(e.target.value)} 
+              placeholder="Mô tả chi tiết câu hỏi của bạn..." 
+              className="min-h-[120px] border-0 bg-transparent p-0 placeholder:text-muted-foreground focus-visible:ring-0 resize-none"
+            />
           </div>
 
-          <div className="ml-auto text-sm text-muted-foreground">MSSV: {currentStudentId || 'Chưa lưu'}</div>
-        </div>
-
-        {error && <div className="text-sm text-destructive mt-2">{error}</div>}
-
-        <div className="mt-6 flex justify-end">
-          <Button className="inline-flex items-center gap-2 bg-gradient-to-r from-primary to-accent text-white" onClick={handlePostQuestion}>
-            <Plus className="w-4 h-4" />
-            Đăng câu hỏi
-          </Button>
-        </div>
-
-        <Dialog open={showProfileModal} onOpenChange={(v) => setShowProfileModal(v)}>
-          <DialogContent showCloseButton>
-            <DialogHeader>
-              <DialogTitle>Yêu cầu cập nhật hồ sơ</DialogTitle>
-            </DialogHeader>
-            <div className="space-y-2">
-              <p className="text-sm text-muted-foreground">Bạn đã chọn chế độ MSSV nhưng chưa có MSSV hợp lệ. Vui lòng nhập MSSV (dạng K#########) để tiếp tục.</p>
-              <Input value={modalInput} onChange={(e) => setModalInput(e.target.value)} placeholder="K#########" className="bg-slate-700 text-slate-100 border-slate-600" />
-            </div>
-            <DialogFooter>
-              <div className="flex justify-end gap-2">
-                <Button variant="outline" onClick={() => setShowProfileModal(false)}>Hủy</Button>
-                <Button onClick={() => {
-                  const v = (modalInput || '').trim()
-                  if (!/^K\d{9}$/.test(v)) return
-                  onUpdateStudentId(v)
-                  setShowProfileModal(false)
-                }}>Lưu MSSV</Button>
+          <div className="flex items-center justify-between pt-4 border-t border-border/50">
+            <div className="flex items-center gap-6">
+              <div className="flex items-center gap-4">
+                <label className="flex items-center gap-2 text-sm text-foreground cursor-pointer">
+                  <input 
+                    type="radio" 
+                    checked={mode === 'anonymous'} 
+                    onChange={() => setMode('anonymous')}
+                    className="text-primary focus:ring-primary"
+                  />
+                  <span>Ẩn danh</span>
+                </label>
+                <label className="flex items-center gap-2 text-sm text-foreground cursor-pointer">
+                  <input 
+                    type="radio" 
+                    checked={mode === 'mssv'} 
+                    onChange={() => setMode('mssv')}
+                    className="text-primary focus:ring-primary"
+                  />
+                  <span>MSSV</span>
+                </label>
               </div>
-            </DialogFooter>
-          </DialogContent>
-        </Dialog>
-      </CardContent>
-    </Card>
+              
+              {currentStudentId && (
+                <div className="text-sm text-muted-foreground">
+                  MSSV: {currentStudentId}
+                </div>
+              )}
+            </div>
+
+            <Button 
+              onClick={handlePostQuestion}
+              className="rounded-full px-6"
+              disabled={!title.trim() || !content.trim()}
+            >
+              <Plus className="w-4 h-4 mr-2" />
+              Đăng câu hỏi
+            </Button>
+          </div>
+
+          {error && (
+            <div className="text-sm text-destructive bg-destructive/10 border border-destructive/20 rounded-lg p-3">
+              {error}
+            </div>
+          )}
+        </div>
+      </div>
+
+      <Dialog open={showProfileModal} onOpenChange={(v) => setShowProfileModal(v)}>
+        <DialogContent showCloseButton>
+          <DialogHeader>
+            <DialogTitle>Yêu cầu cập nhật hồ sơ</DialogTitle>
+          </DialogHeader>
+          <div className="space-y-2">
+            <p className="text-sm text-muted-foreground">Bạn đã chọn chế độ MSSV nhưng chưa có MSSV hợp lệ. Vui lòng nhập MSSV (dạng K#########) để tiếp tục.</p>
+            <Input value={modalInput} onChange={(e) => setModalInput(e.target.value)} placeholder="K#########" />
+          </div>
+          <DialogFooter>
+            <div className="flex justify-end gap-2">
+              <Button variant="outline" onClick={() => setShowProfileModal(false)}>Hủy</Button>
+              <Button onClick={() => {
+                const v = (modalInput || '').trim()
+                if (!/^K\d{9}$/.test(v)) return
+                onUpdateStudentId(v)
+                setShowProfileModal(false)
+              }}>Lưu MSSV</Button>
+            </div>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+    </div>
   )
 }
