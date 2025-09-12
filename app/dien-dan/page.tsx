@@ -20,6 +20,8 @@ import { AskQuestionCard } from './components/cards/ask-question-card'
 import { QuestionCard } from './components/cards/question-card'
 import { SidebarWidgets } from './components/sidebar-widgets'
 
+import { createQuestion, fetchQuestions } from '../../googleSheetApi/sheet'
+
 // Import types and utils
 import { CATEGORIES, STORAGE_KEYS, QuestionItem, Reply, ForumCategory } from './types'
 import { uuid, formatTime } from './utils/index'
@@ -35,6 +37,12 @@ export default function ForumPage() {
 
   // Animation styles are now moved to components/sections/hero.tsx
 
+  const handleFetchQuestions = async () => {
+    const questions = await fetchQuestions({})
+    console.log('questions', questions)
+    if (questions.length) setQuestions(questions)
+  }
+
   useEffect(() => {
     const id = localStorage.getItem(STORAGE_KEYS.userId) || uuid()
     const sid = localStorage.getItem(STORAGE_KEYS.studentId) || ''
@@ -43,28 +51,28 @@ export default function ForumPage() {
     localStorage.setItem(STORAGE_KEYS.userId, id)
 
     // Fetch questions from the server instead of localStorage
-    const fetchQuestions = async () => {
-      try {
-        const response = await fetch('/api/forum/questions')
-        if (response.ok) {
-          const data = await response.json()
-          // Sort by creation time, newest first
-          const sortedData = data.sort((a: QuestionItem, b: QuestionItem) => b.createdAt - a.createdAt);
-          setQuestions(sortedData)
-        } else {
-          // Fallback to localStorage if API fails
-          const saved = localStorage.getItem(STORAGE_KEYS.questions)
-          setQuestions(saved ? JSON.parse(saved) : [])
-        }
-      } catch (error) {
-        console.error("Failed to fetch questions, falling back to localStorage", error)
-        const saved = localStorage.getItem(STORAGE_KEYS.questions)
-        setQuestions(saved ? JSON.parse(saved) : [])
-      }
-    }
-
-    fetchQuestions()
-  }, [questions.length]) // Re-fetch when questions length changes
+    // const fetchQuestions = async () => {
+    //   try {
+    //     const response = await fetch('/api/forum/questions')
+    //     if (response.ok) {
+    //       const data = await response.json()
+    //       // Sort by creation time, newest first
+    //       const sortedData = data.sort((a: QuestionItem, b: QuestionItem) => b.createdAt - a.createdAt);
+    //       setQuestions(sortedData)
+    //     } else {
+    //       // Fallback to localStorage if API fails
+    //       const saved = localStorage.getItem(STORAGE_KEYS.questions)
+    //       setQuestions(saved ? JSON.parse(saved) : [])
+    //     }
+    //   } catch (error) {
+    //     console.error("Failed to fetch questions, falling back to localStorage", error)
+    //     const saved = localStorage.getItem(STORAGE_KEYS.questions)
+    //     setQuestions(saved ? JSON.parse(saved) : [])
+    //   }
+    // }
+    handleFetchQuestions()
+    // fetchQuestions()
+  }, []) // Re-fetch when questions length changes
 
   useEffect(() => {
     setPage(1)
@@ -121,12 +129,12 @@ export default function ForumPage() {
       studentId: data.studentId,
       category: data.category as ForumCategory,
       createdAt: Date.now(),
-      likes: [],
+      likes: 0,
       replies: [],
     }
 
     // Optimistically update the UI
-    setQuestions((prev: QuestionItem[]) => [newQ, ...prev])
+    // setQuestions((prev: QuestionItem[]) => [newQ, ...prev])
 
     // Save student ID if it's valid and not already saved
     if (data.studentId && data.studentId !== currentStudentId) {
@@ -134,52 +142,70 @@ export default function ForumPage() {
       setCurrentStudentId(data.studentId)
     }
 
-    const hasValidMssv = !!data.studentId && /^K\d{9}$/.test(data.studentId)
-
-    if (!hasValidMssv) {
-      // Still save to localStorage for non-logged-in users
-      const currentQuestions = JSON.parse(localStorage.getItem(STORAGE_KEYS.questions) || '[]')
-      localStorage.setItem(STORAGE_KEYS.questions, JSON.stringify([newQ, ...currentQuestions]))
+    const hasValidMssv = data.studentId && /^K\d{9}$/.test(data.studentId)
+    if (data.studentId && !hasValidMssv) {
+      window.alert("MSSV không hợp lệ!")
       return
     }
 
-    try {
-      const tasks: Promise<any>[] = []
-      tasks.push((async () => {
-        try {
-          await fetch('/api/forum/questions', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              studentId: data.studentId,
-              name: authorName,
-              title: data.title,
-              content: data.content,
-              category: data.category,
-              questionId: newId,
-            }),
-          })
-        } catch (_) {}
-      })())
-      tasks.push((async () => {
-        try {
-          await fetch('/api/forum/notion/question', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              studentId: data.studentId,
-              name: authorName,
-              title: data.title,
-              content: data.content,
-              category: data.category,
-              questionId: newId,
-              authorId: currentUserId,
-            }),
-          })
-        } catch (_) {}
-      })())
-      await Promise.allSettled(tasks)
-    } catch (e) {}
+    await createQuestion(newQ)
+
+    // if (!hasValidMssv) {
+    //   // Still save to localStorage for non-logged-in users
+    //   const currentQuestions = JSON.parse(localStorage.getItem(STORAGE_KEYS.questions) || '[]')
+    //   localStorage.setItem(STORAGE_KEYS.questions, JSON.stringify([newQ, ...currentQuestions]))
+    //   return
+    // }
+
+    // const newBody = JSON.stringify({
+    //   studentId: data.studentId,
+    //   name: authorName,
+    //   title: data.title,
+    //   content: data.content,
+    //   category: data.category,
+    //   questionId: newId,
+    // })
+
+    // console.log('newBOdy', newBody)
+    // return
+
+    // try {
+    //   const tasks: Promise<any>[] = []
+    //   tasks.push((async () => {
+    //     try {
+    //       await fetch('/api/forum/questions', {
+    //         method: 'POST',
+    //         headers: { 'Content-Type': 'application/json' },
+    //         body: JSON.stringify({
+    //           studentId: data.studentId,
+    //           name: authorName,
+    //           title: data.title,
+    //           content: data.content,
+    //           category: data.category,
+    //           questionId: newId,
+    //         }),
+    //       })
+    //     } catch (_) { }
+    //   })())
+    //   tasks.push((async () => {
+    //     try {
+    //       await fetch('/api/forum/notion/question', {
+    //         method: 'POST',
+    //         headers: { 'Content-Type': 'application/json' },
+    //         body: JSON.stringify({
+    //           studentId: data.studentId,
+    //           name: authorName,
+    //           title: data.title,
+    //           content: data.content,
+    //           category: data.category,
+    //           questionId: newId,
+    //           authorId: currentUserId,
+    //         }),
+    //       })
+    //     } catch (_) { }
+    //   })())
+    //   await Promise.allSettled(tasks)
+    // } catch (e) { }
   }
 
   function handleToggleLike(qid: string) {
@@ -222,18 +248,18 @@ export default function ForumPage() {
           }
         }
       `}</style>
-      
+
       <Navigation />
 
       {/* Hero Section with Animated Background */}
       <section className="relative min-h-[50vh] flex items-center justify-center py-24 px-4 sm:px-6 lg:px-8">
         {/* Animated background elements */}
         <div className="absolute inset-0 overflow-hidden">
-          <div 
-            className="absolute top-1/4 -right-1/4 w-2/3 h-2/3 bg-gradient-to-br from-primary/20 via-accent/20 to-transparent rounded-full blur-3xl" 
+          <div
+            className="absolute top-1/4 -right-1/4 w-2/3 h-2/3 bg-gradient-to-br from-primary/20 via-accent/20 to-transparent rounded-full blur-3xl"
             style={{ animation: "float 20s ease-in-out infinite" }}
           />
-          <div 
+          <div
             className="absolute -bottom-1/4 -left-1/4 w-2/3 h-2/3 bg-gradient-to-tr from-accent/20 via-primary/20 to-transparent rounded-full blur-3xl"
             style={{ animation: "float 20s ease-in-out infinite reverse" }}
           />
@@ -250,7 +276,7 @@ export default function ForumPage() {
               <span className="absolute inset-0 bg-gradient-to-r from-primary to-accent opacity-40 blur-2xl transform-gpu"></span>
               <span className="relative bg-gradient-to-r from-primary to-accent text-transparent bg-clip-text">DIỄN ĐÀN</span>
             </h1>
-            
+
             {/* Simple Italicized Subtitle */}
             <p className="text-xl sm:text-2xl text-muted-foreground leading-relaxed max-w-3xl mx-auto italic">
               Nơi thảo luận và giải đáp thắc mắc cho các bạn tân sinh viên
@@ -280,7 +306,7 @@ export default function ForumPage() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
           <div className="lg:col-span-3 space-y-8">
-            <AskQuestionCard 
+            <AskQuestionCard
               currentStudentId={currentStudentId}
               onUpdateStudentId={(sid) => {
                 setCurrentStudentId(sid)
@@ -328,7 +354,7 @@ export default function ForumPage() {
             {/* Right sticky utilities */}
             <SidebarWidgets
               currentStudentId={currentStudentId}
-              setCurrentStudentId={(v:string)=>{ setCurrentStudentId(v); localStorage.setItem(STORAGE_KEYS.studentId, v)}}
+              setCurrentStudentId={(v: string) => { setCurrentStudentId(v); localStorage.setItem(STORAGE_KEYS.studentId, v) }}
             />
           </aside>
 

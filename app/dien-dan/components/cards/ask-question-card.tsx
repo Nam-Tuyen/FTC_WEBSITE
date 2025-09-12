@@ -57,6 +57,17 @@ export function AskQuestionCard({
     return true
   }
 
+  const handlePostQuestion = () => {
+    if (!validate()) return
+    const sid = mode === 'mssv' ? (studentId || currentStudentId).trim() : ''
+    onSubmit({ title: title.trim(), content: content.trim(), studentId: sid, category })
+    setTitle('')
+    setContent('')
+    setStudentId('')
+    setCategory('DISCUSSION' as keyof typeof CATEGORIES)
+    setMode('anonymous')
+  }
+
   return (
     <Card id="ask-question-form" className="group relative transition-transform hover:shadow-lg hover:-translate-y-1">
       <div className="absolute inset-0 bg-gradient-to-r from-primary/10 to-accent/10 rounded-2xl transform group-hover:scale-[1.02] transition-transform duration-500" />
@@ -125,16 +136,7 @@ export function AskQuestionCard({
         <div className="flex justify-end">
           <Button
             className="relative group"
-            onClick={() => {
-              if (!validate()) return
-              const sid = mode === 'mssv' ? (studentId || currentStudentId).trim() : ''
-              onSubmit({ title: title.trim(), content: content.trim(), studentId: sid, category })
-              setTitle('')
-              setContent('')
-              setStudentId('')
-              setCategory('DISCUSSION' as keyof typeof CATEGORIES)
-              setMode('anonymous')
-            }}
+            onClick={handlePostQuestion}
           >
             <div className="absolute -inset-0.5 bg-gradient-to-r from-primary to-accent opacity-75 rounded-lg blur transition group-hover:opacity-100"></div>
             <div className="relative flex items-center">
