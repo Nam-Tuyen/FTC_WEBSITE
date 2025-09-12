@@ -39,13 +39,13 @@ export function SidebarWidgets({ currentStudentId, setCurrentStudentId }: { curr
 
   const ProfileCard = (
     <div draggable onDragStart={(e) => onDragStart(e, order.indexOf('profile'))} onDragOver={onDragOver} onDrop={(e) => onDrop(e, order.indexOf('profile'))}>
-      <Card className="widget-card overflow-hidden rounded-xl transition-shadow hover:shadow-lg">
+      <Card className="widget-card overflow-hidden rounded-xl transition-shadow hover:shadow-lg bg-card/50 backdrop-blur-sm border border-border/50">
         <CardHeader className="px-3 py-2 bg-transparent">
           <div className="flex items-center justify-between text-left">
-            <CardTitle className="text-sm font-medium uppercase tracking-wide text-left">
+            <CardTitle className="text-sm font-medium uppercase tracking-wide text-left text-foreground">
               <p>HỒ SƠ NGƯỜI DÙNG</p>
             </CardTitle>
-            <button className="text-xs text-muted-foreground" onClick={() => { /* placeholder */ }}>{currentStudentId ? 'Chỉnh sửa' : 'Thêm'}</button>
+            <button className="text-xs text-muted-foreground hover:text-foreground transition-colors" onClick={() => { /* placeholder */ }}>{currentStudentId ? 'Chỉnh sửa' : 'Thêm'}</button>
           </div>
         </CardHeader>
 
@@ -56,7 +56,7 @@ export function SidebarWidgets({ currentStudentId, setCurrentStudentId }: { curr
                 value={currentStudentId}
                 onChange={(e) => setCurrentStudentId(e.target.value)}
                 placeholder="K#########"
-                className="h-9 text-sm bg-slate-700 text-slate-100 border-slate-600"
+                className="h-9 text-sm bg-background/50 text-foreground border-border/50 focus:border-primary/50"
               />
               <div className="text-xs text-muted-foreground mt-2 text-left">
                 <p>Người dùng có thể đăng bài và trả lời câu hỏi bằng mã số sinh viên hoặc ẩn danh</p>
@@ -70,9 +70,9 @@ export function SidebarWidgets({ currentStudentId, setCurrentStudentId }: { curr
 
   const ActionsCard = (
     <div draggable onDragStart={(e) => onDragStart(e, order.indexOf('actions'))} onDragOver={onDragOver} onDrop={(e) => onDrop(e, order.indexOf('actions'))}>
-      <Card className="widget-card overflow-hidden rounded-xl transition-shadow hover:shadow-lg bg-gradient-to-br from-[#041426] to-[#071425] text-slate-100">
+      <Card className="widget-card overflow-hidden rounded-xl transition-shadow hover:shadow-lg bg-card/50 backdrop-blur-sm border border-border/50">
         <CardHeader className="px-3 py-2 bg-transparent">
-          <CardTitle className="text-[20px] font-semibold text-center uppercase tracking-wide">HÀNH ĐỘNG NHANH</CardTitle>
+          <CardTitle className="text-lg font-semibold text-center uppercase tracking-wide text-foreground">HÀNH ĐỘNG NHANH</CardTitle>
         </CardHeader>
 
         <div className="px-3 pb-3 flex gap-2">
@@ -99,9 +99,9 @@ export function SidebarWidgets({ currentStudentId, setCurrentStudentId }: { curr
   return (
     <div className="space-y-3">
       <div className="flex items-center justify-between">
-        <div className="text-sm text-muted-foreground uppercase tracking-wide"><p><strong>TIỆN ÍCH</strong></p></div>
-        <Button variant="ghost" size="sm" onClick={() => setOrder((s) => [...s].reverse())} className="px-2 py-1">
-          <Shuffle />
+        <div className="text-sm text-foreground uppercase tracking-wide font-semibold"><p>TIỆN ÍCH</p></div>
+        <Button variant="ghost" size="sm" onClick={() => setOrder((s) => [...s].reverse())} className="px-2 py-1 hover:bg-muted/50">
+          <Shuffle className="h-4 w-4" />
         </Button>
       </div>
 

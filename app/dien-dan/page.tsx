@@ -100,7 +100,9 @@ export default function ForumPage() {
 
   const sorted = useMemo(() => {
     return [...filtered].sort((a, b) => {
-      const likeDiff = b.likes.length - a.likes.length
+      const aLikes = Array.isArray(a.likes) ? a.likes.length : (typeof a.likes === 'number' ? a.likes : 0)
+      const bLikes = Array.isArray(b.likes) ? b.likes.length : (typeof b.likes === 'number' ? b.likes : 0)
+      const likeDiff = bLikes - aLikes
       if (likeDiff !== 0) return likeDiff
       return b.createdAt - a.createdAt
     })
