@@ -10,7 +10,7 @@
 
 import { ai } from '@/ai/genkit';
 import { z } from 'genkit';
-import { loadKnowledgeBase } from '@/lib/knowledge';
+import { knowledgeManager } from '@/lib/knowledge-manager';
 
 const FtcChatbotInputSchema = z.object({
   message: z
@@ -110,11 +110,8 @@ const ftcChatbotFlow = ai.defineFlow(
     outputSchema: FtcChatbotOutputSchema,
   },
   async (input) => {
-    // Load knowledge base
-    const knowledgeFiles = loadKnowledgeBase();
-    const knowledgeBase = knowledgeFiles
-      .map(file => `--- ${file.filename} ---\n${file.content}`)
-      .join('\n\n');
+    // Load knowledge base using new manager
+    const knowledgeBase = knowledgeManager.getFormattedContent();
 
     // Format history for prompt
     const historyText = input.history
