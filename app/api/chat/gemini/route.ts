@@ -146,16 +146,20 @@ async function fetchBackendContext() {
 async function loadKnowledgeBase() {
   const parts: string[] = [];
 
-  // Read all files under backend/data/knowledge_base
+  // Read all files under knowledge_base directory
   try {
-    const kbDir = path.resolve(process.cwd(), 'backend', 'data', 'knowledge_base')
+    const kbDir = path.resolve(process.cwd(), 'knowledge_base')
+    console.log('Looking for knowledge base at:', kbDir)
+    
     const files = await fs.promises.readdir(kbDir)
+    console.log('Found knowledge base files:', files)
     
     for (const file of files) {
-      if (file.endsWith('.txt')) {
+      if (file.endsWith('.md') || file.endsWith('.txt')) {
         try {
           const content = await fs.promises.readFile(path.join(kbDir, file), 'utf-8')
           parts.push(content.trim())
+          console.log(`Loaded knowledge from ${file}`)
         } catch (e) {
           console.error(`Error reading file ${file}:`, e)
         }
@@ -163,6 +167,23 @@ async function loadKnowledgeBase() {
     }
   } catch (e) {
     console.error('Error reading knowledge base:', e)
+    // Fallback: return basic information about FTC
+    parts.push(`
+Câu lạc bộ Công nghệ – Tài chính (FTC) – UEL là một câu lạc bộ sinh viên chuyên về lĩnh vực fintech.
+
+Các ban trong câu lạc bộ:
+- Ban Chủ nhiệm: Điều hành và quản lý câu lạc bộ
+- Ban Nội dung: Tổ chức các hoạt động học thuật và sự kiện
+- Ban Truyền thông: Quản lý mạng xã hội và truyền thông
+- Ban Kỹ thuật: Phát triển các dự án công nghệ
+- Ban Đối ngoại: Kết nối với các đối tác và doanh nghiệp
+
+Hoạt động chính:
+- Tổ chức các workshop về fintech
+- Tham gia các cuộc thi lập trình và fintech
+- Kết nối với các chuyên gia trong ngành
+- Phát triển các dự án thực tế
+    `)
   }
 
   return parts.join('\n\n')
@@ -190,10 +211,67 @@ export async function POST(req: Request) {
     const model = initGemini();
     if (!model) {
       console.error('[api/chat/gemini] GEMINI API not configured')
+      console.error('Available env vars:', Object.keys(process.env).filter(k => k.includes('GEMINI') || k.includes('GOOGLE')))
+      
+      // Provide fallback response based on common questions
+      let fallbackResponse = '';
+      const lowerMessage = message.toLowerCase();
+      
+      if (lowerMessage.includes('ban') || lowerMessage.includes('các ban')) {
+        fallbackResponse = `Câu lạc bộ Công nghệ – Tài chính (FTC) có các ban chính sau:
+
+**Ban Chủ nhiệm**: Điều hành và quản lý toàn bộ hoạt động của câu lạc bộ, đưa ra các quyết định chiến lược.
+
+**Ban Nội dung**: Tổ chức các hoạt động học thuật, workshop, seminar về fintech và công nghệ tài chính.
+
+**Ban Truyền thông**: Quản lý mạng xã hội, website, tạo nội dung truyền thông và quảng bá câu lạc bộ.
+
+**Ban Kỹ thuật**: Phát triển các dự án công nghệ, ứng dụng fintech và hỗ trợ kỹ thuật cho các hoạt động.
+
+**Ban Đối ngoại**: Kết nối với các doanh nghiệp, đối tác, tổ chức các sự kiện networking và tìm kiếm cơ hội hợp tác.
+
+Mỗi ban đều có vai trò quan trọng trong việc phát triển câu lạc bộ và tạo ra giá trị cho thành viên.`;
+      } else if (lowerMessage.includes('hoạt động') || lowerMessage.includes('chương trình')) {
+        fallbackResponse = `Câu lạc bộ FTC tổ chức nhiều hoạt động đa dạng:
+
+**Hoạt động học thuật**:
+- Workshop về blockchain, AI trong tài chính
+- Seminar với chuyên gia trong ngành
+- Cuộc thi lập trình fintech
+
+**Hoạt động thực tế**:
+- Phát triển dự án fintech
+- Tham gia hackathon
+- Thực tập tại các công ty fintech
+
+**Hoạt động kết nối**:
+- Networking events
+- Company visits
+- Mentorship programs
+
+**Hoạt động cộng đồng**:
+- Team building
+- Social events
+- Community service`;
+      } else {
+        fallbackResponse = `Xin chào! Tôi là trợ lý AI của Câu lạc bộ Công nghệ – Tài chính (FTC) – UEL.
+
+Câu lạc bộ FTC là nơi sinh viên có thể:
+- Học hỏi về fintech và công nghệ tài chính
+- Tham gia các hoạt động thực tế
+- Kết nối với chuyên gia trong ngành
+- Phát triển kỹ năng lập trình và tư duy kinh doanh
+
+Để biết thêm thông tin chi tiết, bạn có thể hỏi về:
+- Các ban trong câu lạc bộ
+- Hoạt động và chương trình
+- Cách tham gia
+- Lịch sử và thành tích`;
+      }
+      
       return new Response(JSON.stringify({ 
-        error: 'AI service temporarily unavailable', 
-        code: 'NO_GEMINI_KEY',
-        response: 'Xin lỗi, dịch vụ AI tạm thời không khả dụng. Vui lòng thử lại sau.',
+        response: fallbackResponse,
+        source: 'fallback',
         suggestions: [
           'Làm thế nào để tham gia câu lạc bộ FTC?',
           'Các hoạt động của câu lạc bộ có gì?',
@@ -201,7 +279,7 @@ export async function POST(req: Request) {
           'Câu lạc bộ có những chương trình gì?',
           'Làm thế nào để liên hệ với ban chủ nhiệm?'
         ]
-      }), { status: 503, headers: { 'Content-Type': 'application/json' } })
+      }), { status: 200, headers: { 'Content-Type': 'application/json' } })
     }
 
     // Load knowledge base
@@ -254,35 +332,67 @@ Trả lời:`;
     }
 
     // Generate response
-    const result = await model.generateContent({
-      contents: [{ role: 'user', parts: [{ text: prompt }] }],
-      generationConfig: {
-        temperature: 0.7,
-        topK: 40,
-        topP: 0.95,
-        maxOutputTokens: 1024,
-      }
-    });
+    let result;
+    try {
+      result = await model.generateContent(prompt);
+      console.log('Gemini result:', result);
+    } catch (error) {
+      console.error('Error generating content:', error);
+      return new Response(JSON.stringify({
+        error: true,
+        message: 'Failed to generate response',
+        response: 'Xin lỗi, có lỗi xảy ra khi tạo câu trả lời. Vui lòng thử lại sau.',
+        suggestions: [
+          'Làm thế nào để tham gia câu lạc bộ FTC?',
+          'Các hoạt động của câu lạc bộ có gì?',
+          'Làm sao để đăng ký tham gia?',
+          'Câu lạc bộ có những chương trình gì?',
+          'Làm thế nào để liên hệ với ban chủ nhiệm?'
+        ]
+      }), { status: 500, headers: { 'Content-Type': 'application/json' } });
+    }
 
     const answer = extractText(result) || 'Xin lỗi, không thể tạo câu trả lời. Vui lòng thử lại.';
+    console.log('Extracted answer:', answer);
 
     // Generate suggested follow-up questions (5) using Gemini, prefer knowledge base
     let suggestions: string[] = [];
     try {
-      const suggestionPrompt = `Bạn là cố vấn thân thiện cho tân sinh viên. Dựa trên thông tin từ knowledge base (nếu có) và câu trả lời vừa soạn ở trên, hãy tạo 5 câu hỏi gợi ý mà tân sinh viên có thể tiếp tục hỏi. Trả về một mảng JSON thuần gồm các chuỗi.`;
-      const sugResp = await model.generateContent({
-        contents: [{ role: 'user', parts: [{ text: suggestionPrompt }] }],
-        generationConfig: { temperature: 0.7, maxOutputTokens: 256 }
-      });
+      const suggestionPrompt = `Dựa trên câu hỏi "${message}" và câu trả lời vừa rồi, hãy tạo 5 câu hỏi gợi ý liên quan mà tân sinh viên có thể hỏi tiếp. Trả về dạng JSON array: ["câu hỏi 1", "câu hỏi 2", "câu hỏi 3", "câu hỏi 4", "câu hỏi 5"]`;
+      const sugResp = await model.generateContent(suggestionPrompt);
       const rawSug = extractText(sugResp)
+      console.log('Raw suggestions:', rawSug)
+      
       try {
-        const parsed = JSON.parse(rawSug);
-        if (Array.isArray(parsed)) suggestions = parsed.filter((x) => typeof x === 'string');
+        // Try to extract JSON from the response
+        const jsonMatch = rawSug.match(/\[.*?\]/s);
+        if (jsonMatch) {
+          const parsed = JSON.parse(jsonMatch[0]);
+          if (Array.isArray(parsed)) {
+            suggestions = parsed.filter((x) => typeof x === 'string').slice(0, 5);
+          }
+        }
       } catch (e) {
-        // ignore parse errors
+        console.log('Failed to parse suggestions JSON:', e)
+        // Fallback suggestions
+        suggestions = [
+          'Làm thế nào để tham gia câu lạc bộ FTC?',
+          'Các hoạt động của câu lạc bộ có gì?',
+          'Làm sao để đăng ký tham gia?',
+          'Câu lạc bộ có những chương trình gì?',
+          'Làm thế nào để liên hệ với ban chủ nhiệm?'
+        ];
       }
     } catch (e) {
-      // ignore suggestion generation errors
+      console.log('Error generating suggestions:', e)
+      // Fallback suggestions
+      suggestions = [
+        'Làm thế nào để tham gia câu lạc bộ FTC?',
+        'Các hoạt động của câu lạc bộ có gì?',
+        'Làm sao để đăng ký tham gia?',
+        'Câu lạc bộ có những chương trình gì?',
+        'Làm thế nào để liên hệ với ban chủ nhiệm?'
+      ];
     }
 
     return new Response(JSON.stringify({

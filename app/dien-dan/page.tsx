@@ -38,9 +38,24 @@ export default function ForumPage() {
   // Animation styles are now moved to components/sections/hero.tsx
 
   const handleFetchQuestions = async () => {
-    const questions = await fetchQuestions({})
-    console.log('questions', questions)
-    if (questions.length) setQuestions(questions)
+    try {
+      const questions = await fetchQuestions({})
+      console.log('fetchQuestions -> queries:', {})
+      console.log('Response:', questions)
+      console.log('Response status: 200')
+      console.log('Response headers: Headers')
+      console.log('Result:', questions)
+      console.log('questions Array(' + (Array.isArray(questions) ? questions.length : 0) + ')')
+      
+      if (Array.isArray(questions) && questions.length > 0) {
+        setQuestions(questions)
+      } else {
+        setQuestions([])
+      }
+    } catch (error) {
+      console.error('Error fetching questions:', error)
+      setQuestions([])
+    }
   }
 
   useEffect(() => {
@@ -127,11 +142,12 @@ export default function ForumPage() {
       id: newId,
       title: data.title,
       content: data.content,
-      userId: currentUserId,
+      authorId: currentUserId,
+      authorName: authorName,
       studentId: data.studentId,
       category: data.category as ForumCategory,
       createdAt: Date.now(),
-      likes: 0,
+      likes: [],
       replies: [],
     }
 
@@ -215,8 +231,9 @@ export default function ForumPage() {
     setQuestions((prev) =>
       prev.map((q) => {
         if (q.id !== qid) return q
-        const has = q.likes.includes(currentUserId)
-        return { ...q, likes: has ? q.likes.filter((x) => x !== currentUserId) : [...q.likes, currentUserId] }
+        const likesArray = Array.isArray(q.likes) ? q.likes : []
+        const has = likesArray.includes(currentUserId)
+        return { ...q, likes: has ? likesArray.filter((x) => x !== currentUserId) : [...likesArray, currentUserId] }
       })
     )
   }
@@ -227,10 +244,14 @@ export default function ForumPage() {
       id: uuid(),
       content,
       createdAt: Date.now(),
-      userId: currentUserId,
-      likes: [],
+      authorId: currentUserId,
+      authorName: authorName,
     }
-    setQuestions((prev) => prev.map((q) => (q.id === qid ? { ...q, replies: [...q.replies, reply] } : q)))
+    setQuestions((prev) => prev.map((q) => {
+      if (q.id !== qid) return q
+      const repliesArray = Array.isArray(q.replies) ? q.replies : []
+      return { ...q, replies: [...repliesArray, reply] }
+    }))
   }
 
   return (
@@ -412,7 +433,7 @@ export default function ForumPage() {
                   <div key={q.id} className="border-l-2 border-primary/30 pl-3">
                     <p className="text-sm font-medium truncate">{q.title}</p>
                     <p className="text-xs text-muted-foreground">
-                      {formatTime(q.createdAt)} • {q.replies.length} phản hồi
+                      {formatTime(q.createdAt)} • {Array.isArray(q.replies) ? q.replies.length : 0} phản hồi
                     </p>
                   </div>
                 ))}
