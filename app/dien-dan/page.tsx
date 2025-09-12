@@ -10,7 +10,7 @@ import { Navigation } from '@/components/navigation'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
-import { MessageSquare, HelpCircle, Search, Shuffle } from 'lucide-react'
+import { MessageSquare, HelpCircle, Search, Shuffle, Users, TrendingUp, Hash } from 'lucide-react'
 
 // Import custom components
 import { Hero } from './components/sections/hero'
@@ -232,116 +232,222 @@ export default function ForumPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-slate-900 to-slate-900/95 text-slate-100 overflow-hidden">
-      <style>{`
-        @keyframes float {
-          0%, 100% { transform: translate(0, 0); }
-          50% { transform: translate(-20px, 20px); }
-        }
-        @keyframes pulse {
-          0%, 100% { opacity: 0.4; }
-          50% { opacity: 0.7; }
-        }
-        @keyframes shimmer {
-          to {
-            background-position: 200% center;
-          }
-        }
-      `}</style>
-
+    <div className="min-h-screen bg-gradient-to-b from-background to-background/80 text-foreground">
       <Navigation />
 
-      {/* Hero Section */}
-      <Hero search={search} onSearchChange={(v) => setSearch(v)} />
-
-      {/* Category chips */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-8">
-        <div className="bg-slate-800/60 backdrop-blur-sm rounded-2xl p-4 shadow-md flex gap-3 items-center overflow-auto text-slate-100">
-          <button
-            className={`px-3 py-1 rounded-full text-sm ${selectedCategory === '' ? 'bg-gradient-to-r from-primary to-accent text-white' : 'bg-transparent text-muted-foreground border'}`}
-            onClick={() => setSelectedCategory('')}
-          >
-            Tất cả
-          </button>
-          {CATEGORIES && Object.entries(CATEGORIES).map(([key, label]) => (
-            <button
-              key={key}
-              className={`px-3 py-1 rounded-full text-sm ${selectedCategory === key ? 'bg-gradient-to-r from-primary to-accent text-white' : 'bg-transparent text-muted-foreground border'}`}
-              onClick={() => setSelectedCategory(key as any)}
-            >
-              {label}
-            </button>
-          ))}
-          <div className="ml-auto text-sm text-muted-foreground">{sorted.length} câu hỏi</div>
+      {/* Hero Section - Twitter-style minimal */}
+      <section className="relative py-16 overflow-hidden">
+        <div className="absolute inset-0 pointer-events-none">
+          <div className="absolute top-0 right-0 w-[40%] h-[60%] bg-gradient-to-br from-primary/20 to-accent/10 rounded-full blur-3xl transform translate-x-24 -translate-y-8" />
+          <div className="absolute bottom-0 left-0 w-[35%] h-[50%] bg-gradient-to-tr from-accent/10 to-primary/20 rounded-full blur-3xl -translate-x-24 translate-y-8" />
         </div>
-      </div>
-
-
-
-      {/* Main content section */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
-          <div className="lg:col-span-3 space-y-8">
-            <AskQuestionCard
-              currentStudentId={currentStudentId}
-              onUpdateStudentId={(sid) => {
-                setCurrentStudentId(sid)
-                localStorage.setItem(STORAGE_KEYS.studentId, sid)
-              }}
-              onSubmit={handleCreateQuestion}
+        
+        <div className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-tr from-primary to-accent rounded-full shadow-lg mb-6">
+            <MessageSquare className="h-8 w-8 text-white" />
+          </div>
+          <h1 className="text-4xl lg:text-5xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent mb-4">
+            DIỄN ĐÀN SINH VIÊN
+          </h1>
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto mb-8">
+            Nơi sinh viên chia sẻ, thảo luận và tìm kiếm giải đáp cho mọi thắc mắc
+          </p>
+          
+          {/* Search Bar */}
+          <div className="max-w-xl mx-auto relative">
+            <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-muted-foreground" />
+            <Input
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              placeholder="Tìm kiếm câu hỏi..."
+              className="pl-12 h-12 text-base bg-background/50 backdrop-blur-sm border-border/50 focus:border-primary/50 rounded-full"
             />
+          </div>
+        </div>
+      </section>
 
-            <section>
-              <h2 className="font-heading font-semibold text-lg leading-6 text-foreground mb-4 uppercase tracking-wide">CÂU HỎI GẦN ĐÂY</h2>
+      {/* Main Layout - Twitter-style 3-column */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-12">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+          
+          {/* Left Sidebar - Navigation */}
+          <aside className="lg:col-span-3 space-y-6">
+            <div className="bg-card/50 backdrop-blur-sm rounded-2xl border border-border/50 p-6">
+              <h3 className="font-semibold text-lg mb-4 flex items-center gap-2">
+                <Hash className="h-5 w-5" />
+                Danh mục
+              </h3>
+              <div className="space-y-2">
+                <button
+                  className={`w-full text-left px-4 py-3 rounded-xl transition-all ${
+                    selectedCategory === '' 
+                      ? 'bg-primary text-primary-foreground shadow-lg' 
+                      : 'hover:bg-muted/50 text-muted-foreground hover:text-foreground'
+                  }`}
+                  onClick={() => setSelectedCategory('')}
+                >
+                  <div className="flex items-center justify-between">
+                    <span>Tất cả</span>
+                    <span className="text-sm">{questions.length}</span>
+                  </div>
+                </button>
+                {CATEGORIES && Object.entries(CATEGORIES).map(([key, label]) => {
+                  const count = questions.filter(q => q.category === key).length;
+                  return (
+                    <button
+                      key={key}
+                      className={`w-full text-left px-4 py-3 rounded-xl transition-all ${
+                        selectedCategory === key 
+                          ? 'bg-primary text-primary-foreground shadow-lg' 
+                          : 'hover:bg-muted/50 text-muted-foreground hover:text-foreground'
+                      }`}
+                      onClick={() => setSelectedCategory(key as any)}
+                    >
+                      <div className="flex items-center justify-between">
+                        <span>{label}</span>
+                        <span className="text-sm">{count}</span>
+                      </div>
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* Stats Card */}
+            <div className="bg-card/50 backdrop-blur-sm rounded-2xl border border-border/50 p-6">
+              <h3 className="font-semibold text-lg mb-4 flex items-center gap-2">
+                <TrendingUp className="h-5 w-5" />
+                Thống kê
+              </h3>
               <div className="space-y-4">
-                {paginated.map((q) => (
+                <div className="flex items-center justify-between">
+                  <span className="text-muted-foreground">Tổng câu hỏi</span>
+                  <span className="font-semibold">{questions.length}</span>
+                </div>
+                <div className="flex items-center justify-between">
+                  <span className="text-muted-foreground">Hiển thị</span>
+                  <span className="font-semibold">{sorted.length}</span>
+                </div>
+                <div className="flex items-center justify-between">
+                  <span className="text-muted-foreground">Trang hiện tại</span>
+                  <span className="font-semibold">{pageSafe}/{totalPages}</span>
+                </div>
+              </div>
+            </div>
+          </aside>
+
+          {/* Main Content - Feed */}
+          <main className="lg:col-span-6 space-y-6">
+            {/* Create Question Card */}
+            <div className="bg-card/50 backdrop-blur-sm rounded-2xl border border-border/50">
+              <AskQuestionCard
+                currentStudentId={currentStudentId}
+                onUpdateStudentId={(sid) => {
+                  setCurrentStudentId(sid)
+                  localStorage.setItem(STORAGE_KEYS.studentId, sid)
+                }}
+                onSubmit={handleCreateQuestion}
+              />
+            </div>
+
+            {/* Questions Feed */}
+            <div className="space-y-4">
+              {paginated.map((q) => (
+                <div key={q.id} className="bg-card/50 backdrop-blur-sm rounded-2xl border border-border/50 hover:border-border transition-all">
                   <QuestionCard
-                    key={q.id}
                     q={q}
                     defaultStudentId={currentStudentId}
                     onLike={() => handleToggleLike(q.id)}
                     onReply={(content, authorName) => handleAddReply(q.id, content, authorName)}
                   />
-                ))}
-                {sorted.length === 0 && (
-                  <Card>
-                    <CardContent className="p-6 text-sm text-muted-foreground">Không có kết quả phù hợp.</CardContent>
-                  </Card>
-                )}
-              </div>
-
-              {totalPages > 1 && (
-                <div className="flex items-center justify-between mt-4">
-                  <div className="text-sm text-muted-foreground">Trang {pageSafe}/{totalPages}</div>
-                  <div className="inline-flex gap-2">
-                    <Button variant="outline" size="sm" disabled={pageSafe <= 1} onClick={() => setPage((p) => Math.max(1, p - 1))}>
-                      Trang trước
-                    </Button>
-                    <Button variant="outline" size="sm" disabled={pageSafe >= totalPages} onClick={() => setPage((p) => Math.min(totalPages, p + 1))}>
-                      Trang sau
-                    </Button>
-                  </div>
+                </div>
+              ))}
+              
+              {sorted.length === 0 && (
+                <div className="bg-card/50 backdrop-blur-sm rounded-2xl border border-border/50 p-8 text-center">
+                  <MessageSquare className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
+                  <h3 className="text-lg font-semibold mb-2">Chưa có câu hỏi nào</h3>
+                  <p className="text-muted-foreground">Hãy là người đầu tiên đặt câu hỏi!</p>
                 </div>
               )}
-            </section>
-          </div>
+            </div>
 
-          <aside className="space-y-6 lg:col-start-4 lg:col-span-1 lg:sticky lg:top-24">
-            {/* Right sticky utilities */}
+            {/* Pagination */}
+            {totalPages > 1 && (
+              <div className="flex items-center justify-center gap-4 pt-6">
+                <Button 
+                  variant="outline" 
+                  disabled={pageSafe <= 1} 
+                  onClick={() => setPage((p) => Math.max(1, p - 1))}
+                  className="rounded-full"
+                >
+                  Trang trước
+                </Button>
+                <span className="text-sm text-muted-foreground px-4">
+                  {pageSafe} / {totalPages}
+                </span>
+                <Button 
+                  variant="outline" 
+                  disabled={pageSafe >= totalPages} 
+                  onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
+                  className="rounded-full"
+                >
+                  Trang sau
+                </Button>
+              </div>
+            )}
+          </main>
+
+          {/* Right Sidebar - Widgets */}
+          <aside className="lg:col-span-3 space-y-6">
+            <div className="bg-card/50 backdrop-blur-sm rounded-2xl border border-border/50 p-6">
+              <h3 className="font-semibold text-lg mb-4 flex items-center gap-2">
+                <Users className="h-5 w-5" />
+                Hoạt động gần đây
+              </h3>
+              <div className="space-y-3">
+                {questions.slice(0, 5).map((q) => (
+                  <div key={q.id} className="border-l-2 border-primary/30 pl-3">
+                    <p className="text-sm font-medium truncate">{q.title}</p>
+                    <p className="text-xs text-muted-foreground">
+                      {formatTime(q.createdAt)} • {q.replies.length} phản hồi
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </div>
+
             <SidebarWidgets
               currentStudentId={currentStudentId}
-              setCurrentStudentId={(v: string) => { setCurrentStudentId(v); localStorage.setItem(STORAGE_KEYS.studentId, v) }}
+              setCurrentStudentId={(v: string) => { 
+                setCurrentStudentId(v); 
+                localStorage.setItem(STORAGE_KEYS.studentId, v) 
+              }}
             />
           </aside>
-
-          {/* inline component to allow swapping widgets */}
-          <style jsx>{`
-            .widget-card { border-radius: 12px; box-shadow: 0 6px 18px rgba(13, 27, 62, 0.06); }
-          `}</style>
-
-
         </div>
       </div>
+
+      <style jsx global>{`
+        @keyframes gradient {
+          0% { background-position: 0% 50%; }
+          50% { background-position: 100% 50%; }
+          100% { background-position: 0% 50%; }
+        }
+        @keyframes blob {
+          0%, 100% { transform: translate(0, 0) scale(1); }
+          25% { transform: translate(20px, -30px) scale(1.1); }
+          50% { transform: translate(-20px, 20px) scale(0.9); }
+          75% { transform: translate(30px, 30px) scale(1.05); }
+        }
+        .animate-gradient-slow {
+          animation: gradient 15s ease infinite;
+          background-size: 200% 200%;
+        }
+        .animate-blob {
+          animation: blob 20s ease-in-out infinite;
+        }
+      `}</style>
     </div>
   )
 }
