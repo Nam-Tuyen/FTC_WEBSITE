@@ -251,55 +251,31 @@ export default function ForumPage() {
 
       <Navigation />
 
-      {/* Hero Section with Animated Background */}
-      <section className="relative min-h-[50vh] flex items-center justify-center py-24 px-4 sm:px-6 lg:px-8">
-        {/* Animated background elements */}
-        <div className="absolute inset-0 overflow-hidden">
-          <div
-            className="absolute top-1/4 -right-1/4 w-2/3 h-2/3 bg-gradient-to-br from-primary/20 via-accent/20 to-transparent rounded-full blur-3xl"
-            style={{ animation: "float 20s ease-in-out infinite" }}
-          />
-          <div
-            className="absolute -bottom-1/4 -left-1/4 w-2/3 h-2/3 bg-gradient-to-tr from-accent/20 via-primary/20 to-transparent rounded-full blur-3xl"
-            style={{ animation: "float 20s ease-in-out infinite reverse" }}
-          />
-          <div
-            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-[radial-gradient(ellipse_at_center,rgba(var(--primary-rgb),0.05),transparent)] pointer-events-none"
-            style={{ animation: "pulse 8s infinite" }}
-          />
+      {/* Hero Section */}
+      <Hero search={search} onSearchChange={(v) => setSearch(v)} />
+
+      {/* Category chips */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-8">
+        <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-4 shadow-md flex gap-3 items-center overflow-auto">
+          <button
+            className={`px-3 py-1 rounded-full text-sm ${selectedCategory === '' ? 'bg-gradient-to-r from-primary to-accent text-white' : 'bg-transparent text-muted-foreground border'}`}
+            onClick={() => setSelectedCategory('')}
+          >
+            Tất cả
+          </button>
+          {CATEGORIES && Object.entries(CATEGORIES).map(([key, label]) => (
+            <button
+              key={key}
+              className={`px-3 py-1 rounded-full text-sm ${selectedCategory === key ? 'bg-gradient-to-r from-primary to-accent text-white' : 'bg-transparent text-muted-foreground border'}`}
+              onClick={() => setSelectedCategory(key as any)}
+            >
+              {label}
+            </button>
+          ))}
+          <div className="ml-auto text-sm text-muted-foreground">{sorted.length} câu hỏi</div>
         </div>
+      </div>
 
-        <div className="relative max-w-5xl mx-auto">
-          <div className="text-center space-y-8">
-            {/* Main Title with Gradient Style */}
-            <h1 className="relative text-2xl sm:text-3xl lg:text-4xl font-semibold inline-block uppercase tracking-wide">
-              <span className="absolute inset-0 bg-gradient-to-r from-primary to-accent opacity-40 blur-2xl transform-gpu"></span>
-              <span className="relative bg-gradient-to-r from-primary to-accent text-transparent bg-clip-text">DIỄN ĐÀN</span>
-            </h1>
-
-            {/* Simple Italicized Subtitle */}
-            <p className="text-xl sm:text-2xl text-muted-foreground leading-relaxed max-w-3xl mx-auto italic">
-              Nơi thảo luận và giải đáp thắc mắc cho các bạn tân sinh viên
-            </p>
-
-            {/* Search Bar with Modern Style */}
-            <div className="relative max-w-3xl mx-auto mt-12">
-              <div className="relative">
-                <div className="absolute -inset-1 bg-gradient-to-r from-primary/20 to-accent/20 rounded-lg blur opacity-75"></div>
-                <div className="relative bg-background/40 backdrop-blur-sm rounded-lg">
-                  <Search size={20} className="absolute left-4 top-1/2 -translate-y-1/2 text-muted-foreground" />
-                  <Input
-                    value={search}
-                    onChange={(e: ChangeEvent<HTMLInputElement>) => setSearch(e.target.value)}
-                    placeholder="Tìm kiếm câu hỏi, nội dung..."
-                    className="pl-12 bg-transparent border-primary/20 h-12"
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
 
 
       {/* Main content section */}
