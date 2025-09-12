@@ -48,7 +48,7 @@ export function QuestionCard({ q, children, onLike, onReply, defaultStudentId }:
           </div>
 
           <h3 className="mt-2 text-lg font-semibold truncate">{q.title}</h3>
-          <p className="mt-2 text-sm text-slate-700 max-h-24 overflow-hidden text-ellipsis whitespace-pre-wrap">{q.content}</p>
+          <p className="mt-2 text-sm text-slate-300 max-h-24 overflow-hidden text-ellipsis whitespace-pre-wrap">{q.content}</p>
 
           <div className="mt-4 flex items-center gap-3">
             <button onClick={onLike} className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-rose-600 transition">
