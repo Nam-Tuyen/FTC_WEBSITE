@@ -212,6 +212,33 @@ Câu hỏi: ${message}
 
 Trả lời:`;
 
+    // helper to extract text from various SDK response shapes
+    function extractText(resp: any) {
+      try {
+        if (!resp) return ''
+        // older SDK: resp.response.text() is a function
+        if (resp.response && typeof resp.response.text === 'function') {
+          return String(resp.response.text()).trim()
+        }
+        // newer SDK: resp.response.text is string
+        if (resp.response && typeof resp.response.text === 'string') {
+          return resp.response.text.trim()
+        }
+        // fallback: check common fields
+        if (typeof resp.output_text === 'string') return resp.output_text.trim()
+        if (Array.isArray(resp.output) && resp.output.length) {
+          const first = resp.output[0]
+          if (first && Array.isArray(first.content) && first.content.length) {
+            const part = first.content[0]
+            if (part && typeof part.text === 'string') return part.text.trim()
+          }
+        }
+        return ''
+      } catch (e) {
+        return ''
+      }
+    }
+
     // Generate response
     const result = await model.generateContent({
       contents: [{ role: 'user', parts: [{ text: prompt }] }],
@@ -223,7 +250,7 @@ Trả lời:`;
       }
     });
 
-    const answer = result.response?.text?.trim() || 'Xin lỗi, không thể tạo câu trả lời. Vui lòng thử lại.';
+    const answer = extractText(result) || 'Xin lỗi, không thể tạo câu trả lời. Vui lòng thử lại.';
 
     // Generate suggested follow-up questions (5) using Gemini, prefer knowledge base
     let suggestions: string[] = [];
@@ -233,7 +260,7 @@ Trả lời:`;
         contents: [{ role: 'user', parts: [{ text: suggestionPrompt }] }],
         generationConfig: { temperature: 0.7, maxOutputTokens: 256 }
       });
-      const rawSug = sugResp.response?.text?.trim?.() || '';
+      const rawSug = extractText(sugResp)
       try {
         const parsed = JSON.parse(rawSug);
         if (Array.isArray(parsed)) suggestions = parsed.filter((x) => typeof x === 'string');
