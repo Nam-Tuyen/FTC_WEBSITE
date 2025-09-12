@@ -1,7 +1,8 @@
 import React from 'react'
 import { Badge } from '@/components/ui/badge'
 import { Heart, MessageSquare, Share2 } from 'lucide-react'
-import moment from 'moment'
+import { formatDistanceToNow } from 'date-fns'
+import { vi } from 'date-fns/locale'
 
 export function QuestionCard({ q, children, onLike, onReply, defaultStudentId }: { q: any; children?: React.ReactNode; onLike?: () => void; onReply?: (content: string, authorName: string) => void; defaultStudentId?: string }) {
   const created = typeof q.createdAt === 'number' ? new Date(q.createdAt) : new Date(q.createdAt || Date.now())
@@ -30,7 +31,14 @@ export function QuestionCard({ q, children, onLike, onReply, defaultStudentId }:
     setExpanded(true)
   }
 
-  const formatTime = (time: any) => moment(time).fromNow()
+  const formatTime = (time: any) => {
+    try {
+      const date = typeof time === 'number' ? new Date(time) : new Date(time || Date.now())
+      return formatDistanceToNow(date, { addSuffix: true, locale: vi })
+    } catch {
+      return 'vừa xong'
+    }
+  }
 
   return (
     <article className="group relative border border-transparent hover:border-primary/30 hover:shadow-lg transition p-4 rounded-lg bg-gradient-to-br from-[#041426] to-[#071425] text-slate-100">
