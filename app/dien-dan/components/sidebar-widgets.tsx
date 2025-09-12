@@ -42,7 +42,7 @@ export function SidebarWidgets({ currentStudentId, setCurrentStudentId }: { curr
       <Card className="widget-card overflow-hidden rounded-xl transition-shadow hover:shadow-lg">
         <CardHeader className="px-3 py-2 bg-transparent">
           <div className="flex items-center justify-between text-left">
-            <CardTitle className="text-sm font-medium uppercase tracking-wide text-left"> 
+            <CardTitle className="text-sm font-medium uppercase tracking-wide text-left">
               <p>HỒ SƠ NGƯỜI DÙNG</p>
             </CardTitle>
             <button className="text-xs text-muted-foreground" onClick={() => { /* placeholder */ }}>{currentStudentId ? 'Chỉnh sửa' : 'Thêm'}</button>
@@ -56,10 +56,10 @@ export function SidebarWidgets({ currentStudentId, setCurrentStudentId }: { curr
                 value={currentStudentId}
                 onChange={(e) => setCurrentStudentId(e.target.value)}
                 placeholder="K#########"
-                className="h-9 text-sm"
+                className="h-9 text-sm bg-slate-700 text-slate-100 border-slate-600"
               />
               <div className="text-xs text-muted-foreground mt-2 text-left">
-                <p>Người dùng c�� thể đăng bài và trả lời câu hỏi bằng mã số sinh viên hoặc ẩn danh</p>
+                <p>Người dùng có thể đăng bài và trả lời câu hỏi bằng mã số sinh viên hoặc ẩn danh</p>
               </div>
             </div>
           </div>
@@ -70,7 +70,7 @@ export function SidebarWidgets({ currentStudentId, setCurrentStudentId }: { curr
 
   const ActionsCard = (
     <div draggable onDragStart={(e) => onDragStart(e, order.indexOf('actions'))} onDragOver={onDragOver} onDrop={(e) => onDrop(e, order.indexOf('actions'))}>
-      <Card className="widget-card overflow-hidden rounded-xl transition-shadow hover:shadow-lg" style={{ backgroundColor: 'rgb(23, 67, 113)' }}>
+      <Card className="widget-card overflow-hidden rounded-xl transition-shadow hover:shadow-lg bg-gradient-to-br from-[#041426] to-[#071425] text-slate-100">
         <CardHeader className="px-3 py-2 bg-transparent">
           <CardTitle className="text-[20px] font-semibold text-center uppercase tracking-wide">HÀNH ĐỘNG NHANH</CardTitle>
         </CardHeader>
@@ -94,7 +94,7 @@ export function SidebarWidgets({ currentStudentId, setCurrentStudentId }: { curr
     </div>
   )
 
-  const elems = order.map((k) => (k === 'profile' ? ProfileCard : ActionsCard))
+  const elems = order.map((k, idx) => React.cloneElement(k === 'profile' ? ProfileCard : ActionsCard, { key: `${k}-${idx}` }))
 
   return (
     <div className="space-y-3">
