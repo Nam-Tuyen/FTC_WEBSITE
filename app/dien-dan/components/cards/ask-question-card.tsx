@@ -75,11 +75,11 @@ export function AskQuestionCard({
         <p className="text-sm text-muted-foreground mt-1">Chia sẻ câu hỏi của bạn với cộng đồng FTC</p>
       </CardHeader>
 
-      <CardContent className="relative p-6 bg-white/70 backdrop-blur-sm rounded-b-2xl">
+      <CardContent className="relative p-6 bg-slate-800/60 backdrop-blur-sm rounded-b-2xl text-slate-100">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div className="md:col-span-2">
             <label className="block text-xs text-muted-foreground">Tiêu đề</label>
-            <Input value={title} onChange={(e) => setTitle(e.target.value)} placeholder="Tiêu đề ngắn gọn" className="mt-2" />
+            <Input value={title} onChange={(e) => setTitle(e.target.value)} placeholder="Tiêu đề ngắn gọn" className="mt-2 bg-slate-700 text-slate-100 border-slate-600" />
           </div>
 
           <div>
@@ -100,7 +100,7 @@ export function AskQuestionCard({
 
         <div className="mt-4">
           <label className="block text-xs text-muted-foreground">Nội dung</label>
-          <Textarea value={content} onChange={(e) => setContent(e.target.value)} placeholder="Mô tả chi tiết, kèm bối cảnh và bước bạn đã thử" className="mt-2 min-h-[140px]" />
+          <Textarea value={content} onChange={(e) => setContent(e.target.value)} placeholder="M�� tả chi tiết, kèm bối cảnh và bước bạn đã thử" className="mt-2 min-h-[140px] bg-slate-700 text-slate-100 border-slate-600" />
         </div>
 
         <div className="mt-4 flex items-center gap-4">
@@ -131,7 +131,7 @@ export function AskQuestionCard({
             </DialogHeader>
             <div className="space-y-2">
               <p className="text-sm text-muted-foreground">Bạn đã chọn chế độ MSSV nhưng chưa có MSSV hợp lệ. Vui lòng nhập MSSV (dạng K#########) để tiếp tục.</p>
-              <Input value={modalInput} onChange={(e) => setModalInput(e.target.value)} placeholder="K#########" />
+              <Input value={modalInput} onChange={(e) => setModalInput(e.target.value)} placeholder="K#########" className="bg-slate-700 text-slate-100 border-slate-600" />
             </div>
             <DialogFooter>
               <div className="flex justify-end gap-2">
