@@ -5,7 +5,6 @@ import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
 import { Plus } from 'lucide-react'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
-import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from '@/components/ui/dialog'
 import { CATEGORIES } from '@/app/dien-dan/types'
 
@@ -69,80 +68,59 @@ export function AskQuestionCard({
   }
 
   return (
-    <Card id="ask-question-form" className="group relative transition-transform hover:shadow-lg hover:-translate-y-1">
-      <div className="absolute inset-0 bg-gradient-to-r from-primary/10 to-accent/10 rounded-2xl transform group-hover:scale-[1.02] transition-transform duration-500" />
-      <CardHeader>
-        <CardTitle className="text-base font-heading uppercase tracking-wide">ĐẶT CÂU HỎI</CardTitle>
+    <Card id="ask-question-form" className="relative overflow-hidden rounded-2xl border border-transparent hover:shadow-2xl transition">
+      <div className="absolute -inset-1 bg-gradient-to-r from-primary/10 to-accent/10 blur-lg" />
+      <CardHeader className="relative p-6">
+        <CardTitle className="text-lg font-semibold">Đặt câu hỏi</CardTitle>
+        <p className="text-sm text-muted-foreground mt-1">Chia sẻ câu hỏi của bạn với cộng đồng FTC</p>
       </CardHeader>
 
-      <CardContent className="relative space-y-4 bg-background/40 backdrop-blur-lg rounded-2xl p-6">
-        {/* Title */}
-        <div className="space-y-1">
-          <label className="block text-xs font-medium text-muted-foreground uppercase">TIÊU ĐỀ</label>
-          <Input className="mt-1" value={title} onChange={(e) => setTitle(e.target.value)} placeholder="Nhập tiêu đề câu hỏi" />
-        </div>
+      <CardContent className="relative p-6 bg-white/70 backdrop-blur-sm rounded-b-2xl">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div className="md:col-span-2">
+            <label className="block text-xs text-muted-foreground">Tiêu đề</label>
+            <Input value={title} onChange={(e) => setTitle(e.target.value)} placeholder="Tiêu đề ngắn gọn" className="mt-2" />
+          </div>
 
-        {/* Category */}
-        <div className="space-y-1">
-          <label className="block text-xs font-medium text-muted-foreground uppercase">CHỦ ĐỀ</label>
-          <Select value={category} onValueChange={setCategory}>
-            <SelectTrigger className="w-full mt-1">
-              <SelectValue />
-            </SelectTrigger>
-            <SelectContent>
-              {Object.entries(CATEGORIES).map(([key, label]) => (
-                // @ts-ignore
-                <SelectItem key={key} value={key}>{label}</SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-        </div>
-
-        {/* Posting mode */}
-        <div className="space-y-1">
-          <label className="block text-xs font-medium text-muted-foreground uppercase">CHẾ ĐỘ ĐĂNG</label>
-          <div className="flex items-center gap-6 mt-2">
-            <label className="inline-flex items-center gap-2">
-              <input type="radio" checked={mode === 'anonymous'} onChange={() => setMode('anonymous')} className="form-radio" />
-              <span className="text-sm">Ẩn danh</span>
-            </label>
-            <label className="inline-flex items-center gap-2">
-              <input type="radio" checked={mode === 'mssv'} onChange={() => setMode('mssv')} className="form-radio" />
-              <span className="text-sm">MSSV</span>
-            </label>
-
-            {mode === 'mssv' && (
-              <div className="ml-4">
-                <label className="text-sm text-muted-foreground">Mã số sinh viên</label>
-                <div className="mt-1 text-sm">{currentStudentId || <span className="text-xs text-muted-foreground">Chưa có MSSV đã lưu</span>}</div>
-              </div>
-            )}
+          <div>
+            <label className="block text-xs text-muted-foreground">Chủ đề</label>
+            <Select value={category} onValueChange={setCategory}>
+              <SelectTrigger className="w-full mt-2">
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                {Object.entries(CATEGORIES).map(([key, label]) => (
+                  // @ts-ignore
+                  <SelectItem key={key} value={key}>{label}</SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
           </div>
         </div>
 
-        {/* Content */}
-        <div className="space-y-1">
-          <label className="block text-xs font-medium text-muted-foreground uppercase">NỘI DUNG</label>
-          <Textarea
-            className="mt-1 min-h-[140px]"
-            value={content}
-            onChange={(e) => setContent(e.target.value)}
-            placeholder="Mô tả chi tiết vấn đề, bối cảnh, bạn đã thử gì..."
-          />
+        <div className="mt-4">
+          <label className="block text-xs text-muted-foreground">Nội dung</label>
+          <Textarea value={content} onChange={(e) => setContent(e.target.value)} placeholder="Mô tả chi tiết, kèm bối cảnh và bước bạn đã thử" className="mt-2 min-h-[140px]" />
         </div>
 
-        {error && <div className="text-sm text-destructive">{error}</div>}
-
-        <div className="flex justify-end">
-          <Button
-            className="relative group"
-            onClick={handlePostQuestion}
-          >
-            <div className="absolute -inset-0.5 bg-gradient-to-r from-primary to-accent opacity-75 rounded-lg blur transition group-hover:opacity-100"></div>
-            <div className="relative flex items-center">
-              <Plus className="h-4 w-4 mr-2" />
-              ĐĂNG CÂU HỎI
+        <div className="mt-4 flex items-center gap-4">
+          <div className="flex items-center gap-3">
+            <label className="text-sm">Chế độ</label>
+            <div className="inline-flex items-center gap-3">
+              <label className="inline-flex items-center gap-2"><input type="radio" checked={mode === 'anonymous'} onChange={() => setMode('anonymous')} /> <span className="text-sm">Ẩn danh</span></label>
+              <label className="inline-flex items-center gap-2"><input type="radio" checked={mode === 'mssv'} onChange={() => setMode('mssv')} /> <span className="text-sm">MSSV</span></label>
             </div>
+          </div>
+
+          <div className="ml-auto text-sm text-muted-foreground">MSSV: {currentStudentId || 'Chưa lưu'}</div>
+        </div>
+
+        {error && <div className="text-sm text-destructive mt-2">{error}</div>}
+
+        <div className="mt-6 flex justify-end">
+          <Button className="inline-flex items-center gap-2 bg-gradient-to-r from-primary to-accent text-white" onClick={handlePostQuestion}>
+            <Plus className="w-4 h-4" />
+            Đăng câu hỏi
           </Button>
         </div>
 
