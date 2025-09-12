@@ -2,14 +2,8 @@
   "version": 2,
   "name": "rag-chatbot-backend",
   "functions": {
-    "api/index.js": {
+    "api/*.js": {
       "maxDuration": 30
     }
-  },
-  "rewrites": [
-    {
-      "source": "/(.*)",
-      "destination": "/api/index.js"
-    }
-  ]
+  }
 }
