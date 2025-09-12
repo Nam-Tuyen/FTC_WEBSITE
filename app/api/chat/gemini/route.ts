@@ -12,7 +12,10 @@ const MODEL_NAME = "gemini-pro";
 // Helper to initialize Gemini model at request time
 function initGemini() {
   const key = process.env.GEMINI_API_KEY || process.env.GOOGLE_API_KEY
-  if (!key) return null;
+  if (!key) {
+    console.error('GEMINI_API_KEY not found in environment variables')
+    return null;
+  }
   try {
     const genAI = new GoogleGenerativeAI(key);
     return genAI.getGenerativeModel({
@@ -187,7 +190,18 @@ export async function POST(req: Request) {
     const model = initGemini();
     if (!model) {
       console.error('[api/chat/gemini] GEMINI API not configured')
-      return new Response(JSON.stringify({ error: 'AI service unavailable', code: 'NO_GEMINI_KEY' }), { status: 503, headers: { 'Content-Type': 'application/json' } })
+      return new Response(JSON.stringify({ 
+        error: 'AI service temporarily unavailable', 
+        code: 'NO_GEMINI_KEY',
+        response: 'Xin lỗi, dịch vụ AI tạm thời không khả dụng. Vui lòng thử lại sau.',
+        suggestions: [
+          'Làm thế nào để tham gia câu lạc bộ FTC?',
+          'Các hoạt động của câu lạc bộ có gì?',
+          'Làm sao để đăng ký tham gia?',
+          'Câu lạc bộ có những chương trình gì?',
+          'Làm thế nào để liên hệ với ban chủ nhiệm?'
+        ]
+      }), { status: 503, headers: { 'Content-Type': 'application/json' } })
     }
 
     // Load knowledge base
@@ -284,6 +298,14 @@ Trả lời:`;
     return new Response(JSON.stringify({
       error: true,
       message: 'Internal server error',
+      response: 'Xin lỗi, có lỗi xảy ra khi xử lý yêu cầu. Vui lòng thử lại sau.',
+      suggestions: [
+        'Làm thế nào để tham gia câu lạc bộ FTC?',
+        'Các hoạt động của câu lạc bộ có gì?',
+        'Làm sao để đăng ký tham gia?',
+        'Câu lạc bộ có những chương trình gì?',
+        'Làm thế nào để liên hệ với ban chủ nhiệm?'
+      ],
       debug: process.env.NODE_ENV === 'development' ? error.message : undefined
     }), { 
       status: 500,
