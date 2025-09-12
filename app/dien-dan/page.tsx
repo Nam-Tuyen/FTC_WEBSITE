@@ -232,7 +232,7 @@ export default function ForumPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-background to-background/80 overflow-hidden">
+    <div className="min-h-screen bg-gradient-to-b from-slate-900 to-slate-900/95 text-slate-100 overflow-hidden">
       <style>{`
         @keyframes float {
           0%, 100% { transform: translate(0, 0); }
@@ -256,7 +256,7 @@ export default function ForumPage() {
 
       {/* Category chips */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-8">
-        <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-4 shadow-md flex gap-3 items-center overflow-auto">
+        <div className="bg-slate-800/60 backdrop-blur-sm rounded-2xl p-4 shadow-md flex gap-3 items-center overflow-auto text-slate-100">
           <button
             className={`px-3 py-1 rounded-full text-sm ${selectedCategory === '' ? 'bg-gradient-to-r from-primary to-accent text-white' : 'bg-transparent text-muted-foreground border'}`}
             onClick={() => setSelectedCategory('')}
