@@ -412,7 +412,7 @@ export default function ForumPage() {
                   <div key={q.id} className="border-l-2 border-primary/30 pl-3">
                     <p className="text-sm font-medium truncate">{q.title}</p>
                     <p className="text-xs text-muted-foreground">
-                      {formatTime(q.createdAt)} • {q.replies.length} phản hồi
+                      {formatTime(q.createdAt)} • {(q.replies || []).length} phản hồi
                     </p>
                   </div>
                 ))}
