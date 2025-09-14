@@ -191,7 +191,8 @@ export async function POST(req: Request) {
     if (!model) {
       console.error('[api/chat/gemini] GEMINI API not configured')
       return new Response(JSON.stringify({ 
-        error: 'AI service temporarily unavailable', 
+        error: true,
+        message: 'AI service temporarily unavailable', 
         code: 'NO_GEMINI_KEY',
         response: 'Xin lỗi, dịch vụ AI tạm thời không khả dụng. Vui lòng thử lại sau.',
         suggestions: [
@@ -205,7 +206,14 @@ export async function POST(req: Request) {
     }
 
     // Load knowledge base
-    const knowledgeBase = await loadKnowledgeBase();
+    let knowledgeBase = '';
+    try {
+      knowledgeBase = await loadKnowledgeBase();
+    } catch (error) {
+      console.error('[api/chat/gemini] Error loading knowledge base:', error);
+      // Continue without knowledge base if it fails
+      knowledgeBase = '';
+    }
 
     // Build prompt with knowledge base context
     const prompt = `Bạn là trợ lý AI cho Câu lạc bộ Công nghệ – Tài chính (FTC) – UEL.
@@ -254,15 +262,32 @@ Trả lời:`;
     }
 
     // Generate response
-    const result = await model.generateContent({
-      contents: [{ role: 'user', parts: [{ text: prompt }] }],
-      generationConfig: {
-        temperature: 0.7,
-        topK: 40,
-        topP: 0.95,
-        maxOutputTokens: 1024,
-      }
-    });
+    let result;
+    try {
+      result = await model.generateContent({
+        contents: [{ role: 'user', parts: [{ text: prompt }] }],
+        generationConfig: {
+          temperature: 0.7,
+          topK: 40,
+          topP: 0.95,
+          maxOutputTokens: 1024,
+        }
+      });
+    } catch (error) {
+      console.error('[api/chat/gemini] Error generating content:', error);
+      return new Response(JSON.stringify({
+        error: true,
+        message: 'AI service error',
+        response: 'Xin lỗi, có lỗi xảy ra khi tạo câu trả lời. Vui lòng thử lại sau.',
+        suggestions: [
+          'Làm thế nào để tham gia câu lạc bộ FTC?',
+          'Các hoạt động của câu lạc bộ có gì?',
+          'Làm sao để đăng ký tham gia?',
+          'Câu lạc bộ có những chương trình gì?',
+          'Làm thế nào để liên hệ với ban chủ nhiệm?'
+        ]
+      }), { status: 503, headers: { 'Content-Type': 'application/json' } });
+    }
 
     const answer = extractText(result) || 'Xin lỗi, không thể tạo câu trả lời. Vui lòng thử lại.';
 
