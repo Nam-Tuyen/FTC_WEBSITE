@@ -66,6 +66,10 @@ export function Navigation() {
   return (
     <>
       <style jsx>{`
+        .nav-link { font-size: 0.875rem; /* match text-sm */ }
+        .nav-link svg, nav .nav-link svg { height: 1em; width: 1em; display: block; }
+        .nav-label { line-height: 1; }
+
         .nav-icon-glow {
           filter: drop-shadow(0 0 2px rgba(var(--accent-rgb), 0.3));
         }
