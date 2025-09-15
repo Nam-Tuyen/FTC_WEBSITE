@@ -1,0 +1,5 @@
+# Lịch hoạt động tháng
+
+**Thể loại:** schedule
+
+Thứ 3 hàng tuần: Workshop Blockchain và Cryptocurrency\nThứ 5 hàng tuần: Seminar với chuyên gia Fintech\nThứ 7 hàng tuần: Dự án nghiên cứu nhóm\n\nSự kiện đặc biệt:\n- Hackathon Fintech UEL (tháng 11)\n- Cuộc thi ý tưởng khởi nghiệp (tháng 12)\n- Triển lãm công nghệ tài chính (tháng 1)
