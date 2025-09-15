@@ -137,15 +137,15 @@ const FTC_FAQ_CONTEXT = `
     7) Hoạt động FTC trip có gì vui?
     Với phương châm làm hết mình và chơi hết mình câu lạc bộ luôn định kì hằng năm tổ chức các chuyến đi chơi để gắn kết giữa các thành viên và xả stress sau một thời gian dài hoạt động mệt mỏi.
 
-    8) FTC được thành lập khi nào?
+    8) Câu lạc bộ được thành lập khi nào?
     Câu lạc bộ Công nghệ tài chính FTC trực thuộc Khoa Tài chính và Ngân hàng, Trường Đại học Kinh tế và Luật, Đại học Quốc gia Thành phố Hồ Chí Minh, được thành lập vào tháng mười một năm 2020 dưới sự hướng dẫn của ThS. NCS Phan Huy Tâm (Giảng viên Khoa Tài chính - Ngân hàng) cùng đội ngũ sinh viên ngành công nghệ tài chính.
 
-    9) FTC có những thành tích gì?
+    9) Câu lạc bộ có những thành tích gì?
     THÀNH TÍCH NỔI BẬT
     Thành tích nổi bật của câu lạc bộ trong thời gian qua
 
     NIỀM TỰ HÀO CỦA TUỔI TRẺ UEL
-    Câu lạc bộ Công nghệ tài chính (FTC) luôn gắn liền hành trình phát triển của tuổi trẻ Trường Đại học Kinh tế – Luật với những trải nghiệm đáng nhớ và thành tích nổi bật. Trong năm học 2024 – 2025, FTC đã vinh dự được Ban Cán sự Đoàn Đại học Quốc gia TP.HCM trao tặng Giấy khen vì những đóng góp tích cực trong công tác Đoàn và phong trào thanh niên.
+    Câu lạc bộ Công nghệ t��i chính (FTC) luôn gắn liền hành trình phát triển của tuổi trẻ Trường Đại học Kinh tế – Luật với những trải nghiệm đáng nhớ và thành tích nổi bật. Trong năm học 2024 – 2025, FTC đã vinh dự được Ban Cán sự Đoàn Đại học Quốc gia TP.HCM trao tặng Giấy khen vì những đóng góp tích cực trong công tác Đoàn và phong trào thanh niên.
 
     FTC không chỉ tổ chức các hoạt động học thuật và ngoại khóa bổ ích mà còn tạo dựng một môi trường rèn luyện, kết nối và lan tỏa tinh thần tích cực.
 
