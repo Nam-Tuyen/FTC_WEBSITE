@@ -160,7 +160,7 @@ async function loadKnowledgeBase() {
     return (
       "Câu lạc bộ Công nghệ – Tài chính (FTC) là một câu lạc bộ sinh viên tại UEL.\n" +
       "Mục tiêu: Phát triển kỹ năng về công nghệ tài chính và fintech.\n" +
-      "Hoạt ��ộng: Tổ chức các workshop, seminar, hackathon về fintech.\n" +
+      "Hoạt động: Tổ chức các workshop, seminar, hackathon về fintech.\n" +
       "Thành viên: Sinh viên quan tâm đến lĩnh vực fintech và công nghệ tài chính."
     );
   }
@@ -243,7 +243,7 @@ export async function POST(req: Request) {
           "Làm sao để đăng ký tham gia?",
           "Câu lạc bộ có những chương trình gì?",
           "Làm thế nào để liên hệ với ban chủ nhiệm?",
-          "FTC được thành lập khi nào",
+          "Câu lạc bộ được thành lập khi nào",
         ]
       : [
           "FinTech gồm những mảng chính nào?",
