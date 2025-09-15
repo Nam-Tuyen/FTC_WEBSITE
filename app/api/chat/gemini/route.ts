@@ -1,4 +1,5 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
+import { GoogleGenerativeAI } from "@google/generative-ai";
 import fs from 'fs'
 import path from 'path'
 import { RECRUITMENT_CONFIG } from '../../../ung-tuyen/constants'
