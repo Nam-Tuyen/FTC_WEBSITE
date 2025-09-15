@@ -217,7 +217,7 @@ export function Navigation() {
                   <Link 
                     key={href} 
                     href={href} 
-                    className={`group flex items-center gap-3 px-4 py-3 rounded-lg text-base font-medium transition-all duration-200 ${
+                    className={`group flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
                       isActive ? 'bg-accent/10 text-foreground' : 'text-foreground/80 hover:bg-accent/5'
                     }`}
                     onClick={() => setOpen(false)}
