@@ -38,8 +38,11 @@ export const SUGGESTED_QUESTIONS: Record<FaqTopic, string[]> = {
   ],
   founding: [
     'ftc duoc thanh lap khi nao',
+    'ftc duoc thanh lap nam nao',
     'ftc thanh lap',
     'cau lac bo duoc thanh lap khi nao',
+    'cau lac bo duoc thanh lap nam nao',
+    'clb duoc thanh lap nam nao',
     'thanh lap ftc',
   ],
   achievements: [
