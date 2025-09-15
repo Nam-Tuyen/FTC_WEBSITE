@@ -71,7 +71,13 @@ export function SidebarWidgets({ currentStudentId, setCurrentStudentId }: Sideba
               <Button size="sm" onClick={handleSaveId} className="px-3 py-1">Lưu</Button>
             </div>
             <div className="flex items-center gap-2 mt-3">
-              <Button variant="ghost" size="sm" onClick={handleClear} className="text-sm">Xóa</Button>
+              <button
+                onClick={handleClear}
+                className="inline-flex items-center justify-center px-3 py-1 text-sm font-medium rounded-full border border-accent/20 bg-transparent text-foreground hover:bg-accent/5 transition-colors duration-150"
+                aria-label="Xóa MSSV"
+              >
+                Xóa
+              </button>
             </div>
           </div>
 
