@@ -12,7 +12,7 @@ import { FeaturesSidebar } from "./_components/features-sidebar"
 
 export default function ChatbotPage() {
   return (
-    <div className="min-h-screen bg-gradient-to-b from-background to-background/80 overflow-hidden">
+    <div suppressHydrationWarning className="min-h-screen bg-gradient-to-b from-background to-background/80 overflow-hidden">
       <Navigation />
 
       {/* Hero Section */}
