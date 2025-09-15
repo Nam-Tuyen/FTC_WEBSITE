@@ -182,7 +182,12 @@ export default function ChatbotPage() {
   function formatMessageContent(text: string) {
     if (!text) return ""
     const escaped = escapeHtml(text)
-    let out = escaped.replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>")
+    // Handle Markdown-like emphasis: triple (bold+italic), double (bold), single (italic)
+    let out = escaped
+      .replace(/\*\*\*(.+?)\*\*\*/g, "<strong><em>$1</em></strong>")
+      .replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>")
+      .replace(/\*(.+?)\*/g, "<em>$1</em>")
+
     const lines = out.split(/\r?\n/)
     let inList = false
     let res = ""
