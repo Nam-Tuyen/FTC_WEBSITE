@@ -44,31 +44,20 @@ export function Navigation() {
     menuScrollRef.current.scrollTop += e.deltaY * 2
   }, [])
 
-  // Consistent icon size for all navigation elements
-  const ICON_SIZE = "h-7 w-7" // 28px - increased for clearer visibility
-  
   // Icon wrapper for consistent styling
-  const IconWrapper = ({ 
-    Icon, 
-    isActive, 
+  const IconWrapper = ({
+    Icon,
+    isActive,
     className = "",
     showPulse = false
-  }: { 
-    Icon: React.ComponentType<{ className?: string }>, 
-    isActive?: boolean, 
+  }: {
+    Icon: React.ComponentType<{ className?: string }>,
+    isActive?: boolean,
     className?: string,
     showPulse?: boolean
   }) => (
     <div className={`relative flex items-center justify-center ${className}`}>
-      <Icon className={`
-        ${ICON_SIZE} 
-        text-accent 
-        transition-all 
-        duration-200 
-        group-hover:scale-110 
-        ${isActive ? 'nav-icon-active' : 'nav-icon-glow'}
-        ${showPulse ? 'nav-icon-pulse' : ''}
-      `} />
+      <Icon className={`text-accent transition-all duration-200 group-hover:scale-110 ${isActive ? 'nav-icon-active' : 'nav-icon-glow'} ${showPulse ? 'nav-icon-pulse' : ''}`} />
       {isActive && (
         <div className="absolute inset-0 bg-accent/10 rounded-full blur-md -z-10 animate-pulse" />
       )}
