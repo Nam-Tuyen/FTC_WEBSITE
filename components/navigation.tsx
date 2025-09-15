@@ -6,7 +6,8 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { Button } from '@/components/ui/button'
 import { Menu, X, Home, Info, Award, Calendar, Users, MessageSquare, FileText, Bot } from 'lucide-react'
-import Image from 'next/image'
+// Using simple <img> for external FTC logo URL to avoid next/image domain restrictions
+const FTC_LOGO_URL = "https://cdn.builder.io/api/v1/image/assets%2F28c01978106541d5baa7b8a043c11d9b%2Fa73c2f3c74b94de7814f011b7387bea0?format=webp&width=800"
 
 interface NavigationItem {
   label: string
@@ -44,7 +45,7 @@ export function Navigation() {
   }, [])
 
   // Consistent icon size for all navigation elements
-  const ICON_SIZE = "h-6 w-6" // 24px - larger to match text size
+  const ICON_SIZE = "h-7 w-7" // 28px - increased for clearer visibility
   
   // Icon wrapper for consistent styling
   const IconWrapper = ({ 
@@ -99,19 +100,18 @@ export function Navigation() {
           <div className="flex-shrink-0">
             <Link href="/" className="flex items-center space-x-2 sm:space-x-4 group">
               <div className="relative">
-                <Image
-                  src="/ftc-logo.png"
+                <img
+                  src={FTC_LOGO_URL}
                   alt="Financial Technology Club Logo"
-                  width={40}
-                  height={40}
-                  className="rounded-full glow transition-all"
-                  priority
+                  width={64}
+                  height={64}
+                  className="rounded-full glow transition-all object-cover w-16 h-16"
                 />
                 <div className="absolute inset-0 rounded-full border-2 border-accent" aria-hidden="true" />
               </div>
               <div className="flex items-center gap-3">
-                <span className="font-heading text-foreground font-extrabold tracking-wide leading-none text-[28px]">FTC</span>
-                <span className="text-[10px] sm:text-xs text-accent tracking-wide">&nbsp;</span>
+                <span className="font-heading text-foreground font-extrabold tracking-wide leading-none text-[32px]">FTC</span>
+                <span className="text-[12px] sm:text-sm text-accent tracking-wide">&nbsp;</span>
               </div>
             </Link>
           </div>
