@@ -86,7 +86,7 @@ Lưu ý về lịch sinh hoạt: lịch sẽ được sắp xếp theo trưởng
 
 Yêu cầu: nhiệt huyết và tinh thần học hỏi – sẽ có người hướng dẫn từ đầu.
 
-Nếu có nội dung nào chưa rõ hoặc cần thêm thông tin, vui lòng liên hệ Câu lạc bộ qua Fanpage chính thức để được giải đáp: ${FANPAGE_URL}`,
+Nếu có nội dung nào chưa rõ hoặc cần thêm thông tin, vui lòng liên hệ Câu lạc bộ qua Fanpage chính thức để đư���c giải đáp: ${FANPAGE_URL}`,
   },
 
   // 4) Cơ cấu ban trong CLB
@@ -108,8 +108,8 @@ Nếu có nội dung nào chưa rõ hoặc cần thêm thông tin, vui lòng li�
   {
     patterns: ['lich sinh hoat', 'thoi gian sinh hoat', 'lich hop', 'lich clb', 'schedule', 'sinh hoat'],
     answer:
-`🗓️ **Lịch sinh hoạt**: định kỳ ~2 tuần/lần & theo kế hoạch từng chương trình.
-Thông báo chi tiết trên fanpage và website trước sự kiện ≥7 ngày.`,
+`🗓️ **Lịch sinh hoạt**: thường tổ chức định kỳ khoảng 2 tuần/lần, tuy nhiên lịch cụ thể sẽ được sắp xếp theo lịch của trưởng ban và phó ban của ban bạn tham gia.
+Thông báo chi tiết sẽ được gửi qua Fanpage, website và group nhà chung trước sự kiện để các bạn khảo sát và nắm lịch.` + `\n\nNếu có nội dung nào chưa rõ hoặc cần thêm thông tin, vui lòng liên hệ Câu lạc bộ qua Fanpage chính thức để được giải đáp: ${FANPAGE_URL}`,
   },
 
   // 6) Chi phí
