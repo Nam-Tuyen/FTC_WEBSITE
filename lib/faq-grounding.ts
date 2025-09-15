@@ -1,4 +1,4 @@
-export type FaqTopic = 'activities' | 'join' | 'teams' | 'schedule' | 'skills';
+export type FaqTopic = 'activities' | 'join' | 'teams' | 'schedule' | 'skills' | 'founding' | 'achievements';
 
 export const SUGGESTED_QUESTIONS: Record<FaqTopic, string[]> = {
   activities: [
@@ -35,6 +35,18 @@ export const SUGGESTED_QUESTIONS: Record<FaqTopic, string[]> = {
     'yeu cau ung tuyen',
     'tieu chi ung tuyen',
     'kinh nghiem can co de vao clb',
+  ],
+  founding: [
+    'ftc duoc thanh lap khi nao',
+    'ftc thanh lap',
+    'cau lac bo duoc thanh lap khi nao',
+    'thanh lap ftc',
+  ],
+  achievements: [
+    'ftc co nhung thanh tich gi',
+    'thanh tich ftc',
+    'giai thuong ftc',
+    'ftc dat thanh tich gi',
   ],
 };
 
@@ -85,25 +97,46 @@ const FTC_FAQ_CONTEXT = `
 [CÂU HỎI & TRẢ LỜI CHÍNH THỨC CỦA FTC]
 
 1) Câu lạc bộ có những hoạt động gì?
-FTC tổ chức talkshow, workshop và lớp bồi dưỡng về Fintech, AI trong tài chính, giao dịch thuật toán, blockchain và tài chính cá nhân. Thành viên tham gia dự án thực tế trên dữ liệu và thị trường, rèn tư duy sản phẩm và quản trị rủi ro. Câu lạc bộ còn kết nối doanh nghiệp, mở cơ hội thực tập và xây dựng hồ sơ học thuật, đồng thời giúp phát triển kỹ năng giao tiếp, làm việc nhóm và quản lý dự án.
+    FTC tổ chức talkshow, workshop và lớp bồi dưỡng về Fintech, AI trong tài chính, giao dịch thuật toán, blockchain và tài chính cá nhân. Thành viên tham gia dự án thực tế trên dữ liệu và thị trường, rèn tư duy sản phẩm và quản trị rủi ro. Câu lạc bộ còn kết nối doanh nghiệp, mở cơ hội thực tập và xây dựng hồ sơ học thuật, đồng thời giúp phát triển kỹ năng giao tiếp, làm việc nhóm và quản lý dự án.
 
-2) Làm thế nào để tham gia câu lạc bộ?
-Bạn vào mục Ứng tuyển trên website, chọn Bắt đầu ngay hôm nay và điền form. Hãy chọn ban mong muốn, Ban Nhân sự sẽ liên hệ, định hướng và thông báo các bước tiếp theo. Nếu cần hỗ trợ nhanh, vui lòng gửi email hoặc nhắn fanpage của FTC.
+    2) Làm thế nào để tham gia câu lạc bộ?
+    Bạn vào mục Ứng tuyển trên website, chọn Bắt đầu ngay hôm nay và điền form. Hãy chọn ban mong muốn, Ban Nhân sự sẽ liên hệ, định hướng và thông báo các bước tiếp theo. Nếu cần hỗ trợ nhanh, vui lòng gửi email hoặc nhắn fanpage của FTC.
 
-3) Các ban trong câu lạc bộ làm gì?
-Ban Điều hành định hướng chiến lược, điều phối hoạt động và đối ngoại. Ban Học thuật xây dựng nội dung Fintech, soạn giáo trình và tổ chức rèn kỹ năng như xử lý dữ liệu, SQL và phân tích giao dịch. Ban Sự kiện lập kế hoạch, viết kịch bản, điều phối chương trình và tổng kết báo cáo. Ban Truyền thông quản trị kênh chính thức, sản xuất bài viết, đồ họa, video và lưu trữ tư liệu. Ban Tài chính cá nhân phụ trách giáo dục tài chính cá nhân, triển khai MoneyWe và chuỗi FTCCN Sharing. Ban Nhân sự xây văn hóa, tuyển chọn và phân công nhân sự, theo dõi hiệu quả và quản lý quỹ.
+    3) Các ban trong câu lạc bộ làm gì?
+    Ban Điều hành định hướng chiến lược, điều phối hoạt động và đối ngoại. Ban Học thuật xây dựng nội dung Fintech, soạn giáo trình và tổ chức rèn kỹ năng như xử lý dữ liệu, SQL và phân tích giao dịch. Ban Sự kiện lập kế hoạch, viết kịch bản, điều phối chương trình và tổng kết báo cáo. Ban Truyền thông quản trị kênh chính thức, sản xuất bài viết, đồ họa, video và lưu trữ tư liệu. Ban Tài chính cá nhân phụ trách giáo dục tài chính cá nhân, triển khai MoneyWe và chuỗi FTCCN Sharing. Ban Nhân sự xây văn hóa, tuyển chọn và phân công nhân sự, theo dõi hiệu quả và quản lý quỹ.
 
-4) Thời gian sinh hoạt diễn ra khi nào?
-CLB sinh hoạt định kỳ qua các buổi talkshow, workshop và hoạt động nội bộ. Lịch cụ thể được công bố tại mục Hoạt động và trên các kênh chính thức, đồng thời gửi qua email cho ứng viên sau khi đăng ký.
+    4) Thời gian sinh hoạt diễn ra khi nào?
+    CLB sinh hoạt định kỳ qua các buổi talkshow, workshop và hoạt động nội bộ. Lịch cụ thể được công bố tại mục Hoạt động và trên các kênh chính thức, đồng thời gửi qua email cho ứng viên sau khi đăng ký.
 
-5) Cần kỹ năng gì để ứng tuyển?
-Câu lạc bộ ưu tiên tinh thần ham học, chủ động và cam kết thời gian, cùng kỹ năng giao tiếp, làm việc nhóm và quản lý thời gian. Ứng viên có lợi thế khi biết Excel hoặc Google Sheets, SQL hay Python đối với Ban Học thuật, có khả năng lập kế hoạch và điều phối đối với Ban Sự kiện, viết và thiết kế nội dung hoặc quay dựng video đối với Ban Truyền thông, nắm kiến thức tài chính cá nhân đối với Ban Tài chính cá nhân, và có kỹ năng tổ chức, phỏng vấn và vận hành đối với Ban Nhân sự.
+    5) Cần kỹ năng gì để ứng tuyển?
+    Câu lạc bộ ưu tiên tinh thần ham học, chủ động và cam kết thời gian, cùng kỹ năng giao tiếp, làm việc nhóm và quản lý thời gian. Ứng viên có lợi thế khi biết Excel hoặc Google Sheets, SQL hay Python đối với Ban Học thuật, có khả năng lập kế hoạch và điều phối đối với Ban Sự kiện, viết và thiết kế nội dung hoặc quay dựng video đối với Ban Truyền thông, nắm kiến thức tài chính cá nhân đối với Ban Tài chính cá nhân, và có kỹ năng tổ chức, phỏng vấn và vận hành ��ối với Ban Nhân sự.
 
-6) Câu lạc bộ có bao nhiêu ban tất cả?
-Câu lạc bộ có tất cả 5 ban bao gồm: Ban Học thuật, Ban Sự kiện, Ban Truyền thông, Ban Nhân sự và Ban Tài chính cá nhân.
+    6) Câu lạc bộ có bao nhiêu ban tất cả?
+    Câu lạc bộ có tất cả 5 ban bao gồm: Ban Học thuật, Ban Sự kiện, Ban Truyền thông, Ban Nhân sự và Ban Tài chính cá nhân.
 
-7) Hoạt động FTC trip có gì vui?
-Với phương châm làm hết mình và chơi hết mình câu lạc bộ luôn định kì hằng năm tổ chức các chuyến đi chơi để gắn kết giữa các thành viên và xả stress sau một thời gian dài hoạt động mệt mỏi.
+    7) Hoạt động FTC trip có gì vui?
+    Với phương châm làm hết mình và chơi hết mình câu lạc bộ luôn định kì hằng năm tổ chức các chuyến đi chơi để gắn kết giữa các thành viên và xả stress sau một thời gian dài hoạt động mệt mỏi.
+
+    8) FTC được thành lập khi nào?
+    Câu lạc bộ Công nghệ tài chính FTC trực thuộc Khoa Tài chính và Ngân hàng, Trường Đại học Kinh tế và Luật, Đại học Quốc gia Thành phố Hồ Chí Minh, được thành lập vào tháng mười một năm 2020 dưới sự hướng dẫn của ThS. NCS Phan Huy Tâm (Giảng viên Khoa Tài chính - Ngân hàng) cùng đội ngũ sinh viên ngành công nghệ tài chính.
+
+    9) FTC có những thành tích gì?
+    THÀNH TÍCH NỔI BẬT
+    Thành tích nổi bật của câu lạc bộ trong thời gian qua
+
+    NIỀM TỰ HÀO CỦA TUỔI TRẺ UEL
+    Câu lạc bộ Công nghệ tài chính (FTC) luôn gắn liền hành trình phát triển của tuổi trẻ Trường Đại học Kinh tế – Luật với những trải nghiệm đáng nhớ và thành tích nổi bật. Trong năm học 2024 – 2025, FTC đã vinh dự được Ban Cán sự Đoàn Đại học Quốc gia TP.HCM trao tặng Giấy khen vì những đóng góp tích cực trong công tác Đoàn và phong trào thanh niên.
+
+    FTC không chỉ tổ chức các hoạt động học thuật và ngoại khóa bổ ích mà còn tạo dựng một môi trường rèn luyện, kết nối và lan tỏa tinh thần tích cực.
+
+    Giấy khen ĐHQG
+    DẤU ẤN TẠI GIẢI THƯỞNG I-STAR
+    FTC vinh dự nằm trong Top 10 tổ chức, cá nhân tiêu biểu Nhóm 4 tại Giải thưởng Đổi mới sáng tạo và Khởi nghiệp TP.HCM (I-Star). Đây là giải thưởng uy tín do Ủy ban Nhân dân TP.HCM chủ trì và Sở Khoa học và Công nghệ TP.HCM tổ chức.
+
+    Với định hướng "bệ phóng cho những ý tưởng đổi mới", FTC triển khai nhiều chương trình thiết thực như cuộc thi học thuật, đào tạo, workshop và talkshow để giúp sinh viên tiếp cận kiến thức chuyên sâu về công nghệ tài chính và khởi nghiệp sáng tạo.
+
+    I-Star Top10
+    Giấy chứng nhận I-Star ghi nhận thành tích và đóng góp của FTC trong hoạt động đổi mới sáng tạo và khởi nghiệp. Đây là minh chứng cho nỗ lực của câu lạc bộ trong việc thúc đẩy sáng tạo và hỗ trợ sinh viên thực hiện dự án thực tế.
 `.trim();
 
 const FTC_RULES = `
