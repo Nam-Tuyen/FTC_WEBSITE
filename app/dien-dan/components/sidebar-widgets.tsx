@@ -1,13 +1,11 @@
 'use client'
 
-'use client'
-
 import * as React from 'react'
+import { useState, useEffect } from 'react'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
-import {
-  MessageSquare,
+import { MessageSquare, ArrowUp, User, Plus, Settings } from 'lucide-react'
   ArrowUp,
   User,
   Plus,
