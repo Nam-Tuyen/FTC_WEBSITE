@@ -249,6 +249,8 @@ Trả lời:`;
     } catch (e) {}
 
     return new Response(JSON.stringify({
+      reply: answer,
+      answer: answer,
       response: answer,
       source: 'knowledge_base',
       suggestions
