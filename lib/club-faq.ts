@@ -86,7 +86,7 @@ Lưu ý về lịch sinh hoạt: lịch sẽ được sắp xếp theo trưởng
 
 Yêu cầu: nhiệt huyết và tinh thần học hỏi – sẽ có người hướng dẫn từ đầu.
 
-Nếu có nội dung nào chưa rõ hoặc cần thêm thông tin, vui lòng liên hệ Câu lạc bộ qua Fanpage chính thức để được giải đáp: ${FANPAGE_URL}`,
+Nếu có nội dung nào chưa rõ hoặc cần th��m thông tin, vui lòng liên hệ Câu lạc bộ qua Fanpage chính thức để được giải đáp: ${FANPAGE_URL}`,
   },
 
   // 4) Cơ cấu ban trong CLB
@@ -270,7 +270,9 @@ export function getBotFallbackAnswer(raw: string) {
 Bạn có thể:
 • Gửi mail: ${CONTACT_EMAIL}
 • Nhắn fanpage: ${FANPAGE_URL}
-• Thử đặt câu hỏi khác về thành viên, lịch sinh hoạt, học thuật, sự kiện, truyền thông, tài chính cá nhân, nhân sự…`
+• Thử đặt câu hỏi khác về thành viên, lịch sinh hoạt, học thuật, sự kiện, truyền thông, tài chính cá nhân, nhân sự…
+
+Nếu có nội dung nào chưa rõ hoặc cần thêm thông tin, vui lòng liên hệ Câu lạc bộ qua Fanpage chính thức để được giải đáp: ${FANPAGE_URL}`
   );
 }
 
@@ -322,7 +324,7 @@ export function buildClubContextBlock(userQuestion: string) {
   const hint = 'Nếu câu hỏi nói về CLB, trả lời dựa trên block ngữ cảnh này; thiếu dữ liệu thì nói chưa có, đừng bịa.';
 
   return [
-    '# NG��� CẢNH CLB',
+    '# NGỮ CẢNH CLB',
     hint,
     ...quickFacts.map(norm),
     ...meta,
