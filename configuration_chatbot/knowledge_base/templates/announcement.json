@@ -1,0 +1,15 @@
+{
+  "title": "[TIÊU ĐỀ THÔNG BÁO]",
+  "category": "announcements",
+  "type": "announcement",
+  "priority": "high",
+  "startDate": "2024-01-01",
+  "endDate": "2024-12-31",
+  "content": "[Nội dung thông báo chi tiết]\n\n## Thông tin quan trọng\n- Điểm 1\n- Điểm 2\n- Điểm 3\n\n## Hành động cần thực hiện\n1. Bước 1\n2. Bước 2\n3. Bước 3\n\n## Liên hệ\nEmail: contact@example.com\nPhone: 0123456789",
+  "tags": ["thông-báo", "quan-trọng"],
+  "author": "[Tên người tạo]",
+  "department": "[Tên ban phụ trách]",
+  "lastUpdated": "2024-01-01T00:00:00.000Z",
+  "isActive": true,
+  "targetAudience": ["sinh-viên", "thành-viên", "tất-cả"]
+}
