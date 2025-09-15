@@ -47,7 +47,7 @@ function initGemini() {
     return null;
   }
   try {
-    const genAI = new GoogleGenerativeAI(key);
+    const genAI = new GoogleGenerativeAI({ apiKey: key });
     return genAI.getGenerativeModel({
       model: MODEL_NAME,
       generationConfig: {
@@ -251,7 +251,7 @@ export async function POST(req: Request) {
       const answer =
         fallbackClubAnswer ||
         (clubQuery
-          ? "Xin lỗi, dịch vụ AI tạm thời không khả dụng. Đây là tóm tắt nhanh: FTC là câu lạc bộ học thuật về FinTech tại UEL, tổ chức workshop/talkshow/dự án thực tế, có các ban Học thuật, Sự kiện, Truyền thông, Nhân sự và Tài chính cá nhân. Bạn có thể vào mục Ứng tuyển để đăng ký tham gia."
+          ? "Xin lỗi, d���ch vụ AI tạm thời không khả dụng. Đây là tóm tắt nhanh: FTC là câu lạc bộ học thuật về FinTech tại UEL, tổ chức workshop/talkshow/dự án thực tế, có các ban Học thuật, Sự kiện, Truyền thông, Nhân sự và Tài chính cá nhân. Bạn có thể vào mục Ứng tuyển để đăng ký tham gia."
           : "Xin lỗi, dịch vụ AI tạm thời không khả dụng. Bạn có thể hỏi về các chủ đề như FinTech, ngân hàng số, blockchain, thanh toán điện tử, quản lý rủi ro và đầu tư.");
 
       return new Response(
@@ -338,7 +338,7 @@ export async function POST(req: Request) {
   } catch (error: any) {
     console.error("Error in chat route:", error);
     const fallback =
-      "Xin lỗi, có lỗi xảy ra khi xử lý yêu cầu. Vui lòng thử lại sau.";
+      "Xin lỗi, có lỗi x���y ra khi xử lý yêu cầu. Vui lòng thử lại sau.";
     return new Response(
       JSON.stringify({
         error: true,
