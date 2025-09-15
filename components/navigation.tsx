@@ -76,18 +76,18 @@ export function Navigation() {
   return (
     <>
       <style jsx>{`
-        /* Make nav items responsive and prevent overflow */
+        /* Make nav items compact to avoid overflow */
         .nav-link {
-          font-size: 0.95rem;
+          font-size: 0.85rem;
           display: flex;
           align-items: center;
           min-width: 0; /* allow flex children to shrink */
           flex: 0 1 auto;
         }
-        /* Slightly smaller icons so labels fit */
+        /* Icons slightly smaller */
         .nav-link svg, nav .nav-link svg {
-          height: 1.25em;
-          width: 1.25em;
+          height: 1em;
+          width: 1em;
           display: block;
           flex-shrink: 0;
         }
@@ -95,17 +95,17 @@ export function Navigation() {
         /* Label: clamp width and ellipsize to avoid wrapping/overflow */
         .nav-label {
           line-height: 1;
-          font-size: 0.9rem;
+          font-size: 0.75rem;
           display: inline-block;
-          max-width: 8rem;
+          max-width: 6rem;
           overflow: hidden;
           text-overflow: ellipsis;
           white-space: nowrap;
         }
 
-        /* Make container allow items to compress instead of overflowing */
+        /* Reduce spacing between items */
         nav > div > div {
-          gap: 0.5rem;
+          gap: 0.25rem;
         }
 
         .nav-icon-glow {
@@ -122,11 +122,11 @@ export function Navigation() {
           animation: iconPulse 2s ease-in-out infinite;
         }
 
-        /* Tweak sizes on very small screens */
+        /* Extra compact on small screens */
         @media (max-width: 768px) {
-          .nav-link { font-size: 0.85rem; }
-          .nav-label { max-width: 5.5rem; font-size: 0.8rem; }
-          .nav-link svg, nav .nav-link svg { height: 1.05em; width: 1.05em; }
+          .nav-link { font-size: 0.75rem; }
+          .nav-label { max-width: 4.5rem; font-size: 0.7rem; }
+          .nav-link svg, nav .nav-link svg { height: 0.95em; width: 0.95em; }
         }
       `}</style>
       <nav suppressHydrationWarning className="gradient-bg border-b border-accent/30 sticky top-0 z-50 backdrop-blur-md">
