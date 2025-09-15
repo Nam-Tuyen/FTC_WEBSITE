@@ -100,19 +100,18 @@ export function Navigation() {
           <div className="flex-shrink-0">
             <Link href="/" className="flex items-center space-x-2 sm:space-x-4 group">
               <div className="relative">
-                <Image
-                  src="/ftc-logo.png"
+                <img
+                  src={FTC_LOGO_URL}
                   alt="Financial Technology Club Logo"
-                  width={40}
-                  height={40}
-                  className="rounded-full glow transition-all"
-                  priority
+                  width={64}
+                  height={64}
+                  className="rounded-full glow transition-all object-cover w-16 h-16"
                 />
                 <div className="absolute inset-0 rounded-full border-2 border-accent" aria-hidden="true" />
               </div>
               <div className="flex items-center gap-3">
-                <span className="font-heading text-foreground font-extrabold tracking-wide leading-none text-[28px]">FTC</span>
-                <span className="text-[10px] sm:text-xs text-accent tracking-wide">&nbsp;</span>
+                <span className="font-heading text-foreground font-extrabold tracking-wide leading-none text-[32px]">FTC</span>
+                <span className="text-[12px] sm:text-sm text-accent tracking-wide">&nbsp;</span>
               </div>
             </Link>
           </div>
