@@ -76,12 +76,17 @@ liên kết doanh nghiệp và tham quan đơn vị để bạn *học sâu – 
   {
     patterns: ['tham gia', 'gia nhap', 'dang ky', 'apply', 'ung tuyen', 'cach tham gia', 'quy trinh tham gia', 'join'],
     answer:
-`📝 **Cách tham gia**:
-1) Điền đơn đăng ký ở trang *Ứng tuyển*;
-2) Chọn ban phù hợp (Học thuật, Sự kiện, Truyền thông, Tài chính cá nhân, Nhân sự);
-3) Phỏng vấn ngắn;
-4) Buổi làm quen & bắt đầu hoạt động.
-Yêu cầu: nhiệt huyết và tinh thần học hỏi – sẽ có người hướng dẫn từ đầu.`,
+    `📝 **Cách tham gia**:
+1) Theo dõi Fanpage và Instagram của FTC để cập nhật thời điểm mở đơn tuyển và hướng dẫn chi tiết (link sẽ được cập nhật trên các kênh chính thức).
+2) Điền đơn đăng ký ở trang *Ứng tuyển* khi có đợt tuyển;
+3) Chọn ban phù hợp (Học thuật, Sự kiện, Truyền thông, Tài chính cá nhân, Nhân sự);
+4) Phỏng vấn ngắn; 5) Buổi làm quen & bắt đầu hoạt động.
+
+Lưu ý về lịch sinh hoạt: lịch sẽ được sắp xếp theo trưởng ban và phó ban của ban bạn tham gia; thông báo chi tiết sẽ được gửi trong group nhà chung để khảo sát và thống nhất thời gian.
+
+Yêu cầu: nhiệt huyết và tinh thần học hỏi – sẽ có người hướng dẫn từ đầu.
+
+Nếu có nội dung nào chưa rõ hoặc cần th��m thông tin, vui lòng liên hệ Câu lạc bộ qua Fanpage chính thức để được giải đáp: ${FANPAGE_URL}`,
   },
 
   // 4) Cơ cấu ban trong CLB
@@ -89,19 +94,22 @@ Yêu cầu: nhiệt huyết và tinh thần học hỏi – sẽ có người h�
     patterns: ['cac ban', 'ban trong clb', 'phong ban', 'co cau ban', 'ban hoc thuat', 'ban su kien', 'ban truyen thong', 'ban tai chinh ca nhan', 'ban nhan su', 'team'],
     answer:
 `🏷️ **Cơ cấu ban**
+FTC có 5 ban chuyên môn (không tính Ban Điều hành). Các ban gồm:
 • *Học thuật*: nội dung Fintech, dữ liệu, SQL, phân tích, thuật toán.
 • *Sự kiện*: ý tưởng, kịch bản, vận hành chương trình, báo cáo.
 • *Truyền thông*: quản trị kênh, viết nội dung, thiết kế, ảnh/video.
 • *Tài chính cá nhân*: MoneyWe, chủ đề tài chính cá nhân ứng dụng công nghệ.
-• *Nhân sự*: nội quy, văn hóa, tuyển – phân công – đánh giá, minh bạch quỹ.`,
+• *Nhân sự*: nội quy, văn hóa, tuyển – phân công – đánh giá, minh bạch quỹ.
+
+Nếu có nội dung nào chưa rõ hoặc cần thêm thông tin, vui lòng liên hệ Câu lạc bộ qua Fanpage chính thức để được giải đáp: ${FANPAGE_URL}`,
   },
 
   // 5) Lịch sinh hoạt
   {
     patterns: ['lich sinh hoat', 'thoi gian sinh hoat', 'lich hop', 'lich clb', 'schedule', 'sinh hoat'],
     answer:
-`🗓️ **Lịch sinh hoạt**: định kỳ ~2 tuần/lần & theo kế hoạch từng chương trình.
-Thông báo chi tiết trên fanpage và website trước sự kiện ≥7 ngày.`,
+`🗓️ **Lịch sinh hoạt**: thường tổ chức định kỳ khoảng 2 tuần/lần, tuy nhiên lịch cụ thể sẽ được sắp xếp theo lịch của trưởng ban và phó ban của ban bạn tham gia.
+Thông báo chi tiết sẽ được gửi qua Fanpage, website và group nhà chung trước sự kiện để các bạn khảo sát và nắm lịch.` + `\n\nNếu có nội dung nào chưa rõ hoặc cần thêm thông tin, vui lòng liên hệ Câu lạc bộ qua Fanpage chính thức để được giải đáp: ${FANPAGE_URL}`,
   },
 
   // 6) Chi phí
@@ -172,7 +180,10 @@ export function matchClubFaq(userText: string): string | null {
     if (s > best.score) best = { idx: i, score: s };
   });
   // ngưỡng mềm để nhận diện ý gần đúng
-  if (best.idx >= 0 && best.score >= 45) return faq[best.idx].answer;
+  if (best.idx >= 0 && best.score >= 45) {
+    const answer = faq[best.idx].answer;
+    return `${answer}\n\nNếu có nội dung nào chưa rõ hoặc cần thêm thông tin, vui lòng liên hệ Câu lạc bộ qua Fanpage chính thức để được giải đáp: ${FANPAGE_URL}`;
+  }
   return null;
 }
 
@@ -235,7 +246,9 @@ Tôi có thể giúp bạn:
 
 📮 Liên hệ: ${CONTACT_EMAIL}
 
-📘 Fanpage: ${FANPAGE_URL}`
+📘 Fanpage: ${FANPAGE_URL}
+
+Nếu có nội dung nào chưa rõ hoặc cần thêm thông tin, vui lòng liên hệ Câu lạc bộ qua Fanpage chính thức để được giải đáp: ${FANPAGE_URL}`
   );
 }
 
@@ -257,7 +270,9 @@ export function getBotFallbackAnswer(raw: string) {
 Bạn có thể:
 • Gửi mail: ${CONTACT_EMAIL}
 • Nhắn fanpage: ${FANPAGE_URL}
-• Thử đặt câu hỏi khác về thành viên, lịch sinh hoạt, học thuật, sự kiện, truyền thông, tài chính cá nhân, nhân sự…`
+• Thử đặt câu hỏi khác về thành viên, lịch sinh hoạt, học thuật, sự kiện, truyền thông, tài chính cá nhân, nhân sự…
+
+Nếu có nội dung nào chưa rõ hoặc cần thêm thông tin, vui lòng liên hệ Câu lạc bộ qua Fanpage chính thức để được giải đáp: ${FANPAGE_URL}`
   );
 }
 
