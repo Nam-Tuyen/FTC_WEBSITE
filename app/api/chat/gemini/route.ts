@@ -12,8 +12,8 @@ const MODEL_NAME = process.env.GEMINI_MODEL || "gemini-1.5-flash";
 // Required extra suggestions to always include
 const EXTRA_SUGGESTIONS = [
   "FTC là câu lạc bộ như thế nào",
-  "FTC có thành tích gì",
-  "FTC được thành lập khi nào"
+  "Câu lạc bộ có những thành tích gì",
+  "Câu lạc bộ được thành lập khi nào"
 ];
 
 // Helper to extract text from various SDK response shapes
@@ -77,12 +77,19 @@ const FALLBACK_ANSWERS = {
   skills:
     "Ưu tiên tinh thần ham học, chủ động, cam kết thời gian; kỹ năng giao tiếp, làm việc nhóm, quản lý thời gian. Lợi thế: Excel/Google Sheets, SQL/Python (Ban Học thuật); lập kế hoạch/điều phối (Ban Sự kiện); viết/thiết kế/quay dựng (Ban Truyền thông); kiến thức tài chính cá nhân (Ban Tài chính cá nhân); tổ chức/phỏng vấn/vận hành (Ban Nhân sự).",
   founding: `Câu lạc bộ Công nghệ tài chính FTC trực thuộc Khoa Tài chính và Ngân hàng, Trường Đại học Kinh tế và Luật, Đại học Quốc gia Thành phố Hồ Chí Minh, được thành lập vào tháng mười một năm 2020 dưới sự hướng dẫn của ThS. NCS Phan Huy Tâm (Giảng viên Khoa Tài chính - Ngân hàng) cùng đội ngũ sinh viên ngành công nghệ tài chính.`,
-  achievements: `THÀNH TÍCH NỔI BẬT\nThành tích nổi bật của câu lạc bộ trong thời gian qua\n\nNIỀM TỰ HÀO CỦA TUỔI TRẺ UEL\nCâu lạc bộ Công nghệ tài chính (FTC) luôn gắn liền hành trình phát triển của tuổi trẻ Trường Đại học Kinh tế – Luật với những trải nghiệm đáng nhớ và thành tích nổi bật. Trong năm học 2024 – 2025, FTC đã vinh dự được Ban Cán sự Đoàn Đại học Quốc gia TP.HCM trao tặng Giấy khen vì những đóng góp tích cực trong công t��c Đoàn và phong trào thanh niên.\n\nFTC không chỉ tổ chức các hoạt động học thuật và ngoại khóa bổ ích mà còn tạo dựng một môi trường rèn luyện, kết nối và lan tỏa tinh thần tích cực.\n\nGiấy khen ĐHQG\nDẤU ẤN TẠI GIẢI THƯỞNG I-STAR\nFTC vinh dự nằm trong Top 10 tổ chức, cá nhân tiêu biểu Nhóm 4 tại Giải thưởng Đổi mới sáng tạo và Khởi nghiệp TP.HCM (I-Star). Đây là giải thưởng uy tín do Ủy ban Nhân dân TP.HCM chủ trì và Sở Khoa học và Công nghệ TP.HCM tổ chức.\n\nVới định hướng "bệ phóng cho những ý tưởng đổi mới", FTC triển khai nhiều chương trình thiết thực như cuộc thi học thuật, đào tạo, workshop và talkshow để giúp sinh viên tiếp cận kiến thức chuyên sâu về công nghệ tài chính và khởi nghiệp sáng tạo.\n\nI-Star Top10\nGiấy chứng nhận I-Star ghi nhận thành tích và đóng góp của FTC trong hoạt động đổi mới sáng tạo và khởi nghiệp. Đây là minh chứng cho nỗ lực của câu lạc bộ trong việc thúc đẩy sáng tạo và hỗ trợ sinh viên thực hiện dự án thực tế.`,
+  achievements: `THÀNH TÍCH NỔI BẬT\nThành tích nổi bật của câu lạc bộ trong thời gian qua\n\nNIỀM TỰ HÀO CỦA TUỔI TRẺ UEL\nCâu lạc bộ Công nghệ tài chính (FTC) luôn gắn liền hành trình phát triển của tuổi trẻ Trường Đại học Kinh tế – Luật với những trải nghiệm đáng nhớ và thành tích nổi bật. Trong năm học 2024 – 2025, FTC đã vinh dự được Ban Cán sự Đoàn Đại học Quốc gia TP.HCM trao tặng Giấy khen vì những đóng góp tích cực trong công tác Đoàn và phong trào thanh niên.\n\nFTC không chỉ tổ chức các hoạt động học thuật và ngoại khóa bổ ích mà còn tạo dựng một môi trường rèn luyện, kết nối và lan tỏa tinh thần tích cực.\n\nGiấy khen ĐHQG\nDẤU ẤN TẠI GIẢI THƯỞNG I-STAR\nFTC vinh dự nằm trong Top 10 tổ chức, cá nhân tiêu biểu Nhóm 4 tại Giải thưởng Đổi mới sáng tạo và Khởi nghiệp TP.HCM (I-Star). Đây là giải thưởng uy tín do Ủy ban Nhân dân TP.HCM chủ trì và Sở Khoa học và Công nghệ TP.HCM tổ chức.\n\nVới định hướng "bệ phóng cho những ý tưởng đổi mới", FTC triển khai nhiều chương trình thiết thực như cuộc thi học thuật, đào tạo, workshop và talkshow để giúp sinh viên tiếp cận kiến thức chuyên sâu về công nghệ tài chính và khởi nghiệp sáng tạo.\n\nI-Star Top10\nGiấy chứng nhận I-Star ghi nhận thành tích và đóng góp của FTC trong hoạt động đổi mới sáng tạo và khởi nghiệp. Đây là minh chứng cho nỗ lực của câu lạc bộ trong việc thúc đẩy sáng tạo và hỗ trợ sinh viên thực hiện dự án thực tế.`,
 } as const;
 
 function getFallbackAnswer(message: string): string | null {
   const matched = matchSuggestedQuestion(message);
-  if (matched.matched && matched.topic && (FALLBACK_ANSWERS as any)[matched.topic]) {
+  if (!matched.matched || !matched.topic) return null;
+
+  // Provide canonical achievements reply exactly as requested
+  if (matched.topic === 'achievements') {
+    return 'Năm học 2024–2025, FTC được Ban Cán sự Đoàn ĐHQG-HCM tặng Giấy khen vì đóng góp cho công tác Đoàn và phong trào thanh niên. Câu lạc bộ vào Top 10 Giải thưởng Đổi mới sáng tạo và Khởi nghiệp TP.HCM I-Star (Nhóm 4) và nhận Giấy chứng nhận Top 10. Bên cạnh đó, FTC thường xuyên tổ chức chương trình học thuật, đào tạo, tọa đàm và các cuộc thi, góp phần tạo môi trường rèn luyện và kết nối cho sinh viên UEL.'
+  }
+
+  if ((FALLBACK_ANSWERS as any)[matched.topic]) {
     return (FALLBACK_ANSWERS as any)[matched.topic];
   }
   return null;
@@ -94,7 +101,7 @@ function isClubQuery(message: string): boolean {
   return (
     m.includes("ftc") ||
     m.includes("clb") ||
-    m.includes("câu lạc bộ") ||
+    m.includes("câu lạc b��") ||
     m.includes("cau lac bo")
   );
 }
@@ -111,7 +118,7 @@ async function loadKnowledgeBase() {
     } catch {
       return (
         "Câu lạc bộ Công nghệ – Tài chính (FTC) là một câu lạc bộ sinh viên tại UEL.\n" +
-        "Mục ti��u: Phát triển kỹ năng về công nghệ tài chính và fintech.\n" +
+        "Mục tiêu: Phát triển kỹ năng về công nghệ tài chính và fintech.\n" +
         "Hoạt động: Tổ chức các workshop, seminar, hackathon về fintech.\n" +
         "Thành viên: Sinh viên quan tâm đến lĩnh vực fintech và công nghệ tài chính."
       );
@@ -240,26 +247,25 @@ export async function POST(req: Request) {
       ? [
           "Làm thế nào để tham gia câu lạc bộ FTC?",
           "Các hoạt động của câu lạc bộ có gì?",
-          "Làm sao để đăng k�� tham gia?",
+          "Làm sao để đăng ký tham gia?",
           "Câu lạc bộ có những chương trình gì?",
-          "Làm thế nào để liên hệ với ban chủ nhiệm?",
-          "FTC được thành lập khi nào",
+          "Làm thế nào để liên h�� với ban chủ nhiệm?",
+          "Câu lạc bộ được thành lập khi nào",
         ]
       : [
           "FinTech gồm những mảng chính nào?",
           "Blockchain ứng dụng vào tài chính như thế nào?",
           "Sự khác nhau giữa ngân hàng số và ngân hàng truyền thống?",
-          "Làm sao b��t đầu học FinTech?",
+          "Làm sao bắt đầu học FinTech?",
           "Những kỹ năng cần có để làm việc trong FinTech?",
         ];
 
     // If no Gemini available or generation fails, craft deterministic fallback
     if (!model) {
-      const answer =
-        fallbackClubAnswer ||
-        (clubQuery
-          ? "Xin lỗi, d���ch vụ AI tạm thời không khả dụng. Đây là tóm tắt nhanh: FTC là câu lạc bộ học thuật về FinTech tại UEL, tổ chức workshop/talkshow/dự án thực tế, có các ban Học thuật, Sự kiện, Truyền thông, Nhân sự và Tài chính cá nhân. Bạn có thể vào mục Ứng tuyển để đăng ký tham gia."
-          : "Xin lỗi, dịch vụ AI tạm thời không khả dụng. Bạn có thể hỏi về các chủ đề như FinTech, ngân hàng số, blockchain, thanh toán điện tử, quản lý rủi ro và đầu tư.");
+      const answer = clubQuery
+        ? (fallbackClubAnswer ||
+            "Xin lỗi, dịch vụ AI tạm thời không khả dụng. Đây là tóm tắt nhanh: FTC là câu lạc bộ học thuật về FinTech tại UEL, tổ chức workshop/talkshow/dự án thực tế, có các ban Học thuật, Sự kiện, Truyền thông, Nhân sự và Tài chính cá nhân. Bạn có thể vào mục Ứng tuyển để đăng ký tham gia.")
+        : "Xin lỗi, dịch vụ AI tạm thời không khả dụng. Bạn có thể hỏi về các chủ đề như FinTech, ngân hàng số, blockchain, thanh toán điện tử, quản lý rủi ro và đầu tư.";
 
       return new Response(
         JSON.stringify({
@@ -288,11 +294,10 @@ export async function POST(req: Request) {
       answer = extractText(result);
     } catch (error) {
       console.error("[api/chat/gemini] Error generating content:", error);
-      const fallback =
-        fallbackClubAnswer ||
-        (clubQuery
-          ? "FTC tổ chức talkshow, workshop, hoạt động nội bộ và dự án thực tế về FinTech. Bạn có thể vào mục Ứng tuyển để tham gia và chọn ban phù hợp."
-          : "Xin lỗi, hiện chưa thể tạo câu trả lời. Bạn có thể hỏi thêm về FinTech, blockchain, thanh toán, bảo hiểm số hoặc ngân hàng số.");
+      const fallback = clubQuery
+        ? (fallbackClubAnswer ||
+            "FTC tổ chức talkshow, workshop, hoạt động nội bộ và dự án thực tế về FinTech. Bạn có thể vào mục Ứng tuyển để tham gia và chọn ban phù hợp.")
+        : "Xin lỗi, hiện chưa thể tạo câu trả lời. Bạn có thể hỏi thêm về FinTech, blockchain, thanh toán, bảo hiểm số hoặc ngân hàng số.";
 
       return new Response(
         JSON.stringify({
@@ -307,11 +312,10 @@ export async function POST(req: Request) {
     }
 
     if (!answer) {
-      answer =
-        fallbackClubAnswer ||
-        (clubQuery
-          ? "Xin lỗi, không thể tạo câu trả lời lúc này. Bạn có thể hỏi về hoạt động, cách tham gia, các ban của FTC hoặc lịch sinh hoạt."
-          : "Xin lỗi, không thể tạo câu trả lời lúc này. Bạn có thể hỏi về các chủ đề FinTech cụ thể như blockchain, thanh toán số hoặc ngân hàng số.");
+      answer = clubQuery
+        ? (fallbackClubAnswer ||
+            "Xin lỗi, không thể tạo câu trả lời lúc này. Bạn có thể hỏi về hoạt động, cách tham gia, các ban của FTC hoặc lịch sinh hoạt.")
+        : "Xin lỗi, không thể tạo câu trả lời lúc này. Bạn có thể hỏi về các chủ đề FinTech cụ thể như blockchain, thanh toán số hoặc ngân hàng số.";
     }
 
     // Generate suggested follow-up questions (best-effort)
@@ -345,7 +349,7 @@ export async function POST(req: Request) {
   } catch (error: any) {
     console.error("Error in chat route:", error);
     const fallback =
-      "Xin lỗi, có lỗi x���y ra khi xử lý yêu cầu. Vui lòng thử lại sau.";
+      "Xin lỗi, có lỗi xảy ra khi xử lý yêu cầu. Vui lòng thử lại sau.";
     return new Response(
       JSON.stringify({
         error: true,
@@ -358,7 +362,7 @@ export async function POST(req: Request) {
           "Các hoạt động của câu lạc bộ có gì?",
           "Làm sao để đăng ký tham gia?",
           "Câu lạc bộ có những chương trình gì?",
-          "Làm thế nào để li��n hệ với ban chủ nhiệm?",
+          "Làm thế nào để liên hệ với ban chủ nhiệm?",
         ]),
         debug: process.env.NODE_ENV === "development" ? error?.message : undefined,
       }),

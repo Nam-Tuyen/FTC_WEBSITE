@@ -75,6 +75,19 @@ export function matchSuggestedQuestion(input: string): { matched: boolean; topic
 
   const tokensQ = q.split(' ').filter(Boolean);
 
+  // Quick exact pattern match (prefer exact) to avoid misclassification
+  for (const topic of Object.keys(SUGGESTED_QUESTIONS) as FaqTopic[]) {
+    for (const pat of SUGGESTED_QUESTIONS[topic]) {
+      const p = normalizeVi(pat);
+      if (p === q) return { matched: true, topic, score: 1 };
+    }
+  }
+
+  // Common Vietnamese stopwords / particles that cause false positive matches
+  const STOPWORDS = new Set([
+    'co', 'gi', 'la', 'the', 'nhung', 'mot', 'cach', 'de', 've', 'voi', 'va', 'và', 'o', 'tren', 'duoi', 'ban', 'hay', 'tro', 'cho', 'khong'
+  ]);
+
   let best: { topic?: FaqTopic; score: number } = { topic: undefined, score: 0 };
 
   (Object.keys(SUGGESTED_QUESTIONS) as FaqTopic[]).forEach((topic) => {
@@ -82,9 +95,15 @@ export function matchSuggestedQuestion(input: string): { matched: boolean; topic
       const p = normalizeVi(pat);
       const tokensP = p.split(' ').filter(Boolean);
 
-      // Use token overlap rather than simple substring checks to avoid accidental matches (e.g. 'hi' matching 'sinh')
-      const contains = tokensQ.some((t) => tokensP.includes(t)) || tokensP.some((t) => tokensQ.includes(t));
-      const score = Math.max(contains ? 1 : 0, jaccard(tokensQ, tokensP));
+      // Filter out common stopwords before matching to avoid short/common-token collisions (e.g. 'co', 'gi')
+      const qFiltered = tokensQ.filter((t) => !STOPWORDS.has(t));
+      const pFiltered = tokensP.filter((t) => !STOPWORDS.has(t));
+
+      const useQ = qFiltered.length ? qFiltered : tokensQ;
+      const useP = pFiltered.length ? pFiltered : tokensP;
+
+      const contains = useQ.some((t) => useP.includes(t)) || useP.some((t) => useQ.includes(t));
+      const score = Math.max(contains ? 1 : 0, jaccard(useQ, useP));
 
       if (score > best.score) best = { topic, score };
     }
@@ -98,13 +117,13 @@ const FTC_FAQ_CONTEXT = `
 [CÂU HỎI & TRẢ LỜI CHÍNH THỨC CỦA FTC]
 
 1) Câu lạc bộ có những hoạt động gì?
-    FTC tổ chức talkshow, workshop và lớp bồi dưỡng về Fintech, AI trong tài chính, giao dịch thuật toán, blockchain và tài chính cá nhân. Thành vi��n tham gia dự án thực tế trên dữ liệu và thị trường, rèn tư duy sản phẩm và quản trị rủi ro. Câu lạc bộ còn kết nối doanh nghiệp, mở cơ hội thực tập và xây dựng hồ sơ học thuật, đồng thời giúp phát triển kỹ năng giao tiếp, làm việc nhóm và quản lý dự án.
+    FTC tổ chức talkshow, workshop và lớp bồi dưỡng về Fintech, AI trong tài chính, giao dịch thuật toán, blockchain và tài chính cá nhân. Thành viên tham gia dự án thực tế trên dữ liệu và thị trường, rèn tư duy sản phẩm và quản trị rủi ro. Câu lạc bộ còn kết nối doanh nghiệp, mở cơ hội thực tập và xây dựng hồ sơ học thuật, đồng thời giúp phát triển kỹ năng giao tiếp, làm việc nhóm và quản lý dự án.
 
     2) Làm thế nào để tham gia câu lạc bộ?
     Bạn vào mục Ứng tuyển trên website, chọn Bắt đầu ngay hôm nay và điền form. Hãy chọn ban mong muốn, Ban Nhân sự sẽ liên hệ, định hướng và thông báo các bước tiếp theo. Nếu cần hỗ trợ nhanh, vui lòng gửi email hoặc nhắn fanpage của FTC.
 
     3) Các ban trong câu lạc bộ làm gì?
-    Ban Điều hành định hướng chiến lược, điều phối hoạt động và đối ngoại. Ban Học thuật xây dựng nội dung Fintech, soạn giáo trình và tổ chức rèn kỹ năng như xử lý dữ liệu, SQL và phân tích giao dịch. Ban Sự kiện lập kế hoạch, viết kịch bản, điều phối chương trình và tổng kết báo cáo. Ban Truyền thông quản trị kênh chính thức, sản xuất bài viết, đồ họa, video và lưu trữ tư liệu. Ban Tài chính cá nhân phụ trách giáo dục tài chính cá nhân, triển khai MoneyWe và chuỗi FTCCN Sharing. Ban Nhân sự xây văn hóa, tuyển chọn và phân công nhân sự, theo dõi hiệu quả và quản lý quỹ.
+    Ban Điều hành định hướng chiến lược, điều phối hoạt động và đối ngoại. Ban Học thuật xây dựng nội dung Fintech, soạn giáo trình và t��� chức rèn kỹ năng như xử lý dữ liệu, SQL và phân tích giao dịch. Ban Sự kiện lập kế hoạch, viết kịch bản, điều phối chương trình và tổng kết báo cáo. Ban Truyền thông quản trị kênh chính thức, sản xuất bài viết, đồ họa, video và lưu trữ tư liệu. Ban Tài chính cá nhân phụ trách giáo dục tài chính cá nhân, triển khai MoneyWe và chuỗi FTCCN Sharing. Ban Nhân sự xây văn hóa, tuyển chọn và phân công nhân sự, theo dõi hiệu quả và quản lý quỹ.
 
     4) Thời gian sinh hoạt diễn ra khi nào?
     CLB sinh hoạt định kỳ qua các buổi talkshow, workshop và hoạt động nội bộ. Lịch cụ thể được công bố tại mục Hoạt động và trên các kênh chính thức, đồng thời gửi qua email cho ứng viên sau khi đăng ký.
@@ -118,15 +137,15 @@ const FTC_FAQ_CONTEXT = `
     7) Hoạt động FTC trip có gì vui?
     Với phương châm làm hết mình và chơi hết mình câu lạc bộ luôn định kì hằng năm tổ chức các chuyến đi chơi để gắn kết giữa các thành viên và xả stress sau một thời gian dài hoạt động mệt mỏi.
 
-    8) FTC được thành lập khi nào?
+    8) Câu lạc bộ được thành lập khi nào?
     Câu lạc bộ Công nghệ tài chính FTC trực thuộc Khoa Tài chính và Ngân hàng, Trường Đại học Kinh tế và Luật, Đại học Quốc gia Thành phố Hồ Chí Minh, được thành lập vào tháng mười một năm 2020 dưới sự hướng dẫn của ThS. NCS Phan Huy Tâm (Giảng viên Khoa Tài chính - Ngân hàng) cùng đội ngũ sinh viên ngành công nghệ tài chính.
 
-    9) FTC có những thành tích gì?
+    9) Câu lạc bộ có những thành tích gì?
     THÀNH TÍCH NỔI BẬT
     Thành tích nổi bật của câu lạc bộ trong thời gian qua
 
     NIỀM TỰ HÀO CỦA TUỔI TRẺ UEL
-    Câu lạc bộ Công nghệ tài chính (FTC) luôn gắn liền hành trình phát triển của tuổi trẻ Trường Đại học Kinh tế – Luật với những trải nghiệm đáng nhớ và thành tích nổi bật. Trong năm học 2024 – 2025, FTC đã vinh dự được Ban Cán sự Đoàn Đại học Qu��c gia TP.HCM trao tặng Giấy khen vì những đóng góp tích cực trong công tác Đoàn và phong trào thanh niên.
+    Câu lạc bộ Công nghệ t��i chính (FTC) luôn gắn liền hành trình phát triển của tuổi trẻ Trường Đại học Kinh tế – Luật với những trải nghiệm đáng nhớ và thành tích nổi bật. Trong năm học 2024 – 2025, FTC đã vinh dự được Ban Cán sự Đoàn Đại học Quốc gia TP.HCM trao tặng Giấy khen vì những đóng góp tích cực trong công tác Đoàn và phong trào thanh niên.
 
     FTC không chỉ tổ chức các hoạt động học thuật và ngoại khóa bổ ích mà còn tạo dựng một môi trường rèn luyện, kết nối và lan tỏa tinh thần tích cực.
 
@@ -159,6 +178,6 @@ ${userQuestion}
 [HƯỚNG DẪN TRẢ LỜI]
 - Trả lời đúng trọng tâm câu hỏi.
 - Nếu câu hỏi rơi vào 5 chủ đề nêu trên, chỉ dựa vào dữ liệu FTC để trả lời.
-- Nếu không đủ dữ liệu trong FTC, trả lời: "Thông tin hiện chưa có trong dữ liệu FTC."
+- Nếu không đ��� dữ liệu trong FTC, trả lời: "Thông tin hiện chưa có trong dữ liệu FTC."
 `;
 }

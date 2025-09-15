@@ -5,7 +5,7 @@
 ### FTC là gì?
 FTC là Câu lạc bộ Công nghệ Tài chính trực thuộc Khoa Tài chính – Ngân hàng, Trường Đại học Kinh tế – Luật. Chúng mình tập trung vào việc học tập, nghiên cứu và ứng dụng công nghệ trong lĩnh vực tài chính.
 
-### FTC được thành lập khi nào?
+### Câu lạc bộ được thành lập khi nào?
 FTC được thành lập vào tháng 11/2020, đến nay đã hoạt động hơn 4 năm.
 
 ### FTC có bao nhiêu thành viên?
