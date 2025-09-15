@@ -75,6 +75,14 @@ export function matchSuggestedQuestion(input: string): { matched: boolean; topic
 
   const tokensQ = q.split(' ').filter(Boolean);
 
+  // Quick exact pattern match (prefer exact) to avoid misclassification
+  for (const topic of Object.keys(SUGGESTED_QUESTIONS) as FaqTopic[]) {
+    for (const pat of SUGGESTED_QUESTIONS[topic]) {
+      const p = normalizeVi(pat);
+      if (p === q) return { matched: true, topic, score: 1 };
+    }
+  }
+
   // Common Vietnamese stopwords / particles that cause false positive matches
   const STOPWORDS = new Set([
     'co', 'gi', 'la', 'the', 'nhung', 'mot', 'cach', 'de', 've', 'voi', 'va', 'và', 'o', 'tren', 'duoi', 'ban', 'hay', 'tro', 'cho', 'khong'
@@ -115,7 +123,7 @@ const FTC_FAQ_CONTEXT = `
     Bạn vào mục Ứng tuyển trên website, chọn Bắt đầu ngay hôm nay và điền form. Hãy chọn ban mong muốn, Ban Nhân sự sẽ liên hệ, định hướng và thông báo các bước tiếp theo. Nếu cần hỗ trợ nhanh, vui lòng gửi email hoặc nhắn fanpage của FTC.
 
     3) Các ban trong câu lạc bộ làm gì?
-    Ban Điều hành định hướng chiến lược, điều phối hoạt động và đối ngoại. Ban Học thuật xây dựng nội dung Fintech, soạn giáo trình và tổ chức rèn kỹ năng như xử lý dữ liệu, SQL và phân tích giao dịch. Ban Sự kiện lập kế hoạch, viết kịch bản, điều phối chương trình và tổng kết báo cáo. Ban Truyền thông quản trị kênh chính thức, sản xuất bài viết, đồ họa, video và lưu trữ tư liệu. Ban Tài chính cá nhân phụ trách giáo dục tài chính cá nhân, triển khai MoneyWe và chuỗi FTCCN Sharing. Ban Nhân sự xây văn hóa, tuyển chọn và phân công nhân sự, theo dõi hiệu quả và quản lý quỹ.
+    Ban Điều hành định hướng chiến lược, điều phối hoạt động và đối ngoại. Ban Học thuật xây dựng nội dung Fintech, soạn giáo trình và t��� chức rèn kỹ năng như xử lý dữ liệu, SQL và phân tích giao dịch. Ban Sự kiện lập kế hoạch, viết kịch bản, điều phối chương trình và tổng kết báo cáo. Ban Truyền thông quản trị kênh chính thức, sản xuất bài viết, đồ họa, video và lưu trữ tư liệu. Ban Tài chính cá nhân phụ trách giáo dục tài chính cá nhân, triển khai MoneyWe và chuỗi FTCCN Sharing. Ban Nhân sự xây văn hóa, tuyển chọn và phân công nhân sự, theo dõi hiệu quả và quản lý quỹ.
 
     4) Thời gian sinh hoạt diễn ra khi nào?
     CLB sinh hoạt định kỳ qua các buổi talkshow, workshop và hoạt động nội bộ. Lịch cụ thể được công bố tại mục Hoạt động và trên các kênh chính thức, đồng thời gửi qua email cho ứng viên sau khi đăng ký.
@@ -143,7 +151,7 @@ const FTC_FAQ_CONTEXT = `
 
     Giấy khen ĐHQG
     DẤU ẤN TẠI GIẢI THƯỞNG I-STAR
-    FTC vinh dự nằm trong Top 10 tổ chức, cá nhân tiêu biểu Nhóm 4 t���i Giải thưởng Đổi mới sáng tạo và Khởi nghiệp TP.HCM (I-Star). Đây là giải thưởng uy tín do Ủy ban Nhân dân TP.HCM chủ trì và Sở Khoa học và Công nghệ TP.HCM tổ chức.
+    FTC vinh dự nằm trong Top 10 tổ chức, cá nhân tiêu biểu Nhóm 4 tại Giải thưởng Đổi mới sáng tạo và Khởi nghiệp TP.HCM (I-Star). Đây là giải thưởng uy tín do Ủy ban Nhân dân TP.HCM chủ trì và Sở Khoa học và Công nghệ TP.HCM tổ chức.
 
     Với định hướng "bệ phóng cho những ý tưởng đổi mới", FTC triển khai nhiều chương trình thiết thực như cuộc thi học thuật, đào tạo, workshop và talkshow để giúp sinh viên tiếp cận kiến thức chuyên sâu về công nghệ tài chính và khởi nghiệp sáng tạo.
 
@@ -170,6 +178,6 @@ ${userQuestion}
 [HƯỚNG DẪN TRẢ LỜI]
 - Trả lời đúng trọng tâm câu hỏi.
 - Nếu câu hỏi rơi vào 5 chủ đề nêu trên, chỉ dựa vào dữ liệu FTC để trả lời.
-- Nếu không đủ dữ liệu trong FTC, trả lời: "Thông tin hiện chưa có trong dữ liệu FTC."
+- Nếu không đ��� dữ liệu trong FTC, trả lời: "Thông tin hiện chưa có trong dữ liệu FTC."
 `;
 }
