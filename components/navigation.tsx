@@ -147,7 +147,7 @@ export function Navigation() {
                 <div className="absolute inset-0 rounded-full border-2 border-accent" aria-hidden="true" />
               </div>
               <div className="flex items-center gap-2">
-                <span className="font-heading text-foreground font-extrabold tracking-wide leading-none text-[40px]">FTC</span>
+                <span suppressHydrationWarning className="font-heading text-foreground font-extrabold tracking-wide leading-none text-[40px]">FTC</span>
                 <span className="text-xs sm:text-sm text-accent tracking-wide">&nbsp;</span>
               </div>
             </Link>
