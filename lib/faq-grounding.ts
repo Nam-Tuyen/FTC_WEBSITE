@@ -78,7 +78,7 @@ export function matchSuggestedQuestion(input: string): { matched: boolean; topic
   const q = normalizeVi(input);
   if (!q) return { matched: false };
 
-  const tokensQ = q.split(' ').filter(Boolean);
+  const tokensQ = q.split(' ').map(t => t.replace(/[^a-z0-9]/g, '')).filter(Boolean);
 
   // Quick exact pattern match (prefer exact) to avoid misclassification
   for (const topic of Object.keys(SUGGESTED_QUESTIONS) as FaqTopic[]) {
