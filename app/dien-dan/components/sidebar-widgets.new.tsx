@@ -1,18 +1,8 @@
-'use client'
-
-'use client'
-
-import * as React from 'react'
+import { type ReactNode } from 'react'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
-import {
-  MessageSquare,
-  ArrowUp,
-  User,
-  Plus,
-  Settings
-} from '@/components/icons'
+import { MessageSquare, ArrowUp, User, Plus, Settings } from 'lucide-react'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 
 interface SidebarWidgetsProps {
@@ -22,7 +12,7 @@ interface SidebarWidgetsProps {
 
 export function SidebarWidgets({ currentStudentId, setCurrentStudentId }: SidebarWidgetsProps) {
   const STORAGE_KEY = 'forum.widgetOrder'
-  const [order, setOrder] = useState<Array<'profile' | 'actions'>>(() => {
+  const [order, setOrder] = React.useState<Array<'profile' | 'actions'>>(() => {
     try {
       const raw = typeof window !== 'undefined' ? localStorage.getItem(STORAGE_KEY) : null
       if (raw) return JSON.parse(raw)
@@ -30,7 +20,7 @@ export function SidebarWidgets({ currentStudentId, setCurrentStudentId }: Sideba
     return ['profile', 'actions']
   })
 
-  useEffect(() => {
+  React.useEffect(() => {
     try { localStorage.setItem(STORAGE_KEY, JSON.stringify(order)) } catch {}
   }, [order])
 
@@ -42,19 +32,19 @@ export function SidebarWidgets({ currentStudentId, setCurrentStudentId }: Sideba
   }
 
   // Drag handlers
-  function onDragStart(e: DragEvent<HTMLDivElement>, idx: number) {
+  function onDragStart(e: React.DragEvent<HTMLDivElement>, idx: number) {
     e.dataTransfer.setData('text/plain', String(idx))
     e.dataTransfer.effectAllowed = 'move'
   }
-  function onDragOver(e: DragEvent<HTMLDivElement>) { e.preventDefault(); e.dataTransfer.dropEffect = 'move' }
-  function onDrop(e: DragEvent<HTMLDivElement>, idx: number) {
+  function onDragOver(e: React.DragEvent<HTMLDivElement>) { e.preventDefault(); e.dataTransfer.dropEffect = 'move' }
+  function onDrop(e: React.DragEvent<HTMLDivElement>, idx: number) {
     e.preventDefault()
     const from = Number(e.dataTransfer.getData('text/plain'))
     if (!Number.isNaN(from) && from !== idx) move(from, idx)
   }
 
   const ProfileCard = (
-    <div draggable onDragStart={(e: DragEvent<HTMLDivElement>) => onDragStart(e, order.indexOf('profile'))} onDragOver={onDragOver} onDrop={(e: DragEvent<HTMLDivElement>) => onDrop(e, order.indexOf('profile'))}>
+    <div draggable onDragStart={(e) => onDragStart(e, order.indexOf('profile'))} onDragOver={onDragOver} onDrop={(e) => onDrop(e, order.indexOf('profile'))}>
       <Card className="widget-card overflow-hidden rounded-xl transition-all hover:shadow-lg hover:border-primary/30 bg-card/50 backdrop-blur-sm border border-border/50">
         <CardHeader className="px-4 py-3 bg-transparent border-b border-border/10">
           <div className="flex items-center justify-between">
@@ -90,7 +80,7 @@ export function SidebarWidgets({ currentStudentId, setCurrentStudentId }: Sideba
           <div className="space-y-3">
             <Input
               value={currentStudentId}
-              onChange={(e) => setCurrentStudentId(e.target.value)}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => setCurrentStudentId(e.target.value)}
               placeholder="Nhập MSSV (K#########)"
               className="h-9 text-sm bg-background/50 text-foreground border-border/50 focus:border-primary/50"
             />
@@ -104,7 +94,7 @@ export function SidebarWidgets({ currentStudentId, setCurrentStudentId }: Sideba
   )
 
   const ActionsCard = (
-    <div draggable onDragStart={(e: DragEvent<HTMLDivElement>) => onDragStart(e, order.indexOf('actions'))} onDragOver={onDragOver} onDrop={(e: DragEvent<HTMLDivElement>) => onDrop(e, order.indexOf('actions'))}>
+    <div draggable onDragStart={(e) => onDragStart(e, order.indexOf('actions'))} onDragOver={onDragOver} onDrop={(e) => onDrop(e, order.indexOf('actions'))}>
       <Card className="widget-card overflow-hidden rounded-xl transition-all hover:shadow-lg hover:border-primary/30 bg-card/50 backdrop-blur-sm border border-border/50">
         <CardHeader className="px-4 py-3 bg-transparent border-b border-border/10">
           <CardTitle className="flex items-center gap-2 text-sm font-medium">
@@ -161,30 +151,11 @@ export function SidebarWidgets({ currentStudentId, setCurrentStudentId }: Sideba
     </div>
   )
 
-  return (
-    <div className="space-y-4 sticky top-6">
-      {order.map((k, idx) => (
-        <div key={`${k}-${idx}`}>
-          {k === 'profile' ? ProfileCard : ActionsCard}
-        </div>
-      ))}
-    </div>
-  )
-
   const elems = order.map((k, idx) => React.cloneElement(k === 'profile' ? ProfileCard : ActionsCard, { key: `${k}-${idx}` }))
 
   return (
-    <div className="space-y-3">
-      <div className="flex items-center justify-between">
-        <div className="text-sm text-foreground uppercase tracking-wide font-semibold"><p>TIỆN ÍCH</p></div>
-        <Button variant="ghost" size="sm" onClick={() => setOrder((s) => [...s].reverse())} className="px-2 py-1 hover:bg-muted/50">
-          <Shuffle className="h-4 w-4" />
-        </Button>
-      </div>
-
-      <div className="grid grid-cols-1 gap-2">
-        {elems}
-      </div>
+    <div className="space-y-4 sticky top-6">
+      {elems}
     </div>
   )
 }

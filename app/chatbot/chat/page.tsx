@@ -182,11 +182,13 @@ export default function ChatbotPage() {
   function formatMessageContent(text: string) {
     if (!text) return ""
     const escaped = escapeHtml(text)
-    // Handle Markdown-like emphasis: triple (bold+italic), double (bold), single (italic)
+    // Handle text formatting: bold, italic, underline
     let out = escaped
-      .replace(/\*\*\*(.+?)\*\*\*/g, "<strong><em>$1</em></strong>")
-      .replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>")
-      .replace(/\*(.+?)\*/g, "<em>$1</em>")
+      .replace(/__(.+?)__/g, "<u>$1</u>")  // Underline
+      .replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>")  // Bold
+      .replace(/\*(.+?)\*/g, "<em>$1</em>")  // Italic
+      // Handle the footer link separately
+      .replace(/\[Fanpage\]\((https:\/\/www\.facebook\.com\/clbfintechuel)\)/g, '<a href="$1" target="_blank" class="text-accent hover:underline">Fanpage</a>')
 
     const lines = out.split(/\r?\n/)
     let inList = false
