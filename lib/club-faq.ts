@@ -86,7 +86,7 @@ Lưu ý về lịch sinh hoạt: lịch sẽ được sắp xếp theo trưởng
 
 Yêu cầu: nhiệt huyết và tinh thần học hỏi – sẽ có người hướng dẫn từ đầu.
 
-Nếu có nội dung nào chưa rõ hoặc cần thêm thông tin, vui lòng liên hệ Câu lạc bộ qua Fanpage chính thức để đư���c giải đáp: ${FANPAGE_URL}`,
+Nếu có nội dung nào chưa rõ hoặc cần thêm thông tin, vui lòng liên hệ Câu lạc bộ qua Fanpage chính thức để được giải đáp: ${FANPAGE_URL}`,
   },
 
   // 4) Cơ cấu ban trong CLB
@@ -101,7 +101,7 @@ FTC có 5 ban chuyên môn (không tính Ban Điều hành). Các ban gồm:
 • *Tài chính cá nhân*: MoneyWe, chủ đề tài chính cá nhân ứng dụng công nghệ.
 • *Nhân sự*: nội quy, văn hóa, tuyển – phân công – đánh giá, minh bạch quỹ.
 
-Nếu có nội dung nào chưa rõ hoặc cần thêm thông tin, vui lòng liên hệ Câu lạc bộ qua Fanpage chính thức để được giải đáp: ${FANPAGE_URL}`,
+Nếu có nội dung nào chưa rõ hoặc cần thêm thông tin, vui lòng liên h��� Câu lạc bộ qua Fanpage chính thức để được giải đáp: ${FANPAGE_URL}`,
   },
 
   // 5) Lịch sinh hoạt
@@ -125,7 +125,7 @@ thành viên tích cực thường được ưu tiên miễn/giảm.`,
   {
     patterns: ['ky nang', 'skill', 'yeu cau', 'requirement', 'can ky nang gi', 'co can kinh nghiem khong'],
     answer:
-`🧩 **Kỹ năng/Yêu cầu**:
+`��� **Kỹ năng/Yêu cầu**:
 • Không bắt buộc kinh nghiệm trước
 • Đam mê công nghệ & tài chính, sẵn sàng học hỏi
 • Kỹ năng cơ bản: làm việc nhóm, thuyết trình, Office
@@ -180,7 +180,10 @@ export function matchClubFaq(userText: string): string | null {
     if (s > best.score) best = { idx: i, score: s };
   });
   // ngưỡng mềm để nhận diện ý gần đúng
-  if (best.idx >= 0 && best.score >= 45) return faq[best.idx].answer;
+  if (best.idx >= 0 && best.score >= 45) {
+    const answer = faq[best.idx].answer;
+    return `${answer}\n\nNếu có nội dung nào chưa rõ hoặc cần thêm thông tin, vui lòng liên hệ Câu lạc bộ qua Fanpage chính thức để được giải đáp: ${FANPAGE_URL}`;
+  }
   return null;
 }
 
