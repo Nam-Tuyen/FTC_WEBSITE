@@ -18,7 +18,7 @@ function initGemini() {
     throw new Error('GEMINI_API_KEY not configured');
   }
   try {
-    const genAI = new GoogleGenerativeAI(key);
+    const genAI = new GoogleGenerativeAI({ apiKey: key });
     return genAI.getGenerativeModel({
       model: MODEL_NAME,
       generationConfig: {
