@@ -48,7 +48,13 @@ function initGemini() {
         temperature: 0.7,
         topK: 40,
         topP: 0.95,
-        maxOutputTokens: 1024,
+        maxOutputTokens: 2048, // Increased for longer responses
+        safetySettings: [
+          { category: 'HARM_CATEGORY_HARASSMENT', threshold: 'BLOCK_MEDIUM_AND_ABOVE' },
+          { category: 'HARM_CATEGORY_HATE_SPEECH', threshold: 'BLOCK_MEDIUM_AND_ABOVE' },
+          { category: 'HARM_CATEGORY_SEXUALLY_EXPLICIT', threshold: 'BLOCK_MEDIUM_AND_ABOVE' },
+          { category: 'HARM_CATEGORY_DANGEROUS_CONTENT', threshold: 'BLOCK_MEDIUM_AND_ABOVE' }
+        ]
       }
     });
   } catch (e) {
@@ -195,18 +201,72 @@ export async function POST(req: Request) {
     }
 
     // Build prompt with knowledge base context
+    const baseKnowledge = mode === 'domain' ? `
+Fintech (Financial Technology) là sự kết hợp giữa công nghệ và tài chính, bao gồm các lĩnh vực:
+
+1. Thanh toán và chuyển tiền kỹ thuật số
+- Ví điện tử, QR code, NFC
+- Chuyển tiền nhanh liên ngân hàng
+- Thanh toán không tiếp xúc
+
+2. Cho vay và tín dụng số
+- Cho vay ngang hàng (P2P)
+- Chấm điểm tín dụng bằng AI
+- Cho vay tức thì qua ứng dụng
+
+3. Ngân hàng số
+- Ngân hàng hoàn toàn trực tuyến
+- Tài khoản và dịch vụ phi truyền thống
+- Open Banking và API Banking
+
+4. Quản lý tài sản và đầu tư
+- Robo-advisor tự động
+- Đầu tư chứng khoán trực tuyến
+- Quỹ ETF và đầu tư phân tán
+
+5. Bảo hiểm công nghệ (Insurtech)
+- Bảo hiểm theo yêu cầu
+- Định giá rủi ro bằng AI
+- Quy trình bồi thường tự động
+
+6. Blockchain và tiền điện tử
+- Smart contracts
+- DeFi (Tài chính phi tập trung)
+- NFT và tài sản số
+
+7. Các công nghệ nền tảng
+- AI và Machine Learning
+- Big Data Analytics
+- Cloud Computing
+- API và Microservices
+
+8. An ninh và tuân thủ
+- Xác thực sinh trắc học
+- Chống gian lận AI
+- KYC/AML số hóa
+
+Xu hướng phát triển:
+- Ngân hàng mở và Banking-as-a-Service
+- Tài chính nhúng (Embedded Finance)
+- Siêu ứng dụng (Super Apps)
+- Ngân hàng phi truyền thống (Neobanks)
+- ESG và tài chính bền vững` : '';
+
     const prompt = `Bạn là trợ lý AI cho Câu lạc bộ Công nghệ – Tài chính (FTC) – UEL.
 Vai trò của bạn là ${mode === 'domain' ? 'chuyên gia về fintech và tài chính' : 'cố vấn cho tân sinh viên về CLB'}.
 
-${mode === 'domain' ? `Khi người dùng hỏi về kiến thức chung về fintech, blockchain, tài chính số, ngân hàng số, v.v... hãy trả lời với tư cách là chuyên gia trong lĩnh vực, không cần đề cập đến CLB.
+${mode === 'domain' ? `Bạn là chuyên gia fintech với kiến thức sâu rộng về công nghệ tài chính. Hãy trả lời các câu hỏi về fintech, blockchain, tài chính số, ngân hàng số một cách chuyên nghiệp nhưng dễ hiểu.
 
-Nếu câu hỏi liên quan đến CLB, hãy chuyển hướng người dùng sang chế độ 'club' để được tư vấn chi tiết hơn.` : 'Tập trung vào thông tin về CLB, các hoạt động và cách thức tham gia. Nếu câu hỏi về kiến thức chuyên môn, gợi ý chuyển sang chế độ "domain" để được tư vấn kỹ hơn.'}
+Nếu câu hỏi liên quan đến CLB, hãy chuyển hướng người dùng sang chế độ 'club' để được tư vấn chi tiết hơn.
 
-Thông tin tham khảo từ knowledge base:
-${knowledgeBase}
+Kiến thức nền tảng về Fintech:
+${baseKnowledge}` : 'Tập trung vào thông tin về CLB, các hoạt động và cách thức tham gia. Nếu câu hỏi về kiến thức chuyên môn, gợi ý chuyển sang chế độ "domain" để được tư vấn kỹ hơn.'}
+
+${knowledgeBase ? `Thông tin tham khảo từ knowledge base:
+${knowledgeBase}` : ''}
 
 Dựa vào thông tin trên, hãy trả lời câu hỏi sau một cách súc tích bằng tiếng Việt.
-${mode === 'domain' ? 'Nếu không có thông tin liên quan trong knowledge base, hãy trả lời dựa trên kiến thức chung về fintech và tài chính.' : 'Nếu không có thông tin trong knowledge base, hãy trả lời dựa trên hiểu biết chung về hoạt động CLB sinh viên.'}
+${mode === 'domain' ? 'Trả lời dựa trên kiến thức chuyên môn về fintech và tài chính, kết hợp với thông tin từ knowledge base nếu có.' : 'Nếu không có thông tin trong knowledge base, hãy trả lời dựa trên hiểu biết chung về hoạt động CLB sinh viên.'}
 
 Trả lời cần phải:
 - Ngắn gọn, dễ hiểu
@@ -225,23 +285,72 @@ Trả lời:`;
       const result = await model.generateContent({
         contents: [{ role: 'user', parts: [{ text: prompt }] }],
         generationConfig: {
-          temperature: 0.7,
+          temperature: mode === 'domain' ? 0.3 : 0.7, // Lower temperature for domain knowledge
           topK: 40,
           topP: 0.95,
-          maxOutputTokens: 1024,
+          maxOutputTokens: mode === 'domain' ? 2048 : 1024,
         }
       });
       answer = extractText(result);
+
+      // If no answer in domain mode, provide a default response about fintech
+      if (!answer && mode === 'domain') {
+        answer = `Fintech (Financial Technology) là lĩnh vực kết hợp giữa công nghệ và tài chính, bao gồm:
+
+- Thanh toán số: Ví điện tử, QR code, chuyển tiền nhanh
+- Ngân hàng số: Mobile banking, internet banking, neobank
+- Cho vay số: P2P lending, credit scoring bằng AI
+- Quản lý tài sản: Robo-advisor, đầu tư online
+- Insurtech: Bảo hiểm công nghệ, định giá rủi ro AI
+- Blockchain: DeFi, smart contracts, crypto
+
+Ngành đang phát triển nhanh và có nhiều cơ hội nghề nghiệp. Để tìm hiểu thêm, bạn có thể tham khảo các nguồn:
+- Báo cáo của KPMG và PWC về fintech
+- Các khóa học trên Coursera về Digital Finance
+- Website của Ngân hàng Nhà nước về fintech
+
+Bạn có thể tìm hiểu sâu hơn về bất kỳ lĩnh vực nào bạn quan tâm.`;
+      }
     } catch (error) {
       console.error('[api/chat/gemini] Error generating content:', error);
-      if (fallbackAnswer) {
-        return new Response(JSON.stringify({ reply: fallbackAnswer, answer: fallbackAnswer, response: fallbackAnswer, source: 'fallback', suggestions: [
-          'Làm thế nào để tham gia câu lạc bộ FTC?',
-          'Các hoạt động của câu lạc bộ có gì?',
-          'Làm sao để đăng ký tham gia?',
-          'Câu lạc bộ có những chương trình gì?',
-          'Làm thế nào để liên hệ với ban chủ nhiệm?'
-        ] }), { headers: { 'Content-Type': 'application/json' } });
+      if (mode === 'domain') {
+        // For domain mode, provide fintech knowledge even on error
+        return new Response(JSON.stringify({
+          reply: `Fintech (Financial Technology) là sự kết hợp của công nghệ và tài chính nhằm cải thiện và tự động hóa các dịch vụ tài chính. Các lĩnh vực chính bao gồm:
+
+1. Thanh toán số và chuyển tiền
+2. Ngân hàng số và banking-as-a-service
+3. Cho vay và tín dụng số
+4. Quản lý tài sản và đầu tư
+5. Công nghệ bảo hiểm
+6. Blockchain và tài chính phi tập trung
+
+Bạn muốn tìm hiểu sâu về lĩnh vực nào trong số này?`,
+          answer: "Đã xảy ra lỗi khi tạo câu trả lời chi tiết, nhưng tôi có thể giúp bạn tìm hiểu về các khía cạnh cơ bản của fintech. Hãy cho tôi biết lĩnh vực nào bạn quan tâm nhất.",
+          response: "Tôi có thể giải thích về fintech. Bạn muốn biết thêm về mảng nào?",
+          source: 'default_knowledge',
+          suggestions: [
+            'Thanh toán số là gì và hoạt động như thế nào?',
+            'Ngân hàng số khác gì so với ngân hàng truyền thống?',
+            'Blockchain ứng dụng trong fintech ra sao?',
+            'Các công nghệ AI được dùng trong fintech?',
+            'Cơ hội nghề nghiệp trong fintech?'
+          ]
+        }), { headers: { 'Content-Type': 'application/json' } });
+      } else if (fallbackAnswer) {
+        return new Response(JSON.stringify({ 
+          reply: fallbackAnswer, 
+          answer: fallbackAnswer, 
+          response: fallbackAnswer, 
+          source: 'fallback', 
+          suggestions: [
+            'Làm thế nào để tham gia câu lạc bộ FTC?',
+            'Các hoạt động của câu lạc bộ có gì?',
+            'Làm sao để đăng ký tham gia?',
+            'Câu lạc bộ có những chương trình gì?',
+            'Làm thế nào để liên hệ với ban chủ nhiệm?'
+          ] 
+        }), { headers: { 'Content-Type': 'application/json' } });
       }
       return new Response(JSON.stringify({
         error: true,
