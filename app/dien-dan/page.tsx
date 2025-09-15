@@ -257,13 +257,22 @@ export default function ForumPage() {
           
           {/* Search Bar */}
           <div className="max-w-xl mx-auto relative">
-            <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-muted-foreground" />
+            <div className="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-muted-foreground flex items-center">
+              <Search className="h-5 w-5 text-muted-foreground" />
+            </div>
             <Input
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               placeholder="Tìm kiếm câu hỏi..."
-              className="pl-12 h-12 text-base bg-background/50 backdrop-blur-sm border-border/50 focus:border-primary/50 rounded-full"
+              className="pl-12 h-12 text-base bg-white/6 backdrop-blur-md border border-transparent hover:border-border/20 focus:border-accent/30 rounded-full shadow-lg transition-shadow duration-200"
             />
+            <button
+              onClick={() => setSearch('')}
+              className="absolute right-3 top-1/2 transform -translate-y-1/2 text-sm text-muted-foreground hover:text-foreground"
+              aria-label="Clear search"
+            >
+              X
+            </button>
           </div>
         </div>
       </section>
