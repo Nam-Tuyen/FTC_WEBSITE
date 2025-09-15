@@ -107,8 +107,8 @@ export function Navigation() {
       `}</style>
       <nav suppressHydrationWarning className="gradient-bg border-b border-accent/30 sticky top-0 z-50 backdrop-blur-md">
         <div className="absolute inset-0 bg-background/80 backdrop-blur-md" />
-        <div className="relative w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 overflow-visible">
-        <div className="flex justify-between items-center h-16 sm:h-20">
+        <div className="relative w-full max-w-6xl mx-auto px-3 sm:px-4 lg:px-6 overflow-visible">
+        <div className="flex justify-between items-center h-14 sm:h-16">
           {/* Logo */}
           <div className="flex-shrink-0">
             <Link href="/" className="flex items-center space-x-2 sm:space-x-4 group">
@@ -116,22 +116,22 @@ export function Navigation() {
                 <img
                   src={FTC_LOGO_URL}
                   alt="Financial Technology Club Logo"
-                  width={64}
-                  height={64}
-                  className="rounded-full glow transition-all object-cover w-16 h-16"
+                  width={48}
+                  height={48}
+                  className="rounded-full glow transition-all object-cover w-12 h-12"
                 />
                 <div className="absolute inset-0 rounded-full border-2 border-accent" aria-hidden="true" />
               </div>
-              <div className="flex items-center gap-3">
-                <span className="font-heading text-foreground font-extrabold tracking-wide leading-none text-[32px]">FTC</span>
-                <span className="text-[12px] sm:text-sm text-accent tracking-wide">&nbsp;</span>
+              <div className="flex items-center gap-2">
+                <span className="font-heading text-foreground font-extrabold tracking-wide leading-none text-2xl">FTC</span>
+                <span className="text-xs sm:text-sm text-accent tracking-wide">&nbsp;</span>
               </div>
             </Link>
           </div>
 
           {/* Desktop nav */}
           <div className="hidden md:block">
-            <div className="ml-4 lg:ml-10 flex items-center gap-3 flex-nowrap overflow-visible">
+            <div className="ml-3 lg:ml-6 flex items-center gap-2 flex-nowrap overflow-visible">
               {NAV.map(({ href, label, icon: Icon }) => {
                 const isActive = (() => {
                   try {
@@ -146,7 +146,7 @@ export function Navigation() {
                     key={href}
                     href={href}
                     aria-current={isActive ? 'page' : undefined}
-                    className={`nav-link group inline-flex items-center gap-3 py-3 px-4 rounded-md transition-all duration-200 whitespace-nowrap text-base ${isActive ? 'bg-accent/10 text-foreground shadow-sm' : 'text-foreground/80 hover:bg-accent/5'}`}
+                    className={`nav-link group inline-flex items-center gap-2 py-2 px-3 rounded-md transition-all duration-200 whitespace-nowrap text-sm ${isActive ? 'bg-accent/10 text-foreground shadow-sm' : 'text-foreground/80 hover:bg-accent/5'}`}
                   >
                     <IconWrapper 
                       Icon={Icon} 
@@ -193,7 +193,7 @@ export function Navigation() {
                   <Link 
                     key={href} 
                     href={href} 
-                    className={`group flex items-center gap-4 px-5 py-4 rounded-lg text-lg font-medium transition-all duration-200 ${
+                    className={`group flex items-center gap-3 px-4 py-3 rounded-lg text-base font-medium transition-all duration-200 ${
                       isActive ? 'bg-accent/10 text-foreground' : 'text-foreground/80 hover:bg-accent/5'
                     }`}
                     onClick={() => setOpen(false)}

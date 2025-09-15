@@ -1,7 +1,30 @@
-const CONTACT_INFO = `\n\nNếu có nội dung nào chưa rõ hoặc cần thêm thông tin, vui lòng liên hệ Câu lạc bộ qua Fanpage để được giải đáp: facebook.com/clbfintechuel`;
+const CONTACT_INFO = `\n\n---\n\nNếu có nội dung nào chưa rõ hoặc cần thêm thông tin, vui lòng liên hệ Câu lạc bộ qua [Fanpage](https://www.facebook.com/clbfintechuel) chính thức để được giải đáp.`;
 
 export const activityResponses = {
-  schedule: `Thời gian sinh hoạt sẽ được các trưởng ban và phó ban thông báo tới các bạn thông qua tin nhắn hoặc group nhà chung để các bạn nắm được.${CONTACT_INFO}`,
+  achievements: `🏆 **THÀNH TÍCH NỔI BẬT CỦA FTC**
+
+1️⃣ **NIỀM TỰ HÀO CỦA TUỔI TRẺ UEL**
+• Câu lạc bộ Công nghệ tài chính (FTC) luôn gắn liền hành trình phát triển của tuổi trẻ Trường Đại học Kinh tế – Luật với những trải nghiệm đáng nhớ và thành tích nổi bật
+• Trong năm học 2024 – 2025, FTC vinh dự được Ban Cán sự Đoàn Đại học Quốc gia TP.HCM trao tặng Giấy khen vì những đóng góp tích cực trong công tác Đoàn và phong trào thanh niên
+• FTC không chỉ tổ chức các hoạt động học thuật và ngoại khóa bổ ích mà còn tạo dựng một môi trường rèn luyện, kết nối và lan tỏa tinh thần tích cực
+
+2️⃣ **DẤU ẤN TẠI GIẢI THƯỞNG I-STAR**
+• FTC vinh dự nằm trong Top 10 tổ chức, cá nhân tiêu biểu Nhóm 4 tại Giải thưởng Đổi mới sáng tạo và Khởi nghiệp TP.HCM (I-Star)
+• Đây là giải thưởng uy tín do Ủy ban Nhân dân TP.HCM chủ trì và Sở Khoa học và Công nghệ TP.HCM tổ chức
+• Với định hướng "bệ phóng cho những ý tưởng đổi mới", FTC triển khai nhiều chương trình thiết thực như cuộc thi học thuật, đào tạo, workshop và talkshow
+• Giúp sinh viên tiếp cận kiến thức chuyên sâu về công nghệ tài chính và khởi nghiệp sáng tạo
+
+3️⃣ **GIẤY CHỨNG NHẬN I-STAR**
+• Giấy chứng nhận Top 10 I-Star ghi nhận thành tích và đóng góp của FTC trong hoạt động đổi mới sáng tạo và khởi nghiệp
+• Đây là minh chứng cho nỗ lực của câu lạc bộ trong việc thúc đẩy sáng tạo và hỗ trợ sinh viên thực hiện dự án thực tế${CONTACT_INFO}`,
+
+  schedule: `Thời gian sinh hoạt sẽ được **trưởng ban** và **phó ban** thông báo và cập nhật thường xuyên thông qua:
+
+1. Group chat chính thức của câu lạc bộ
+2. Group **Nhà chung FTC** - nơi trao đổi và cập nhật thông tin nội bộ
+3. Các kênh liên lạc nội bộ khác của từng ban
+
+Các thành viên sẽ được thêm vào các group này sau khi chính thức tham gia CLB.${CONTACT_INFO}`,
   
   overview: `Chào bạn! Rất vui được hỗ trợ bạn. Câu lạc bộ Công nghệ Tài chính (FTC) – UEL có rất nhiều hoạt động thú vị dành cho bạn đấy!  Một số hoạt động tiêu biểu gồm:
 
