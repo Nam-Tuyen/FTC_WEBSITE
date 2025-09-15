@@ -1,5 +1,4 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
-import { GoogleGenerativeAI } from "@google/generative-ai";
 import fs from 'fs'
 import path from 'path'
 import { RECRUITMENT_CONFIG } from '../../../ung-tuyen/constants'
@@ -41,7 +40,7 @@ const FALLBACK_ANSWERS: Record<string, string> = {
   join: `Bạn vào mục Ứng tuyển trên website, chọn “Bắt đầu ngay hôm nay” và điền form. Chọn ban mong muốn, Ban Nhân sự sẽ liên hệ, định hướng và thông báo các bước tiếp theo. Cần hỗ trợ nhanh có thể gửi email hoặc nhắn fanpage của FTC.`,
   teams: `CLB có 5 ban: Ban Học thuật (nội dung Fintech, giáo trình, rèn kỹ năng dữ liệu/SQL), Ban Sự kiện (lập kế hoạch, điều phối, tổng kết), Ban Truyền thông (quản trị kênh, bài viết, đồ họa, video), Ban Nhân sự (văn hóa, tuyển chọn, phân công, theo dõi hiệu quả) và Ban Tài chính cá nhân (giáo dục tài chính cá nhân, MoneyWe, FTCCN Sharing).`,
   schedule: `CLB sinh hoạt định kỳ qua talkshow, workshop và hoạt động nội bộ. Lịch cụ thể được công bố tại mục Hoạt động và trên các kênh chính thức; ứng viên sau khi đăng ký sẽ nhận thông báo qua email.`,
-  skills: `Ưu tiên tinh thần ham học, chủ động, cam kết thời gian; kỹ năng giao tiếp, làm việc nhóm, quản lý thời gian. Lợi thế: Excel/Google Sheets, SQL/Python (Ban Học thuật); lập kế hoạch/điều phối (Ban Sự kiện); viết/thiết kế/quay dựng (Ban Truyền thông); kiến thức tài chính cá nhân (Ban Tài chính cá nhân); tổ chức/phỏng vấn/vận hành (Ban Nhân sự).`
+  skills: `Ưu tiên tinh thần ham h���c, chủ động, cam kết thời gian; kỹ năng giao tiếp, làm việc nhóm, quản lý thời gian. Lợi thế: Excel/Google Sheets, SQL/Python (Ban Học thuật); lập kế hoạch/điều phối (Ban Sự kiện); viết/thiết kế/quay dựng (Ban Truyền thông); kiến thức tài chính cá nhân (Ban Tài chính cá nhân); tổ chức/phỏng vấn/vận hành (Ban Nhân sự).`
 }
 
 function getFallbackAnswer(message: string): string | null {
@@ -63,7 +62,7 @@ async function loadKnowledgeBase() {
     try {
       await fs.promises.access(kbDir)
     } catch {
-      return `Câu lạc bộ Công nghệ – Tài chính (FTC) là một câu lạc bộ sinh viên tại UEL.\nMục tiêu: Phát triển kỹ năng về công nghệ tài chính và fintech.\nHoạt động: Tổ chức các workshop, seminar, hackathon về fintech.\nThành viên: Sinh viên quan tâm đến lĩnh vực fintech và công nghệ tài chính.`
+      return `Câu lạc bộ Công nghệ – Tài chính (FTC) là một câu lạc bộ sinh viên tại UEL.\nMục tiêu: Phát triển kỹ năng về công nghệ tài chính và fintech.\nHoạt động: Tổ chức các workshop, seminar, hackathon về fintech.\nThành viên: Sinh viên quan tâm đến lĩnh vực fintech v�� công nghệ tài chính.`
     }
 
     const files = await fs.promises.readdir(kbDir)
@@ -272,7 +271,7 @@ Trả lời:`;
         'Các hoạt động của câu lạc bộ có gì?',
         'Làm sao để đăng ký tham gia?',
         'Câu lạc bộ có những chương trình gì?',
-        'Làm thế nào để liên hệ với ban chủ nhiệm?'
+        'Làm thế nào để liên hệ với ban ch�� nhiệm?'
       ],
       debug: process.env.NODE_ENV === 'development' ? error.message : undefined
     }), {
