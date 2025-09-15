@@ -149,8 +149,8 @@ export function Navigation() {
               className="group inline-flex items-center justify-center h-10 w-10 rounded-lg border border-accent/30 hover:bg-accent/5 transition-colors duration-200"
             >
               <div className="relative">
-                <Menu className={`absolute ${ICON_SIZE} text-accent transition-all duration-300 group-hover:scale-110 ${open ? 'opacity-0 rotate-90' : 'opacity-100 rotate-0'}`} aria-hidden={open} />
-                <X className={`absolute ${ICON_SIZE} text-accent transition-all duration-300 group-hover:scale-110 ${open ? 'opacity-100 rotate-0' : 'opacity-0 -rotate-90'}`} aria-hidden={!open} />
+                <Menu className={`absolute text-accent transition-all duration-300 group-hover:scale-110 ${open ? 'opacity-0 rotate-90' : 'opacity-100 rotate-0'}`} aria-hidden={open} />
+                <X className={`absolute text-accent transition-all duration-300 group-hover:scale-110 ${open ? 'opacity-100 rotate-0' : 'opacity-0 -rotate-90'}`} aria-hidden={!open} />
               </div>
             </button>
           </div>
