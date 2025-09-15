@@ -4,13 +4,20 @@
 /// <reference path="../../types/shadcn-ui.d.ts" />
 
 import React from 'react'
+'use client'
 import dynamic from "next/dynamic"
+import { useEffect, useState } from 'react'
 import { Bot } from "lucide-react"
 
 const Navigation = dynamic(() => import("@/components/navigation"), { ssr: false })
 const ChatInterface = dynamic(() => import("./_components/chat-interface"), { ssr: false })
 
 export default function ChatbotPage() {
+  const [mounted, setMounted] = useState(false)
+  useEffect(() => setMounted(true), [])
+
+  if (!mounted) return <div className="min-h-screen" />
+
   return (
     <div suppressHydrationWarning className="min-h-screen bg-gradient-to-b from-background to-background/80 overflow-hidden">
       <Navigation />
