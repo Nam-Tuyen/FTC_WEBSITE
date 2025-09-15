@@ -11,6 +11,7 @@
 import { ai } from '@/ai/genkit';
 import { z } from 'genkit';
 import { knowledgeManager } from '@/lib/knowledge-manager';
+import { activityResponses } from '@/lib/activity-responses';
 
 const FtcChatbotInputSchema = z.object({
   message: z
@@ -47,6 +48,95 @@ const FtcChatbotOutputSchema = z.object({
 export type FtcChatbotOutput = z.infer<typeof FtcChatbotOutputSchema>;
 
 export async function ftcChatbot(input: FtcChatbotInput): Promise<FtcChatbotOutput> {
+  // Check for schedule-related questions
+  const message = input.message.toLowerCase();
+
+  if (message.includes('thời gian sinh hoạt') || message.includes('sinh hoạt khi nào') || message.includes('lịch sinh hoạt')) {
+    return {
+      response: activityResponses.schedule,
+      source: 'activity_responses',
+      suggestions: [
+        'Các hoạt động thường diễn ra như thế nào?',
+        'Làm sao để tham gia FTC?',
+        'Các ban trong FTC làm gì?'
+      ]
+    };
+  }
+  
+  // Check for activity-related questions
+  if (message.includes('hoạt động') || message.includes('sinh hoạt')) {
+    // Overview of all activities
+    return {
+      response: activityResponses.overview,
+      source: 'activity_responses',
+      suggestions: [
+        'Cho mình biết thêm về hoạt động học thuật',
+        'FTC có những dự án thực tế nào?',
+        'Làm sao để tham gia FTC?'
+      ]
+    };
+  }
+
+  if (message.includes('học thuật') || message.includes('hội thảo') || message.includes('attacker')) {
+    return {
+      response: activityResponses.academic,
+      source: 'activity_responses',
+      suggestions: [
+        'FTC có dự án thực tế không?',
+        'Làm sao để tham gia các hoạt động học thuật?',
+        'Khi nào có cuộc thi ATTACKER tiếp theo?'
+      ]
+    };
+  }
+
+  if (message.includes('thực hành') || message.includes('dự án')) {
+    return {
+      response: activityResponses.practical,
+      source: 'activity_responses',
+      suggestions: [
+        'Làm sao để tham gia dự án?',
+        'FTC có đào tạo kỹ năng không?',
+        'Cho mình xem portfolio các dự án trước'
+      ]
+    };
+  }
+
+  if (message.includes('kết nối') || message.includes('networking') || message.includes('career')) {
+    return {
+      response: activityResponses.networking,
+      source: 'activity_responses',
+      suggestions: [
+        'Khi nào có Career Day?',
+        'Làm sao để tham gia talkshow?',
+        'FTC có kết nối thực tập không?'
+      ]
+    };
+  }
+
+  if (message.includes('phát triển') || message.includes('kỹ năng') || message.includes('training')) {
+    return {
+      response: activityResponses.selfDevelopment,
+      source: 'activity_responses',
+      suggestions: [
+        'FTC Training diễn ra khi nào?',
+        'Có cần kiến thức nền không?',
+        'Làm sao để tham gia khóa học?'
+      ]
+    };
+  }
+
+  if (message.includes('gắn kết') || message.includes('cộng đồng') || message.includes('trip')) {
+    return {
+      response: activityResponses.community,
+      source: 'activity_responses',
+      suggestions: [
+        'Khi nào có FTC Trip?',
+        'Chi phí tham gia trip là bao nhiêu?',
+        'Hoạt động gắn kết thường diễn ra khi nào?'
+      ]
+    };
+  }
+
   return ftcChatbotFlow(input);
 }
 
@@ -109,13 +199,14 @@ const ftcChatbotFlow = ai.defineFlow(
     inputSchema: FtcChatbotInputSchema,
     outputSchema: FtcChatbotOutputSchema,
   },
-  async (input) => {
+  async (input: FtcChatbotInput) => {
     // Load knowledge base using new manager
     const knowledgeBase = knowledgeManager.getFormattedContent();
 
     // Format history for prompt
     const historyText = input.history
-      ?.map(msg => `${msg.role === 'user' ? 'Người dùng' : 'Trợ lý'}: ${msg.content}`)
+      ?.map((msg: { role: string; content: string }) => 
+        `${msg.role === 'user' ? 'Người dùng' : 'Trợ lý'}: ${msg.content}`)
       .join('\n') || 'Chưa có lịch sử trò chuyện.';
 
     // Generate main response

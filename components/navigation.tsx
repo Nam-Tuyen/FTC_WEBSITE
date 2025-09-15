@@ -56,8 +56,17 @@ export function Navigation() {
     className?: string,
     showPulse?: boolean
   }) => (
-    <div className={`relative flex items-center justify-center ${className}`}>
-      <Icon className={`text-accent transition-all duration-200 group-hover:scale-110 ${isActive ? 'nav-icon-active' : 'nav-icon-glow'} ${showPulse ? 'nav-icon-pulse' : ''}`} />
+    <div className={`relative flex items-center justify-center w-6 h-6 ${className}`}>
+      <Icon 
+        className={`
+          w-full h-full 
+          text-accent 
+          transition-all duration-200 
+          group-hover:scale-110 
+          ${isActive ? 'nav-icon-active' : 'nav-icon-glow'} 
+          ${showPulse ? 'nav-icon-pulse' : ''}
+        `} 
+      />
       {isActive && (
         <div className="absolute inset-0 bg-accent/10 rounded-full blur-md -z-10 animate-pulse" />
       )}
@@ -67,15 +76,26 @@ export function Navigation() {
   return (
     <>
       <style jsx>{`
-        .nav-link { font-size: 0.875rem; /* match text-sm */ }
-        .nav-link svg, nav .nav-link svg { height: 1em; width: 1em; display: block; }
-        .nav-label { line-height: 1; }
+        .nav-link { 
+          font-size: 1rem; /* Increased from 0.875rem */
+          display: flex;
+          align-items: center;
+        }
+        .nav-link svg, nav .nav-link svg { 
+          height: 1.5em; /* Increased from 1em */
+          width: 1.5em; /* Increased from 1em */
+          display: block;
+        }
+        .nav-label { 
+          line-height: 1;
+          font-size: 1rem; /* Match icon size */
+        }
 
         .nav-icon-glow {
-          filter: drop-shadow(0 0 2px rgba(var(--accent-rgb), 0.3));
+          filter: drop-shadow(0 0 3px rgba(var(--accent-rgb), 0.4));
         }
         .nav-icon-active {
-          filter: drop-shadow(0 0 4px rgba(var(--accent-rgb), 0.5));
+          filter: drop-shadow(0 0 5px rgba(var(--accent-rgb), 0.6));
         }
         @keyframes iconPulse {
           0%, 100% { opacity: 1; }
@@ -126,7 +146,7 @@ export function Navigation() {
                     key={href}
                     href={href}
                     aria-current={isActive ? 'page' : undefined}
-                    className={`nav-link group inline-flex items-center gap-2 py-2 px-3 rounded-md transition-all duration-200 whitespace-nowrap ${isActive ? 'bg-accent/10 text-foreground shadow-sm' : 'text-foreground/80 hover:bg-accent/5'}`}
+                    className={`nav-link group inline-flex items-center gap-3 py-3 px-4 rounded-md transition-all duration-200 whitespace-nowrap text-base ${isActive ? 'bg-accent/10 text-foreground shadow-sm' : 'text-foreground/80 hover:bg-accent/5'}`}
                   >
                     <IconWrapper 
                       Icon={Icon} 
@@ -173,7 +193,7 @@ export function Navigation() {
                   <Link 
                     key={href} 
                     href={href} 
-                    className={`group flex items-center gap-3 px-4 py-3 rounded-lg text-base transition-all duration-200 ${
+                    className={`group flex items-center gap-4 px-5 py-4 rounded-lg text-lg font-medium transition-all duration-200 ${
                       isActive ? 'bg-accent/10 text-foreground' : 'text-foreground/80 hover:bg-accent/5'
                     }`}
                     onClick={() => setOpen(false)}
