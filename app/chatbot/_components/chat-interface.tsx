@@ -20,6 +20,8 @@ export default function ChatInterface() {
   const [showInfo, setShowInfo] = useState(false)
   const [selectedSuggestion, setSelectedSuggestion] = useState<number | null>(null)
   const containerRef = useRef<HTMLDivElement | null>(null)
+  const inputRef = useRef<HTMLInputElement | null>(null)
+  const composingRef = useRef(false)
 
   useEffect(() => {
     const el = containerRef.current
@@ -30,18 +32,28 @@ export default function ChatInterface() {
 
   async function onSubmit(e?: React.FormEvent) {
     e?.preventDefault()
-    if (isSending || !value.trim()) return
+    if (isSending) return
+    const text = (value || "").trim()
+    if (!text) return
+
     setIsSending(true)
+    // clear UI input immediately to give instant feedback
+    setValue("")
     try {
-      const text = value.trim()
-      setValue("")
       await send(text)
     } finally {
+      // ensure input cleared after send completes
       setIsSending(false)
+      setValue("")
+      try {
+        if (inputRef.current) inputRef.current.value = ""
+      } catch {}
     }
   }
 
   function handleKeyDown(e: React.KeyboardEvent<HTMLInputElement>) {
+    // Respect IME composition (Vietnamese) — don't submit while composing
+    if (composingRef.current) return
     if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault()
       onSubmit()
