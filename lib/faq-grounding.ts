@@ -47,6 +47,8 @@ export const SUGGESTED_QUESTIONS: Record<FaqTopic, string[]> = {
   ],
   achievements: [
     'ftc co nhung thanh tich gi',
+    'cau lac bo co nhung thanh tich gi',
+    'clb co nhung thanh tich gi',
     'thanh tich ftc',
     'giai thuong ftc',
     'ftc dat thanh tich gi',
