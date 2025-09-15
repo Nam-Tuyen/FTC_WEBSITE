@@ -261,6 +261,8 @@ Trả lời:`;
     return new Response(JSON.stringify({
       error: true,
       message: 'Internal server error',
+      reply: 'Xin lỗi, có lỗi xảy ra khi xử lý yêu cầu. Vui lòng thử lại sau.',
+      answer: 'Xin lỗi, có lỗi xảy ra khi xử lý yêu cầu. Vui lòng thử lại sau.',
       response: 'Xin lỗi, có lỗi xảy ra khi xử lý yêu cầu. Vui lòng thử lại sau.',
       suggestions: [
         'Làm thế nào để tham gia câu lạc bộ FTC?',
