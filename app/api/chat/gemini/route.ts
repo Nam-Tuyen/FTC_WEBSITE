@@ -11,8 +11,8 @@ const MODEL_NAME = process.env.GEMINI_MODEL || "gemini-1.5-flash";
 
 // Required extra suggestions to always include
 const EXTRA_SUGGESTIONS = [
-  "Câu lạc bộ FTC là gì",
-  "Thành tích của câu lạc bộ FTC"
+  "FTC là câu lạc bộ như thế nào",
+  "FTC có thành tích gì"
 ];
 
 // Helper to extract text from various SDK response shapes
