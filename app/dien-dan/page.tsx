@@ -264,14 +264,18 @@ export default function ForumPage() {
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               placeholder="Tìm kiếm câu hỏi..."
-              className="pl-12 h-12 text-base bg-white/6 backdrop-blur-md border border-transparent hover:border-border/20 focus:border-accent/30 rounded-full shadow-lg transition-shadow duration-200"
+              className="pl-12 h-12 text-base bg-white/6 backdrop-blur-md border border-transparent hover:border-border/20 focus:border-accent/30 rounded-full shadow-lg transition-shadow duration-200 ring-0 focus:ring-2 focus:ring-accent/20"
             />
             <button
               onClick={() => setSearch('')}
-              className="absolute right-3 top-1/2 transform -translate-y-1/2 text-sm text-muted-foreground hover:text-foreground"
+              className="absolute right-3 top-1/2 transform -translate-y-1/2 text-sm text-muted-foreground hover:text-foreground inline-flex items-center justify-center w-8 h-8 rounded-full border border-border/20 bg-background/30 hover:bg-background/40 transition-colors"
               aria-label="Clear search"
             >
-              X
+              <span className="sr-only">Clear</span>
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <line x1="18" y1="6" x2="6" y2="18" />
+                <line x1="6" y1="6" x2="18" y2="18" />
+              </svg>
             </button>
           </div>
         </div>
