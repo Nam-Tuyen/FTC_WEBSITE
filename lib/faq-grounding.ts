@@ -75,6 +75,11 @@ export function matchSuggestedQuestion(input: string): { matched: boolean; topic
 
   const tokensQ = q.split(' ').filter(Boolean);
 
+  // Common Vietnamese stopwords / particles that cause false positive matches
+  const STOPWORDS = new Set([
+    'co', 'gi', 'la', 'the', 'nhung', 'mot', 'cach', 'de', 've', 'voi', 'va', 'và', 'o', 'tren', 'duoi', 'ban', 'hay', 'tro', 'cho', 'khong'
+  ]);
+
   let best: { topic?: FaqTopic; score: number } = { topic: undefined, score: 0 };
 
   (Object.keys(SUGGESTED_QUESTIONS) as FaqTopic[]).forEach((topic) => {
@@ -82,9 +87,15 @@ export function matchSuggestedQuestion(input: string): { matched: boolean; topic
       const p = normalizeVi(pat);
       const tokensP = p.split(' ').filter(Boolean);
 
-      // Use token overlap rather than simple substring checks to avoid accidental matches (e.g. 'hi' matching 'sinh')
-      const contains = tokensQ.some((t) => tokensP.includes(t)) || tokensP.some((t) => tokensQ.includes(t));
-      const score = Math.max(contains ? 1 : 0, jaccard(tokensQ, tokensP));
+      // Filter out common stopwords before matching to avoid short/common-token collisions (e.g. 'co', 'gi')
+      const qFiltered = tokensQ.filter((t) => !STOPWORDS.has(t));
+      const pFiltered = tokensP.filter((t) => !STOPWORDS.has(t));
+
+      const useQ = qFiltered.length ? qFiltered : tokensQ;
+      const useP = pFiltered.length ? pFiltered : tokensP;
+
+      const contains = useQ.some((t) => useP.includes(t)) || useP.some((t) => useQ.includes(t));
+      const score = Math.max(contains ? 1 : 0, jaccard(useQ, useP));
 
       if (score > best.score) best = { topic, score };
     }
@@ -132,7 +143,7 @@ const FTC_FAQ_CONTEXT = `
 
     Giấy khen ĐHQG
     DẤU ẤN TẠI GIẢI THƯỞNG I-STAR
-    FTC vinh dự nằm trong Top 10 tổ chức, cá nhân tiêu biểu Nhóm 4 tại Giải thưởng Đổi mới sáng tạo và Khởi nghiệp TP.HCM (I-Star). Đây là giải thưởng uy tín do Ủy ban Nhân dân TP.HCM chủ trì và Sở Khoa học và Công nghệ TP.HCM tổ chức.
+    FTC vinh dự nằm trong Top 10 tổ chức, cá nhân tiêu biểu Nhóm 4 t���i Giải thưởng Đổi mới sáng tạo và Khởi nghiệp TP.HCM (I-Star). Đây là giải thưởng uy tín do Ủy ban Nhân dân TP.HCM chủ trì và Sở Khoa học và Công nghệ TP.HCM tổ chức.
 
     Với định hướng "bệ phóng cho những ý tưởng đổi mới", FTC triển khai nhiều chương trình thiết thực như cuộc thi học thuật, đào tạo, workshop và talkshow để giúp sinh viên tiếp cận kiến thức chuyên sâu về công nghệ tài chính và khởi nghiệp sáng tạo.
 
