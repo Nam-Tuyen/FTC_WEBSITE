@@ -72,10 +72,6 @@ export function SidebarWidgets({ currentStudentId, setCurrentStudentId }: Sideba
             </div>
             <div className="flex items-center gap-2 mt-3">
               <Button variant="ghost" size="sm" onClick={handleClear} className="text-sm">Xóa</Button>
-              <Button variant="outline" size="sm" onClick={() => { /* open profile settings placeholder */ }}>
-                <Settings className="h-4 w-4 mr-2" />
-                Cài đặt
-              </Button>
             </div>
           </div>
 
