@@ -208,7 +208,10 @@ export async function POST(req: Request) {
       });
     }
 
-    const clubQuery = requestedMode === "club" || (requestedMode === "auto" && isClubQuery(message));
+    const matchedSuggested = matchSuggestedQuestion(message);
+    const clubQuery =
+      requestedMode === "club" ||
+      (requestedMode === "auto" && (isClubQuery(message) || matchedSuggested.matched));
     const fallbackClubAnswer = getFallbackAnswer(message);
 
     // Initialize Gemini for non-club or as generator for club when available
