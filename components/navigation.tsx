@@ -45,7 +45,7 @@ export function Navigation() {
   }, [])
 
   // Consistent icon size for all navigation elements
-  const ICON_SIZE = "h-6 w-6" // 24px - larger to match text size
+  const ICON_SIZE = "h-7 w-7" // 28px - increased for clearer visibility
   
   // Icon wrapper for consistent styling
   const IconWrapper = ({ 
