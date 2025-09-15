@@ -12,8 +12,8 @@ const MODEL_NAME = process.env.GEMINI_MODEL || "gemini-1.5-flash";
 // Required extra suggestions to always include
 const EXTRA_SUGGESTIONS = [
   "FTC là câu lạc bộ như thế nào",
-  "FTC có thành tích gì",
-  "FTC được thành lập khi nào"
+  "Câu lạc bộ có những thành tích gì",
+  "Câu lạc bộ được thành lập khi nào"
 ];
 
 // Helper to extract text from various SDK response shapes
@@ -67,7 +67,7 @@ function initGemini() {
 // Fallback answers for common club topics when AI is unavailable
 const FALLBACK_ANSWERS = {
   activities:
-    "FTC tổ chức talkshow, workshop và lớp bồi dưỡng về Fintech, AI trong tài chính, giao dịch thuật toán, blockchain và tài chính cá nhân. Thành viên được tham gia dự án thực tế trên dữ liệu và thị trường, rèn tư duy sản phẩm và quản trị rủi ro. CLB kết nối doanh nghiệp, mở cơ hội thực tập và xây hồ sơ học thuật, đồng thời phát tri��n kỹ năng giao tiếp, làm việc nhóm và quản lý dự án.",
+    "FTC tổ chức talkshow, workshop và lớp bồi dưỡng về Fintech, AI trong tài chính, giao dịch thuật toán, blockchain và tài chính cá nhân. Thành viên được tham gia dự án thực tế trên dữ liệu và thị trường, rèn tư duy sản phẩm và quản trị rủi ro. CLB kết nối doanh nghiệp, mở cơ hội thực tập và xây hồ sơ học thuật, đồng thời phát triển kỹ năng giao tiếp, làm việc nhóm và quản lý dự án.",
   join:
     'Bạn vào mục Ứng tuyển trên website, chọn "Bắt đầu ngay hôm nay" và điền form. Chọn ban mong muốn, Ban Nhân sự sẽ liên hệ, định hướng và thông báo các bước tiếp theo. Cần hỗ trợ nhanh có thể gửi email hoặc nhắn fanpage của FTC.',
   teams:
@@ -75,7 +75,7 @@ const FALLBACK_ANSWERS = {
   schedule:
     "CLB sinh hoạt định kỳ qua talkshow, workshop và hoạt động nội bộ. Lịch cụ thể được công bố tại mục Hoạt động và trên các kênh chính thức; ứng viên sau khi đăng ký sẽ nhận thông báo qua email.",
   skills:
-    "Ưu tiên tinh thần ham học, chủ động, cam kết thời gian; kỹ năng giao tiếp, làm việc nhóm, quản lý thời gian. Lợi thế: Excel/Google Sheets, SQL/Python (Ban Học thuật); lập kế hoạch/điều ph���i (Ban Sự kiện); viết/thiết kế/quay dựng (Ban Truyền thông); kiến thức tài chính cá nhân (Ban Tài chính cá nhân); tổ chức/phỏng vấn/vận hành (Ban Nhân sự).",
+    "Ưu tiên tinh thần ham học, chủ động, cam kết thời gian; kỹ năng giao tiếp, làm việc nhóm, quản lý thời gian. Lợi thế: Excel/Google Sheets, SQL/Python (Ban Học thuật); lập kế hoạch/điều phối (Ban Sự kiện); viết/thiết kế/quay dựng (Ban Truyền thông); kiến thức tài chính cá nhân (Ban Tài chính cá nhân); tổ chức/phỏng vấn/vận hành (Ban Nhân sự).",
   founding: `Câu lạc bộ Công nghệ tài chính FTC trực thuộc Khoa Tài chính và Ngân hàng, Trường Đại học Kinh tế và Luật, Đại học Quốc gia Thành phố Hồ Chí Minh, được thành lập vào tháng mười một năm 2020 dưới sự hướng dẫn của ThS. NCS Phan Huy Tâm (Giảng viên Khoa Tài chính - Ngân hàng) cùng đội ngũ sinh viên ngành công nghệ tài chính.`,
   achievements: `THÀNH TÍCH NỔI BẬT\nThành tích nổi bật của câu lạc bộ trong thời gian qua\n\nNIỀM TỰ HÀO CỦA TUỔI TRẺ UEL\nCâu lạc bộ Công nghệ tài chính (FTC) luôn gắn liền hành trình phát triển của tuổi trẻ Trường Đại học Kinh tế – Luật với những trải nghiệm đáng nhớ và thành tích nổi bật. Trong năm học 2024 – 2025, FTC đã vinh dự được Ban Cán sự Đoàn Đại học Quốc gia TP.HCM trao tặng Giấy khen vì những đóng góp tích cực trong công tác Đoàn và phong trào thanh niên.\n\nFTC không chỉ tổ chức các hoạt động học thuật và ngoại khóa bổ ích mà còn tạo dựng một môi trường rèn luyện, kết nối và lan tỏa tinh thần tích cực.\n\nGiấy khen ĐHQG\nDẤU ẤN TẠI GIẢI THƯỞNG I-STAR\nFTC vinh dự nằm trong Top 10 tổ chức, cá nhân tiêu biểu Nhóm 4 tại Giải thưởng Đổi mới sáng tạo và Khởi nghiệp TP.HCM (I-Star). Đây là giải thưởng uy tín do Ủy ban Nhân dân TP.HCM chủ trì và Sở Khoa học và Công nghệ TP.HCM tổ chức.\n\nVới định hướng "bệ phóng cho những ý tưởng đổi mới", FTC triển khai nhiều chương trình thiết thực như cuộc thi học thuật, đào tạo, workshop và talkshow để giúp sinh viên tiếp cận kiến thức chuyên sâu về công nghệ tài chính và khởi nghiệp sáng tạo.\n\nI-Star Top10\nGiấy chứng nhận I-Star ghi nhận thành tích và đóng góp của FTC trong hoạt động đổi mới sáng tạo và khởi nghiệp. Đây là minh chứng cho nỗ lực của câu lạc bộ trong việc thúc đẩy sáng tạo và hỗ trợ sinh viên thực hiện dự án thực tế.`,
 } as const;
@@ -160,7 +160,7 @@ async function loadKnowledgeBase() {
     return (
       "Câu lạc bộ Công nghệ – Tài chính (FTC) là một câu lạc bộ sinh viên tại UEL.\n" +
       "Mục tiêu: Phát triển kỹ năng về công nghệ tài chính và fintech.\n" +
-      "Hoạt động: Tổ chức các workshop, seminar, hackathon về fintech.\n" +
+      "Hoạt ��ộng: Tổ chức các workshop, seminar, hackathon về fintech.\n" +
       "Thành viên: Sinh viên quan tâm đến lĩnh vực fintech và công nghệ tài chính."
     );
   }
