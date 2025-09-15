@@ -32,6 +32,8 @@ export function FloatingChatbot() {
   ])
   const [inputValue, setInputValue] = useState("")
   const [isLoading, setIsLoading] = useState(false)
+  const [isComposing, setIsComposing] = useState(false)
+  const inputRef = React.useRef<HTMLInputElement | null>(null)
 
   const getBotResponse = async (userMessage: string): Promise<string> => {
     try {
