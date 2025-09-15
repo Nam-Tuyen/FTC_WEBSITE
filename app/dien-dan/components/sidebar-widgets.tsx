@@ -6,11 +6,6 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { MessageSquare, ArrowUp, User, Plus, Settings } from 'lucide-react'
-  ArrowUp,
-  User,
-  Plus,
-  Settings
-} from '@/components/icons'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 
 interface SidebarWidgetsProps {
