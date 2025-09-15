@@ -227,7 +227,7 @@ export function Navigation() {
                       isActive={isActive}
                       showPulse={label === 'CHATBOT' && !isActive}
                     />
-                    <span className="font-medium">{label}</span>
+                    <span className="font-medium text-lg">{label}</span>
                   </Link>
                 )
               })}
