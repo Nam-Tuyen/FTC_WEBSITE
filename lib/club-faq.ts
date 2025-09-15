@@ -44,7 +44,7 @@ export function isClubRelated(question: string): boolean {
   return clubKeywords.some((kw) => q.includes(toKey(kw)));
 }
 
-// ===== FAQ Dataset (đã gộp & m�� rộng pattern) =====
+// ===== FAQ Dataset (đã gộp & mở rộng pattern) =====
 const faq: ClubFaqItem[] = [
   // 1) Giới thiệu CLB
   {
@@ -94,11 +94,14 @@ Nếu có nội dung nào chưa rõ hoặc cần thêm thông tin, vui lòng li�
     patterns: ['cac ban', 'ban trong clb', 'phong ban', 'co cau ban', 'ban hoc thuat', 'ban su kien', 'ban truyen thong', 'ban tai chinh ca nhan', 'ban nhan su', 'team'],
     answer:
 `🏷️ **Cơ cấu ban**
+FTC có 5 ban chuyên môn (không tính Ban Điều hành). Các ban gồm:
 • *Học thuật*: nội dung Fintech, dữ liệu, SQL, phân tích, thuật toán.
 • *Sự kiện*: ý tưởng, kịch bản, vận hành chương trình, báo cáo.
 • *Truyền thông*: quản trị kênh, viết nội dung, thiết kế, ảnh/video.
 • *Tài chính cá nhân*: MoneyWe, chủ đề tài chính cá nhân ứng dụng công nghệ.
-• *Nhân sự*: nội quy, văn hóa, tuyển – phân công – đánh giá, minh bạch quỹ.`,
+• *Nhân sự*: nội quy, văn hóa, tuyển – phân công – đánh giá, minh bạch quỹ.
+
+Nếu có nội dung nào chưa rõ hoặc cần thêm thông tin, vui lòng liên hệ Câu lạc bộ qua Fanpage chính thức để được giải đáp: ${FANPAGE_URL}`,
   },
 
   // 5) Lịch sinh hoạt
@@ -284,7 +287,7 @@ export function buildClubContextBlock(userQuestion: string) {
   const norm = (s: string) => (s ?? '').replace(/\uFFFD/g, '').normalize('NFC').trim();
 
   const quickFacts: string[] = [
-    'FTC trực thuộc Khoa Tài chính – Ng��n hàng, UEL',
+    'FTC trực thuộc Khoa Tài chính – Ngân hàng, UEL',
     'Thành lập 11/2020',
   ];
 
