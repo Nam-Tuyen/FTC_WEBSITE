@@ -2,12 +2,13 @@ import { GoogleGenerativeAI } from "@google/generative-ai";
 import fs from 'fs'
 import path from 'path'
 import { RECRUITMENT_CONFIG } from '../../../ung-tuyen/constants'
+import { matchSuggestedQuestion } from '@/lib/faq-grounding'
 
 export const dynamic = 'force-dynamic';
 export const maxDuration = 300; // 5 minutes timeout
 export const runtime = 'nodejs';
 
-const MODEL_NAME = "gemini-pro";
+const MODEL_NAME = process.env.GEMINI_MODEL || 'gemini-1.5-flash';
 
 // Helper to initialize Gemini model at request time
 function initGemini() {
@@ -33,129 +34,43 @@ function initGemini() {
   }
 }
 
-// Validate and parse request body
-async function parseRequest(req: Request) {
-  try {
-    const clonedReq = req.clone ? req.clone() : req;
-    const body = await clonedReq.json();
-
-    const message = typeof body.message === 'string' ? body.message.trim() : '';
-    const history = Array.isArray(body.history) ? body.history : [];
-    const mode = body.mode === 'club' ? 'club' : (body.mode === 'domain' ? 'domain' : 'auto');
-
-    if (!message) {
-      throw new Error('Invalid message');
-    }
-
-    return { message, history, mode };
-  } catch (error) {
-    throw new Error('Invalid request body');
-  }
+// Fallback answers for common topics when AI is unavailable
+const FALLBACK_ANSWERS: Record<string, string> = {
+  activities: `FTC tổ chức talkshow, workshop và lớp bồi dưỡng về Fintech, AI trong tài chính, giao dịch thuật toán, blockchain và tài chính cá nhân. Thành viên được tham gia dự án thực tế trên dữ liệu và thị trường, rèn tư duy sản phẩm và quản trị rủi ro. CLB kết nối doanh nghiệp, mở cơ hội thực tập và xây hồ sơ học thuật, đồng th��i phát triển kỹ năng giao tiếp, làm việc nhóm và quản lý dự án.`,
+  join: `Bạn vào mục Ứng tuyển trên website, chọn “Bắt đầu ngay hôm nay” và điền form. Chọn ban mong muốn, Ban Nhân sự sẽ liên hệ, định hướng và thông báo các bước tiếp theo. Cần hỗ trợ nhanh có thể gửi email hoặc nhắn fanpage của FTC.`,
+  teams: `CLB có 5 ban: Ban Học thuật (nội dung Fintech, giáo trình, rèn kỹ năng dữ liệu/SQL), Ban Sự kiện (lập kế hoạch, điều phối, tổng kết), Ban Truyền thông (quản trị kênh, bài viết, đồ họa, video), Ban Nhân sự (văn hóa, tuyển chọn, phân công, theo dõi hiệu quả) và Ban Tài chính cá nhân (giáo dục tài chính cá nhân, MoneyWe, FTCCN Sharing).`,
+  schedule: `CLB sinh hoạt định kỳ qua talkshow, workshop và hoạt động nội bộ. Lịch cụ thể được công bố tại mục Hoạt động và trên các kênh chính thức; ứng viên sau khi đăng ký sẽ nhận thông báo qua email.`,
+  skills: `Ưu tiên tinh thần ham học, chủ động, cam kết thời gian; kỹ năng giao tiếp, làm việc nhóm, quản lý thời gian. Lợi thế: Excel/Google Sheets, SQL/Python (Ban Học thuật); lập kế hoạch/điều phối (Ban Sự kiện); viết/thiết kế/quay dựng (Ban Truyền thông); kiến thức tài chính cá nhân (Ban Tài chính cá nhân); tổ chức/phỏng vấn/vận hành (Ban Nhân sự).`
 }
 
-async function fetchBackendContext() {
-  // Fetch useful backend data: recent forum questions and recruitment info
-  const parts: string[] = [];
-  try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL || ''}/api/forum/questions`);
-    if (res.ok) {
-      const qs = await res.json();
-      if (Array.isArray(qs) && qs.length) {
-        const top = qs.slice(0, 5).map((q: any) => `- ${q.title}: ${String(q.content || '').slice(0, 120).replace(/\n/g, ' ')}...`);
-        parts.push('[RECENT_FORUM_QUESTIONS]');
-        parts.push(...top);
-      }
-    }
-  } catch (e) {
-    // ignore
+function getFallbackAnswer(message: string): string | null {
+  const matched = matchSuggestedQuestion(message)
+  if (matched.matched && matched.topic && FALLBACK_ANSWERS[matched.topic]) {
+    return FALLBACK_ANSWERS[matched.topic]
   }
-
-  try {
-    const status = RECRUITMENT_CONFIG.getStatus();
-    parts.push('[RECRUITMENT]');
-    parts.push(`status: ${status}`);
-    parts.push(`formUrl: ${RECRUITMENT_CONFIG.formUrl}`);
-  } catch (e) {}
-
-  // Read all files under backend/data/knowledge_base and build a heuristic summary (cacheable)
-  try {
-    const kbDir = path.resolve(process.cwd(), 'backend', 'data', 'knowledge_base')
-    const cacheFile = path.join(kbDir, '.kb_summary.txt')
-
-    // Use cache if present and recent (24h)
-    try {
-      const s = await fs.promises.stat(cacheFile)
-      const age = Date.now() - s.mtime.getTime()
-      if (age < 24 * 60 * 60 * 1000) {
-        const cached = await fs.promises.readFile(cacheFile, 'utf-8')
-        parts.push('[KNOWLEDGE_BASE_SUMMARY]')
-        parts.push(cached.trim())
-        // return early using cache
-        return parts.join('\n')
-      }
-    } catch (e) {
-      // no cache or unreadable
-    }
-
-    const files = await fs.promises.readdir(kbDir)
-    const summaries: string[] = []
-    for (const f of files) {
-      const full = path.join(kbDir, f)
-      const stat = await fs.promises.stat(full)
-      if (stat.isFile() && f.endsWith('.py')) {
-        const txt = await fs.promises.readFile(full, 'utf-8')
-        // Heuristic: extract triple-quoted blocks and long comment/paragraph lines
-        const triples: string[] = []
-        const tripleRe = /"""([\s\S]*?)"""/g
-        let m: RegExpExecArray | null
-        while ((m = tripleRe.exec(txt)) !== null) {
-          const block = m[1].replace(/\s+/g, ' ').trim()
-          if (block.length > 30) triples.push(block)
-        }
-        // fallback: collect long lines
-        const longLines = txt.split(/\r?\n/).map(l => l.trim()).filter(l => l.length > 40).slice(0, 5)
-        const top = triples.length ? triples.slice(0,3) : longLines
-        if (top.length) {
-          summaries.push(`--- ${f} ---`)
-          summaries.push(...top.map(s => s.replace(/\s+/g, ' ').trim()))
-        }
-      }
-    }
-
-    const joined = summaries.join('\n').trim()
-    if (joined) {
-      // limit size
-      const limited = joined.slice(0, 15000)
-      parts.push('[KNOWLEDGE_BASE_SUMMARY]')
-      parts.push(limited)
-      // write cache (best-effort)
-      try {
-        await fs.promises.writeFile(cacheFile, limited, 'utf-8')
-      } catch (e) {
-        // ignore cache write errors
-      }
-    }
-  } catch (e) {
-    // ignore if folder not present
-  }
-
-  return parts.join('\n')
+  return null
 }
 
-// Load knowledge base content
+// Load knowledge base content (supports .txt and .md with sensible default)
 async function loadKnowledgeBase() {
   const parts: string[] = [];
 
-  // Read all files under backend/data/knowledge_base
   try {
     const kbDir = path.resolve(process.cwd(), 'backend', 'data', 'knowledge_base')
+
+    // Check dir exists
+    try {
+      await fs.promises.access(kbDir)
+    } catch {
+      return `Câu lạc bộ Công nghệ – Tài chính (FTC) là một câu lạc bộ sinh viên tại UEL.\nMục tiêu: Phát triển kỹ năng về công nghệ tài chính và fintech.\nHoạt động: Tổ chức các workshop, seminar, hackathon về fintech.\nThành viên: Sinh viên quan tâm đến lĩnh vực fintech và công nghệ tài chính.`
+    }
+
     const files = await fs.promises.readdir(kbDir)
-    
     for (const file of files) {
-      if (file.endsWith('.txt')) {
+      if (file.endsWith('.txt') || file.endsWith('.md')) {
         try {
           const content = await fs.promises.readFile(path.join(kbDir, file), 'utf-8')
-          parts.push(content.trim())
+          if (content.trim()) parts.push(content.trim())
         } catch (e) {
           console.error(`Error reading file ${file}:`, e)
         }
@@ -165,34 +80,49 @@ async function loadKnowledgeBase() {
     console.error('Error reading knowledge base:', e)
   }
 
+  if (parts.length === 0) {
+    return `Câu lạc bộ Công nghệ – Tài chính (FTC) là một câu lạc bộ sinh viên tại UEL.\nMục tiêu: Phát triển kỹ năng về công nghệ tài chính và fintech.\nHoạt động: Tổ chức các workshop, seminar, hackathon về fintech.\nThành viên: Sinh viên quan tâm đến lĩnh vực fintech và công nghệ tài chính.`
+  }
+
   return parts.join('\n\n')
 }
 
 export async function POST(req: Request) {
   try {
-    // Parse request
-    let parsedBody: any = null
+    // Parse request body
+    let body: any = null
     try {
-      parsedBody = await req.json()
+      body = await req.json()
     } catch (e) {
       console.error('Failed to parse JSON body for /api/chat/gemini', e)
       return new Response(JSON.stringify({ error: 'Invalid JSON body' }), { status: 400, headers: { 'Content-Type': 'application/json' } })
     }
 
-    const { message, history } = parsedBody
-    console.log('[api/chat/gemini] incoming request, messageLength=', typeof message === 'string' ? message.length : 'none', 'historyLen=', Array.isArray(history) ? history.length : 0)
+    const message: string = typeof body?.message === 'string' ? body.message.trim() : ''
+    const history = Array.isArray(body?.history) ? body.history : []
+    console.log('[api/chat/gemini] incoming', { messageLen: message?.length || 0, historyLen: history.length })
 
-    if (!message || typeof message !== 'string') {
+    if (!message) {
       return new Response(JSON.stringify({ error: 'Invalid message' }), { status: 400, headers: { 'Content-Type': 'application/json' } })
     }
+
+    const fallbackAnswer = getFallbackAnswer(message)
 
     // Initialize Gemini
     const model = initGemini();
     if (!model) {
-      console.error('[api/chat/gemini] GEMINI API not configured')
-      return new Response(JSON.stringify({ 
+      if (fallbackAnswer) {
+        return new Response(JSON.stringify({ response: fallbackAnswer, source: 'fallback', suggestions: [
+          'Làm thế nào để tham gia câu lạc bộ FTC?',
+          'Các hoạt động của câu lạc bộ có gì?',
+          'Làm sao để đăng ký tham gia?',
+          'Câu lạc bộ có những chương trình gì?',
+          'Làm thế nào để liên hệ với ban chủ nhiệm?'
+        ] }), { headers: { 'Content-Type': 'application/json' } })
+      }
+      return new Response(JSON.stringify({
         error: true,
-        message: 'AI service temporarily unavailable', 
+        message: 'AI service temporarily unavailable',
         code: 'NO_GEMINI_KEY',
         response: 'Xin lỗi, dịch vụ AI tạm thời không khả dụng. Vui lòng thử lại sau.',
         suggestions: [
@@ -211,7 +141,6 @@ export async function POST(req: Request) {
       knowledgeBase = await loadKnowledgeBase();
     } catch (error) {
       console.error('[api/chat/gemini] Error loading knowledge base:', error);
-      // Continue without knowledge base if it fails
       knowledgeBase = '';
     }
 
@@ -238,15 +167,12 @@ Trả lời:`;
     function extractText(resp: any) {
       try {
         if (!resp) return ''
-        // older SDK: resp.response.text() is a function
         if (resp.response && typeof resp.response.text === 'function') {
           return String(resp.response.text()).trim()
         }
-        // newer SDK: resp.response.text is string
         if (resp.response && typeof resp.response.text === 'string') {
           return resp.response.text.trim()
         }
-        // fallback: check common fields
         if (typeof resp.output_text === 'string') return resp.output_text.trim()
         if (Array.isArray(resp.output) && resp.output.length) {
           const first = resp.output[0]
@@ -262,9 +188,9 @@ Trả lời:`;
     }
 
     // Generate response
-    let result;
+    let answer = ''
     try {
-      result = await model.generateContent({
+      const result = await model.generateContent({
         contents: [{ role: 'user', parts: [{ text: prompt }] }],
         generationConfig: {
           temperature: 0.7,
@@ -273,8 +199,18 @@ Trả lời:`;
           maxOutputTokens: 1024,
         }
       });
+      answer = extractText(result)
     } catch (error) {
       console.error('[api/chat/gemini] Error generating content:', error);
+      if (fallbackAnswer) {
+        return new Response(JSON.stringify({ response: fallbackAnswer, source: 'fallback', suggestions: [
+          'Làm thế nào để tham gia câu lạc bộ FTC?',
+          'Các hoạt động của câu lạc bộ có gì?',
+          'Làm sao để đăng ký tham gia?',
+          'Câu lạc bộ có những chương trình gì?',
+          'Làm thế nào để liên hệ với ban chủ nhiệm?'
+        ] }), { headers: { 'Content-Type': 'application/json' } })
+      }
       return new Response(JSON.stringify({
         error: true,
         message: 'AI service error',
@@ -289,9 +225,11 @@ Trả lời:`;
       }), { status: 503, headers: { 'Content-Type': 'application/json' } });
     }
 
-    const answer = extractText(result) || 'Xin lỗi, không thể tạo câu trả lời. Vui lòng thử lại.';
+    if (!answer) {
+      answer = fallbackAnswer || 'Xin lỗi, không thể tạo câu trả lời. Vui lòng thử lại.'
+    }
 
-    // Generate suggested follow-up questions (5) using Gemini, prefer knowledge base
+    // Generate suggested follow-up questions (best-effort)
     let suggestions: string[] = [];
     try {
       const suggestionPrompt = `Bạn là cố vấn thân thiện cho tân sinh viên. Dựa trên thông tin từ knowledge base (nếu có) và câu trả lời vừa soạn ở trên, hãy tạo 5 câu hỏi gợi ý mà tân sinh viên có thể tiếp tục hỏi. Trả về một mảng JSON thuần gồm các chuỗi.`;
@@ -303,12 +241,8 @@ Trả lời:`;
       try {
         const parsed = JSON.parse(rawSug);
         if (Array.isArray(parsed)) suggestions = parsed.filter((x) => typeof x === 'string');
-      } catch (e) {
-        // ignore parse errors
-      }
-    } catch (e) {
-      // ignore suggestion generation errors
-    }
+      } catch (e) {}
+    } catch (e) {}
 
     return new Response(JSON.stringify({
       response: answer,
@@ -332,9 +266,9 @@ Trả lời:`;
         'Làm thế nào để liên hệ với ban chủ nhiệm?'
       ],
       debug: process.env.NODE_ENV === 'development' ? error.message : undefined
-    }), { 
+    }), {
       status: 500,
-      headers: { 'Content-Type': 'application/json' } 
+      headers: { 'Content-Type': 'application/json' }
     })
   }
 }
