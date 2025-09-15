@@ -37,7 +37,7 @@ function initGemini() {
 // Fallback answers for common topics when AI is unavailable
 const FALLBACK_ANSWERS: Record<string, string> = {
   activities: `FTC tổ chức talkshow, workshop và lớp bồi dưỡng về Fintech, AI trong tài chính, giao dịch thuật toán, blockchain và tài chính cá nhân. Thành viên được tham gia dự án thực tế trên dữ liệu và thị trường, rèn tư duy sản phẩm và quản trị rủi ro. CLB kết nối doanh nghiệp, mở cơ hội thực tập và xây hồ sơ học thuật, đồng th��i phát triển kỹ năng giao tiếp, làm việc nhóm và quản lý dự án.`,
-  join: `Bạn vào mục Ứng tuyển trên website, chọn “Bắt đầu ngay hôm nay” và điền form. Chọn ban mong muốn, Ban Nhân sự sẽ liên hệ, định hướng và thông báo các bước tiếp theo. Cần h��� trợ nhanh có thể gửi email hoặc nhắn fanpage của FTC.`,
+  join: `Bạn vào mục Ứng tuyển trên website, chọn “Bắt đầu ngay hôm nay” và điền form. Chọn ban mong muốn, Ban Nhân sự sẽ liên hệ, định hướng và thông báo các bước tiếp theo. Cần hỗ trợ nhanh có thể gửi email hoặc nhắn fanpage của FTC.`,
   teams: `CLB có 5 ban: Ban Học thuật (nội dung Fintech, giáo trình, rèn kỹ năng dữ liệu/SQL), Ban Sự kiện (lập kế hoạch, điều phối, tổng kết), Ban Truyền thông (quản trị kênh, bài viết, đồ họa, video), Ban Nhân sự (văn hóa, tuyển chọn, phân công, theo dõi hiệu quả) và Ban Tài chính cá nhân (giáo dục tài chính cá nhân, MoneyWe, FTCCN Sharing).`,
   schedule: `CLB sinh hoạt định kỳ qua talkshow, workshop và hoạt động nội bộ. Lịch cụ thể được công bố tại mục Hoạt động và trên các kênh chính thức; ứng viên sau khi đăng ký sẽ nhận thông báo qua email.`,
   skills: `Ưu tiên tinh thần ham học, chủ động, cam kết thời gian; kỹ năng giao tiếp, làm việc nhóm, quản lý thời gian. Lợi thế: Excel/Google Sheets, SQL/Python (Ban Học thuật); lập kế hoạch/điều phối (Ban Sự kiện); viết/thiết kế/quay dựng (Ban Truyền thông); kiến thức tài chính cá nhân (Ban Tài chính cá nhân); tổ chức/phỏng vấn/vận hành (Ban Nhân sự).`
@@ -205,7 +205,7 @@ Trả lời:`;
     } catch (error) {
       console.error('[api/chat/gemini] Error generating content:', error);
       if (fallbackAnswer) {
-        return new Response(JSON.stringify({ response: fallbackAnswer, source: 'fallback', suggestions: [
+        return new Response(JSON.stringify({ reply: fallbackAnswer, answer: fallbackAnswer, response: fallbackAnswer, source: 'fallback', suggestions: [
           'Làm thế nào để tham gia câu lạc bộ FTC?',
           'Các hoạt động của câu lạc bộ có gì?',
           'Làm sao để đăng ký tham gia?',
@@ -216,6 +216,8 @@ Trả lời:`;
       return new Response(JSON.stringify({
         error: true,
         message: 'AI service error',
+        reply: 'Xin lỗi, có lỗi xảy ra khi tạo câu trả lời. Vui lòng thử lại sau.',
+        answer: 'Xin lỗi, có lỗi xảy ra khi tạo câu trả lời. Vui lòng thử lại sau.',
         response: 'Xin lỗi, có lỗi xảy ra khi tạo câu trả lời. Vui lòng thử lại sau.',
         suggestions: [
           'Làm thế nào để tham gia câu lạc bộ FTC?',
