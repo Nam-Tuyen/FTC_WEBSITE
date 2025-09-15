@@ -2,10 +2,11 @@
 
 import * as React from 'react'
 import { useState, useEffect } from 'react'
+import type { DragEvent, JSX } from 'react'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
-import { MessageSquare, ArrowUp, User, Plus, Settings } from 'lucide-react'
+import { MessageSquare, ArrowUp, User, Plus, Settings } from '@/components/icons'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 
 interface SidebarWidgetsProps {
@@ -155,28 +156,20 @@ export function SidebarWidgets({ currentStudentId, setCurrentStudentId }: Sideba
   )
 
   return (
-    <div className="space-y-4 sticky top-6">
-      {order.map((k, idx) => (
-        <div key={`${k}-${idx}`}>
-          {k === 'profile' ? ProfileCard : ActionsCard}
-        </div>
-      ))}
-    </div>
-  )
-
-  const elems = order.map((k, idx) => React.cloneElement(k === 'profile' ? ProfileCard : ActionsCard, { key: `${k}-${idx}` }))
-
-  return (
     <div className="space-y-3">
       <div className="flex items-center justify-between">
         <div className="text-sm text-foreground uppercase tracking-wide font-semibold"><p>TIỆN ÍCH</p></div>
         <Button variant="ghost" size="sm" onClick={() => setOrder((s) => [...s].reverse())} className="px-2 py-1 hover:bg-muted/50">
-          <Shuffle className="h-4 w-4" />
+          <ArrowUp className="h-4 w-4 rotate-180" />
         </Button>
       </div>
 
       <div className="grid grid-cols-1 gap-2">
-        {elems}
+        {order.map((k, idx) => (
+          <div key={`${k}-${idx}`}>
+            {k === 'profile' ? ProfileCard : ActionsCard}
+          </div>
+        ))}
       </div>
     </div>
   )
