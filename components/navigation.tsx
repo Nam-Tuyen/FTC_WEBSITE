@@ -170,7 +170,7 @@ export function Navigation() {
                     key={href}
                     href={href}
                     aria-current={isActive ? 'page' : undefined}
-                    className={`nav-link group inline-flex items-center gap-2 py-2 px-3 rounded-md transition-all duration-200 whitespace-nowrap text-sm ${isActive ? 'bg-accent/10 text-foreground shadow-sm' : 'text-foreground/80 hover:bg-accent/5'}`}
+                    className={`nav-link group inline-flex items-center gap-1 py-1 px-2 rounded-md transition-all duration-200 whitespace-nowrap ${isActive ? 'bg-accent/10 text-foreground shadow-sm' : 'text-foreground/80 hover:bg-accent/5'}`}
                   >
                     <IconWrapper 
                       Icon={Icon} 
