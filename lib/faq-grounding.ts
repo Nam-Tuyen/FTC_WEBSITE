@@ -98,7 +98,7 @@ export function matchSuggestedQuestion(input: string): { matched: boolean; topic
   (Object.keys(SUGGESTED_QUESTIONS) as FaqTopic[]).forEach((topic) => {
     for (const pat of SUGGESTED_QUESTIONS[topic]) {
       const p = normalizeVi(pat);
-      const tokensP = p.split(' ').filter(Boolean);
+      const tokensP = p.split(' ').map(t => t.replace(/[^a-z0-9]/g, '')).filter(Boolean);
 
       // Filter out common stopwords before matching to avoid short/common-token collisions (e.g. 'co', 'gi')
       const qFiltered = tokensQ.filter((t) => !STOPWORDS.has(t));
