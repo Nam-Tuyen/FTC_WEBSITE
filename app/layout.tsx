@@ -98,10 +98,29 @@ export default function RootLayout({
                       } catch(_) {}
                     });
 
-                    // Fetch wrapper removed — interfering with third-party scripts (FullStory) and Next client fetch.
-                    // Keeping this no-op in development to avoid masking real network errors.
+                    // Wrap window.fetch in development to suppress noisy third-party fetch errors
+                    // This is only active on preview/dev domains (fly.dev, localhost, vercel) to avoid masking production issues.
                     try {
-                      // no-op
+                      var __origFetch = window.fetch.bind(window)
+                      window.fetch = async function(input, init){
+                        try {
+                          return await __origFetch(input, init)
+                        } catch (err) {
+                          try {
+                            var url = typeof input === 'string' ? input : (input && input.url) || '<request>'
+                            var shouldSuppress = location && location.hostname && (location.hostname.endsWith('.fly.dev') || location.hostname === 'localhost' || location.hostname.includes('vercel'))
+                            if (shouldSuppress) {
+                              console.warn('Suppressed dev fetch error to', url, err)
+                              try {
+                                return new Response(JSON.stringify({ error: 'Dev suppressed fetch error' }), { status: 503, headers: { 'Content-Type': 'application/json' } })
+                              } catch (_) {
+                                return new Response('', { status: 503 })
+                              }
+                            }
+                          } catch (_) {}
+                          throw err
+                        }
+                      }
                     } catch(_) {}
 
                   } catch(_) {}
