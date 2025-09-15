@@ -44,7 +44,7 @@ export function isClubRelated(question: string): boolean {
   return clubKeywords.some((kw) => q.includes(toKey(kw)));
 }
 
-// ===== FAQ Dataset (đã gộp & mở rộng pattern) =====
+// ===== FAQ Dataset (đã gộp & m�� rộng pattern) =====
 const faq: ClubFaqItem[] = [
   // 1) Giới thiệu CLB
   {
@@ -76,12 +76,17 @@ liên kết doanh nghiệp và tham quan đơn vị để bạn *học sâu – 
   {
     patterns: ['tham gia', 'gia nhap', 'dang ky', 'apply', 'ung tuyen', 'cach tham gia', 'quy trinh tham gia', 'join'],
     answer:
-`📝 **Cách tham gia**:
-1) Điền đơn đăng ký ở trang *Ứng tuyển*;
-2) Chọn ban phù hợp (Học thuật, Sự kiện, Truyền thông, Tài chính cá nhân, Nhân sự);
-3) Phỏng vấn ngắn;
-4) Buổi làm quen & bắt đầu hoạt động.
-Yêu cầu: nhiệt huyết và tinh thần học hỏi – sẽ có người hướng dẫn từ đầu.`,
+    `📝 **Cách tham gia**:
+1) Theo dõi Fanpage và Instagram của FTC để cập nhật thời điểm mở đơn tuyển và hướng dẫn chi tiết (link sẽ được cập nhật trên các kênh chính thức).
+2) Điền đơn đăng ký ở trang *Ứng tuyển* khi có đợt tuyển;
+3) Chọn ban phù hợp (Học thuật, Sự kiện, Truyền thông, Tài chính cá nhân, Nhân sự);
+4) Phỏng vấn ngắn; 5) Buổi làm quen & bắt đầu hoạt động.
+
+Lưu ý về lịch sinh hoạt: lịch sẽ được sắp xếp theo trưởng ban và phó ban của ban bạn tham gia; thông báo chi tiết sẽ được gửi trong group nhà chung để khảo sát và thống nhất thời gian.
+
+Yêu cầu: nhiệt huyết và tinh thần học hỏi – sẽ có người hướng dẫn từ đầu.
+
+Nếu có nội dung nào chưa rõ hoặc cần thêm thông tin, vui lòng liên hệ Câu lạc bộ qua Fanpage chính thức để được giải đáp: ${FANPAGE_URL}`,
   },
 
   // 4) Cơ cấu ban trong CLB
@@ -279,7 +284,7 @@ export function buildClubContextBlock(userQuestion: string) {
   const norm = (s: string) => (s ?? '').replace(/\uFFFD/g, '').normalize('NFC').trim();
 
   const quickFacts: string[] = [
-    'FTC trực thuộc Khoa Tài chính – Ngân hàng, UEL',
+    'FTC trực thuộc Khoa Tài chính – Ng��n hàng, UEL',
     'Thành lập 11/2020',
   ];
 
