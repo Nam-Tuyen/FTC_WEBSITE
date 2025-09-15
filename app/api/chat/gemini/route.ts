@@ -82,7 +82,14 @@ const FALLBACK_ANSWERS = {
 
 function getFallbackAnswer(message: string): string | null {
   const matched = matchSuggestedQuestion(message);
-  if (matched.matched && matched.topic && (FALLBACK_ANSWERS as any)[matched.topic]) {
+  if (!matched.matched || !matched.topic) return null;
+
+  // Provide canonical achievements reply exactly as requested
+  if (matched.topic === 'achievements') {
+    return 'Năm học 2024–2025, FTC được Ban Cán sự Đoàn ĐHQG-HCM tặng Giấy khen vì đóng góp cho công tác Đoàn và phong trào thanh niên. Câu lạc bộ vào Top 10 Giải thưởng Đổi mới sáng tạo và Khởi nghiệp TP.HCM I-Star (Nhóm 4) và nhận Giấy chứng nhận Top 10. Bên cạnh đó, FTC thường xuyên tổ chức chương trình học thuật, đào tạo, tọa đàm và các cuộc thi, góp phần tạo môi trường rèn luyện và kết nối cho sinh viên UEL.'
+  }
+
+  if ((FALLBACK_ANSWERS as any)[matched.topic]) {
     return (FALLBACK_ANSWERS as any)[matched.topic];
   }
   return null;
@@ -242,7 +249,7 @@ export async function POST(req: Request) {
           "Các hoạt động của câu lạc bộ có gì?",
           "Làm sao để đăng ký tham gia?",
           "Câu lạc bộ có những chương trình gì?",
-          "Làm thế nào để liên hệ với ban chủ nhiệm?",
+          "Làm thế nào để liên h�� với ban chủ nhiệm?",
           "Câu lạc bộ được thành lập khi nào",
         ]
       : [
