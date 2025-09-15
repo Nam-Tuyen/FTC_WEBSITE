@@ -94,6 +94,26 @@ export default function AchievementsPage() {
               </div>
             </div>
           </div>
+
+          {/* I-Star Certificate Image (added) */}
+          <div className="relative group">
+            <div className="absolute inset-0 bg-gradient-to-r from-primary/5 to-accent/5 rounded-3xl transform transition-all"></div>
+            <div className="relative bg-background/40 backdrop-blur-lg rounded-3xl border border-primary/10 p-8">
+              <div className="flex flex-col md:flex-row gap-8 items-center">
+                <div className="md:w-1/2 rounded-2xl overflow-hidden border border-primary/10 hover:shadow-lg transition-shadow duration-300">
+                  <img
+                    src="https://cdn.builder.io/api/v1/image/assets%2F28c01978106541d5baa7b8a043c11d9b%2F7345f41f834d4a34b2ad9918af6fb722?format=webp&width=1600"
+                    alt="Giấy chứng nhận I-Star Top 10"
+                    className="w-full h-auto object-cover transform hover:scale-105 transition-transform duration-300"
+                  />
+                </div>
+                <div className="flex-1 space-y-4">
+                  <h3 className="text-2xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">GIẤY CHỨNG NHẬN I-STAR</h3>
+                  <p className="text-lg text-muted-foreground/90 leading-relaxed text-justify">Giấy chứng nhận Top 10 I-Star ghi nhận thành tích và đóng góp của FTC trong hoạt động đổi mới sáng tạo và khởi nghiệp. Đây là minh chứng cho nỗ lực của câu lạc bộ trong việc thúc đẩy sáng tạo và hỗ trợ sinh viên thực hiện dự án thực tế.</p>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
