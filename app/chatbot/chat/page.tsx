@@ -125,7 +125,7 @@ export default function ChatbotPage() {
       let source: string | undefined
       try {
         const data = await res.json()
-        reply = typeof data?.response === "string" && data.response.trim() ? data.response : ""
+        reply = (typeof data?.reply === "string" && data.reply.trim()) ? data.reply : ((typeof data?.answer === "string" && data.answer.trim()) ? data.answer : ((typeof data?.response === "string" && data.response.trim()) ? data.response : ""))
         backendContext = typeof data?.backendContext === 'string' ? data.backendContext : undefined
         source = typeof data?.source === 'string' ? data.source : undefined
       } catch (err) {

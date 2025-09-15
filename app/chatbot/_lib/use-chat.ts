@@ -48,7 +48,7 @@ export function useChat() {
       let text = "Xin lỗi, hiện chưa thể trả lời."
       try {
         const data = await res.json()
-        text = data?.answer ?? data?.reply ?? text
+        text = data?.answer ?? data?.reply ?? data?.response ?? text
       } catch (e) {
         text = `Không đọc được phản hồi từ server. (status ${res.status})`
       }

@@ -43,31 +43,20 @@ export function Navigation() {
     menuScrollRef.current.scrollTop += e.deltaY * 2
   }, [])
 
-  // Consistent icon size for all navigation elements
-  const ICON_SIZE = "h-6 w-6" // 24px - larger to match text size
-  
-  // Icon wrapper for consistent styling
-  const IconWrapper = ({ 
-    Icon, 
-    isActive, 
+  // Icon wrapper for consistent styling (svg will scale with font-size)
+  const IconWrapper = ({
+    Icon,
+    isActive,
     className = "",
     showPulse = false
-  }: { 
-    Icon: React.ComponentType<{ className?: string }>, 
-    isActive?: boolean, 
+  }: {
+    Icon: React.ComponentType<{ className?: string }>,
+    isActive?: boolean,
     className?: string,
     showPulse?: boolean
   }) => (
     <div className={`relative flex items-center justify-center ${className}`}>
-      <Icon className={`
-        ${ICON_SIZE} 
-        text-accent 
-        transition-all 
-        duration-200 
-        group-hover:scale-110 
-        ${isActive ? 'nav-icon-active' : 'nav-icon-glow'}
-        ${showPulse ? 'nav-icon-pulse' : ''}
-      `} />
+      <Icon className={`text-accent transition-all duration-200 group-hover:scale-110 ${isActive ? 'nav-icon-active' : 'nav-icon-glow'} ${showPulse ? 'nav-icon-pulse' : ''}`} />
       {isActive && (
         <div className="absolute inset-0 bg-accent/10 rounded-full blur-md -z-10 animate-pulse" />
       )}
@@ -77,6 +66,10 @@ export function Navigation() {
   return (
     <>
       <style jsx>{`
+        .nav-link { font-size: 0.875rem; /* match text-sm */ }
+        .nav-link svg, nav .nav-link svg { height: 1em; width: 1em; display: block; }
+        .nav-label { line-height: 1; }
+
         .nav-icon-glow {
           filter: drop-shadow(0 0 2px rgba(var(--accent-rgb), 0.3));
         }
@@ -156,8 +149,8 @@ export function Navigation() {
               className="group inline-flex items-center justify-center h-10 w-10 rounded-lg border border-accent/30 hover:bg-accent/5 transition-colors duration-200"
             >
               <div className="relative">
-                <Menu className={`absolute ${ICON_SIZE} text-accent transition-all duration-300 group-hover:scale-110 ${open ? 'opacity-0 rotate-90' : 'opacity-100 rotate-0'}`} aria-hidden={open} />
-                <X className={`absolute ${ICON_SIZE} text-accent transition-all duration-300 group-hover:scale-110 ${open ? 'opacity-100 rotate-0' : 'opacity-0 -rotate-90'}`} aria-hidden={!open} />
+                <Menu className={`absolute text-accent transition-all duration-300 group-hover:scale-110 ${open ? 'opacity-0 rotate-90' : 'opacity-100 rotate-0'}`} aria-hidden={open} />
+                <X className={`absolute text-accent transition-all duration-300 group-hover:scale-110 ${open ? 'opacity-100 rotate-0' : 'opacity-0 -rotate-90'}`} aria-hidden={!open} />
               </div>
             </button>
           </div>
