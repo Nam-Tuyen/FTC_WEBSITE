@@ -11,6 +11,8 @@ const SUGGESTED = [
   "Các ban trong câu lạc bộ làm gì?",
   "Thời gian sinh hoạt diễn ra khi nào?",
   "Cần kỹ năng gì để ứng tuyển?",
+  "FTC được thành lập khi nào",
+  "FTC có những thành tích gì",
 ]
 
 export default function ChatInterface() {
