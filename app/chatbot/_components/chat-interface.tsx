@@ -166,7 +166,7 @@ export default function ChatInterface() {
           {/* Input */}
           <div className="px-8 py-4 bg-[linear-gradient(180deg,rgba(255,255,255,0.02),transparent)] border-t border-slate-800">
             <form className="flex items-center gap-4" onSubmit={onSubmit}>
-              <input id="chat-input" value={value} onChange={(e)=>setValue(e.target.value)} onKeyDown={handleKeyDown} placeholder="Nhập câu hỏi hoặc gõ @ để bắt đầu..." autoComplete="off" className="flex-1 rounded-full px-5 py-2 bg-slate-800/70 text-white placeholder-slate-400 border border-slate-700 focus:outline-none focus:ring-2 focus:ring-indigo-600/30 text-sm" />
+              <input id="chat-input" ref={inputRef} value={value} onChange={(e)=>setValue(e.target.value)} onKeyDown={handleKeyDown} onCompositionStart={() => (composingRef.current = true)} onCompositionEnd={() => (composingRef.current = false)} placeholder="Nhập câu hỏi hoặc gõ @ để bắt đầu..." autoComplete="off" className="flex-1 rounded-full px-5 py-2 bg-slate-800/70 text-white placeholder-slate-400 border border-slate-700 focus:outline-none focus:ring-2 focus:ring-indigo-600/30 text-sm" />
               <button type="submit" disabled={isSending || loading} className="flex items-center gap-3 px-6 py-3 rounded-full bg-gradient-to-r from-indigo-600 to-emerald-500 text-white shadow-xl disabled:opacity-50">
                 <Send className="h-5 w-5" /> <span className="text-sm font-semibold">Gửi</span>
               </button>
