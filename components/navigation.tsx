@@ -76,19 +76,36 @@ export function Navigation() {
   return (
     <>
       <style jsx>{`
-        .nav-link { 
-          font-size: 1rem; /* Increased from 0.875rem */
+        /* Make nav items responsive and prevent overflow */
+        .nav-link {
+          font-size: 0.95rem;
           display: flex;
           align-items: center;
+          min-width: 0; /* allow flex children to shrink */
+          flex: 0 1 auto;
         }
-        .nav-link svg, nav .nav-link svg { 
-          height: 1.5em; /* Increased from 1em */
-          width: 1.5em; /* Increased from 1em */
+        /* Slightly smaller icons so labels fit */
+        .nav-link svg, nav .nav-link svg {
+          height: 1.25em;
+          width: 1.25em;
           display: block;
+          flex-shrink: 0;
         }
-        .nav-label { 
+
+        /* Label: clamp width and ellipsize to avoid wrapping/overflow */
+        .nav-label {
           line-height: 1;
-          font-size: 1rem; /* Match icon size */
+          font-size: 0.9rem;
+          display: inline-block;
+          max-width: 8rem;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+        }
+
+        /* Make container allow items to compress instead of overflowing */
+        nav > div > div {
+          gap: 0.5rem;
         }
 
         .nav-icon-glow {
@@ -103,6 +120,13 @@ export function Navigation() {
         }
         .nav-icon-pulse {
           animation: iconPulse 2s ease-in-out infinite;
+        }
+
+        /* Tweak sizes on very small screens */
+        @media (max-width: 768px) {
+          .nav-link { font-size: 0.85rem; }
+          .nav-label { max-width: 5.5rem; font-size: 0.8rem; }
+          .nav-link svg, nav .nav-link svg { height: 1.05em; width: 1.05em; }
         }
       `}</style>
       <nav suppressHydrationWarning className="gradient-bg border-b border-accent/30 sticky top-0 z-50 backdrop-blur-md">
