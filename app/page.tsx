@@ -1,11 +1,8 @@
-import dynamic from "next/dynamic"
+import { Navigation } from "@/components/navigation"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { ArrowRight, Users2, Code, Database, Shield, Zap, Brain, Rocket, Globe } from "lucide-react"
 import Link from "next/link"
-
-// Load Navigation dynamically on the client only to avoid SSR/CSR hydration mismatches
-const Navigation = dynamic(() => import("@/components/navigation").then(mod => mod.Navigation), { ssr: false })
 
 export default function HomePage() {
   return (
