@@ -98,35 +98,10 @@ export default function RootLayout({
                       } catch(_) {}
                     });
 
-                    // Wrap window.fetch in development to intercept noisy network failures from third-party scripts
+                    // Fetch wrapper removed — interfering with third-party scripts (FullStory) and Next client fetch.
+                    // Keeping this no-op in development to avoid masking real network errors.
                     try {
-                      var __origFetch = window.fetch.bind(window)
-                      window.fetch = async function(input, init){
-                        try {
-                          return await __origFetch(input, init)
-                        } catch (err) {
-                          try {
-                            var url = ''
-                            if (typeof input === 'string') url = input
-                            else if (input && input.url) url = input.url
-
-                            // Only suppress for known noisy origins or during preview hosts
-                            var shouldSuppress = false
-                            if (url && (url.includes('fullstory.com') || url.includes('/_next/webpack-hmr') || url.includes('/_next/on-demand-entries'))) shouldSuppress = true
-                            if (!shouldSuppress && location && location.hostname && (location.hostname.endsWith('.fly.dev') || location.hostname === 'localhost' || location.hostname.includes('vercel')) && url && url.startsWith(location.origin + '/api')) shouldSuppress = true
-
-                            if (shouldSuppress) {
-                              console.warn('Suppressed dev fetch error to', url, err)
-                              try {
-                                return new Response(JSON.stringify({ error: 'Dev suppressed fetch error' }), { status: 503, headers: { 'Content-Type': 'application/json' } })
-                              } catch (_) {
-                                return Promise.resolve(null)
-                              }
-                            }
-                          } catch(_) {}
-                          throw err
-                        }
-                      }
+                      // no-op
                     } catch(_) {}
 
                   } catch(_) {}

@@ -76,19 +76,36 @@ export function Navigation() {
   return (
     <>
       <style jsx>{`
-        .nav-link { 
-          font-size: 1rem; /* Increased from 0.875rem */
+        /* Make nav items compact to avoid overflow */
+        .nav-link {
+          font-size: 0.85rem;
           display: flex;
           align-items: center;
+          min-width: 0; /* allow flex children to shrink */
+          flex: 0 1 auto;
         }
-        .nav-link svg, nav .nav-link svg { 
-          height: 1.5em; /* Increased from 1em */
-          width: 1.5em; /* Increased from 1em */
+        /* Icons slightly smaller */
+        .nav-link svg, nav .nav-link svg {
+          height: 1em;
+          width: 1em;
           display: block;
+          flex-shrink: 0;
         }
-        .nav-label { 
+
+        /* Label: clamp width and ellipsize to avoid wrapping/overflow */
+        .nav-label {
           line-height: 1;
-          font-size: 1rem; /* Match icon size */
+          font-size: 0.75rem;
+          display: inline-block;
+          max-width: 6rem;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+        }
+
+        /* Reduce spacing between items */
+        nav > div > div {
+          gap: 0.25rem;
         }
 
         .nav-icon-glow {
@@ -104,6 +121,13 @@ export function Navigation() {
         .nav-icon-pulse {
           animation: iconPulse 2s ease-in-out infinite;
         }
+
+        /* Extra compact on small screens */
+        @media (max-width: 768px) {
+          .nav-link { font-size: 0.75rem; }
+          .nav-label { max-width: 4.5rem; font-size: 0.7rem; }
+          .nav-link svg, nav .nav-link svg { height: 0.95em; width: 0.95em; }
+        }
       `}</style>
       <nav suppressHydrationWarning className="gradient-bg border-b border-accent/30 sticky top-0 z-50 backdrop-blur-md">
         <div className="absolute inset-0 bg-background/80 backdrop-blur-md" />
@@ -116,14 +140,14 @@ export function Navigation() {
                 <img
                   src={FTC_LOGO_URL}
                   alt="Financial Technology Club Logo"
-                  width={48}
-                  height={48}
-                  className="rounded-full glow transition-all object-cover w-12 h-12"
+                  width={40}
+                  height={40}
+                  className="rounded-full glow transition-all object-cover w-10 h-10"
                 />
                 <div className="absolute inset-0 rounded-full border-2 border-accent" aria-hidden="true" />
               </div>
               <div className="flex items-center gap-2">
-                <span className="font-heading text-foreground font-extrabold tracking-wide leading-none text-2xl">FTC</span>
+                <span suppressHydrationWarning className="font-heading text-foreground font-extrabold tracking-wide leading-none text-[40px]">FTC</span>
                 <span className="text-xs sm:text-sm text-accent tracking-wide">&nbsp;</span>
               </div>
             </Link>
@@ -146,14 +170,14 @@ export function Navigation() {
                     key={href}
                     href={href}
                     aria-current={isActive ? 'page' : undefined}
-                    className={`nav-link group inline-flex items-center gap-2 py-2 px-3 rounded-md transition-all duration-200 whitespace-nowrap text-sm ${isActive ? 'bg-accent/10 text-foreground shadow-sm' : 'text-foreground/80 hover:bg-accent/5'}`}
+                    className={`nav-link group inline-flex items-center gap-1 py-1 px-2 rounded-md transition-all duration-200 whitespace-nowrap ${isActive ? 'bg-accent/10 text-foreground shadow-sm' : 'text-foreground/80 hover:bg-accent/5'}`}
                   >
                     <IconWrapper 
                       Icon={Icon} 
                       isActive={isActive} 
                       showPulse={label === 'CHATBOT' && !isActive}
                     />
-                    <span className="nav-label text-sm font-medium tracking-wide">{label}</span>
+                    <span className="nav-label font-medium tracking-wide">{label}</span>
                   </Link>
                 )
               })}
@@ -193,7 +217,7 @@ export function Navigation() {
                   <Link 
                     key={href} 
                     href={href} 
-                    className={`group flex items-center gap-3 px-4 py-3 rounded-lg text-base font-medium transition-all duration-200 ${
+                    className={`group flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
                       isActive ? 'bg-accent/10 text-foreground' : 'text-foreground/80 hover:bg-accent/5'
                     }`}
                     onClick={() => setOpen(false)}
@@ -203,7 +227,7 @@ export function Navigation() {
                       isActive={isActive}
                       showPulse={label === 'CHATBOT' && !isActive}
                     />
-                    <span className="font-medium">{label}</span>
+                    <span className="font-medium text-sm">{label}</span>
                   </Link>
                 )
               })}

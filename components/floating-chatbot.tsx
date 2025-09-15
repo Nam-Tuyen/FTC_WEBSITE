@@ -1,8 +1,6 @@
 "use client"
 
-import type React from "react"
-
-import { useState } from "react"
+import React, { useState, useRef } from "react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
@@ -32,6 +30,8 @@ export function FloatingChatbot() {
   ])
   const [inputValue, setInputValue] = useState("")
   const [isLoading, setIsLoading] = useState(false)
+  const [isComposing, setIsComposing] = useState(false)
+  const inputRef = useRef<HTMLInputElement | null>(null)
 
   const getBotResponse = async (userMessage: string): Promise<string> => {
     try {
@@ -246,14 +246,28 @@ export function FloatingChatbot() {
           <div className="border-t p-3">
             <div className="flex space-x-2">
               <Input
+                ref={inputRef}
                 value={inputValue}
                 onChange={(e) => setInputValue(e.target.value)}
-                onKeyPress={handleKeyPress}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') {
+                    e.preventDefault()
+                    if (!isComposing) handleSendMessage()
+                  }
+                }}
+                onCompositionStart={() => setIsComposing(true)}
+                onCompositionEnd={() => setIsComposing(false)}
                 placeholder="Nhập tin nhắn..."
                 className="flex-1 text-sm"
                 disabled={isLoading}
               />
-              <Button size="sm" onClick={handleSendMessage} disabled={!inputValue.trim() || isLoading}>
+              <Button size="sm" onClick={async () => {
+                // ensure composition committed before sending
+                if (isComposing) return
+                await handleSendMessage()
+                // blur to finalize any IME state
+                try { inputRef.current?.blur() } catch(_){}
+              }} disabled={!inputValue.trim() || isLoading}>
                 {isLoading ? <Loader2 className="h-3 w-3 animate-spin" /> : <Send className="h-3 w-3" />}
               </Button>
             </div>
