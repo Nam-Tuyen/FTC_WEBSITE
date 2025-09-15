@@ -101,7 +101,7 @@ FTC có 5 ban chuyên môn (không tính Ban Điều hành). Các ban gồm:
 • *Tài chính cá nhân*: MoneyWe, chủ đề tài chính cá nhân ứng dụng công nghệ.
 • *Nhân sự*: nội quy, văn hóa, tuyển – phân công – đánh giá, minh bạch quỹ.
 
-Nếu có nội dung nào chưa rõ hoặc cần thêm thông tin, vui lòng liên h��� Câu lạc bộ qua Fanpage chính thức để được giải đáp: ${FANPAGE_URL}`,
+Nếu có nội dung nào chưa rõ hoặc cần thêm thông tin, vui lòng liên hệ Câu lạc bộ qua Fanpage chính thức để được giải đáp: ${FANPAGE_URL}`,
   },
 
   // 5) Lịch sinh hoạt
@@ -125,7 +125,7 @@ thành viên tích cực thường được ưu tiên miễn/giảm.`,
   {
     patterns: ['ky nang', 'skill', 'yeu cau', 'requirement', 'can ky nang gi', 'co can kinh nghiem khong'],
     answer:
-`��� **Kỹ năng/Yêu cầu**:
+`🧩 **Kỹ năng/Yêu cầu**:
 • Không bắt buộc kinh nghiệm trước
 • Đam mê công nghệ & tài chính, sẵn sàng học hỏi
 • Kỹ năng cơ bản: làm việc nhóm, thuyết trình, Office
@@ -246,7 +246,9 @@ Tôi có thể giúp bạn:
 
 📮 Liên hệ: ${CONTACT_EMAIL}
 
-📘 Fanpage: ${FANPAGE_URL}`
+📘 Fanpage: ${FANPAGE_URL}
+
+Nếu có nội dung nào chưa rõ hoặc cần thêm thông tin, vui lòng liên hệ Câu lạc bộ qua Fanpage chính thức để được giải đáp: ${FANPAGE_URL}`
   );
 }
 
@@ -320,7 +322,7 @@ export function buildClubContextBlock(userQuestion: string) {
   const hint = 'Nếu câu hỏi nói về CLB, trả lời dựa trên block ngữ cảnh này; thiếu dữ liệu thì nói chưa có, đừng bịa.';
 
   return [
-    '# NGỮ CẢNH CLB',
+    '# NG��� CẢNH CLB',
     hint,
     ...quickFacts.map(norm),
     ...meta,
