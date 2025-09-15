@@ -25,6 +25,8 @@ const suggestedQuestions = [
   "Các ban trong câu lạc bộ làm gì?",
   "Thời gian sinh hoạt diễn ra khi nào?",
   "Cần kỹ năng gì để ứng tuyển?",
+  "Câu lạc bộ được thành lập khi nào",
+  "Câu lạc bộ có những thành tích gì",
 ]
 
 const suggestionAnswers: Record<string, string> = {
@@ -414,7 +416,7 @@ export default function ChatbotPage() {
                     <MessageSquare className="h-4 w-4 text-accent" />
                   </div>
                   <div>
-                    <h4 className="font-semibold text-sm">Hỗ trợ 24/7</h4>
+                    <h4 className="font-semibold text-sm">H�� trợ 24/7</h4>
                     <p className="text-xs text-muted-foreground">Luôn sẵn sàng giúp đỡ</p>
                   </div>
                 </div>
