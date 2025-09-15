@@ -25,6 +25,8 @@ const suggestedQuestions = [
   "Các ban trong câu lạc bộ làm gì?",
   "Thời gian sinh hoạt diễn ra khi nào?",
   "Cần kỹ năng gì để ứng tuyển?",
+  "Câu lạc bộ được thành lập khi nào",
+  "Câu lạc bộ có những thành tích gì",
 ]
 
 const suggestionAnswers: Record<string, string> = {
