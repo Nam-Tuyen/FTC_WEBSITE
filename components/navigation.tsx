@@ -140,14 +140,14 @@ export function Navigation() {
                 <img
                   src={FTC_LOGO_URL}
                   alt="Financial Technology Club Logo"
-                  width={48}
-                  height={48}
-                  className="rounded-full glow transition-all object-cover w-12 h-12"
+                  width={40}
+                  height={40}
+                  className="rounded-full glow transition-all object-cover w-10 h-10"
                 />
                 <div className="absolute inset-0 rounded-full border-2 border-accent" aria-hidden="true" />
               </div>
               <div className="flex items-center gap-2">
-                <span className="font-heading text-foreground font-extrabold tracking-wide leading-none text-xl">FTC</span>
+                <span className="font-heading text-foreground font-extrabold tracking-wide leading-none text-lg">FTC</span>
                 <span className="text-xs sm:text-sm text-accent tracking-wide">&nbsp;</span>
               </div>
             </Link>
