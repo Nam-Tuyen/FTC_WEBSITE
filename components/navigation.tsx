@@ -130,7 +130,7 @@ export function Navigation() {
         }
       `}</style>
       <nav suppressHydrationWarning className="gradient-bg border-b border-accent/30 sticky top-0 z-50 backdrop-blur-md">
-        <div className="absolute inset-0 bg-background/80 backdrop-blur-md" />
+        <div suppressHydrationWarning className="absolute inset-0 bg-background/80 backdrop-blur-md" />
         <div className="relative w-full max-w-6xl mx-auto px-3 sm:px-4 lg:px-6 overflow-visible">
         <div className="flex justify-between items-center h-14 sm:h-16">
           {/* Logo */}

@@ -25,6 +25,8 @@ const suggestedQuestions = [
   "Các ban trong câu lạc bộ làm gì?",
   "Thời gian sinh hoạt diễn ra khi nào?",
   "Cần kỹ năng gì để ứng tuyển?",
+  "Câu lạc bộ được thành lập khi nào?",
+  "Câu lạc bộ có những thành tích gì?",
 ]
 
 const suggestionAnswers: Record<string, string> = {
@@ -35,7 +37,7 @@ const suggestionAnswers: Record<string, string> = {
   "Các ban trong câu lạc bộ làm gì?":
     "CLB có các ban: Học thuật (nội dung/giảng dạy), Sự kiện (tổ chức), Truyền thông (hình ảnh/nội dung), Tài chính cá nhân (giáo dục tài chính), Nhân sự (văn hóa & vận hành).",
   "Thời gian sinh hoạt diễn ra khi n��o?":
-    "Sinh hoạt định kỳ buổi tối trong tuần hoặc cuối tuần (tùy giai đoạn). Lịch cụ thể sẽ thông báo trước trên nhóm nội bộ/website.",
+    "Sinh hoạt định kỳ buổi tối trong tuần hoặc cu���i tuần (tùy giai đoạn). Lịch cụ thể sẽ thông báo trước trên nhóm nội bộ/website.",
   "Cần kỹ năng gì để ứng tuyển?":
     "Cần tinh thần chủ động học, kỹ năng cơ bản về công nghệ/kinh tế tùy vị trí; biết Git/Excel/Python/Thiết kế là lợi thế. Đọc kỹ mô tả ở trang Ứng tuyển.",
 }

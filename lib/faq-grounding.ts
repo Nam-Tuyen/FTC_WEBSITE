@@ -38,12 +38,17 @@ export const SUGGESTED_QUESTIONS: Record<FaqTopic, string[]> = {
   ],
   founding: [
     'ftc duoc thanh lap khi nao',
+    'ftc duoc thanh lap nam nao',
     'ftc thanh lap',
     'cau lac bo duoc thanh lap khi nao',
+    'cau lac bo duoc thanh lap nam nao',
+    'clb duoc thanh lap nam nao',
     'thanh lap ftc',
   ],
   achievements: [
     'ftc co nhung thanh tich gi',
+    'cau lac bo co nhung thanh tich gi',
+    'clb co nhung thanh tich gi',
     'thanh tich ftc',
     'giai thuong ftc',
     'ftc dat thanh tich gi',
@@ -73,7 +78,7 @@ export function matchSuggestedQuestion(input: string): { matched: boolean; topic
   const q = normalizeVi(input);
   if (!q) return { matched: false };
 
-  const tokensQ = q.split(' ').filter(Boolean);
+  const tokensQ = q.split(' ').map(t => t.replace(/[^a-z0-9]/g, '')).filter(Boolean);
 
   // Quick exact pattern match (prefer exact) to avoid misclassification
   for (const topic of Object.keys(SUGGESTED_QUESTIONS) as FaqTopic[]) {
@@ -93,7 +98,7 @@ export function matchSuggestedQuestion(input: string): { matched: boolean; topic
   (Object.keys(SUGGESTED_QUESTIONS) as FaqTopic[]).forEach((topic) => {
     for (const pat of SUGGESTED_QUESTIONS[topic]) {
       const p = normalizeVi(pat);
-      const tokensP = p.split(' ').filter(Boolean);
+      const tokensP = p.split(' ').map(t => t.replace(/[^a-z0-9]/g, '')).filter(Boolean);
 
       // Filter out common stopwords before matching to avoid short/common-token collisions (e.g. 'co', 'gi')
       const qFiltered = tokensQ.filter((t) => !STOPWORDS.has(t));

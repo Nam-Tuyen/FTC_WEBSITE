@@ -1,18 +1,25 @@
 "use client"
 
+'use client'
 /// <reference path="../../types/react-extensions.d.ts" />
 /// <reference path="../../types/shadcn-ui.d.ts" />
 
 import React from 'react'
-import { Navigation } from "@/components/navigation"
+import dynamic from "next/dynamic"
+import { useEffect, useState } from 'react'
 import { Bot } from "lucide-react"
-import ChatInterface from "./_components/chat-interface"
-import { SuggestedQuestions } from "./_components/suggested-questions"
-import { FeaturesSidebar } from "./_components/features-sidebar"
+
+const Navigation = dynamic(() => import("@/components/navigation"), { ssr: false })
+const ChatInterface = dynamic(() => import("./_components/chat-interface"), { ssr: false })
 
 export default function ChatbotPage() {
+  const [mounted, setMounted] = useState(false)
+  useEffect(() => setMounted(true), [])
+
+  if (!mounted) return <div className="min-h-screen" />
+
   return (
-    <div className="min-h-screen bg-gradient-to-b from-background to-background/80 overflow-hidden">
+    <div suppressHydrationWarning className="min-h-screen bg-gradient-to-b from-background to-background/80 overflow-hidden">
       <Navigation />
 
       {/* Hero Section */}
@@ -27,7 +34,7 @@ export default function ChatbotPage() {
             <Bot className="h-9 w-9 text-white" />
           </div>
           <h1 className="relative" style={{letterSpacing: '-1.2px', position: 'relative', font: '800 48px/60px Inter, ui-sans-serif, system-ui, -apple-system'}}>
-            <div className="inline-block" style={{backgroundClip: 'text', backgroundImage: 'linear-gradient(to right, oklch(0.673 0.182 276.935) 0%, oklch(0.845 0.143 164.978) 100%)', fontFamily: 'Montserrat, "Montserrat Fallback", sans-serif', fontWeight: 800}}>
+            <div className="inline-block" style={{backgroundClip: 'text', backgroundImage: 'linear-gradient(to right, oklch(0.673 0.182 276.935) 0%, oklch(0.845 0.143 164.978) 100%)', fontFamily: 'Montserrat, \"Montserrat Fallback\", sans-serif', fontWeight: 800}}>
               <p>TRỢ LÝ HỖ TRỢ </p>
             </div>
           </h1>

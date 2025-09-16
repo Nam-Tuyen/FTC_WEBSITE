@@ -11,8 +11,8 @@ const SUGGESTED = [
   "Các ban trong câu lạc bộ làm gì?",
   "Thời gian sinh hoạt diễn ra khi nào?",
   "Cần kỹ năng gì để ứng tuyển?",
-  "Câu lạc bộ được thành lập khi nào",
-  "Câu lạc bộ có những thành tích gì",
+  "Câu lạc bộ được thành lập khi nào?",
+  "Câu lạc bộ có những thành tích gì?",
 ]
 
 export default function ChatInterface() {
@@ -68,7 +68,7 @@ export default function ChatInterface() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center px-6 py-12">
+    <div suppressHydrationWarning className="min-h-screen flex items-center justify-center px-6 py-12">
       <div className="w-full max-w-[1100px] h-[88vh] grid grid-cols-[260px_minmax(760px,1fr)] gap-6 items-stretch mx-auto">
 
         {/* Left column - quick nav */}
