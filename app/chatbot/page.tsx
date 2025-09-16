@@ -1,10 +1,10 @@
 "use client"
 
+'use client'
 /// <reference path="../../types/react-extensions.d.ts" />
 /// <reference path="../../types/shadcn-ui.d.ts" />
 
 import React from 'react'
-'use client'
 import dynamic from "next/dynamic"
 import { useEffect, useState } from 'react'
 import { Bot } from "lucide-react"
