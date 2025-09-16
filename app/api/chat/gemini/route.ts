@@ -2,6 +2,7 @@ import { GoogleGenerativeAI } from "@google/generative-ai";
 import fs from "fs";
 import path from "path";
 import { matchSuggestedQuestion } from "@/lib/faq-grounding";
+import { ragSystem } from "@/lib/rag-system";
 
 export const dynamic = "force-dynamic";
 export const maxDuration = 300; // 5 minutes timeout
@@ -208,6 +209,8 @@ export async function POST(req: Request) {
       mode: requestedMode,
     });
 
+    const started = Date.now();
+
     if (!message) {
       return new Response(JSON.stringify({ error: "Invalid message" }), {
         status: 400,
@@ -223,10 +226,27 @@ export async function POST(req: Request) {
     // Initialize Gemini for non-club or as generator for club when available
     const model = initGemini();
 
-    // Load knowledge base for all queries
+    // Load knowledge base for all queries (try ragSystem first, fall back to local loader)
     let knowledgeBase = "";
+    let kbCount = 0;
+    let kbHit = 0;
     try {
-      knowledgeBase = await loadKnowledgeBase();
+      try {
+        const ctx = await ragSystem.loadKnowledgeBase();
+        kbCount = ctx?.totalItems ?? 0;
+      } catch (e) {
+        // ragSystem not available or failed; kbCount remains 0
+      }
+
+      try {
+        // build context and compute relevant hits
+        const ctxStr = await ragSystem.buildContextString(message).catch(() => "");
+        const relevant = await ragSystem.getRelevantKnowledge(message, 3).catch(() => []);
+        knowledgeBase = ctxStr || (await loadKnowledgeBase().catch(() => ""));
+        kbHit = Array.isArray(relevant) ? relevant.length : 0;
+      } catch (e) {
+        knowledgeBase = await loadKnowledgeBase().catch(() => "");
+      }
     } catch (error) {
       console.error("[api/chat/gemini] Error loading knowledge base:", error);
       knowledgeBase = "";
@@ -264,6 +284,15 @@ export async function POST(req: Request) {
             "Xin lỗi, dịch vụ AI tạm thời không khả dụng. Đây là tóm tắt nhanh: FTC là câu lạc bộ học thuật về FinTech tại UEL, tổ chức workshop/talkshow/dự án thực tế, có các ban Học thuật, Sự kiện, Truyền thông, Nhân sự và Tài chính cá nhân. Bạn có thể vào mục Ứng tuyển để đăng ký tham gia.")
         : "Xin lỗi, dịch vụ AI tạm thời không khả dụng. Bạn có thể hỏi về các chủ đề như FinTech, ngân hàng số, blockchain, thanh toán điện tử, quản lý rủi ro và đầu tư.";
 
+      const headers = new Headers({
+        "Content-Type": "application/json",
+        "x-chat-route": "gemini-rag",
+        "x-rag-mode": clubQuery ? "kb" : "google",
+        "x-kb-count": String(kbCount),
+        "x-kb-hit": String(kbHit),
+        "x-duration-ms": String(Date.now() - started),
+      });
+
       return new Response(
         JSON.stringify({
           reply: answer,
@@ -272,7 +301,7 @@ export async function POST(req: Request) {
           source: clubQuery ? "knowledge_base_fallback" : "general_fallback",
           suggestions: mergeSuggestions([], defaultSuggestions),
         }),
-        { headers: { "Content-Type": "application/json" } }
+        { headers }
       );
     }
 
@@ -296,6 +325,15 @@ export async function POST(req: Request) {
             "FTC tổ chức talkshow, workshop, hoạt động nội bộ và dự án thực tế về FinTech. Bạn có thể vào mục Ứng tuyển để tham gia và chọn ban phù hợp.")
         : "Xin lỗi, hiện chưa thể tạo câu trả lời. Bạn có thể hỏi thêm về FinTech, blockchain, thanh toán, bảo hiểm số hoặc ngân hàng số.";
 
+      const headers = new Headers({
+        "Content-Type": "application/json",
+        "x-chat-route": "gemini-rag",
+        "x-rag-mode": clubQuery ? "kb" : "google",
+        "x-kb-count": String(kbCount),
+        "x-kb-hit": String(kbHit),
+        "x-duration-ms": String(Date.now() - started),
+      });
+
       return new Response(
         JSON.stringify({
           reply: fallback,
@@ -304,7 +342,7 @@ export async function POST(req: Request) {
           source: clubQuery ? "knowledge_base_fallback" : "general_fallback",
           suggestions: mergeSuggestions([], defaultSuggestions),
         }),
-        { headers: { "Content-Type": "application/json" } }
+        { headers }
       );
     }
 
@@ -333,6 +371,15 @@ export async function POST(req: Request) {
       } catch {}
     } catch {}
 
+    const resHeaders = new Headers({
+      "Content-Type": "application/json",
+      "x-chat-route": "gemini-rag",
+      "x-rag-mode": clubQuery ? "kb" : "google",
+      "x-kb-count": String(kbCount),
+      "x-kb-hit": String(kbHit),
+      "x-duration-ms": String(Date.now() - started),
+    });
+
     return new Response(
       JSON.stringify({
         reply: answer,
@@ -341,7 +388,7 @@ export async function POST(req: Request) {
         source: clubQuery ? "knowledge_base" : "gemini",
         suggestions: mergeSuggestions(suggestions, defaultSuggestions),
       }),
-      { headers: { "Content-Type": "application/json" } }
+      { headers: resHeaders }
     );
   } catch (error: any) {
     console.error("Error in chat route:", error);
