@@ -69,15 +69,15 @@ const FALLBACK_ANSWERS = {
   activities:
     "FTC tổ chức talkshow, workshop và lớp bồi dưỡng về Fintech, AI trong tài chính, giao dịch thuật toán, blockchain và tài chính cá nhân. Thành viên được tham gia dự án thực tế trên dữ liệu và thị trường, rèn tư duy sản phẩm và quản trị rủi ro. CLB kết nối doanh nghiệp, mở cơ hội thực tập và xây hồ sơ học thuật, đồng thời phát triển kỹ năng giao tiếp, làm việc nhóm và quản lý dự án.",
   join:
-    'Bạn vào mục Ứng tuyển trên website, chọn "Bắt đầu ngay hôm nay" và điền form. Chọn ban mong muốn, Ban Nhân sự sẽ liên hệ, định hướng và thông báo các bước tiếp theo. Cần h�� trợ nhanh có thể gửi email hoặc nhắn fanpage của FTC.',
+    'Bạn vào mục Ứng tuyển trên website, chọn "Bắt đầu ngay hôm nay" và điền form. Chọn ban mong muốn, Ban Nhân sự sẽ liên hệ, đ��nh hướng và thông báo các bước tiếp theo. Cần h�� trợ nhanh có thể gửi email hoặc nhắn fanpage của FTC.',
   teams:
     "CLB có 5 ban: Ban Học thuật (nội dung Fintech, giáo trình, rèn kỹ năng dữ liệu/SQL), Ban Sự kiện (lập kế hoạch, điều phối, tổng kết), Ban Truyền thông (quản trị kênh, bài viết, đồ họa, video), Ban Nhân sự (văn hóa, tuyển chọn, phân công, theo dõi hiệu quả) và Ban Tài chính cá nhân (giáo dục tài chính cá nhân, MoneyWe, FTCCN Sharing).",
   schedule:
     "CLB sinh hoạt định kỳ qua talkshow, workshop và hoạt động nội bộ. Lịch cụ thể được công bố tại mục Hoạt động và trên các kênh chính thức; ứng viên sau khi đăng ký sẽ nhận thông báo qua email.",
   skills:
     "Ưu tiên tinh thần ham học, chủ động, cam kết thời gian; kỹ năng giao tiếp, làm việc nhóm, quản lý thời gian. Lợi thế: Excel/Google Sheets, SQL/Python (Ban Học thuật); lập kế hoạch/điều phối (Ban Sự kiện); viết/thiết kế/quay dựng (Ban Truyền thông); kiến thức tài chính cá nhân (Ban Tài chính cá nhân); tổ chức/phỏng vấn/vận hành (Ban Nhân sự).",
-  founding: `Câu lạc bộ Công nghệ tài chính FTC trực thuộc Khoa Tài chính và Ngân hàng, Trường Đại học Kinh tế và Luật, Đại học Quốc gia Thành phố Hồ Chí Minh, được thành lập vào tháng mười một năm 2020 dưới sự hướng dẫn của ThS. NCS Phan Huy Tâm (Giảng viên Khoa Tài chính - Ngân hàng) cùng đội ngũ sinh viên ngành công nghệ tài chính.`,
-  achievements: `THÀNH TÍCH NỔI BẬT\nThành tích nổi bật của câu lạc bộ trong thời gian qua\n\nNIỀM TỰ HÀO CỦA TUỔI TRẺ UEL\nCâu lạc bộ Công nghệ tài chính (FTC) luôn gắn liền hành trình phát triển của tuổi trẻ Trường Đại học Kinh tế – Luật với những trải nghiệm đáng nhớ và thành tích nổi bật. Trong năm học 2024 – 2025, FTC đã vinh dự được Ban Cán sự Đoàn Đại học Quốc gia TP.HCM trao tặng Giấy khen vì những đóng góp tích cực trong công tác Đoàn và phong trào thanh niên.\n\nFTC không chỉ tổ chức các hoạt động học thuật và ngoại khóa b��� ích mà còn tạo dựng một môi trường rèn luyện, kết nối và lan tỏa tinh thần tích cực.\n\nGiấy khen ĐHQG\nDẤU ẤN TẠI GIẢI THƯỞNG I-STAR\nFTC vinh dự nằm trong Top 10 tổ chức, cá nhân tiêu biểu Nhóm 4 tại Giải thưởng Đổi mới sáng tạo và Kh��i nghiệp TP.HCM (I-Star). Đây là giải thưởng uy tín do Ủy ban Nhân dân TP.HCM chủ trì và Sở Khoa học và Công nghệ TP.HCM tổ chức.\n\nVới định hướng "bệ ph��ng cho những ý tưởng đổi mới", FTC triển khai nhiều chương trình thiết thực như cuộc thi học thuật, đào tạo, workshop và talkshow để giúp sinh viên tiếp cận kiến thức chuyên sâu về công nghệ tài chính và khởi nghiệp sáng tạo.\n\nI-Star Top10\nGiấy chứng nhận I-Star ghi nhận thành tích và đóng góp của FTC trong hoạt động đổi mới sáng tạo và khởi nghiệp. Đ��y là minh chứng cho nỗ lực của câu lạc bộ trong việc thúc đẩy sáng tạo và hỗ trợ sinh viên thực hiện dự án thực tế.`,
+  founding: `Câu lạc bộ Công nghệ t��i chính FTC trực thuộc Khoa Tài chính và Ngân hàng, Trường Đại học Kinh tế và Luật, Đại học Quốc gia Thành phố Hồ Chí Minh, được thành lập vào tháng mười một năm 2020 dưới sự hướng dẫn của ThS. NCS Phan Huy Tâm (Giảng viên Khoa Tài chính - Ngân hàng) cùng đội ngũ sinh viên ngành công nghệ tài chính.`,
+  achievements: `THÀNH TÍCH NỔI BẬT\nThành tích nổi bật của câu lạc bộ trong thời gian qua\n\nNIỀM TỰ HÀO CỦA TUỔI TRẺ UEL\nCâu lạc bộ Công nghệ tài chính (FTC) luôn gắn liền hành trình phát triển của tuổi trẻ Trường Đại học Kinh tế – Luật với những trải nghiệm đáng nhớ và thành tích nổi bật. Trong năm học 2024 – 2025, FTC đã vinh dự được Ban Cán sự Đoàn Đại học Quốc gia TP.HCM trao tặng Giấy khen vì những đóng góp tích cực trong công tác Đoàn và phong trào thanh niên.\n\nFTC không chỉ tổ chức các hoạt động học thuật và ngoại khóa b��� ích mà còn tạo dựng một môi trường rèn luyện, kết nối và lan tỏa tinh thần tích cực.\n\nGiấy khen ĐHQG\nDẤU ẤN TẠI GIẢI THƯỞNG I-STAR\nFTC vinh dự nằm trong Top 10 tổ chức, cá nhân tiêu bi��u Nhóm 4 tại Giải thưởng Đổi mới sáng tạo và Kh��i nghiệp TP.HCM (I-Star). Đây là giải thưởng uy tín do Ủy ban Nhân dân TP.HCM chủ trì và Sở Khoa học và Công nghệ TP.HCM tổ chức.\n\nVới định hướng "bệ ph��ng cho những ý tưởng đổi mới", FTC triển khai nhiều chương trình thiết thực như cuộc thi học thuật, đào tạo, workshop và talkshow để giúp sinh viên tiếp cận kiến thức chuyên sâu về công nghệ tài chính và khởi nghiệp sáng tạo.\n\nI-Star Top10\nGiấy chứng nhận I-Star ghi nhận thành tích và đóng góp của FTC trong hoạt động đổi mới sáng tạo và khởi nghiệp. Đ��y là minh chứng cho nỗ lực của câu lạc bộ trong việc thúc đẩy sáng tạo và hỗ trợ sinh viên thực hiện dự án thực tế.`,
 } as const;
 
 function getFallbackAnswer(message: string): string | null {
@@ -223,23 +223,21 @@ export async function POST(req: Request) {
     // Initialize Gemini for non-club or as generator for club when available
     const model = initGemini();
 
-    // Load knowledge base (only for suggested questions)
+    // Load knowledge base for all queries
     let knowledgeBase = "";
-    if (clubQuery) {
-      try {
-        knowledgeBase = await loadKnowledgeBase();
-      } catch (error) {
-        console.error("[api/chat/gemini] Error loading knowledge base:", error);
-        knowledgeBase = "";
-      }
+    try {
+      knowledgeBase = await loadKnowledgeBase();
+    } catch (error) {
+      console.error("[api/chat/gemini] Error loading knowledge base:", error);
+      knowledgeBase = "";
     }
 
-    // Build prompt
+    // Build prompt (always check knowledge base first; if insufficient, emulate Google search)
     let prompt = "";
     if (clubQuery) {
-      prompt = `Bạn là trợ lý AI cho Câu lạc bộ Công nghệ – Tài chính (FTC) – UEL.\nTập trung trả lời về thông tin liên quan đến câu lạc bộ, hoạt động và cách tham gia.\n\nThông tin tham khảo (knowledge base):\n${knowledgeBase}\n\nHãy trả lời ngắn gọn, rõ ràng, thân thiện bằng tiếng Việt.\nCâu hỏi: ${message}\n\nTrả lời:`;
+      prompt = `Bạn là trợ lý AI cho Câu lạc bộ Công nghệ – Tài chính (FTC) – UEL.\nTập trung trả lời về thông tin liên quan đến câu lạc bộ, hoạt động và cách tham gia.\n\nTHÔNG TIN THAM KHẢO (knowledge base):\n${knowledgeBase}\n\nHƯỚNG DẪN:\n- Trước tiên sử dụng thông tin trong knowledge base để trả lời.\n- Nếu không có/không đủ dữ liệu liên quan, hãy giả lập việc tìm kiếm trên Google và tổng hợp câu trả lời chính xác, ngắn gọn; nếu dùng nguồn web, hãy nêu rõ nguồn (tên trang hoặc URL nếu có).\n- Viết bằng tiếng Việt, rõ ràng, thân thiện; ưu tiên gạch đầu dòng khi phù hợp.\n\nCâu hỏi: ${message}\n\nTrả lời:`;
     } else {
-      prompt = `Bạn là chuyên gia về FinTech và công nghệ tài chính.\nTrả lời câu hỏi một cách chính xác, ngắn gọn, có cấu trúc, bằng tiếng Việt.\nKhông cần nhắc đến FTC nếu câu hỏi không liên quan.\n\nCâu hỏi: ${message}\n\nTrả lời:`;
+      prompt = `Bạn là chuyên gia về FinTech và công nghệ tài chính.\n\nTHÔNG TIN NỘI BỘ CÓ THỂ THAM KHẢO (nếu liên quan):\n${knowledgeBase}\n\nHƯỚNG DẪN:\n- Luôn kiểm tra knowledge base ở trên; nếu không liên quan thì bỏ qua.\n- Khi knowledge base không đủ, hãy giả lập tìm kiếm trên Google và tổng hợp câu trả lời chính xác, có cấu trúc; nếu có nguồn web, vui lòng nêu rõ (tên trang hoặc URL).\n- Trả lời ngắn gọn, mạch lạc, bằng tiếng Việt.\n\nCâu hỏi: ${message}\n\nTrả lời:`;
     }
 
     const defaultSuggestions = clubQuery
