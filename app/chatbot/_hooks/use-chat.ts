@@ -81,6 +81,14 @@ export function useChat() {
             console.warn('Server returned non-ok', url, res.status, txt)
             throw new Error(`Server ${res.status}: ${txt ?? res.statusText}`)
           }
+          // Log response headers for debugging (x-chat-route, x-rag-mode, x-kb-count, x-kb-hit)
+          try {
+            const route = res.headers.get('x-chat-route')
+            const ragMode = res.headers.get('x-rag-mode')
+            const kbCount = res.headers.get('x-kb-count')
+            const kbHit = res.headers.get('x-kb-hit')
+            console.debug('[useChat] fetched', url, { route, ragMode, kbCount, kbHit })
+          } catch (e) {}
           break
         } catch (err) {
           lastErr = err

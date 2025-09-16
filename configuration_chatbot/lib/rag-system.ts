@@ -1,6 +1,10 @@
 import fs from 'fs';
 import path from 'path';
 
+// Configurable RAG tuning knobs (can be overridden via env)
+const DEFAULT_TOP_K = parseInt(process.env.RAG_TOP_K ?? '3', 10); // how many items to return by default
+const MIN_RELEVANCE_SCORE = parseFloat(process.env.RAG_MIN_SCORE ?? '1.5'); // minimum score to consider a match
+
 export interface KnowledgeItem {
   id: string;
   title: string;
@@ -85,7 +89,7 @@ class RAGSystem {
   /**
    * Get relevant knowledge items for a query
    */
-  async getRelevantKnowledge(query: string, limit: number = 5): Promise<KnowledgeItem[]> {
+  async getRelevantKnowledge(query: string, limit: number = DEFAULT_TOP_K): Promise<KnowledgeItem[]> {
     const context = await this.loadKnowledgeBase();
     
     if (context.knowledgeItems.length === 0) {
@@ -101,7 +105,7 @@ class RAGSystem {
 
     // Sort by relevance score and return top items
     return scoredItems
-      .filter(scored => scored.score > 0)
+      .filter(scored => scored.score >= MIN_RELEVANCE_SCORE)
       .sort((a, b) => b.score - a.score)
       .slice(0, limit)
       .map(scored => scored.item);
