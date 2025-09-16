@@ -42,7 +42,7 @@ export default function RootLayout({
           <FloatingChatbotGate />
           <Analytics />
           {process.env.NODE_ENV === "development" && (
-            <Script id="suppress-clipboard-policy-error" strategy="afterInteractive">
+            <Script id="suppress-clipboard-policy-error" strategy="beforeInteractive">
               {`
                 (function(){
                   try {
