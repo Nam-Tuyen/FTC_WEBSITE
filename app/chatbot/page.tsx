@@ -2,21 +2,33 @@
 
 import React, { useEffect, useMemo, useRef, useState } from "react"
 import dynamic from "next/dynamic"
-import { Bot, BookOpen, HelpCircle, MessageSquare, Send, Users } from "lucide-react"
+import {
+  Bot,
+  BookOpen,
+  HelpCircle,
+  MessageSquare,
+  Send,
+  Users,
+  Heart,
+  Repeat2,
+  Share2,
+  MoreHorizontal,
+  CheckCheck,
+} from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { cn } from "@/lib/utils"
 
-// --- Dynamic (giữ nguyên Navigation như project của bạn) ---
+// Navigation động (giữ như project)
 const Navigation = dynamic(() => import("@/components/navigation"), { ssr: false })
 
 // --- Types ---
 type ChatMode = "club" | "industry"
-type ChatMessage = { id: string; role: "user" | "assistant"; content: string; mode?: ChatMode }
+type ChatMessage = { id: string; role: "user" | "assistant"; content: string; mode?: ChatMode; ts?: number }
 
 // --- ENV & constants ---
-const NEXT_PUBLIC_FTC_WEBSITE = (typeof window !== 'undefined' && (window as any).process?.env?.NEXT_PUBLIC_FTC_WEBSITE) || "" // ví dụ https://ftc.uel.edu.vn
+const NEXT_PUBLIC_FTC_WEBSITE = process.env.NEXT_PUBLIC_FTC_WEBSITE || ""
 const FTC_FANPAGE = "https://www.facebook.com/clbfintechuel"
 
 const SUGGESTED_QUESTIONS: string[] = [
@@ -33,20 +45,20 @@ const CHAT_MODES: Array<{ mode: ChatMode; label: string; description: string; co
   {
     mode: "club",
     label: "Hỏi về câu lạc bộ",
-    description: "Ưu tiên trả lời theo FAQ cố định của FTC. Nếu ngoài danh sách, dùng Gemini vai cố vấn tân sinh viên.",
+    description: "Ưu tiên FAQ FTC; ngoài danh sách dùng Gemini (vai cố vấn tân sinh viên).",
     color: "bg-blue-600",
     icon: Users,
   },
   {
     mode: "industry",
     label: "Hỏi về ngành",
-    description: "Trả lời dựa trên kiến thức từ Google (API thật hoặc mô phỏng), có trích nguồn ngắn gọn.",
+    description: "Tổng hợp từ Google (API thật hoặc mô phỏng), có trích nguồn ngắn gọn.",
     color: "bg-green-600",
     icon: BookOpen,
   },
 ]
 
-// --- FAQ fixed mapping (khóa) ---
+// --- FAQ cố định cho FTC (khóa không dấu) ---
 const FAQ_MAP: Record<string, string> = {
   "cac ban trong cau lac bo lam gi":
     "Ban Học thuật: Thiết kế nội dung cho workshop và talkshow, chuẩn bị câu hỏi cho tọa đàm, xây dựng ngân hàng câu hỏi, ra đề và chấm cuộc thi ATTACKER.\nBan Sự kiện: Lập kế hoạch và hồ sơ tổ chức, xây dựng kịch bản MC và timeline, điều phối hậu cần và giám sát thực thi tại hiện trường.\nBan Truyền thông: Thiết kế ấn phẩm, quản lý các kênh truyền thông, lập kế hoạch nội dung và phát triển hình ảnh thương hiệu của câu lạc bộ.\nBan Tài chính cá nhân: Tổ chức đào tạo về quản lý tài chính cá nhân cho sinh viên, phát triển và cập nhật bộ bài MoneyWe, hỗ trợ giảng viên ở các học phần liên quan.\nBan Nhân sự: Phân công và theo dõi tiến độ, bảo đảm nguồn lực, triển khai hoạt động gắn kết và gìn giữ văn hóa tổ chức.",
@@ -63,21 +75,6 @@ const FAQ_MAP: Record<string, string> = {
   "cau lac bo co nhung thanh tich gi":
     "Năm học 2024–2025, FTC được Ban Cán sự Đoàn ĐHQG-HCM tặng Giấy khen vì đóng góp tích cực cho công tác Đoàn và phong trào thanh niên. Câu lạc bộ đồng thời vào Top 10 Nhóm 4 của Giải thưởng Đổi mới sáng tạo và Khởi nghiệp TP.HCM I-STAR, được cấp Giấy chứng nhận ghi nhận nỗ lực và đóng góp trong hoạt động đổi mới sáng tạo.",
 }
-
-// --- Prompts (tham chiếu, BE sẽ dùng; FE không cần gửi) ---
-const CLUB_MODE_SYSTEM_PROMPT = `Mục tiêu: Khi câu hỏi của người dùng trùng/giống một trong các câu FAQ, phải trả nguyên văn "answer" đã định nghĩa. Nếu không khớp, gọi model Gemini với role cố vấn tân sinh viên.
-Luật so khớp:
-1) Chuẩn hoá câu hỏi: chữ thường, loại dấu tiếng Việt (NFD), bỏ ký tự ngoài chữ-số, rút gọn khoảng trắng.
-2) So khớp trực tiếp: nếu câu người dùng sau chuẩn hoá chứa nguyên cụm câu hỏi chuẩn hoá (hoặc ngược lại).
-3) So khớp theo từ khoá: nếu có từ 2 cụm khoá độc nhất của câu hỏi chuẩn hoá xuất hiện trong câu người dùng.
-4) So khớp xấp xỉ: Jaccard ≥ 0.35 hoặc Levenshtein ≤ 10 nếu độ dài > 30 ký tự.
-5) Nếu nhiều mục khớp, chọn mục có điểm cao nhất.
-6) Nếu khớp: trả nguyên văn "answer". Không thêm bớt.
-7) Nếu không khớp: chuyển sang nhánh Gemini (role bên dưới).`
-
-const GEMINI_ADVISOR_ROLE = `Bạn là cố vấn học tập dành cho tân sinh viên. Hãy giới thiệu ngắn gọn, thân thiện và dễ hiểu về Câu lạc bộ Công nghệ tài chính FTC cùng định hướng ngành học liên quan... (rút gọn—BE đã có bản đầy đủ).`
-
-const INDUSTRY_MODE_SYSTEM_PROMPT = `CHẾ ĐỘ HỎI VỀ NGÀNH (Google-mode): Tổng hợp nhanh, có cấu trúc, trả lời gãy gọn bằng tiếng Việt, không dùng dấu ";" hay gạch đầu dòng. Cuối câu trả lời luôn thêm "Nguồn: domain1, domain2, domain3" với các tên miền uy tín.`
 
 // --- Helpers ---
 function normalize(text: string) {
@@ -127,9 +124,104 @@ async function askServer({
   return data.reply || data.response || data.text || data.answer || ""
 }
 
+// --- Small UI atoms ---
+function Avatar({ who }: { who: "user" | "assistant" }) {
+  // IG story-like ring + gradient avatar
+  const isUser = who === "user"
+  return (
+    <div
+      className={cn(
+        "relative h-10 w-10 rounded-full p-[2px]",
+        isUser ? "bg-gradient-to-tr from-fuchsia-500 to-amber-400" : "bg-gradient-to-tr from-indigo-500 to-emerald-400"
+      )}
+    >
+      <div className="h-full w-full rounded-full bg-background flex items-center justify-center text-xs font-semibold">
+        {isUser ? "Bạn" : "FTC"}
+      </div>
+    </div>
+  )
+}
+
+function Handle({ who }: { who: "user" | "assistant" }) {
+  const name = who === "user" ? "Bạn" : "FTC Bot"
+  const handle = who === "user" ? "@student" : "@ftc_official"
+  return (
+    <div className="flex items-center gap-2">
+      <span className="text-sm font-semibold">{name}</span>
+      <span className="text-xs text-muted-foreground">{handle}</span>
+      <CheckCheck className="h-3.5 w-3.5 text-primary/80" />
+    </div>
+  )
+}
+
+function PrettyTime({ ts }: { ts?: number }) {
+  const [text, setText] = useState("•")
+  useEffect(() => {
+    if (!ts) return
+    const d = new Date(ts)
+    const pad = (n: number) => String(n).padStart(2, "0")
+    setText(`${pad(d.getHours())}:${pad(d.getMinutes())}`)
+  }, [ts])
+  return <span className="text-xs text-muted-foreground">· {text}</span>
+}
+
+function MessageCard({ m }: { m: ChatMessage }) {
+  const isUser = m.role === "user"
+  return (
+    <div className={cn("flex gap-3", isUser ? "justify-end" : "justify-start")}>
+      {!isUser && <Avatar who="assistant" />}
+      <div
+        className={cn(
+          "rounded-2xl border border-accent/30 w-full max-w-[720px] shadow-sm",
+          "bg-card/60 backdrop-blur supports-[backdrop-filter]:bg-card/70"
+        )}
+      >
+        {/* Header like tweet */}
+        <div className="px-3 pt-2 flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <Handle who={isUser ? "user" : "assistant"} />
+            <PrettyTime ts={m.ts} />
+          </div>
+          <MoreHorizontal className="h-4 w-4 text-muted-foreground" />
+        </div>
+
+        {/* Body */}
+        <div
+          className={cn(
+            "px-3 py-3 text-[15px] leading-6",
+            isUser ? "text-foreground" : "text-foreground"
+          )}
+          // Cho phép xuống dòng + anchor
+          dangerouslySetInnerHTML={{ __html: (m.content || "").replace(/\n/g, "<br/>") }}
+        />
+
+        {/* Footer actions like Twitter */}
+        <div className="px-3 pb-2 flex items-center gap-5 text-muted-foreground/90">
+          <button className="inline-flex items-center gap-1 hover:text-foreground transition-colors">
+            <MessageSquare className="h-4 w-4" />
+            <span className="text-xs">Trả lời</span>
+          </button>
+          <button className="inline-flex items-center gap-1 hover:text-foreground transition-colors">
+            <Repeat2 className="h-4 w-4" />
+            <span className="text-xs">Chia sẻ</span>
+          </button>
+          <button className="inline-flex items-center gap-1 hover:text-foreground transition-colors">
+            <Heart className="h-4 w-4" />
+            <span className="text-xs">Hữu ích</span>
+          </button>
+          <button className="ml-auto inline-flex items-center gap-1 hover:text-foreground transition-colors">
+            <Share2 className="h-4 w-4" />
+            <span className="text-xs">Sao chép</span>
+          </button>
+        </div>
+      </div>
+      {isUser && <Avatar who="user" />}
+    </div>
+  )
+}
+
 // --- Page component ---
 export default function ChatbotPage() {
-  const [mounted, setMounted] = useState(false)
   const [selectedMode, setSelectedMode] = useState<ChatMode>("club")
   const [inputValue, setInputValue] = useState("")
   const [messages, setMessages] = useState<ChatMessage[]>([])
@@ -137,48 +229,47 @@ export default function ChatbotPage() {
   const [showModeChangeNotification, setShowModeChangeNotification] = useState(false)
   const messagesEndRef = useRef<HTMLDivElement>(null)
 
-  useEffect(() => setMounted(true), [])
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })
   }, [messages])
 
   const dynamicPlaceholder = useMemo(
-    () => (selectedMode === "club" ? "Hỏi về câu lạc bộ, hoạt động, cách tham gia…" : "Hỏi về FinTech, blockchain, ngân hàng số…"),
+    () => (selectedMode === "club" ? "Hỏi về FTC, hoạt động, cách tham gia…" : "Hỏi về FinTech, blockchain, ngân hàng số…"),
     [selectedMode]
   )
 
   const handleModeChange = (m: ChatMode) => {
     setSelectedMode(m)
     setShowModeChangeNotification(true)
-    setTimeout(() => setShowModeChangeNotification(false), 2200)
+    setTimeout(() => setShowModeChangeNotification(false), 2000)
   }
 
   async function handleSendMessage() {
     const q = inputValue.trim()
     if (!q || isSending) return
 
-    const newUserMsg: ChatMessage = { id: crypto.randomUUID(), role: "user", content: q, mode: selectedMode }
-    setMessages((prev: ChatMessage[]) => [...prev, newUserMsg])
+    const newUserMsg: ChatMessage = { id: crypto.randomUUID(), role: "user", content: q, mode: selectedMode, ts: Date.now() }
+    setMessages((prev) => [...prev, newUserMsg])
     setInputValue("")
     setIsSending(true)
 
     try {
       let botText: string | null = null
 
-      // 1) Club-mode: thử match FAQ ngay trên FE cho mượt
+      // Club-mode: nếu trùng câu gợi ý → trả lời cố định FTC
       if (selectedMode === "club") {
         const quick = faqMatchOrNull(q)
         if (quick) botText = quick
       }
 
-      // 2) Không khớp thì gọi BE
+      // Không khớp thì gọi backend (Gemini / Google-mode)
       if (!botText) {
-        const history = messages.slice(-6).map((m: ChatMessage) => ({ role: m.role, content: m.content }))
+        const history = messages.slice(-6).map((m) => ({ role: m.role, content: m.content }))
         const out = await askServer({ mode: selectedMode, question: q, history })
         botText = out || "Xin lỗi, hiện chưa thể trả lời."
       }
 
-      // 3) Nếu hỏi link/website trong club-mode → gợi ý link
+      // Nếu hỏi link/website trong club-mode → gợi ý website/Fanpage
       if (selectedMode === "club") {
         const keys = ["link", "website", "trang web", "web", "thông tin", "thong tin", "tuyển", "tuyen"]
         if (keys.some((k) => normalize(q).includes(normalize(k)))) {
@@ -186,9 +277,19 @@ export default function ChatbotPage() {
         }
       }
 
-      setMessages((prev: ChatMessage[]) => [...prev, { id: crypto.randomUUID(), role: "assistant", content: botText!, mode: selectedMode }])
+      const botMsg: ChatMessage = {
+        id: crypto.randomUUID(),
+        role: "assistant",
+        content: botText!,
+        mode: selectedMode,
+        ts: Date.now(),
+      }
+      setMessages((prev) => [...prev, botMsg])
     } catch {
-      setMessages((prev: ChatMessage[]) => [...prev, { id: crypto.randomUUID(), role: "assistant", content: "Xin lỗi, hiện chưa thể trả lời.", mode: selectedMode }])
+      setMessages((prev) => [
+        ...prev,
+        { id: crypto.randomUUID(), role: "assistant", content: "Xin lỗi, hiện chưa thể trả lời.", mode: selectedMode, ts: Date.now() },
+      ])
     } finally {
       setIsSending(false)
     }
@@ -201,201 +302,235 @@ export default function ChatbotPage() {
     }
   }
 
-  if (!mounted) return <div className="min-h-screen" />
-
   return (
-    <div suppressHydrationWarning className="min-h-screen bg-gradient-to-b from-background to-background/80 overflow-hidden">
+    <div className="min-h-screen bg-gradient-to-b from-background to-background/80 overflow-hidden">
       <Navigation />
 
-      {/* Hero Section (giữ như bạn có) */}
-      <section className="relative min-h-[48vh] flex items-center justify-center py-12">
-        <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <div className="absolute top-0 right-0 w-[40%] h-[60%] bg-gradient-to-br from-indigo-700/20 to-emerald-600/6 rounded-full blur-3xl transform translate-x-24 -translate-y-8" />
-          <div className="absolute bottom-0 left-0 w-[35%] h-[50%] bg-gradient-to-tr from-emerald-500/10 to-indigo-600/6 rounded-full blur-3xl -translate-x-24 translate-y-8" />
+      {/* Hero Section với hiệu ứng nhấp nháy hiện đại */}
+      <section className="relative min-h-[50vh] flex items-center justify-center py-16 px-4 sm:px-6 lg:px-8">
+        <div className="absolute inset-0 overflow-hidden">
+          <div className="absolute top-1/4 -right-1/4 w-2/3 h-2/3 bg-gradient-to-br from-primary/20 via-accent/20 to-transparent rounded-full blur-3xl animate-float" />
+          <div className="absolute -bottom-1/4 -left-1/4 w-2/3 h-2/3 bg-gradient-to-tr from-accent/20 via-primary/20 to-transparent rounded-full blur-3xl animate-float-reverse" />
         </div>
 
-        <div className="relative responsive-container text-center">
-          <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-tr from-indigo-600 to-emerald-500 rounded-full shadow-lg mb-6">
-            <Bot className="h-9 w-9 text-white" />
-          </div>
-          <h1 className="relative" style={{ letterSpacing: "-1.2px", position: "relative", font: "800 48px/60px Inter, ui-sans-serif, system-ui, -apple-system" }}>
-            <div className="inline-block" style={{ backgroundClip: "text", backgroundImage: "linear-gradient(to right, oklch(0.673 0.182 276.935) 0%, oklch(0.845 0.143 164.978) 100%)", fontFamily: 'Montserrat, "Montserrat Fallback", sans-serif', fontWeight: 800 }}>
-              <p>TRỢ LÝ HỖ TRỢ </p>
-            </div>
+        <div className="relative max-w-5xl mx-auto text-center space-y-8">
+          {/* Title với hiệu ứng shimmer */}
+          <h1 className="relative text-4xl sm:text-5xl lg:text-6xl font-extrabold">
+            <span className="absolute inset-0 bg-gradient-to-r from-primary to-accent opacity-50 blur-2xl animate-pulse"></span>
+            <span className="relative bg-gradient-to-r from-primary to-accent text-transparent bg-clip-text animate-text-shine">
+              FTC CHATBOT
+            </span>
           </h1>
-          <div className="mt-3 text-sm sm:text-base text-muted-foreground max-w-2xl mx-auto">
-            <p>Trợ lý AI thân thiện giúp tân sinh viên tìm hiểu thông tin về câu lạc bộ và kiến thức về ngành công nghệ tài chính</p>
+          
+          {/* Subtitle */}
+          <p className="text-xl sm:text-2xl text-muted-foreground leading-relaxed max-w-3xl mx-auto italic">
+            Trợ lý AI thông minh cho tân sinh viên · Hỗ trợ thông tin câu lạc bộ và kiến thức ngành
+          </p>
+
+          {/* Mode selector với hiệu ứng hiện đại */}
+          <div className="mt-8 relative">
+            <div className="absolute inset-0 bg-gradient-to-r from-primary/5 to-accent/5 rounded-3xl transform transition-all" />
+            <div className="relative bg-background/40 backdrop-blur-lg rounded-3xl border border-primary/10 p-6">
+              <div className="flex flex-col sm:flex-row items-center gap-4">
+                <div className="flex items-center gap-3">
+                  <div className="w-12 h-12 relative">
+                    <div className="absolute inset-0 bg-gradient-to-r from-primary/20 to-accent/20 rounded-xl blur-lg animate-pulse" />
+                    <div className="relative w-full h-full bg-background/50 rounded-xl flex items-center justify-center">
+                      <Bot className="h-6 w-6 text-primary" />
+                    </div>
+                  </div>
+                  <div>
+                    <h2 className="text-lg font-bold text-foreground">Chọn chế độ</h2>
+                    <p className="text-sm text-muted-foreground">Tùy chỉnh trải nghiệm chat</p>
+                  </div>
+                </div>
+                
+                <div className="flex gap-2">
+                  {CHAT_MODES.map((mc) => {
+                    const Icon = mc.icon
+                    const active = selectedMode === mc.mode
+                    return (
+                      <button
+                        key={mc.mode}
+                        onClick={() => handleModeChange(mc.mode)}
+                        className={cn(
+                          "px-4 py-2 rounded-xl text-sm font-medium flex items-center gap-2 transition-all duration-300 transform hover:scale-105",
+                          active 
+                            ? `${mc.color} text-white shadow-lg scale-105` 
+                            : "bg-muted/50 hover:bg-accent/30 text-muted-foreground hover:text-foreground"
+                        )}
+                      >
+                        <Icon className="h-4 w-4" />
+                        {mc.label}
+                      </button>
+                    )
+                  })}
+                </div>
+              </div>
+
+              {showModeChangeNotification && (
+                <div className="mt-4 inline-flex items-center gap-2 text-sm text-muted-foreground animate-in slide-in-from-top-2 duration-300">
+                  <div className="w-2 h-2 rounded-full bg-primary animate-pulse" />
+                  Đã chuyển sang chế độ: <span className="font-semibold text-primary">{CHAT_MODES.find((m) => m.mode === selectedMode)?.label}</span>
+                </div>
+              )}
+            </div>
           </div>
         </div>
       </section>
 
-      {/* Main layout */}
-      <div className="responsive-container pt-6 pb-12">
-        <div className="flex justify-center">
-          <div className="w-full max-w-[1200px]">
-            {/* Card Chat */}
-            <Card>
-              <CardHeader>
-                <div className="flex items-start justify-between gap-4">
-                  <div>
-                    <CardTitle className="text-xl sm:text-2xl">FTC Chatbot</CardTitle>
-                    <p className="text-xs text-muted-foreground">Hai chế độ: Hỏi về câu lạc bộ / Hỏi về ngành</p>
+      {/* Main Content với glassmorphism design */}
+      <section className="py-12 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-6xl mx-auto space-y-8">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+            {/* Chat Area (8 columns) */}
+            <div className="lg:col-span-8 space-y-6">
+              {/* Input Composer với hiệu ứng hiện đại */}
+              <div className="relative group">
+                <div className="absolute inset-0 bg-gradient-to-r from-primary/5 to-accent/5 rounded-3xl transform transition-all" />
+                <div className="relative bg-background/40 backdrop-blur-lg rounded-3xl border border-primary/10 p-6">
+                  <div className="flex items-start gap-4">
+                    <div className="w-12 h-12 relative">
+                      <div className="absolute inset-0 bg-gradient-to-r from-primary/20 to-accent/20 rounded-xl blur-lg group-hover:blur-xl transition-all" />
+                      <div className="relative w-full h-full bg-background/50 rounded-xl flex items-center justify-center">
+                        <div className="text-sm font-semibold text-primary">Bạn</div>
+                      </div>
+                    </div>
+                    <div className="flex-1 space-y-3">
+                      <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                        {selectedMode === "club" ? (
+                          <>
+                            <Users className="h-4 w-4 text-blue-500" />
+                            <span>Chế độ CLB · Trả lời dựa trên thông tin FTC</span>
+                          </>
+                        ) : (
+                          <>
+                            <BookOpen className="h-4 w-4 text-green-600" />
+                            <span>Chế độ Ngành · Tổng hợp từ Google</span>
+                          </>
+                        )}
+                      </div>
+                      <div className="flex gap-3">
+                        <Input
+                          value={inputValue}
+                          onChange={(e) => setInputValue(e.target.value)}
+                          onKeyDown={handleKeyDown}
+                          placeholder={selectedMode === "club" ? "Hỏi về FTC, hoạt động, cách tham gia…" : "Hỏi về FinTech, blockchain, ngân hàng số…"}
+                          className="flex-1 border-primary/20 focus:border-primary/40 transition-colors"
+                        />
+                        <Button 
+                          onClick={handleSendMessage} 
+                          disabled={!inputValue.trim() || isSending} 
+                          className="bg-gradient-to-r from-primary to-accent hover:from-primary/90 hover:to-accent/90 text-white shadow-lg transform hover:scale-105 transition-all"
+                        >
+                          <Send className="h-4 w-4 mr-2" /> Gửi
+                        </Button>
+                      </div>
+                    </div>
                   </div>
                 </div>
+              </div>
 
-                {/* Mode Selector */}
-                <div className="mt-3 flex gap-1 bg-accent/10 p-1 rounded-lg w-full">
-                  {CHAT_MODES.map((mc) => {
-                    const Icon = mc.icon
-                    const selected = selectedMode === mc.mode
-                    return (
-                      <Button
-                        key={mc.mode}
-                        variant={selected ? "default" : "ghost"}
-                        size="sm"
-                        onClick={() => handleModeChange(mc.mode)}
-                        className={cn("flex items-center gap-2 transition-all duration-300", selected ? `${mc.color} text-white shadow-lg scale-105` : "hover:bg-accent/30 text-muted-foreground hover:text-foreground")}
-                      >
-                        <Icon className="h-4 w-4" />
-                        <span className="hidden sm:inline font-medium">{mc.label}</span>
-                        {selected && <div className="w-2 h-2 bg-white rounded-full animate-pulse" />}
-                      </Button>
-                    )
-                  })}
-                </div>
-
-                {/* Mode Description */}
-                <div className="mt-3 p-3 bg-gradient-to-r from-accent/20 to-primary/20 rounded-lg border border-accent/30">
-                  <div className="flex items-center gap-2 mb-1">
-                    {selectedMode === "club" ? <Users className="h-4 w-4 text-blue-500" /> : <BookOpen className="h-4 w-4 text-green-500" />}
-                    <span className="text-sm font-semibold text-foreground">Chế độ: {CHAT_MODES.find((m) => m.mode === selectedMode)?.label}</span>
-                  </div>
-                  <p className="text-xs text-muted-foreground">{CHAT_MODES.find((m) => m.mode === selectedMode)?.description}</p>
-                </div>
-              </CardHeader>
-
-              {/* Mode Change Notification */}
-              {showModeChangeNotification && (
-                <div className="mx-4 mb-2 p-2 bg-gradient-to-r from-blue-500/20 to-green-500/20 border border-accent/30 rounded-lg animate-in slide-in-from-top-2 duration-300">
-                  <div className="flex items-center gap-2 text-sm">
-                    <div className="w-2 h-2 bg-accent rounded-full animate-pulse" />
-                    <span className="text-muted-foreground">
-                      Đã chuyển sang chế độ: <strong>{CHAT_MODES.find((m) => m.mode === selectedMode)?.label}</strong>
-                    </span>
-                  </div>
-                </div>
-              )}
-
-              {/* Messages */}
-              <CardContent className="flex-1 overflow-y-auto p-4 space-y-4 max-h-[65vh]">
-                {messages.map((m: ChatMessage) => (
-                  <div key={m.id} className={cn("flex", m.role === "user" ? "justify-end" : "justify-start")}>
-                    <div
-                      className={cn(
-                        "px-3 py-2 rounded-lg max-w-[85%] whitespace-pre-wrap break-words",
-                        m.role === "user" ? "bg-primary text-primary-foreground" : "bg-muted text-foreground border border-accent/20"
-                      )}
-                      dangerouslySetInnerHTML={{ __html: m.content.replace(/\n/g, "<br/>") }}
-                    />
+              {/* Messages với hiệu ứng hiện đại */}
+              <div className="space-y-4">
+                {messages.map((m) => (
+                  <div key={m.id} className="relative group">
+                    <div className="absolute inset-0 bg-gradient-to-r from-primary/5 to-accent/5 rounded-3xl transform transition-all" />
+                    <div className="relative bg-background/40 backdrop-blur-lg rounded-3xl border border-primary/10 p-4">
+                      <MessageCard m={m} />
+                    </div>
                   </div>
                 ))}
                 <div ref={messagesEndRef} />
-              </CardContent>
-
-              {/* Input */}
-              <div className="border-t border-accent/20 pt-4 px-4 pb-3 bg-card/10 backdrop-blur-sm sticky bottom-0 mt-auto">
-                <div className="mb-2 flex items-center gap-2 text-xs text-muted-foreground">
-                  {selectedMode === "club" ? (
-                    <>
-                      <Users className="h-3 w-3 text-blue-500" />
-                      <span>Chế độ CLB - Trả lời về thông tin câu lạc bộ</span>
-                    </>
-                  ) : (
-                    <>
-                      <BookOpen className="h-3 w-3 text-green-500" />
-                      <span>Chế độ Ngành - Trả lời về kiến thức FinTech</span>
-                    </>
-                  )}
-                </div>
-
-                <div className="flex space-x-2">
-                  <Input
-                    value={inputValue}
-                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => setInputValue(e.target.value)}
-                    onKeyDown={handleKeyDown}
-                    placeholder={dynamicPlaceholder}
-                    className="flex-1 w-full"
-                  />
-                  <Button onClick={handleSendMessage} disabled={!inputValue.trim() || isSending} className="glow">
-                    <Send className="h-4 w-4 mr-1" /> Gửi
-                  </Button>
-                </div>
               </div>
-            </Card>
+            </div>
 
-            {/* Suggested Questions (auto dùng CLB) */}
-            <Card className="mt-4">
-              <CardHeader>
-                <CardTitle className="flex items-center">
-                  <HelpCircle className="h-5 w-5 mr-2" /> Câu hỏi gợi ý
-                </CardTitle>
-                <div className="mt-2 p-2 bg-blue-500/10 border border-blue-500/20 rounded-lg">
-                  <div className="flex items-center gap-2 text-sm">
-                    <Users className="h-4 w-4 text-blue-500" />
-                    <span className="text-blue-700 font-medium">Tự động dùng chế độ CLB</span>
-                  </div>
-                  <p className="text-xs text-blue-600 mt-1">Các câu hỏi này sẽ luôn trả lời về thông tin câu lạc bộ</p>
-                </div>
-              </CardHeader>
-              <CardContent className="space-y-2">
-                {SUGGESTED_QUESTIONS.map((q, idx) => (
-                  <Button
-                    key={idx}
-                    variant="outline"
-                    className="w-full text-left justify-start h-auto p-3 bg-transparent whitespace-normal break-words hover:bg-blue-500/10 hover:border-blue-500/30 transition-all duration-200 group"
-                    onClick={() => {
-                      setSelectedMode("club")
-                      setInputValue(q)
-                    }}
-                  >
-                    <div className="flex items-start gap-3 w-full">
-                      <div className="flex-shrink-0 mt-0.5">
-                        <MessageSquare className="h-4 w-4 text-blue-500 group-hover:text-blue-600" />
-                      </div>
-                      <div className="flex-1 min-w-0">
-                        <span className="text-sm break-words text-left block">{q}</span>
-                        <div className="flex items-center gap-1 mt-1">
-                          <Users className="h-3 w-3 text-blue-400" />
-                          <span className="text-xs text-blue-500">Chế độ CLB</span>
-                        </div>
+            {/* Sidebar với hiệu ứng hiện đại */}
+            <div className="lg:col-span-4">
+              <div className="relative group">
+                <div className="absolute inset-0 bg-gradient-to-r from-primary/5 to-accent/5 rounded-3xl transform transition-all" />
+                <div className="relative bg-background/40 backdrop-blur-lg rounded-3xl border border-primary/10 p-6">
+                  <div className="flex items-center gap-3 mb-6">
+                    <div className="w-10 h-10 relative">
+                      <div className="absolute inset-0 bg-gradient-to-r from-primary/20 to-accent/20 rounded-xl blur-lg group-hover:blur-xl transition-all" />
+                      <div className="relative w-full h-full bg-background/50 rounded-xl flex items-center justify-center">
+                        <HelpCircle className="h-5 w-5 text-primary" />
                       </div>
                     </div>
-                  </Button>
-                ))}
-              </CardContent>
-            </Card>
+                    <div>
+                      <h3 className="text-lg font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+                        Câu hỏi gợi ý
+                      </h3>
+                      <p className="text-sm text-muted-foreground">Luôn dùng chế độ CLB</p>
+                    </div>
+                  </div>
+                  
+                  <div className="space-y-3">
+                    {SUGGESTED_QUESTIONS.map((q, idx) => (
+                      <button
+                        key={idx}
+                        onClick={() => {
+                          setSelectedMode("club")
+                          setInputValue(q)
+                        }}
+                        className="w-full text-left rounded-2xl border border-primary/20 px-4 py-3 hover:bg-primary/10 hover:border-primary/40 transition-all duration-300 transform hover:scale-105 group"
+                      >
+                        <div className="flex items-start gap-3">
+                          <div className="mt-1">
+                            <MessageSquare className="h-4 w-4 text-primary group-hover:text-primary/80" />
+                          </div>
+                          <div className="flex-1">
+                            <div className="text-sm font-medium text-foreground group-hover:text-primary transition-colors">
+                              {q}
+                            </div>
+                            <div className="mt-2 flex items-center gap-2">
+                              <Users className="h-3 w-3 text-blue-500" />
+                              <span className="text-xs text-blue-600 font-medium">Chế độ CLB</span>
+                            </div>
+                          </div>
+                        </div>
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-
-      {/* global style (giữ nguyên animation) */}
-      <style jsx global>{`
-        @keyframes gradient {
-          0% { background-position: 0% 50%; }
-          50% { background-position: 100% 50%; }
-          100% { background-position: 0% 50%; }
-        }
-        @keyframes blob {
-          0%, 100% { transform: translate(0, 0) scale(1); }
-          25% { transform: translate(20px, -30px) scale(1.1); }
-          50% { transform: translate(-20px, 20px) scale(0.9); }
-          75% { transform: translate(30px, 30px) scale(1.05); }
-        }
-        .animate-gradient-slow { animation: gradient 15s ease infinite; background-size: 200% 200%; }
-        .animate-blob { animation: blob 20s ease-in-out infinite; }
-        .animation-delay-2000 { animation-delay: 2s; }
-        .animation-delay-4000 { animation-delay: 4s; }
-      `}</style>
+      </section>
     </div>
   )
 }
+
+// CSS Animations cho hiệu ứng hiện đại
+<style jsx global>{`
+  @keyframes float {
+    0%, 100% { transform: translate(0, 0) rotate(0deg); }
+    50% { transform: translate(-20px, 20px) rotate(5deg); }
+  }
+  @keyframes float-reverse {
+    0%, 100% { transform: translate(0, 0) rotate(0deg); }
+    50% { transform: translate(20px, -20px) rotate(-5deg); }
+  }
+  .animate-float {
+    animation: float 20s ease-in-out infinite;
+  }
+  .animate-float-reverse {
+    animation: float-reverse 20s ease-in-out infinite;
+  }
+  @keyframes shimmer {
+    0% { background-position: -200% center; }
+    100% { background-position: 200% center; }
+  }
+  .animate-text-shine {
+    background-size: 200% auto;
+    animation: shimmer 3s linear infinite;
+  }
+  @keyframes pulse-glow {
+    0%, 100% { opacity: 0.5; }
+    50% { opacity: 0.8; }
+  }
+  .animate-pulse-glow {
+    animation: pulse-glow 2s ease-in-out infinite;
+  }
+`}</style>
