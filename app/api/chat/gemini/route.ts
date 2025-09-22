@@ -9,11 +9,21 @@ export const dynamic = "force-dynamic";
 type KBItem = { id?: string; question?: string; answer?: string; content?: string; tags?: string[] };
 
 async function readKB(): Promise<KBItem[]> {
+  // Allow ENV-provided KB
+  const envJson = process.env.KB_JSON;
+  if (envJson) {
+    try {
+      const parsed = JSON.parse(envJson as string);
+      if (Array.isArray(parsed)) return parsed as KBItem[];
+      if (Array.isArray((parsed as any)?.data)) return (parsed as any).data as KBItem[];
+    } catch {}
+  }
   const candidates = [
-    "configuration_chatbot/knowledge_base/faq.json",
-    "knowledge_base/faq.json",
-    "configuration_chatbot/knowledge_base/index.json",
     "public/knowledge_base/faq.json",
+    "public/kb.json",
+    "knowledge_base/faq.json",
+    "configuration_chatbot/knowledge_base/faq.json",
+    "configuration_chatbot/knowledge_base/index.json",
   ];
   for (const rel of candidates) {
     try {
@@ -28,7 +38,7 @@ async function readKB(): Promise<KBItem[]> {
 }
 
 function normalize(s: string) {
-  return s
+  return (s || "")
     .toLowerCase()
     .normalize("NFD")
     .replace(/[\u0300-\u036f]/g, "")
@@ -70,27 +80,48 @@ function systemPrompt(mode: "kb" | "google") {
     : "CHẾ ĐỘ MÔ PHỎNG TÌM KIẾM GOOGLE: tổng hợp nhanh, có cấu trúc; luôn đưa 2–3 nguồn uy tín dạng (nguồn: domain1, domain2, ...).";
 }
 
+function extractUserQuestion(body: any): string {
+  const direct = [body?.message, body?.input, body?.prompt, body?.question].find(
+    (x) => typeof x === "string" && String(x).trim()
+  );
+  if (direct) return String(direct).trim();
+
+  const pickFromArray = (arr: any[]) => {
+    const last = [...arr].reverse().find((m) => {
+      const role = (m?.role ?? "user").toLowerCase();
+      const content = typeof m?.content === "string" ? m.content : m?.content?.toString?.();
+      return role !== "system" && content && String(content).trim();
+    });
+    return last ? String(last.content).trim() : "";
+  };
+
+  if (Array.isArray(body?.messages)) {
+    const s = pickFromArray(body.messages);
+    if (s) return s;
+  }
+  if (Array.isArray(body?.history)) {
+    const s = pickFromArray(body.history);
+    if (s) return s;
+  }
+  return "";
+}
+
 export async function POST(req: NextRequest) {
   const started = Date.now();
   const body = await req.json().catch(() => ({} as any));
 
-  // Accept both shapes: { messages: [...] } and { message, history }
-  const arr = Array.isArray((body as any)?.messages) ? (body as any).messages : [];
-  const lastFromArray = [...arr].reverse().find((m: any) => m && m.role === "user");
-  const fromSingle = typeof (body as any)?.message === "string" ? (body as any).message : "";
-  const userQ: string = String((lastFromArray?.content ?? fromSingle ?? "")).trim();
-
-  if (!userQ) {
-    return NextResponse.json(
-      { error: "Invalid message" },
-      { status: 400, headers: { "x-chat-route": "gemini-rag", "Cache-Control": "no-store" } }
-    );
-  }
+  const userQ: string = extractUserQuestion(body);
 
   if (!process.env.GEMINI_API_KEY && !process.env.GOOGLE_API_KEY) {
     return NextResponse.json(
       { error: "GEMINI_API_KEY not set" },
       { status: 500, headers: { "x-chat-route": "gemini-rag", "Cache-Control": "no-store" } }
+    );
+  }
+  if (!userQ) {
+    return NextResponse.json(
+      { error: "Empty prompt" },
+      { status: 400, headers: { "x-chat-route": "gemini-rag", "Cache-Control": "no-store" } }
     );
   }
 
@@ -135,10 +166,27 @@ export async function POST(req: NextRequest) {
       { status: 200, headers }
     );
   } catch (err: any) {
-    console.error("[gemini-route]", err?.message || err);
+    const msg = (err?.message || String(err)).toLowerCase();
+    let hint = "unknown";
+    if (msg.includes("permission") || msg.includes("401") || msg.includes("api key")) hint = "invalid_or_missing_key";
+    else if (msg.includes("safety")) hint = "safety_block";
+    else if (msg.includes("quota") || msg.includes("rate")) hint = "quota_or_rate_limit";
+    else if (msg.includes("model")) hint = "model_not_available";
+
     return NextResponse.json(
-      { text: "Xin lỗi, hiện chưa thể tạo câu trả lời.", reply: "Xin lỗi, hiện chưa thể tạo câu trả lời.", response: "Xin lỗi, hiện chưa thể tạo câu trả lời.", detail: err?.message || String(err) },
-      { status: 200, headers: { "x-chat-route": "gemini-rag", "x-error": err?.name || "unknown", "Cache-Control": "no-store" } }
+      { text: "Xin lỗi, hiện chưa thể tạo câu trả lời.", detail: err?.message || String(err) },
+      {
+        status: 200,
+        headers: {
+          "x-chat-route": "gemini-rag",
+          "x-error": hint,
+          "x-rag-mode": mode,
+          "x-kb-count": String(kb.length),
+          "x-kb-hit": String(ids.length),
+          "x-duration-ms": String(Date.now() - started),
+          "Cache-Control": "no-store",
+        },
+      }
     );
   }
 }
