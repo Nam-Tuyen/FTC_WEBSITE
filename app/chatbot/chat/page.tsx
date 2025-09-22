@@ -74,6 +74,13 @@ export default function ChatbotPage() {
   const [isTyping, setIsTyping] = useState(false)
   const [hasMounted, setHasMounted] = useState(false)
   const [selectedMode, setSelectedMode] = useState<"club" | "industry">("club")
+  const [showModeChangeNotification, setShowModeChangeNotification] = useState(false)
+
+  const handleModeChange = (newMode: "club" | "industry") => {
+    setSelectedMode(newMode)
+    setShowModeChangeNotification(true)
+    setTimeout(() => setShowModeChangeNotification(false), 3000)
+  }
   const messagesEndRef = useRef<HTMLDivElement>(null)
   const isSendingRef = useRef(false)
   const lastSentRef = useRef<{ text: string; time: number }>({ text: "", time: 0 })
@@ -310,23 +317,27 @@ export default function ChatbotPage() {
                   </div>
                   
                   {/* Mode Selector */}
-                  <div className="flex gap-2">
+                  <div className="flex gap-1 bg-accent/10 p-1 rounded-lg">
                     {CHAT_MODES.map((modeConfig) => {
                       const Icon = modeConfig.icon
+                      const isSelected = selectedMode === modeConfig.mode
                       return (
                         <Button
                           key={modeConfig.mode}
-                          variant={selectedMode === modeConfig.mode ? "default" : "outline"}
+                          variant={isSelected ? "default" : "ghost"}
                           size="sm"
-                          onClick={() => setSelectedMode(modeConfig.mode)}
-                          className={`flex items-center gap-2 transition-all duration-200 ${
-                            selectedMode === modeConfig.mode 
-                              ? `${modeConfig.color} text-white hover:opacity-90` 
-                              : "hover:bg-accent/20"
+                          onClick={() => handleModeChange(modeConfig.mode)}
+                          className={`flex items-center gap-2 transition-all duration-300 ${
+                            isSelected 
+                              ? `${modeConfig.color} text-white shadow-lg scale-105` 
+                              : "hover:bg-accent/30 text-muted-foreground hover:text-foreground"
                           }`}
                         >
                           <Icon className="h-4 w-4" />
-                          <span className="hidden sm:inline">{modeConfig.label}</span>
+                          <span className="hidden sm:inline font-medium">{modeConfig.label}</span>
+                          {isSelected && (
+                            <div className="w-2 h-2 bg-white rounded-full animate-pulse" />
+                          )}
                         </Button>
                       )
                     })}
@@ -334,12 +345,34 @@ export default function ChatbotPage() {
                 </div>
                 
                 {/* Mode Description */}
-                <div className="mt-3 p-2 bg-accent/10 rounded-lg">
+                <div className="mt-3 p-3 bg-gradient-to-r from-accent/20 to-primary/20 rounded-lg border border-accent/30">
+                  <div className="flex items-center gap-2 mb-1">
+                    {selectedMode === "club" ? (
+                      <Users className="h-4 w-4 text-blue-500" />
+                    ) : (
+                      <BookOpen className="h-4 w-4 text-green-500" />
+                    )}
+                    <span className="text-sm font-semibold text-foreground">
+                      Chế độ: {CHAT_MODES.find(m => m.mode === selectedMode)?.label}
+                    </span>
+                  </div>
                   <p className="text-xs text-muted-foreground">
-                    <strong>Chế độ hiện tại:</strong> {CHAT_MODES.find(m => m.mode === selectedMode)?.description}
+                    {CHAT_MODES.find(m => m.mode === selectedMode)?.description}
                   </p>
                 </div>
               </CardHeader>
+
+              {/* Mode Change Notification */}
+              {showModeChangeNotification && (
+                <div className="mx-4 mb-2 p-2 bg-gradient-to-r from-blue-500/20 to-green-500/20 border border-accent/30 rounded-lg animate-in slide-in-from-top-2 duration-300">
+                  <div className="flex items-center gap-2 text-sm">
+                    <div className="w-2 h-2 bg-accent rounded-full animate-pulse" />
+                    <span className="text-muted-foreground">
+                      Đã chuyển sang chế độ: <strong>{CHAT_MODES.find(m => m.mode === selectedMode)?.label}</strong>
+                    </span>
+                  </div>
+                </div>
+              )}
 
               {/* Messages */}
               <CardContent className="flex-1 overflow-y-auto p-4 space-y-4 max-h-[65vh]">
@@ -426,12 +459,31 @@ export default function ChatbotPage() {
 
               {/* Input */}
               <div className="border-t border-accent/20 pt-4 px-4 pb-0 bg-card/10 backdrop-blur-sm sticky bottom-0 mt-auto">
+                {/* Mode Indicator for Input */}
+                <div className="mb-2 flex items-center gap-2 text-xs text-muted-foreground">
+                  {selectedMode === "club" ? (
+                    <>
+                      <Users className="h-3 w-3 text-blue-500" />
+                      <span>Chế độ CLB - Trả lời về thông tin câu lạc bộ</span>
+                    </>
+                  ) : (
+                    <>
+                      <BookOpen className="h-3 w-3 text-green-500" />
+                      <span>Chế độ Ngành - Trả lời về kiến thức FinTech</span>
+                    </>
+                  )}
+                </div>
+                
                 <div className="flex space-x-2">
                   <Input
                     value={inputValue}
                     onChange={(e) => setInputValue(e.target.value)}
                     onKeyDown={handleKeyDown}
-                    placeholder="Nhập câu hỏi của bạn..."
+                    placeholder={
+                      selectedMode === "club" 
+                        ? "Hỏi về câu lạc bộ, hoạt động, cách tham gia..." 
+                        : "Hỏi về FinTech, blockchain, ngân hàng số..."
+                    }
                     className="flex-1 w-full"
                   />
                   <Button onClick={handleSendMessage} disabled={!inputValue.trim()} className="glow">
@@ -451,20 +503,36 @@ export default function ChatbotPage() {
                   <HelpCircle className="h-5 w-5 mr-2" />
                   Câu hỏi gợi ý
                 </CardTitle>
-                <p className="text-xs text-muted-foreground mt-1">
-                  💡 Tự động dùng chế độ "Hỏi về câu lạc bộ"
-                </p>
+                <div className="mt-2 p-2 bg-blue-500/10 border border-blue-500/20 rounded-lg">
+                  <div className="flex items-center gap-2 text-sm">
+                    <Users className="h-4 w-4 text-blue-500" />
+                    <span className="text-blue-700 font-medium">Tự động dùng chế độ CLB</span>
+                  </div>
+                  <p className="text-xs text-blue-600 mt-1">
+                    Các câu hỏi này sẽ luôn trả lời về thông tin câu lạc bộ
+                  </p>
+                </div>
               </CardHeader>
               <CardContent className="space-y-2 flex-1 overflow-y-auto">
                 {suggestedQuestions.map((question, index) => (
                   <Button
                     key={index}
                     variant="outline"
-                    className="w-full text-left justify-start h-auto p-3 bg-transparent whitespace-normal break-words"
+                    className="w-full text-left justify-start h-auto p-3 bg-transparent whitespace-normal break-words hover:bg-blue-500/10 hover:border-blue-500/30 transition-all duration-200 group"
                     onClick={() => handleSuggestedQuestion(question)}
                   >
-                    <MessageSquare className="h-4 w-4 mr-2 flex-shrink-0" />
-                    <span className="text-sm break-words">{question}</span>
+                    <div className="flex items-start gap-3 w-full">
+                      <div className="flex-shrink-0 mt-0.5">
+                        <MessageSquare className="h-4 w-4 text-blue-500 group-hover:text-blue-600" />
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <span className="text-sm break-words text-left block">{question}</span>
+                        <div className="flex items-center gap-1 mt-1">
+                          <Users className="h-3 w-3 text-blue-400" />
+                          <span className="text-xs text-blue-500">Chế độ CLB</span>
+                        </div>
+                      </div>
+                    </div>
                   </Button>
                 ))}
               </CardContent>
