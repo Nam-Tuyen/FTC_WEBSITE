@@ -232,6 +232,7 @@ export async function POST(req: NextRequest) {
   try { body = await req.json(); } catch {}
 
   const userQ = extractUserQuestion(body);
+  const mode = (body.mode || "club").toLowerCase(); // Default to club mode
 
   if (!process.env.GEMINI_API_KEY) {
     return NextResponse.json(
@@ -264,14 +265,58 @@ export async function POST(req: NextRequest) {
     const ans = matched.item.answer;
     return new NextResponse(JSON.stringify({ text: ans, reply: ans, response: ans, mode: "faq" }), { status: 200, headers });
   }
+  // Handle different modes
+  if (mode === "industry") {
+    // Industry mode: use general knowledge without FTC context
+    const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY as string);
+    const model = genAI.getGenerativeModel({
+      model: process.env.GEMINI_MODEL ?? "gemini-1.5-flash",
+      systemInstruction: systemPrompt("google", false),
+      safetySettings: [
+        { category: HarmCategory.HARM_CATEGORY_HATE_SPEECH, threshold: HarmBlockThreshold.BLOCK_NONE },
+        { category: HarmCategory.HARM_CATEGORY_HARASSMENT, threshold: HarmBlockThreshold.BLOCK_NONE },
+        { category: HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT, threshold: HarmBlockThreshold.BLOCK_NONE },
+        { category: HarmCategory.HARM_CATEGORY_SEXUALLY_EXPLICIT, threshold: HarmBlockThreshold.BLOCK_NONE },
+        { category: HarmCategory.HARM_CATEGORY_CIVIC_INTEGRITY, threshold: HarmBlockThreshold.BLOCK_NONE },
+      ],
+    });
+
+    const userMsg = `CÂU HỎI: ${userQ}\n\nYÊU CẦU PHONG CÁCH: Trả lời tự nhiên, trực diện, không chào lại. Không dùng dấu ";" và không dùng gạch đầu dòng.`;
+
+    try {
+      const result = await model.generateContent({
+        contents: [{ role: "user", parts: [{ text: userMsg }] }],
+        generationConfig: { temperature: 0.3, maxOutputTokens: 800 },
+      });
+      const out = result.response.text();
+
+      const headers = new Headers({
+        "x-chat-route": "gemini-industry",
+        "x-router": "gemini",
+        "x-rag-mode": "industry",
+        "x-duration-ms": String(Date.now() - started),
+        "Cache-Control": "no-store",
+      });
+
+      const payload = { reply: out, response: out, text: out, mode: "industry", source: "gemini" };
+      return new NextResponse(JSON.stringify(payload), { status: 200, headers });
+    } catch (err: any) {
+      return NextResponse.json(
+        { text: "Xin lỗi, hiện chưa thể tạo câu trả lời.", detail: err?.message || String(err) },
+        { status: 200, headers: { "x-chat-route": "gemini-industry", "Cache-Control": "no-store" } }
+      );
+    }
+  }
+
+  // Club mode: use existing logic with FTC context
   const { ids, text } = buildContext(userQ, kb);
-  const mode: "kb" | "google" = text ? "kb" : "google";
+  const ragMode: "kb" | "google" = text ? "kb" : "google";
   const greetOnce = isFirstTurn(body);
 
   const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY as string);
   const model = genAI.getGenerativeModel({
     model: process.env.GEMINI_MODEL ?? "gemini-1.5-flash",
-    systemInstruction: systemPrompt(mode, greetOnce),
+    systemInstruction: systemPrompt(ragMode, greetOnce),
     safetySettings: [
       { category: HarmCategory.HARM_CATEGORY_HATE_SPEECH, threshold: HarmBlockThreshold.BLOCK_NONE },
       { category: HarmCategory.HARM_CATEGORY_HARASSMENT, threshold: HarmBlockThreshold.BLOCK_NONE },
@@ -302,7 +347,7 @@ export async function POST(req: NextRequest) {
       "Cache-Control": "no-store",
     });
 
-    const payload = { reply: out, response: out, text: out, mode, kb_hit_ids: ids };
+    const payload = { reply: out, response: out, text: out, mode: "club", kb_hit_ids: ids };
     return new NextResponse(JSON.stringify(payload), { status: 200, headers });
   } catch (err: any) {
     const msg = (err?.message || String(err)).toLowerCase();

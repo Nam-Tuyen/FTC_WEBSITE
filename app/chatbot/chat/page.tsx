@@ -6,7 +6,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { Send, Bot, User, Sparkles, MessageSquare, HelpCircle, Zap } from "lucide-react"
+import { Send, Bot, User, Sparkles, MessageSquare, HelpCircle, Zap, Users, BookOpen } from "lucide-react"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import { Label } from "@/components/ui/label"
 import { getDefaultWelcomeMessage, CONTACT_EMAIL, FANPAGE_URL } from "@/lib/club-faq"
@@ -17,6 +17,7 @@ interface Message {
   sender: "user" | "bot"
   timestamp: Date
   source?: string
+  mode?: "club" | "industry"
 }
 
 const suggestedQuestions = [
@@ -42,6 +43,24 @@ const suggestionAnswers: Record<string, string> = {
     "Cần tinh thần chủ động học, kỹ năng cơ bản về công nghệ/kinh tế tùy vị trí; biết Git/Excel/Python/Thiết kế là lợi thế. Đọc kỹ mô tả ở trang Ứng tuyển.",
 }
 
+// Chat modes configuration
+const CHAT_MODES = [
+  {
+    mode: "club" as const,
+    label: "Hỏi về câu lạc bộ",
+    description: "Thông tin về FTC, hoạt động, cách tham gia",
+    icon: Users,
+    color: "bg-blue-500"
+  },
+  {
+    mode: "industry" as const,
+    label: "Hỏi về ngành",
+    description: "Kiến thức FinTech, blockchain, ngân hàng số",
+    icon: BookOpen,
+    color: "bg-green-500"
+  }
+]
+
 export default function ChatbotPage() {
   const [messages, setMessages] = useState<Message[]>([
     {
@@ -54,6 +73,7 @@ export default function ChatbotPage() {
   const [inputValue, setInputValue] = useState("")
   const [isTyping, setIsTyping] = useState(false)
   const [hasMounted, setHasMounted] = useState(false)
+  const [selectedMode, setSelectedMode] = useState<"club" | "industry">("club")
   const messagesEndRef = useRef<HTMLDivElement>(null)
   const isSendingRef = useRef(false)
   const lastSentRef = useRef<{ text: string; time: number }>({ text: "", time: 0 })
@@ -70,8 +90,8 @@ export default function ChatbotPage() {
     setHasMounted(true)
   }, [])
 
-  const handleSendMessage = async () => {
-    const text = inputValue.trim()
+  const handleSendMessage = async (questionText?: string, forceMode?: "club" | "industry") => {
+    const text = questionText || inputValue.trim()
     if (!text) return
 
     if (isSendingRef.current) return
@@ -80,11 +100,15 @@ export default function ChatbotPage() {
     lastSentRef.current = { text, time: now }
     isSendingRef.current = true
 
+    // Determine mode: suggested questions always use club mode, otherwise use selected mode
+    const mode = forceMode || (suggestedQuestions.includes(text) ? "club" : selectedMode)
+
     const userMessage: Message = {
       id: Date.now().toString(),
       content: text,
       sender: "user",
       timestamp: new Date(),
+      mode: mode
     }
 
     const history = messages.map((m) => ({
@@ -106,7 +130,7 @@ export default function ChatbotPage() {
           res = await fetch(url, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ message: text, history }),
+            body: JSON.stringify({ message: text, history, mode }),
           })
           if (!res.ok) {
             const txt = await res.text().catch(() => null)
@@ -142,6 +166,7 @@ export default function ChatbotPage() {
         sender: "bot",
         timestamp: new Date(),
         source,
+        mode: mode
       }
 
       setMessages((prev) => [...prev, botMessage])
@@ -162,6 +187,10 @@ export default function ChatbotPage() {
 
   const handleSuggestedQuestion = (question: string) => {
     setInputValue(question)
+    // Auto-send suggested questions with club mode
+    setTimeout(() => {
+      handleSendMessage(question, "club")
+    }, 100)
   }
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -258,27 +287,57 @@ export default function ChatbotPage() {
           <div className="col-start-2 col-span-1 row-span-2">
             <Card className="h-full min-h-[70vh] flex flex-col bg-card/20 backdrop-blur-sm border-accent/20 ring-1 ring-accent/10 hover:border-accent/40 transition-all duration-500 hover:glow">
               <CardHeader className="border-b border-accent/20">
-                <div className="flex items-center space-x-3">
-                  <Avatar>
-                    <AvatarImage src="/ai-chatbot-avatar.png" alt="AI Assistant" />
-                    <AvatarFallback className="bg-primary text-primary-foreground">
-                      <Bot className="h-5 w-5" />
-                    </AvatarFallback>
-                  </Avatar>
-                  <div>
-                    <CardTitle className="text-lg">FTC AI Assistant</CardTitle>
-                    <div className="flex items-center gap-4 mt-1">
-                      <p className="text-sm text-muted-foreground flex items-center gap-2">
-                        Luôn sẵn sàng hỗ trợ bạn
-                        <span className="inline-flex items-center text-xs">
-                          <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse mr-1" />
-                          Online
-                        </span>
-                      </p>
-
-
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center space-x-3">
+                    <Avatar>
+                      <AvatarImage src="/ai-chatbot-avatar.png" alt="AI Assistant" />
+                      <AvatarFallback className="bg-primary text-primary-foreground">
+                        <Bot className="h-5 w-5" />
+                      </AvatarFallback>
+                    </Avatar>
+                    <div>
+                      <CardTitle className="text-lg">FTC AI Assistant</CardTitle>
+                      <div className="flex items-center gap-4 mt-1">
+                        <p className="text-sm text-muted-foreground flex items-center gap-2">
+                          Luôn sẵn sàng hỗ trợ bạn
+                          <span className="inline-flex items-center text-xs">
+                            <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse mr-1" />
+                            Online
+                          </span>
+                        </p>
+                      </div>
                     </div>
                   </div>
+                  
+                  {/* Mode Selector */}
+                  <div className="flex gap-2">
+                    {CHAT_MODES.map((modeConfig) => {
+                      const Icon = modeConfig.icon
+                      return (
+                        <Button
+                          key={modeConfig.mode}
+                          variant={selectedMode === modeConfig.mode ? "default" : "outline"}
+                          size="sm"
+                          onClick={() => setSelectedMode(modeConfig.mode)}
+                          className={`flex items-center gap-2 transition-all duration-200 ${
+                            selectedMode === modeConfig.mode 
+                              ? `${modeConfig.color} text-white hover:opacity-90` 
+                              : "hover:bg-accent/20"
+                          }`}
+                        >
+                          <Icon className="h-4 w-4" />
+                          <span className="hidden sm:inline">{modeConfig.label}</span>
+                        </Button>
+                      )
+                    })}
+                  </div>
+                </div>
+                
+                {/* Mode Description */}
+                <div className="mt-3 p-2 bg-accent/10 rounded-lg">
+                  <p className="text-xs text-muted-foreground">
+                    <strong>Chế độ hiện tại:</strong> {CHAT_MODES.find(m => m.mode === selectedMode)?.description}
+                  </p>
                 </div>
               </CardHeader>
 
@@ -297,22 +356,41 @@ export default function ChatbotPage() {
                           </AvatarFallback>
                         </Avatar>
                       )}
-                      <div
-                        className={`rounded-2xl px-4 py-3 overflow-hidden break-words ${
-                          message.sender === "user"
-                            ? "bg-primary text-primary-foreground glow"
-                            : "bg-secondary/20 text-foreground border border-accent/20"
-                        }`}
-                        dangerouslySetInnerHTML={{ __html: formatMessageContent(message.content) }}
-                      />
-                      <p className="text-xs opacity-70 mt-1">
-                        {hasMounted
-                          ? message.timestamp.toLocaleTimeString("vi-VN", {
-                              hour: "2-digit",
-                              minute: "2-digit",
-                            })
-                          : ""}
-                      </p>
+                      <div className="flex flex-col">
+                        <div
+                          className={`rounded-2xl px-4 py-3 overflow-hidden break-words ${
+                            message.sender === "user"
+                              ? "bg-primary text-primary-foreground glow"
+                              : "bg-secondary/20 text-foreground border border-accent/20"
+                          }`}
+                          dangerouslySetInnerHTML={{ __html: formatMessageContent(message.content) }}
+                        />
+                        <div className="flex items-center justify-between mt-1">
+                          <p className="text-xs opacity-70">
+                            {hasMounted
+                              ? message.timestamp.toLocaleTimeString("vi-VN", {
+                                  hour: "2-digit",
+                                  minute: "2-digit",
+                                })
+                              : ""}
+                          </p>
+                          {message.mode && (
+                            <div className="flex items-center gap-1 text-xs opacity-70">
+                              {message.mode === "club" ? (
+                                <>
+                                  <Users className="h-3 w-3" />
+                                  <span>CLB</span>
+                                </>
+                              ) : (
+                                <>
+                                  <BookOpen className="h-3 w-3" />
+                                  <span>Ngành</span>
+                                </>
+                              )}
+                            </div>
+                          )}
+                        </div>
+                      </div>
                       {message.sender === "user" && (
                         <Avatar className="w-8 h-8">
                           <AvatarFallback className="bg-accent text-accent-foreground">
@@ -373,6 +451,9 @@ export default function ChatbotPage() {
                   <HelpCircle className="h-5 w-5 mr-2" />
                   Câu hỏi gợi ý
                 </CardTitle>
+                <p className="text-xs text-muted-foreground mt-1">
+                  💡 Tự động dùng chế độ "Hỏi về câu lạc bộ"
+                </p>
               </CardHeader>
               <CardContent className="space-y-2 flex-1 overflow-y-auto">
                 {suggestedQuestions.map((question, index) => (
