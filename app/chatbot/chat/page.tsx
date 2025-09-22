@@ -6,7 +6,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { Send, Bot, User, Sparkles, MessageSquare, HelpCircle, Zap, Users, BookOpen } from "lucide-react"
+import { Send, Bot, User, Sparkles, MessageSquare, HelpCircle, Zap } from "lucide-react"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import { Label } from "@/components/ui/label"
 import { getDefaultWelcomeMessage, CONTACT_EMAIL, FANPAGE_URL } from "@/lib/club-faq"
@@ -17,7 +17,6 @@ interface Message {
   sender: "user" | "bot"
   timestamp: Date
   source?: string
-  mode?: "club" | "industry"
 }
 
 const suggestedQuestions = [
@@ -43,24 +42,6 @@ const suggestionAnswers: Record<string, string> = {
     "Cần tinh thần chủ động học, kỹ năng cơ bản về công nghệ/kinh tế tùy vị trí; biết Git/Excel/Python/Thiết kế là lợi thế. Đọc kỹ mô tả ở trang Ứng tuyển.",
 }
 
-// Chat modes configuration
-const CHAT_MODES = [
-  {
-    mode: "club" as const,
-    label: "Hỏi về câu lạc bộ",
-    description: "Thông tin về FTC, hoạt động, cách tham gia",
-    icon: Users,
-    color: "bg-blue-500"
-  },
-  {
-    mode: "industry" as const,
-    label: "Hỏi về ngành",
-    description: "Kiến thức FinTech, blockchain, ngân hàng số",
-    icon: BookOpen,
-    color: "bg-green-500"
-  }
-]
-
 export default function ChatbotPage() {
   const [messages, setMessages] = useState<Message[]>([
     {
@@ -72,15 +53,8 @@ export default function ChatbotPage() {
   ])
   const [inputValue, setInputValue] = useState("")
   const [isTyping, setIsTyping] = useState(false)
+  const [mode, setMode] = useState<"club" | "industry">("club")
   const [hasMounted, setHasMounted] = useState(false)
-  const [selectedMode, setSelectedMode] = useState<"club" | "industry">("club")
-  const [showModeChangeNotification, setShowModeChangeNotification] = useState(false)
-
-  const handleModeChange = (newMode: "club" | "industry") => {
-    setSelectedMode(newMode)
-    setShowModeChangeNotification(true)
-    setTimeout(() => setShowModeChangeNotification(false), 3000)
-  }
   const messagesEndRef = useRef<HTMLDivElement>(null)
   const isSendingRef = useRef(false)
   const lastSentRef = useRef<{ text: string; time: number }>({ text: "", time: 0 })
@@ -97,8 +71,8 @@ export default function ChatbotPage() {
     setHasMounted(true)
   }, [])
 
-  const handleSendMessage = async (questionText?: string, forceMode?: "club" | "industry") => {
-    const text = questionText || inputValue.trim()
+  const handleSendMessage = async () => {
+    const text = inputValue.trim()
     if (!text) return
 
     if (isSendingRef.current) return
@@ -107,15 +81,11 @@ export default function ChatbotPage() {
     lastSentRef.current = { text, time: now }
     isSendingRef.current = true
 
-    // Determine mode: suggested questions always use club mode, otherwise use selected mode
-    const mode = forceMode || (suggestedQuestions.includes(text) ? "club" : selectedMode)
-
     const userMessage: Message = {
       id: Date.now().toString(),
       content: text,
       sender: "user",
       timestamp: new Date(),
-      mode: mode
     }
 
     const history = messages.map((m) => ({
@@ -173,7 +143,6 @@ export default function ChatbotPage() {
         sender: "bot",
         timestamp: new Date(),
         source,
-        mode: mode
       }
 
       setMessages((prev) => [...prev, botMessage])
@@ -193,11 +162,13 @@ export default function ChatbotPage() {
   }
 
   const handleSuggestedQuestion = (question: string) => {
+    // Suggested questions always use Club mode and auto-send
+    setMode("club")
     setInputValue(question)
-    // Auto-send suggested questions with club mode
+    // ensure input state is set before sending
     setTimeout(() => {
-      handleSendMessage(question, "club")
-    }, 100)
+      handleSendMessage()
+    }, 50)
   }
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -294,85 +265,29 @@ export default function ChatbotPage() {
           <div className="col-start-2 col-span-1 row-span-2">
             <Card className="h-full min-h-[70vh] flex flex-col bg-card/20 backdrop-blur-sm border-accent/20 ring-1 ring-accent/10 hover:border-accent/40 transition-all duration-500 hover:glow">
               <CardHeader className="border-b border-accent/20">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center space-x-3">
-                    <Avatar>
-                      <AvatarImage src="/ai-chatbot-avatar.png" alt="AI Assistant" />
-                      <AvatarFallback className="bg-primary text-primary-foreground">
-                        <Bot className="h-5 w-5" />
-                      </AvatarFallback>
-                    </Avatar>
-                    <div>
-                      <CardTitle className="text-lg">FTC AI Assistant</CardTitle>
-                      <div className="flex items-center gap-4 mt-1">
-                        <p className="text-sm text-muted-foreground flex items-center gap-2">
-                          Luôn sẵn sàng hỗ trợ bạn
-                          <span className="inline-flex items-center text-xs">
-                            <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse mr-1" />
-                            Online
-                          </span>
-                        </p>
-                      </div>
+                <div className="flex items-center space-x-3">
+                  <Avatar>
+                    <AvatarImage src="/ai-chatbot-avatar.png" alt="AI Assistant" />
+                    <AvatarFallback className="bg-primary text-primary-foreground">
+                      <Bot className="h-5 w-5" />
+                    </AvatarFallback>
+                  </Avatar>
+                  <div>
+                    <CardTitle className="text-lg">FTC AI Assistant</CardTitle>
+                    <div className="flex items-center gap-4 mt-1">
+                      <p className="text-sm text-muted-foreground flex items-center gap-2">
+                        Luôn sẵn sàng hỗ trợ bạn
+                        <span className="inline-flex items-center text-xs">
+                          <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse mr-1" />
+                          Online
+                        </span>
+                      </p>
+
+
                     </div>
                   </div>
-                  
-                  {/* Mode Selector */}
-                  <div className="flex gap-1 bg-accent/10 p-1 rounded-lg">
-                    {CHAT_MODES.map((modeConfig) => {
-                      const Icon = modeConfig.icon
-                      const isSelected = selectedMode === modeConfig.mode
-                      return (
-                        <Button
-                          key={modeConfig.mode}
-                          variant={isSelected ? "default" : "ghost"}
-                          size="sm"
-                          onClick={() => handleModeChange(modeConfig.mode)}
-                          className={`flex items-center gap-2 transition-all duration-300 ${
-                            isSelected 
-                              ? `${modeConfig.color} text-white shadow-lg scale-105` 
-                              : "hover:bg-accent/30 text-muted-foreground hover:text-foreground"
-                          }`}
-                        >
-                          <Icon className="h-4 w-4" />
-                          <span className="hidden sm:inline font-medium">{modeConfig.label}</span>
-                          {isSelected && (
-                            <div className="w-2 h-2 bg-white rounded-full animate-pulse" />
-                          )}
-                        </Button>
-                      )
-                    })}
-                  </div>
-                </div>
-                
-                {/* Mode Description */}
-                <div className="mt-3 p-3 bg-gradient-to-r from-accent/20 to-primary/20 rounded-lg border border-accent/30">
-                  <div className="flex items-center gap-2 mb-1">
-                    {selectedMode === "club" ? (
-                      <Users className="h-4 w-4 text-blue-500" />
-                    ) : (
-                      <BookOpen className="h-4 w-4 text-green-500" />
-                    )}
-                    <span className="text-sm font-semibold text-foreground">
-                      Chế độ: {CHAT_MODES.find(m => m.mode === selectedMode)?.label}
-                    </span>
-                  </div>
-                  <p className="text-xs text-muted-foreground">
-                    {CHAT_MODES.find(m => m.mode === selectedMode)?.description}
-                  </p>
                 </div>
               </CardHeader>
-
-              {/* Mode Change Notification */}
-              {showModeChangeNotification && (
-                <div className="mx-4 mb-2 p-2 bg-gradient-to-r from-blue-500/20 to-green-500/20 border border-accent/30 rounded-lg animate-in slide-in-from-top-2 duration-300">
-                  <div className="flex items-center gap-2 text-sm">
-                    <div className="w-2 h-2 bg-accent rounded-full animate-pulse" />
-                    <span className="text-muted-foreground">
-                      Đã chuyển sang chế độ: <strong>{CHAT_MODES.find(m => m.mode === selectedMode)?.label}</strong>
-                    </span>
-                  </div>
-                </div>
-              )}
 
               {/* Messages */}
               <CardContent className="flex-1 overflow-y-auto p-4 space-y-4 max-h-[65vh]">
@@ -389,41 +304,22 @@ export default function ChatbotPage() {
                           </AvatarFallback>
                         </Avatar>
                       )}
-                      <div className="flex flex-col">
-                        <div
-                          className={`rounded-2xl px-4 py-3 overflow-hidden break-words ${
-                            message.sender === "user"
-                              ? "bg-primary text-primary-foreground glow"
-                              : "bg-secondary/20 text-foreground border border-accent/20"
-                          }`}
-                          dangerouslySetInnerHTML={{ __html: formatMessageContent(message.content) }}
-                        />
-                        <div className="flex items-center justify-between mt-1">
-                          <p className="text-xs opacity-70">
-                            {hasMounted
-                              ? message.timestamp.toLocaleTimeString("vi-VN", {
-                                  hour: "2-digit",
-                                  minute: "2-digit",
-                                })
-                              : ""}
-                          </p>
-                          {message.mode && (
-                            <div className="flex items-center gap-1 text-xs opacity-70">
-                              {message.mode === "club" ? (
-                                <>
-                                  <Users className="h-3 w-3" />
-                                  <span>CLB</span>
-                                </>
-                              ) : (
-                                <>
-                                  <BookOpen className="h-3 w-3" />
-                                  <span>Ngành</span>
-                                </>
-                              )}
-                            </div>
-                          )}
-                        </div>
-                      </div>
+                      <div
+                        className={`rounded-2xl px-4 py-3 overflow-hidden break-words ${
+                          message.sender === "user"
+                            ? "bg-primary text-primary-foreground glow"
+                            : "bg-secondary/20 text-foreground border border-accent/20"
+                        }`}
+                        dangerouslySetInnerHTML={{ __html: formatMessageContent(message.content) }}
+                      />
+                      <p className="text-xs opacity-70 mt-1">
+                        {hasMounted
+                          ? message.timestamp.toLocaleTimeString("vi-VN", {
+                              hour: "2-digit",
+                              minute: "2-digit",
+                            })
+                          : ""}
+                      </p>
                       {message.sender === "user" && (
                         <Avatar className="w-8 h-8">
                           <AvatarFallback className="bg-accent text-accent-foreground">
@@ -459,31 +355,36 @@ export default function ChatbotPage() {
 
               {/* Input */}
               <div className="border-t border-accent/20 pt-4 px-4 pb-0 bg-card/10 backdrop-blur-sm sticky bottom-0 mt-auto">
-                {/* Mode Indicator for Input */}
-                <div className="mb-2 flex items-center gap-2 text-xs text-muted-foreground">
-                  {selectedMode === "club" ? (
-                    <>
-                      <Users className="h-3 w-3 text-blue-500" />
-                      <span>Chế độ CLB - Trả lời về thông tin câu lạc bộ</span>
-                    </>
-                  ) : (
-                    <>
-                      <BookOpen className="h-3 w-3 text-green-500" />
-                      <span>Chế độ Ngành - Trả lời về kiến thức FinTech</span>
-                    </>
-                  )}
+                {/* Mode Selector */}
+                <div className="flex items-center justify-between mb-3">
+                  <div className="flex items-center gap-4">
+                    <span className="text-sm text-muted-foreground">Chế độ:</span>
+                    <div className="flex items-center gap-2">
+                      <Button
+                        type="button"
+                        variant={mode === "club" ? "default" : "outline"}
+                        onClick={() => setMode("club")}
+                        className="h-8 px-3 text-xs"
+                      >
+                        Hỏi về câu lạc bộ
+                      </Button>
+                      <Button
+                        type="button"
+                        variant={mode === "industry" ? "default" : "outline"}
+                        onClick={() => setMode("industry")}
+                        className="h-8 px-3 text-xs"
+                      >
+                        Hỏi về ngành
+                      </Button>
+                    </div>
+                  </div>
                 </div>
-                
                 <div className="flex space-x-2">
                   <Input
                     value={inputValue}
                     onChange={(e) => setInputValue(e.target.value)}
                     onKeyDown={handleKeyDown}
-                    placeholder={
-                      selectedMode === "club" 
-                        ? "Hỏi về câu lạc bộ, hoạt động, cách tham gia..." 
-                        : "Hỏi về FinTech, blockchain, ngân hàng số..."
-                    }
+                    placeholder="Nhập câu hỏi của bạn..."
                     className="flex-1 w-full"
                   />
                   <Button onClick={handleSendMessage} disabled={!inputValue.trim()} className="glow">
@@ -503,36 +404,17 @@ export default function ChatbotPage() {
                   <HelpCircle className="h-5 w-5 mr-2" />
                   Câu hỏi gợi ý
                 </CardTitle>
-                <div className="mt-2 p-2 bg-blue-500/10 border border-blue-500/20 rounded-lg">
-                  <div className="flex items-center gap-2 text-sm">
-                    <Users className="h-4 w-4 text-blue-500" />
-                    <span className="text-blue-700 font-medium">Tự động dùng chế độ CLB</span>
-                  </div>
-                  <p className="text-xs text-blue-600 mt-1">
-                    Các câu hỏi này sẽ luôn trả lời về thông tin câu lạc bộ
-                  </p>
-                </div>
               </CardHeader>
               <CardContent className="space-y-2 flex-1 overflow-y-auto">
                 {suggestedQuestions.map((question, index) => (
                   <Button
                     key={index}
                     variant="outline"
-                    className="w-full text-left justify-start h-auto p-3 bg-transparent whitespace-normal break-words hover:bg-blue-500/10 hover:border-blue-500/30 transition-all duration-200 group"
+                    className="w-full text-left justify-start h-auto p-3 bg-transparent whitespace-normal break-words"
                     onClick={() => handleSuggestedQuestion(question)}
                   >
-                    <div className="flex items-start gap-3 w-full">
-                      <div className="flex-shrink-0 mt-0.5">
-                        <MessageSquare className="h-4 w-4 text-blue-500 group-hover:text-blue-600" />
-                      </div>
-                      <div className="flex-1 min-w-0">
-                        <span className="text-sm break-words text-left block">{question}</span>
-                        <div className="flex items-center gap-1 mt-1">
-                          <Users className="h-3 w-3 text-blue-400" />
-                          <span className="text-xs text-blue-500">Chế độ CLB</span>
-                        </div>
-                      </div>
-                    </div>
+                    <MessageSquare className="h-4 w-4 mr-2 flex-shrink-0" />
+                    <span className="text-sm break-words">{question}</span>
                   </Button>
                 ))}
               </CardContent>
