@@ -372,7 +372,7 @@ export default function ChatbotPage() {
                 <div className="mt-4 inline-flex items-center gap-2 text-sm text-muted-foreground animate-in slide-in-from-top-2 duration-300">
                   <div className="w-2 h-2 rounded-full bg-primary animate-pulse" />
                   Đã chuyển sang chế độ: <span className="font-semibold text-primary">{CHAT_MODES.find((m) => m.mode === selectedMode)?.label}</span>
-                </div>
+          </div>
               )}
             </div>
           </div>
@@ -427,9 +427,9 @@ export default function ChatbotPage() {
                         </Button>
                       </div>
                     </div>
-                  </div>
-                </div>
-              </div>
+          </div>
+        </div>
+      </div>
 
               {/* Messages với hiệu ứng hiện đại */}
               <div className="space-y-4">
@@ -501,36 +501,3 @@ export default function ChatbotPage() {
     </div>
   )
 }
-
-// CSS Animations cho hiệu ứng hiện đại
-<style jsx global>{`
-  @keyframes float {
-    0%, 100% { transform: translate(0, 0) rotate(0deg); }
-    50% { transform: translate(-20px, 20px) rotate(5deg); }
-  }
-  @keyframes float-reverse {
-    0%, 100% { transform: translate(0, 0) rotate(0deg); }
-    50% { transform: translate(20px, -20px) rotate(-5deg); }
-  }
-  .animate-float {
-    animation: float 20s ease-in-out infinite;
-  }
-  .animate-float-reverse {
-    animation: float-reverse 20s ease-in-out infinite;
-  }
-  @keyframes shimmer {
-    0% { background-position: -200% center; }
-    100% { background-position: 200% center; }
-  }
-  .animate-text-shine {
-    background-size: 200% auto;
-    animation: shimmer 3s linear infinite;
-  }
-  @keyframes pulse-glow {
-    0%, 100% { opacity: 0.5; }
-    50% { opacity: 0.8; }
-  }
-  .animate-pulse-glow {
-    animation: pulse-glow 2s ease-in-out infinite;
-  }
-`}</style>
