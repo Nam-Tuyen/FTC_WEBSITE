@@ -189,6 +189,8 @@ export default function ChatbotPage() {
       .replace(/__(.+?)__/g, "<u>$1</u>")  // Underline
       .replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>")  // Bold
       .replace(/\*(.+?)\*/g, "<em>$1</em>")  // Italic
+      // Convert URLs to clickable links
+      .replace(/(https?:\/\/[^\s<>"{}|\\^`[\]]+)/g, '<a href="$1" target="_blank" rel="noopener noreferrer" class="text-accent hover:underline">$1</a>')
       // Handle the footer link separately
       .replace(/\[Fanpage\]\((https:\/\/www\.facebook\.com\/clbfintechuel)\)/g, '<a href="$1" target="_blank" class="text-accent hover:underline">Fanpage</a>')
 

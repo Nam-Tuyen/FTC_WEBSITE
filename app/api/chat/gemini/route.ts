@@ -8,6 +8,7 @@ export const dynamic = "force-dynamic";
 
 type KBItem = { id?: string; question?: string; answer?: string; content?: string; tags?: string[] };
 type FAQItem = { id?: string; canonical_question?: string; answer: string };
+type HistoryMsg = { role?: string; content?: string };
 
 function normalize(s: string) {
   return (s || "")
@@ -172,9 +173,30 @@ function buildContext(q: string, kb: KBItem[]) {
   return { ids, text };
 }
 
-function systemPrompt(_mode: "kb" | "google") {
-  const advisorRole = "Bạn là cố vấn học tập dành cho tân sinh viên. Hãy giới thiệu ngắn gọn, thân thiện và dễ hiểu về Câu lạc bộ Công nghệ tài chính FTC cùng định hướng ngành học liên quan. Thông tin nền để dùng khi trả lời: FTC trực thuộc Khoa Tài chính và Ngân hàng, Trường Đại học Kinh tế và Luật, ĐHQG-HCM, thành lập tháng 11/2020 dưới sự hướng dẫn của ThS. NCS Phan Huy Tâm. Hoạt động tiêu biểu gồm hội thảo, tọa đàm và chuyên đề về FinTech, dữ liệu, trí tuệ nhân tạo, ngân hàng số, thị trường vốn, quản trị rủi ro; cuộc thi học thuật ATTACKER; chuỗi talkshow và workshop; training nội bộ; tham quan doanh nghiệp như VNG; sự kiện hướng nghiệp Web3 Career Innovation; hoạt động gắn kết cộng đồng FTC Trip. Cơ cấu gồm 5 ban chuyên môn: Học thuật, Sự kiện, Truyền thông, Tài chính cá nhân, Nhân sự (Ban Điều hành giữ vai trò định hướng và phê duyệt, không tính là ban chuyên môn). Cách tham gia: theo dõi Fanpage để cập nhật đợt tuyển và hướng dẫn nộp hồ sơ (https://www.facebook.com/clbfintechuel). Lịch sinh hoạt được công bố trước trên kênh nội bộ và Fanpage theo từng chương trình. Kỹ năng khuyến khích: tinh thần học hỏi, kỷ luật, chủ động; nền tảng Excel, SQL hoặc Python là lợi thế; kỹ năng viết, thuyết trình, làm việc nhóm và quản lý thời gian giúp theo kịp dự án và sự kiện; thiên về sự kiện cần tư duy tổ chức, thiên về truyền thông cần năng lực xây dựng nội dung và thẩm mỹ thị giác. Thành tích: Giấy khen của Ban Cán sự Đoàn ĐHQG-HCM năm học 2024–2025; Top 10 Nhóm 4 Giải thưởng I-STAR TP.HCM. Khi thiếu dữ liệu chi tiết, hãy nói rõ “tài liệu chưa nêu” và hướng người hỏi sang Fanpage. Trả lời bằng tiếng Việt, mạch lạc, không dùng dấu “;” hoặc gạch đầu dòng.";
-  return advisorRole;
+function systemPrompt(mode: "kb" | "google", greetOnce: boolean) {
+  if (mode === "google") {
+    // Ngoài phạm vi FTC: dùng kiến thức tổng quát từ Gemini, không ràng buộc FTC
+    return (
+      "Bạn là trợ lý AI nói tiếng Việt, giọng điệu tự nhiên, xúc tích, thân thiện nhưng không rườm rà. " +
+      (greetOnce ? "Chỉ chào ở tin nhắn đầu tiên nếu người dùng chào trước; về sau trả lời trực tiếp, không mở đầu bằng lời chào. " : "Không mở đầu bằng lời chào. ") +
+      "Nếu câu hỏi yêu cầu kiến thức phổ quát, hãy trả lời trực diện, có cấu trúc mạch lạc, tránh gạch đầu dòng và dấu ';'. " +
+      "Nếu thiếu dữ liệu, nêu rõ còn thiếu thay vì suy đoán."
+    );
+  }
+  // Trong phạm vi FTC: đóng vai cố vấn FTC, nhưng vẫn tránh chào nhiều lần
+  return (
+    "Bạn là cố vấn FTC. Trả lời về Câu lạc bộ Công nghệ tài chính FTC bằng tiếng Việt, tự nhiên, xúc tích, mạch lạc. " +
+    (greetOnce ? "Chỉ chào ở tin đầu tiên; về sau trả lời trực tiếp, không chào lại. " : "Không mở đầu bằng lời chào. ") +
+    "Thông tin nền: FTC trực thuộc Khoa Tài chính và Ngân hàng, Trường ĐH Kinh tế và Luật (ĐHQG-HCM), thành lập 11/2020 (GV hướng dẫn: ThS. NCS Phan Huy Tâm). Hoạt động: hội thảo/tọa đàm FinTech, dữ liệu, AI, ngân hàng số, thị trường vốn, quản trị rủi ro; cuộc thi học thuật ATTACKER; workshop; training nội bộ; tham quan doanh nghiệp (VD: VNG); Web3 Career Innovation; gắn kết cộng đồng FTC Trip. Cơ cấu: 5 ban chuyên môn (Học thuật, Sự kiện, Truyền thông, Tài chính cá nhân, Nhân sự). Cách tham gia: theo dõi Fanpage https://www.facebook.com/clbfintechuel để biết đợt tuyển. Khi thiếu chi tiết, nói \"tài liệu chưa nêu\" và hướng sang Fanpage. Tránh dùng dấu ';' và gạch đầu dòng."
+  );
+}
+
+function isFirstTurn(body: any): boolean {
+  const collect = (arr?: HistoryMsg[]) =>
+    Array.isArray(arr) ? arr.filter((m) => (m?.role || "").toLowerCase() !== "system" && !!m?.content).length : 0;
+  const histMsgs = (Array.isArray(body?.history) ? body.history : Array.isArray(body?.messages) ? body.messages : []) as HistoryMsg[];
+  const assistantCount = histMsgs.filter((m) => (m?.role || "").toLowerCase() === "assistant" || (m?.role || "").toLowerCase() === "model").length;
+  return assistantCount === 0; // chưa có trả lời từ bot trước đó
 }
 
 function extractUserQuestion(body: any): string {
@@ -244,11 +266,12 @@ export async function POST(req: NextRequest) {
   }
   const { ids, text } = buildContext(userQ, kb);
   const mode: "kb" | "google" = text ? "kb" : "google";
+  const greetOnce = isFirstTurn(body);
 
   const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY as string);
   const model = genAI.getGenerativeModel({
     model: process.env.GEMINI_MODEL ?? "gemini-1.5-flash",
-    systemInstruction: systemPrompt(mode),
+    systemInstruction: systemPrompt(mode, greetOnce),
     safetySettings: [
       { category: HarmCategory.HARM_CATEGORY_HATE_SPEECH, threshold: HarmBlockThreshold.BLOCK_NONE },
       { category: HarmCategory.HARM_CATEGORY_HARASSMENT, threshold: HarmBlockThreshold.BLOCK_NONE },
@@ -259,8 +282,8 @@ export async function POST(req: NextRequest) {
   });
 
   const userMsg = text
-    ? `CÂU HỎI: ${userQ}\n\nNGỮ CẢNH (CONTEXT):\n${text}\n\nTRẢ LỜI: Bằng tiếng Việt, mạch lạc, không dùng dấu ";" và không dùng gạch đầu dòng.`
-    : `CÂU HỎI: ${userQ}\n\nTRẢ LỜI: Bằng tiếng Việt, mạch lạc, không dùng dấu ";" và không dùng gạch đầu dòng.`;
+    ? `CÂU HỎI: ${userQ}\n\nNGỮ CẢNH (CONTEXT):\n${text}\n\nYÊU CẦU PHONG CÁCH: Trả lời tự nhiên, trực diện, không chào lại trừ khi đây là tin nhắn đầu. Không dùng dấu ";" và không dùng gạch đầu dòng.`
+    : `CÂU HỎI: ${userQ}\n\nYÊU CẦU PHONG CÁCH: Trả lời tự nhiên, trực diện, không chào lại trừ khi đây là tin nhắn đầu. Không dùng dấu ";" và không dùng gạch đầu dòng.`;
 
   try {
     const result = await model.generateContent({

@@ -151,7 +151,10 @@ export function FloatingChatbot() {
   function formatMessageContent(text: string) {
     if (!text) return ""
     const escaped = escapeHtml(text)
-    let out = escaped.replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>")
+    let out = escaped
+      .replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>")
+      // Convert URLs to clickable links
+      .replace(/(https?:\/\/[^\s<>"{}|\\^`[\]]+)/g, '<a href="$1" target="_blank" rel="noopener noreferrer" class="text-accent hover:underline">$1</a>')
     const lines = out.split(/\r?\n/)
     let inList = false
     let res = ""

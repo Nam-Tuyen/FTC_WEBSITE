@@ -16,6 +16,7 @@ export type IndustryDomain =
 
 export const CONTACT_EMAIL = 'clbcongnghetaichinh@st.uel.edu.vn';
 export const FANPAGE_URL = 'https://www.facebook.com/clbfintechuel';
+export const INSTAGRAM_URL = 'https://www.instagram.com/ftcers/';
 
 // ===== Utils =====
 export function normalizeVi(s: string) {
@@ -77,7 +78,9 @@ liên kết doanh nghiệp và tham quan đơn vị để bạn *học sâu – 
     patterns: ['tham gia', 'gia nhap', 'dang ky', 'apply', 'ung tuyen', 'cach tham gia', 'quy trinh tham gia', 'join'],
     answer:
     `📝 **Cách tham gia**:
-1) Theo dõi Fanpage và Instagram của FTC để cập nhật thời điểm mở đơn tuyển và hướng dẫn chi tiết (link sẽ được cập nhật trên các kênh chính thức).
+1) Theo dõi Fanpage và Instagram của FTC để cập nhật thời điểm mở đơn tuyển và hướng dẫn chi tiết:
+   • Fanpage: ${FANPAGE_URL}
+   • Instagram: ${INSTAGRAM_URL}
 2) Điền đơn đăng ký ở trang *Ứng tuyển* khi có đợt tuyển;
 3) Chọn ban phù hợp (Học thuật, Sự kiện, Truyền thông, Tài chính cá nhân, Nhân sự);
 4) Phỏng vấn ngắn; 5) Buổi làm quen & bắt đầu hoạt động.
@@ -159,12 +162,13 @@ Thành viên có sản phẩm/dự án & đóng góp nổi bật sẽ được �
 
   // 11) Liên hệ
   {
-    patterns: ['lien he', 'hotline', 'email', 'facebook', 'fanpage', 'contact', 'phone'],
+    patterns: ['lien he', 'hotline', 'email', 'facebook', 'fanpage', 'contact', 'phone', 'instagram'],
     answer:
-`📮 **Liên hệ**:
+    `📮 **Liên hệ**:
 • Email: ${CONTACT_EMAIL}
 • Fanpage: ${FANPAGE_URL}
-Bạn có thể nhắn trực tiếp fanpage “FTC – Câu lạc bộ Công nghệ – Tài chính UEL” hoặc dùng email trên.`,
+• Instagram: ${INSTAGRAM_URL}
+Bạn có thể nhắn trực tiếp fanpage "FTC – Câu lạc bộ Công nghệ – Tài chính UEL" hoặc dùng email trên.`,
   },
 ];
 
@@ -248,6 +252,8 @@ Tôi có thể giúp bạn:
 
 📘 Fanpage: ${FANPAGE_URL}
 
+📸 Instagram: ${INSTAGRAM_URL}
+
 Nếu có nội dung nào chưa rõ hoặc cần thêm thông tin, vui lòng liên hệ Câu lạc bộ qua Fanpage chính thức để được giải đáp: ${FANPAGE_URL}`
   );
 }
@@ -265,11 +271,12 @@ export function getBotFallbackAnswer(raw: string) {
   }
 
   return (
-`Mình đã nhận câu hỏi: "${raw}". Hiện chưa có thông tin chi tiết trong FAQ.
+    `Mình đã nhận câu hỏi: "${raw}". Hiện chưa có thông tin chi tiết trong FAQ.
 
 Bạn có thể:
 • Gửi mail: ${CONTACT_EMAIL}
 • Nhắn fanpage: ${FANPAGE_URL}
+• Theo dõi Instagram: ${INSTAGRAM_URL}
 • Thử đặt câu hỏi khác về thành viên, lịch sinh hoạt, học thuật, sự kiện, truyền thông, tài chính cá nhân, nhân sự…
 
 Nếu có nội dung nào chưa rõ hoặc cần thêm thông tin, vui lòng liên hệ Câu lạc bộ qua Fanpage chính thức để được giải đáp: ${FANPAGE_URL}`
@@ -302,7 +309,7 @@ export function buildClubContextBlock(userQuestion: string) {
     'CLB Công nghệ – Tài chính (FTC) – trực thuộc Khoa Tài chính – Ngân hàng, UEL.',
     'Tầm nhìn: Học sâu – làm thật – kết nối rộng trong FinTech.',
     'Sứ mệnh: Xây cộng đồng sinh viên yêu công nghệ tài chính, thực chiến dự án, gắn kết doanh nghiệp.',
-    `Liên hệ: ${CONTACT_EMAIL}; Fanpage: ${FANPAGE_URL}`,
+    `Liên hệ: ${CONTACT_EMAIL}; Fanpage: ${FANPAGE_URL}; Instagram: ${INSTAGRAM_URL}`,
   ].map(norm);
 
   const activities = [
