@@ -9,14 +9,14 @@ import { cn, formatTime, isTypingMessage } from '../../lib'
 function renderMessageContent(content: string) {
   // Process markdown formatting and links
   let processedContent = content
-    // Convert **bold** to <strong>
-    .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
-    // Convert *italic* to <em>
-    .replace(/\*(.*?)\*/g, '<em>$1</em>')
+    // Convert **bold** to <strong> (process bold first to avoid conflicts)
+    .replace(/\*\*(.*?)\*\*/g, '<strong class="font-bold">$1</strong>')
+    // Convert *italic* to <em> (but not if already inside **)
+    .replace(/(?<!\*)\*([^*]+)\*(?!\*)/g, '<em class="italic">$1</em>')
     // Convert [text](url) to clickable links
-    .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer" class="text-blue-400 hover:text-blue-300 underline">$1</a>')
-    // Convert plain URLs to clickable links
-    .replace(/(https?:\/\/[^\s]+)/g, '<a href="$1" target="_blank" rel="noopener noreferrer" class="text-blue-400 hover:text-blue-300 underline">$1</a>')
+    .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer" class="text-blue-400 hover:text-blue-300 underline transition-colors">$1</a>')
+    // Convert plain URLs to clickable links (but not if already in [text](url) format)
+    .replace(/(?<!\]\()(https?:\/\/[^\s\)]+)(?!\))/g, '<a href="$1" target="_blank" rel="noopener noreferrer" class="text-blue-400 hover:text-blue-300 underline transition-colors">$1</a>')
     // Convert newlines to <br>
     .replace(/\n/g, '<br/>')
   

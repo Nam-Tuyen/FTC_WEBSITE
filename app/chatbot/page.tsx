@@ -274,11 +274,21 @@ export default function ChatbotPage() {
   const [messages, setMessages] = useState<ChatMessage[]>([])
   const [isSending, setIsSending] = useState(false)
   const [showModeChangeNotification, setShowModeChangeNotification] = useState(false)
-  const messagesEndRef = useRef<HTMLDivElement>(null)
 
+  // Auto-scroll to bottom when new messages arrive (smooth scroll)
   useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })
+    const chatArea = document.getElementById("chat-scroll-area")
+    if (chatArea) {
+      // Smooth scroll to bottom without jumping
+      setTimeout(() => {
+        chatArea.scrollTo({
+          top: chatArea.scrollHeight,
+          behavior: 'smooth'
+        })
+      }, 100)
+    }
   }, [messages])
+  const messagesEndRef = useRef<HTMLDivElement>(null)
 
   const dynamicPlaceholder = useMemo(
     () => (selectedMode === "club" ? "Hỏi về FTC, hoạt động, cách tham gia…" : "Hỏi về FinTech, blockchain, ngân hàng số…"),
@@ -354,10 +364,12 @@ export default function ChatbotPage() {
           </div>
 
           <div className="relative max-w-5xl mx-auto text-center space-y-8">
-            {/* Title với hiệu ứng shimmer */}
+            {/* Title với hiệu ứng nhấp nháy hiện đại */}
             <h1 className="relative text-4xl sm:text-5xl lg:text-6xl font-extrabold">
               <span className="absolute inset-0 bg-gradient-to-r from-[#003663] to-[#1a5490] opacity-50 blur-2xl animate-pulse"></span>
-              <span className={`relative ${BRAND.text.gradient} animate-text-shine`}>
+              <span className={`relative ${BRAND.text.gradient} animate-bounce`} style={{
+                animation: 'blink 1.5s infinite, gradient-shift 2s ease-in-out infinite, bounce 2s infinite'
+              }}>
                 FTC CHATBOT
               </span>
             </h1>
@@ -422,9 +434,9 @@ export default function ChatbotPage() {
         {/* Main Content với glassmorphism design */}
         <section className="py-12 px-4 sm:px-6 lg:px-8">
           <div className="max-w-6xl mx-auto space-y-8">
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-              {/* Chat Area (8 columns) */}
-              <div className="lg:col-span-8">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+              {/* Chat Area (9 columns - lớn hơn) */}
+              <div className="lg:col-span-9">
                 {/* Messages Container */}
                 <div className={`relative flex flex-col h-[600px] sm:h-[700px] rounded-3xl ${BRAND.borders.glow} border ${BRAND.surfaces.glass} overflow-hidden ${BRAND.shadows.glow}`}>
                   {/* Header cố định */}
@@ -441,8 +453,12 @@ export default function ChatbotPage() {
                     <div className="text-sm text-white/70">🟢 Online</div>
                   </div>
 
-                  {/* Vùng messages cuộn bên trong */}
-                  <div className={`flex-1 overflow-y-auto px-6 py-4 ${BRAND.gradients.surface}`} id="chat-scroll-area">
+                  {/* Vùng messages cuộn bên trong với scroll behavior tối ưu */}
+                  <div className={`flex-1 overflow-y-auto px-6 py-4 ${BRAND.gradients.surface} scroll-smooth`} id="chat-scroll-area" style={{
+                    scrollBehavior: 'smooth',
+                    scrollbarWidth: 'thin',
+                    scrollbarColor: `${BRAND.primary} transparent`
+                  }}>
                     {/* Welcome Message */}
                     {messages.length === 0 && (
                       <div className="flex flex-col items-center justify-center h-full text-center py-12">
@@ -534,8 +550,8 @@ export default function ChatbotPage() {
                 </div>
               </div>
 
-              {/* Sidebar với hiệu ứng hiện đại */}
-              <div className="lg:col-span-4 flex flex-col gap-6 min-h-[600px]">
+              {/* Sidebar với hiệu ứng hiện đại (3 columns - nhỏ hơn) */}
+              <div className="lg:col-span-3 flex flex-col gap-6 min-h-[600px]">
                 <div className={`rounded-3xl ${BRAND.shadows.xl} overflow-hidden ${BRAND.borders.glow} border ${BRAND.surfaces.card} flex-1 flex flex-col`}>
                   <div className={`px-6 py-4 ${BRAND.borders.light} border-b ${BRAND.gradients.ambient}`}>
                     <div className="flex items-center gap-3">
