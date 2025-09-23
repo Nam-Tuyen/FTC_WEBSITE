@@ -29,6 +29,7 @@ type ChatMessage = { id: string; role: "user" | "assistant"; content: string; mo
 
 // --- ENV & constants ---
 const NEXT_PUBLIC_FTC_WEBSITE = process.env.NEXT_PUBLIC_FTC_WEBSITE || ""
+const NEXT_PUBLIC_BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL || ""
 const FTC_FANPAGE = "https://www.facebook.com/clbfintechuel"
 
 const SUGGESTED_QUESTIONS: string[] = [
@@ -111,26 +112,36 @@ async function askServer({
   question: string
   history?: Array<{ role: "user" | "assistant"; content: string }>
 }) {
-  try {
-    const res = await fetch("/api/chat/gemini", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        message: question,
-        history: history || [],
-      }),
-    })
-    
-    if (!res.ok) {
-      throw new Error(`HTTP ${res.status}: ${res.statusText}`)
+  const endpoints = [
+    "/api/chat/gemini",
+    NEXT_PUBLIC_BACKEND_URL ? `${NEXT_PUBLIC_BACKEND_URL}/chat` : null,
+  ].filter(Boolean) as string[]
+
+  let lastErr: any = null
+  for (const url of endpoints) {
+    try {
+      const res = await fetch(url, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          mode,
+          message: question,
+          messages: [...(history || []), { role: "user", content: question }],
+        }),
+      })
+      if (!res.ok) {
+        const txt = await res.text().catch(() => null)
+        console.warn("Server returned non-ok", url, res.status, txt)
+        throw new Error(`Server ${res.status}: ${txt ?? res.statusText}`)
+      }
+      const data = await res.json().catch(() => ({}))
+      return data.reply || data.response || data.text || data.answer || ""
+    } catch (err) {
+      lastErr = err
     }
-    
-    const data = await res.json()
-    return data.reply || data.response || data.text || data.answer || "Xin lỗi, không thể tạo câu trả lời."
-  } catch (error) {
-    console.error("API Error:", error)
-    return "Xin lỗi, có lỗi xảy ra khi kết nối với server."
   }
+  console.error("All chat endpoints failed:", lastErr)
+  return "Xin lỗi, có lỗi kết nối. Vui lòng thử lại sau."
 }
 
 // --- Small UI atoms ---
