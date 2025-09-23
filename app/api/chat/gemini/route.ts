@@ -204,7 +204,7 @@ function buildContext(q: string, kb: KBItem[]) {
   return { ids, text };
 }
 
-function systemPrompt(mode: "club" | "industry", greetOnce: boolean) {
+function systemPrompt(mode: "club" | "industry", greetOnce: boolean, searchResults?: Array<{ title: string; domain: string; snippet: string }>) {
   const WEBSITE_LINK = process.env.NEXT_PUBLIC_FTC_WEBSITE
     ? `Bạn có thể xem thêm tại website chính thức: <a href='${process.env.NEXT_PUBLIC_FTC_WEBSITE}' target='_blank' rel='noopener noreferrer'>${process.env.NEXT_PUBLIC_FTC_WEBSITE}</a>.`
     : "Bạn có thể xem thêm tại Fanpage của câu lạc bộ: https://www.facebook.com/clbfintechuel.";
@@ -213,9 +213,9 @@ function systemPrompt(mode: "club" | "industry", greetOnce: boolean) {
 
   if (mode === "industry") {
     return (
-      "Bạn là FTC Chatbot với 2 chế độ: 'club' (Hỏi về câu lạc bộ) và 'industry' (Hỏi về ngành). Chỉ trả lời bằng tiếng Việt, mạch lạc, tự nhiên, không dùng dấu ';' và không gạch đầu dòng. Luôn ưu tiên ngắn gọn, đúng trọng tâm. " +
+      "Bạn là trợ lý học thuật FinTech. Nhiệm vụ của bạn là trả lời ngắn gọn, chính xác, tự nhiên bằng tiếng Việt, dựa chỉ và duy nhất trên các kết quả tìm kiếm Google đã được cung cấp (tiêu đề, domain, snippet). Không tự bịa, không suy diễn ngoài dữ liệu đã cấp. " +
       (greetOnce ? "Chỉ chào ở tin nhắn đầu tiên nếu người dùng chào trước; về sau trả lời trực tiếp, không mở đầu bằng lời chào. " : "Không mở đầu bằng lời chào. ") +
-      "Nếu mode = 'industry': Tóm tắt dựa trên kết quả tìm kiếm Google (API thật hoặc snippets được truyền vào). Chỉ dùng nội dung từ kết quả tìm kiếm đã cung cấp. Kết thúc bằng một dòng 'Nguồn: domain1, domain2, domain3'. Nếu không có dữ liệu, trả lời lịch sự rằng chưa thể tìm được thông tin phù hợp."
+      "Chỉ dùng thông tin từ search_results. Nếu thiếu dữ liệu cho phần nào, nói rõ \"tài liệu chưa nêu\" cho phần đó thay vì suy đoán. Không liệt kê hay trích nguồn chi tiết. Không chèn link, không ghi tiêu đề bài viết, không ghi domain cụ thể. Chỉ tóm tắt nội dung thành câu văn mạch lạc. Phong cách: tự nhiên, rõ ràng, không dùng dấu ';' và không dùng gạch đầu dòng. Viết thành đoạn văn. Ngắn gọn trước, chi tiết sau: mở đầu 1–2 câu tổng quan, tiếp theo là giải thích trọng tâm theo câu hỏi của người dùng. Xử lý mâu thuẫn: nếu các snippet bất nhất, ưu tiên điểm giao nhau giữa nhiều snippet. Khi không thể kết luận, nêu phương án khả dĩ và nói \"tài liệu chưa nêu chi tiết để khẳng định\". Tính thời điểm: nếu câu hỏi nhạy cảm theo thời gian (xu hướng, quy định), hãy nói thời tính như \"hiện tại\", \"gần đây\", trừ khi snippet nêu mốc rõ ràng. Giữ ngữ nghĩa học thuật: định nghĩa thuật ngữ, nêu ví dụ ngắn gọn khi cần. Nếu người dùng hỏi \"cách làm\", trả lời theo các bước nhưng vẫn viết thành câu văn, không liệt kê bullet. An toàn nội dung: không đưa lời khuyên tài chính cá nhân, không đưa chỉ dẫn vi phạm pháp luật, không dạy hack gian lận. Với nội dung rủi ro, chỉ giải thích bối cảnh học thuật. Không sao chép y nguyên câu dài từ snippet. Hãy diễn đạt lại bằng lời của bạn. Giới hạn độ dài: đa số câu trả lời 4–8 câu. Với câu \"định nghĩa\", ưu tiên 3–5 câu."
     );
   }
   // mode === "club"
@@ -270,6 +270,7 @@ export async function POST(req: NextRequest) {
 
   const userQ = extractUserQuestion(body);
   const requestedMode: "club" | "industry" = (body.mode || "club").toLowerCase();
+  const searchResults: Array<{ title: string; domain: string; snippet: string }> | undefined = body.search_results;
 
   if (!process.env.GEMINI_API_KEY) {
     return NextResponse.json(
@@ -322,7 +323,7 @@ export async function POST(req: NextRequest) {
   const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY as string);
   const model = genAI.getGenerativeModel({
     model: process.env.GEMINI_MODEL ?? "gemini-1.5-flash",
-    systemInstruction: systemPrompt(finalMode, greetOnce),
+    systemInstruction: systemPrompt(finalMode, greetOnce, searchResults),
     safetySettings: [
       { category: HarmCategory.HARM_CATEGORY_HATE_SPEECH, threshold: HarmBlockThreshold.BLOCK_NONE },
       { category: HarmCategory.HARM_CATEGORY_HARASSMENT, threshold: HarmBlockThreshold.BLOCK_NONE },
@@ -338,7 +339,15 @@ export async function POST(req: NextRequest) {
     // The systemPrompt already contains the CLUB_INFO
   }
 
-  const userMsg = `CÂU HỎI: ${userQ}`;
+  let userMsg = `CÂU HỎI: ${userQ}`;
+  if (requestedMode === "industry" && searchResults && searchResults.length > 0) {
+    const searchResultsText = searchResults.map((result, idx) => {
+      return `${idx + 1}) ${result.title} — ${result.domain}\nTóm tắt: ${result.snippet}`;
+    }).join("\n");
+    userMsg = `Câu hỏi: "${userQ}"\nKết quả tìm kiếm (tối đa ${searchResults.length}):\n${searchResultsText}\nYêu cầu: Dựa vào các tóm tắt trên để trả lời.`
+  } else if (requestedMode === "industry" && (!searchResults || searchResults.length === 0)) {
+    userMsg = "Mình chưa thấy dữ liệu phù hợp từ kết quả tìm kiếm kèm theo nên chưa thể trả lời chính xác. Bạn có thể hỏi lại cụ thể hơn."
+  }
 
   try {
     const result = await model.generateContent({
