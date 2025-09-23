@@ -2,19 +2,7 @@
 
 import React, { useEffect, useMemo, useRef, useState } from "react"
 import dynamic from "next/dynamic"
-import {
-  Bot,
-  BookOpen,
-  HelpCircle,
-  MessageSquare,
-  Send,
-  Users,
-  Heart,
-  Repeat2,
-  Share2,
-  MoreHorizontal,
-  CheckCheck,
-} from "lucide-react"
+import { Bot, BookOpen, HelpCircle, MessageSquare, Send, Users, Heart, Repeat2, Share2, MoreHorizontal, CheckCheck } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
@@ -287,7 +275,7 @@ export default function ChatbotPage() {
     if (!q || isSending) return
 
     const newUserMsg: ChatMessage = { id: crypto.randomUUID(), role: "user", content: q, mode: selectedMode, ts: Date.now() }
-    setMessages((prev) => [...prev, newUserMsg])
+    setMessages((prev: ChatMessage[]) => [...prev, newUserMsg])
     if (!messageOverride) setInputValue("")
     setIsSending(true)
 
@@ -302,7 +290,7 @@ export default function ChatbotPage() {
 
       // Không khớp thì gọi backend (Gemini / Google-mode)
       if (!botText) {
-        const history = messages.slice(-6).map((m) => ({ role: m.role, content: m.content }))
+        const history = messages.slice(-6).map((m: ChatMessage) => ({ role: m.role, content: m.content }))
         const out = await askServer({ mode: selectedMode, question: q, history })
         botText = out || "Xin lỗi, hiện chưa thể trả lời."
       }
@@ -322,9 +310,9 @@ export default function ChatbotPage() {
         mode: selectedMode,
         ts: Date.now(),
       }
-      setMessages((prev) => [...prev, botMsg])
+      setMessages((prev: ChatMessage[]) => [...prev, botMsg])
     } catch {
-      setMessages((prev) => [
+      setMessages((prev: ChatMessage[]) => [
         ...prev,
         { id: crypto.randomUUID(), role: "assistant", content: "Xin lỗi, hiện chưa thể trả lời.", mode: selectedMode, ts: Date.now() },
       ])
@@ -341,242 +329,243 @@ export default function ChatbotPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-background to-background/80 overflow-hidden">
+    <>
+      <div className="min-h-screen bg-gradient-to-b from-background to-background/80 overflow-hidden">
       <Navigation />
 
-      {/* Hero Section với hiệu ứng nhấp nháy hiện đại */}
-      <section className="relative min-h-[50vh] flex items-center justify-center py-16 px-4 sm:px-6 lg:px-8">
-        <div className="absolute inset-0 overflow-hidden">
-          <div className="absolute top-1/4 -right-1/4 w-2/3 h-2/3 bg-gradient-to-br from-primary/20 via-accent/20 to-transparent rounded-full blur-3xl animate-float" />
-          <div className="absolute -bottom-1/4 -left-1/4 w-2/3 h-2/3 bg-gradient-to-tr from-accent/20 via-primary/20 to-transparent rounded-full blur-3xl animate-float-reverse" />
-        </div>
-
-        <div className="relative max-w-5xl mx-auto text-center space-y-8">
-          {/* Title với hiệu ứng shimmer */}
-          <h1 className="relative text-4xl sm:text-5xl lg:text-6xl font-extrabold">
-            <span className="absolute inset-0 bg-gradient-to-r from-primary to-accent opacity-50 blur-2xl animate-pulse"></span>
-            <span className="relative bg-gradient-to-r from-primary to-accent text-transparent bg-clip-text animate-text-shine">
-              FTC CHATBOT
-            </span>
-          </h1>
-          
-          {/* Subtitle */}
-          <p className="text-xl sm:text-2xl text-muted-foreground leading-relaxed max-w-3xl mx-auto italic">
-            Trợ lý AI thông minh cho tân sinh viên · Hỗ trợ thông tin câu lạc bộ và kiến thức ngành
-          </p>
-
-          {/* Mode selector với hiệu ứng hiện đại */}
-          <div className="mt-8 relative">
-            <div className="absolute inset-0 bg-gradient-to-r from-primary/5 to-accent/5 rounded-3xl transform transition-all" />
-            <div className="relative bg-background/40 backdrop-blur-lg rounded-3xl border border-primary/10 p-6">
-              <div className="flex flex-col sm:flex-row items-center gap-4">
-                <div className="flex items-center gap-3">
-                  <div className="w-12 h-12 relative">
-                    <div className="absolute inset-0 bg-gradient-to-r from-primary/20 to-accent/20 rounded-xl blur-lg animate-pulse" />
-                    <div className="relative w-full h-full bg-background/50 rounded-xl flex items-center justify-center">
-                      <Bot className="h-6 w-6 text-primary" />
-                    </div>
-                  </div>
-                  <div>
-                    <h2 className="text-lg font-bold text-foreground">Chọn chế độ</h2>
-                    <p className="text-sm text-muted-foreground">Tùy chỉnh trải nghiệm chat</p>
-                  </div>
-                </div>
-                
-                <div className="flex gap-2">
-                  {CHAT_MODES.map((mc) => {
-                    const Icon = mc.icon
-                    const active = selectedMode === mc.mode
-                    return (
-                      <button
-                        key={mc.mode}
-                        onClick={() => handleModeChange(mc.mode)}
-                        className={cn(
-                          "px-4 py-2 rounded-xl text-sm font-medium flex items-center gap-2 transition-all duration-300 transform hover:scale-105",
-                          active 
-                            ? `${mc.color} text-white shadow-lg scale-105` 
-                            : "bg-muted/50 hover:bg-accent/30 text-muted-foreground hover:text-foreground"
-                        )}
-                      >
-                        <Icon className="h-4 w-4" />
-                        {mc.label}
-                      </button>
-                    )
-                  })}
-                </div>
-              </div>
-
-              {showModeChangeNotification && (
-                <div className="mt-4 inline-flex items-center gap-2 text-sm text-muted-foreground animate-in slide-in-from-top-2 duration-300">
-                  <div className="w-2 h-2 rounded-full bg-primary animate-pulse" />
-                  Đã chuyển sang chế độ: <span className="font-semibold text-primary">{CHAT_MODES.find((m) => m.mode === selectedMode)?.label}</span>
-          </div>
-              )}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Main Content với glassmorphism design */}
-      <section className="py-12 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-6xl mx-auto space-y-8">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-            {/* Chat Area (8 columns) */}
-            <div className="lg:col-span-8">
-              {/* Messages Container */}
-              <div className="relative bg-white/5 backdrop-blur-xl rounded-3xl border border-white/10 p-6 mb-6 min-h-[500px] max-h-[600px] overflow-y-auto">
-                {/* Welcome Message */}
-                {messages.length === 0 && (
-                  <div className="flex flex-col items-center justify-center h-full text-center py-12">
-                    <div className="w-20 h-20 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center mb-6 shadow-2xl">
-                      <Bot className="h-10 w-10 text-white" />
-                    </div>
-                    <h3 className="text-2xl font-bold text-white mb-2">Chào mừng đến với FTC Chatbot!</h3>
-                    <p className="text-white/70 mb-6 max-w-md">
-                      Tôi có thể giúp bạn tìm hiểu về câu lạc bộ FTC và kiến thức về ngành công nghệ tài chính
-                    </p>
-                    <div className="flex items-center gap-2 text-sm text-white/60">
-                      <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
-                      <span>Đang hoạt động</span>
-                    </div>
-                  </div>
-                )}
-
-                {/* Messages */}
-                <div className="space-y-2">
-                  {messages.map((m) => (
-                    <MessageCard key={m.id} m={m} />
-                  ))}
-                  <div ref={messagesEndRef} />
-                </div>
-              </div>
-
-              {/* Input Composer hiện đại */}
-              <div className="relative bg-white/10 backdrop-blur-xl rounded-2xl border border-white/20 p-4">
-                <div className="flex items-end gap-3">
-                  <div className="flex-1">
-                    <div className="flex items-center gap-2 mb-2 text-sm text-white/70">
-                      {selectedMode === "club" ? (
-                        <>
-                          <Users className="h-4 w-4 text-blue-400" />
-                          <span>Chế độ CLB - Thông tin FTC</span>
-                        </>
-                      ) : (
-                        <>
-                          <BookOpen className="h-4 w-4 text-green-400" />
-                          <span>Chế độ Ngành - Kiến thức FinTech</span>
-                        </>
-                      )}
-                    </div>
-                    <div className="relative">
-                      <Input
-                        value={inputValue}
-                        onChange={(e) => setInputValue(e.target.value)}
-                        onKeyDown={handleKeyDown}
-                        placeholder={selectedMode === "club" ? "Hỏi về FTC, hoạt động, cách tham gia..." : "Hỏi về FinTech, blockchain, ngân hàng số..."}
-                        className="w-full bg-white/20 border-white/30 text-white placeholder:text-white/50 focus:border-blue-400 focus:ring-2 focus:ring-blue-400/20 rounded-xl pr-12"
-                        disabled={isSending}
-                      />
-                      {isSending && (
-                        <div className="absolute right-3 top-1/2 transform -translate-y-1/2">
-                          <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                  <Button 
-                    onClick={handleSendMessage} 
-                    disabled={!inputValue.trim() || isSending}
-                    className="bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white px-6 py-3 rounded-xl shadow-lg transform hover:scale-105 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
-                  >
-                    <Send className="h-5 w-5" />
-                  </Button>
-                </div>
-                {isSending && selectedMode === "industry" && (
-                  <div className="flex items-center gap-2 mt-3 text-xs text-white/70">
-                    <div className="w-4 h-4 border-2 border-white/30 border-t-blue-300 rounded-full animate-spin"></div>
-                    <span>🔍 Đang tìm kiếm thông tin từ Google...</span>
-                  </div>
-                )}
-              </div>
-            </div>
+        {/* Hero Section với hiệu ứng nhấp nháy hiện đại */}
+        <section className="relative min-h-[50vh] flex items-center justify-center py-16 px-4 sm:px-6 lg:px-8">
+          <div className="absolute inset-0 overflow-hidden">
+            <div className="absolute top-1/4 -right-1/4 w-2/3 h-2/3 bg-gradient-to-br from-primary/20 via-accent/20 to-transparent rounded-full blur-3xl animate-float" />
+            <div className="absolute -bottom-1/4 -left-1/4 w-2/3 h-2/3 bg-gradient-to-tr from-accent/20 via-primary/20 to-transparent rounded-full blur-3xl animate-float-reverse" />
           </div>
 
-            {/* Sidebar với hiệu ứng hiện đại */}
-            <div className="lg:col-span-4">
-              <div className="relative bg-white/10 backdrop-blur-xl rounded-3xl border border-white/20 p-6">
-                <div className="flex items-center gap-3 mb-6">
-                  <div className="w-12 h-12 rounded-full bg-gradient-to-br from-yellow-500 to-orange-600 flex items-center justify-center shadow-lg">
-                    <HelpCircle className="h-6 w-6 text-white" />
-                  </div>
-                  <div>
-                    <h3 className="text-xl font-bold text-white">
-                      Câu hỏi gợi ý
-                    </h3>
-                    <p className="text-sm text-white/70">Nhấp để hỏi ngay</p>
-                  </div>
-                </div>
-                
-                <div className="space-y-3">
-                  {SUGGESTED_QUESTIONS.map((q, idx) => (
-                    <button
-                      key={idx}
-                      onClick={() => {
-                        setSelectedMode("club")
-                        handleSendMessage(q)
-                      }}
-                      className="w-full text-left rounded-2xl bg-white/5 hover:bg-white/10 border border-white/20 hover:border-white/30 px-4 py-4 transition-all duration-300 transform hover:scale-[1.02] group"
-                    >
-                      <div className="flex items-start gap-3">
-                        <div className="w-8 h-8 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center flex-shrink-0 mt-1">
-                          <span className="text-white text-sm font-bold">{idx + 1}</span>
-                        </div>
-                        <div className="flex-1">
-                          <div className="text-sm font-medium text-white group-hover:text-blue-300 transition-colors leading-relaxed">
-                            {q}
-                          </div>
-                          <div className="mt-3 flex items-center gap-2">
-                            <div className="flex items-center gap-1">
-                              <Users className="h-3 w-3 text-blue-400" />
-                              <span className="text-xs text-blue-300 font-medium">Chế độ CLB</span>
-                            </div>
-                            <div className="flex items-center gap-1 ml-auto">
-                              <Send className="h-3 w-3 text-white/50 group-hover:text-white/80" />
-                              <span className="text-xs text-white/50 group-hover:text-white/80">Gửi</span>
-                            </div>
-                          </div>
-                        </div>
+          <div className="relative max-w-5xl mx-auto text-center space-y-8">
+            {/* Title với hiệu ứng shimmer */}
+            <h1 className="relative text-4xl sm:text-5xl lg:text-6xl font-extrabold">
+              <span className="absolute inset-0 bg-gradient-to-r from-primary to-accent opacity-50 blur-2xl animate-pulse"></span>
+              <span className="relative bg-gradient-to-r from-primary to-accent text-transparent bg-clip-text animate-text-shine">
+                FTC CHATBOT
+              </span>
+            </h1>
+            
+            {/* Subtitle */}
+            <p className="text-xl sm:text-2xl text-muted-foreground leading-relaxed max-w-3xl mx-auto italic">
+              Trợ lý AI thông minh cho tân sinh viên · Hỗ trợ thông tin câu lạc bộ và kiến thức ngành
+            </p>
+
+            {/* Mode selector với hiệu ứng hiện đại */}
+            <div className="mt-8 relative">
+              <div className="absolute inset-0 bg-gradient-to-r from-primary/5 to-accent/5 rounded-3xl transform transition-all" />
+              <div className="relative bg-background/40 backdrop-blur-lg rounded-3xl border border-primary/10 p-6">
+                <div className="flex flex-col sm:flex-row items-center gap-4">
+                  <div className="flex items-center gap-3">
+                    <div className="w-12 h-12 relative">
+                      <div className="absolute inset-0 bg-gradient-to-r from-primary/20 to-accent/20 rounded-xl blur-lg animate-pulse" />
+                      <div className="relative w-full h-full bg-background/50 rounded-xl flex items-center justify-center">
+                        <Bot className="h-6 w-6 text-primary" />
                       </div>
-                    </button>
-                  ))}
+                    </div>
+                    <div>
+                      <h2 className="text-lg font-bold text-foreground">Chọn chế độ</h2>
+                      <p className="text-sm text-muted-foreground">Tùy chỉnh trải nghiệm chat</p>
+                    </div>
+        </div>
+
+                  <div className="flex gap-2">
+                    {CHAT_MODES.map((mc) => {
+                      const Icon = mc.icon
+                      const active = selectedMode === mc.mode
+                      return (
+                        <button
+                          key={mc.mode}
+                          onClick={() => handleModeChange(mc.mode)}
+                          className={cn(
+                            "px-4 py-2 rounded-xl text-sm font-medium flex items-center gap-2 transition-all duration-300 transform hover:scale-105",
+                            active 
+                              ? `${mc.color} text-white shadow-lg scale-105` 
+                              : "bg-muted/50 hover:bg-accent/30 text-muted-foreground hover:text-foreground"
+                          )}
+                        >
+                          <Icon className="h-4 w-4" />
+                          {mc.label}
+                        </button>
+                      )
+                    })}
+                  </div>
                 </div>
 
-                {/* Quick Tips */}
-                <div className="mt-8 p-4 rounded-2xl bg-gradient-to-r from-blue-500/20 to-purple-600/20 border border-blue-500/30">
-                  <h4 className="text-sm font-semibold text-white mb-2 flex items-center gap-2">
-                    <div className="w-2 h-2 bg-blue-400 rounded-full animate-pulse"></div>
-                    Mẹo sử dụng
-                  </h4>
-                  <ul className="text-xs text-white/70 space-y-1">
-                    <li>• Chế độ CLB: Thông tin FTC chính xác</li>
-                    <li>• Chế độ Ngành: Kiến thức FinTech tổng hợp</li>
-                    <li>• Nhấp câu hỏi gợi ý để hỏi ngay</li>
-                  </ul>
+                {showModeChangeNotification && (
+                  <div className="mt-4 inline-flex items-center gap-2 text-sm text-muted-foreground animate-in slide-in-from-top-2 duration-300">
+                    <div className="w-2 h-2 rounded-full bg-primary animate-pulse" />
+                    Đã chuyển sang chế độ: <span className="font-semibold text-primary">{CHAT_MODES.find((m) => m.mode === selectedMode)?.label}</span>
+            </div>
+                )}
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Main Content với glassmorphism design */}
+        <section className="py-12 px-4 sm:px-6 lg:px-8">
+          <div className="max-w-6xl mx-auto space-y-8">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+              {/* Chat Area (8 columns) */}
+              <div className="lg:col-span-8">
+                {/* Messages Container */}
+                <div className="relative bg-white/5 backdrop-blur-xl rounded-3xl border border-white/10 p-6 mb-6 min-h-[500px] max-h-[600px] overflow-y-auto">
+                  {/* Welcome Message */}
+                  {messages.length === 0 && (
+                    <div className="flex flex-col items-center justify-center h-full text-center py-12">
+                      <div className="w-20 h-20 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center mb-6 shadow-2xl">
+                        <Bot className="h-10 w-10 text-white" />
+                      </div>
+                      <h3 className="text-2xl font-bold text-white mb-2">Chào mừng đến với FTC Chatbot!</h3>
+                      <p className="text-white/70 mb-6 max-w-md">
+                        Tôi có thể giúp bạn tìm hiểu về câu lạc bộ FTC và kiến thức về ngành công nghệ tài chính
+                      </p>
+                      <div className="flex items-center gap-2 text-sm text-white/60">
+                        <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
+                        <span>Đang hoạt động</span>
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Messages */}
+                  <div className="space-y-2">
+                    {messages.map((m: ChatMessage) => (
+                      <MessageCard key={m.id} m={m} />
+                    ))}
+                    <div ref={messagesEndRef} />
+                  </div>
+                </div>
+
+                {/* Input Composer hiện đại */}
+                <div className="relative bg-white/10 backdrop-blur-xl rounded-2xl border border-white/20 p-4">
+                  <div className="flex items-end gap-3">
+                    <div className="flex-1">
+                      <div className="flex items-center gap-2 mb-2 text-sm text-white/70">
+                        {selectedMode === "club" ? (
+                          <>
+                            <Users className="h-4 w-4 text-blue-400" />
+                            <span>Chế độ CLB - Thông tin FTC</span>
+                          </>
+                        ) : (
+                          <>
+                            <BookOpen className="h-4 w-4 text-green-400" />
+                            <span>Chế độ Ngành - Kiến thức FinTech</span>
+                          </>
+                        )}
+                      </div>
+                      <div className="relative">
+                        <Input
+                          value={inputValue}
+                          onChange={(e: React.ChangeEvent<HTMLInputElement>) => setInputValue(e.target.value)}
+                          onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => handleKeyDown(e)}
+                          placeholder={selectedMode === "club" ? "Hỏi về FTC, hoạt động, cách tham gia..." : "Hỏi về FinTech, blockchain, ngân hàng số..."}
+                          className="w-full bg-white/20 border-white/30 text-white placeholder:text-white/50 focus:border-blue-400 focus:ring-2 focus:ring-blue-400/20 rounded-xl pr-12"
+                          disabled={isSending}
+                        />
+                        {isSending && (
+                          <div className="absolute right-3 top-1/2 transform -translate-y-1/2">
+                            <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                    <Button 
+                      onClick={handleSendMessage} 
+                      disabled={!inputValue.trim() || isSending}
+                      className="bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white px-6 py-3 rounded-xl shadow-lg transform hover:scale-105 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                    >
+                      <Send className="h-5 w-5" />
+                    </Button>
+                  </div>
+                  {isSending && selectedMode === "industry" && (
+                    <div className="flex items-center gap-2 mt-3 text-xs text-white/70">
+                      <div className="w-4 h-4 border-2 border-white/30 border-t-blue-300 rounded-full animate-spin"></div>
+                      <span>🔍 Đang tìm kiếm thông tin từ Google...</span>
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              {/* Sidebar với hiệu ứng hiện đại */}
+              <div className="lg:col-span-4">
+                <div className="relative bg-white/10 backdrop-blur-xl rounded-3xl border border-white/20 p-6">
+                  <div className="flex items-center gap-3 mb-6">
+                    <div className="w-12 h-12 rounded-full bg-gradient-to-br from-yellow-500 to-orange-600 flex items-center justify-center shadow-lg">
+                      <HelpCircle className="h-6 w-6 text-white" />
+                    </div>
+                    <div>
+                      <h3 className="text-xl font-bold text-white">
+                        Câu hỏi gợi ý
+                      </h3>
+                      <p className="text-sm text-white/70">Nhấp để hỏi ngay</p>
+                    </div>
+                  </div>
+                  
+                  <div className="space-y-3">
+                    {SUGGESTED_QUESTIONS.map((q, idx) => (
+                      <button
+                        key={idx}
+                        onClick={() => {
+                          setSelectedMode("club")
+                          handleSendMessage(q)
+                        }}
+                        className="w-full text-left rounded-2xl bg-white/5 hover:bg-white/10 border border-white/20 hover:border-white/30 px-4 py-4 transition-all duration-300 transform hover:scale-[1.02] group"
+                      >
+                        <div className="flex items-start gap-3">
+                          <div className="w-8 h-8 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center flex-shrink-0 mt-1">
+                            <span className="text-white text-sm font-bold">{idx + 1}</span>
+                          </div>
+                          <div className="flex-1">
+                            <div className="text-sm font-medium text-white group-hover:text-blue-300 transition-colors leading-relaxed">
+                              {q}
+                            </div>
+                            <div className="mt-3 flex items-center gap-2">
+                              <div className="flex items-center gap-1">
+                                <Users className="h-3 w-3 text-blue-400" />
+                                <span className="text-xs text-blue-300 font-medium">Chế độ CLB</span>
+                              </div>
+                              <div className="flex items-center gap-1 ml-auto">
+                                <Send className="h-3 w-3 text-white/50 group-hover:text-white/80" />
+                                <span className="text-xs text-white/50 group-hover:text-white/80">Gửi</span>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </button>
+                    ))}
+                  </div>
+
+                  {/* Quick Tips */}
+                  <div className="mt-8 p-4 rounded-2xl bg-gradient-to-r from-blue-500/20 to-purple-600/20 border border-blue-500/30">
+                    <h4 className="text-sm font-semibold text-white mb-2 flex items-center gap-2">
+                      <div className="w-2 h-2 bg-blue-400 rounded-full animate-pulse"></div>
+                      Mẹo sử dụng
+                    </h4>
+                    <ul className="text-xs text-white/70 space-y-1">
+                      <li>• Chế độ CLB: Thông tin FTC chính xác</li>
+                      <li>• Chế độ Ngành: Kiến thức FinTech tổng hợp</li>
+                      <li>• Nhấp câu hỏi gợi ý để hỏi ngay</li>
+                    </ul>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
+        </section>
+        {/* Footer */}
+        <div className="pb-10">
+          <div className="max-w-6xl mx-auto px-4">
+            <div className="text-center text-xs text-muted-foreground bg-background/40 backdrop-blur border border-primary/10 rounded-xl py-3">
+              Powered by ⚡ <span className="font-semibold text-primary">FTC</span>
+              {selectedMode === "industry" && <span className="ml-2">• Tích hợp Google Search</span>}
         </div>
-      </section>
-      {/* Footer */}
-      <div className="pb-10">
-        <div className="max-w-6xl mx-auto px-4">
-          <div className="text-center text-xs text-muted-foreground bg-background/40 backdrop-blur border border-primary/10 rounded-xl py-3">
-            Powered by ⚡ <span className="font-semibold text-primary">FTC</span>
-            {selectedMode === "industry" && <span className="ml-2">• Tích hợp Google Search</span>}
           </div>
         </div>
       </div>
-    </div>
+    </>
   )
 }
