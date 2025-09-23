@@ -116,9 +116,9 @@ export const FAQ_MAP: Record<string, string> = {
 2. Ban Sự kiện - Lập kế hoạch chi tiết và viết kịch bản MC. Điều phối hiện trường và làm việc với đối tác địa điểm. Chịu trách nhiệm timeline, checklist, phân công nhân sự, nghiệm thu chất lượng và báo cáo chi phí sau sự kiện.
 3. Ban Truyền thông - Xây dựng nhận diện và câu chuyện thương hiệu. Quản lý các kênh mạng xã hội. Sản xuất nội dung và ấn phẩm, theo dõi hiệu quả tiếp cận. Đầu ra điển hình gồm bộ ảnh, video ngắn, bài giới thiệu diễn giả, bài recap và báo cáo chỉ số.
 4. Ban Tài chính cá nhân - Thiết kế giáo trình quản lý tài chính cho sinh viên và vận hành lớp học chuyên đề. Cập nhật và triển khai bộ bài MoneyWe. Hỗ trợ các học phần liên quan. Chủ đề trọng tâm gồm lập ngân sách, đặt mục tiêu tiết kiệm và quản trị rủi ro tài chính cá nhân.
-5. Ban Nhân sự - Quy hoạch nguồn lực theo quý và theo dõi tiến độ thực hiện. Tổ chức hoạt động gắn kết nội bộ và chương trình mentor. Quản lý hồ sơ, tuyển chọn, on-boarding, đánh giá và khen thưởng để duy trì văn hóa và hiệu suất của câu lạc bộ.`, // Hoạt động
+5. Ban Nhân sự - Quy hoạch nguồn lực theo quý và theo dõi tiến độ thực hiện. Tổ chức hoạt động gắn kết nội bộ và chương trình mentor. Quản lý hồ sơ, tuyển chọn, on-boarding, đánh giá và khen thưởng để duy trì văn hóa và hiệu suất của câu lạc bộ.`,   // Hoạt động
   "cau lac bo co nhung hoat dong gi":
-`FTC vận hành hệ sinh thái học thuật kết hợp trải nghiệm thực tế. Trọng tâm là workshop, talkshow, tọa đàm chuyên đề và cuộc thi ATTACKER. Bên cạnh đó là training nội bộ theo quý, tham quan doanh nghiệp như VNG, sự kiện hướng nghiệp và các hoạt động gắn kết cộng đồng. Mỗi chương trình có mục tiêu học tập rõ ràng, tiêu chí đánh giá cụ thể và báo cáo tổng kết để cải tiến.`,   // Tham gia
+`FTC xây dựng một hệ sinh thái hoạt động vừa học thuật vừa trải nghiệm thực tiễn: các hội thảo, tọa đàm và chuyên đề về FinTech, dữ liệu, trí tuệ nhân tạo, ngân hàng số, thị trường vốn và quản trị rủi ro; cuộc thi học thuật ATTACKER; chuỗi talkshow và workshop theo chủ đề; training nội bộ nâng kỹ năng; tham quan doanh nghiệp (như VNG); sự kiện hướng nghiệp Web3 Career Innovation; cùng các hoạt động gắn kết cộng đồng như FTC Trip.`,   // Tham gia
   "lam the nao de tham gia cau lac bo":
 `Mọi thông tin về tuyển tân thành viên sẽ được cập nhật trên Fanpage. Link Fanpage: ${FTC_CONTACTS.fanpage}`,   // Lịch sinh hoạt
   "thoi gian sinh hoat dien ra khi nao":
@@ -156,9 +156,9 @@ export function faqMatchOrNull(question: string): string | null {
   const index: Record<string, string[]> = {
     "cac ban trong cau lac bo lam gi": ["ban nao", "cac ban", "bo may", "phan cong", "nhiem vu"],
     "cau lac bo co nhung hoat dong gi": ["hoat dong", "chuong trinh", "su kien", "workshop", "talkshow"],
-    "lam the nao de tham gia cau lac bo": ["tham gia", "ung tuyen", "dang ky", "tuyen thanh vien"],
+    "lam the nao de tham gia cau lac bo": ["tham gia", "dang ky", "tuyen thanh vien", "gia nhap"],
     "thoi gian sinh hoat dien ra khi nao": ["lich sinh hoat", "thoi gian", "bao gio"],
-    "can ky nang gi de ung tuyen": ["ky nang", "yeu cau", "dieu kien"],
+    "can ky nang gi de ung tuyen": ["ky nang", "yeu cau", "dieu kien", "ung tuyen", "can gi"],
     "cau lac bo duoc thanh lap khi nao": ["thanh lap", "ra doi", "nam nao"],
     "cau lac bo co nhung thanh tich gi": ["thanh tich", "giai thuong", "giay khen"],
     "quyen loi cua thanh vien la gi": ["quyen loi", "loi ich", "benefit"],
