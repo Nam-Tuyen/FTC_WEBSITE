@@ -4,6 +4,26 @@ import { BRAND } from '../../constants'
 import { cn, formatTime, isTypingMessage } from '../../lib'
 
 /**
+ * Render message content with markdown formatting and clickable links
+ */
+function renderMessageContent(content: string) {
+  // Process markdown formatting and links
+  let processedContent = content
+    // Convert **bold** to <strong>
+    .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+    // Convert *italic* to <em>
+    .replace(/\*(.*?)\*/g, '<em>$1</em>')
+    // Convert [text](url) to clickable links
+    .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer" class="text-blue-400 hover:text-blue-300 underline">$1</a>')
+    // Convert plain URLs to clickable links
+    .replace(/(https?:\/\/[^\s]+)/g, '<a href="$1" target="_blank" rel="noopener noreferrer" class="text-blue-400 hover:text-blue-300 underline">$1</a>')
+    // Convert newlines to <br>
+    .replace(/\n/g, '<br/>')
+  
+  return <span dangerouslySetInnerHTML={{ __html: processedContent }} />
+}
+
+/**
  * Typing Indicator Component
  */
 function TypingIndicator() {
@@ -69,10 +89,9 @@ export function MessageBubble({ message }: MessageBubbleProps) {
           {isTyping ? (
             <TypingIndicator />
           ) : (
-            <div 
-              className="text-sm leading-relaxed break-words"
-              dangerouslySetInnerHTML={{ __html: message.content.replace(/\n/g, "<br/>") }}
-            />
+            <div className="text-sm leading-relaxed break-words">
+              {renderMessageContent(message.content)}
+            </div>
           )}
           
           {/* Timestamp */}
@@ -84,42 +103,6 @@ export function MessageBubble({ message }: MessageBubbleProps) {
           </div>
         </div>
 
-        {/* Action buttons for bot messages */}
-        {!isUser && !isTyping && (
-          <div className="flex items-center gap-2 mt-3 ml-2">
-            <button
-              className={cn(
-                "p-2 rounded-full transition-all group",
-                BRAND.states.hover,
-                BRAND.surfaces.hover
-              )}
-              aria-label="Thích tin nhắn"
-            >
-              <span className={cn("text-sm", BRAND.text.light, "group-hover:text-red-500")}>❤️</span>
-            </button>
-            <button
-              className={cn(
-                "p-2 rounded-full transition-all group",
-                BRAND.states.hover,
-                BRAND.surfaces.hover
-              )}
-              onClick={handleCopy}
-              aria-label="Sao chép tin nhắn"
-            >
-              <span className={cn("text-sm", BRAND.text.light, `group-hover:text-[${BRAND.primary}]`)}>📋</span>
-            </button>
-            <button
-              className={cn(
-                "p-2 rounded-full transition-all group",
-                BRAND.states.hover,
-                BRAND.surfaces.hover
-              )}
-              aria-label="Chia sẻ tin nhắn"
-            >
-              <span className={cn("text-sm", BRAND.text.light, `group-hover:text-[${BRAND.secondary}]`)}>↗️</span>
-            </button>
-          </div>
-        )}
       </div>
     </div>
   )
