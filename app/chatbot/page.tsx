@@ -262,39 +262,6 @@ function MessageCard({ m }: { m: ChatMessage }) {
           </div>
         </div>
 
-        {/* Action buttons for bot messages */}
-        {!isUser && !isTyping && (
-          <div className="flex items-center gap-2 mt-3 ml-2">
-            <button
-              className={cn(
-                "p-2 rounded-full transition-all group",
-                BRAND.states.hover,
-                BRAND.surfaces.hover
-              )}
-            >
-              <span className={cn("text-sm", BRAND.text.light, "group-hover:text-red-500")}>❤️</span>
-            </button>
-            <button
-              className={cn(
-                "p-2 rounded-full transition-all group",
-                BRAND.states.hover,
-                BRAND.surfaces.hover
-              )}
-              onClick={() => navigator.clipboard?.writeText(m.content)}
-            >
-              <span className={cn("text-sm", BRAND.text.light, `group-hover:text-[${BRAND.primary}]`)}>📋</span>
-            </button>
-            <button
-              className={cn(
-                "p-2 rounded-full transition-all group",
-                BRAND.states.hover,
-                BRAND.surfaces.hover
-              )}
-            >
-              <span className={cn("text-sm", BRAND.text.light, `group-hover:text-[${BRAND.secondary}]`)}>↗️</span>
-            </button>
-          </div>
-        )}
       </div>
     </div>
   )
@@ -568,8 +535,8 @@ export default function ChatbotPage() {
               </div>
 
               {/* Sidebar với hiệu ứng hiện đại */}
-              <div className="lg:col-span-4 space-y-6">
-                <div className={`rounded-3xl ${BRAND.shadows.xl} overflow-hidden ${BRAND.borders.glow} border ${BRAND.surfaces.card}`}>
+              <div className="lg:col-span-4 flex flex-col gap-6 min-h-[600px]">
+                <div className={`rounded-3xl ${BRAND.shadows.xl} overflow-hidden ${BRAND.borders.glow} border ${BRAND.surfaces.card} flex-1 flex flex-col`}>
                   <div className={`px-6 py-4 ${BRAND.borders.light} border-b ${BRAND.gradients.ambient}`}>
                     <div className="flex items-center gap-3">
                       <div className={`w-12 h-12 rounded-3xl flex items-center justify-center ${BRAND.gradients.radial}`}>
@@ -582,8 +549,8 @@ export default function ChatbotPage() {
                     </div>
                   </div>
                   
-                  <div className="p-4">
-                    <div className="space-y-3">
+                  <div className="p-4 flex-1 flex flex-col">
+                    <div className="space-y-3 flex-1 overflow-auto">
                       {SUGGESTED_QUESTIONS.map((q, idx) => (
                         <button
                           key={idx}
@@ -609,7 +576,7 @@ export default function ChatbotPage() {
 
                   {/* Quick Tips */}
                   {/* Features */}
-                  <div className={`rounded-3xl ${BRAND.shadows.xl} ${BRAND.borders.glow} border ${BRAND.surfaces.card} p-6`}>
+                  <div className={`rounded-3xl ${BRAND.shadows.xl} ${BRAND.borders.glow} border ${BRAND.surfaces.card} p-6 flex-none`}>
                     <h3 className={`font-semibold ${BRAND.text.primary} mb-4 flex items-center gap-2`}>
                       <span className={`text-[${BRAND.primary}] text-lg`}>⚡</span>
                       Tính năng nổi bật
@@ -645,26 +612,6 @@ export default function ChatbotPage() {
                     </div>
                   </div>
 
-                  {/* Stats */}
-                  <div className={`rounded-3xl ${BRAND.shadows.glow} text-white p-6 ${BRAND.gradients.radial}`}>
-                    <h3 className="font-semibold mb-4 flex items-center gap-2">
-                      <span className="text-lg">✨</span>
-                      Thống kê hoạt động
-                    </h3>
-                    <div className="grid grid-cols-2 gap-4">
-                      <div className="text-center">
-                        <div className="text-2xl font-bold">1,234+</div>
-                        <div className="text-sm text-white/80">Câu hỏi đã giải đáp</div>
-                      </div>
-                      <div className="text-center">
-                        <div className="text-2xl font-bold">98%</div>
-                        <div className="text-sm text-white/80">Độ hài lòng</div>
-                      </div>
-                    </div>
-                    <div className="mt-4 p-3 bg-white/10 rounded-2xl backdrop-blur-sm">
-                      <p className="text-sm text-center">🚀 Tối ưu hóa bởi AI hiện đại</p>
-                    </div>
-                  </div>
                 </div>
               </div>
             </div>
