@@ -16,97 +16,7 @@ const animations = {
 // import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar" // Commented out to avoid conflict
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip"
 import { ChatMode, FAQ_MAP, SUGGESTED_QUESTIONS, FTC_CONTACTS, normalize, faqMatchOrNull, withCTA } from "../api/chat/gemini/route"
-
-// ===== Advanced Brand Palette - Modern Color System =====
-const BRAND = {
-  // Primary Colors
-  primary: "#003663",        // Deep Navy
-  secondary: "#0e1117",      // Dark Blue-Black
-  
-  // Tonal Variations
-  primary50: "#f0f4f8",      // Very light blue
-  primary100: "#d1e0eb",     // Light blue
-  primary200: "#a3c2d6",    // Medium light blue
-  primary300: "#7498b3",    // Medium blue
-  primary400: "#456a8a",    // Medium dark blue
-  primary500: "#003663",    // Main primary
-  primary600: "#002a4f",    // Darker primary
-  primary700: "#001f3b",    // Very dark primary
-  primary800: "#001426",    // Extremely dark
-  primary900: "#0e1117",    // Secondary (darkest)
-  
-  // Accent & Complementary
-  accent: "#1a5490",         // Bright navy
-  accentLight: "#2563eb",    // Lighter accent
-  warm: "#f59e0b",          // Golden yellow for highlights
-  warmLight: "#fbbf24",     // Light warm
-  
-  // Gradients - Modern & Sophisticated
-  gradients: {
-    primary: "bg-gradient-to-r from-[#003663] to-[#0e1117]",
-    primaryReverse: "bg-gradient-to-r from-[#0e1117] to-[#003663]",
-    radial: "bg-gradient-to-br from-[#003663] via-[#1a5490] to-[#0e1117]",
-    soft: "bg-gradient-to-br from-[#003663]/10 via-[#1a5490]/5 to-[#0e1117]/10",
-    text: "bg-gradient-to-r from-[#003663] via-[#1a5490] to-[#0e1117] bg-clip-text text-transparent",
-    glow: "bg-gradient-to-r from-[#003663]/20 via-[#1a5490]/30 to-[#0e1117]/20",
-    glass: "bg-gradient-to-br from-white/10 via-[#003663]/5 to-[#0e1117]/10",
-    surface: "bg-gradient-to-br from-white via-[#f0f4f8] to-white",
-    ethereal: "bg-gradient-to-br from-[#003663]/5 via-transparent to-[#0e1117]/5",
-    ambient: "bg-gradient-to-r from-[#003663]/10 via-[#1a5490]/5 to-[#0e1117]/10"
-  },
-  
-  // Surfaces & Backgrounds
-  surfaces: {
-    primary: "bg-white",
-    secondary: "bg-gradient-to-br from-[#f0f4f8] to-white",
-    glass: "bg-white/80 backdrop-blur-xl",
-    darkGlass: "bg-[#0e1117]/90 backdrop-blur-xl",
-    card: "bg-white/95 backdrop-blur-sm",
-    panel: "bg-gradient-to-br from-[#003663]/5 via-white to-[#0e1117]/5",
-    hover: "hover:bg-gradient-to-br hover:from-[#003663]/10 hover:to-[#0e1117]/10",
-    interactive: "bg-gradient-to-br from-white/90 to-[#f0f4f8]/90 backdrop-blur-sm"
-  },
-  
-  // Borders & Outlines
-  borders: {
-    light: "border-gray-100",
-    medium: "border-gray-200",
-    primary: "border-[#003663]/20",
-    glass: "border-white/20",
-    glow: "border-[#003663]/30 shadow-[0_0_20px_rgba(0,54,99,0.15)]",
-    accent: "border-[#1a5490]/30"
-  },
-  
-  // Text Colors
-  text: {
-    primary: "text-[#0e1117]",
-    secondary: "text-[#003663]",
-    muted: "text-gray-600",
-    light: "text-gray-500",
-    gradient: "bg-gradient-to-r from-[#003663] via-[#1a5490] to-[#0e1117] bg-clip-text text-transparent",
-    white: "text-white",
-    whiteAlpha: "text-white/90"
-  },
-  
-  // Shadows & Effects
-  shadows: {
-    soft: "shadow-sm",
-    medium: "shadow-md",
-    large: "shadow-lg shadow-[#003663]/10",
-    xl: "shadow-xl shadow-[#003663]/15",
-    glow: "shadow-2xl shadow-[#003663]/25",
-    inner: "shadow-inner shadow-[#0e1117]/10",
-    ambient: "shadow-2xl shadow-[#003663]/20"
-  },
-  
-  // Interactive States
-  states: {
-    hover: "hover:shadow-lg hover:shadow-[#003663]/20 hover:scale-[1.02]",
-    active: "active:scale-[0.98]",
-    focus: "focus:ring-2 focus:ring-[#003663]/30 focus:border-[#003663]",
-    disabled: "disabled:opacity-50 disabled:cursor-not-allowed"
-  }
-}
+import { BRAND } from "./constants/brand"
 
 // Navigation động (giữ như project)
 const Navigation = dynamic(() => import("@/components/navigation"), { ssr: false })
@@ -327,8 +237,8 @@ function MessageCard({ m }: { m: ChatMessage }) {
           "relative rounded-3xl px-6 py-4",
           BRAND.shadows.large,
           isUser
-            ? `text-white ${BRAND.gradients.radial}`
-            : `${BRAND.surfaces.card} ${BRAND.borders.glow} border`
+            ? `${BRAND.text.inverse} ${BRAND.surfaces.userBubble}`
+            : `${BRAND.text.primary} ${BRAND.surfaces.chatBubble} ${BRAND.borders.light} border`
         )}>
           {/* Message content */}
           {isTyping ? (
@@ -464,8 +374,8 @@ export default function ChatbotPage() {
 
   return (
     <>
-      <div className="min-h-screen overflow-hidden" style={{ 
-        background: `linear-gradient(140deg, ${BRAND.primary50} 0%, #ffffff 40%, ${BRAND.primary100} 100%)` 
+      <div className={`min-h-screen overflow-hidden ${BRAND.surfaces.primary}`} style={{ 
+        background: `linear-gradient(140deg, ${BRAND.primary50} 0%, ${BRAND.primary100} 40%, ${BRAND.primary200} 100%)` 
       }}>
       <Navigation />
 
@@ -486,7 +396,7 @@ export default function ChatbotPage() {
             </h1>
             
             {/* Subtitle */}
-            <p className="text-xl sm:text-2xl text-muted-foreground leading-relaxed max-w-3xl mx-auto italic">
+            <p className={`text-xl sm:text-2xl ${BRAND.text.secondary} leading-relaxed max-w-3xl mx-auto italic`}>
               Trợ lý AI thông minh, hỗ trợ giải đáp thông tin về câu lạc bộ và ngành Fintech cho các bạn tân sinh viên
             </p>
 
@@ -549,7 +459,7 @@ export default function ChatbotPage() {
               {/* Chat Area (8 columns) */}
               <div className="lg:col-span-8">
                 {/* Messages Container */}
-                <div className={`relative flex flex-col h-[600px] sm:h-[700px] rounded-3xl ${BRAND.borders.glow} border ${BRAND.surfaces.darkGlass} overflow-hidden ${BRAND.shadows.glow}`}>
+                <div className={`relative flex flex-col h-[600px] sm:h-[700px] rounded-3xl ${BRAND.borders.glow} border ${BRAND.surfaces.glass} overflow-hidden ${BRAND.shadows.glow}`}>
                   {/* Header cố định */}
                   <div className={`shrink-0 px-4 py-3 ${BRAND.borders.glass} border-b ${BRAND.surfaces.glass} flex items-center justify-between`}>
                     <div className="flex items-center gap-3">
@@ -600,18 +510,18 @@ export default function ChatbotPage() {
                   </div>
 
                   {/* Input sticky, chiều cao cố định */}
-                  <div className={`shrink-0 ${BRAND.borders.glass} border-t px-6 py-4 ${BRAND.surfaces.glass} sticky bottom-0`}>
+                  <div className={`shrink-0 ${BRAND.borders.light} border-t px-6 py-4 ${BRAND.surfaces.card} sticky bottom-0`}>
                     <div className="flex items-end gap-3">
                       <div className="flex-1">
-                        <div className="flex items-center gap-2 mb-2 text-sm text-white/70">
+                        <div className={`flex items-center gap-2 mb-2 text-sm ${BRAND.text.light}`}>
                           {selectedMode === "club" ? (
                             <>
-                              <span className="text-blue-400">👥</span>
+                              <span className={BRAND.text.accent}>👥</span>
                               <span>Chế độ Câu lạc bộ - Giải đáp thông tin về FTC</span>
                             </>
                           ) : (
                             <>
-                              <span className="text-green-400">📚</span>
+                              <span className={BRAND.text.warm}>📚</span>
                               <span>Chế độ Ngành - Giải đáp kiến thức về FinTech</span>
                             </>
                           )}
@@ -622,12 +532,12 @@ export default function ChatbotPage() {
                             onChange={(e: React.ChangeEvent<HTMLInputElement>) => setInputValue(e.target.value)}
                             onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => handleKeyDown(e)}
                             placeholder={selectedMode === "club" ? "Hỏi về FTC, hoạt động, cách tham gia..." : "Hỏi về FinTech, blockchain, ngân hàng số..."}
-                            className={`w-full ${BRAND.gradients.ethereal} ${BRAND.borders.glass} border text-white placeholder:text-white/50 ${BRAND.states.focus} outline-none transition-all rounded-2xl pr-12`}
+                            className={`w-full ${BRAND.surfaces.interactive} ${BRAND.borders.primary} border ${BRAND.text.primary} placeholder:${BRAND.text.placeholder} ${BRAND.states.focus} outline-none transition-all rounded-2xl pr-12`}
                             disabled={isSending}
                           />
                           {isSending && (
                             <div className="absolute right-3 top-1/2 transform -translate-y-1/2 h-5 flex items-center">
-                              <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
+                              <div className={`w-5 h-5 border-2 border-gray-600 border-t-${BRAND.accent} rounded-full animate-spin`}></div>
                             </div>
                           )}
                         </div>
@@ -681,7 +591,7 @@ export default function ChatbotPage() {
                             setSelectedMode("club")
                             handleSendMessage(q)
                           }}
-                          className={`w-full text-left p-4 rounded-2xl ${BRAND.gradients.ethereal} hover:${BRAND.gradients.ambient} hover:${BRAND.borders.accent} ${BRAND.borders.light} border transition-all group`}
+                          className={`w-full text-left p-4 rounded-2xl ${BRAND.surfaces.interactive} ${BRAND.states.hover} ${BRAND.borders.light} border transition-all group`}
                         >
                           <div className="flex items-center gap-3">
                             <div className={`w-8 h-8 rounded-full ${BRAND.gradients.soft} flex items-center justify-center flex-shrink-0`}>

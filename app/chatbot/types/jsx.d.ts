@@ -22,6 +22,8 @@ declare global {
       h6: React.DetailedHTMLProps<React.HTMLAttributes<HTMLHeadingElement>, HTMLHeadingElement>;
       em: React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement>, HTMLElement>;
       section: React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement>, HTMLElement>;
+      button: React.DetailedHTMLProps<React.ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement>;
+      input: React.DetailedHTMLProps<React.InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>;
       style: React.DetailedHTMLProps<React.StyleHTMLAttributes<HTMLStyleElement>, HTMLStyleElement>;
       [elemName: string]: any;
     }
