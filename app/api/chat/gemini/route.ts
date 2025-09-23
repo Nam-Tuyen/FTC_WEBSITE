@@ -113,6 +113,37 @@ function tokenizeForKeywords(s: string) {
   return tokens.filter((t) => t.length >= 3);
 }
 
+const STATIC_FAQS: FAQItem[] = [
+  {
+    canonical_question: "câu lạc bộ có những hoạt động gì",
+    answer: "FTC triển khai hệ sinh thái hoạt động học thuật và trải nghiệm thực tế gồm hội thảo, tọa đàm và chuyên đề về FinTech, dữ liệu, trí tuệ nhân tạo, ngân hàng số, thị trường vốn và quản trị rủi ro. Bên cạnh đó là cuộc thi học thuật ATTACKER, chuỗi talkshow và workshop, các buổi training nội bộ, tham quan doanh nghiệp như VNG, sự kiện hướng nghiệp Web3 Career Innovation và hoạt động gắn kết cộng đồng FTC Trip."
+  },
+  {
+    canonical_question: "làm thế nào để tham gia câu lạc bộ",
+    answer: "Bạn theo dõi Fanpage để cập nhật đợt tuyển thành viên và hướng dẫn nộp hồ sơ. Link Fanpage: https://www.facebook.com/clbfintechuel. Thông báo sẽ nêu rõ mốc thời gian, điều kiện và quy trình."
+  },
+  {
+    canonical_question: "các ban trong câu lạc bộ làm gì",
+    answer: "Ban Học thuật: Thiết kế nội dung cho workshop và talkshow, chuẩn bị câu hỏi cho tọa đàm, xây dựng ngân hàng câu hỏi, ra đề và chấm cuộc thi ATTACKER. Ban Sự kiện: Lập kế hoạch và hồ sơ tổ chức, xây dựng kịch bản MC và timeline, điều phối hậu cần và giám sát thực thi tại hiện trường. Ban Truyền thông: Thiết kế ấn phẩm, quản lý các kênh truyền thông, lập kế hoạch nội dung và phát triển hình ảnh thương hiệu của câu lạc bộ. Ban Tài chính cá nhân: Tổ chức đào tạo về quản lý tài chính cá nhân cho sinh viên, phát triển và cập nhật bộ bài MoneyWe, hỗ trợ giảng viên ở các học phần liên quan. Ban Nhân sự: Phân công và theo dõi tiến độ, bảo đảm nguồn lực, triển khai hoạt động gắn kết và gìn giữ văn hóa tổ chức."
+  },
+  {
+    canonical_question: "thời gian sinh hoạt diễn ra khi nào",
+    answer: "Lịch sinh hoạt được công bố trước trên các kênh nội bộ và Fanpage để mọi thành viên nắm bắt kịp thời. Tùy chương trình, câu lạc bộ sẽ thông báo rõ thời gian, hình thức tham gia và yêu cầu chuẩn bị cho từng hoạt động như talkshow, workshop, training hoặc sự kiện theo mùa."
+  },
+  {
+    canonical_question: "cần kỹ năng gì để ứng tuyển",
+    answer: "FTC chào đón đa dạng chuyên ngành. Tinh thần học hỏi, kỷ luật và chủ động là nền tảng quan trọng. Kiến thức nền về Excel, SQL hoặc Python là lợi thế khi tham gia các nội dung dữ liệu và công nghệ tài chính. Kỹ năng viết và thuyết trình giúp bạn đóng góp hiệu quả cho học thuật và truyền thông. Kỹ năng làm việc nhóm và quản lý thời gian hỗ trợ bạn theo kịp tiến độ dự án và sự kiện. Ứng viên quan tâm mảng sự kiện nên có tư duy tổ chức và khả năng phối hợp nhiều đầu việc. Ứng viên thiên về truyền thông cần khả năng xây dựng nội dung và thẩm mỹ thị giác."
+  },
+  {
+    canonical_question: "câu lạc bộ được thành lập khi nào",
+    answer: "FTC trực thuộc Khoa Tài chính và Ngân hàng, Trường Đại học Kinh tế và Luật, ĐHQG-HCM. Câu lạc bộ được thành lập vào tháng mười một năm 2020 dưới sự hướng dẫn của ThS. NCS Phan Huy Tâm cùng đội ngũ sinh viên ngành công nghệ tài chính."
+  },
+  {
+    canonical_question: "câu lạc bộ có những thành tích gì",
+    answer: "Năm học 2024–2025, FTC được Ban Cán sự Đoàn ĐHQG-HCM tặng Giấy khen vì đóng góp tích cực cho công tác Đoàn và phong trào thanh niên. Câu lạc bộ đồng thời vào Top 10 Nhóm 4 của Giải thưởng Đổi mới sáng tạo và Khởi nghiệp TP.HCM I-STAR, được cấp Giấy chứng nhận ghi nhận nỗ lực và đóng góp trong hoạt động đổi mới sáng tạo."
+  }
+];
+
 function matchFAQ(userQuestion: string, faqList: FAQItem[]) {
   const uqNorm = normalize(userQuestion);
   let best: { item: FAQItem; score: number; reason: string } | null = null;
@@ -173,21 +204,27 @@ function buildContext(q: string, kb: KBItem[]) {
   return { ids, text };
 }
 
-function systemPrompt(mode: "kb" | "google", greetOnce: boolean) {
-  if (mode === "google") {
-    // Ngoài phạm vi FTC: dùng kiến thức tổng quát từ Gemini, không ràng buộc FTC
+function systemPrompt(mode: "club" | "industry", greetOnce: boolean) {
+  const WEBSITE_LINK = process.env.NEXT_PUBLIC_FTC_WEBSITE
+    ? `Bạn có thể xem thêm tại website chính thức: <a href='${process.env.NEXT_PUBLIC_FTC_WEBSITE}' target='_blank' rel='noopener noreferrer'>${process.env.NEXT_PUBLIC_FTC_WEBSITE}</a>.`
+    : "Bạn có thể xem thêm tại Fanpage của câu lạc bộ: https://www.facebook.com/clbfintechuel.";
+
+  const CLUB_INFO = `FTC trực thuộc Khoa Tài chính và Ngân hàng, Trường Đại học Kinh tế và Luật, ĐHQG-HCM; thành lập tháng 11/2020 dưới sự hướng dẫn của ThS. NCS Phan Huy Tâm. Hoạt động tiêu biểu gồm hội thảo, tọa đàm và chuyên đề về FinTech, dữ liệu, trí tuệ nhân tạo, ngân hàng số, thị trường vốn, quản trị rủi ro; cuộc thi ATTACKER; chuỗi talkshow và workshop; training nội bộ; tham quan VNG; sự kiện Web3 Career Innovation; hoạt động gắn kết cộng đồng FTC Trip. Cơ cấu: Học thuật, Sự kiện, Truyền thông, Tài chính cá nhân, Nhân sự (Ban Điều hành không tính là ban chuyên môn). Cách tham gia: theo dõi Fanpage https://www.facebook.com/clbfintechuel. Lịch sinh hoạt công bố trước trên kênh nội bộ và Fanpage. Kỹ năng khuyến khích: tinh thần học hỏi, kỷ luật, chủ động; nền tảng Excel, SQL, Python là lợi thế; kỹ năng viết, thuyết trình, làm việc nhóm, quản lý thời gian; thiên về sự kiện cần tư duy tổ chức; thiên về truyền thông cần năng lực nội dung và thẩm mỹ thị giác. Thành tích: Giấy khen Ban Cán sự Đoàn ĐHQG-HCM năm học 2024–2025; Top 10 Nhóm 4 Giải thưởng I-STAR TP.HCM.`;
+
+  if (mode === "industry") {
     return (
-      "Bạn là trợ lý AI nói tiếng Việt, giọng điệu tự nhiên, xúc tích, thân thiện nhưng không rườm rà. " +
+      "Bạn là FTC Chatbot với 2 chế độ: 'club' (Hỏi về câu lạc bộ) và 'industry' (Hỏi về ngành). Chỉ trả lời bằng tiếng Việt, mạch lạc, tự nhiên, không dùng dấu ';' và không gạch đầu dòng. Luôn ưu tiên ngắn gọn, đúng trọng tâm. " +
       (greetOnce ? "Chỉ chào ở tin nhắn đầu tiên nếu người dùng chào trước; về sau trả lời trực tiếp, không mở đầu bằng lời chào. " : "Không mở đầu bằng lời chào. ") +
-      "Nếu câu hỏi yêu cầu kiến thức phổ quát, hãy trả lời trực diện, có cấu trúc mạch lạc, tránh gạch đầu dòng và dấu ';'. " +
-      "Nếu thiếu dữ liệu, nêu rõ còn thiếu thay vì suy đoán."
+      "Nếu mode = 'industry': Tóm tắt dựa trên kết quả tìm kiếm Google (API thật hoặc snippets được truyền vào). Chỉ dùng nội dung từ kết quả tìm kiếm đã cung cấp. Kết thúc bằng một dòng 'Nguồn: domain1, domain2, domain3'. Nếu không có dữ liệu, trả lời lịch sự rằng chưa thể tìm được thông tin phù hợp."
     );
   }
-  // Trong phạm vi FTC: đóng vai cố vấn FTC, nhưng vẫn tránh chào nhiều lần
+  // mode === "club"
   return (
-    "Bạn là cố vấn FTC. Trả lời về Câu lạc bộ Công nghệ tài chính FTC bằng tiếng Việt, tự nhiên, xúc tích, mạch lạc. " +
-    (greetOnce ? "Chỉ chào ở tin đầu tiên; về sau trả lời trực tiếp, không chào lại. " : "Không mở đầu bằng lời chào. ") +
-    "Thông tin nền: FTC trực thuộc Khoa Tài chính và Ngân hàng, Trường ĐH Kinh tế và Luật (ĐHQG-HCM), thành lập 11/2020 (GV hướng dẫn: ThS. NCS Phan Huy Tâm). Hoạt động: hội thảo/tọa đàm FinTech, dữ liệu, AI, ngân hàng số, thị trường vốn, quản trị rủi ro; cuộc thi học thuật ATTACKER; workshop; training nội bộ; tham quan doanh nghiệp (VD: VNG); Web3 Career Innovation; gắn kết cộng đồng FTC Trip. Cơ cấu: 5 ban chuyên môn (Học thuật, Sự kiện, Truyền thông, Tài chính cá nhân, Nhân sự). Cách tham gia: theo dõi Fanpage https://www.facebook.com/clbfintechuel để biết đợt tuyển. Khi thiếu chi tiết, nói \"tài liệu chưa nêu\" và hướng sang Fanpage. Tránh dùng dấu ';' và gạch đầu dòng."
+    "Bạn là FTC Chatbot với 2 chế độ: 'club' (Hỏi về câu lạc bộ) và 'industry' (Hỏi về ngành). Chỉ trả lời bằng tiếng Việt, mạch lạc, tự nhiên, không dùng dấu ';' và không gạch đầu dòng. Luôn ưu tiên ngắn gọn, đúng trọng tâm. " +
+    (greetOnce ? "Chỉ chào ở tin nhắn đầu tiên nếu người dùng chào trước; về sau trả lời trực tiếp, không mở đầu bằng lời chào. " : "Không mở đầu bằng lời chào. ") +
+    "Nếu mode = 'club': So khớp câu hỏi với 7 câu FAQ (khớp chính xác hoặc na ná). Nếu khớp, trả đúng 'câu trả lời cố định' đã định nghĩa, không thêm bớt. " +
+    `Nếu không khớp, chuyển sang vai 'Cố vấn tân sinh viên' và trả lời dựa trên thông tin nền: ${CLUB_INFO} ` +
+    `Nếu người dùng hỏi 'link/website', chèn thêm một dòng có thể click: ${WEBSITE_LINK}`
   );
 }
 
@@ -250,7 +287,7 @@ export async function POST(req: NextRequest) {
   const kb = await readKB();
   const faqFromEnv = readFAQFromEnv();
   const faqFromKb = extractFAQFromKB(kb);
-  const faqList: FAQItem[] = [...faqFromEnv, ...faqFromKb];
+  const faqList: FAQItem[] = [...STATIC_FAQS, ...faqFromEnv, ...faqFromKb];
 
   let finalMode: "kb" | "google" = "google"; // Default to general knowledge (industry mode)
   let botResponse: string | null = null;
@@ -263,13 +300,10 @@ export async function POST(req: NextRequest) {
       finalMode = "kb"; // FAQ response is part of KB mode
     } else {
       // Fallback to Gemini with KB context if no direct FAQ match in club mode
-      const { ids, text } = buildContext(userQ, kb);
-      if (text) {
-        finalMode = "kb";
-        kbHitIds = ids;
-      }
-      // If still no KB context, it remains 'google' and the systemPrompt will handle it
+      finalMode = "kb"; // Ensure it's KB mode if no direct FAQ but still in club mode
     }
+  } else if (requestedMode === "industry") {
+    finalMode = "google"; // Explicitly set for industry mode
   }
 
   if (botResponse) {
@@ -298,16 +332,13 @@ export async function POST(req: NextRequest) {
     ],
   });
 
-  let contextText = "";
-  if (finalMode === "kb") {
-    const { ids, text } = buildContext(userQ, kb);
-    contextText = text;
-    kbHitIds = ids;
+  let contextText = ""; // This will not be used directly in the prompt anymore, context is in systemPrompt
+  if (requestedMode === "club" && !botResponse) {
+    // In club mode, if no FAQ match, Gemini acts as advisor, no explicit context needed here
+    // The systemPrompt already contains the CLUB_INFO
   }
 
-  const userMsg = contextText
-    ? `CÂU HỎI: ${userQ}\n\nNGỮ CẢNH (CONTEXT):\n${contextText}\n\nYÊU CẦU PHONG CÁCH: Trả lời tự nhiên, trực diện, không chào lại trừ khi đây là tin nhắn đầu. Không dùng dấu ";" và không dùng gạch đầu dòng.`
-    : `CÂU HỎI: ${userQ}\n\nYÊU CẦU PHONG CÁCH: Trả lời tự nhiên, trực diện, không chào lại trừ khi đây là tin nhắn đầu. Không dùng dấu ";" và không dùng gạch đầu dòng.`;
+  const userMsg = `CÂU HỎI: ${userQ}`;
 
   try {
     const result = await model.generateContent({
