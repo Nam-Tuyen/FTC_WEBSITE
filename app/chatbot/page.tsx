@@ -7,28 +7,28 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { cn } from "@/lib/utils"
+import { ChatMode, FAQ_MAP, SUGGESTED_QUESTIONS, FTC_CONTACTS, normalize, faqMatchOrNull, withCTA } from "../api/chat/gemini/route"
 
 // Navigation động (giữ như project)
 const Navigation = dynamic(() => import("@/components/navigation"), { ssr: false })
 
 // --- Types ---
-type ChatMode = "club" | "industry"
 type ChatMessage = { id: string; role: "user" | "assistant"; content: string; mode?: ChatMode; ts?: number }
 
 // --- ENV & constants ---
 const NEXT_PUBLIC_FTC_WEBSITE = process.env.NEXT_PUBLIC_FTC_WEBSITE || ""
 const NEXT_PUBLIC_BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL || ""
-const FTC_FANPAGE = "https://www.facebook.com/clbfintechuel"
+// const FTC_FANPAGE = "https://www.facebook.com/clbfintechuel" // Moved to FTC_CONTACTS
 
-const SUGGESTED_QUESTIONS: string[] = [
-  "Câu lạc bộ có những hoạt động gì?",
-  "Làm thế nào để tham gia câu lạc bộ?",
-  "Các ban trong câu lạc bộ làm gì?",
-  "Thời gian sinh hoạt diễn ra khi nào?",
-  "Cần kỹ năng gì để ứng tuyển?",
-  "Câu lạc bộ được thành lập khi nào?",
-  "Câu lạc bộ có những thành tích gì?",
-]
+// const SUGGESTED_QUESTIONS: string[] = [ // Moved to backend route
+//   "Câu lạc bộ có những hoạt động gì?",
+//   "Làm thế nào để tham gia câu lạc bộ?",
+//   "Các ban trong câu lạc bộ làm gì?",
+//   "Thời gian sinh hoạt diễn ra khi nào?",
+//   "Cần kỹ năng gì để ứng tuyển?",
+//   "Câu lạc bộ được thành lập khi nào?",
+//   "Câu lạc bộ có những thành tích gì?",
+// ]
 
 const CHAT_MODES: Array<{ mode: ChatMode; label: string; description: string; color: string; icon: React.ComponentType<any> }> = [
   {
@@ -48,48 +48,48 @@ const CHAT_MODES: Array<{ mode: ChatMode; label: string; description: string; co
 ]
 
 // --- FAQ cố định cho FTC (khóa không dấu) ---
-const FAQ_MAP: Record<string, string> = {
-  "cac ban trong cau lac bo lam gi":
-    "Ban Học thuật: Thiết kế nội dung cho workshop và talkshow, chuẩn bị câu hỏi cho tọa đàm, xây dựng ngân hàng câu hỏi, ra đề và chấm cuộc thi ATTACKER.\nBan Sự kiện: Lập kế hoạch và hồ sơ tổ chức, xây dựng kịch bản MC và timeline, điều phối hậu cần và giám sát thực thi tại hiện trường.\nBan Truyền thông: Thiết kế ấn phẩm, quản lý các kênh truyền thông, lập kế hoạch nội dung và phát triển hình ảnh thương hiệu của câu lạc bộ.\nBan Tài chính cá nhân: Tổ chức đào tạo về quản lý tài chính cá nhân cho sinh viên, phát triển và cập nhật bộ bài MoneyWe, hỗ trợ giảng viên ở các học phần liên quan.\nBan Nhân sự: Phân công và theo dõi tiến độ, bảo đảm nguồn lực, triển khai hoạt động gắn kết và gìn giữ văn hóa tổ chức.",
-  "cau lac bo co nhung hoat dong gi":
-    "FTC triển khai hệ sinh thái hoạt động học thuật và trải nghiệm thực tế gồm hội thảo, tọa đàm và chuyên đề về FinTech, dữ liệu, trí tuệ nhân tạo, ngân hàng số, thị trường vốn và quản trị rủi ro. Bên cạnh đó là cuộc thi học thuật ATTACKER, chuỗi talkshow và workshop, các buổi training nội bộ, tham quan doanh nghiệp như VNG, sự kiện hướng nghiệp Web3 Career Innovation và hoạt động gắn kết cộng đồng FTC Trip.",
-  "lam the nao de tham gia cau lac bo":
-    `Bạn theo dõi Fanpage để cập nhật đợt tuyển thành viên và hướng dẫn nộp hồ sơ. Link Fanpage: ${FTC_FANPAGE} . Thông báo sẽ nêu rõ mốc thời gian, điều kiện và quy trình.`,
-  "thoi gian sinh hoat dien ra khi nao":
-    "Lịch sinh hoạt được công bố trước trên các kênh nội bộ và Fanpage để mọi thành viên nắm bắt kịp thời. Tùy chương trình, câu lạc bộ sẽ thông báo rõ thời gian, hình thức tham gia và yêu cầu chuẩn bị cho từng hoạt động như talkshow, workshop, training hoặc sự kiện theo mùa.",
-  "can ky nang gi de ung tuyen":
-    "FTC chào đón đa dạng chuyên ngành. Tinh thần học hỏi, kỷ luật và chủ động là nền tảng quan trọng. Kiến thức nền về Excel, SQL hoặc Python là lợi thế khi tham gia các nội dung dữ liệu và công nghệ tài chính. Kỹ năng viết và thuyết trình giúp bạn đóng góp hiệu quả cho học thuật và truyền thông. Kỹ năng làm việc nhóm và quản lý thời gian hỗ trợ bạn theo kịp tiến độ dự án và sự kiện. Ứng viên quan tâm mảng sự kiện nên có tư duy tổ chức và khả năng phối hợp nhiều đầu việc. Ứng viên thiên về truyền thông cần khả năng xây dựng nội dung và thẩm mỹ thị giác.",
-  "cau lac bo duoc thanh lap khi nao":
-    "FTC trực thuộc Khoa Tài chính và Ngân hàng, Trường Đại học Kinh tế và Luật, ĐHQG-HCM. Câu lạc bộ được thành lập vào tháng mười một năm 2020 dưới sự hướng dẫn của ThS. NCS Phan Huy Tâm cùng đội ngũ sinh viên ngành công nghệ tài chính.",
-  "cau lac bo co nhung thanh tich gi":
-    "Năm học 2024–2025, FTC được Ban Cán sự Đoàn ĐHQG-HCM tặng Giấy khen vì đóng góp tích cực cho công tác Đoàn và phong trào thanh niên. Câu lạc bộ đồng thời vào Top 10 Nhóm 4 của Giải thưởng Đổi mới sáng tạo và Khởi nghiệp TP.HCM I-STAR, được cấp Giấy chứng nhận ghi nhận nỗ lực và đóng góp trong hoạt động đổi mới sáng tạo.",
-}
+// const FAQ_MAP: Record<string, string> = { // Moved to backend route
+//   "cac ban trong cau lac bo lam gi":
+//     "Ban Học thuật: Thiết kế nội dung cho workshop và talkshow, chuẩn bị câu hỏi cho tọa đàm, xây dựng ngân hàng câu hỏi, ra đề và chấm cuộc thi ATTACKER.\nBan Sự kiện: Lập kế hoạch và hồ sơ tổ chức, xây dựng kịch bản MC và timeline, điều phối hậu cần và giám sát thực thi tại hiện trường.\nBan Truyền thông: Thiết kế ấn phẩm, quản lý các kênh truyền thông, lập kế hoạch nội dung và phát triển hình ảnh thương hiệu của câu lạc bộ.\nBan Tài chính cá nhân: Tổ chức đào tạo về quản lý tài chính cá nhân cho sinh viên, phát triển và cập nhật bộ bài MoneyWe, hỗ trợ giảng viên ở các học phần liên quan.\nBan Nhân sự: Phân công và theo dõi tiến độ, bảo đảm nguồn lực, triển khai hoạt động gắn kết và gìn giữ văn hóa tổ chức.",
+//   "cau lac bo co nhung hoat dong gi":
+//     "FTC triển khai hệ sinh thái hoạt động học thuật và trải nghiệm thực tế gồm hội thảo, tọa đàm và chuyên đề về FinTech, dữ liệu, trí tuệ nhân tạo, ngân hàng số, thị trường vốn và quản trị rủi ro. Bên cạnh đó là cuộc thi học thuật ATTACKER, chuỗi talkshow và workshop, các buổi training nội bộ, tham quan doanh nghiệp như VNG, sự kiện hướng nghiệp Web3 Career Innovation và hoạt động gắn kết cộng đồng FTC Trip.",
+//   "lam the nao de tham gia cau lac bo":
+//     `Bạn theo dõi Fanpage để cập nhật đợt tuyển thành viên và hướng dẫn nộp hồ sơ. Link Fanpage: ${FTC_FANPAGE} . Thông báo sẽ nêu rõ mốc thời gian, điều kiện và quy trình.`,
+//   "thoi gian sinh hoat dien ra khi nao":
+//     "Lịch sinh hoạt được công bố trước trên các kênh nội bộ và Fanpage để mọi thành viên nắm bắt kịp thời. Tùy chương trình, câu lạc bộ sẽ thông báo rõ thời gian, hình thức tham gia và yêu cầu chuẩn bị cho từng hoạt động như talkshow, workshop, training hoặc sự kiện theo mùa.",
+//   "can ky nang gi de ung tuyen":
+//     "FTC chào đón đa dạng chuyên ngành. Tinh thần học hỏi, kỷ luật và chủ động là nền tảng quan trọng. Kiến thức nền về Excel, SQL hoặc Python là lợi thế khi tham gia các nội dung dữ liệu và công nghệ tài chính. Kỹ năng viết và thuyết trình giúp bạn đóng góp hiệu quả cho học thuật và truyền thông. Kỹ năng làm việc nhóm và quản lý thời gian hỗ trợ bạn theo kịp tiến độ dự án và sự kiện. Ứng viên quan tâm mảng sự kiện nên có tư duy tổ chức và khả năng phối hợp nhiều đầu việc. Ứng viên thiên về truyền thông cần khả năng xây dựng nội dung và thẩm mỹ thị giác.",
+//   "cau lac bo duoc thanh lap khi nao":
+//     "FTC trực thuộc Khoa Tài chính và Ngân hàng, Trường Đại học Kinh tế và Luật, ĐHQG-HCM. Câu lạc bộ được thành lập vào tháng mười một năm 2020 dưới sự hướng dẫn của ThS. NCS Phan Huy Tâm cùng đội ngũ sinh viên ngành công nghệ tài chính.",
+//   "cau lac bo co nhung thanh tich gi":
+//     "Năm học 2024–2025, FTC được Ban Cán sự Đoàn ĐHQG-HCM tặng Giấy khen vì đóng góp tích cực cho công tác Đoàn và phong trào thanh niên. Câu lạc bộ đồng thời vào Top 10 Nhóm 4 của Giải thưởng Đổi mới sáng tạo và Khởi nghiệp TP.HCM I-STAR, được cấp Giấy chứng nhận ghi nhận nỗ lực và đóng góp trong hoạt động đổi mới sáng tạo.",
+// }
 
 // --- Helpers ---
-function normalize(text: string) {
-  return (text || "")
-    .toLowerCase()
-    .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g, "")
-    .replace(/[^a-z0-9\s]/g, " ")
-    .replace(/\s+/g, " ")
-    .trim()
-}
+// function normalize(text: string) { // Moved to backend route
+//   return (text || "")
+//     .toLowerCase()
+//     .normalize("NFD")
+//     .replace(/[\u0300-\u036f]/g, "")
+//     .replace(/[^a-z0-9\s]/g, " ")
+//     .replace(/\s+/g, " ")
+//     .trim()
+// }
 
-function faqMatchOrNull(q: string): string | null {
-  const nx = normalize(q)
-  for (const [k, v] of Object.entries(FAQ_MAP)) {
-    if (nx.includes(k) || k.includes(nx)) return v
-  }
-  return null
-}
+// function faqMatchOrNull(q: string): string | null { // Moved to backend route
+//   const nx = normalize(q)
+//   for (const [k, v] of Object.entries(FAQ_MAP)) {
+//     if (nx.includes(k) || k.includes(nx)) return v
+//   }
+//   return null
+// }
 
-function websiteAnchor(): string {
-  if (NEXT_PUBLIC_FTC_WEBSITE) {
-    return `Bạn có thể xem thêm tại website chính thức: <a href="${NEXT_PUBLIC_FTC_WEBSITE}" target="_blank" rel="noopener noreferrer">${NEXT_PUBLIC_FTC_WEBSITE}</a>.`
-  }
-  return `Theo dõi Fanpage: <a href="${FTC_FANPAGE}" target="_blank" rel="noopener noreferrer">${FTC_FANPAGE}</a>.`
-}
+// function websiteAnchor(): string { // Moved to backend route
+//   if (NEXT_PUBLIC_FTC_WEBSITE) {
+//     return `Bạn có thể xem thêm tại website chính thức: <a href="${NEXT_PUBLIC_FTC_WEBSITE}" target="_blank" rel="noopener noreferrer">${NEXT_PUBLIC_FTC_WEBSITE}</a>.`
+//   }
+//   return `Theo dõi Fanpage: <a href="${FTC_FANPAGE}" target="_blank" rel="noopener noreferrer">${FTC_FANPAGE}</a>.`
+// }
 
 async function askServer({
   mode,
@@ -289,24 +289,14 @@ export default function ChatbotPage() {
       }
 
       // Không khớp thì gọi backend (Gemini / Google-mode)
-      if (!botText) {
-        const history = messages.slice(-6).map((m: ChatMessage) => ({ role: m.role, content: m.content }))
-        const out = await askServer({ mode: selectedMode, question: q, history })
-        botText = out || "Xin lỗi, hiện chưa thể trả lời."
-      }
-
-      // Nếu hỏi link/website trong club-mode → gợi ý website/Fanpage
-      if (selectedMode === "club") {
-        const keys = ["link", "website", "trang web", "web", "thông tin", "thong tin", "tuyển", "tuyen"]
-        if (keys.some((k) => normalize(q).includes(normalize(k)))) {
-          botText = `${botText}\n\n${websiteAnchor()}`
-        }
-      }
+      const history = messages.slice(-6).map((m: ChatMessage) => ({ role: m.role, content: m.content }))
+      const out = await askServer({ mode: selectedMode, question: q, history })
+      botText = out || "Xin lỗi, hiện chưa thể trả lời."
 
       const botMsg: ChatMessage = {
         id: crypto.randomUUID(),
         role: "assistant",
-        content: botText!,
+        content: withCTA(botText!, selectedMode),
         mode: selectedMode,
         ts: Date.now(),
       }

@@ -9,13 +9,16 @@ export const dynamic = "force-dynamic";
 type KBItem = { id?: string; question?: string; answer?: string; content?: string; tags?: string[] };
 type FAQItem = { id?: string; canonical_question?: string; answer: string };
 type HistoryMsg = { role?: string; content?: string };
+export type ChatMode = "club" | "industry"
 
-function normalize(s: string) {
+export function normalize(s: string) {
   return (s || "")
     .toLowerCase()
     .normalize("NFD")
     .replace(/[\u0300-\u036f]/g, "")
-    .replace(/[^a-z0-9\s]/g, " ");
+    .replace(/[^a-z0-9\s]/g, " ")
+    .replace(/\s+/g, " ")
+    .trim()
 }
 
 function jaccard(aArr: string[], bArr: string[]) {
@@ -45,6 +48,77 @@ function levenshtein(a: string, b: string) {
   return dp[m][n];
 }
 
+export const SYSTEM_PROMPT_CLUB = `
+Bạn là cố vấn học tập cho tân sinh viên. Chỉ trả lời về Câu lạc bộ Công nghệ tài chính FTC dựa trên tri thức nội bộ đã cung cấp.
+Bối cảnh: FTC trực thuộc Khoa Tài chính và Ngân hàng, Trường Đại học Kinh tế và Luật, ĐHQG-HCM, thành lập tháng 11/2020 dưới sự hướng dẫn của ThS. NCS Phan Huy Tâm. Hoạt động tiêu biểu gồm hội thảo, tọa đàm và chuyên đề về FinTech, dữ liệu, trí tuệ nhân tạo, ngân hàng số, thị trường vốn, quản trị rủi ro; cuộc thi học thuật ATTACKER; chuỗi talkshow và workshop; training nội bộ; tham quan doanh nghiệp như VNG; sự kiện hướng nghiệp Web3 Career Innovation; hoạt động gắn kết cộng đồng FTC Trip. Cơ cấu gồm 5 ban chuyên môn: Học thuật, Sự kiện, Truyền thông, Tài chính cá nhân, Nhân sự (Ban Điều hành giữ vai trò định hướng và phê duyệt, không tính là ban chuyên môn). Cách tham gia: theo dõi Fanpage để cập nhật đợt tuyển và hướng dẫn nộp hồ sơ (https://www.facebook.com/clbfintechuel
+). Lịch sinh hoạt được công bố trước trên kênh nội bộ và Fanpage theo từng chương trình. Kỹ năng khuyến khích: tinh thần học hỏi, kỷ luật, chủ động; nền tảng Excel, SQL hoặc Python là lợi thế; kỹ năng viết, thuyết trình, làm việc nhóm và quản lý thời gian giúp theo kịp tiến độ dự án và sự kiện; thiên về sự kiện cần tư duy tổ chức, thiên về truyền thông cần năng lực xây dựng nội dung và thẩm mỹ thị giác. Thành tích: Giấy khen của Ban Cán sự Đoàn ĐHQG-HCM năm học 2024–2025; Top 10 Nhóm 4 Giải thưởng I-STAR TP.HCM. Khi thiếu dữ liệu chi tiết, hãy nói rõ “tài liệu chưa nêu” và hướng người hỏi sang Fanpage. Trả lời bằng tiếng Việt, mạch lạc, không dùng dấu “;” hoặc gạch đầu dòng.
+
+Quy tắc trả lời:
+1. Ưu tiên kiến thức nội bộ và FAQ. Nếu câu hỏi trùng FAQ thì dùng đúng câu trả lời.
+2. Nếu thiếu dữ liệu, nói ngắn gọn “tài liệu chưa nêu” và mời xem Fanpage để cập nhật.
+3. Giọng điệu thân thiện, rõ ràng, không dùng dấu “;” hoặc “-”. Viết một đến ba đoạn ngắn, mỗi đoạn hai đến ba câu.
+4. Không tự suy đoán mốc thời gian, số liệu hay lịch nếu chưa có trong dữ liệu. Nêu rõ khi thông tin chưa sẵn sàng.
+5. Chỉ đưa link Fanpage khi cần kêu gọi hành động.
+6. Nếu câu hỏi vượt phạm vi CLB, báo câu hỏi thuộc mảng kiến thức ngành và đề nghị chuyển sang chế độ Ngành.
+
+Mẫu đầu ra:
+“FTC là câu lạc bộ Công nghệ tài chính thuộc Khoa Tài chính và Ngân hàng, ĐHQG HCM. Câu lạc bộ tạo môi trường học và làm dự án về FinTech, dữ liệu và ngân hàng số. Bạn có thể theo dõi Fanpage để cập nhật đợt tuyển và lịch hoạt động mới.”
+`;
+
+export const SYSTEM_PROMPT_INDUSTRY = `
+Bạn là trợ lý học thuật về FinTech và các lĩnh vực sát cạnh gồm ngân hàng số, dữ liệu, AI tài chính, blockchain, thị trường vốn và quản trị rủi ro. Chỉ dùng thông tin từ KẾT QUẢ TÌM KIẾM GOOGLE mà hệ thống truyền vào. Không hiển thị link và không liệt kê nguồn chi tiết. Trả lời ngắn gọn, chính xác, trung lập.
+
+Đầu vào:
+[KE_TQUA_TIM_KIEM_BAT_DAU]
+1) {title} — {domain}
+Tóm tắt: {snippet}
+...
+[N entries]
+[KE_TQUA_TIM_KIEM_KET_THUC]
+Cau_hoi: "{question}"
+
+Quy tắc tổng hợp:
+1. Trả lồi dựa trên thông tin kiếm được
+2. Phong cách mạch lạc, không dùng dấu “;” hoặc “-”. Mặc định viết một đoạn tám mươi đến một trăm năm mươi từ.
+3. Với câu hỏi “là gì”, nêu định nghĩa ngắn rồi cách hoạt động và một ví dụ rút từ kết quả. Với “so sánh”, nêu khác biệt cốt lõi bằng câu văn ngắn. Với “xu hướng”, khái quát hai đến ba hướng nổi bật.
+4. Không đưa khuyến nghị đầu tư và không yêu cầu dữ liệu cá nhân.
+
+Mẫu:
+“Blockchain trong tài chính được mô tả như một sổ cái phân tán giúp xác thực giao dịch minh bạch và khó bị sửa đổi. Theo các kết quả tìm kiếm, ứng dụng phổ biến là chuyển tiền quốc tế, lưu ký tài sản số và đối soát sau giao dịch. Lợi ích chính là giảm lệch pha dữ liệu và rút ngắn thời gian quyết toán, tuy nhiên chi phí tuân thủ và khả năng mở rộng vẫn là rào cản ở một số hệ thống.”
+
+Lưu ý: Không hiển thị liên kết và không liệt kê tên nguồn. Chỉ trả lời dựa trên khối kết quả tìm kiếm đã cho.
+`;
+
+export const FTC_CONTACTS = {
+  fanpage: "https://www.facebook.com/clbfintechuel",
+  email: "clbcongnghetaichinh@st.uel.edu.vn"
+}
+
+export const SUGGESTED_QUESTIONS: string[] = [
+  "Câu lạc bộ có những hoạt động gì?",
+  "Làm thế nào để tham gia câu lạc bộ?",
+  "Các ban trong câu lạc bộ làm gì?",
+  "Thời gian sinh hoạt diễn ra khi nào?",
+  "Cần kỹ năng gì để ứng tuyển?",
+  "Câu lạc bộ được thành lập khi nào?",
+  "Câu lạc bộ có những thành tích gì?",
+  "Quyền lợi của thành viên là gì?",
+  "Quy trình tuyển chọn gồm những bước nào?",
+  "Có thu phí thành viên không?"
+]
+
+// Heuristic đơn giản, ưu tiên route sang CLB nếu chứa từ khóa về tổ chức nội bộ
+export function detectMode(question: string): ChatMode {
+  const q = normalize(question)
+  const clubHints = [
+    "cau lac bo", "ftc", "ban hoc thuat", "ban su kien", "ban truyen thong",
+    "ban tai chinh ca nhan", "ban nhan su", "tuyen thanh vien", "lich sinh hoat",
+    "thanh tich", "fanpage", "mentor", "on boarding", "cuoc thi attacker"
+  ]
+  const hit = clubHints.some(k => q.includes(k))
+  return hit ? "club" : "industry"
+}
+
 function score(q: string, item: KBItem) {
   const text = `${item.question ?? ""}\n${item.answer ?? ""}\n${item.content ?? ""}\n${(item.tags ?? []).join(" ")}`;
   const s = jaccard(normalize(q).split(/\s+/).filter(Boolean), normalize(text).split(/\s+/).filter(Boolean));
@@ -52,97 +126,87 @@ function score(q: string, item: KBItem) {
   return s + titleBoost;
 }
 
-async function readKB(): Promise<KBItem[]> {
-  // Ưu tiên lấy từ ENV nếu muốn deploy không đụng filesystem
-  const envJson = process.env.KB_JSON;
-  if (envJson) {
-    try {
-      const parsed = JSON.parse(envJson);
-      if (Array.isArray(parsed)) return parsed;
-      if (Array.isArray((parsed as any)?.data)) return (parsed as any).data;
-    } catch {}
-  }
-  // Fallback: đọc file trong repo
-  const candidates = [
-    "public/knowledge_base/faq.json",
-    "public/kb.json",
-    "knowledge_base/faq.json",
-    "configuration_chatbot/knowledge_base/faq.json",
-    "configuration_chatbot/knowledge_base/index.json",
-  ];
-  for (const rel of candidates) {
-    try {
-      const p = path.resolve(process.cwd(), rel);
-      const raw = await fs.readFile(p, "utf8");
-      const json = JSON.parse(raw);
-      if (Array.isArray(json)) return json;
-      if (Array.isArray(json?.data)) return json.data;
-    } catch {}
-  }
-  return [];
-}
-
-function extractFAQFromKB(kb: KBItem[]): FAQItem[] {
-  return kb
-    .filter((it) => it.answer && (((it as any).canonical_question) || it.question))
-    .map((it) => ({
-      id: it.id,
-      canonical_question: (it as any).canonical_question || (it.question ? normalize(it.question) : undefined),
-      answer: it.answer as string,
-    })) as FAQItem[];
-}
-
-function readFAQFromEnv(): FAQItem[] {
-  const out: FAQItem[] = [];
-  const envJson = process.env.KB_JSON;
-  if (!envJson) return out;
-  try {
-    const parsed = JSON.parse(envJson);
-    const faqArr = Array.isArray(parsed?.faq) ? parsed.faq : (Array.isArray(parsed) ? parsed : []);
-    for (const f of faqArr) {
-      if (f?.answer && (f?.canonical_question || f?.question)) {
-        out.push({ id: f.id, canonical_question: normalize(f.canonical_question || f.question), answer: f.answer });
-      }
-    }
-  } catch {}
-  return out;
-}
-
 function tokenizeForKeywords(s: string) {
   const tokens = normalize(s).split(/\s+/).filter(Boolean);
   return tokens.filter((t) => t.length >= 3);
 }
 
-const STATIC_FAQS: FAQItem[] = [
-  {
-    canonical_question: "câu lạc bộ có những hoạt động gì",
-    answer: "FTC triển khai hệ sinh thái hoạt động học thuật và trải nghiệm thực tế gồm hội thảo, tọa đàm và chuyên đề về FinTech, dữ liệu, trí tuệ nhân tạo, ngân hàng số, thị trường vốn và quản trị rủi ro. Bên cạnh đó là cuộc thi học thuật ATTACKER, chuỗi talkshow và workshop, các buổi training nội bộ, tham quan doanh nghiệp như VNG, sự kiện hướng nghiệp Web3 Career Innovation và hoạt động gắn kết cộng đồng FTC Trip."
-  },
-  {
-    canonical_question: "làm thế nào để tham gia câu lạc bộ",
-    answer: "Bạn theo dõi Fanpage để cập nhật đợt tuyển thành viên và hướng dẫn nộp hồ sơ. Link Fanpage: https://www.facebook.com/clbfintechuel. Thông báo sẽ nêu rõ mốc thời gian, điều kiện và quy trình."
-  },
-  {
-    canonical_question: "các ban trong câu lạc bộ làm gì",
-    answer: "Ban Học thuật: Thiết kế nội dung cho workshop và talkshow, chuẩn bị câu hỏi cho tọa đàm, xây dựng ngân hàng câu hỏi, ra đề và chấm cuộc thi ATTACKER. Ban Sự kiện: Lập kế hoạch và hồ sơ tổ chức, xây dựng kịch bản MC và timeline, điều phối hậu cần và giám sát thực thi tại hiện trường. Ban Truyền thông: Thiết kế ấn phẩm, quản lý các kênh truyền thông, lập kế hoạch nội dung và phát triển hình ảnh thương hiệu của câu lạc bộ. Ban Tài chính cá nhân: Tổ chức đào tạo về quản lý tài chính cá nhân cho sinh viên, phát triển và cập nhật bộ bài MoneyWe, hỗ trợ giảng viên ở các học phần liên quan. Ban Nhân sự: Phân công và theo dõi tiến độ, bảo đảm nguồn lực, triển khai hoạt động gắn kết và gìn giữ văn hóa tổ chức."
-  },
-  {
-    canonical_question: "thời gian sinh hoạt diễn ra khi nào",
-    answer: "Lịch sinh hoạt được công bố trước trên các kênh nội bộ và Fanpage để mọi thành viên nắm bắt kịp thời. Tùy chương trình, câu lạc bộ sẽ thông báo rõ thời gian, hình thức tham gia và yêu cầu chuẩn bị cho từng hoạt động như talkshow, workshop, training hoặc sự kiện theo mùa."
-  },
-  {
-    canonical_question: "cần kỹ năng gì để ứng tuyển",
-    answer: "FTC chào đón đa dạng chuyên ngành. Tinh thần học hỏi, kỷ luật và chủ động là nền tảng quan trọng. Kiến thức nền về Excel, SQL hoặc Python là lợi thế khi tham gia các nội dung dữ liệu và công nghệ tài chính. Kỹ năng viết và thuyết trình giúp bạn đóng góp hiệu quả cho học thuật và truyền thông. Kỹ năng làm việc nhóm và quản lý thời gian hỗ trợ bạn theo kịp tiến độ dự án và sự kiện. Ứng viên quan tâm mảng sự kiện nên có tư duy tổ chức và khả năng phối hợp nhiều đầu việc. Ứng viên thiên về truyền thông cần khả năng xây dựng nội dung và thẩm mỹ thị giác."
-  },
-  {
-    canonical_question: "câu lạc bộ được thành lập khi nào",
-    answer: "FTC trực thuộc Khoa Tài chính và Ngân hàng, Trường Đại học Kinh tế và Luật, ĐHQG-HCM. Câu lạc bộ được thành lập vào tháng mười một năm 2020 dưới sự hướng dẫn của ThS. NCS Phan Huy Tâm cùng đội ngũ sinh viên ngành công nghệ tài chính."
-  },
-  {
-    canonical_question: "câu lạc bộ có những thành tích gì",
-    answer: "Năm học 2024–2025, FTC được Ban Cán sự Đoàn ĐHQG-HCM tặng Giấy khen vì đóng góp tích cực cho công tác Đoàn và phong trào thanh niên. Câu lạc bộ đồng thời vào Top 10 Nhóm 4 của Giải thưởng Đổi mới sáng tạo và Khởi nghiệp TP.HCM I-STAR, được cấp Giấy chứng nhận ghi nhận nỗ lực và đóng góp trong hoạt động đổi mới sáng tạo."
+// -------------------- 4) FAQ mở rộng cho chế độ CLB --------------------
+export const FAQ_MAP: Record<string, string> = {
+  // Ban chuyên môn
+  "cac ban trong cau lac bo lam gi":
+`Ban Học thuật phát triển nội dung cho workshop và talkshow, biên soạn tài liệu thực hành về FinTech, dữ liệu và ngân hàng số. Ban xây ngân hàng câu hỏi, ra đề và chấm cuộc thi ATTACKER. Đầu ra gồm slide, case study, ngân hàng trắc nghiệm, outline dự án và báo cáo tổng kết.
+Ban Sự kiện lập kế hoạch, viết kịch bản MC, điều phối hiện trường, làm việc với đối tác địa điểm. Ban chịu trách nhiệm timeline chi tiết, checklist, phân công, nghiệm thu chất lượng và báo cáo chi phí.
+Ban Truyền thông xây dựng nhận diện và câu chuyện thương hiệu, quản lý kênh mạng xã hội, sản xuất nội dung và ấn phẩm, theo dõi hiệu quả tiếp cận. Đầu ra gồm bộ ảnh, video ngắn, bài giới thiệu diễn giả, bài recap và báo cáo chỉ số.
+Ban Tài chính cá nhân thiết kế giáo trình quản lý tài chính cho sinh viên, vận hành lớp học và cập nhật bộ bài MoneyWe, hỗ trợ học phần liên quan. Chủ đề gồm lập ngân sách, mục tiêu tiết kiệm và quản trị rủi ro tài chính.
+Ban Nhân sự quy hoạch nguồn lực theo quý, theo dõi tiến độ, triển khai gắn kết nội bộ, thiết lập chương trình mentor, quản lý hồ sơ, tuyển chọn, on boarding, đánh giá và khen thưởng.`, // Hoạt động
+  "cau lac bo co nhung hoat dong gi":
+`FTC vận hành hệ sinh thái học thuật kết hợp trải nghiệm thực tế. Trọng tâm là workshop, talkshow, tọa đàm chuyên đề và cuộc thi ATTACKER. Bên cạnh đó là training nội bộ theo quý, tham quan doanh nghiệp như VNG, sự kiện hướng nghiệp và các hoạt động gắn kết cộng đồng. Mỗi chương trình có mục tiêu học tập rõ ràng, tiêu chí đánh giá cụ thể và báo cáo tổng kết để cải tiến.`, // Tham gia
+  "lam the nao de tham gia cau lac bo":
+`Bạn theo dõi Fanpage để cập nhật đợt tuyển và hướng dẫn nộp hồ sơ. Thông báo sẽ nêu mốc thời gian, điều kiện và quy trình. Thông thường hồ sơ có phần giới thiệu ngắn, lựa chọn ban mong muốn và một bài bài tập theo ban. Ứng viên qua vòng hồ sơ sẽ phỏng vấn và tham gia giai đoạn thử thách ngắn trước khi trở thành thành viên chính thức. Link Fanpage ${FTC_CONTACTS.fanpage}`, // Lịch sinh hoạt
+  "thoi gian sinh hoat dien ra khi nao":
+`Lịch sinh hoạt được công bố sớm trên kênh nội bộ và Fanpage. Hoạt động học thuật thường diễn ra buổi tối trong tuần. Sự kiện lớn và tham quan thường tổ chức cuối tuần để thuận tiện cho sinh viên.`, // Kỹ năng
+  "can ky nang gi de ung tuyen":
+`FTC chào đón đa dạng chuyên ngành. Tinh thần học hỏi, kỷ luật và chủ động là nền tảng. Kiến thức về Excel, SQL hoặc Python là lợi thế cho mảng dữ liệu và công nghệ tài chính. Kỹ năng viết và thuyết trình hỗ trợ học thuật và truyền thông. Kỹ năng làm việc nhóm và quản lý thời gian giúp theo kịp tiến độ. Thành viên mới sẽ được on boarding và có mentor đồng hành.`, // Lịch sử
+  "cau lac bo duoc thanh lap khi nao":
+`FTC trực thuộc Khoa Tài chính và Ngân hàng, Trường Đại học Kinh tế và Luật, ĐHQG HCM. Câu lạc bộ thành lập tháng 11 năm 2020 dưới sự hướng dẫn của ThS NCS Phan Huy Tâm.`, // Thành tích
+  "cau lac bo co nhung thanh tich gi":
+`Năm học 2024 đến 2025, FTC nhận Giấy khen của Ban Cán sự Đoàn ĐHQG HCM. Câu lạc bộ vào Top 10 Nhóm 4 của Giải thưởng I STAR TP HCM và được cấp Giấy chứng nhận ghi nhận nỗ lực và ảnh hưởng.`, // Quyền lợi
+  "quyen loi cua thanh vien la gi":
+`Thành viên được tham gia hệ thống lớp học và dự án có mentor hướng dẫn. Mỗi học kỳ có lộ trình mục tiêu rõ ràng và cơ hội thử sức vai trò điều phối để rèn luyện năng lực lãnh đạo. Câu lạc bộ cấp chứng nhận nội bộ theo đóng góp, hỗ trợ giới thiệu thực tập khi đáp ứng chuẩn đầu ra và tạo điều kiện xây dựng danh mục dự án cá nhân.`, // Quy trình tuyển
+  "quy trinh tuyen chon gom nhung buoc nao":
+`Quy trình điển hình gồm thông báo tuyển, nộp hồ sơ trực tuyến, sàng lọc, phỏng vấn và giai đoạn thử thách ngắn. Thời lượng và tiêu chí có thể điều chỉnh theo từng đợt. Nếu có thay đổi, Fanpage sẽ cập nhật chi tiết.`, // Phí thành viên
+  "co thu phi thanh vien khong":
+`Tài liệu chưa nêu mức phí cụ thể. Nếu có thu phí, thông tin sẽ được thông báo trong đợt tuyển hoặc trong hướng dẫn on boarding. Vui lòng theo dõi Fanpage để cập nhật.`, // Liên hệ
+  "lien he clb bang cach nao":
+`Bạn có thể liên hệ qua email ${FTC_CONTACTS.email} hoặc Fanpage ${FTC_CONTACTS.fanpage}. Khi cần hỗ trợ nhanh, hãy nhắn tin trực tiếp trên Fanpage.`
+}
+
+const FAQ_KEYS = Object.keys(FAQ_MAP)
+
+export function faqMatchOrNull(question: string): string | null {
+  const q = normalize(question)
+
+  // Ưu tiên khớp chính xác
+  const exact = FAQ_MAP[q]
+  if (exact) return exact
+
+  // Từ khóa cho từng FAQ để khớp gần đúng
+  const index: Record<string, string[]> = {
+    "cac ban trong cau lac bo lam gi": ["ban nao", "cac ban", "bo may", "phan cong", "nhiem vu"],
+    "cau lac bo co nhung hoat dong gi": ["hoat dong", "chuong trinh", "su kien", "workshop", "talkshow"],
+    "lam the nao de tham gia cau lac bo": ["tham gia", "ung tuyen", "dang ky", "tuyen thanh vien"],
+    "thoi gian sinh hoat dien ra khi nao": ["lich sinh hoat", "thoi gian", "bao gio"],
+    "can ky nang gi de ung tuyen": ["ky nang", "yeu cau", "dieu kien"],
+    "cau lac bo duoc thanh lap khi nao": ["thanh lap", "ra doi", "nam nao"],
+    "cau lac bo co nhung thanh tich gi": ["thanh tich", "giai thuong", "giay khen"],
+    "quyen loi cua thanh vien la gi": ["quyen loi", "loi ich", "benefit"],
+    "quy trinh tuyen chon gom nhung buoc nao": ["quy trinh", "tuyen chon", "vong", "phong van", "thu thach"],
+    "co thu phi thanh vien khong": ["phi thanh vien", "dong phi", "hoc phi"],
+    "lien he clb bang cach nao": ["lien he", "email", "fanpage", "contact"]
   }
-];
+
+  // Tính điểm khớp
+  let bestKey = ""
+  let bestScore = 0
+  for (const [key, kws] of Object.entries(index)) {
+    const score = kws.reduce((acc, kw) => acc + (q.includes(normalize(kw)) ? 1 : 0), 0)
+    if (score > bestScore) {
+      bestScore = score
+      bestKey = key
+    }
+  }
+  if (bestScore > 0) return FAQ_MAP[bestKey]
+
+  return null
+}
+
+export function withCTA(answer: string, mode: ChatMode): string {
+  if (mode === "club") {
+    return `${answer}\n\nBạn muốn tìm hiểu thêm về ban nào hoặc lịch sinh hoạt gần nhất không`
+  }
+  return `${answer}\n\nBạn có muốn thu hẹp phạm vi theo quốc gia, giai đoạn hoặc trường hợp sử dụng cụ thể không`
+}
 
 function matchFAQ(userQuestion: string, faqList: FAQItem[]) {
   const uqNorm = normalize(userQuestion);
@@ -269,7 +333,10 @@ export async function POST(req: NextRequest) {
   try { body = await req.json(); } catch {}
 
   const userQ = extractUserQuestion(body);
-  const requestedMode: "club" | "industry" = (body.mode || "club").toLowerCase();
+  let requestedMode: ChatMode = (body.mode || "").toLowerCase();
+  if (!requestedMode || (requestedMode !== "club" && requestedMode !== "industry")) {
+    requestedMode = detectMode(userQ);
+  }
   const searchResults: Array<{ title: string; domain: string; snippet: string }> | undefined = body.search_results;
 
   if (!process.env.GEMINI_API_KEY) {
@@ -285,23 +352,22 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  const kb = await readKB();
-  const faqFromEnv = readFAQFromEnv();
-  const faqFromKb = extractFAQFromKB(kb);
-  const faqList: FAQItem[] = [...STATIC_FAQS, ...faqFromEnv, ...faqFromKb];
+  const kb = []; // No longer needed directly
+  const faqFromEnv = []; // No longer needed
+  const faqFromKb = []; // No longer needed
+  const faqList: FAQItem[] = []; // No longer needed
 
   let finalMode: "kb" | "google" = "google"; // Default to general knowledge (industry mode)
   let botResponse: string | null = null;
-  let kbHitIds: string[] = [];
+  let kbHitIds: string[] = []; // No longer used directly
 
   if (requestedMode === "club") {
-    const matched = faqList.length ? matchFAQ(userQ, faqList) : null;
+    const matched = faqMatchOrNull(userQ);
     if (matched) {
-      botResponse = matched.item.answer;
+      botResponse = withCTA(matched, "club");
       finalMode = "kb"; // FAQ response is part of KB mode
     } else {
-      // Fallback to Gemini with KB context if no direct FAQ match in club mode
-      finalMode = "kb"; // Ensure it's KB mode if no direct FAQ but still in club mode
+      finalMode = "kb"; // Fallback to Gemini with SYSTEM_PROMPT_CLUB
     }
   } else if (requestedMode === "industry") {
     finalMode = "google"; // Explicitly set for industry mode
@@ -311,7 +377,7 @@ export async function POST(req: NextRequest) {
     const headers = new Headers({
       "x-chat-route": "gemini-rag",
       "x-router": "faq",
-      "x-faq-id": String(faqList.find(f => f.answer === botResponse)?.id || ""),
+      // "x-faq-id": String(faqList.find(f => f.answer === botResponse)?.id || ""), // faqList is no longer used
       "Cache-Control": "no-store",
     });
     return new NextResponse(JSON.stringify({ text: botResponse, reply: botResponse, response: botResponse, mode: requestedMode }), { status: 200, headers });
@@ -323,7 +389,7 @@ export async function POST(req: NextRequest) {
   const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY as string);
   const model = genAI.getGenerativeModel({
     model: process.env.GEMINI_MODEL ?? "gemini-1.5-flash",
-    systemInstruction: systemPrompt(finalMode, greetOnce, searchResults),
+    systemInstruction: requestedMode === "club" ? SYSTEM_PROMPT_CLUB : SYSTEM_PROMPT_INDUSTRY,
     safetySettings: [
       { category: HarmCategory.HARM_CATEGORY_HATE_SPEECH, threshold: HarmBlockThreshold.BLOCK_NONE },
       { category: HarmCategory.HARM_CATEGORY_HARASSMENT, threshold: HarmBlockThreshold.BLOCK_NONE },
