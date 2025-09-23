@@ -66,27 +66,7 @@ Mẫu đầu ra:
 `;
 
 export const SYSTEM_PROMPT_INDUSTRY = `
-Bạn là trợ lý học thuật về FinTech và các lĩnh vực sát cạnh gồm ngân hàng số, dữ liệu, AI tài chính, blockchain, thị trường vốn và quản trị rủi ro. Chỉ dùng thông tin từ KẾT QUẢ TÌM KIẾM GOOGLE mà hệ thống truyền vào. Không hiển thị link và không liệt kê nguồn chi tiết. Trả lời ngắn gọn, chính xác, trung lập.
-
-Đầu vào:
-[KE_TQUA_TIM_KIEM_BAT_DAU]
-1) {title} — {domain}
-Tóm tắt: {snippet}
-...
-[N entries]
-[KE_TQUA_TIM_KIEM_KET_THUC]
-Cau_hoi: "{question}"
-
-Quy tắc tổng hợp:
-1. Trả lồi dựa trên thông tin kiếm được
-2. Phong cách mạch lạc, không dùng dấu “;” hoặc “-”. Mặc định viết một đoạn tám mươi đến một trăm năm mươi từ.
-3. Với câu hỏi “là gì”, nêu định nghĩa ngắn rồi cách hoạt động và một ví dụ rút từ kết quả. Với “so sánh”, nêu khác biệt cốt lõi bằng câu văn ngắn. Với “xu hướng”, khái quát hai đến ba hướng nổi bật.
-4. Không đưa khuyến nghị đầu tư và không yêu cầu dữ liệu cá nhân.
-
-Mẫu:
-“Blockchain trong tài chính được mô tả như một sổ cái phân tán giúp xác thực giao dịch minh bạch và khó bị sửa đổi. Theo các kết quả tìm kiếm, ứng dụng phổ biến là chuyển tiền quốc tế, lưu ký tài sản số và đối soát sau giao dịch. Lợi ích chính là giảm lệch pha dữ liệu và rút ngắn thời gian quyết toán, tuy nhiên chi phí tuân thủ và khả năng mở rộng vẫn là rào cản ở một số hệ thống.”
-
-Lưu ý: Không hiển thị liên kết và không liệt kê tên nguồn. Chỉ trả lời dựa trên khối kết quả tìm kiếm đã cho.
+Bạn là trợ lý AI. Nhiệm vụ của bạn là trả lời các câu hỏi về ngành FinTech và các lĩnh vực liên quan bằng tiếng Việt, mạch lạc, tự nhiên, không dùng dấu ';' và không gạch đầu dòng. Luôn ưu tiên ngắn gọn, đúng trọng tâm và cung cấp thông tin hữu ích. Nếu bạn không có đủ thông tin để trả lời chính xác, hãy nói rõ rằng bạn chưa có dữ liệu phù hợp để trả lời câu hỏi này.
 `;
 
 export const FTC_CONTACTS = {
@@ -268,7 +248,7 @@ function buildContext(q: string, kb: KBItem[]) {
   return { ids, text };
 }
 
-function systemPrompt(mode: "club" | "industry", greetOnce: boolean, searchResults?: Array<{ title: string; domain: string; snippet: string }>) {
+function systemPrompt(mode: "club" | "industry", greetOnce: boolean) {
   const WEBSITE_LINK = process.env.NEXT_PUBLIC_FTC_WEBSITE
     ? `Bạn có thể xem thêm tại website chính thức: <a href='${process.env.NEXT_PUBLIC_FTC_WEBSITE}' target='_blank' rel='noopener noreferrer'>${process.env.NEXT_PUBLIC_FTC_WEBSITE}</a>.`
     : "Bạn có thể xem thêm tại Fanpage của câu lạc bộ: https://www.facebook.com/clbfintechuel.";
@@ -277,9 +257,7 @@ function systemPrompt(mode: "club" | "industry", greetOnce: boolean, searchResul
 
   if (mode === "industry") {
     return (
-      "Bạn là trợ lý học thuật FinTech. Nhiệm vụ của bạn là trả lời ngắn gọn, chính xác, tự nhiên bằng tiếng Việt, dựa chỉ và duy nhất trên các kết quả tìm kiếm Google đã được cung cấp (tiêu đề, domain, snippet). Không tự bịa, không suy diễn ngoài dữ liệu đã cấp. " +
-      (greetOnce ? "Chỉ chào ở tin nhắn đầu tiên nếu người dùng chào trước; về sau trả lời trực tiếp, không mở đầu bằng lời chào. " : "Không mở đầu bằng lời chào. ") +
-      "Chỉ dùng thông tin từ search_results. Nếu thiếu dữ liệu cho phần nào, nói rõ \"tài liệu chưa nêu\" cho phần đó thay vì suy đoán. Không liệt kê hay trích nguồn chi tiết. Không chèn link, không ghi tiêu đề bài viết, không ghi domain cụ thể. Chỉ tóm tắt nội dung thành câu văn mạch lạc. Phong cách: tự nhiên, rõ ràng, không dùng dấu ';' và không dùng gạch đầu dòng. Viết thành đoạn văn. Ngắn gọn trước, chi tiết sau: mở đầu 1–2 câu tổng quan, tiếp theo là giải thích trọng tâm theo câu hỏi của người dùng. Xử lý mâu thuẫn: nếu các snippet bất nhất, ưu tiên điểm giao nhau giữa nhiều snippet. Khi không thể kết luận, nêu phương án khả dĩ và nói \"tài liệu chưa nêu chi tiết để khẳng định\". Tính thời điểm: nếu câu hỏi nhạy cảm theo thời gian (xu hướng, quy định), hãy nói thời tính như \"hiện tại\", \"gần đây\", trừ khi snippet nêu mốc rõ ràng. Giữ ngữ nghĩa học thuật: định nghĩa thuật ngữ, nêu ví dụ ngắn gọn khi cần. Nếu người dùng hỏi \"cách làm\", trả lời theo các bước nhưng vẫn viết thành câu văn, không liệt kê bullet. An toàn nội dung: không đưa lời khuyên tài chính cá nhân, không đưa chỉ dẫn vi phạm pháp luật, không dạy hack gian lận. Với nội dung rủi ro, chỉ giải thích bối cảnh học thuật. Không sao chép y nguyên câu dài từ snippet. Hãy diễn đạt lại bằng lời của bạn. Giới hạn độ dài: đa số câu trả lời 4–8 câu. Với câu \"định nghĩa\", ưu tiên 3–5 câu."
+      "Bạn là trợ lý AI. Nhiệm vụ của bạn là trả lời các câu hỏi về ngành FinTech và các lĩnh vực liên quan bằng tiếng Việt, mạch lạc, tự nhiên, không dùng dấu ';' và không gạch đầu dòng. Luôn ưu tiên ngắn gọn, đúng trọng tâm và cung cấp thông tin hữu ích. Nếu bạn không có đủ thông tin để trả lời chính xác, hãy nói rõ rằng bạn chưa có dữ liệu phù hợp để trả lời câu hỏi này."
     );
   }
   // mode === "club"
@@ -337,7 +315,7 @@ export async function POST(req: NextRequest) {
   if (!requestedMode || (requestedMode !== "club" && requestedMode !== "industry")) {
     requestedMode = detectMode(userQ);
   }
-  const searchResults: Array<{ title: string; domain: string; snippet: string }> | undefined = body.search_results;
+  // const searchResults: Array<{ title: string; domain: string; snippet: string }> | undefined = body.search_results; // No longer needed
 
   if (!process.env.GEMINI_API_KEY) {
     return NextResponse.json(
@@ -406,14 +384,14 @@ export async function POST(req: NextRequest) {
   }
 
   let userMsg = `CÂU HỎI: ${userQ}`;
-  if (requestedMode === "industry" && searchResults && searchResults.length > 0) {
-    const searchResultsText = searchResults.map((result, idx) => {
-      return `${idx + 1}) ${result.title} — ${result.domain}\nTóm tắt: ${result.snippet}`;
-    }).join("\n");
-    userMsg = `Câu hỏi: "${userQ}"\nKết quả tìm kiếm (tối đa ${searchResults.length}):\n${searchResultsText}\nYêu cầu: Dựa vào các tóm tắt trên để trả lời.`
-  } else if (requestedMode === "industry" && (!searchResults || searchResults.length === 0)) {
-    userMsg = "Mình chưa thấy dữ liệu phù hợp từ kết quả tìm kiếm kèm theo nên chưa thể trả lời chính xác. Bạn có thể hỏi lại cụ thể hơn."
-  }
+  // if (requestedMode === "industry" && searchResults && searchResults.length > 0) {
+  //   const searchResultsText = searchResults.map((result, idx) => {
+  //     return `${idx + 1}) ${result.title} — ${result.domain}\nTóm tắt: ${result.snippet}`;
+  //   }).join("\n");
+  //   userMsg = `Câu hỏi: "${userQ}"\nKết quả tìm kiếm (tối đa ${searchResults.length}):\n${searchResultsText}\nYêu cầu: Dựa vào các tóm tắt trên để trả lời.`
+  // } else if (requestedMode === "industry" && (!searchResults || searchResults.length === 0)) {
+  //   userMsg = "Mình chưa thấy dữ liệu phù hợp từ kết quả tìm kiếm kèm theo nên chưa thể trả lời chính xác. Bạn có thể hỏi lại cụ thể hơn."
+  // }
 
   try {
     const result = await model.generateContent({
