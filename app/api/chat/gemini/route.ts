@@ -232,6 +232,7 @@ export async function POST(req: NextRequest) {
   try { body = await req.json(); } catch {}
 
   const userQ = extractUserQuestion(body);
+  const requestedMode: "club" | "industry" = (body.mode || "club").toLowerCase();
 
   if (!process.env.GEMINI_API_KEY) {
     return NextResponse.json(
@@ -247,31 +248,47 @@ export async function POST(req: NextRequest) {
   }
 
   const kb = await readKB();
-  // Build FAQ set: ENV.faq first, then derive from KB entries
   const faqFromEnv = readFAQFromEnv();
   const faqFromKb = extractFAQFromKB(kb);
   const faqList: FAQItem[] = [...faqFromEnv, ...faqFromKb];
 
-  // FAQ router override
-  const matched = faqList.length ? matchFAQ(userQ, faqList) : null;
-  if (matched) {
+  let finalMode: "kb" | "google" = "google"; // Default to general knowledge (industry mode)
+  let botResponse: string | null = null;
+  let kbHitIds: string[] = [];
+
+  if (requestedMode === "club") {
+    const matched = faqList.length ? matchFAQ(userQ, faqList) : null;
+    if (matched) {
+      botResponse = matched.item.answer;
+      finalMode = "kb"; // FAQ response is part of KB mode
+    } else {
+      // Fallback to Gemini with KB context if no direct FAQ match in club mode
+      const { ids, text } = buildContext(userQ, kb);
+      if (text) {
+        finalMode = "kb";
+        kbHitIds = ids;
+      }
+      // If still no KB context, it remains 'google' and the systemPrompt will handle it
+    }
+  }
+
+  if (botResponse) {
     const headers = new Headers({
       "x-chat-route": "gemini-rag",
       "x-router": "faq",
-      "x-faq-id": String(matched.item.id || ""),
+      "x-faq-id": String(faqList.find(f => f.answer === botResponse)?.id || ""),
       "Cache-Control": "no-store",
     });
-    const ans = matched.item.answer;
-    return new NextResponse(JSON.stringify({ text: ans, reply: ans, response: ans, mode: "faq" }), { status: 200, headers });
+    return new NextResponse(JSON.stringify({ text: botResponse, reply: botResponse, response: botResponse, mode: requestedMode }), { status: 200, headers });
   }
-  const { ids, text } = buildContext(userQ, kb);
-  const mode: "kb" | "google" = text ? "kb" : "google";
+
+  // Prepare for Gemini generation
   const greetOnce = isFirstTurn(body);
 
   const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY as string);
   const model = genAI.getGenerativeModel({
     model: process.env.GEMINI_MODEL ?? "gemini-1.5-flash",
-    systemInstruction: systemPrompt(mode, greetOnce),
+    systemInstruction: systemPrompt(finalMode, greetOnce),
     safetySettings: [
       { category: HarmCategory.HARM_CATEGORY_HATE_SPEECH, threshold: HarmBlockThreshold.BLOCK_NONE },
       { category: HarmCategory.HARM_CATEGORY_HARASSMENT, threshold: HarmBlockThreshold.BLOCK_NONE },
@@ -281,8 +298,15 @@ export async function POST(req: NextRequest) {
     ],
   });
 
-  const userMsg = text
-    ? `CÂU HỎI: ${userQ}\n\nNGỮ CẢNH (CONTEXT):\n${text}\n\nYÊU CẦU PHONG CÁCH: Trả lời tự nhiên, trực diện, không chào lại trừ khi đây là tin nhắn đầu. Không dùng dấu ";" và không dùng gạch đầu dòng.`
+  let contextText = "";
+  if (finalMode === "kb") {
+    const { ids, text } = buildContext(userQ, kb);
+    contextText = text;
+    kbHitIds = ids;
+  }
+
+  const userMsg = contextText
+    ? `CÂU HỎI: ${userQ}\n\nNGỮ CẢNH (CONTEXT):\n${contextText}\n\nYÊU CẦU PHONG CÁCH: Trả lời tự nhiên, trực diện, không chào lại trừ khi đây là tin nhắn đầu. Không dùng dấu ";" và không dùng gạch đầu dòng.`
     : `CÂU HỎI: ${userQ}\n\nYÊU CẦU PHONG CÁCH: Trả lời tự nhiên, trực diện, không chào lại trừ khi đây là tin nhắn đầu. Không dùng dấu ";" và không dùng gạch đầu dòng.`;
 
   try {
@@ -295,14 +319,14 @@ export async function POST(req: NextRequest) {
     const headers = new Headers({
       "x-chat-route": "gemini-rag",
       "x-router": "gemini",
-      "x-rag-mode": mode,
+      "x-rag-mode": finalMode,
       "x-kb-count": String(kb.length),
-      "x-kb-hit": String(ids.length),
+      "x-kb-hit": String(kbHitIds.length),
       "x-duration-ms": String(Date.now() - started),
       "Cache-Control": "no-store",
     });
 
-    const payload = { reply: out, response: out, text: out, mode, kb_hit_ids: ids };
+    const payload = { reply: out, response: out, text: out, mode: requestedMode, kb_hit_ids: kbHitIds };
     return new NextResponse(JSON.stringify(payload), { status: 200, headers });
   } catch (err: any) {
     const msg = (err?.message || String(err)).toLowerCase();
