@@ -75,60 +75,6 @@ export function Navigation() {
 
   return (
     <>
-      <style jsx>{`
-        /* Make nav items compact to avoid overflow */
-        .nav-link {
-          font-size: 0.85rem;
-          display: flex;
-          align-items: center;
-          min-width: 0; /* allow flex children to shrink */
-          flex: 0 1 auto;
-        }
-        /* Icons slightly smaller */
-        .nav-link svg, nav .nav-link svg {
-          height: 1em;
-          width: 1em;
-          display: block;
-          flex-shrink: 0;
-        }
-
-        /* Label: clamp width and ellipsize to avoid wrapping/overflow */
-        .nav-label {
-          line-height: 1;
-          font-size: 0.75rem;
-          display: inline-block;
-          max-width: 6rem;
-          overflow: hidden;
-          text-overflow: ellipsis;
-          white-space: nowrap;
-        }
-
-        /* Reduce spacing between items */
-        nav > div > div {
-          gap: 0.25rem;
-        }
-
-        .nav-icon-glow {
-          filter: drop-shadow(0 0 3px rgba(var(--accent-rgb), 0.4));
-        }
-        .nav-icon-active {
-          filter: drop-shadow(0 0 5px rgba(var(--accent-rgb), 0.6));
-        }
-        @keyframes iconPulse {
-          0%, 100% { opacity: 1; }
-          50% { opacity: 0.8; }
-        }
-        .nav-icon-pulse {
-          animation: iconPulse 2s ease-in-out infinite;
-        }
-
-        /* Extra compact on small screens */
-        @media (max-width: 768px) {
-          .nav-link { font-size: 0.75rem; }
-          .nav-label { max-width: 4.5rem; font-size: 0.7rem; }
-          .nav-link svg, nav .nav-link svg { height: 0.95em; width: 0.95em; }
-        }
-      `}</style>
       <nav suppressHydrationWarning className="gradient-bg border-b border-accent/30 sticky top-0 z-50 backdrop-blur-md">
         <div suppressHydrationWarning className="absolute inset-0 bg-background/80 backdrop-blur-md" />
         <div className="relative w-full max-w-6xl mx-auto px-3 sm:px-4 lg:px-6 overflow-visible">
