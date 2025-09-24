@@ -431,26 +431,29 @@ export default function ChatbotPage() {
           </div>
         </section>
 
-        {/* Main Content với glassmorphism design */}
-        <section className="py-12 px-4 sm:px-6 lg:px-8">
-          <div className="max-w-6xl mx-auto space-y-8">
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
-              {/* Chat Area (9 columns - lớn hơn) */}
-              <div className="lg:col-span-9">
-                {/* Messages Container - Tăng chiều cao để cân đối với sidebar */}
-                <div className={`relative flex flex-col h-[700px] sm:h-[800px] lg:h-[900px] rounded-3xl ${BRAND.borders.glow} border ${BRAND.surfaces.glass} overflow-hidden ${BRAND.shadows.glow}`}>
-                  {/* Header cố định */}
-                  <div className={`shrink-0 px-4 py-3 ${BRAND.borders.glass} border-b ${BRAND.surfaces.glass} flex items-center justify-between`}>
-                    <div className="flex items-center gap-3">
-                      <div className={`w-10 h-10 rounded-2xl ${BRAND.gradients.radial} flex items-center justify-center`}>
-                        <span className="text-white text-lg">🤖</span>
+        {/* Main Content với glassmorphism design hiện đại */}
+        <section className="py-8 px-4 sm:px-6 lg:px-8">
+          <div className="max-w-7xl mx-auto">
+            <div className="grid grid-cols-1 xl:grid-cols-12 gap-8">
+              {/* Chat Area (8 columns - tối ưu hơn) */}
+              <div className="xl:col-span-8">
+                {/* Messages Container - Tăng chiều cao đáng kể */}
+                <div className={`relative flex flex-col h-[800px] sm:h-[900px] lg:h-[1000px] xl:h-[1100px] rounded-3xl ${BRAND.borders.glow} border ${BRAND.surfaces.glass} overflow-hidden ${BRAND.shadows.glow} backdrop-blur-xl`}>
+                  {/* Header hiện đại với gradient */}
+                  <div className={`shrink-0 px-6 py-4 ${BRAND.borders.glass} border-b ${BRAND.gradients.ambient} flex items-center justify-between backdrop-blur-xl`}>
+                    <div className="flex items-center gap-4">
+                      <div className={`w-12 h-12 rounded-3xl ${BRAND.gradients.radial} flex items-center justify-center ${BRAND.shadows.glow}`}>
+                        <span className="text-white text-xl">🤖</span>
                       </div>
                       <div>
-                        <h3 className="text-lg font-bold text-white">FTC Chatbot</h3>
-                        <p className="text-xs text-white/70">AI Assistant</p>
+                        <h3 className="text-xl font-bold text-white">FTC Chatbot</h3>
+                        <p className="text-sm text-white/80">AI Assistant • {selectedMode === "club" ? "Câu lạc bộ" : "FinTech"}</p>
                       </div>
                     </div>
-                    <div className="text-sm text-white/70">🟢 Online</div>
+                    <div className="flex items-center gap-2">
+                      <div className="w-2 h-2 rounded-full bg-green-400 animate-pulse"></div>
+                      <span className="text-sm text-white/80 font-medium">Online</span>
+                    </div>
                   </div>
 
                   {/* Vùng messages cuộn bên trong với scroll behavior tối ưu */}
@@ -492,20 +495,26 @@ export default function ChatbotPage() {
                     </div>
                   </div>
 
-                  {/* Input sticky, chiều cao cố định */}
-                  <div className={`shrink-0 ${BRAND.borders.light} border-t px-6 py-4 ${BRAND.surfaces.card} sticky bottom-0`}>
-                    <div className="flex items-end gap-3">
+                  {/* Input hiện đại với glassmorphism */}
+                  <div className={`shrink-0 ${BRAND.borders.light} border-t px-6 py-5 ${BRAND.surfaces.glass} backdrop-blur-xl sticky bottom-0`}>
+                    <div className="flex items-end gap-4">
                       <div className="flex-1">
-                        <div className={`flex items-center gap-2 mb-2 text-sm ${BRAND.text.light}`}>
+                        <div className={`flex items-center gap-3 mb-3 text-sm ${BRAND.text.light}`}>
                           {selectedMode === "club" ? (
                             <>
-                              <span className={BRAND.text.accent}>👥</span>
-                              <span>Chế độ Câu lạc bộ - Giải đáp thông tin về FTC</span>
+                              <div className={`w-6 h-6 rounded-full ${BRAND.gradients.soft} flex items-center justify-center`}>
+                                <span className="text-xs">👥</span>
+                              </div>
+                              <span className="font-medium">Chế độ Câu lạc bộ</span>
+                              <span className="text-xs px-2 py-1 rounded-full bg-blue-500/20 text-blue-300">FTC</span>
                             </>
                           ) : (
                             <>
-                              <span className={BRAND.text.warm}>📚</span>
-                              <span>Chế độ Ngành - Giải đáp kiến thức về FinTech</span>
+                              <div className={`w-6 h-6 rounded-full ${BRAND.gradients.ambient} flex items-center justify-center`}>
+                                <span className="text-xs">📚</span>
+                              </div>
+                              <span className="font-medium">Chế độ Ngành</span>
+                              <span className="text-xs px-2 py-1 rounded-full bg-orange-500/20 text-orange-300">FinTech</span>
                             </>
                           )}
                         </div>
@@ -515,12 +524,12 @@ export default function ChatbotPage() {
                             onChange={(e: React.ChangeEvent<HTMLInputElement>) => setInputValue(e.target.value)}
                             onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => handleKeyDown(e)}
                             placeholder={selectedMode === "club" ? "Hỏi về FTC, hoạt động, cách tham gia..." : "Hỏi về FinTech, blockchain, ngân hàng số..."}
-                            className={`w-full ${BRAND.surfaces.interactive} ${BRAND.borders.primary} border ${BRAND.text.primary} placeholder:${BRAND.text.placeholder} ${BRAND.states.focus} outline-none transition-all rounded-2xl pr-12`}
+                            className={`w-full h-12 ${BRAND.surfaces.interactive} ${BRAND.borders.primary} border ${BRAND.text.primary} placeholder:${BRAND.text.placeholder} ${BRAND.states.focus} outline-none transition-all rounded-2xl pr-14 text-sm`}
                             disabled={isSending}
                           />
                           {isSending && (
-                            <div className="absolute right-3 top-1/2 transform -translate-y-1/2 h-5 flex items-center">
-                              <div className={`w-5 h-5 border-2 border-gray-600 border-t-${BRAND.accent} rounded-full animate-spin`}></div>
+                            <div className="absolute right-4 top-1/2 transform -translate-y-1/2 h-5 flex items-center">
+                              <div className={`w-5 h-5 border-2 border-gray-400 border-t-blue-400 rounded-full animate-spin`}></div>
                             </div>
                           )}
                         </div>
@@ -550,9 +559,10 @@ export default function ChatbotPage() {
                 </div>
               </div>
 
-              {/* Sidebar với hiệu ứng hiện đại (3 columns - nhỏ hơn) */}
-              <div className="lg:col-span-3 flex flex-col gap-6 min-h-[700px] sm:min-h-[800px] lg:min-h-[900px]">
-                <div className={`rounded-3xl ${BRAND.shadows.xl} overflow-hidden ${BRAND.borders.glow} border ${BRAND.surfaces.card} flex-1 flex flex-col`}>
+              {/* Sidebar hiện đại (4 columns - cân đối hơn) */}
+              <div className="xl:col-span-4 space-y-6">
+                {/* Câu hỏi gợi ý - Card hiện đại */}
+                <div className={`rounded-3xl ${BRAND.shadows.xl} overflow-hidden ${BRAND.borders.glow} border ${BRAND.surfaces.card} backdrop-blur-xl`}>
                   <div className={`px-6 py-4 ${BRAND.borders.light} border-b ${BRAND.gradients.ambient}`}>
                     <div className="flex items-center gap-3">
                       <div className={`w-12 h-12 rounded-3xl flex items-center justify-center ${BRAND.gradients.radial}`}>
@@ -589,16 +599,25 @@ export default function ChatbotPage() {
                       ))}
                     </div>
                   </div>
+                </div>
 
-                  {/* Quick Tips */}
-                  {/* Features */}
-                  <div className={`rounded-3xl ${BRAND.shadows.xl} ${BRAND.borders.glow} border ${BRAND.surfaces.card} p-6 flex-none`}>
-                    <h3 className={`font-semibold ${BRAND.text.primary} mb-4 flex items-center gap-2`}>
-                      <span className={`text-[${BRAND.primary}] text-lg`}>⚡</span>
-                      Tính năng nổi bật
-                    </h3>
+                {/* Tính năng nổi bật - Card riêng biệt */}
+                <div className={`rounded-3xl ${BRAND.shadows.xl} overflow-hidden ${BRAND.borders.glow} border ${BRAND.surfaces.card} backdrop-blur-xl`}>
+                  <div className={`px-6 py-4 ${BRAND.borders.light} border-b ${BRAND.gradients.ambient}`}>
+                    <div className="flex items-center gap-3">
+                      <div className={`w-12 h-12 rounded-3xl flex items-center justify-center ${BRAND.gradients.radial}`}>
+                        <span className="text-white text-2xl">⚡</span>
+                      </div>
+                      <div>
+                        <h3 className={`font-semibold ${BRAND.text.primary}`}>Tính năng nổi bật</h3>
+                        <p className={`text-sm ${BRAND.text.muted}`}>Khám phá khả năng AI</p>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div className="p-6">
                     <div className="space-y-4">
-                      <div className="flex items-start gap-3">
+                      <div className="flex items-start gap-3 p-3 rounded-2xl hover:bg-white/5 transition-all">
                         <div className={`w-10 h-10 rounded-xl ${BRAND.gradients.soft} flex items-center justify-center flex-shrink-0`}>
                           <span className={`text-[${BRAND.primary}] text-lg`}>🧠</span>
                         </div>
@@ -607,16 +626,16 @@ export default function ChatbotPage() {
                           <p className={`text-xs ${BRAND.text.muted}`}>Hiểu ngữ cảnh và phản hồi mạch lạc</p>
                         </div>
                       </div>
-                      <div className="flex items-start gap-3">
+                      <div className="flex items-start gap-3 p-3 rounded-2xl hover:bg-white/5 transition-all">
                         <div className={`w-10 h-10 rounded-xl ${BRAND.gradients.ambient} flex items-center justify-center flex-shrink-0`}>
                           <span className={`text-[${BRAND.secondary}] text-lg`}>🌍</span>
                         </div>
                         <div>
                           <p className={`font-medium ${BRAND.text.primary} text-sm`}>Cập nhật kịp thời</p>
-                          <p className={`text-xs ${BRAND.text.muted}`}>Kiến thức FinTech tổng quan (demo)</p>
+                          <p className={`text-xs ${BRAND.text.muted}`}>Kiến thức FinTech tổng quan</p>
                         </div>
                       </div>
-                      <div className="flex items-start gap-3">
+                      <div className="flex items-start gap-3 p-3 rounded-2xl hover:bg-white/5 transition-all">
                         <div className={`w-10 h-10 rounded-xl ${BRAND.gradients.soft} flex items-center justify-center flex-shrink-0`}>
                           <span className={`text-[${BRAND.primary}] text-lg`}>💬</span>
                         </div>
@@ -627,7 +646,6 @@ export default function ChatbotPage() {
                       </div>
                     </div>
                   </div>
-
                 </div>
               </div>
             </div>

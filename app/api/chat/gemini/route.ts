@@ -67,7 +67,7 @@ TRI THỨC NỘI BỘ TÓM TẮT
   3) Ban Truyền thông: Xây dựng nhận diện và câu chuyện thương hiệu; quản lý kênh mạng xã hội; sản xuất nội dung và ấn phẩm; theo dõi hiệu quả tiếp cận. Đầu ra: bộ ảnh, video ngắn, bài giới thiệu diễn giả, bài recap, báo cáo chỉ số.
   4) Ban Tài chính cá nhân: Thiết kế giáo trình quản lý tài chính cho sinh viên, vận hành lớp học chuyên đề, cập nhật và triển khai bộ bài MoneyWe, hỗ trợ học phần liên quan. Chủ đề: lập ngân sách, mục tiêu tiết kiệm, quản trị rủi ro tài chính cá nhân.
   5) Ban Nhân sự: Quy hoạch nguồn lực theo quý, theo dõi tiến độ; gắn kết nội bộ và chương trình mentor; quản lý hồ sơ, tuyển chọn, on-boarding, đánh giá và khen thưởng.
-- Cần kỹ năng gì để ứng tuyển: Chào đón mọi chuyên ngành. Quan trọng nhất là tinh thần học hỏi, kỷ luật, chủ động. Nền tảng Excel, SQL hoặc Python là lợi thế cho các hoạt động dữ liệu và công nghệ tài chính. Kỹ năng viết và thuyết trình hỗ trợ học thuật và truyền thông. Kỹ năng làm việc nhóm và quản lý thời gian giúp theo kịp tiến độ dự án và sự kiện. Ứng viên mảng sự kiện cần tư duy tổ chức và phối hợp nhiều đầu việc. Ứng viên mảng truyền thông cần năng lực xây dựng nội dung và cảm quan thẩm mỹ.
+- Cần kỹ năng gì để ứng tuyển: Quan trọng nhất là tinh thần học hỏi, kỷ luật, chủ động. Nền tảng Excel, SQL hoặc Python là lợi thế cho các hoạt động dữ liệu và công nghệ tài chính. Kỹ năng viết và thuyết trình hỗ trợ học thuật và truyền thông. Kỹ năng làm việc nhóm và quản lý thời gian giúp theo kịp tiến độ dự án và sự kiện. Ứng viên mảng sự kiện cần tư duy tổ chức và phối hợp nhiều đầu việc. Ứng viên mảng truyền thông cần năng lực xây dựng nội dung và cảm quan thẩm mỹ.
 - Có thu phí thành viên không: Không thu phí. Điều quan trọng là đam mê, nhiệt huyết và trách nhiệm trong công việc, tham gia đầy đủ và hoàn thành nhiệm vụ.
 - Thời gian sinh hoạt: Lịch được cập nhật trực tiếp trong group nhà chung. Sau khi trúng tuyển, thành viên được thêm vào nhóm để nhận thông báo chi tiết về thời gian, hình thức online hoặc offline và địa điểm cho từng hoạt động.
 - Cách tham gia: Mọi thông tin tuyển tân thành viên được cập nhật trên Fanpage. Link: https://www.facebook.com/clbfintechuel
@@ -137,69 +137,107 @@ function tokenizeForKeywords(s: string) {
 // -------------------- 4) FAQ mở rộng cho chế độ CLB --------------------
 export const FAQ_MAP: Record<string, string> = {
   // Ban chuyên môn
-  "cac ban trong cau lac bo lam gi":
-`**1. Ban Học thuật** - Phát triển nội dung cho workshop và talkshow. Biên soạn tài liệu thực hành về FinTech, dữ liệu và ngân hàng số. Xây dựng ngân hàng câu hỏi, ra đề và chấm cuộc thi ATTACKER. *Đầu ra điển hình*: slide, case study, ngân hàng trắc nghiệm, đề cương dự án và báo cáo tổng kết.
+  "cac ban trong cau lac bo lam gi": `
+    <ol>
+      <li>
+        <strong>1. Ban Học thuật</strong> — Phát triển nội dung cho workshop và talkshow. Biên soạn tài liệu thực hành về FinTech, dữ liệu và ngân hàng số. Xây dựng ngân hàng câu hỏi, ra đề và chấm cuộc thi ATTACKER.
+        <p><strong>Đầu ra điển hình:</strong> slide, case study, ngân hàng trắc nghiệm, đề cương dự án và báo cáo tổng kết.</p>
+      </li>
+      <li>
+        <strong>2. Ban Sự kiện</strong> — Lập kế hoạch chi tiết và viết kịch bản MC. Điều phối hiện trường và làm việc với đối tác địa điểm.
+        <p><strong>Chịu trách nhiệm:</strong> timeline, checklist, phân công nhân sự, nghiệm thu chất lượng và báo cáo chi phí sau sự kiện.</p>
+      </li>
+      <li>
+        <strong>3. Ban Truyền thông</strong> — Xây dựng nhận diện và câu chuyện thương hiệu. Quản lý các kênh mạng xã hội. Sản xuất nội dung và ấn phẩm, theo dõi hiệu quả tiếp cận.
+        <p><strong>Đầu ra điển hình:</strong> bộ ảnh, video ngắn, bài giới thiệu diễn giả, bài recap và báo cáo chỉ số.</p>
+      </li>
+      <li>
+        <strong>4. Ban Tài chính cá nhân</strong> — Thiết kế giáo trình quản lý tài chính cho sinh viên và vận hành lớp học chuyên đề. Cập nhật và triển khai bộ bài MoneyWe. Hỗ trợ các học phần liên quan.
+        <p><strong>Chủ đề trọng tâm:</strong> lập ngân sách, đặt mục tiêu tiết kiệm và quản trị rủi ro tài chính cá nhân.</p>
+      </li>
+      <li>
+        <strong>5. Ban Nhân sự</strong> — Quy hoạch nguồn lực theo quý và theo dõi tiến độ thực hiện. Tổ chức hoạt động gắn kết nội bộ và chương trình mentor. Quản lý hồ sơ, tuyển chọn, on-boarding, đánh giá và khen thưởng để duy trì văn hóa và hiệu suất của câu lạc bộ.
+      </li>
+    </ol>
+  `,
 
-**2. Ban Sự kiện** - Lập kế hoạch chi tiết và viết kịch bản MC. Điều phối hiện trường và làm việc với đối tác địa điểm. *Chịu trách nhiệm*: timeline, checklist, phân công nhân sự, nghiệm thu chất lượng và báo cáo chi phí sau sự kiện.
+  // Hoạt động
+  "cau lac bo co nhung hoat dong gi": `
+    <p>FTC xây dựng một <strong>hệ sinh thái hoạt động</strong> vừa học thuật vừa trải nghiệm thực tiễn:</p>
+    <ul>
+      <li><strong>Hoạt động học thuật:</strong> hội thảo, tọa đàm và chuyên đề về FinTech, dữ liệu, trí tuệ nhân tạo, ngân hàng số, thị trường vốn, quản trị rủi ro; cuộc thi học thuật <strong>ATTACKER</strong>; chuỗi talkshow và workshop theo chủ đề.</li>
+      <li><strong>Hoạt động trải nghiệm:</strong> training nội bộ nâng kỹ năng; tham quan doanh nghiệp (như <strong>VNG</strong>); sự kiện hướng nghiệp <strong>Web3 Career Innovation</strong>.</li>
+      <li><strong>Hoạt động gắn kết:</strong> các hoạt động cộng đồng như <strong>FTC Trip</strong>.</li>
+    </ul>
+  `,
 
-**3. Ban Truyền thông** - Xây dựng nhận diện và câu chuyện thương hiệu. Quản lý các kênh mạng xã hội. Sản xuất nội dung và ấn phẩm, theo dõi hiệu quả tiếp cận. *Đầu ra điển hình*: bộ ảnh, video ngắn, bài giới thiệu diễn giả, bài recap và báo cáo chỉ số.
+  // Tham gia
+  "lam the nao de tham gia cau lac bo": `
+    <p>Mọi thông tin về tuyển tân thành viên sẽ được cập nhật trên <strong>Fanpage</strong>.</p>
+    <p><strong>Link Fanpage:</strong> <a href="\${FTC_CONTACTS.fanpage}">\${FTC_CONTACTS.fanpage}</a></p>
+  `,
 
-**4. Ban Tài chính cá nhân** - Thiết kế giáo trình quản lý tài chính cho sinh viên và vận hành lớp học chuyên đề. Cập nhật và triển khai bộ bài MoneyWe. Hỗ trợ các học phần liên quan. *Chủ đề trọng tâm*: lập ngân sách, đặt mục tiêu tiết kiệm và quản trị rủi ro tài chính cá nhân.
+  // Lịch sinh hoạt
+  "thoi gian sinh hoat dien ra khi nao": `
+    <p>Lịch sinh hoạt sẽ được cập nhật trực tiếp trong group chung của câu lạc bộ. Sau khi trúng tuyển, bạn sẽ được thêm vào nhóm để nhận thông báo chi tiết về thời gian, hình thức (online hoặc offline) và địa điểm cho từng buổi sinh hoạt.</p>
+  `,
 
-**5. Ban Nhân sự** - Quy hoạch nguồn lực theo quý và theo dõi tiến độ thực hiện. Tổ chức hoạt động gắn kết nội bộ và chương trình mentor. Quản lý hồ sơ, tuyển chọn, on-boarding, đánh giá và khen thưởng để duy trì văn hóa và hiệu suất của câu lạc bộ.`,   // Hoạt động
-  "cau lac bo co nhung hoat dong gi":
-`FTC xây dựng một **hệ sinh thái hoạt động** vừa học thuật vừa trải nghiệm thực tiễn:
+  // Kỹ năng
+  "can ky nang gi de ung tuyen": `
+    <p>FTC chào đón <strong>mọi chuyên ngành</strong>, nên điều quan trọng nhất là <em>tinh thần học hỏi, kỷ luật và chủ động</em>.</p>
+    <ul>
+      <li><strong>Kỹ năng kỹ thuật:</strong> Ứng viên có nền tảng Excel, SQL hoặc Python sẽ thuận lợi khi tham gia các hoạt động về dữ liệu và công nghệ tài chính.</li>
+      <li><strong>Kỹ năng mềm:</strong> Kỹ năng viết và thuyết trình giúp bạn đóng góp cho học thuật và truyền thông. Khả năng làm việc nhóm và quản lý thời gian hỗ trợ bạn theo kịp tiến độ dự án và sự kiện.</li>
+    </ul>
+    <p><strong>Theo từng mảng:</strong></p>
+    <ul>
+      <li><em>Mảng sự kiện:</em> cần tư duy tổ chức và phối hợp nhiều đầu việc.</li>
+      <li><em>Mảng truyền thông:</em> cần khả năng xây dựng nội dung và cảm quan thẩm mỹ tốt.</li>
+    </ul>
+  `,
 
-*Hoạt động học thuật*: các hội thảo, tọa đàm và chuyên đề về FinTech, dữ liệu, trí tuệ nhân tạo, ngân hàng số, thị trường vốn và quản trị rủi ro; cuộc thi học thuật **ATTACKER**; chuỗi talkshow và workshop theo chủ đề.
+  // Lịch sử
+  "cau lac bo duoc thanh lap khi nao": `
+    <p>FTC trực thuộc Khoa Tài chính và Ngân hàng, Trường Đại học Kinh tế và Luật, ĐHQG HCM. Câu lạc bộ thành lập tháng 11 năm 2020 dưới sự hướng dẫn của ThS NCS Phan Huy Tâm.</p>
+  `,
 
-*Hoạt động trải nghiệm*: training nội bộ nâng kỹ năng; tham quan doanh nghiệp (như **VNG**); sự kiện hướng nghiệp **Web3 Career Innovation**.
+  // Thành tích
+  "cau lac bo co nhung thanh tich gi": `
+    <p>Năm học 2024–2025, FTC nhận Giấy khen của Ban Cán sự Đoàn ĐHQG HCM. Câu lạc bộ vào Top 10 Nhóm 4 của Giải thưởng I-STAR TP.HCM và được cấp Giấy chứng nhận ghi nhận nỗ lực và ảnh hưởng.</p>
+  `,
 
-*Hoạt động gắn kết*: các hoạt động cộng đồng như **FTC Trip**.`,   // Tham gia
-  "lam the nao de tham gia cau lac bo":
-`Mọi thông tin về tuyển tân thành viên sẽ được cập nhật trên **Fanpage**. 
+  // Quyền lợi
+  "quyen loi cua thanh vien la gi": `
+    <p>Thành viên được tham gia hệ thống lớp học và dự án có mentor hướng dẫn. Mỗi học kỳ có lộ trình mục tiêu rõ ràng và cơ hội thử sức vai trò điều phối để rèn luyện năng lực lãnh đạo. Câu lạc bộ cấp chứng nhận nội bộ theo đóng góp, hỗ trợ giới thiệu thực tập khi đáp ứng chuẩn đầu ra và tạo điều kiện xây dựng danh mục dự án cá nhân.</p>
+  `,
 
-**Link Fanpage**: [${FTC_CONTACTS.fanpage}](${FTC_CONTACTS.fanpage})`,   // Lịch sinh hoạt
-  "thoi gian sinh hoat dien ra khi nao":
-`Lịch sinh hoạt sẽ được cập nhật trực tiếp trong group chung của câu lạc bộ. Sau khi trúng tuyển, bạn sẽ được thêm vào nhóm để nhận thông báo chi tiết về thời gian, hình thức (online hoặc offline) và địa điểm cho từng buổi sinh hoạt.`,   // Kỹ năng
-  "can ky nang gi de ung tuyen":
-`FTC chào đón **mọi chuyên ngành**, nên điều quan trọng nhất là *tinh thần học hỏi, kỷ luật và chủ động*.
+  // Quy trình tuyển
+  "quy trinh tuyen chon gom nhung buoc nao": `
+    <h3>Quy trình tuyển chọn 5 bước</h3>
+    <ol>
+      <li><strong>Theo dõi thông báo:</strong> Cập nhật thời gian mở tuyển trên Fanpage và truy cập form đăng ký.</li>
+      <li><strong>Điền form trực tuyến:</strong> Hoàn tất thông tin theo yêu cầu. <em>Kết quả sơ tuyển</em> sẽ được gửi qua email.</li>
+      <li><strong>Vòng 2 – Chạy trạm:</strong> Tập trung tại địa điểm được thông báo qua email và thực hiện các yêu cầu do ban tổ chức đưa ra.</li>
+      <li><strong>Vòng phỏng vấn:</strong> Trao đổi trực tiếp để đánh giá phù hợp về kỹ năng, thái độ và cam kết.</li>
+      <li><strong>Thông báo kết quả:</strong> Nhận email trúng tuyển và được thêm vào <em>group nhà chung</em> để cập nhật lịch sinh hoạt cùng hướng dẫn tiếp theo.</li>
+    </ol>
+  `,
 
-**Kỹ năng kỹ thuật**: Ứng viên có nền tảng Excel, SQL hoặc Python sẽ thuận lợi khi tham gia các hoạt động về dữ liệu và công nghệ tài chính.
+  // Phí thành viên
+  "co thu phi thanh vien khong": `
+    <p>Không. Câu lạc bộ không thu phí thành viên; điều quan trọng là bạn có đam mê, nhiệt huyết và làm việc có trách nhiệm, sẵn sàng tham gia đầy đủ và hoàn thành các nhiệm vụ được giao.</p>
+  `,
 
-**Kỹ năng mềm**: Kỹ năng viết và thuyết trình giúp bạn đóng góp cho học thuật và truyền thông. Khả năng làm việc nhóm và quản lý thời gian hỗ trợ bạn theo kịp tiến độ dự án và sự kiện.
-
-**Theo từng mảng**:
-- *Mảng sự kiện*: cần tư duy tổ chức và phối hợp nhiều đầu việc
-- *Mảng truyền thông*: cần khả năng xây dựng nội dung và cảm quan thẩm mỹ tốt`, // Lịch sử
-  "cau lac bo duoc thanh lap khi nao":
-`FTC trực thuộc Khoa Tài chính và Ngân hàng, Trường Đại học Kinh tế và Luật, ĐHQG HCM. Câu lạc bộ thành lập tháng 11 năm 2020 dưới sự hướng dẫn của ThS NCS Phan Huy Tâm.`, // Thành tích
-  "cau lac bo co nhung thanh tich gi":
-`Năm học 2024 đến 2025, FTC nhận Giấy khen của Ban Cán sự Đoàn ĐHQG HCM. Câu lạc bộ vào Top 10 Nhóm 4 của Giải thưởng I STAR TP HCM và được cấp Giấy chứng nhận ghi nhận nỗ lực và ảnh hưởng.`, // Quyền lợi
-  "quyen loi cua thanh vien la gi":
-`Thành viên được tham gia hệ thống lớp học và dự án có mentor hướng dẫn. Mỗi học kỳ có lộ trình mục tiêu rõ ràng và cơ hội thử sức vai trò điều phối để rèn luyện năng lực lãnh đạo. Câu lạc bộ cấp chứng nhận nội bộ theo đóng góp, hỗ trợ giới thiệu thực tập khi đáp ứng chuẩn đầu ra và tạo điều kiện xây dựng danh mục dự án cá nhân.`,   // Quy trình tuyển
-  "quy trinh tuyen chon gom nhung buoc nao":
-`**Quy trình tuyển chọn 5 bước:**
-
-**1. Theo dõi thông báo** - Cập nhật thời gian mở tuyển trên Fanpage và truy cập form đăng ký.
-
-**2. Điền form trực tuyến** - Hoàn tất thông tin theo yêu cầu. *Kết quả sơ tuyển* sẽ được gửi qua email.
-
-**3. Vòng 2 – Chạy trạm** - Tập trung tại địa điểm được thông báo qua email và thực hiện các yêu cầu do ban tổ chức đưa ra.
-
-**4. Vòng phỏng vấn** - Trao đổi trực tiếp để đánh giá phù hợp về kỹ năng, thái độ và cam kết.
-
-**5. Thông báo kết quả** - Nhận email trúng tuyển và được thêm vào *group nhà chung* để cập nhật lịch sinh hoạt cùng hướng dẫn tiếp theo.`,   // Phí thành viên
-  "co thu phi thanh vien khong":
-`Không. Câu lạc bộ không thu phí thành viên; điều quan trọng là bạn có đam mê, nhiệt huyết và làm việc có trách nhiệm, sẵn sàng tham gia đầy đủ và hoàn thành các nhiệm vụ được giao.`,   // Liên hệ
-  "lien he clb bang cach nao":
-`Bạn có thể liên hệ qua:
-
-**Email**: [${FTC_CONTACTS.email}](mailto:${FTC_CONTACTS.email})
-
-**Fanpage**: [${FTC_CONTACTS.fanpage}](${FTC_CONTACTS.fanpage})
-
-*Lưu ý*: Khi cần hỗ trợ nhanh, hãy nhắn tin trực tiếp trên Fanpage.`
-}
+  // Liên hệ
+  "lien he clb bang cach nao": `
+    <p>Bạn có thể liên hệ qua:</p>
+    <ul>
+      <li><strong>Email:</strong> <a href="mailto:\${FTC_CONTACTS.email}">\${FTC_CONTACTS.email}</a></li>
+      <li><strong>Fanpage:</strong> <a href="\${FTC_CONTACTS.fanpage}">\${FTC_CONTACTS.fanpage}</a></li>
+    </ul>
+    <p><em>Lưu ý:</em> Khi cần hỗ trợ nhanh, hãy nhắn tin trực tiếp trên Fanpage.</p>
+  `
+};
 
 const FAQ_KEYS = Object.keys(FAQ_MAP)
 
