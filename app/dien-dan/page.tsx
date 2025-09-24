@@ -220,66 +220,116 @@ export default function ForumPage() {
     <div className="min-h-screen bg-[#003663] text-white">
       <Navigation />
 
-      {/* Hero Section với hiệu ứng nhấp nháy giống trang cơ cấu */}
-      <section className="relative min-h-[60vh] flex items-center justify-center py-16 px-4 sm:px-6 lg:px-8">
+      {/* Modern Hero Section với enhanced spacing và visual effects */}
+      <section className="relative min-h-[70vh] flex items-center justify-center py-24 px-4 sm:px-6 lg:px-8">
+        {/* Enhanced Background Effects */}
         <div className="absolute inset-0 overflow-hidden">
-          <div className="absolute top-1/4 -right-1/4 w-2/3 h-2/3 bg-gradient-to-br from-primary/20 via-accent/20 to-transparent rounded-full blur-3xl animate-float" />
-          <div className="absolute -bottom-1/4 -left-1/4 w-2/3 h-2/3 bg-gradient-to-tr from-accent/20 via-primary/20 to-transparent rounded-full blur-3xl animate-float-reverse" />
+          <div className="absolute top-1/4 -right-1/4 w-2/3 h-2/3 bg-gradient-to-br from-blue-500/30 via-purple-500/20 to-transparent rounded-full blur-3xl animate-float" />
+          <div className="absolute -bottom-1/4 -left-1/4 w-2/3 h-2/3 bg-gradient-to-tr from-purple-500/30 via-pink-500/20 to-transparent rounded-full blur-3xl animate-float-reverse" />
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-1/2 h-1/2 bg-gradient-to-r from-cyan-500/20 to-blue-500/20 rounded-full blur-2xl animate-pulse" />
         </div>
 
-        <div className="relative max-w-5xl mx-auto text-center space-y-6">
-          <h1 className="relative text-4xl sm:text-5xl lg:text-6xl font-extrabold">
-            <span className="absolute inset-0 bg-gradient-to-r from-white to-white opacity-50 blur-2xl animate-pulse"></span>
-            <span className="relative text-white animate-bounce" style={{
-              animation: 'blink 1.5s infinite, gradient-shift 2s ease-in-out infinite, bounce 2s infinite'
-            }}>
-              DIỄN ĐÀN FTC
-            </span>
-          </h1>
-          <p className="text-xl sm:text-2xl text-white/80 leading-relaxed max-w-3xl mx-auto italic">
-            Nơi cộng đồng fintech chia sẻ kiến thức, thảo luận xu hướng và kết nối với nhau
-          </p>
+        <div className="relative max-w-6xl mx-auto text-center space-y-8">
+          {/* Enhanced Title với better spacing */}
+          <div className="space-y-6">
+            <h1 className="relative text-5xl sm:text-6xl lg:text-7xl font-extrabold">
+              <span className="absolute inset-0 bg-gradient-to-r from-white via-blue-100 to-purple-100 opacity-60 blur-3xl animate-pulse"></span>
+              <span className="relative text-white animate-bounce" style={{
+                animation: 'blink 1.5s infinite, gradient-shift 2s ease-in-out infinite, bounce 2s infinite'
+              }}>
+                DIỄN ĐÀN FTC
+              </span>
+            </h1>
+            <p className="text-2xl sm:text-3xl text-white/90 leading-relaxed max-w-4xl mx-auto font-medium">
+              Nơi cộng đồng fintech chia sẻ kiến thức, thảo luận xu hướng và kết nối với nhau
+            </p>
+          </div>
 
-          {/* Search */}
-          <div className="max-w-xl mx-auto relative mt-8">
-            <div className="absolute left-4 top-1/2 -translate-y-1/2">
-              <Search className="h-5 w-5 text-white/70" />
+          {/* Enhanced Search với modern design */}
+          <div className="max-w-2xl mx-auto relative mt-12">
+            <div className="absolute left-6 top-1/2 -translate-y-1/2">
+              <Search className="h-6 w-6 text-white/80" />
             </div>
             <Input
               value={search}
               onChange={(e: ChangeEvent<HTMLInputElement>) => setSearch(e.target.value)}
-              placeholder="Tìm kiếm câu hỏi..."
-              className="pl-12 h-12 text-base bg-white/10 border border-white/20 placeholder-white/70 text-white rounded-full shadow-lg focus-visible:ring-2 focus-visible:ring-white/60"
+              placeholder="Tìm kiếm câu hỏi, thảo luận..."
+              className="pl-16 h-16 text-lg bg-white/15 border-2 border-white/25 placeholder-white/70 text-white rounded-2xl shadow-2xl focus-visible:ring-4 focus-visible:ring-white/40 backdrop-blur-xl"
             />
             {!!search && (
               <button
                 onClick={() => setSearch('')}
-                className="absolute right-3 top-1/2 -translate-y-1/2 w-8 h-8 grid place-items-center rounded-full bg-white/10 hover:bg-white/20"
+                className="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 grid place-items-center rounded-xl bg-white/20 hover:bg-white/30 transition-all duration-300"
                 aria-label="Xóa tìm kiếm"
               >
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <line x1="18" y1="6" x2="6" y2="18" />
                   <line x1="6" y1="6" x2="18" y2="18" />
                 </svg>
               </button>
             )}
           </div>
+
+          {/* Enhanced Stats Preview */}
+          <div className="flex items-center justify-center gap-8 mt-16">
+            <div className="flex items-center gap-3 bg-white/10 rounded-2xl px-6 py-4 backdrop-blur-xl border border-white/20">
+              <MessageSquare className="h-6 w-6 text-blue-300" />
+              <div className="text-left">
+                <div className="text-2xl font-bold text-white">{questions.length}</div>
+                <div className="text-sm text-white/70">Câu hỏi</div>
+              </div>
+            </div>
+            <div className="flex items-center gap-3 bg-white/10 rounded-2xl px-6 py-4 backdrop-blur-xl border border-white/20">
+              <Users className="h-6 w-6 text-green-300" />
+              <div className="text-left">
+                <div className="text-2xl font-bold text-white">{questions.length * 2}</div>
+                <div className="text-sm text-white/70">Thành viên</div>
+              </div>
+            </div>
+            <div className="flex items-center gap-3 bg-white/10 rounded-2xl px-6 py-4 backdrop-blur-xl border border-white/20">
+              <TrendingUp className="h-6 w-6 text-purple-300" />
+              <div className="text-left">
+                <div className="text-2xl font-bold text-white">98%</div>
+                <div className="text-sm text-white/70">Hài lòng</div>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
-      {/* Modern Layout với improved spacing và visual hierarchy */}
-      <div className="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8 pb-16">
-        <div className="grid grid-cols-1 xl:grid-cols-12 gap-8 lg:gap-12">
+      {/* Spacer để tạo khoảng cách giữa header và body */}
+      <div className="h-16 bg-gradient-to-b from-transparent to-[#003663]/50"></div>
+
+      {/* Ultra Modern Layout với enhanced spacing và visual effects */}
+      <div className="max-w-9xl mx-auto px-6 sm:px-8 lg:px-12 pb-20">
+        {/* Section Header với modern design */}
+        <div className="text-center mb-16">
+          <div className="inline-flex items-center gap-3 bg-gradient-to-r from-blue-500/20 to-purple-500/20 rounded-2xl px-6 py-3 mb-6">
+            <MessageSquare className="h-6 w-6 text-blue-300" />
+            <span className="text-lg font-semibold text-white">Cộng đồng thảo luận</span>
+          </div>
+          <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4">
+            Khám phá và tham gia thảo luận
+          </h2>
+          <p className="text-xl text-white/80 max-w-3xl mx-auto">
+            Tham gia vào các cuộc thảo luận sôi nổi, chia sẻ kiến thức và kết nối với cộng đồng fintech
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 xl:grid-cols-12 gap-10 lg:gap-16">
           
           {/* Left Sidebar - Compact và Modern */}
           <aside className="xl:col-span-3 space-y-8">
-            {/* Categories - Enhanced Design */}
-            <div className="bg-gradient-to-br from-white/8 to-white/3 rounded-3xl border border-white/15 p-8 shadow-2xl backdrop-blur-xl">
-              <div className="flex items-center gap-3 mb-6">
-                <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-blue-500/20 to-purple-500/20 flex items-center justify-center">
-                  <Hash className="h-5 w-5 text-blue-300" />
+            {/* Categories - Ultra Modern Design */}
+            <div className="bg-gradient-to-br from-white/12 to-white/5 rounded-3xl border border-white/20 p-10 shadow-3xl backdrop-blur-2xl hover:shadow-4xl transition-all duration-500">
+              <div className="flex items-center gap-4 mb-8">
+                <div className="w-12 h-12 rounded-3xl bg-gradient-to-br from-blue-500/30 to-purple-500/30 flex items-center justify-center shadow-lg">
+                  <Hash className="h-6 w-6 text-blue-200" />
                 </div>
-                <h3 className="text-xl font-bold text-white">Danh mục</h3>
+                <div>
+                  <h3 className="text-2xl font-bold text-white">Danh mục</h3>
+                  <p className="text-sm text-white/70">Lọc theo chủ đề</p>
+                </div>
               </div>
               <div className="space-y-3">
                 <button
@@ -317,13 +367,16 @@ export default function ForumPage() {
               </div>
             </div>
 
-            {/* Stats - Modern Cards */}
-            <div className="bg-gradient-to-br from-white/8 to-white/3 rounded-3xl border border-white/15 p-8 shadow-2xl backdrop-blur-xl">
-              <div className="flex items-center gap-3 mb-6">
-                <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-green-500/20 to-emerald-500/20 flex items-center justify-center">
-                  <TrendingUp className="h-5 w-5 text-green-300" />
+            {/* Stats - Ultra Modern Cards */}
+            <div className="bg-gradient-to-br from-white/12 to-white/5 rounded-3xl border border-white/20 p-10 shadow-3xl backdrop-blur-2xl hover:shadow-4xl transition-all duration-500">
+              <div className="flex items-center gap-4 mb-8">
+                <div className="w-12 h-12 rounded-3xl bg-gradient-to-br from-green-500/30 to-emerald-500/30 flex items-center justify-center shadow-lg">
+                  <TrendingUp className="h-6 w-6 text-green-200" />
                 </div>
-                <h3 className="text-xl font-bold text-white">Thống kê</h3>
+                <div>
+                  <h3 className="text-2xl font-bold text-white">Thống kê</h3>
+                  <p className="text-sm text-white/70">Dữ liệu cộng đồng</p>
+                </div>
               </div>
               <div className="space-y-4">
                 <div className="flex items-center justify-between p-4 rounded-2xl bg-white/8 border border-white/10">
@@ -344,22 +397,25 @@ export default function ForumPage() {
 
           {/* Main Content - Enhanced với better spacing */}
           <main className="xl:col-span-6 space-y-8">
-            {/* Ask box - Modern Design */}
-            <div className="bg-gradient-to-br from-white/8 to-white/3 rounded-3xl border border-white/15 p-8 shadow-2xl backdrop-blur-xl">
-              <div className="flex items-center gap-3 mb-6">
-                <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-orange-500/20 to-red-500/20 flex items-center justify-center">
-                  <MessageSquare className="h-5 w-5 text-orange-300" />
+            {/* Ask box - Ultra Modern Design */}
+            <div className="bg-gradient-to-br from-white/12 to-white/5 rounded-3xl border border-white/20 p-10 shadow-3xl backdrop-blur-2xl hover:shadow-4xl transition-all duration-500">
+              <div className="flex items-center gap-4 mb-8">
+                <div className="w-12 h-12 rounded-3xl bg-gradient-to-br from-orange-500/30 to-red-500/30 flex items-center justify-center shadow-lg">
+                  <MessageSquare className="h-6 w-6 text-orange-200" />
                 </div>
-                <h3 className="text-xl font-bold text-white">Đặt câu hỏi</h3>
+                <div>
+                  <h3 className="text-2xl font-bold text-white">Đặt câu hỏi</h3>
+                  <p className="text-sm text-white/70">Chia sẻ thắc mắc của bạn</p>
+                </div>
               </div>
               <AskInline onSubmit={handleCreateQuestion} defaultStudentId={currentStudentId} onUpdateStudentId={(sid)=>{setCurrentStudentId(sid); localStorage.setItem(STORAGE_KEYS.studentId, sid)}} />
             </div>
 
-            {/* Questions list - Enhanced Cards */}
-            <div className="space-y-6">
+            {/* Questions list - Ultra Modern Cards */}
+            <div className="space-y-8">
               {paginated.map((question) => (
-                <div key={question.id} className="bg-gradient-to-br from-white/8 to-white/3 rounded-3xl border border-white/15 hover:border-white/25 transition-all duration-500 overflow-hidden group hover:bg-white/10 shadow-2xl hover:shadow-3xl backdrop-blur-xl">
-                  <div className="p-8">
+                <div key={question.id} className="bg-gradient-to-br from-white/12 to-white/5 rounded-3xl border border-white/20 hover:border-white/30 transition-all duration-700 overflow-hidden group hover:bg-white/15 shadow-3xl hover:shadow-4xl backdrop-blur-2xl hover:scale-[1.02]">
+                  <div className="p-10">
                     {/* Header - Enhanced */}
                     <div className="flex items-start justify-between mb-6">
                       <div className="flex items-center gap-4">
@@ -449,14 +505,17 @@ export default function ForumPage() {
             )}
           </main>
 
-          {/* Right Sidebar - Enhanced */}
-          <aside className="xl:col-span-3 space-y-8">
-            <div className="bg-gradient-to-br from-white/8 to-white/3 rounded-3xl border border-white/15 p-8 shadow-2xl backdrop-blur-xl">
-              <div className="flex items-center gap-3 mb-8">
-                <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-green-500/20 to-emerald-500/20 flex items-center justify-center">
-                  <Users className="h-5 w-5 text-green-300" />
+          {/* Right Sidebar - Ultra Modern */}
+          <aside className="xl:col-span-3 space-y-10">
+            <div className="bg-gradient-to-br from-white/12 to-white/5 rounded-3xl border border-white/20 p-10 shadow-3xl backdrop-blur-2xl hover:shadow-4xl transition-all duration-500">
+              <div className="flex items-center gap-4 mb-10">
+                <div className="w-12 h-12 rounded-3xl bg-gradient-to-br from-green-500/30 to-emerald-500/30 flex items-center justify-center shadow-lg">
+                  <Users className="h-6 w-6 text-green-200" />
                 </div>
-                <h3 className="text-xl font-bold text-white">Hoạt động gần đây</h3>
+                <div>
+                  <h3 className="text-2xl font-bold text-white">Hoạt động gần đây</h3>
+                  <p className="text-sm text-white/70">Cập nhật mới nhất</p>
+                </div>
               </div>
               <div className="space-y-6">
                 {questions.slice(0, 5).map((q) => (
@@ -490,8 +549,14 @@ export default function ForumPage() {
         .shadow-3xl {
           box-shadow: 0 35px 60px -12px rgba(0, 0, 0, 0.25);
         }
+        .shadow-4xl {
+          box-shadow: 0 50px 80px -20px rgba(0, 0, 0, 0.35);
+        }
         .border-gradient-to-b {
           border-image: linear-gradient(to bottom, #60a5fa, #a78bfa) 1;
+        }
+        .backdrop-blur-2xl {
+          backdrop-filter: blur(40px);
         }
       `}</style>
     </div>
