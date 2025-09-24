@@ -4,7 +4,7 @@ import React, { ChangeEvent, useEffect, useMemo, useState } from 'react'
 import { Navigation } from '@/components/navigation'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
-import { MessageSquare, Search, Users, TrendingUp, Hash, Star, Clock, Eye, Heart, MessageCircle } from 'lucide-react'
+import { MessageSquare, Search, Users, TrendingUp, Hash, Star, Clock, Heart, MessageCircle } from 'lucide-react'
 import { createQuestion, fetchQuestions } from '../../googleSheetApi/sheet'
 import { CATEGORIES, STORAGE_KEYS, QuestionItem, Reply, ForumCategory } from './types'
 import { uuid, formatTime } from './utils/index'
@@ -435,12 +435,6 @@ export default function ForumPage() {
                             <MessageCircle className="h-4 w-4 sm:h-5 sm:w-5 text-white" />
                           </div>
                           <span className="text-sm sm:text-base font-semibold text-white">{(question.replies || []).length}</span>
-                        </div>
-                        <div className="flex items-center gap-2 sm:gap-3 opacity-90">
-                          <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl bg-white/10 flex items-center justify-center">
-                            <Eye className="h-4 w-4 sm:h-5 sm:w-5 text-white" />
-                          </div>
-                          <span className="text-sm sm:text-base font-semibold text-white">{(question as any).views || 0}</span>
                         </div>
                       </div>
                       <span className="text-xs sm:text-sm font-bold px-3 sm:px-4 py-1.5 sm:py-2 bg-gradient-to-r from-blue-500/20 to-purple-500/20 rounded-full border border-blue-400/30 capitalize">
