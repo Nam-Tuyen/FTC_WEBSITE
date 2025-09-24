@@ -425,8 +425,16 @@ export default function ForumPage() {
                     <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-4 pt-4 sm:pt-6 border-t border-white/15">
                       <div className="flex items-center gap-4 sm:gap-6 lg:gap-8">
                         <button onClick={() => handleToggleLike(question.id)} className="flex items-center gap-2 sm:gap-3 hover:opacity-80 transition-all duration-300 hover:scale-110 group">
-                          <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl bg-white/10 flex items-center justify-center group-hover:bg-red-500/20 transition-colors">
-                            <Heart className="h-4 w-4 sm:h-5 sm:w-5 text-white group-hover:text-red-400" />
+                          <div className={`w-8 h-8 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl flex items-center justify-center transition-colors ${
+                            Array.isArray(question.likes) && question.likes.includes(currentUserId)
+                              ? 'bg-red-500/30 border border-red-400/50' 
+                              : 'bg-white/10 group-hover:bg-red-500/20'
+                          }`}>
+                            <Heart className={`h-4 w-4 sm:h-5 sm:w-5 transition-colors ${
+                              Array.isArray(question.likes) && question.likes.includes(currentUserId)
+                                ? 'text-red-400 fill-red-400' 
+                                : 'text-white group-hover:text-red-400'
+                            }`} />
                           </div>
                           <span className="text-sm sm:text-base font-semibold text-white">{Array.isArray(question.likes) ? question.likes.length : 0}</span>
                         </button>
