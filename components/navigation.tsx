@@ -74,7 +74,7 @@ export function Navigation() {
                   />
                 </div>
                 <div className="flex items-center">
-                  <span className="font-heading text-6xl font-black text-foreground group-hover:text-accent transition-colors duration-300">FTC</span>
+                  <span className="font-heading text-3xl font-black text-foreground group-hover:text-accent transition-colors duration-300">FTC</span>
                 </div>
               </Link>
 
