@@ -267,27 +267,32 @@ export default function ForumPage() {
         </div>
       </section>
 
-      {/* Layout */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-12">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-          {/* Left: Categories & Stats */}
-          <aside className="lg:col-span-3 space-y-6">
-            {/* Categories */}
-            <div className="bg-white/5 rounded-2xl border border-white/10 p-6 shadow-2xl">
-              <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
-                <Hash className="h-5 w-5" />
-                Danh mục
-              </h3>
-              <div className="space-y-2">
+      {/* Modern Layout với improved spacing và visual hierarchy */}
+      <div className="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8 pb-16">
+        <div className="grid grid-cols-1 xl:grid-cols-12 gap-8 lg:gap-12">
+          
+          {/* Left Sidebar - Compact và Modern */}
+          <aside className="xl:col-span-3 space-y-8">
+            {/* Categories - Enhanced Design */}
+            <div className="bg-gradient-to-br from-white/8 to-white/3 rounded-3xl border border-white/15 p-8 shadow-2xl backdrop-blur-xl">
+              <div className="flex items-center gap-3 mb-6">
+                <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-blue-500/20 to-purple-500/20 flex items-center justify-center">
+                  <Hash className="h-5 w-5 text-blue-300" />
+                </div>
+                <h3 className="text-xl font-bold text-white">Danh mục</h3>
+              </div>
+              <div className="space-y-3">
                 <button
                   onClick={() => setSelectedCategory('')}
-                  className={`w-full text-left px-4 py-3 rounded-xl transition-all ${
-                    selectedCategory === '' ? 'bg-white/20 shadow-lg' : 'hover:bg-white/10'
+                  className={`w-full text-left px-6 py-4 rounded-2xl transition-all duration-300 group ${
+                    selectedCategory === '' 
+                      ? 'bg-gradient-to-r from-blue-500/20 to-purple-500/20 border border-blue-400/30 shadow-lg shadow-blue-500/10' 
+                      : 'hover:bg-white/10 border border-transparent hover:border-white/20'
                   }`}
                 >
                   <div className="flex items-center justify-between">
-                    <span>Tất cả</span>
-                    <span className="text-sm bg-white/10 px-2 py-0.5 rounded-full">{questions.length}</span>
+                    <span className="font-semibold">Tất cả</span>
+                    <span className="text-sm bg-white/15 px-3 py-1 rounded-full font-medium">{questions.length}</span>
                   </div>
                 </button>
                 {Object.entries(CATEGORIES).map(([key, label]) => {
@@ -296,13 +301,15 @@ export default function ForumPage() {
                     <button
                       key={key}
                       onClick={() => setSelectedCategory(key as ForumCategory)}
-                      className={`w-full text-left px-4 py-3 rounded-xl transition-all ${
-                        selectedCategory === key ? 'bg-white/20 shadow-lg' : 'hover:bg-white/10'
+                      className={`w-full text-left px-6 py-4 rounded-2xl transition-all duration-300 group ${
+                        selectedCategory === key 
+                          ? 'bg-gradient-to-r from-blue-500/20 to-purple-500/20 border border-blue-400/30 shadow-lg shadow-blue-500/10' 
+                          : 'hover:bg-white/10 border border-transparent hover:border-white/20'
                       }`}
                     >
                       <div className="flex items-center justify-between">
-                        <span>{label}</span>
-                        <span className="text-sm bg-white/10 px-2 py-0.5 rounded-full">{count}</span>
+                        <span className="font-semibold">{label}</span>
+                        <span className="text-sm bg-white/15 px-3 py-1 rounded-full font-medium">{count}</span>
                       </div>
                     </button>
                   )
@@ -310,60 +317,67 @@ export default function ForumPage() {
               </div>
             </div>
 
-            {/* Stats */}
-            <div className="bg-white/5 rounded-2xl border border-white/10 p-6 shadow-2xl">
-              <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
-                <TrendingUp className="h-5 w-5" />
-                Thống kê
-              </h3>
+            {/* Stats - Modern Cards */}
+            <div className="bg-gradient-to-br from-white/8 to-white/3 rounded-3xl border border-white/15 p-8 shadow-2xl backdrop-blur-xl">
+              <div className="flex items-center gap-3 mb-6">
+                <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-green-500/20 to-emerald-500/20 flex items-center justify-center">
+                  <TrendingUp className="h-5 w-5 text-green-300" />
+                </div>
+                <h3 className="text-xl font-bold text-white">Thống kê</h3>
+              </div>
               <div className="space-y-4">
-                <div className="flex items-center justify-between p-3 rounded-lg bg-white/5">
-                  <span>Tổng câu hỏi</span>
-                  <span className="font-semibold">{questions.length}</span>
+                <div className="flex items-center justify-between p-4 rounded-2xl bg-white/8 border border-white/10">
+                  <span className="text-white/90 font-medium">Tổng câu hỏi</span>
+                  <span className="font-bold text-xl text-white">{questions.length}</span>
                 </div>
-                <div className="flex items-center justify-between p-3 rounded-lg bg-white/5">
-                  <span>Hiển thị</span>
-                  <span className="font-semibold">{sorted.length}</span>
+                <div className="flex items-center justify-between p-4 rounded-2xl bg-white/8 border border-white/10">
+                  <span className="text-white/90 font-medium">Hiển thị</span>
+                  <span className="font-bold text-xl text-white">{sorted.length}</span>
                 </div>
-                <div className="flex items-center justify-between p-3 rounded-lg bg-white/5">
-                  <span>Trang hiện tại</span>
-                  <span className="font-semibold">{pageSafe}/{totalPages}</span>
+                <div className="flex items-center justify-between p-4 rounded-2xl bg-white/8 border border-white/10">
+                  <span className="text-white/90 font-medium">Trang hiện tại</span>
+                  <span className="font-bold text-xl text-white">{pageSafe}/{totalPages}</span>
                 </div>
               </div>
             </div>
           </aside>
 
-          {/* Middle: Feed */}
-          <main className="lg:col-span-6 space-y-6">
-            {/* Ask box */}
-            <div className="bg-white/5 rounded-2xl border border-white/10 p-6 shadow-2xl">
-              <h3 className="text-lg font-semibold mb-4">Đặt câu hỏi</h3>
+          {/* Main Content - Enhanced với better spacing */}
+          <main className="xl:col-span-6 space-y-8">
+            {/* Ask box - Modern Design */}
+            <div className="bg-gradient-to-br from-white/8 to-white/3 rounded-3xl border border-white/15 p-8 shadow-2xl backdrop-blur-xl">
+              <div className="flex items-center gap-3 mb-6">
+                <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-orange-500/20 to-red-500/20 flex items-center justify-center">
+                  <MessageSquare className="h-5 w-5 text-orange-300" />
+                </div>
+                <h3 className="text-xl font-bold text-white">Đặt câu hỏi</h3>
+              </div>
               <AskInline onSubmit={handleCreateQuestion} defaultStudentId={currentStudentId} onUpdateStudentId={(sid)=>{setCurrentStudentId(sid); localStorage.setItem(STORAGE_KEYS.studentId, sid)}} />
             </div>
 
-            {/* Questions list */}
-            <div className="space-y-5">
+            {/* Questions list - Enhanced Cards */}
+            <div className="space-y-6">
               {paginated.map((question) => (
-                <div key={question.id} className="bg-white/5 rounded-2xl border border-white/10 hover:border-white/20 transition-all duration-300 overflow-hidden group hover:bg-white/10 shadow-xl hover:shadow-2xl">
-                  <div className="p-6">
-                    {/* Header */}
-                    <div className="flex items-start justify-between mb-5">
+                <div key={question.id} className="bg-gradient-to-br from-white/8 to-white/3 rounded-3xl border border-white/15 hover:border-white/25 transition-all duration-500 overflow-hidden group hover:bg-white/10 shadow-2xl hover:shadow-3xl backdrop-blur-xl">
+                  <div className="p-8">
+                    {/* Header - Enhanced */}
+                    <div className="flex items-start justify-between mb-6">
                       <div className="flex items-center gap-4">
-                        <div className="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center flex-shrink-0 shadow-lg">
-                          <MessageSquare className="h-5 w-5 text-white" />
+                        <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-blue-500/20 to-purple-500/20 flex items-center justify-center flex-shrink-0 shadow-lg">
+                          <MessageSquare className="h-6 w-6 text-blue-300" />
                         </div>
                         <div>
-                          <div className="flex items-center gap-3 mb-1">
-                            <span className="font-semibold text-base">{question.studentId || 'Ẩn danh'}</span>
+                          <div className="flex items-center gap-3 mb-2">
+                            <span className="font-bold text-lg text-white">{question.studentId || 'Ẩn danh'}</span>
                             {/* Hot badge when many likes */}
                             {((Array.isArray(question.likes) ? question.likes.length : 0) >= 10) && (
-                              <div className="flex items-center gap-1 bg-gradient-to-r from-orange-500 to-red-500 px-3 py-1 rounded-full text-xs font-bold shadow-lg">
+                              <div className="flex items-center gap-1 bg-gradient-to-r from-orange-500 to-red-500 px-4 py-1.5 rounded-full text-xs font-bold shadow-lg">
                                 <Star className="h-3 w-3 text-white" />
                                 HOT
                               </div>
                             )}
                           </div>
-                          <div className="text-sm flex items-center gap-2 text-white/80">
+                          <div className="text-sm flex items-center gap-2 text-white/70">
                             <Clock className="h-4 w-4" />
                             {formatTime(question.createdAt)}
                           </div>
@@ -371,72 +385,84 @@ export default function ForumPage() {
                       </div>
                     </div>
 
-                    {/* Content */}
-                    <h3 className="text-xl font-bold mb-3 leading-tight">{question.title}</h3>
-                    <p className="mb-6 line-clamp-2 text-base leading-relaxed text-white/90">{question.content}</p>
+                    {/* Content - Better Typography */}
+                    <h3 className="text-2xl font-bold mb-4 leading-tight text-white">{question.title}</h3>
+                    <p className="mb-8 line-clamp-3 text-lg leading-relaxed text-white/90">{question.content}</p>
 
-                    {/* Actions */}
-                    <div className="flex items-center justify-between pt-4 border-t border-white/10">
-                      <div className="flex items-center gap-6">
-                        <button onClick={() => handleToggleLike(question.id)} className="flex items-center gap-2 hover:opacity-80 transition-all duration-200 hover:scale-110">
-                          <Heart className="h-5 w-5" />
-                          <span className="font-medium">{Array.isArray(question.likes) ? question.likes.length : 0}</span>
+                    {/* Actions - Enhanced */}
+                    <div className="flex items-center justify-between pt-6 border-t border-white/15">
+                      <div className="flex items-center gap-8">
+                        <button onClick={() => handleToggleLike(question.id)} className="flex items-center gap-3 hover:opacity-80 transition-all duration-300 hover:scale-110 group">
+                          <div className="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center group-hover:bg-red-500/20 transition-colors">
+                            <Heart className="h-5 w-5 text-white group-hover:text-red-400" />
+                          </div>
+                          <span className="font-semibold text-white">{Array.isArray(question.likes) ? question.likes.length : 0}</span>
                         </button>
-                        <div className="flex items-center gap-2 opacity-90">
-                          <MessageCircle className="h-5 w-5" />
-                          <span className="font-medium">{(question.replies || []).length}</span>
+                        <div className="flex items-center gap-3 opacity-90">
+                          <div className="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center">
+                            <MessageCircle className="h-5 w-5 text-white" />
+                          </div>
+                          <span className="font-semibold text-white">{(question.replies || []).length}</span>
                         </div>
-                        <div className="flex items-center gap-2 opacity-90">
-                          <Eye className="h-5 w-5" />
-                          <span className="font-medium">{(question as any).views || 0}</span>
+                        <div className="flex items-center gap-3 opacity-90">
+                          <div className="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center">
+                            <Eye className="h-5 w-5 text-white" />
+                          </div>
+                          <span className="font-semibold text-white">{(question as any).views || 0}</span>
                         </div>
                       </div>
-                      <span className="text-sm font-semibold px-3 py-1 bg-white/10 rounded-full capitalize">
+                      <span className="text-sm font-bold px-4 py-2 bg-gradient-to-r from-blue-500/20 to-purple-500/20 rounded-full border border-blue-400/30 capitalize">
                         {CATEGORIES[question.category] || 'Khác'}
                       </span>
                     </div>
 
-                    {/* Quick reply */}
-                    <QuickReply onSubmit={(content)=>handleAddReply(question.id, content, '')} />
+                    {/* Quick reply - Enhanced */}
+                    <div className="mt-6">
+                      <QuickReply onSubmit={(content)=>handleAddReply(question.id, content, '')} />
+                    </div>
                   </div>
                 </div>
               ))}
 
               {sorted.length === 0 && (
-                <div className="bg-white/5 rounded-2xl border border-white/10 p-16 text-center shadow-2xl">
-                  <MessageSquare className="h-20 w-20 text-white mx-auto mb-6" />
-                  <h3 className="text-2xl font-bold mb-3">Chưa có câu hỏi nào</h3>
-                  <p className="text-white/80 text-lg">Hãy là người đầu tiên đặt câu hỏi!</p>
+                <div className="bg-gradient-to-br from-white/8 to-white/3 rounded-3xl border border-white/15 p-20 text-center shadow-2xl backdrop-blur-xl">
+                  <div className="w-24 h-24 rounded-3xl bg-gradient-to-br from-blue-500/20 to-purple-500/20 flex items-center justify-center mx-auto mb-8">
+                    <MessageSquare className="h-12 w-12 text-blue-300" />
+                  </div>
+                  <h3 className="text-3xl font-bold mb-4 text-white">Chưa có câu hỏi nào</h3>
+                  <p className="text-white/80 text-xl">Hãy là người đầu tiên đặt câu hỏi!</p>
                 </div>
               )}
             </div>
 
-            {/* Pagination */}
+            {/* Pagination - Enhanced */}
             {totalPages > 1 && (
-              <div className="flex items-center justify-center gap-4 pt-6">
-                <Button variant="outline" disabled={pageSafe <= 1} onClick={() => setPage((p) => Math.max(1, p - 1))} className="rounded-full border-white/30 text-white hover:bg-white/10">
+              <div className="flex items-center justify-center gap-6 pt-8">
+                <Button variant="outline" disabled={pageSafe <= 1} onClick={() => setPage((p) => Math.max(1, p - 1))} className="rounded-2xl border-white/30 text-white hover:bg-white/10 px-8 py-3 font-semibold">
                   Trang trước
                 </Button>
-                <span className="px-4 text-white/80">{pageSafe} / {totalPages}</span>
-                <Button variant="outline" disabled={pageSafe >= totalPages} onClick={() => setPage((p) => Math.min(totalPages, p + 1))} className="rounded-full border-white/30 text-white hover:bg-white/10">
+                <span className="px-6 py-3 bg-white/10 rounded-2xl text-white font-semibold">{pageSafe} / {totalPages}</span>
+                <Button variant="outline" disabled={pageSafe >= totalPages} onClick={() => setPage((p) => Math.min(totalPages, p + 1))} className="rounded-2xl border-white/30 text-white hover:bg-white/10 px-8 py-3 font-semibold">
                   Trang sau
                 </Button>
               </div>
             )}
           </main>
 
-          {/* Right: Recent & Widgets */}
-          <aside className="lg:col-span-3 space-y-6">
-            <div className="bg-white/5 rounded-2xl border border-white/10 p-6 shadow-2xl">
-              <h3 className="text-lg font-semibold mb-6 flex items-center gap-2">
-                <Users className="h-5 w-5" />
-                Hoạt động gần đây
-              </h3>
-              <div className="space-y-4">
+          {/* Right Sidebar - Enhanced */}
+          <aside className="xl:col-span-3 space-y-8">
+            <div className="bg-gradient-to-br from-white/8 to-white/3 rounded-3xl border border-white/15 p-8 shadow-2xl backdrop-blur-xl">
+              <div className="flex items-center gap-3 mb-8">
+                <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-green-500/20 to-emerald-500/20 flex items-center justify-center">
+                  <Users className="h-5 w-5 text-green-300" />
+                </div>
+                <h3 className="text-xl font-bold text-white">Hoạt động gần đây</h3>
+              </div>
+              <div className="space-y-6">
                 {questions.slice(0, 5).map((q) => (
-                  <div key={q.id} className="border-l-4 border-white/30 pl-4">
-                    <p className="text-sm font-semibold line-clamp-2 mb-1 leading-relaxed">{q.title}</p>
-                    <p className="text-xs text-white/80 flex items-center gap-2">
+                  <div key={q.id} className="border-l-4 border-gradient-to-b from-blue-400 to-purple-400 pl-6 py-2">
+                    <p className="text-sm font-semibold line-clamp-2 mb-2 leading-relaxed text-white">{q.title}</p>
+                    <p className="text-xs text-white/70 flex items-center gap-2">
                       <Clock className="h-3 w-3" />
                       {formatTime(q.createdAt)} • {(q.replies || []).length} phản hồi
                     </p>
@@ -454,6 +480,18 @@ export default function ForumPage() {
           -webkit-line-clamp: 2; 
           -webkit-box-orient: vertical; 
           overflow: hidden; 
+        }
+        .line-clamp-3 { 
+          display: -webkit-box; 
+          -webkit-line-clamp: 3; 
+          -webkit-box-orient: vertical; 
+          overflow: hidden; 
+        }
+        .shadow-3xl {
+          box-shadow: 0 35px 60px -12px rgba(0, 0, 0, 0.25);
+        }
+        .border-gradient-to-b {
+          border-image: linear-gradient(to bottom, #60a5fa, #a78bfa) 1;
         }
       `}</style>
     </div>
