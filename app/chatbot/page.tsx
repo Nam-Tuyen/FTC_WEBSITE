@@ -437,8 +437,8 @@ export default function ChatbotPage() {
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
               {/* Chat Area (9 columns - lớn hơn) */}
               <div className="lg:col-span-9">
-                {/* Messages Container */}
-                <div className={`relative flex flex-col h-[600px] sm:h-[700px] rounded-3xl ${BRAND.borders.glow} border ${BRAND.surfaces.glass} overflow-hidden ${BRAND.shadows.glow}`}>
+                {/* Messages Container - Tăng chiều cao để cân đối với sidebar */}
+                <div className={`relative flex flex-col h-[700px] sm:h-[800px] lg:h-[900px] rounded-3xl ${BRAND.borders.glow} border ${BRAND.surfaces.glass} overflow-hidden ${BRAND.shadows.glow}`}>
                   {/* Header cố định */}
                   <div className={`shrink-0 px-4 py-3 ${BRAND.borders.glass} border-b ${BRAND.surfaces.glass} flex items-center justify-between`}>
                     <div className="flex items-center gap-3">
@@ -551,7 +551,7 @@ export default function ChatbotPage() {
               </div>
 
               {/* Sidebar với hiệu ứng hiện đại (3 columns - nhỏ hơn) */}
-              <div className="lg:col-span-3 flex flex-col gap-6 min-h-[600px]">
+              <div className="lg:col-span-3 flex flex-col gap-6 min-h-[700px] sm:min-h-[800px] lg:min-h-[900px]">
                 <div className={`rounded-3xl ${BRAND.shadows.xl} overflow-hidden ${BRAND.borders.glow} border ${BRAND.surfaces.card} flex-1 flex flex-col`}>
                   <div className={`px-6 py-4 ${BRAND.borders.light} border-b ${BRAND.gradients.ambient}`}>
                     <div className="flex items-center gap-3">

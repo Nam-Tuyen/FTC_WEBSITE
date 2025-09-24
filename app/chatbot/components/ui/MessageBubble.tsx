@@ -7,18 +7,23 @@ import { cn, formatTime, isTypingMessage } from '../../lib'
  * Render message content with markdown formatting and clickable links
  */
 function renderMessageContent(content: string) {
-  // Process markdown formatting and links
+  // Process markdown formatting and links step by step
   let processedContent = content
-    // Convert **bold** to <strong> (process bold first to avoid conflicts)
-    .replace(/\*\*(.*?)\*\*/g, '<strong class="font-bold">$1</strong>')
-    // Convert *italic* to <em> (but not if already inside **)
-    .replace(/(?<!\*)\*([^*]+)\*(?!\*)/g, '<em class="italic">$1</em>')
-    // Convert [text](url) to clickable links
-    .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer" class="text-blue-400 hover:text-blue-300 underline transition-colors">$1</a>')
-    // Convert plain URLs to clickable links (but not if already in [text](url) format)
-    .replace(/(?<!\]\()(https?:\/\/[^\s\)]+)(?!\))/g, '<a href="$1" target="_blank" rel="noopener noreferrer" class="text-blue-400 hover:text-blue-300 underline transition-colors">$1</a>')
-    // Convert newlines to <br>
-    .replace(/\n/g, '<br/>')
+  
+  // Step 1: Convert **bold** to <strong> (process bold first to avoid conflicts)
+  processedContent = processedContent.replace(/\*\*(.*?)\*\*/g, '<strong class="font-bold text-white">$1</strong>')
+  
+  // Step 2: Convert *italic* to <em> (simple approach)
+  processedContent = processedContent.replace(/\*([^*]+)\*/g, '<em class="italic text-gray-300">$1</em>')
+  
+  // Step 3: Convert [text](url) to clickable links
+  processedContent = processedContent.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer" class="text-blue-400 hover:text-blue-300 underline transition-colors">$1</a>')
+  
+  // Step 4: Convert plain URLs to clickable links
+  processedContent = processedContent.replace(/(https?:\/\/[^\s]+)/g, '<a href="$1" target="_blank" rel="noopener noreferrer" class="text-blue-400 hover:text-blue-300 underline transition-colors">$1</a>')
+  
+  // Step 5: Convert newlines to <br>
+  processedContent = processedContent.replace(/\n/g, '<br/>')
   
   return <span dangerouslySetInnerHTML={{ __html: processedContent }} />
 }
