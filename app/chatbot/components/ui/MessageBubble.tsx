@@ -2,31 +2,8 @@ import React from 'react'
 import { MessageBubbleProps } from '../../types'
 import { BRAND } from '../../constants'
 import { cn, formatTime, isTypingMessage } from '../../lib'
+import { MarkdownMessage } from './MarkdownMessage'
 
-/**
- * Render message content with markdown formatting and clickable links
- */
-function renderMessageContent(content: string) {
-  // Process markdown formatting and links step by step
-  let processedContent = content
-  
-  // Step 1: Convert **bold** to <strong> (process bold first to avoid conflicts)
-  processedContent = processedContent.replace(/\*\*(.*?)\*\*/g, '<strong class="font-bold text-white">$1</strong>')
-  
-  // Step 2: Convert *italic* to <em> (simple approach)
-  processedContent = processedContent.replace(/\*([^*]+)\*/g, '<em class="italic text-gray-300">$1</em>')
-  
-  // Step 3: Convert [text](url) to clickable links
-  processedContent = processedContent.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer" class="text-blue-400 hover:text-blue-300 underline transition-colors">$1</a>')
-  
-  // Step 4: Convert plain URLs to clickable links
-  processedContent = processedContent.replace(/(https?:\/\/[^\s]+)/g, '<a href="$1" target="_blank" rel="noopener noreferrer" class="text-blue-400 hover:text-blue-300 underline transition-colors">$1</a>')
-  
-  // Step 5: Convert newlines to <br>
-  processedContent = processedContent.replace(/\n/g, '<br/>')
-  
-  return <span dangerouslySetInnerHTML={{ __html: processedContent }} />
-}
 
 /**
  * Typing Indicator Component
@@ -95,7 +72,7 @@ export function MessageBubble({ message }: MessageBubbleProps) {
             <TypingIndicator />
           ) : (
             <div className="text-sm leading-relaxed break-words">
-              {renderMessageContent(message.content)}
+              <MarkdownMessage text={message.content} />
             </div>
           )}
           

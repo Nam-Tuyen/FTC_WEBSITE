@@ -1,6 +1,6 @@
 import * as React from "react"
 import type { Metadata } from "next"
-import { Montserrat } from "next/font/google"
+import { Inter } from "next/font/google"
 import { Analytics } from "@vercel/analytics/next"
 import { Suspense } from "react"
 import Script from "next/script"
@@ -8,11 +8,9 @@ import { FloatingChatbotGate } from "@/components/floating-chatbot-gate"
 import { AuthProvider } from "@/app/providers/auth-provider"
 import "./globals.css"
 
-const montserrat = Montserrat({
-  subsets: ["latin", "vietnamese"],
+const inter = Inter({
+  subsets: ["vietnamese", "latin"],
   display: "swap",
-  variable: "--font-montserrat",
-  weight: ["300", "400", "500", "600", "700", "800", "900"],
 })
 
 export const viewport = {
@@ -36,7 +34,7 @@ export default function RootLayout({
       <head>
         <link rel="icon" href="https://cdn.builder.io/api/v1/image/assets%2F28c01978106541d5baa7b8a043c11d9b%2Fa73c2f3c74b94de7814f011b7387bea0?format=webp&width=800" />
       </head>
-      <body className={`${montserrat.className} ${montserrat.variable}`}>
+      <body className={inter.className}>
         <AuthProvider>
           <Suspense fallback={null}>{children}</Suspense>
           <FloatingChatbotGate />
