@@ -88,8 +88,10 @@ export default function ActivitiesPage() {
 
         <div className="relative max-w-5xl mx-auto text-center space-y-6">
           <h1 className="relative text-4xl sm:text-5xl lg:text-6xl font-extrabold">
-            <span className="absolute inset-0 bg-gradient-to-r from-primary to-accent opacity-50 blur-2xl animate-pulse"></span>
-            <span className="relative bg-gradient-to-r from-primary to-accent text-transparent bg-clip-text animate-text-shine">
+            <span className="absolute inset-0 bg-gradient-to-r from-white to-white opacity-50 blur-2xl animate-pulse"></span>
+            <span className="relative text-white animate-bounce" style={{
+              animation: 'blink 1.5s infinite, gradient-shift 2s ease-in-out infinite, bounce 2s infinite'
+            }}>
               HOẠT ĐỘNG CỦA CÂU LẠC BỘ
             </span>
           </h1>
