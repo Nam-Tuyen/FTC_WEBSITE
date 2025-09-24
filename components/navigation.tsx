@@ -86,14 +86,14 @@ export function Navigation() {
                 <img
                   src={FTC_LOGO_URL}
                   alt="Financial Technology Club Logo"
-                  width={40}
-                  height={40}
-                  className="rounded-full glow transition-all object-cover w-10 h-10"
+                  width={43}
+                  height={43}
+                  className="rounded-full glow transition-all object-cover w-[43px] h-[43px]"
                 />
                 <div className="absolute inset-0 rounded-full border-2 border-accent" aria-hidden="true" />
               </div>
               <div className="flex items-center gap-2">
-                <span suppressHydrationWarning className="font-heading text-foreground font-extrabold tracking-wide leading-none text-[40px]">FTC</span>
+                <span suppressHydrationWarning className="font-heading text-foreground font-extrabold tracking-wide leading-none text-[43px]">FTC</span>
                 <span className="text-xs sm:text-sm text-accent tracking-wide">&nbsp;</span>
               </div>
             </Link>
@@ -123,7 +123,7 @@ export function Navigation() {
                       isActive={isActive} 
                       showPulse={label === 'CHATBOT' && !isActive}
                     />
-                    <span className="nav-label font-medium tracking-wide">{label}</span>
+                    <span className="nav-label font-medium tracking-wide text-[16px]">{label}</span>
                   </Link>
                 )
               })}

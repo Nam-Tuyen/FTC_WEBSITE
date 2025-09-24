@@ -446,7 +446,9 @@ export default function ChatbotPage() {
                         <span className="text-white text-xl">🤖</span>
                       </div>
                       <div>
-                        <h3 className="text-xl font-bold text-white">FTC Chatbot</h3>
+                        <h3 className="text-xl font-bold text-white animate-bounce" style={{
+                          animation: 'blink 1.5s infinite, gradient-shift 2s ease-in-out infinite, bounce 2s infinite'
+                        }}>FTC CHATBOT</h3>
                         <p className="text-sm text-white/80">AI Assistant • {selectedMode === "club" ? "Câu lạc bộ" : "FinTech"}</p>
                       </div>
                     </div>

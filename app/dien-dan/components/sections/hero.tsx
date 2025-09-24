@@ -30,8 +30,10 @@ export function Hero({ search, onSearchChange }: HeroProps) {
       <div className="relative max-w-5xl mx-auto">
         <div className="text-center space-y-8">
           <h1 className="relative text-4xl sm:text-5xl lg:text-6xl font-extrabold inline-block">
-            <span className="absolute inset-0 bg-gradient-to-r from-primary to-accent opacity-50 blur-2xl animate-pulse" />
-            <span className="relative bg-gradient-to-r from-primary to-accent text-transparent bg-clip-text animate-text-shine">
+            <span className="absolute inset-0 bg-gradient-to-r from-white/20 to-white/10 opacity-50 blur-2xl animate-pulse" />
+            <span className="relative text-white animate-bounce" style={{
+              animation: 'blink 1.5s infinite, gradient-shift 2s ease-in-out infinite, bounce 2s infinite'
+            }}>
               DIỄN ĐÀN FTC
             </span>
           </h1>
