@@ -96,7 +96,7 @@ export default function ActivitiesPage() {
             </span>
           </h1>
           <p className="text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl text-muted-foreground leading-relaxed max-w-4xl mx-auto italic px-4">
-            Những sự kiện ghi dấu ấn của câu lạc bộ trong những năm qua 
+            Những sự kiện ghi dấu ấn của câu lạc bộ những năm qua 
           </p>
         </div>
       </section>
