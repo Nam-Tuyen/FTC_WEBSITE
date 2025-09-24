@@ -1,28 +1,11 @@
 'use client'
 
-/// <reference path="../../types/react-extensions.d.ts" />
-/// <reference path="../../types/shadcn-ui.d.ts" />
-
 import React, { ChangeEvent, useEffect, useMemo, useState } from 'react'
 import { Navigation } from '@/components/navigation'
-
-// Import UI components
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
-import { MessageSquare, HelpCircle, Search, Shuffle, Users, TrendingUp, Hash } from 'lucide-react'
-
-// Import custom components
-import { Hero } from './components/sections/hero'
-import { Sidebar } from './components/sections/sidebar'
-import { SearchBar } from './components/cards/search-bar'
-import { AskQuestionCard } from './components/cards/ask-question-card'
-import { QuestionCard } from './components/cards/question-card'
-import { SidebarWidgets } from './components/sidebar-widgets'
-
+import { MessageSquare, Search, Users, TrendingUp, Hash, Star, Clock, Eye, Heart, MessageCircle } from 'lucide-react'
 import { createQuestion, fetchQuestions } from '../../googleSheetApi/sheet'
-
-// Import types and utils
 import { CATEGORIES, STORAGE_KEYS, QuestionItem, Reply, ForumCategory } from './types'
 import { uuid, formatTime } from './utils/index'
 
@@ -234,155 +217,196 @@ export default function ForumPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-background to-background/80 text-foreground">
+    <div className="min-h-screen bg-[#003663] text-white">
       <Navigation />
 
-      {/* Hero Section - Twitter-style minimal */}
-      <section className="relative py-16 overflow-hidden">
-        <div className="absolute inset-0 pointer-events-none">
-          <div className="absolute top-0 right-0 w-[40%] h-[60%] bg-gradient-to-br from-primary/20 to-accent/10 rounded-full blur-3xl transform translate-x-24 -translate-y-8" />
-          <div className="absolute bottom-0 left-0 w-[35%] h-[50%] bg-gradient-to-tr from-accent/10 to-primary/20 rounded-full blur-3xl -translate-x-24 translate-y-8" />
+      {/* Hero Section với hiệu ứng nhấp nháy giống trang cơ cấu */}
+      <section className="relative min-h-[60vh] flex items-center justify-center py-16 px-4 sm:px-6 lg:px-8">
+        <div className="absolute inset-0 overflow-hidden">
+          <div className="absolute top-1/4 -right-1/4 w-2/3 h-2/3 bg-gradient-to-br from-primary/20 via-accent/20 to-transparent rounded-full blur-3xl animate-float" />
+          <div className="absolute -bottom-1/4 -left-1/4 w-2/3 h-2/3 bg-gradient-to-tr from-accent/20 via-primary/20 to-transparent rounded-full blur-3xl animate-float-reverse" />
         </div>
-        
-        <div className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-tr from-primary to-accent rounded-full shadow-lg mb-6">
-            <MessageSquare className="h-8 w-8 text-white" />
-          </div>
-          <h1 className="text-4xl lg:text-5xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent mb-4">
-            DIỄN ĐÀN SINH VIÊN
+
+        <div className="relative max-w-5xl mx-auto text-center space-y-6">
+          <h1 className="relative text-4xl sm:text-5xl lg:text-6xl font-extrabold">
+            <span className="absolute inset-0 bg-gradient-to-r from-white to-white opacity-50 blur-2xl animate-pulse"></span>
+            <span className="relative text-white animate-bounce" style={{
+              animation: 'blink 1.5s infinite, gradient-shift 2s ease-in-out infinite, bounce 2s infinite'
+            }}>
+              DIỄN ĐÀN FTC
+            </span>
           </h1>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto mb-8">
-            Nơi sinh viên chia sẻ, thảo luận và tìm kiếm giải đáp cho mọi thắc mắc
+          <p className="text-xl sm:text-2xl text-white/80 leading-relaxed max-w-3xl mx-auto italic">
+            Nơi cộng đồng fintech chia sẻ kiến thức, thảo luận xu hướng và kết nối với nhau
           </p>
-          
-          {/* Search Bar */}
-          <div className="max-w-xl mx-auto relative">
-            <div className="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-muted-foreground flex items-center">
-              <Search className="h-5 w-5 text-muted-foreground" />
+
+          {/* Search */}
+          <div className="max-w-xl mx-auto relative mt-8">
+            <div className="absolute left-4 top-1/2 -translate-y-1/2">
+              <Search className="h-5 w-5 text-white/70" />
             </div>
             <Input
               value={search}
-              onChange={(e) => setSearch(e.target.value)}
+              onChange={(e: ChangeEvent<HTMLInputElement>) => setSearch(e.target.value)}
               placeholder="Tìm kiếm câu hỏi..."
-              className="pl-12 h-12 text-base bg-white/6 backdrop-blur-md border border-transparent hover:border-border/20 focus:border-accent/30 rounded-full shadow-lg transition-shadow duration-200 ring-0 focus:ring-2 focus:ring-accent/20"
+              className="pl-12 h-12 text-base bg-white/10 border border-white/20 placeholder-white/70 text-white rounded-full shadow-lg focus-visible:ring-2 focus-visible:ring-white/60"
             />
-            <button
-              onClick={() => setSearch('')}
-              className="absolute right-3 top-1/2 transform -translate-y-1/2 text-sm text-muted-foreground hover:text-foreground inline-flex items-center justify-center w-8 h-8 rounded-full border border-border/20 bg-background/30 hover:bg-background/40 transition-colors"
-              aria-label="Clear search"
-            >
-              <span className="sr-only">Clear</span>
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <line x1="18" y1="6" x2="6" y2="18" />
-                <line x1="6" y1="6" x2="18" y2="18" />
-              </svg>
-            </button>
+            {!!search && (
+              <button
+                onClick={() => setSearch('')}
+                className="absolute right-3 top-1/2 -translate-y-1/2 w-8 h-8 grid place-items-center rounded-full bg-white/10 hover:bg-white/20"
+                aria-label="Xóa tìm kiếm"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <line x1="18" y1="6" x2="6" y2="18" />
+                  <line x1="6" y1="6" x2="18" y2="18" />
+                </svg>
+              </button>
+            )}
           </div>
         </div>
       </section>
 
-      {/* Main Layout - Modern 3-column */}
+      {/* Layout */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-12">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-          
-          {/* Left Sidebar - Navigation */}
+          {/* Left: Categories & Stats */}
           <aside className="lg:col-span-3 space-y-6">
-            <div className="bg-gradient-to-br from-background/80 to-background/40 backdrop-blur-xl rounded-3xl border border-white/10 p-6 shadow-2xl shadow-black/20">
-              <h3 className="font-semibold text-lg mb-4 flex items-center gap-2">
+            {/* Categories */}
+            <div className="bg-white/5 rounded-2xl border border-white/10 p-6 shadow-2xl">
+              <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
                 <Hash className="h-5 w-5" />
                 Danh mục
               </h3>
               <div className="space-y-2">
                 <button
-                  className={`w-full text-left px-4 py-3 rounded-xl transition-all ${
-                    selectedCategory === '' 
-                      ? 'bg-primary text-primary-foreground shadow-lg' 
-                      : 'hover:bg-muted/50 text-muted-foreground hover:text-foreground'
-                  }`}
                   onClick={() => setSelectedCategory('')}
+                  className={`w-full text-left px-4 py-3 rounded-xl transition-all ${
+                    selectedCategory === '' ? 'bg-white/20 shadow-lg' : 'hover:bg-white/10'
+                  }`}
                 >
                   <div className="flex items-center justify-between">
                     <span>Tất cả</span>
-                    <span className="text-sm">{questions.length}</span>
+                    <span className="text-sm bg-white/10 px-2 py-0.5 rounded-full">{questions.length}</span>
                   </div>
                 </button>
-                {CATEGORIES && Object.entries(CATEGORIES).map(([key, label]) => {
-                  const count = questions.filter(q => q.category === key).length;
+                {Object.entries(CATEGORIES).map(([key, label]) => {
+                  const count = questions.filter((q) => q.category === key).length
                   return (
                     <button
                       key={key}
+                      onClick={() => setSelectedCategory(key as ForumCategory)}
                       className={`w-full text-left px-4 py-3 rounded-xl transition-all ${
-                        selectedCategory === key 
-                          ? 'bg-primary text-primary-foreground shadow-lg' 
-                          : 'hover:bg-muted/50 text-muted-foreground hover:text-foreground'
+                        selectedCategory === key ? 'bg-white/20 shadow-lg' : 'hover:bg-white/10'
                       }`}
-                      onClick={() => setSelectedCategory(key as any)}
                     >
                       <div className="flex items-center justify-between">
                         <span>{label}</span>
-                        <span className="text-sm">{count}</span>
+                        <span className="text-sm bg-white/10 px-2 py-0.5 rounded-full">{count}</span>
                       </div>
                     </button>
-                  );
+                  )
                 })}
               </div>
             </div>
 
-            {/* Stats Card */}
-            <div className="bg-gradient-to-br from-background/80 to-background/40 backdrop-blur-xl rounded-3xl border border-white/10 p-6 shadow-2xl shadow-black/20">
-              <h3 className="font-semibold text-lg mb-4 flex items-center gap-2">
+            {/* Stats */}
+            <div className="bg-white/5 rounded-2xl border border-white/10 p-6 shadow-2xl">
+              <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
                 <TrendingUp className="h-5 w-5" />
                 Thống kê
               </h3>
               <div className="space-y-4">
-                <div className="flex items-center justify-between">
-                  <span className="text-muted-foreground">Tổng câu hỏi</span>
+                <div className="flex items-center justify-between p-3 rounded-lg bg-white/5">
+                  <span>Tổng câu hỏi</span>
                   <span className="font-semibold">{questions.length}</span>
                 </div>
-                <div className="flex items-center justify-between">
-                  <span className="text-muted-foreground">Hiển thị</span>
+                <div className="flex items-center justify-between p-3 rounded-lg bg-white/5">
+                  <span>Hiển thị</span>
                   <span className="font-semibold">{sorted.length}</span>
                 </div>
-                <div className="flex items-center justify-between">
-                  <span className="text-muted-foreground">Trang hiện tại</span>
+                <div className="flex items-center justify-between p-3 rounded-lg bg-white/5">
+                  <span>Trang hiện tại</span>
                   <span className="font-semibold">{pageSafe}/{totalPages}</span>
                 </div>
               </div>
             </div>
           </aside>
 
-          {/* Main Content - Feed */}
+          {/* Middle: Feed */}
           <main className="lg:col-span-6 space-y-6">
-            {/* Create Question Card */}
-            <div className="bg-gradient-to-br from-background/80 to-background/40 backdrop-blur-xl rounded-3xl border border-white/10 shadow-2xl shadow-black/20">
-              <AskQuestionCard
-                currentStudentId={currentStudentId}
-                onUpdateStudentId={(sid) => {
-                  setCurrentStudentId(sid)
-                  localStorage.setItem(STORAGE_KEYS.studentId, sid)
-                }}
-                onSubmit={handleCreateQuestion}
-              />
+            {/* Ask box */}
+            <div className="bg-white/5 rounded-2xl border border-white/10 p-6 shadow-2xl">
+              <h3 className="text-lg font-semibold mb-4">Đặt câu hỏi</h3>
+              <AskInline onSubmit={handleCreateQuestion} defaultStudentId={currentStudentId} onUpdateStudentId={(sid)=>{setCurrentStudentId(sid); localStorage.setItem(STORAGE_KEYS.studentId, sid)}} />
             </div>
 
-            {/* Questions Feed */}
-            <div className="space-y-4">
-              {paginated.map((q) => (
-                <div key={q.id} className="bg-gradient-to-br from-background/80 to-background/40 backdrop-blur-xl rounded-3xl border border-white/10 hover:border-white/20 transition-all duration-300 shadow-xl shadow-black/10 hover:shadow-2xl hover:shadow-black/20">
-                  <QuestionCard
-                    q={q}
-                    defaultStudentId={currentStudentId}
-                    onLike={() => handleToggleLike(q.id)}
-                    onReply={(content, authorName) => handleAddReply(q.id, content, authorName)}
-                  />
+            {/* Questions list */}
+            <div className="space-y-5">
+              {paginated.map((question) => (
+                <div key={question.id} className="bg-white/5 rounded-2xl border border-white/10 hover:border-white/20 transition-all duration-300 overflow-hidden group hover:bg-white/10 shadow-xl hover:shadow-2xl">
+                  <div className="p-6">
+                    {/* Header */}
+                    <div className="flex items-start justify-between mb-5">
+                      <div className="flex items-center gap-4">
+                        <div className="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center flex-shrink-0 shadow-lg">
+                          <MessageSquare className="h-5 w-5 text-white" />
+                        </div>
+                        <div>
+                          <div className="flex items-center gap-3 mb-1">
+                            <span className="font-semibold text-base">{question.studentId || 'Ẩn danh'}</span>
+                            {/* Hot badge when many likes */}
+                            {((Array.isArray(question.likes) ? question.likes.length : 0) >= 10) && (
+                              <div className="flex items-center gap-1 bg-gradient-to-r from-orange-500 to-red-500 px-3 py-1 rounded-full text-xs font-bold shadow-lg">
+                                <Star className="h-3 w-3 text-white" />
+                                HOT
+                              </div>
+                            )}
+                          </div>
+                          <div className="text-sm flex items-center gap-2 text-white/80">
+                            <Clock className="h-4 w-4" />
+                            {formatTime(question.createdAt)}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Content */}
+                    <h3 className="text-xl font-bold mb-3 leading-tight">{question.title}</h3>
+                    <p className="mb-6 line-clamp-2 text-base leading-relaxed text-white/90">{question.content}</p>
+
+                    {/* Actions */}
+                    <div className="flex items-center justify-between pt-4 border-t border-white/10">
+                      <div className="flex items-center gap-6">
+                        <button onClick={() => handleToggleLike(question.id)} className="flex items-center gap-2 hover:opacity-80 transition-all duration-200 hover:scale-110">
+                          <Heart className="h-5 w-5" />
+                          <span className="font-medium">{Array.isArray(question.likes) ? question.likes.length : 0}</span>
+                        </button>
+                        <div className="flex items-center gap-2 opacity-90">
+                          <MessageCircle className="h-5 w-5" />
+                          <span className="font-medium">{(question.replies || []).length}</span>
+                        </div>
+                        <div className="flex items-center gap-2 opacity-90">
+                          <Eye className="h-5 w-5" />
+                          <span className="font-medium">{(question as any).views || 0}</span>
+                        </div>
+                      </div>
+                      <span className="text-sm font-semibold px-3 py-1 bg-white/10 rounded-full capitalize">
+                        {CATEGORIES[question.category] || 'Khác'}
+                      </span>
+                    </div>
+
+                    {/* Quick reply */}
+                    <QuickReply onSubmit={(content)=>handleAddReply(question.id, content, '')} />
+                  </div>
                 </div>
               ))}
-              
+
               {sorted.length === 0 && (
-                <div className="bg-gradient-to-br from-background/80 to-background/40 backdrop-blur-xl rounded-3xl border border-white/10 p-8 text-center shadow-2xl shadow-black/20">
-                  <MessageSquare className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
-                  <h3 className="text-lg font-semibold mb-2">Chưa có câu hỏi nào</h3>
-                  <p className="text-muted-foreground">Hãy là người đầu tiên đặt câu hỏi!</p>
+                <div className="bg-white/5 rounded-2xl border border-white/10 p-16 text-center shadow-2xl">
+                  <MessageSquare className="h-20 w-20 text-white mx-auto mb-6" />
+                  <h3 className="text-2xl font-bold mb-3">Chưa có câu hỏi nào</h3>
+                  <p className="text-white/80 text-lg">Hãy là người đầu tiên đặt câu hỏi!</p>
                 </div>
               )}
             </div>
@@ -390,79 +414,88 @@ export default function ForumPage() {
             {/* Pagination */}
             {totalPages > 1 && (
               <div className="flex items-center justify-center gap-4 pt-6">
-                <Button 
-                  variant="outline" 
-                  disabled={pageSafe <= 1} 
-                  onClick={() => setPage((p) => Math.max(1, p - 1))}
-                  className="rounded-full"
-                >
+                <Button variant="outline" disabled={pageSafe <= 1} onClick={() => setPage((p) => Math.max(1, p - 1))} className="rounded-full border-white/30 text-white hover:bg-white/10">
                   Trang trước
                 </Button>
-                <span className="text-sm text-muted-foreground px-4">
-                  {pageSafe} / {totalPages}
-                </span>
-                <Button 
-                  variant="outline" 
-                  disabled={pageSafe >= totalPages} 
-                  onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
-                  className="rounded-full"
-                >
+                <span className="px-4 text-white/80">{pageSafe} / {totalPages}</span>
+                <Button variant="outline" disabled={pageSafe >= totalPages} onClick={() => setPage((p) => Math.min(totalPages, p + 1))} className="rounded-full border-white/30 text-white hover:bg-white/10">
                   Trang sau
                 </Button>
               </div>
             )}
           </main>
 
-          {/* Right Sidebar - Widgets */}
+          {/* Right: Recent & Widgets */}
           <aside className="lg:col-span-3 space-y-6">
-            <div className="bg-gradient-to-br from-background/80 to-background/40 backdrop-blur-xl rounded-3xl border border-white/10 p-6 shadow-2xl shadow-black/20">
-              <h3 className="font-semibold text-lg mb-4 flex items-center gap-2">
+            <div className="bg-white/5 rounded-2xl border border-white/10 p-6 shadow-2xl">
+              <h3 className="text-lg font-semibold mb-6 flex items-center gap-2">
                 <Users className="h-5 w-5" />
                 Hoạt động gần đây
               </h3>
-              <div className="space-y-3">
+              <div className="space-y-4">
                 {questions.slice(0, 5).map((q) => (
-                  <div key={q.id} className="border-l-2 border-primary/30 pl-3">
-                    <p className="text-sm font-medium truncate">{q.title}</p>
-                    <p className="text-xs text-muted-foreground">
+                  <div key={q.id} className="border-l-4 border-white/30 pl-4">
+                    <p className="text-sm font-semibold line-clamp-2 mb-1 leading-relaxed">{q.title}</p>
+                    <p className="text-xs text-white/80 flex items-center gap-2">
+                      <Clock className="h-3 w-3" />
                       {formatTime(q.createdAt)} • {(q.replies || []).length} phản hồi
                     </p>
                   </div>
                 ))}
               </div>
             </div>
-
-            <SidebarWidgets
-              currentStudentId={currentStudentId}
-              setCurrentStudentId={(v: string) => { 
-                setCurrentStudentId(v); 
-                localStorage.setItem(STORAGE_KEYS.studentId, v) 
-              }}
-            />
           </aside>
         </div>
       </div>
 
       <style jsx global>{`
-        @keyframes gradient {
-          0% { background-position: 0% 50%; }
-          50% { background-position: 100% 50%; }
-          100% { background-position: 0% 50%; }
-        }
-        @keyframes blob {
-          0%, 100% { transform: translate(0, 0) scale(1); }
-          25% { transform: translate(20px, -30px) scale(1.1); }
-          50% { transform: translate(-20px, 20px) scale(0.9); }
-          75% { transform: translate(30px, 30px) scale(1.05); }
-        }
-        .animate-gradient-slow {
-          animation: gradient 15s ease infinite;
-          background-size: 200% 200%;
-        }
-        .animate-blob {
-          animation: blob 20s ease-in-out infinite;
+        .line-clamp-2 { 
+          display: -webkit-box; 
+          -webkit-line-clamp: 2; 
+          -webkit-box-orient: vertical; 
+          overflow: hidden; 
         }
       `}</style>
+    </div>
+  )
+}
+
+// --- Inline helpers to keep page self-contained ---
+function AskInline({ onSubmit, defaultStudentId, onUpdateStudentId }: { onSubmit: (d: { title: string; content: string; studentId: string; category: string }) => void; defaultStudentId?: string; onUpdateStudentId: (sid: string)=>void }) {
+  const [title, setTitle] = useState('')
+  const [content, setContent] = useState('')
+  const [studentId, setStudentId] = useState(defaultStudentId || '')
+  const [category, setCategory] = useState<string>('thao-luan')
+
+  return (
+    <div className="space-y-4">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+        <Input value={studentId} onChange={(e)=>{ setStudentId(e.target.value); onUpdateStudentId(e.target.value) }} placeholder="MSSV (ví dụ: K21520001)" className="bg-white/10 border-white/20 text-white placeholder-white/60" />
+        <select value={category} onChange={(e)=>setCategory(e.target.value)} className="bg-white/10 border border-white/20 rounded-xl px-3 py-2">
+          {Object.entries(CATEGORIES).map(([key, label]) => (
+            <option key={key} value={key} className="bg-[#003663] text-white">{label}</option>
+          ))}
+        </select>
+        <Input value={title} onChange={(e)=>setTitle(e.target.value)} placeholder="Tiêu đề câu hỏi" className="bg-white/10 border-white/20 text-white placeholder-white/60" />
+      </div>
+      <textarea value={content} onChange={(e)=>setContent(e.target.value)} rows={4} placeholder="Nội dung câu hỏi" className="w-full rounded-xl bg-white/10 border border-white/20 p-3 placeholder-white/60" />
+      <div className="flex justify-end">
+        <Button disabled={!title.trim() || !content.trim()} onClick={()=>onSubmit({ title, content, studentId, category })} className="bg-white/10 hover:bg-white/20 text-white border border-white/20 rounded-xl">
+          Gửi câu hỏi
+        </Button>
+      </div>
+    </div>
+  )
+}
+
+function QuickReply({ onSubmit }: { onSubmit: (content: string)=>void }) {
+  const [content, setContent] = useState('')
+  return (
+    <div className="mt-4 flex items-center gap-2">
+      <Input value={content} onChange={(e)=>setContent(e.target.value)} placeholder="Viết phản hồi nhanh..." className="flex-1 bg-white/10 border-white/20 text-white placeholder-white/60" />
+      <Button onClick={()=>{ if(content.trim()){ onSubmit(content); setContent('') } }} className="bg-white/10 hover:bg-white/20 text-white border border-white/20 rounded-xl">
+        Trả lời
+      </Button>
     </div>
   )
 }
