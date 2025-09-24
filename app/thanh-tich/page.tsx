@@ -4,7 +4,7 @@ import { Navigation } from "@/components/navigation"
 
 export default function AchievementsPage() {
   return (
-    <div className="min-h-screen bg-gradient-to-b from-background to-background/80 overflow-hidden">
+    <div className="min-h-screen bg-[#003663] text-white overflow-hidden">
       <Navigation />
 
       {/* Mobile Responsive Hero Section */}

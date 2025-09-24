@@ -351,9 +351,7 @@ export default function ChatbotPage() {
 
   return (
     <>
-      <div className={`min-h-screen overflow-hidden ${BRAND.surfaces.primary}`} style={{ 
-        background: `linear-gradient(140deg, ${BRAND.primary50} 0%, ${BRAND.primary100} 40%, ${BRAND.primary200} 100%)` 
-      }}>
+      <div className="min-h-screen bg-[#003663] text-white overflow-hidden">
       <Navigation />
 
         {/* Mobile Responsive Hero Section */}
