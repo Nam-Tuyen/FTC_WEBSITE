@@ -40,6 +40,39 @@
   background-clip: text;
 }
 
+/* Font Inter optimization for markdown rendering */
+.markdown-content {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+  font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+  font-variant-ligatures: common-ligatures;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Ensure markdown elements use Inter font */
+.markdown-content strong,
+.markdown-content em,
+.markdown-content p,
+.markdown-content li,
+.markdown-content h1,
+.markdown-content h2,
+.markdown-content h3 {
+  font-family: inherit;
+}
+
+/* Force font weight for bold text */
+.markdown-content strong {
+  font-weight: 700 !important;
+  font-variation-settings: 'wght' 700;
+}
+
+/* Force italic for emphasis */
+.markdown-content em {
+  font-style: italic !important;
+  font-variation-settings: 'slnt' -12;
+}
+
 @custom-variant dark (&:is(.dark *));
 
 :root {
