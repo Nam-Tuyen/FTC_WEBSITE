@@ -228,7 +228,7 @@ export default function ForumPage() {
           <div className="absolute -bottom-1/4 -left-1/4 w-2/3 h-2/3 bg-gradient-to-tr from-purple-500/30 via-pink-500/20 to-transparent rounded-full blur-3xl animate-float-reverse" />
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-1/2 h-1/2 bg-gradient-to-r from-cyan-500/20 to-blue-500/20 rounded-full blur-2xl animate-pulse" />
         </div>
-
+        
         <div className="relative max-w-6xl mx-auto text-center space-y-8">
           {/* Enhanced Title với better spacing */}
           <div className="space-y-6">
@@ -257,43 +257,19 @@ export default function ForumPage() {
               className="pl-16 h-16 text-lg bg-white/15 border-2 border-white/25 placeholder-white/70 text-white rounded-2xl shadow-2xl focus-visible:ring-4 focus-visible:ring-white/40 backdrop-blur-xl"
             />
             {!!search && (
-              <button
-                onClick={() => setSearch('')}
+            <button
+              onClick={() => setSearch('')}
                 className="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 grid place-items-center rounded-xl bg-white/20 hover:bg-white/30 transition-all duration-300"
                 aria-label="Xóa tìm kiếm"
-              >
+            >
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <line x1="18" y1="6" x2="6" y2="18" />
-                  <line x1="6" y1="6" x2="18" y2="18" />
-                </svg>
-              </button>
+                <line x1="18" y1="6" x2="6" y2="18" />
+                <line x1="6" y1="6" x2="18" y2="18" />
+              </svg>
+            </button>
             )}
           </div>
 
-          {/* Enhanced Stats Preview */}
-          <div className="flex items-center justify-center gap-8 mt-16">
-            <div className="flex items-center gap-3 bg-white/10 rounded-2xl px-6 py-4 backdrop-blur-xl border border-white/20">
-              <MessageSquare className="h-6 w-6 text-blue-300" />
-              <div className="text-left">
-                <div className="text-2xl font-bold text-white">{questions.length}</div>
-                <div className="text-sm text-white/70">Câu hỏi</div>
-              </div>
-            </div>
-            <div className="flex items-center gap-3 bg-white/10 rounded-2xl px-6 py-4 backdrop-blur-xl border border-white/20">
-              <Users className="h-6 w-6 text-green-300" />
-              <div className="text-left">
-                <div className="text-2xl font-bold text-white">{questions.length * 2}</div>
-                <div className="text-sm text-white/70">Thành viên</div>
-              </div>
-            </div>
-            <div className="flex items-center gap-3 bg-white/10 rounded-2xl px-6 py-4 backdrop-blur-xl border border-white/20">
-              <TrendingUp className="h-6 w-6 text-purple-300" />
-              <div className="text-left">
-                <div className="text-2xl font-bold text-white">98%</div>
-                <div className="text-sm text-white/70">Hài lòng</div>
-              </div>
-            </div>
-          </div>
         </div>
       </section>
 
@@ -479,7 +455,7 @@ export default function ForumPage() {
                   </div>
                 </div>
               ))}
-
+              
               {sorted.length === 0 && (
                 <div className="bg-gradient-to-br from-white/8 to-white/3 rounded-3xl border border-white/15 p-20 text-center shadow-2xl backdrop-blur-xl">
                   <div className="w-24 h-24 rounded-3xl bg-gradient-to-br from-blue-500/20 to-purple-500/20 flex items-center justify-center mx-auto mb-8">
