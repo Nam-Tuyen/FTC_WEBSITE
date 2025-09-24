@@ -37,7 +37,7 @@ export function ApplicationDeadlineCheck({ recruitmentStatus }: ApplicationDeadl
             CHƯA TỚI THỜI GIAN ỨNG TUYỂN
           </h3>
           <p className="text-base text-muted-foreground/90">
-            Vui lòng theo dõi fanpage FTC để cập nhật thông tin tuyển thành viên
+            Vui lòng theo dõi Fanpage của FTC để cập nhật thông tin về tuyển thành viên
           </p>
         </div>
       </div>
