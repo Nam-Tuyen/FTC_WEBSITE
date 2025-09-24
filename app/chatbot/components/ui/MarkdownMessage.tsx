@@ -48,11 +48,19 @@ function normalizeMarkdownStars(s: string): string {
 }
 
 /**
+ * Convert @https://... format to clickable links
+ */
+function processAtLinks(s: string): string {
+  // Convert @https://... to [@https://...](https://...)
+  return s.replace(/@(https?:\/\/[^\s\)]+)/g, '[@$1]($1)')
+}
+
+/**
  * MarkdownMessage Component
  * Renders markdown content with proper styling and link handling
  */
 export function MarkdownMessage({ text }: { text: string }) {
-  const normalizedText = normalizeMarkdownStars(text)
+  const normalizedText = processAtLinks(normalizeMarkdownStars(text))
   
   return (
     <div className="markdown-content">

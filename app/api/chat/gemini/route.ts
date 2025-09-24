@@ -174,7 +174,7 @@ export const FAQ_MAP: Record<string, string> = {
   // Tham gia
   "lam the nao de tham gia cau lac bo": `
     <p>Mọi thông tin về tuyển tân thành viên sẽ được cập nhật trên <strong>Fanpage</strong>.</p>
-    <p><strong>Link Fanpage:</strong> <a href="\${FTC_CONTACTS.fanpage}">\${FTC_CONTACTS.fanpage}</a></p>
+    <p><strong>Link Fanpage:</strong> @https://www.facebook.com/clbfintechuel</p>
   `,
 
   // Lịch sinh hoạt
@@ -184,15 +184,10 @@ export const FAQ_MAP: Record<string, string> = {
 
   // Kỹ năng
   "can ky nang gi de ung tuyen": `
-    <p>FTC chào đón <strong>mọi chuyên ngành</strong>, nên điều quan trọng nhất là <em>tinh thần học hỏi, kỷ luật và chủ động</em>.</p>
+    <p>FTC quan trọng nhất là <em>tinh thần học hỏi, kỷ luật và chủ động</em>.</p>
     <ul>
-      <li><strong>Kỹ năng kỹ thuật:</strong> Ứng viên có nền tảng Excel, SQL hoặc Python sẽ thuận lợi khi tham gia các hoạt động về dữ liệu và công nghệ tài chính.</li>
-      <li><strong>Kỹ năng mềm:</strong> Kỹ năng viết và thuyết trình giúp bạn đóng góp cho học thuật và truyền thông. Khả năng làm việc nhóm và quản lý thời gian hỗ trợ bạn theo kịp tiến độ dự án và sự kiện.</li>
-    </ul>
-    <p><strong>Theo từng mảng:</strong></p>
-    <ul>
-      <li><em>Mảng sự kiện:</em> cần tư duy tổ chức và phối hợp nhiều đầu việc.</li>
-      <li><em>Mảng truyền thông:</em> cần khả năng xây dựng nội dung và cảm quan thẩm mỹ tốt.</li>
+      <li><strong>Kỹ năng cứng:</strong> Ứng viên có kiến thức nền tảng về Excel, SQL hoặc Python là lợi thế nổi bật giúp hồ sơ của bạn được đánh giá cao hơn.</li>
+      <li><strong>Kỹ năng mềm:</strong> Tinh thần học hỏi, kỷ luật và chủ động là tiêu chí cốt lõi. Làm việc nhóm và giao tiếp rõ ràng được kiểm tra qua tình huống phối hợp và phản hồi email. Quản lý thời gian và tự chủ thể hiện ở việc đúng hạn và chất lượng đầu ra. Tư duy phản biện và giải quyết vấn đề đánh giá qua bài tập tình huống. Tổ chức và phối hợp nhiều đầu việc nhìn vào kế hoạch và theo dõi tiến độ. Sáng tạo nội dung và thẩm mỹ khi cần trình bày. Thái độ trách nhiệm và cam kết tham gia ổn định.</li>
     </ul>
   `,
 
