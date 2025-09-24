@@ -2,6 +2,7 @@ import * as React from "react"
 import type { Metadata } from "next"
 import { Inter } from "next/font/google"
 import { Analytics } from "@vercel/analytics/next"
+import { SpeedInsights } from "@vercel/speed-insights/next"
 import { Suspense } from "react"
 import Script from "next/script"
 import { FloatingChatbotGate } from "@/components/floating-chatbot-gate"
@@ -39,6 +40,7 @@ export default function RootLayout({
           <Suspense fallback={null}>{children}</Suspense>
           <FloatingChatbotGate />
           <Analytics />
+          <SpeedInsights />
           {process.env.NODE_ENV === "development" && (
             <Script id="suppress-clipboard-policy-error" strategy="beforeInteractive">
               {`
