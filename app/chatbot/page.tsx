@@ -356,26 +356,23 @@ export default function ChatbotPage() {
       }}>
       <Navigation />
 
-        {/* Hero Section với hiệu ứng nhấp nháy hiện đại */}
-        <section className="relative min-h-[50vh] flex items-center justify-center py-16 px-4 sm:px-6 lg:px-8 animate-in fade-in duration-1000">
+        {/* Hero Section */}
+        <section className="relative min-h-[60vh] flex items-center justify-center py-16 px-4 sm:px-6 lg:px-8">
           <div className="absolute inset-0 overflow-hidden">
             <div className="absolute top-1/4 -right-1/4 w-2/3 h-2/3 bg-gradient-to-br from-primary/20 via-accent/20 to-transparent rounded-full blur-3xl animate-float" />
             <div className="absolute -bottom-1/4 -left-1/4 w-2/3 h-2/3 bg-gradient-to-tr from-accent/20 via-primary/20 to-transparent rounded-full blur-3xl animate-float-reverse" />
           </div>
 
-          <div className="relative max-w-5xl mx-auto text-center space-y-8">
-            {/* Title với hiệu ứng nhấp nháy hiện đại */}
+          <div className="relative max-w-5xl mx-auto text-center space-y-6">
             <h1 className="relative text-4xl sm:text-5xl lg:text-6xl font-extrabold">
-              <span className="absolute inset-0 bg-gradient-to-r from-[#003663] to-[#1a5490] opacity-50 blur-2xl animate-pulse"></span>
-              <span className={`relative ${BRAND.text.gradient} animate-bounce`} style={{
+              <span className="absolute inset-0 bg-gradient-to-r from-white to-white opacity-50 blur-2xl animate-pulse"></span>
+              <span className="relative text-white animate-bounce" style={{
                 animation: 'blink 1.5s infinite, gradient-shift 2s ease-in-out infinite, bounce 2s infinite'
               }}>
                 FTC CHATBOT
               </span>
             </h1>
-            
-            {/* Subtitle */}
-            <p className={`text-xl sm:text-2xl ${BRAND.text.secondary} leading-relaxed max-w-3xl mx-auto italic`}>
+            <p className="text-xl sm:text-2xl text-muted-foreground leading-relaxed max-w-3xl mx-auto italic">
               Trợ lý AI thông minh, hỗ trợ giải đáp thông tin về câu lạc bộ và ngành Fintech cho các bạn tân sinh viên
             </p>
 

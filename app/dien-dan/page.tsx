@@ -281,13 +281,13 @@ export default function ForumPage() {
         </div>
       </section>
 
-      {/* Main Layout - Twitter-style 3-column */}
+      {/* Main Layout - Modern 3-column */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-12">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
           
           {/* Left Sidebar - Navigation */}
           <aside className="lg:col-span-3 space-y-6">
-            <div className="bg-card/50 backdrop-blur-sm rounded-2xl border border-border/50 p-6">
+            <div className="bg-gradient-to-br from-background/80 to-background/40 backdrop-blur-xl rounded-3xl border border-white/10 p-6 shadow-2xl shadow-black/20">
               <h3 className="font-semibold text-lg mb-4 flex items-center gap-2">
                 <Hash className="h-5 w-5" />
                 Danh mục
@@ -329,7 +329,7 @@ export default function ForumPage() {
             </div>
 
             {/* Stats Card */}
-            <div className="bg-card/50 backdrop-blur-sm rounded-2xl border border-border/50 p-6">
+            <div className="bg-gradient-to-br from-background/80 to-background/40 backdrop-blur-xl rounded-3xl border border-white/10 p-6 shadow-2xl shadow-black/20">
               <h3 className="font-semibold text-lg mb-4 flex items-center gap-2">
                 <TrendingUp className="h-5 w-5" />
                 Thống kê
@@ -354,7 +354,7 @@ export default function ForumPage() {
           {/* Main Content - Feed */}
           <main className="lg:col-span-6 space-y-6">
             {/* Create Question Card */}
-            <div className="bg-card/50 backdrop-blur-sm rounded-2xl border border-border/50">
+            <div className="bg-gradient-to-br from-background/80 to-background/40 backdrop-blur-xl rounded-3xl border border-white/10 shadow-2xl shadow-black/20">
               <AskQuestionCard
                 currentStudentId={currentStudentId}
                 onUpdateStudentId={(sid) => {
@@ -368,7 +368,7 @@ export default function ForumPage() {
             {/* Questions Feed */}
             <div className="space-y-4">
               {paginated.map((q) => (
-                <div key={q.id} className="bg-card/50 backdrop-blur-sm rounded-2xl border border-border/50 hover:border-border transition-all">
+                <div key={q.id} className="bg-gradient-to-br from-background/80 to-background/40 backdrop-blur-xl rounded-3xl border border-white/10 hover:border-white/20 transition-all duration-300 shadow-xl shadow-black/10 hover:shadow-2xl hover:shadow-black/20">
                   <QuestionCard
                     q={q}
                     defaultStudentId={currentStudentId}
@@ -379,7 +379,7 @@ export default function ForumPage() {
               ))}
               
               {sorted.length === 0 && (
-                <div className="bg-card/50 backdrop-blur-sm rounded-2xl border border-border/50 p-8 text-center">
+                <div className="bg-gradient-to-br from-background/80 to-background/40 backdrop-blur-xl rounded-3xl border border-white/10 p-8 text-center shadow-2xl shadow-black/20">
                   <MessageSquare className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
                   <h3 className="text-lg font-semibold mb-2">Chưa có câu hỏi nào</h3>
                   <p className="text-muted-foreground">Hãy là người đầu tiên đặt câu hỏi!</p>
@@ -415,7 +415,7 @@ export default function ForumPage() {
 
           {/* Right Sidebar - Widgets */}
           <aside className="lg:col-span-3 space-y-6">
-            <div className="bg-card/50 backdrop-blur-sm rounded-2xl border border-border/50 p-6">
+            <div className="bg-gradient-to-br from-background/80 to-background/40 backdrop-blur-xl rounded-3xl border border-white/10 p-6 shadow-2xl shadow-black/20">
               <h3 className="font-semibold text-lg mb-4 flex items-center gap-2">
                 <Users className="h-5 w-5" />
                 Hoạt động gần đây
