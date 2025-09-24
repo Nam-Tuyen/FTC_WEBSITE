@@ -9,8 +9,8 @@ export default function HomePage() {
     <div className="min-h-screen gradient-bg">
       <Navigation />
 
-      {/* Hero Section */}
-      <section className="relative py-32 px-4 sm:px-6 lg:px-8 overflow-hidden">
+      {/* Mobile Responsive Hero Section */}
+      <section className="relative py-16 sm:py-24 lg:py-32 px-4 sm:px-6 lg:px-8 overflow-hidden">
         {/* Animated background elements */}
         <div className="absolute inset-0">
           <div className="absolute top-20 left-10 w-72 h-72 bg-accent/10 rounded-full blur-3xl animate-pulse"></div>
@@ -27,18 +27,18 @@ export default function HomePage() {
 
         <div className="max-w-7xl mx-auto relative z-10">
           <div className="text-center">
-            <div className="inline-flex items-center px-6 py-3 rounded-full bg-accent/20 border border-accent/40 mb-8 glow">
-              <Zap className="h-5 w-5 text-accent mr-3 animate-pulse" />
-              <span className="text-sm font-bold text-accent uppercase tracking-wider">BẠN ĐÃ SẴN SÀNG CHƯA?</span>
+            <div className="inline-flex items-center px-4 sm:px-6 py-2 sm:py-3 rounded-full bg-accent/20 border border-accent/40 mb-6 sm:mb-8 glow">
+              <Zap className="h-4 w-4 sm:h-5 sm:w-5 text-accent mr-2 sm:mr-3 animate-pulse" />
+              <span className="text-xs sm:text-sm font-bold text-accent uppercase tracking-wider">BẠN ĐÃ SẴN SÀNG CHƯA?</span>
             </div>
 
-            <h1 className="font-heading font-black text-5xl sm:text-6xl text-foreground mb-8 text-balance text-glow lg:text-7xl tracking-wide leading-tight">
+            <h1 className="font-heading font-black text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl text-foreground mb-6 sm:mb-8 text-balance text-glow tracking-wide leading-tight">
               CÂU LẠC BỘ <br />
               <span className="bg-gradient-to-r from-accent via-secondary to-accent bg-clip-text text-transparent animate-pulse">
                 CÔNG NGHỆ TÀI CHÍNH
               </span>
             </h1>
-            <p className="text-xl sm:text-2xl text-foreground/80 mb-12 max-w-4xl mx-auto text-pretty font-medium leading-relaxed">
+            <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-foreground/80 mb-8 sm:mb-12 max-w-4xl mx-auto text-pretty font-medium leading-relaxed px-4">
               {""}
             </p>
             <div className="flex flex-col sm:flex-row gap-6 justify-center">

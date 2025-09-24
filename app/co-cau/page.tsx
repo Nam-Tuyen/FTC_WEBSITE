@@ -8,15 +8,15 @@ export default function CoPage() {
     <div className="min-h-screen bg-gradient-to-b from-background to-background/80 overflow-hidden">
       <Navigation />
 
-      {/* Hero Section */}
-      <section className="relative min-h-[60vh] flex items-center justify-center py-16 px-4 sm:px-6 lg:px-8">
+      {/* Mobile Responsive Hero Section */}
+      <section className="relative min-h-[60vh] sm:min-h-[70vh] flex items-center justify-center py-12 sm:py-16 lg:py-24 px-4 sm:px-6 lg:px-8">
         <div className="absolute inset-0 overflow-hidden">
           <div className="absolute top-1/4 -right-1/4 w-2/3 h-2/3 bg-gradient-to-br from-primary/20 via-accent/20 to-transparent rounded-full blur-3xl animate-float" />
           <div className="absolute -bottom-1/4 -left-1/4 w-2/3 h-2/3 bg-gradient-to-tr from-accent/20 via-primary/20 to-transparent rounded-full blur-3xl animate-float-reverse" />
         </div>
 
-        <div className="relative max-w-5xl mx-auto text-center space-y-6">
-          <h1 className="relative text-4xl sm:text-5xl lg:text-6xl font-extrabold">
+        <div className="relative max-w-6xl mx-auto text-center space-y-4 sm:space-y-6 lg:space-y-8">
+          <h1 className="relative text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-extrabold">
             <span className="absolute inset-0 bg-gradient-to-r from-white to-white opacity-50 blur-2xl animate-pulse"></span>
             <span className="relative text-white animate-bounce" style={{
               animation: 'blink 1.5s infinite, gradient-shift 2s ease-in-out infinite, bounce 2s infinite'
@@ -24,7 +24,7 @@ export default function CoPage() {
               CƠ CẤU TỔ CHỨC
             </span>
           </h1>
-          <p className="text-xl sm:text-2xl text-muted-foreground leading-relaxed max-w-3xl mx-auto italic">
+          <p className="text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl text-muted-foreground leading-relaxed max-w-4xl mx-auto italic px-4">
             Thành phần và vai trò của các ban trong câu lạc bộ 
           </p>
         </div>

@@ -7,8 +7,8 @@ export default function AchievementsPage() {
     <div className="min-h-screen bg-gradient-to-b from-background to-background/80 overflow-hidden">
       <Navigation />
 
-      {/* Hero Section with Animated Background */}
-      <section className="relative min-h-[60vh] flex items-center justify-center py-16 px-4 sm:px-6 lg:px-8">
+      {/* Mobile Responsive Hero Section */}
+      <section className="relative min-h-[60vh] sm:min-h-[70vh] flex items-center justify-center py-12 sm:py-16 lg:py-24 px-4 sm:px-6 lg:px-8">
         {/* Animated background elements */}
         <div className="absolute inset-0 overflow-hidden">
           <div
@@ -21,8 +21,8 @@ export default function AchievementsPage() {
           />
         </div>
 
-        <div className="relative max-w-5xl mx-auto text-center space-y-6">
-          <h1 className="relative text-4xl sm:text-5xl lg:text-6xl font-extrabold">
+        <div className="relative max-w-6xl mx-auto text-center space-y-4 sm:space-y-6 lg:space-y-8">
+          <h1 className="relative text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-extrabold">
             <span className="absolute inset-0 bg-gradient-to-r from-white to-white opacity-50 blur-2xl animate-pulse"></span>
             <span className="relative text-white animate-bounce" style={{
               animation: 'blink 1.5s infinite, gradient-shift 2s ease-in-out infinite, bounce 2s infinite'
@@ -30,7 +30,7 @@ export default function AchievementsPage() {
               THÀNH TÍCH NỔI BẬT
             </span>
           </h1>
-          <p className="text-xl sm:text-2xl text-muted-foreground leading-relaxed max-w-3xl mx-auto italic">
+          <p className="text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl text-muted-foreground leading-relaxed max-w-4xl mx-auto italic px-4">
             Thành tích nổi bật của câu lạc bộ trong thời gian qua
           </p>
         </div>
