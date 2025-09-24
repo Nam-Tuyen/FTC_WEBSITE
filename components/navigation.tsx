@@ -73,9 +73,8 @@ export function Navigation() {
                     className="relative w-8 h-8 sm:w-10 sm:h-10 rounded-full object-cover border-2 border-accent/30 group-hover:border-accent transition-all duration-300 group-hover:scale-110"
                   />
                 </div>
-                <div className="flex flex-col">
-                  <span className="font-heading text-lg sm:text-2xl font-black text-foreground group-hover:text-accent transition-colors duration-300">FTC</span>
-                  <span className="hidden sm:block text-xs text-muted-foreground -mt-1">Financial Technology Club</span>
+                <div className="flex items-center">
+                  <span className="font-heading text-6xl font-black text-foreground group-hover:text-accent transition-colors duration-300">FTC</span>
                 </div>
               </Link>
 
