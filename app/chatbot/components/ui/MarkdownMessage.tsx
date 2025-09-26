@@ -133,17 +133,17 @@ export function MarkdownMessage({ text }: { text: string }) {
   const normalizedText = processAtLinks(normalizeMarkdownStars(text))
   
   return (
-    <div className="markdown-content">
+    <div className="markdown-content" style={{ color: '#ffffff' }}>
       <ReactMarkdown
         remarkPlugins={[remarkGfm]}
         components={{
         strong: ({ children }) => (
-          <strong className="font-bold text-white" style={{ fontWeight: '700' }}>
+          <strong className="font-bold text-white" style={{ fontWeight: '700', color: '#ffffff' }}>
             {children}
           </strong>
         ),
         em: ({ children }) => (
-          <em className="italic text-gray-300" style={{ fontStyle: 'italic' }}>
+          <em className="italic text-gray-300" style={{ fontStyle: 'italic', color: '#d1d5db' }}>
             {children}
           </em>
         ),
@@ -159,16 +159,16 @@ export function MarkdownMessage({ text }: { text: string }) {
           </a>
         ),
         p: ({ children }) => (
-          <p className="mb-2 last:mb-0 text-sm leading-relaxed">{children}</p>
+          <p className="mb-2 last:mb-0 text-sm leading-relaxed text-white" style={{ color: '#ffffff' }}>{children}</p>
         ),
         ul: ({ children }) => (
-          <ul className="list-disc pl-5 mb-2 space-y-1">{children}</ul>
+          <ul className="list-disc pl-5 mb-2 space-y-1 text-white" style={{ color: '#ffffff' }}>{children}</ul>
         ),
         ol: ({ children }) => (
-          <ol className="list-decimal pl-5 mb-2 space-y-1">{children}</ol>
+          <ol className="list-decimal pl-5 mb-2 space-y-1 text-white" style={{ color: '#ffffff' }}>{children}</ol>
         ),
         li: ({ children }) => (
-          <li className="text-sm leading-relaxed">{children}</li>
+          <li className="text-sm leading-relaxed text-white" style={{ color: '#ffffff' }}>{children}</li>
         ),
         code: ({ children }) => (
           <code className="px-1.5 py-0.5 rounded bg-gray-100 text-gray-800 text-xs font-mono">
@@ -181,17 +181,17 @@ export function MarkdownMessage({ text }: { text: string }) {
           </blockquote>
         ),
         h1: ({ children }) => (
-          <h1 className="text-lg font-bold text-white mb-2" style={{ fontWeight: '700' }}>
+          <h1 className="text-lg font-bold text-white mb-2" style={{ fontWeight: '700', color: '#ffffff' }}>
             {children}
           </h1>
         ),
         h2: ({ children }) => (
-          <h2 className="text-base font-bold text-white mb-2" style={{ fontWeight: '700' }}>
+          <h2 className="text-base font-bold text-white mb-2" style={{ fontWeight: '700', color: '#ffffff' }}>
             {children}
           </h2>
         ),
         h3: ({ children }) => (
-          <h3 className="text-sm font-bold text-white mb-1" style={{ fontWeight: '700' }}>
+          <h3 className="text-sm font-bold text-white mb-1" style={{ fontWeight: '700', color: '#ffffff' }}>
             {children}
           </h3>
         ),
