@@ -47,7 +47,7 @@ const RecruitmentPage: NextPage = () => {
             
             {/* Mobile Responsive Subtitle */}
             <p className="text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl text-muted-foreground leading-relaxed max-w-4xl mx-auto italic px-4">
-              Chúng mình đang tìm kiếm những người bạn đam mê công nghệ và tài chính, 
+              Tụi mình đang tìm kiếm những người bạn đam mê công nghệ và tài chính, 
               sẵn sàng học hỏi và phát triển cùng FTC.
             </p>
 
