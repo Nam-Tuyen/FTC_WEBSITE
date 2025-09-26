@@ -116,11 +116,11 @@ const activities = [
     duration: "1 ngày",
     participants: "3000+ sinh viên",
     icon: TrendingUp,
-    color: "from-orange-500 to-yellow-500",
-    bgColor: "bg-orange-500/10",
-    borderColor: "border-orange-500/20",
+    color: "from-amber-700 to-yellow-800",
+    bgColor: "bg-amber-700/10",
+    borderColor: "border-amber-700/20",
     status: "Thành công",
-    statusColor: "bg-orange-500/20 text-orange-300 border-orange-400/30",
+    statusColor: "bg-amber-700/20 text-amber-300 border-amber-600/30",
     highlights: [
       "Web3 & Blockchain",
       "Phỏng vấn trực tiếp",
@@ -198,12 +198,12 @@ const categoryColors = {
     cardGradient: "from-purple-500 to-violet-500"
   },
   "Nghề nghiệp": {
-    gradient: "from-orange-500/20 to-yellow-500/20",
-    border: "border-orange-400/40",
+    gradient: "from-amber-700/20 to-yellow-800/20",
+    border: "border-amber-600/40",
     icon: "text-white",
     title: "text-white",
     dots: ["bg-red-400", "bg-cyan-400", "bg-white"],
-    cardGradient: "from-orange-500 to-yellow-500"
+    cardGradient: "from-amber-700 to-yellow-800"
   },
   "Gắn kết": {
     gradient: "from-pink-500/20 to-rose-500/20",
@@ -292,7 +292,7 @@ export default function ActivitiesPage() {
                             activity.category === "Học thuật" ? "bg-gradient-to-r from-blue-500 to-cyan-500" :
                             activity.category === "Trải nghiệm" ? "bg-gradient-to-r from-green-500 to-emerald-500" :
                             activity.category === "Đào tạo" ? "bg-gradient-to-r from-purple-500 to-violet-500" :
-                            activity.category === "Nghề nghiệp" ? "bg-gradient-to-r from-orange-500 to-yellow-500" :
+                            activity.category === "Nghề nghiệp" ? "bg-gradient-to-r from-amber-700 to-yellow-800" :
                             activity.category === "Gắn kết" ? "bg-gradient-to-r from-pink-500 to-rose-500" :
                             "bg-gradient-to-r from-blue-500 to-purple-600"
                           }`}>
