@@ -51,7 +51,7 @@ const activities = [
     color: "from-blue-500 to-cyan-500",
     bgColor: "bg-blue-500/10",
     borderColor: "border-blue-500/20",
-    status: "Thường niên",
+    status: "Đang diễn ra",
     statusColor: "bg-blue-500/20 text-blue-300 border-blue-400/30"
   },
   {
@@ -67,7 +67,7 @@ const activities = [
     color: "from-green-500 to-emerald-500",
     bgColor: "bg-green-500/10",
     borderColor: "border-green-500/20",
-    status: "Sắp diễn ra",
+    status: "Đang diễn ra",
     statusColor: "bg-green-500/20 text-green-300 border-green-400/30"
   },
   {
@@ -83,7 +83,7 @@ const activities = [
     color: "from-purple-500 to-violet-500",
     bgColor: "bg-purple-500/10",
     borderColor: "border-purple-500/20",
-    status: "Hằng tuần",
+    status: "Đang diễn ra",
     statusColor: "bg-purple-500/20 text-purple-300 border-purple-400/30"
   },
   {
@@ -115,7 +115,7 @@ const activities = [
     color: "from-indigo-500 to-blue-500",
     bgColor: "bg-indigo-500/10",
     borderColor: "border-indigo-500/20",
-    status: "Hằng tháng",
+    status: "Đang diễn ra",
     statusColor: "bg-indigo-500/20 text-indigo-300 border-indigo-400/30"
   },
   {
@@ -131,7 +131,7 @@ const activities = [
     color: "from-pink-500 to-rose-500",
     bgColor: "bg-pink-500/10",
     borderColor: "border-pink-500/20",
-    status: "Sắp tới",
+    status: "Đang diễn ra",
     statusColor: "bg-pink-500/20 text-pink-300 border-pink-400/30"
   },
 ]
@@ -141,8 +141,11 @@ export default function ActivitiesPage() {
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-indigo-900 text-white">
       <Navigation />
 
-      {/* Compact Hero Section */}
-      <section className="relative py-20 px-4 sm:px-6 lg:px-8">
+      {/* Modern Hero Section */}
+      <section className="relative py-16 px-4 sm:px-6 lg:px-8">
+        {/* Subtle Background Pattern */}
+        <div className="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg%20width%3D%2260%22%20height%3D%2260%22%20viewBox%3D%220%200%2060%2060%22%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%3E%3Cg%20fill%3D%22none%22%20fill-rule%3D%22evenodd%22%3E%3Cg%20fill%3D%22%239C92AC%22%20fill-opacity%3D%220.1%22%3E%3Ccircle%20cx%3D%2230%22%20cy%3D%2230%22%20r%3D%221%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')] opacity-30" />
+        
         <div className="relative max-w-6xl mx-auto text-center">
           {/* Modern Badge */}
           <div className="inline-flex items-center gap-2 bg-gradient-to-r from-blue-500/20 to-purple-500/20 backdrop-blur-md border border-blue-400/30 rounded-full px-6 py-3 mb-8">
@@ -151,12 +154,12 @@ export default function ActivitiesPage() {
           </div>
 
           {/* Modern Title with Animation */}
-          <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold mb-8 bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent animate-pulse">
+          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-8 bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent animate-pulse">
             HOẠT ĐỘNG CỦA FTC
           </h1>
 
-          {/* Modern Description */}
-          <p className="text-xl text-slate-300 max-w-4xl mx-auto leading-relaxed font-light">
+          {/* Modern Description - Italic */}
+          <p className="text-lg text-slate-300 max-w-4xl mx-auto leading-relaxed font-light italic">
             Khám phá những sự kiện đặc sắc và hoạt động thú vị của câu lạc bộ
           </p>
         </div>
