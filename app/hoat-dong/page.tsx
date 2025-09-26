@@ -51,7 +51,7 @@ const activities = [
     color: "from-blue-500 to-cyan-500",
     bgColor: "bg-blue-500/10",
     borderColor: "border-blue-500/20",
-    status: "Đang diễn ra",
+    status: "Thường niên",
     statusColor: "bg-blue-500/20 text-blue-300 border-blue-400/30"
   },
   {
@@ -67,7 +67,7 @@ const activities = [
     color: "from-green-500 to-emerald-500",
     bgColor: "bg-green-500/10",
     borderColor: "border-green-500/20",
-    status: "Đang diễn ra",
+    status: "Sắp diễn ra",
     statusColor: "bg-green-500/20 text-green-300 border-green-400/30"
   },
   {
@@ -83,7 +83,7 @@ const activities = [
     color: "from-purple-500 to-violet-500",
     bgColor: "bg-purple-500/10",
     borderColor: "border-purple-500/20",
-    status: "Đang diễn ra",
+    status: "Hằng tuần",
     statusColor: "bg-purple-500/20 text-purple-300 border-purple-400/30"
   },
   {
@@ -99,7 +99,7 @@ const activities = [
     color: "from-orange-500 to-yellow-500",
     bgColor: "bg-orange-500/10",
     borderColor: "border-orange-500/20",
-    status: "Đang diễn ra",
+    status: "Thành công",
     statusColor: "bg-orange-500/20 text-orange-300 border-orange-400/30"
   },
   {
@@ -115,7 +115,7 @@ const activities = [
     color: "from-indigo-500 to-blue-500",
     bgColor: "bg-indigo-500/10",
     borderColor: "border-indigo-500/20",
-    status: "Đang diễn ra",
+    status: "Hằng tháng",
     statusColor: "bg-indigo-500/20 text-indigo-300 border-indigo-400/30"
   },
   {
@@ -131,33 +131,32 @@ const activities = [
     color: "from-pink-500 to-rose-500",
     bgColor: "bg-pink-500/10",
     borderColor: "border-pink-500/20",
-    status: "Đang diễn ra",
+    status: "Sắp tới",
     statusColor: "bg-pink-500/20 text-pink-300 border-pink-400/30"
   },
 ]
 
 export default function ActivitiesPage() {
   return (
-    <div className="min-h-screen bg-[#003663] text-white overflow-hidden">
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-indigo-900 text-white">
       <Navigation />
 
-      {/* Mobile Responsive Hero Section */}
-      <section className="relative min-h-[60vh] sm:min-h-[70vh] flex items-center justify-center py-12 sm:py-16 lg:py-24 px-4 sm:px-6 lg:px-8">
-        <div className="absolute inset-0 overflow-hidden">
-          <div className="absolute top-1/4 -right-1/4 w-2/3 h-2/3 bg-gradient-to-br from-primary/20 via-accent/20 to-transparent rounded-full blur-3xl animate-float" />
-          <div className="absolute -bottom-1/4 -left-1/4 w-2/3 h-2/3 bg-gradient-to-tr from-accent/20 via-primary/20 to-transparent rounded-full blur-3xl animate-float-reverse" />
-        </div>
+      {/* Compact Hero Section */}
+      <section className="relative py-20 px-4 sm:px-6 lg:px-8">
+        <div className="relative max-w-6xl mx-auto text-center">
+          {/* Modern Badge */}
+          <div className="inline-flex items-center gap-2 bg-gradient-to-r from-blue-500/20 to-purple-500/20 backdrop-blur-md border border-blue-400/30 rounded-full px-6 py-3 mb-8">
+            <Sparkles className="w-5 h-5 text-blue-400" />
+            <span className="text-sm font-semibold text-blue-100">Hoạt động nổi bật</span>
+          </div>
 
-        <div className="relative max-w-6xl mx-auto text-center space-y-4 sm:space-y-6 lg:space-y-8">
-          <h1 className="relative text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-extrabold">
-            <span className="absolute inset-0 bg-gradient-to-r from-white to-white opacity-50 blur-2xl animate-pulse"></span>
-            <span className="relative text-white animate-bounce" style={{
-              animation: 'blink 1.5s infinite, gradient-shift 2s ease-in-out infinite, bounce 2s infinite'
-            }}>
-              HOẠT ĐỘNG CỦA FTC
-            </span>
+          {/* Modern Title with Animation */}
+          <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold mb-8 bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent animate-pulse">
+            HOẠT ĐỘNG CỦA FTC
           </h1>
-          <p className="text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl text-muted-foreground leading-relaxed max-w-4xl mx-auto italic px-4">
+
+          {/* Modern Description */}
+          <p className="text-xl text-slate-300 max-w-4xl mx-auto leading-relaxed font-light italic">
             Khám phá những sự kiện đặc sắc và hoạt động thú vị của câu lạc bộ
           </p>
         </div>
@@ -190,9 +189,10 @@ export default function ActivitiesPage() {
                                 src={activity.img}
                                 alt={activity.alt}
                                 loading="lazy"
-                                className="w-full h-full object-cover transition-all duration-700 group-hover:scale-110 group-hover:brightness-110"
+                                className={`w-full h-full object-cover transition-all duration-700 group-hover:scale-110 group-hover:brightness-110 ${activity.title === "TALKSHOW CHUYÊN ĐỀ" ? "rotate-180" : ""}`}
                               />
                               <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
+                              
                               
                               {/* Overlay Icon */}
                               <div className="absolute bottom-6 left-6">
@@ -222,23 +222,23 @@ export default function ActivitiesPage() {
                           </div>
                           
                           {/* Enhanced Title */}
-                          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold bg-gradient-to-r from-white via-blue-100 to-white bg-clip-text text-transparent leading-tight">
+                          <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold bg-gradient-to-r from-white via-blue-100 to-white bg-clip-text text-transparent leading-tight">
                             {activity.title}
                           </h2>
                           
                           {/* Quick Features */}
                           <div className="flex flex-wrap gap-3">
                             <div className="flex items-center gap-2 text-sm text-white/80 bg-white/5 backdrop-blur-sm px-3 py-2 rounded-full border border-white/20">
-                              <Zap className="w-4 h-4 text-yellow-400" />
-                              <span>Thực hành</span>
+                              <Star className="w-4 h-4 text-blue-400" />
+                              <span>Chuyên môn</span>
                             </div>
                             <div className="flex items-center gap-2 text-sm text-white/80 bg-white/5 backdrop-blur-sm px-3 py-2 rounded-full border border-white/20">
-                              <Eye className="w-4 h-4 text-blue-400" />
-                              <span>Kinh nghiệm</span>
+                              <Users className="w-4 h-4 text-purple-400" />
+                              <span>Cộng đồng</span>
                             </div>
                             <div className="flex items-center gap-2 text-sm text-white/80 bg-white/5 backdrop-blur-sm px-3 py-2 rounded-full border border-white/20">
-                              <Heart className="w-4 h-4 text-red-400" />
-                              <span>Giao lưu</span>
+                              <TrendingUp className="w-4 h-4 text-green-400" />
+                              <span>Phát triển</span>
                             </div>
                           </div>
                         </div>
@@ -256,18 +256,6 @@ export default function ActivitiesPage() {
                             <p className="text-white/90 leading-relaxed text-lg font-light">
                               {activity.body}
                             </p>
-                            
-                            {/* Call to Action */}
-                            <div className="mt-8 flex items-center justify-between">
-                              <div className="flex items-center gap-2 text-sm text-white/70">
-                                <Calendar className="w-4 h-4" />
-                                <span>Cập nhật thường xuyên</span>
-                              </div>
-                              <button className="flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-blue-500 to-purple-600 rounded-2xl text-white font-semibold hover:shadow-lg hover:scale-105 transition-all">
-                                <span>Tìm hiểu thêm</span>
-                                <ArrowRight className="w-4 h-4" />
-                              </button>
-                            </div>
                           </div>
                         </div>
                         
@@ -276,8 +264,8 @@ export default function ActivitiesPage() {
                           {/* Highlights Card */}
                           <div className="bg-gradient-to-br from-blue-500/10 to-purple-500/10 backdrop-blur-xl rounded-2xl p-6 border border-blue-400/30 shadow-xl">
                             <div className="flex items-center gap-3 mb-4">
-                              <Star className="w-6 h-6 text-yellow-400" />
-                              <span className="text-lg font-bold text-yellow-300">Điểm nổi bật</span>
+                              <Star className="w-6 h-6 text-blue-400" />
+                              <span className="text-lg font-bold text-blue-300">Điểm nổi bật</span>
                             </div>
                             <div className="space-y-3">
                               <div className="flex items-center gap-3 text-white/90">
@@ -289,7 +277,7 @@ export default function ActivitiesPage() {
                                 <span className="text-sm">Thực tế ứng dụng</span>
                               </div>
                               <div className="flex items-center gap-3 text-white/90">
-                                <div className="w-2 h-2 bg-pink-400 rounded-full animate-pulse" />
+                                <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
                                 <span className="text-sm">Kết nối mạng lưới</span>
                               </div>
                             </div>
@@ -328,9 +316,14 @@ export default function ActivitiesPage() {
             <p className="text-xl text-white/80 mb-8 leading-relaxed">
               Đăng ký để không bỏ lỡ các hoạt động thú vị và cơ hội học hỏi quý báu
             </p>
-            <button className="px-8 py-4 bg-gradient-to-r from-blue-500 to-purple-600 rounded-2xl text-white font-bold hover:shadow-xl hover:scale-105 transition-all">
-              Theo dõi Fanpage
-            </button>
+            <div className="flex flex-wrap justify-center gap-4">
+              <button className="px-8 py-4 bg-gradient-to-r from-blue-500 to-purple-600 rounded-2xl text-white font-bold hover:shadow-xl hover:scale-105 transition-all">
+                Theo dõi Fanpage
+              </button>
+              <button className="px-8 py-4 bg-white/10 backdrop-blur-xl border border-white/30 rounded-2xl text-white font-bold hover:bg-white/20 transition-all">
+                Xem thêm thông tin
+              </button>
+            </div>
           </div>
         </div>
       </section>
@@ -344,14 +337,29 @@ export default function ActivitiesPage() {
         </div>
       </footer>
 
+      {/* Custom Animations */}
       <style jsx global>{`
         @keyframes float {
           0%, 100% { transform: translate(0, 0) rotate(0deg); }
-          50% { transform: translate(-20px, 20px) rotate(5deg); }
+          33% { transform: translate(20px, -20px) rotate(2deg); }
+          66% { transform: translate(-20px, 20px) rotate(-2deg); }
         }
         @keyframes float-reverse {
           0%, 100% { transform: translate(0, 0) rotate(0deg); }
-          50% { transform: translate(20px, -20px) rotate(-5deg); }
+          33% { transform: translate(-20px, 20px) rotate(-2deg); }
+          66% { transform: translate(20px, -20px) rotate(2deg); }
+        }
+        @keyframes blink {
+          0%, 50%, 100% { opacity: 1; }
+          25%, 75% { opacity: 0.8; }
+        }
+        @keyframes gradient-shift {
+          0%, 100% { background-position: 0% 50%; }
+          50% { background-position: 100% 50%; }
+        }
+        @keyframes float-particle {
+          0%, 100% { transform: translateY(0px) rotate(0deg); }
+          50% { transform: translateY(-20px) rotate(180deg); }
         }
         .animate-float {
           animation: float 20s ease-in-out infinite;
@@ -359,12 +367,8 @@ export default function ActivitiesPage() {
         .animate-float-reverse {
           animation: float-reverse 20s ease-in-out infinite;
         }
-        @keyframes shimmer {
-          to { background-position: 200% center; }
-        }
-        .animate-text-shine {
-          background-size: 200% auto;
-          animation: shimmer 3s linear infinite;
+        .animate-float-particle {
+          animation: float-particle 3s ease-in-out infinite;
         }
       `}</style>
     </div>
