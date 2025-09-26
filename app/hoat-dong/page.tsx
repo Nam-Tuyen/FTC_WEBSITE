@@ -2,7 +2,7 @@
 
 import { Navigation } from "@/components/navigation"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Target, Users, BookOpen, TrendingUp, Award, Network, Facebook, Instagram } from "lucide-react"
+import { Target, Users, BookOpen, TrendingUp, Award, Network, Facebook, Instagram, Calendar, MapPin, Clock, Star, ArrowRight, Sparkles } from "lucide-react"
 
 const IMAGES = {
   attacker:
@@ -28,6 +28,13 @@ const activities = [
       "ATTACKER là cuộc thi học thuật thường niên do FTC tổ chức, thu hút đông đảo sinh viên yêu thích và đam mê công nghệ tài chính. Mỗi mùa thi mang đến một chủ đề mới gắn liền với các xu hướng công nghệ hiện đại, giúp thí sinh rèn luyện tư duy sáng tạo, trải nghiệm thực tế và chinh phục những giải thưởng giá trị. Năm 2025, ATTACKER đã bước vào vòng 3 và đang diễn ra vô cùng kịch tính.",
     img: IMAGES.attacker,
     alt: "Cuộc thi ATTACKER của FTC",
+    category: "Học thuật",
+    duration: "3 tháng",
+    participants: "200+ sinh viên",
+    icon: Award,
+    color: "from-red-500 to-pink-500",
+    bgColor: "bg-red-500/10",
+    borderColor: "border-red-500/20"
   },
   {
     title: "TALKSHOW CHUYÊN ĐỀ",
@@ -35,7 +42,13 @@ const activities = [
       "Hằng năm, FTC tổ chức nhiều buổi Talkshow xoay quanh các chủ đề FinTech và công nghệ số. Đây là cơ hội để sinh viên giao lưu, lắng nghe chia sẻ từ các chuyên gia đầu ngành và đặt câu hỏi trực tiếp. Một số chương trình tiêu biểu có thể kể đến như: \"Blockchain & AI: Con đường sự nghiệp trong kỷ nguyên số hóa\", \"Chứng khoán thời công nghệ – Tư duy tiếp cận phù hợp\".",
     img: IMAGES.talkshow,
     alt: "Talkshow chuyên đề FinTech",
-    rotate: true,
+    category: "Học thuật",
+    duration: "2-3 giờ",
+    participants: "100+ sinh viên",
+    icon: BookOpen,
+    color: "from-blue-500 to-cyan-500",
+    bgColor: "bg-blue-500/10",
+    borderColor: "border-blue-500/20"
   },
   {
     title: "THAM QUAN DOANH NGHIỆP",
@@ -43,6 +56,13 @@ const activities = [
       "FTC hợp tác cùng nhiều doanh nghiệp để tổ chức chương trình tham quan thực tế. Tiêu biểu là chuyến tham quan VNG, nơi các thành viên có cơ hội trải nghiệm môi trường làm việc, tìm hiểu hoạt động công ty và khám phá tiềm năng nghề nghiệp trong lĩnh vực công nghệ tài chính.",
     img: IMAGES.company,
     alt: "Chương trình tham quan doanh nghiệp",
+    category: "Trải nghiệm",
+    duration: "1 ngày",
+    participants: "30-50 sinh viên",
+    icon: MapPin,
+    color: "from-green-500 to-emerald-500",
+    bgColor: "bg-green-500/10",
+    borderColor: "border-green-500/20"
   },
   {
     title: "FTC TRAINING & SHARING",
@@ -50,6 +70,13 @@ const activities = [
       "Là một câu lạc bộ học thuật, FTC đặc biệt chú trọng hoạt động training nội bộ và chia sẻ kiến thức. Thành viên sẽ được trang bị kiến thức FinTech từ cơ bản đến nâng cao, rèn luyện kỹ năng nghề nghiệp và giải đáp thắc mắc về cơ hội việc làm trong ngành. Ngoài ra, fanpage FTC cũng thường xuyên đăng tải các bài viết hữu ích phục vụ cộng đồng sinh viên.",
     img: IMAGES.training,
     alt: "FTC Training & Sharing",
+    category: "Đào tạo",
+    duration: "2-4 giờ",
+    participants: "50+ thành viên",
+    icon: Target,
+    color: "from-purple-500 to-violet-500",
+    bgColor: "bg-purple-500/10",
+    borderColor: "border-purple-500/20"
   },
   {
     title: "CAREER DAY",
@@ -57,6 +84,13 @@ const activities = [
       "Chuỗi sự kiện Web3 Career Innovation gồm ba hoạt động chính: talkshow, doanh nghiệp đặt booth và phỏng vấn trực tiếp. Chương trình hướng đến việc giúp sinh viên tiếp cận công nghệ Blockchain & Web3, thay đổi góc nhìn tiêu cực về Crypto và mở ra cơ hội nghề nghiệp sáng tạo trong lĩnh vực công nghệ - tài chính.",
     img: IMAGES.career,
     alt: "Career Day Web3 Career Innovation",
+    category: "Nghề nghiệp",
+    duration: "1 ngày",
+    participants: "150+ sinh viên",
+    icon: TrendingUp,
+    color: "from-orange-500 to-yellow-500",
+    bgColor: "bg-orange-500/10",
+    borderColor: "border-orange-500/20"
   },
   {
     title: "WORKSHOP CHUYÊN SÂU",
@@ -64,78 +98,147 @@ const activities = [
       "FTC phối hợp cùng các đối tác để tổ chức các buổi workshop và tập huấn. Đây là dịp để sinh viên vừa nâng cao kiến thức chuyên môn, vừa rèn kỹ năng quản lý - tổ chức sự kiện.",
     img: IMAGES.workshop,
     alt: "Workshop chuyên sâu của FTC",
+    category: "Đào tạo",
+    duration: "3-4 giờ",
+    participants: "40+ sinh viên",
+    icon: Users,
+    color: "from-indigo-500 to-blue-500",
+    bgColor: "bg-indigo-500/10",
+    borderColor: "border-indigo-500/20"
   },
   {
     title: "FTC TRIP",
     body:
-      "Bên cạnh các hoạt động học thuật, FTC còn tổ chức các chuyến đi gắn kết cộng đồng. FTC Trip là hoạt động thường niên được mong chờ nhất, nơi các thành viên và cựu thành viên cùng nhau tham gia những chuyến đi “chữa lành”, xả stress và tạo kỷ niệm đáng nhớ. Ngoài ra, còn có nhiều mini trip định kỳ hàng tháng hoặc hàng quý giúp các thành viên kết nối chặt chẽ hơn.",
+      "Bên cạnh các hoạt động học thuật, FTC còn tổ chức các chuyến đi gắn kết cộng đồng. FTC Trip là hoạt động thường niên được mong chờ nhất, nơi các thành viên và cựu thành viên cùng nhau tham gia những chuyến đi 'chữa lành', xả stress và tạo kỷ niệm đáng nhớ. Ngoài ra, còn có nhiều mini trip định kỳ hàng tháng hoặc hàng quý giúp các thành viên kết nối chặt chẽ hơn.",
     img: IMAGES.trip,
     alt: "FTC Trip gắn kết cộng đồng",
+    category: "Gắn kết",
+    duration: "2-3 ngày",
+    participants: "60+ thành viên",
+    icon: Network,
+    color: "from-pink-500 to-rose-500",
+    bgColor: "bg-pink-500/10",
+    borderColor: "border-pink-500/20"
   },
 ]
 
 export default function ActivitiesPage() {
   return (
-    <div className="min-h-screen bg-[#003663] text-white overflow-hidden">
+    <div className="min-h-screen bg-gradient-to-br from-[#0A1B2E] via-[#003663] to-[#1A5490] text-white overflow-hidden">
       <Navigation />
 
-      {/* Mobile Responsive Hero Section */}
-      <section className="relative min-h-[60vh] sm:min-h-[70vh] flex items-center justify-center py-12 sm:py-16 lg:py-24 px-4 sm:px-6 lg:px-8">
+      {/* Modern Hero Section */}
+      <section className="relative min-h-[70vh] flex items-center justify-center py-16 px-4 sm:px-6 lg:px-8">
         <div className="absolute inset-0 overflow-hidden">
-          <div className="absolute top-1/4 -right-1/4 w-2/3 h-2/3 bg-gradient-to-br from-primary/20 via-accent/20 to-transparent rounded-full blur-3xl animate-float" />
-          <div className="absolute -bottom-1/4 -left-1/4 w-2/3 h-2/3 bg-gradient-to-tr from-accent/20 via-primary/20 to-transparent rounded-full blur-3xl animate-float-reverse" />
+          <div className="absolute top-1/4 -right-1/4 w-2/3 h-2/3 bg-gradient-to-br from-[#4A9FFF]/20 via-[#1A5490]/20 to-transparent rounded-full blur-3xl animate-float" />
+          <div className="absolute -bottom-1/4 -left-1/4 w-2/3 h-2/3 bg-gradient-to-tr from-[#1A5490]/20 via-[#4A9FFF]/20 to-transparent rounded-full blur-3xl animate-float-reverse" />
+          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-gradient-to-r from-[#4A9FFF]/10 to-[#1A5490]/10 rounded-full blur-2xl animate-pulse" />
         </div>
 
-        <div className="relative max-w-6xl mx-auto text-center space-y-4 sm:space-y-6 lg:space-y-8">
-          <h1 className="relative text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-extrabold">
-            <span className="absolute inset-0 bg-gradient-to-r from-white to-white opacity-50 blur-2xl animate-pulse"></span>
-            <span className="relative text-white animate-bounce" style={{
-              animation: 'blink 1.5s infinite, gradient-shift 2s ease-in-out infinite, bounce 2s infinite'
-            }}>
+        <div className="relative max-w-6xl mx-auto text-center space-y-6">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 mb-4">
+            <Sparkles className="w-4 h-4 text-[#4A9FFF]" />
+            <span className="text-sm font-medium">Hoạt động nổi bật</span>
+          </div>
+          
+          <h1 className="relative text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold leading-tight">
+            <span className="bg-gradient-to-r from-white via-[#4A9FFF] to-white bg-clip-text text-transparent animate-gradient">
               HOẠT ĐỘNG CỦA CÂU LẠC BỘ
             </span>
           </h1>
-          <p className="text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl text-muted-foreground leading-relaxed max-w-4xl mx-auto italic px-4">
-            Những sự kiện ghi dấu ấn của câu lạc bộ những năm qua 
+          
+          <p className="text-lg sm:text-xl md:text-2xl text-white/80 leading-relaxed max-w-4xl mx-auto">
+            Khám phá những sự kiện đặc sắc và hoạt động thú vị của FTC
           </p>
         </div>
       </section>
 
-      {/* Main Content */}
-      <section className="py-12 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-6xl mx-auto space-y-16">
-          {activities.map((item, idx) => {
-            const isEven = idx % 2 === 1
-            return (
-              <div key={item.title} className="relative group">
-                <div className="absolute inset-0 bg-gradient-to-r from-primary/5 to-accent/5 rounded-3xl transform transition-all" />
-                <div className="relative bg-background/40 backdrop-blur-lg rounded-3xl border border-primary/10 p-8 space-y-6">
-                  <h2 className="text-3xl font-bold text-center bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-                    {item.title}
-                  </h2>
-                  <div className={`grid gap-8 items-center ${item.img ? "grid-cols-1 md:grid-cols-2" : "grid-cols-1"}`}>
-                    {item.img && (
-                      <div className={`relative group ${isEven ? "md:order-2" : "md:order-1"}`}>
-                        <div className="absolute inset-0 bg-gradient-to-r from-primary/5 to-accent/5 rounded-2xl transform transition-all" />
-                        <div className="relative overflow-hidden rounded-2xl border border-primary/10">
-                          <img
-                            src={item.img}
-                            alt={item.alt}
-                            loading="lazy"
-                            className={`w-full h-72 md:h-[320px] object-cover ${item.rotate ? "rotate-180" : ""}`}
-                          />
+      {/* Modern Activities Grid */}
+      <section className="py-16 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto">
+          <div className="grid gap-8 md:gap-12">
+            {activities.map((activity, idx) => {
+              const IconComponent = activity.icon
+              return (
+                <div key={activity.title} className="group relative">
+                  {/* Background Effects */}
+                  <div className="absolute inset-0 bg-gradient-to-r from-white/5 to-white/5 rounded-3xl blur-xl group-hover:blur-2xl transition-all duration-500" />
+                  
+                  {/* Main Card */}
+                  <div className={`relative bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-xl rounded-3xl border border-white/20 p-8 transition-all duration-500 group-hover:scale-[1.02] group-hover:shadow-2xl group-hover:shadow-[#4A9FFF]/20`}>
+                    
+                    {/* Header */}
+                    <div className="flex flex-col lg:flex-row lg:items-center gap-6 mb-8">
+                      <div className="flex-1">
+                        <div className="flex items-center gap-3 mb-4">
+                          <div className={`p-3 rounded-2xl ${activity.bgColor} border ${activity.borderColor}`}>
+                            <IconComponent className={`w-6 h-6 bg-gradient-to-r ${activity.color} bg-clip-text text-transparent`} />
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <span className={`px-3 py-1 rounded-full text-xs font-semibold bg-gradient-to-r ${activity.color} bg-clip-text text-transparent border border-white/20`}>
+                              {activity.category}
+                            </span>
+                            <div className="flex items-center gap-1 text-white/60">
+                              <Clock className="w-4 h-4" />
+                              <span className="text-sm">{activity.duration}</span>
+                            </div>
+                          </div>
+                        </div>
+                        
+                        <h2 className="text-2xl sm:text-3xl font-bold mb-4 bg-gradient-to-r from-white to-white/80 bg-clip-text text-transparent">
+                          {activity.title}
+                        </h2>
+                        
+                        <div className="flex flex-wrap items-center gap-4 text-sm text-white/70">
+                          <div className="flex items-center gap-2">
+                            <Users className="w-4 h-4" />
+                            <span>{activity.participants}</span>
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <Calendar className="w-4 h-4" />
+                            <span>Thường niên</span>
+                          </div>
                         </div>
                       </div>
-                    )}
-
-                    <div className={`space-y-4 ${isEven ? "md:order-1" : "md:order-2"}`}>
-                      <p className="text-lg text-muted-foreground/90 leading-relaxed text-justify">{item.body}</p>
+                      
+                      {/* Image */}
+                      {activity.img && (
+                        <div className="lg:w-80 lg:flex-shrink-0">
+                          <div className="relative overflow-hidden rounded-2xl border border-white/20">
+                            <img
+                              src={activity.img}
+                              alt={activity.alt}
+                              loading="lazy"
+                              className="w-full h-48 lg:h-64 object-cover transition-transform duration-500 group-hover:scale-105"
+                            />
+                            <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                    
+                    {/* Content */}
+                    <div className="space-y-4">
+                      <p className="text-white/90 leading-relaxed text-lg">
+                        {activity.body}
+                      </p>
+                      
+                      <div className="flex items-center justify-between pt-4">
+                        <div className="flex items-center gap-2 text-white/60">
+                          <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
+                          <span className="text-sm">Hoạt động nổi bật</span>
+                        </div>
+                        <div className="flex items-center gap-2 text-[#4A9FFF] group-hover:gap-3 transition-all">
+                          <span className="text-sm font-medium">Tìm hiểu thêm</span>
+                          <ArrowRight className="w-4 h-4" />
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            )
-          })}
+              )
+            })}
+          </div>
         </div>
       </section>
 
@@ -148,14 +251,21 @@ export default function ActivitiesPage() {
           0%, 100% { transform: translate(0, 0) rotate(0deg); }
           50% { transform: translate(20px, -20px) rotate(-5deg); }
         }
+        @keyframes gradient {
+          0%, 100% { background-position: 0% 50%; }
+          50% { background-position: 100% 50%; }
+        }
         .animate-float {
           animation: float 20s ease-in-out infinite;
         }
         .animate-float-reverse {
           animation: float-reverse 20s ease-in-out infinite;
         }
+        .animate-gradient {
+          background-size: 200% 200%;
+          animation: gradient 3s ease infinite;
+        }
       `}</style>
-
     </div>
   )
 }

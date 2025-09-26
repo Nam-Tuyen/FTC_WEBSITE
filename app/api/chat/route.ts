@@ -100,7 +100,7 @@ Yêu cầu:
 - Ưu tiên định nghĩa, ví dụ ứng dụng, và các ý chính có thể hành động; tránh biệt ngữ không cần thiết.
 - Nếu cần phạm vi/giới hạn dữ liệu, hãy nêu giả định ngắn gọn; không bịa nguồn.
 - Không thêm bất kỳ câu gợi ý theo sau câu trả lời. Cụ thể: KHÔNG chèn câu "Bạn có muốn thu hẹp phạm vi theo quốc gia, giai đoạn hoặc trường hợp sử dụng cụ thể không".
-- Định dạng trả lời ở dạng đoạn văn kết hợp list ra tóm tắt theo dòng để người dùng dễ nắm bắt, không dùng emoji trừ khi người dùng dùng trước. Đồng thời kết hợp sử dụng in nghiêng in đậm để trình bày rõ ràng hơn.
+- Định dạng trả lời ở dạng đoạn văn kết hợp list phải có bulllet point ở mỗi dòng để tóm tắt ý chính giúp người dùng dễ nắm bắt, không dùng emoji trừ khi người dùng dùng trước. Đồng thời kết hợp sử dụng in nghiêng in đậm để trình bày rõ ràng hơn.
 `;
 
 export const FTC_CONTACTS = {
@@ -140,7 +140,6 @@ export function buildSystemPrompt(mode: ChatMode) {
 // ---------- FAQ (CLUB) - No <h3> ----------
 export const FAQ_MAP: Record<string, string> = {
   "cau lac bo co nhung hoat dong gi": `
-Câu lạc bộ có những hoạt động gì?
 
 FTC xây dựng hệ sinh thái hoạt động đa dạng, cân bằng giữa học thuật, thực hành và gắn kết cộng đồng. Một số hoạt động tiêu biểu:
 
@@ -163,18 +162,16 @@ FTC xây dựng hệ sinh thái hoạt động đa dạng, cân bằng giữa h�
     <div>
       <p><strong><em>Làm thế nào để tham gia câu lạc bộ?</em></strong></p>
       <ol>
-        <li><strong><em>Theo dõi kênh:</em></strong> cập nhật thông báo tuyển trên <em>fanpage/Instagram</em> của FTC.</li>
-        <li><strong><em>Đăng ký form:</em></strong> điền thông tin cá nhân, sở thích, mong muốn tham gia.</li>
-        <li><strong><em>Phỏng vấn đầu vào:</em></strong> trao đổi với Ban Nhân sự & Ban Điều hành về nguyện vọng, kỹ năng, sự phù hợp với từng ban.</li>
-        <li><strong><em>Kết quả:</em></strong> công bố trúng tuyển và phân bổ vào 1 trong 5 ban.</li>
+        <li><strong><em>• Theo dõi kênh:</em></strong> cập nhật thông báo tuyển trên <em>fanpage/Instagram</em> của FTC.</li>
+        <li><strong><em>• Đăng ký form:</em></strong> điền thông tin cá nhân, sở thích, mong muốn tham gia.</li>
+        <li><strong><em>• Phỏng vấn đầu vào:</em></strong> trao đổi với Ban Nhân sự & Ban Điều hành về nguyện vọng, kỹ năng, sự phù hợp với từng ban.</li>
+        <li><strong><em>• Kết quả:</em></strong> công bố trúng tuyển và phân bổ vào 1 trong 5 ban.</li>
       </ol>
       <p><em>Lưu ý:</em> FTC tuyển chính vào đầu năm học và có thể bổ sung nhỏ trong năm. Quan trọng nhất là <strong>tinh thần học hỏi</strong>, không yêu cầu “giỏi sẵn”.</p>
     </div>
   `,
 
   "cac ban trong cau lac bo lam gi": `
-Các ban trong câu lạc bộ làm gì?
-
 FTC có 5 ban chuyên môn (không tính Ban Điều hành). Mỗi ban có chức năng riêng và phối hợp chặt chẽ:
 
 • Ban Học thuật: trái tim kiến thức; xây dựng nội dung workshop/talkshow, ra đề ATTACKER, biên soạn tài liệu thực hành dữ liệu, ngân hàng số, thuật toán giao dịch.
@@ -190,50 +187,45 @@ FTC có 5 ban chuyên môn (không tính Ban Điều hành). Mỗi ban có chứ
 
   "thoi gian sinh hoat dien ra khi nao": `
     <div>
-      <p><strong><em>Thời gian sinh hoạt diễn ra khi nào?</em></strong></p>
       <p>FTC sinh hoạt theo 2 hình thức:</p>
       <ul>
-        <li><strong><em>Định kỳ nội bộ:</em></strong> training hoặc họp ban theo tuần/tháng (phụ thuộc tiến độ dự án).</li>
-        <li><strong><em>Theo sự kiện:</em></strong> Talkshow, Workshop, Career Day, FTC Trip được thông báo trước trên fanpage; thường rơi vào giữa học kỳ hoặc dịp hè.</li>
+        <li><strong><em>• Định kỳ nội bộ:</em></strong> training hoặc họp ban theo tuần/tháng (phụ thuộc tiến độ dự án).</li>
+        <li><strong><em>• Theo sự kiện:</em></strong> Talkshow, Workshop, Career Day, FTC Trip được thông báo trước trên fanpage; thường rơi vào giữa học kỳ hoặc dịp hè.</li>
       </ul>
-      <p><em>Nguyên tắc:</em> kế hoạch cụ thể, cân bằng học tập & giải trí — không tạo áp lực tần suất.</p>
+      <p><em>• Nguyên tắc:</em> kế hoạch cụ thể, cân bằng học tập & giải trí — không tạo áp lực tần suất.</p>
     </div>
   `,
 
   "can ky nang gi de ung tuyen": `
     <div>
-      <p><strong><em>Cần kỹ năng gì để ứng tuyển?</em></strong></p>
       <p><strong><em>Không yêu cầu chuyên môn cao ngay từ đầu.</em></strong> Quan trọng nhất:</p>
       <ul>
-        <li><strong><em>Tinh thần học hỏi & kỷ luật:</em></strong> sẵn sàng tìm tòi, tôn trọng deadline.</li>
-        <li><strong><em>Làm việc nhóm:</em></strong> đa số hoạt động triển khai theo nhóm.</li>
-        <li><strong><em>Thái độ tích cực:</em></strong> chủ động, cởi mở, sẵn sàng đóng góp.</li>
+        <li><strong><em>• Tinh thần học hỏi & kỷ luật:</em></strong> sẵn sàng tìm tòi, tôn trọng deadline.</li>
+        <li><strong><em>• Làm việc nhóm:</em></strong> đa số hoạt động triển khai theo nhóm.</li>
+        <li><strong><em>• Thái độ tích cực:</em></strong> chủ động, cởi mở, sẵn sàng đóng góp.</li>
       </ul>
       <p><em>Yêu cầu bổ sung theo ban:</em></p>
       <ul>
-        <li><strong>Học thuật:</strong> phân tích dữ liệu, viết nội dung, khả năng nghiên cứu.</li>
-        <li><strong>Sự kiện:</strong> quản lý timeline, giao tiếp, tổ chức.</li>
-        <li><strong>Truyền thông:</strong> viết content, thiết kế, chỉnh sửa ảnh/video.</li>
-        <li><strong>Tài chính cá nhân:</strong> kiến thức quản lý chi tiêu, sáng tạo hoạt động.</li>
-        <li><strong>Nhân sự:</strong> quản lý con người, gắn kết nội bộ.</li>
+        <li><strong>• Học thuật:</strong> phân tích dữ liệu, viết nội dung, khả năng nghiên cứu.</li>
+        <li><strong>• Sự kiện:</strong> quản lý timeline, giao tiếp, tổ chức.</li>
+        <li><strong>• Truyền thông:</strong> viết content, thiết kế, chỉnh sửa ảnh/video.</li>
+        <li><strong>• Tài chính cá nhân:</strong> kiến thức quản lý chi tiêu, sáng tạo hoạt động.</li>
+        <li><strong>• Nhân sự:</strong> quản lý con người, gắn kết nội bộ.</li>
       </ul>
     </div>
   `,
 
   "cau lac bo duoc thanh lap khi nao": `
     <div>
-      <p><strong><em>Câu lạc bộ được thành lập khi nào?</em></strong></p>
-      <p>FTC thành lập <strong><em>tháng 11/2020</em></strong>, trực thuộc Khoa Tài chính – Ngân hàng, Trường Đại học Kinh tế – Luật, ĐHQG-HCM; người sáng lập & hướng dẫn: <strong>ThS. NCS Phan Huy Tâm</strong>.</p>
-      <p>Từ đó đến nay, FTC là một trong các CLB học thuật tiên phong tại UEL gắn với lĩnh vực công nghệ tài chính.</p>
+      <p>FTC thành lập <strong><em>tháng 11/2020</em></strong>, trực thuộc Khoa Tài chính – Ngân hàng, Trường Đại học Kinh tế – Luật, ĐHQG-HCM; người sáng lập & hướng dẫn: <strong>ThS. NCS Phan Huy Tâm</strong>. Từ đó đến nay, FTC là một trong các CLB học thuật tiên phong tại UEL gắn với lĩnh vực công nghệ tài chính.</p>
     </div>
   `,
 
   "cau lac bo co nhung thanh tich gi": `
     <div>
-      <p><strong><em>Câu lạc bộ có những thành tích gì?</em></strong></p>
       <ul>
-        <li><strong><em>2024–2025:</em></strong> Giấy khen của Ban Cán sự Đoàn ĐHQG-HCM vì đóng góp tích cực cho công tác Đoàn & phong trào thanh niên.</li>
-        <li><strong><em>Giải thưởng I-STAR TP.HCM:</em></strong> Top 10 Nhóm 4 (tổ chức/cá nhân hỗ trợ khởi nghiệp) — giải thưởng uy tín do UBND TP.HCM chủ trì, tôn vinh đóng góp cho đổi mới sáng tạo.</li>
+        <li><strong><em>2024–2025:</em></strong> • Giấy khen của Ban Cán sự Đoàn ĐHQG-HCM vì đóng góp tích cực cho công tác Đoàn & phong trào thanh niên.</li>
+        <li><strong><em>Giải thưởng I-STAR TP.HCM:</em></strong> • Top 10 Nhóm 4 (tổ chức/cá nhân hỗ trợ khởi nghiệp) — giải thưởng uy tín do UBND TP.HCM chủ trì, tôn vinh đóng góp cho đổi mới sáng tạo.</li>
       </ul>
       <p>Những thành tích này khẳng định vai trò tiên phong của FTC trong hệ sinh thái học thuật – khởi nghiệp gắn với FinTech.</p>
     </div>
@@ -241,24 +233,22 @@ FTC có 5 ban chuyên môn (không tính Ban Điều hành). Mỗi ban có chứ
 
   "quyen loi cua thanh vien la gi": `
     <div>
-      <p><strong><em>Quyền lợi của thành viên là gì?</em></strong></p>
       <ul>
-        <li><strong><em>Học tập:</em></strong> kiến thức FinTech, blockchain, AI trong tài chính, quản trị rủi ro, giao dịch theo thuật toán.</li>
-        <li><strong><em>Thực hành:</em></strong> tham gia dự án, thi học thuật, trải nghiệm dữ liệu & thị trường thực.</li>
-        <li><strong><em>Nghề nghiệp:</em></strong> tham quan doanh nghiệp, Career Day, hỗ trợ hồ sơ học thuật, cơ hội thực tập.</li>
-        <li><strong><em>Kỹ năng:</em></strong> teamwork, quản lý dự án, truyền thông, thiết kế nội dung, tư duy phản biện.</li>
-        <li><strong><em>Cộng đồng:</em></strong> môi trường cởi mở, năng động, gắn kết như gia đình.</li>
+        <li><strong><em> • Học tập:</em></strong> kiến thức FinTech, blockchain, AI trong tài chính, quản trị rủi ro, giao dịch theo thuật toán.</li>
+        <li><strong><em> • Thực hành:</em></strong> tham gia dự án, thi học thuật, trải nghiệm dữ liệu & thị trường thực.</li>
+        <li><strong><em> • Nghề nghiệp:</em></strong> tham quan doanh nghiệp, Career Day, hỗ trợ hồ sơ học thuật, cơ hội thực tập.</li>
+        <li><strong><em> • Kỹ năng:</em></strong> teamwork, quản lý dự án, truyền thông, thiết kế nội dung, tư duy phản biện.</li>
+        <li><strong><em> • Cộng đồng:</em></strong> môi trường cởi mở, năng động, gắn kết như gia đình.</li>
       </ul>
     </div>
   `,
 
   "quy trinh tuyen chon gom nhung buoc nao": `
     <div>
-      <p><strong><em>Quy trình tuyển chọn gồm những bước nào?</em></strong></p>
       <ol>
-        <li><strong><em>Đăng ký form:</em></strong> điền thông tin cá nhân, kỹ năng, mong muốn.</li>
-        <li><strong><em>Phỏng vấn:</em></strong> trao đổi trực tiếp với ban phụ trách để đánh giá phù hợp.</li>
-        <li><strong><em>Kết quả:</em></strong> công bố trúng tuyển, phân bổ vào các ban.</li>
+        <li><strong><em> • Đăng ký form:</em></strong> điền thông tin cá nhân, kỹ năng, mong muốn.</li>
+        <li><strong><em> • Phỏng vấn:</em></strong> trao đổi trực tiếp với ban phụ trách để đánh giá phù hợp.</li>
+        <li><strong><em> • Kết quả:</em></strong> công bố trúng tuyển, phân bổ vào các ban.</li>
       </ol>
       <p><em>Nguyên tắc:</em> đánh giá công bằng, minh bạch dựa trên thái độ, tinh thần học hỏi, mức độ phù hợp với hoạt động CLB.</p>
     </div>
@@ -266,13 +256,12 @@ FTC có 5 ban chuyên môn (không tính Ban Điều hành). Mỗi ban có chứ
 
   "co thu phi thanh vien khong": `
     <div>
-      <p><strong><em>Có thu phí thành viên không?</em></strong></p>
       <p>FTC là CLB học thuật <strong><em>phi lợi nhuận</em></strong>, trực thuộc Đoàn – Hội sinh viên Trường, <strong>không thu phí tham gia</strong>.</p>
       <p><em>Nguồn lực hoạt động:</em></p>
       <ul>
-        <li>Ngân sách Đoàn – Hội.</li>
-        <li>Sự hỗ trợ từ doanh nghiệp, đối tác.</li>
-        <li>Nguồn gây quỹ minh bạch trong các sự kiện.</li>
+        <li>• Ngân sách Đoàn – Hội.</li>
+        <li>• Sự hỗ trợ từ doanh nghiệp, đối tác.</li>
+        <li>• Nguồn gây quỹ minh bạch trong các sự kiện.</li>
       </ul>
       <p>Thành viên chỉ cần đóng góp <strong>tinh thần, nhiệt huyết, trách nhiệm</strong>, không cần lo chi phí khi tham gia CLB.</p>
     </div>
