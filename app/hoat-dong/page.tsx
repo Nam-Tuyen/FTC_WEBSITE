@@ -178,7 +178,7 @@ const categoryColors = {
     border: "border-blue-400/40",
     icon: "text-white",
     title: "text-white",
-    dots: ["bg-blue-300", "bg-cyan-300", "bg-indigo-300"],
+    dots: ["bg-yellow-400", "bg-cyan-400", "bg-white"],
     cardGradient: "from-blue-500 to-cyan-500"
   },
   "Trải nghiệm": {
@@ -186,7 +186,7 @@ const categoryColors = {
     border: "border-green-400/40",
     icon: "text-white",
     title: "text-white",
-    dots: ["bg-green-300", "bg-emerald-300", "bg-teal-300"],
+    dots: ["bg-yellow-400", "bg-orange-400", "bg-white"],
     cardGradient: "from-green-500 to-emerald-500"
   },
   "Đào tạo": {
@@ -194,7 +194,7 @@ const categoryColors = {
     border: "border-purple-400/40",
     icon: "text-white",
     title: "text-white",
-    dots: ["bg-purple-300", "bg-violet-300", "bg-fuchsia-300"],
+    dots: ["bg-pink-400", "bg-cyan-400", "bg-white"],
     cardGradient: "from-purple-500 to-violet-500"
   },
   "Nghề nghiệp": {
@@ -202,7 +202,7 @@ const categoryColors = {
     border: "border-orange-400/40",
     icon: "text-white",
     title: "text-white",
-    dots: ["bg-orange-300", "bg-yellow-300", "bg-amber-300"],
+    dots: ["bg-red-400", "bg-cyan-400", "bg-white"],
     cardGradient: "from-orange-500 to-yellow-500"
   },
   "Gắn kết": {
@@ -210,7 +210,7 @@ const categoryColors = {
     border: "border-pink-400/40",
     icon: "text-white",
     title: "text-white",
-    dots: ["bg-pink-300", "bg-rose-300", "bg-red-300"],
+    dots: ["bg-yellow-400", "bg-cyan-400", "bg-white"],
     cardGradient: "from-pink-500 to-rose-500"
   }
 }
@@ -363,8 +363,8 @@ export default function ActivitiesPage() {
                               {activity.highlights?.map((highlight, index) => {
                                 const colors = categoryColors[activity.category as keyof typeof categoryColors]?.dots || ['bg-blue-300', 'bg-cyan-300', 'bg-indigo-300'];
                                 return (
-                                  <div key={index} className="flex items-center gap-2 text-white">
-                                    <div className={`w-1.5 h-1.5 ${colors[index % colors.length]} rounded-full animate-pulse`} />
+                                  <div key={index} className="flex items-center gap-3 text-white">
+                                    <div className={`w-2 h-2 ${colors[index % colors.length]} rounded-full animate-pulse shadow-lg`} />
                                     <span className="text-xs font-medium">{highlight}</span>
                                   </div>
                                 );
