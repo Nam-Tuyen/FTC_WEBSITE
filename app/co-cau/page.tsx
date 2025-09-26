@@ -18,13 +18,6 @@ const organizationData = [
       "Phê duyệt kế hoạch, ngân sách và nhân sự",
       "Đại diện câu lạc bộ làm việc với các doanh nghiệp và đối tác"
     ],
-    highlights: [
-      "Chiến lược tổng thể",
-      "Quản lý cao cấp",
-      "Đối ngoại và đối tác"
-    ],
-    status: "Hoạt động",
-    statusColor: "bg-red-500/20 text-red-300 border-red-400/30"
   },
   {
     title: "BAN HỌC THUẬT",
@@ -33,20 +26,13 @@ const organizationData = [
     bgColor: "bg-blue-500/10",
     borderColor: "border-blue-500/20",
     cardGradient: "from-blue-500 to-cyan-500",
-    category: "Chuyên môn",
+    category: "Phụ trách chuyên môn học thuật",
     responsibilities: [
       "Phụ trách nội dung chuyên môn cho các buổi workshop, talkshow",
       "Chuẩn bị câu hỏi cho các buổi tọa đàm và chuyên đề, xây dựng ngân hàng câu hỏi",
       "Ra đề và đánh giá đề cho cuộc thi ATTACKER",
       "Nghiên cứu và cập nhật xu hướng FinTech mới nhất"
     ],
-    highlights: [
-      "Kiến thức chuyên sâu",
-      "Nội dung chất lượng",
-      "Xu hướng công nghệ"
-    ],
-    status: "Tuyển dụng",
-    statusColor: "bg-blue-500/20 text-blue-300 border-blue-400/30"
   },
   {
     title: "BAN SỰ KIỆN",
@@ -55,20 +41,13 @@ const organizationData = [
     bgColor: "bg-green-500/10",
     borderColor: "border-green-500/20",
     cardGradient: "from-green-500 to-emerald-500",
-    category: "Tổ chức",
+    category: "Phụ trách xử lý hồ sơ giấy tờ",
     responsibilities: [
       "Viết kế hoạch, báo cáo và các giấy tờ liên quan tới câu lạc bộ",
       "Xây dựng kịch bản MC và timeline cho sự kiện",
       "Điều phối logistics và venue cho các hoạt động",
       "Quản lý chất lượng và tiến độ thực hiện sự kiện"
     ],
-    highlights: [
-      "Tổ chức chuyên nghiệp",
-      "Quản lý logistics",
-      "Kịch bản sáng tạo"
-    ],
-    status: "Hoạt động",
-    statusColor: "bg-green-500/20 text-green-300 border-green-400/30"
   },
   {
     title: "BAN TRUYỀN THÔNG",
@@ -77,20 +56,13 @@ const organizationData = [
     bgColor: "bg-purple-500/10",
     borderColor: "border-purple-500/20",
     cardGradient: "from-purple-500 to-violet-500",
-    category: "Marketing",
+    category: "Phụ trách mảng truyền thông",
     responsibilities: [
       "Thiết kế ấn phẩm và truyền thông cho câu lạc bộ",
       "Quản lý các kênh truyền thông của câu lạc bộ và lên kế hoạch đăng bài truyền thông",
       "Phát triển hình ảnh và thương hiệu của câu lạc bộ",
       "Sản xuất nội dung video, podcast và multimedia"
     ],
-    highlights: [
-      "Thương hiệu mạnh mẽ",
-      "Nội dung sáng tạo",
-      "Đa kênh truyền thông"
-    ],
-    status: "Mở rộng",
-    statusColor: "bg-purple-500/20 text-purple-300 border-purple-400/30"
   },
   {
     title: "BAN TÀI CHÍNH CÁ NHÂN",
@@ -99,20 +71,13 @@ const organizationData = [
     bgColor: "bg-amber-700/10",
     borderColor: "border-amber-700/20",
     cardGradient: "from-amber-700 to-yellow-800",
-    category: "Chuyên biệt",
+    category: "Phụ trách chuyên môn về mảng tài chính cá nhân",
     responsibilities: [
       "Tổ chức đào tạo, nâng cao hiểu biết tài chính cá nhân cho sinh viên",
       "Phát triển và cập nhật nội dung cho bộ bài MoneyWe",
       "Hỗ trợ giảng viên giảng dạy các môn học liên quan đến mảng tài chính cá nhân",
       "Tư vấn và hướng dẫn quản lý tài chính cho sinh viên"
     ],
-    highlights: [
-      "Giáo dục tài chính",
-      "Nội dung MoneyWe",
-      "Tư vấn chuyên môn"
-    ],
-    status: "Đặc biệt",
-    statusColor: "bg-amber-700/20 text-amber-300 border-amber-600/30"
   },
   {
     title: "BAN NHÂN SỰ",
@@ -121,20 +86,13 @@ const organizationData = [
     bgColor: "bg-indigo-500/10",
     borderColor: "border-indigo-500/20",
     cardGradient: "from-indigo-500 to-blue-500",
-    category: "Quản lý",
+    category: "Phụ trách quản lý phân công nhân sự",
     responsibilities: [
       "Phân công công việc và quản lý tiến độ công việc",
       "Triển khai hoạt động gắn kết, gìn giữ văn hóa tổ chức",
       "Lập dự trù kinh phí cho từng hoạt động",
       "Tuyển dụng, đào tạo và phát triển nhân lực"
     ],
-    highlights: [
-      "Quản lý nhân lực",
-      "Văn hóa tổ chức",
-      "Phát triển năng lực"
-    ],
-    status: "Core Team",
-    statusColor: "bg-indigo-500/20 text-indigo-300 border-indigo-400/30"
   }
 ]
 
@@ -142,7 +100,7 @@ const cooperationPrinciples = [
   {
     step: "01",
     title: "Ban Học thuật",
-    description: "Chuẩn bị và bàn giao nội dung chuyên môn chất lượng cao",
+    description: "Chuẩn bị và bàn giao nội dung học thuật phù hợp theo yêu cầu của sự kiện",
     icon: BookOpen,
     color: "from-blue-500 to-cyan-500"
   },
@@ -156,14 +114,14 @@ const cooperationPrinciples = [
   {
     step: "03",
     title: "Ban Truyền thông", 
-    description: "Thiết kế ấn phẩm và lên bài quảng bá sự kiện hiệu quả",
+    description: "Thiết kế ấn phẩm và lên bài truyền thông về sự kiện",
     icon: Megaphone,
     color: "from-purple-500 to-violet-500"
   },
   {
     step: "04",
     title: "Ban Tài chính cá nhân",
-    description: "Phụ trách mảng giáo dục tài chính cá nhân chuyên biệt", 
+    description: "Phụ trách mảng giáo dục tài chính cá nhân độc lập", 
     icon: Wallet,
     color: "from-amber-700 to-yellow-800"
   },
@@ -269,46 +227,23 @@ export default function CoPage() {
                         </div>
                       </div>
                       
-                      {/* Content Section - Responsibilities and Highlights */}
-                      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                        {/* Responsibilities Section */}
-                        <div className="lg:col-span-2">
-                          <div className="bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-xl rounded-2xl p-6 border border-white/20 shadow-xl">
-                            <div className="flex items-center gap-3 mb-6">
-                              <div className="w-2 h-2 bg-gradient-to-r from-blue-400 to-purple-400 rounded-full animate-pulse" />
-                              <h3 className="text-lg font-bold text-white">Nhiệm vụ và trách nhiệm</h3>
-                            </div>
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                              {dept.responsibilities.map((responsibility, index) => (
-                                <div key={index} className="flex items-start gap-3 p-4 bg-white/5 rounded-xl border border-white/10 hover:bg-white/10 transition-all duration-300">
-                                  <div className="w-6 h-6 rounded-lg bg-gradient-to-br from-blue-400/20 to-purple-400/20 border border-blue-400/30 flex items-center justify-center mt-1 flex-shrink-0">
-                                    <span className="text-xs font-bold text-blue-300">{index + 1}</span>
-                                  </div>
-                                  <p className="text-white/90 leading-relaxed text-sm">
-                                    {responsibility}
-                                  </p>
-                                </div>
-                              ))}
-                            </div>
-                          </div>
+                      {/* Content Section - Responsibilities */}
+                      <div className="bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-xl rounded-2xl p-6 border border-white/20 shadow-xl">
+                        <div className="flex items-center gap-3 mb-6">
+                          <div className="w-2 h-2 bg-gradient-to-r from-blue-400 to-purple-400 rounded-full animate-pulse" />
+                          <h3 className="text-lg font-bold text-white">Nhiệm vụ và trách nhiệm</h3>
                         </div>
-                        
-                        {/* Enhanced Sidebar - Highlights */}
-                        <div className="lg:col-span-1">
-                          <div className={`bg-gradient-to-br ${dept.cardGradient} rounded-2xl p-6 border ${dept.borderColor} shadow-xl h-full`}>
-                            <div className="flex items-center gap-2 mb-4">
-                              <Star className="w-5 h-5 text-white" />
-                              <span className="text-sm font-bold text-white">Đặc điểm nổi bật</span>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                          {dept.responsibilities.map((responsibility, index) => (
+                            <div key={index} className="flex items-start gap-3 p-4 bg-white/5 rounded-xl border border-white/10 hover:bg-white/10 transition-all duration-300">
+                              <div className="w-6 h-6 rounded-lg bg-gradient-to-br from-blue-400/20 to-purple-400/20 border border-blue-400/30 flex items-center justify-center mt-1 flex-shrink-0">
+                                <span className="text-xs font-bold text-blue-300">{index + 1}</span>
+                              </div>
+                              <p className="text-white/90 leading-relaxed text-sm">
+                                {responsibility}
+                              </p>
                             </div>
-                            <div className="space-y-3">
-                              {dept.highlights?.map((highlight, index) => (
-                                <div key={index} className="flex items-center gap-3 text-white">
-                                  <div className="w-2 h-2 bg-white/80 rounded-full animate-pulse shadow-lg" />
-                                  <span className="text-xs font-medium">{highlight}</span>
-                                </div>
-                              ))}
-                            </div>
-                          </div>
+                          ))}
                         </div>
                       </div>
                     </div>
@@ -413,9 +348,6 @@ export default function CoPage() {
               >
                 Đăng ký tham gia
               </a>
-              <div className="px-8 py-4 bg-white/10 backdrop-blur-xl border border-white/20 rounded-2xl text-white font-bold hover:bg-white/20 transition-all cursor-pointer">
-                Tìm hiểu thêm
-              </div>
             </div>
           </div>
         </div>
