@@ -5,9 +5,23 @@ import { BRAND } from '../../constants'
 
 /**
  * Normalize markdown stars to prevent display of unmatched **
+ * If text contains ***, reprocess entire content for proper formatting
  */
 function normalizeMarkdownStars(s: string): string {
-  // Xử lý markdown stars để tránh hiển thị dấu ** không hợp lệ
+  // Nếu có dấu ***, xử lý lại toàn bộ nội dung
+  if (s.includes('***')) {
+    console.log('Detected *** in text, reprocessing entire content...')
+    
+    // Xử lý *** thành ** (bold) - giả sử *** là lỗi của **
+    let out = s.replace(/\*\*\*/g, '**')
+    
+    // Xử lý lại toàn bộ markdown formatting
+    out = processMarkdownFormatting(out)
+    
+    return out
+  }
+  
+  // Xử lý markdown stars bình thường để tránh hiển thị dấu ** không hợp lệ
   let out = s
   
   // Bước 1: Xử lý ** lẻ (không tạo thành cặp)
@@ -43,6 +57,62 @@ function normalizeMarkdownStars(s: string): string {
       }
     }
   }
+  
+  return out
+}
+
+/**
+ * Process markdown formatting for entire content
+ */
+function processMarkdownFormatting(s: string): string {
+  let out = s
+  
+  // 1. Xử lý *** thành ** (bold)
+  out = out.replace(/\*\*\*/g, '**')
+  
+  // 2. Xử lý ** lẻ (không tạo thành cặp)
+  const doubleStarCount = (out.match(/\*\*/g) || []).length
+  if (doubleStarCount % 2 === 1) {
+    out = out.replace(/\*\*/, "")
+  }
+  
+  // 3. Xử lý * đơn lẻ (không tạo thành cặp italic)
+  let singleStarCount = 0
+  let inDoubleStar = false
+  
+  for (let i = 0; i < out.length; i++) {
+    if (out[i] === '*' && out[i + 1] === '*') {
+      inDoubleStar = true
+      i++ // Skip next *
+    } else if (out[i] === '*' && !inDoubleStar) {
+      singleStarCount++
+    } else if (out[i] === '*' && inDoubleStar) {
+      inDoubleStar = false
+    }
+  }
+  
+  // Nếu số * đơn lẻ là lẻ, loại bỏ một dấu *
+  if (singleStarCount % 2 === 1) {
+    let removed = false
+    for (let i = 0; i < out.length && !removed; i++) {
+      if (out[i] === '*' && out[i + 1] !== '*') {
+        out = out.substring(0, i) + out.substring(i + 1)
+        removed = true
+      }
+    }
+  }
+  
+  // 4. Xử lý các lỗi formatting khác
+  // Loại bỏ các dấu * đơn lẻ không hợp lệ
+  out = out.replace(/(?<!\*)\*(?!\*)/g, '')
+  
+  // 5. Đảm bảo ** được đóng đúng cách
+  const openBold = (out.match(/\*\*/g) || []).length
+  if (openBold % 2 === 1) {
+    out = out.replace(/\*\*/, '')
+  }
+  
+  console.log('Processed markdown formatting:', out.substring(0, 100) + '...')
   
   return out
 }
