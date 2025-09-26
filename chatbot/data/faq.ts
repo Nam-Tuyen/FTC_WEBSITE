@@ -16,13 +16,13 @@ export const FAQ_MAP: Record<string, string> = {
 - Ban Nhân sự: quy hoạch nguồn lực; gắn kết/mentor; hồ sơ; tuyển chọn/on-boarding; đánh giá/khen thưởng.
   `,
   'cau lac bo co nhung hoat dong gi': `
-FTC xây dựng một <strong>hệ sinh thái hoạt động</strong> vừa học thuật vừa trải nghiệm thực tiễn:
+FTC xây dựng một **hệ sinh thái hoạt động** vừa học thuật vừa trải nghiệm thực tiễn:
 
-<strong>Hoạt động học thuật:</strong> hội thảo, tọa đàm và chuyên đề về FinTech, dữ liệu, trí tuệ nhân tạo, ngân hàng số, thị trường vốn, quản trị rủi ro; cuộc thi học thuật <strong>ATTACKER</strong>; chuỗi talkshow và workshop theo chủ đề.
+**Hoạt động học thuật:** hội thảo, tọa đàm và chuyên đề về FinTech, dữ liệu, trí tuệ nhân tạo, ngân hàng số, thị trường vốn, quản trị rủi ro; cuộc thi học thuật **ATTACKER**; chuỗi talkshow và workshop theo chủ đề.
 
-<strong>Hoạt động trải nghiệm:</strong> training nội bộ nâng kỹ năng; tham quan doanh nghiệp (như <strong>VNG</strong>); sự kiện hướng nghiệp <strong>Web3 Career Innovation</strong>.
+**Hoạt động trải nghiệm:** training nội bộ nâng kỹ năng; tham quan doanh nghiệp (như **VNG**); sự kiện hướng nghiệp **Web3 Career Innovation**.
 
-<strong>Hoạt động gắn kết:</strong> các hoạt động cộng đồng như <strong>FTC Trip</strong>.
+**Hoạt động gắn kết:** các hoạt động cộng đồng như **FTC Trip**.
   `,
   'lam the nao de tham gia cau lac bo': `
 Theo dõi Fanpage để cập nhật thông báo tuyển & form: ${FTC_CONTACTS.fanpage}

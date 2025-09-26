@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Markdown Rendering</title>
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react.dom.development.js"></script>
+    <script src="https://unpkg.com/react-markdown@9.0.1/dist/react-markdown.min.js"></script>
+    <script src="https://unpkg.com/remark-gfm@4.0.0/dist/remark-gfm.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+    <div id="root"></div>
+    
+    <script>
+        const { createElement: h } = React;
+        const { createRoot } = ReactDOM;
+        const ReactMarkdown = window.ReactMarkdown;
+        const remarkGfm = window.remarkGfm;
+        
+        const testText = `Ví trả sau là một hình thức tín dụng ngắn hạn, cho phép người dùng mua hàng trước và thanh toán sau trong một khoảng thời gian nhất định (thường là 30-45 ngày) mà không bị tính lãi suất nếu thanh toán đúng hạn.
+
+* **Định nghĩa:** Tương tự thẻ tín dụng nhưng thường tích hợp trực tiếp vào ứng dụng mua sắm hoặc ví điện tử.
+* **Ví dụ ứng dụng:** Mua sắm trực tuyến, thanh toán hóa đơn, dịch vụ đi lại.
+* **Ưu điểm:**
+* Tiện lợi, dễ dàng tiếp cận tín dụng.
+* Không lãi suất nếu trả đúng hạn.
+* Tăng khả năng chi tiêu.
+* **Rủi ro:**
+* Phí phạt và lãi suất cao nếu thanh toán trễ.
+* Dễ dẫn đến nợ nần nếu không quản lý chi tiêu tốt.
+* **Lưu ý:** Cần đọc kỹ điều khoản và điều kiện, quản lý chi tiêu cẩn thận để tránh phát sinh phí không mong muốn.`;
+
+        function MarkdownMessage({ text }) {
+            return h('div', { className: 'markdown-content' },
+                h(ReactMarkdown, {
+                    remarkPlugins: [remarkGfm],
+                    components: {
+                        strong: ({ children }) => h('strong', { 
+                            className: 'font-bold text-white',
+                            style: { fontWeight: '700' }
+                        }, children),
+                        em: ({ children }) => h('em', { 
+                            className: 'italic text-gray-300',
+                            style: { fontStyle: 'italic' }
+                        }, children),
+                        p: ({ children }) => h('p', { 
+                            className: 'mb-2 last:mb-0 text-sm leading-relaxed' 
+                        }, children),
+                        ul: ({ children }) => h('ul', { 
+                            className: 'list-disc pl-5 mb-2 space-y-1' 
+                        }, children),
+                        li: ({ children }) => h('li', { 
+                            className: 'text-sm leading-relaxed' 
+                        }, children)
+                    }
+                }, text)
+            );
+        }
+
+        function App() {
+            return h('div', { className: 'p-8 bg-gray-900 text-white' },
+                h('h1', { className: 'text-2xl font-bold mb-4' }, 'Test Markdown Rendering'),
+                h('div', { className: 'bg-gray-800 p-4 rounded-lg' },
+                    h(MarkdownMessage, { text: testText })
+                )
+            );
+        }
+
+        const root = createRoot(document.getElementById('root'));
+        root.render(h(App));
+    </script>
+</body>
+</html>
