@@ -2,7 +2,7 @@
 
 import { Navigation } from "@/components/navigation"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Target, Users, BookOpen, TrendingUp, Award, Network, Facebook, Instagram, Calendar, MapPin, Clock, Star, ArrowRight, Sparkles } from "lucide-react"
+import { Target, Users, BookOpen, TrendingUp, Award, Network, Facebook, Instagram, Calendar, MapPin, Clock, Star, ArrowRight, Sparkles, Zap, Eye, Heart } from "lucide-react"
 
 const IMAGES = {
   attacker:
@@ -34,7 +34,9 @@ const activities = [
     icon: Award,
     color: "from-red-500 to-pink-500",
     bgColor: "bg-red-500/10",
-    borderColor: "border-red-500/20"
+    borderColor: "border-red-500/20",
+    status: "Đang diễn ra",
+    statusColor: "bg-red-500/20 text-red-300 border-red-400/30"
   },
   {
     title: "TALKSHOW CHUYÊN ĐỀ",
@@ -48,7 +50,9 @@ const activities = [
     icon: BookOpen,
     color: "from-blue-500 to-cyan-500",
     bgColor: "bg-blue-500/10",
-    borderColor: "border-blue-500/20"
+    borderColor: "border-blue-500/20",
+    status: "Thường niên",
+    statusColor: "bg-blue-500/20 text-blue-300 border-blue-400/30"
   },
   {
     title: "THAM QUAN DOANH NGHIỆP",
@@ -62,7 +66,9 @@ const activities = [
     icon: MapPin,
     color: "from-green-500 to-emerald-500",
     bgColor: "bg-green-500/10",
-    borderColor: "border-green-500/20"
+    borderColor: "border-green-500/20",
+    status: "Sắp diễn ra",
+    statusColor: "bg-green-500/20 text-green-300 border-green-400/30"
   },
   {
     title: "FTC TRAINING & SHARING",
@@ -76,7 +82,9 @@ const activities = [
     icon: Target,
     color: "from-purple-500 to-violet-500",
     bgColor: "bg-purple-500/10",
-    borderColor: "border-purple-500/20"
+    borderColor: "border-purple-500/20",
+    status: "Hằng tuần",
+    statusColor: "bg-purple-500/20 text-purple-300 border-purple-400/30"
   },
   {
     title: "CAREER DAY",
@@ -90,7 +98,9 @@ const activities = [
     icon: TrendingUp,
     color: "from-orange-500 to-yellow-500",
     bgColor: "bg-orange-500/10",
-    borderColor: "border-orange-500/20"
+    borderColor: "border-orange-500/20",
+    status: "Thành công",
+    statusColor: "bg-orange-500/20 text-orange-300 border-orange-400/30"
   },
   {
     title: "WORKSHOP CHUYÊN SÂU",
@@ -104,7 +114,9 @@ const activities = [
     icon: Users,
     color: "from-indigo-500 to-blue-500",
     bgColor: "bg-indigo-500/10",
-    borderColor: "border-indigo-500/20"
+    borderColor: "border-indigo-500/20",
+    status: "Hằng tháng",
+    statusColor: "bg-indigo-500/20 text-indigo-300 border-indigo-400/30"
   },
   {
     title: "FTC TRIP",
@@ -118,122 +130,233 @@ const activities = [
     icon: Network,
     color: "from-pink-500 to-rose-500",
     bgColor: "bg-pink-500/10",
-    borderColor: "border-pink-500/20"
+    borderColor: "border-pink-500/20",
+    status: "Sắp tới",
+    statusColor: "bg-pink-500/20 text-pink-300 border-pink-400/30"
   },
 ]
 
 export default function ActivitiesPage() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-indigo-900 text-white">
+    <div className="min-h-screen bg-[#003663] text-white overflow-hidden">
       <Navigation />
 
-      {/* Modern Hero Section */}
-      <section className="relative py-20 px-4 sm:px-6 lg:px-8">
-        {/* Subtle Background Pattern */}
-        <div className="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg%20width%3D%2260%22%20height%3D%2260%22%20viewBox%3D%220%200%2060%2060%22%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%3E%3Cg%20fill%3D%22none%22%20fill-rule%3D%22evenodd%22%3E%3Cg%20fill%3D%22%239C92AC%22%20fill-opacity%3D%220.1%22%3E%3Ccircle%20cx%3D%2230%22%20cy%3D%2230%22%20r%3D%221%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')] opacity-30" />
-        
-        <div className="relative max-w-6xl mx-auto text-center">
+      {/* Modern Hero Section - Similar to chatbot design */}
+      <section className="relative min-h-[70vh] flex items-center justify-center py-16 px-4 sm:px-6 lg:px-8">
+        {/* Animated Background Effects */}
+        <div className="absolute inset-0 overflow-hidden">
+          <div className="absolute top-1/4 -right-1/4 w-2/3 h-2/3 bg-gradient-to-br from-blue-500/20 via-purple-500/20 to-transparent rounded-full blur-3xl animate-float" />
+          <div className="absolute -bottom-1/4 -left-1/4 w-2/3 h-2/3 bg-gradient-to-tr from-purple-500/20 via-blue-500/20 to-transparent rounded-full blur-3xl animate-float-reverse" />
+          
+          {/* Floating Particles */}
+          <div className="absolute top-1/3 left-1/4 w-2 h-2 bg-blue-400 rounded-full animate-float opacity-70" />
+          <div className="absolute bottom-1/3 right-1/4 w-3 h-3 bg-purple-400 rounded-full animate-float-reverse opacity-60" />
+          <div className="absolute top-1/2 left-3/4 w-1.5 h-1.5 bg-cyan-400 rounded-full animate-bounce opacity-80" />
+        </div>
+
+        <div className="relative max-w-6xl mx-auto text-center space-y-8">
           {/* Modern Badge */}
-          <div className="inline-flex items-center gap-2 bg-gradient-to-r from-blue-500/20 to-purple-500/20 backdrop-blur-md border border-blue-400/30 rounded-full px-6 py-3 mb-8">
-            <Sparkles className="w-5 h-5 text-blue-400" />
-            <span className="text-sm font-semibold text-blue-100">Hoạt động nổi bật</span>
+          <div className="inline-flex items-center gap-3 bg-gradient-to-r from-blue-500/10 to-purple-500/10 backdrop-blur-xl border border-blue-400/30 rounded-full px-8 py-4 shadow-2xl">
+            <div className="relative">
+              <Sparkles className="w-6 h-6 text-blue-400" />
+              <div className="absolute inset-0 w-6 h-6 bg-blue-400 rounded-full animate-ping opacity-30" />
+            </div>
+            <span className="text-lg font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
+              Hoạt động nổi bật
+            </span>
           </div>
 
-          {/* Modern Title with Animation */}
-          <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold mb-8 bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent animate-pulse">
-            HOẠT ĐỘNG CỦA FTC
-          </h1>
+          {/* Modern Animated Title */}
+          <div className="relative">
+            <h1 className="text-6xl sm:text-7xl lg:text-8xl font-extrabold mb-8 relative">
+              <span className="absolute inset-0 bg-gradient-to-r from-white to-white opacity-50 blur-2xl animate-pulse" />
+              <span 
+                className="relative bg-gradient-to-r from-white via-blue-100 to-purple-100 bg-clip-text text-transparent"
+                style={{
+                  animation: 'blink 1.5s infinite, gradient-shift 2s ease-in-out infinite, bounce 2s infinite'
+                }}
+              >
+                HOẠT ĐỘNG CỦA FTC
+              </span>
+            </h1>
+            
+            {/* Subtitle with modern styling */}
+            <p className="text-xl sm:text-2xl lg:text-3xl text-white/80 max-w-4xl mx-auto leading-relaxed font-light italic">
+              Khám phá những sự kiện đặc sắc và hoạt động thú vị của câu lạc bộ
+            </p>
+          </div>
 
-          {/* Modern Description */}
-          <p className="text-xl text-slate-300 max-w-4xl mx-auto leading-relaxed font-light">
-            Khám phá những sự kiện đặc sắc và hoạt động thú vị của câu lạc bộ
-          </p>
+          {/* Quick Stats */}
+          <div className="flex flex-wrap justify-center gap-6 mt-12">
+            <div className="bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-xl rounded-2xl border border-white/20 px-6 py-4 shadow-xl">
+              <div className="text-2xl font-bold text-blue-400">7+</div>
+              <div className="text-sm text-white/80">Loại hoạt động</div>
+            </div>
+            <div className="bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-xl rounded-2xl border border-white/20 px-6 py-4 shadow-xl">
+              <div className="text-2xl font-bold text-green-400">1000+</div>
+              <div className="text-sm text-white/80">Sinh viên tham gia</div>
+            </div>
+            <div className="bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-xl rounded-2xl border border-white/20 px-6 py-4 shadow-xl">
+              <div className="text-2xl font-bold text-purple-400">5</div>
+              <div className="text-sm text-white/80">Năm kinh nghiệm</div>
+            </div>
+          </div>
         </div>
       </section>
 
-      {/* Modern Masonry Grid */}
+      {/* Modern Activities Grid */}
       <section className="py-16 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
-          {/* Masonry Grid Layout */}
-          <div className="columns-1 md:columns-2 lg:columns-3 gap-8 space-y-8">
+          <div className="grid gap-8 lg:gap-12">
             {activities.map((activity, idx) => {
               const IconComponent = activity.icon
-              const isLarge = idx % 3 === 0 // Every 3rd item is larger
               
               return (
-                <div key={activity.title} className={`group relative break-inside-avoid ${isLarge ? 'lg:col-span-2' : ''}`}>
-                  {/* Modern Card with Dynamic Height */}
-                  <div className="relative bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-xl rounded-3xl border border-white/20 overflow-hidden transition-all duration-500 group-hover:scale-[1.02] group-hover:shadow-2xl group-hover:shadow-blue-500/20 h-full">
+                <div key={activity.title} className="group relative">
+                  {/* Modern Glassmorphism Card */}
+                  <div className="relative bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-xl rounded-3xl border border-white/20 overflow-hidden transition-all duration-700 group-hover:scale-[1.02] group-hover:shadow-2xl group-hover:shadow-blue-500/20 group-hover:border-blue-400/30">
                     
-                    {/* Hero Image */}
-                    {activity.img && (
-                      <div className="relative h-48 lg:h-56 overflow-hidden">
-                        <img
-                          src={activity.img}
-                          alt={activity.alt}
-                          loading="lazy"
-                          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                        />
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
+                    {/* Animated Background Overlay */}
+                    <div className="absolute inset-0 bg-gradient-to-br from-transparent via-blue-500/5 to-purple-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+                    
+                    <div className="relative z-10 p-8 lg:p-10">
+                      {/* Header Section - Redesigned Layout */}
+                      <div className="flex flex-col lg:flex-row gap-8 mb-10">
                         
-                        {/* Floating Icon */}
-                        <div className="absolute top-4 right-4">
-                          <div className={`p-3 rounded-2xl ${activity.bgColor} border ${activity.borderColor} backdrop-blur-sm`}>
-                            <IconComponent className={`w-6 h-6 bg-gradient-to-r ${activity.color} bg-clip-text text-transparent`} />
+                        {/* Enhanced Image Section */}
+                        {activity.img && (
+                          <div className="lg:w-2/5">
+                            <div className="relative h-[280px] lg:h-[320px] overflow-hidden rounded-3xl shadow-2xl group-hover:shadow-blue-500/20 transition-all duration-700">
+                              <img
+                                src={activity.img}
+                                alt={activity.alt}
+                                loading="lazy"
+                                className="w-full h-full object-cover transition-all duration-700 group-hover:scale-110 group-hover:brightness-110"
+                              />
+                              <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
+                              
+                              {/* Floating Status Badge */}
+                              <div className="absolute top-6 right-6">
+                                <div className={`px-4 py-2 rounded-full backdrop-blur-xl text-sm font-bold ${activity.statusColor} border shadow-lg`}>
+                                  {activity.status}
+                                </div>
+                              </div>
+                              
+                              {/* Overlay Icon */}
+                              <div className="absolute bottom-6 left-6">
+                                <div className={`w-16 h-16 rounded-2xl ${activity.bgColor} ${activity.borderColor} border backdrop-blur-xl flex items-center justify-center shadow-xl`}>
+                                  <IconComponent className="w-8 h-8 text-white" />
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        )}
+                        
+                        {/* Enhanced Info Section */}
+                        <div className="lg:w-3/5 flex flex-col justify-center space-y-6">
+                          {/* Category and Meta Info */}
+                          <div className="flex flex-wrap items-center gap-4 mb-4">
+                            <div className={`px-6 py-3 rounded-full text-sm font-bold backdrop-blur-xl border shadow-lg bg-gradient-to-r ${activity.color} text-white`}>
+                              {activity.category}
+                            </div>
+                            <div className="flex items-center gap-2 text-white/80 bg-white/10 backdrop-blur-xl px-4 py-3 rounded-full border border-white/20 shadow-lg">
+                              <Clock className="w-5 h-5" />
+                              <span className="text-sm font-medium">{activity.duration}</span>
+                            </div>
+                            <div className="flex items-center gap-2 text-white/80 bg-white/10 backdrop-blur-xl px-4 py-3 rounded-full border border-white/20 shadow-lg">
+                              <Users className="w-5 h-5" />
+                              <span className="text-sm font-medium">{activity.participants}</span>
+                            </div>
+                          </div>
+                          
+                          {/* Enhanced Title */}
+                          <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold bg-gradient-to-r from-white via-blue-100 to-white bg-clip-text text-transparent leading-tight">
+                            {activity.title}
+                          </h2>
+                          
+                          {/* Quick Features */}
+                          <div className="flex flex-wrap gap-3">
+                            <div className="flex items-center gap-2 text-sm text-white/80 bg-white/5 backdrop-blur-sm px-3 py-2 rounded-full border border-white/20">
+                              <Zap className="w-4 h-4 text-yellow-400" />
+                              <span>Thực hành</span>
+                            </div>
+                            <div className="flex items-center gap-2 text-sm text-white/80 bg-white/5 backdrop-blur-sm px-3 py-2 rounded-full border border-white/20">
+                              <Eye className="w-4 h-4 text-blue-400" />
+                              <span>Kinh nghiệm</span>
+                            </div>
+                            <div className="flex items-center gap-2 text-sm text-white/80 bg-white/5 backdrop-blur-sm px-3 py-2 rounded-full border border-white/20">
+                              <Heart className="w-4 h-4 text-red-400" />
+                              <span>Giao lưu</span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      
+                      {/* Enhanced Content Section */}
+                      <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
+                        {/* Main Description - Larger Column */}
+                        <div className="lg:col-span-3">
+                          <div className="bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-xl rounded-3xl p-8 border border-white/20 shadow-xl">
+                            <div className="flex items-center gap-4 mb-6">
+                              <div className="w-3 h-3 bg-gradient-to-r from-blue-400 to-purple-400 rounded-full animate-pulse" />
+                              <h3 className="text-xl font-bold text-white">Mô tả chi tiết</h3>
+                            </div>
+                            <p className="text-white/90 leading-relaxed text-lg font-light">
+                              {activity.body}
+                            </p>
+                            
+                            {/* Call to Action */}
+                            <div className="mt-8 flex items-center justify-between">
+                              <div className="flex items-center gap-2 text-sm text-white/70">
+                                <Calendar className="w-4 h-4" />
+                                <span>Cập nhật thường xuyên</span>
+                              </div>
+                              <button className="flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-blue-500 to-purple-600 rounded-2xl text-white font-semibold hover:shadow-lg hover:scale-105 transition-all">
+                                <span>Tìm hiểu thêm</span>
+                                <ArrowRight className="w-4 h-4" />
+                              </button>
+                            </div>
                           </div>
                         </div>
                         
-                        {/* Category Badge */}
-                        <div className="absolute bottom-4 left-4">
-                          <span className={`px-3 py-1 rounded-full text-xs font-bold bg-gradient-to-r ${activity.color} bg-clip-text text-transparent border border-white/30 backdrop-blur-sm`}>
-                            {activity.category}
-                          </span>
-                        </div>
-                      </div>
-                    )}
-                    
-                    {/* Content */}
-                    <div className="p-6">
-                      {/* Title */}
-                      <h2 className="text-2xl lg:text-3xl font-bold bg-gradient-to-r from-white to-white/90 bg-clip-text text-transparent mb-4 leading-tight">
-                        {activity.title}
-                      </h2>
-                      
-                      {/* Description */}
-                      <p className="text-slate-300 leading-relaxed text-sm lg:text-base font-light mb-6 line-clamp-4">
-                        {activity.body}
-                      </p>
-                      
-                      {/* Info Pills */}
-                      <div className="flex flex-wrap gap-2 mb-6">
-                        <div className="flex items-center gap-2 text-slate-300 bg-white/10 backdrop-blur-sm px-3 py-1.5 rounded-full text-xs">
-                          <Clock className="w-3 h-3" />
-                          <span className="font-medium">{activity.duration}</span>
-                        </div>
-                        <div className="flex items-center gap-2 text-slate-300 bg-white/10 backdrop-blur-sm px-3 py-1.5 rounded-full text-xs">
-                          <Users className="w-3 h-3" />
-                          <span className="font-medium">{activity.participants}</span>
-                        </div>
-                      </div>
-                      
-                      {/* Status & Features */}
-                      <div className="space-y-3">
-                        {/* Status */}
-                        <div className="flex items-center gap-2">
-                          <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
-                          <span className="text-xs font-semibold text-green-300">Đang diễn ra</span>
-                        </div>
-                        
-                        {/* Features */}
-                        <div className="flex items-center gap-2">
-                          <Star className="w-4 h-4 text-yellow-400" />
-                          <span className="text-xs font-semibold text-yellow-300">Hoạt động nổi bật</span>
+                        {/* Enhanced Sidebar */}
+                        <div className="space-y-6">
+                          {/* Highlights Card */}
+                          <div className="bg-gradient-to-br from-blue-500/10 to-purple-500/10 backdrop-blur-xl rounded-2xl p-6 border border-blue-400/30 shadow-xl">
+                            <div className="flex items-center gap-3 mb-4">
+                              <Star className="w-6 h-6 text-yellow-400" />
+                              <span className="text-lg font-bold text-yellow-300">Điểm nổi bật</span>
+                            </div>
+                            <div className="space-y-3">
+                              <div className="flex items-center gap-3 text-white/90">
+                                <div className="w-2 h-2 bg-blue-400 rounded-full animate-pulse" />
+                                <span className="text-sm">Chuyên môn cao</span>
+                              </div>
+                              <div className="flex items-center gap-3 text-white/90">
+                                <div className="w-2 h-2 bg-purple-400 rounded-full animate-pulse" />
+                                <span className="text-sm">Thực tế ứng dụng</span>
+                              </div>
+                              <div className="flex items-center gap-3 text-white/90">
+                                <div className="w-2 h-2 bg-pink-400 rounded-full animate-pulse" />
+                                <span className="text-sm">Kết nối mạng lưới</span>
+                              </div>
+                            </div>
+                          </div>
+                          
+                          {/* Impact Card */}
+                          <div className="bg-gradient-to-br from-green-500/10 to-blue-500/10 backdrop-blur-xl rounded-2xl p-6 border border-green-400/30 shadow-xl">
+                            <div className="flex items-center gap-3 mb-4">
+                              <TrendingUp className="w-6 h-6 text-green-400" />
+                              <span className="text-lg font-bold text-green-300">Tác động</span>
+                            </div>
+                            <div className="text-center">
+                              <div className="text-3xl font-bold text-white mb-2">{activity.participants}</div>
+                              <div className="text-sm text-white/70">Đã tham gia</div>
+                            </div>
+                          </div>
                         </div>
                       </div>
                     </div>
-                    
-                    {/* Hover Effect Overlay */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-blue-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-3xl" />
                   </div>
                 </div>
               )
@@ -242,18 +365,61 @@ export default function ActivitiesPage() {
         </div>
       </section>
 
+      {/* Call to Action Section */}
+      <section className="py-16 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-4xl mx-auto text-center">
+          <div className="bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-xl rounded-3xl border border-white/20 p-12 shadow-2xl">
+            <div className="w-20 h-20 mx-auto mb-8 bg-gradient-to-r from-blue-500 to-purple-600 rounded-3xl flex items-center justify-center shadow-xl">
+              <Sparkles className="w-10 h-10 text-white" />
+            </div>
+            <h2 className="text-4xl font-bold text-white mb-6">Tham gia cùng FTC</h2>
+            <p className="text-xl text-white/80 mb-8 leading-relaxed">
+              Đăng ký để không bỏ lỡ các hoạt động thú vị và cơ hội học hỏi quý báu
+            </p>
+            <div className="flex flex-wrap justify-center gap-4">
+              <button className="px-8 py-4 bg-gradient-to-r from-blue-500 to-purple-600 rounded-2xl text-white font-bold hover:shadow-xl hover:scale-105 transition-all">
+                Theo dõi Fanpage
+              </button>
+              <button className="px-8 py-4 bg-white/10 backdrop-blur-xl border border-white/30 rounded-2xl text-white font-bold hover:bg-white/20 transition-all">
+                Xem thêm thông tin
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Modern Footer */}
+      <footer className="py-12 px-4 sm:px-6 lg:px-8 border-t border-white/20">
+        <div className="max-w-7xl mx-auto text-center">
+          <p className="text-lg text-white/70">
+            Powered by <span className="font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">FTC Team</span>
+          </p>
+        </div>
+      </footer>
+
+      {/* Custom Animations */}
       <style jsx global>{`
         @keyframes float {
           0%, 100% { transform: translate(0, 0) rotate(0deg); }
-          50% { transform: translate(-20px, 20px) rotate(5deg); }
+          33% { transform: translate(20px, -20px) rotate(2deg); }
+          66% { transform: translate(-20px, 20px) rotate(-2deg); }
         }
         @keyframes float-reverse {
           0%, 100% { transform: translate(0, 0) rotate(0deg); }
-          50% { transform: translate(20px, -20px) rotate(-5deg); }
+          33% { transform: translate(-20px, 20px) rotate(-2deg); }
+          66% { transform: translate(20px, -20px) rotate(2deg); }
         }
-        @keyframes gradient {
+        @keyframes blink {
+          0%, 50%, 100% { opacity: 1; }
+          25%, 75% { opacity: 0.8; }
+        }
+        @keyframes gradient-shift {
           0%, 100% { background-position: 0% 50%; }
           50% { background-position: 100% 50%; }
+        }
+        @keyframes float-particle {
+          0%, 100% { transform: translateY(0px) rotate(0deg); }
+          50% { transform: translateY(-20px) rotate(180deg); }
         }
         .animate-float {
           animation: float 20s ease-in-out infinite;
@@ -261,31 +427,8 @@ export default function ActivitiesPage() {
         .animate-float-reverse {
           animation: float-reverse 20s ease-in-out infinite;
         }
-        .animate-gradient {
-          background-size: 200% 200%;
-          animation: gradient 3s ease infinite;
-        }
-        .line-clamp-4 {
-          display: -webkit-box;
-          -webkit-line-clamp: 4;
-          -webkit-box-orient: vertical;
-          overflow: hidden;
-        }
-        .break-inside-avoid {
-          break-inside: avoid;
-        }
-        @media (min-width: 768px) {
-          .columns-1 {
-            columns: 1;
-          }
-          .columns-2 {
-            columns: 2;
-          }
-        }
-        @media (min-width: 1024px) {
-          .columns-3 {
-            columns: 3;
-          }
+        .animate-float-particle {
+          animation: float-particle 3s ease-in-out infinite;
         }
       `}</style>
     </div>
