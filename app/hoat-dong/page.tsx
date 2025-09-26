@@ -292,17 +292,6 @@ export default function ActivitiesPage() {
                             </div>
                           </div>
                           
-                          {/* Impact Card */}
-                          <div className="bg-gradient-to-br from-green-500/10 to-blue-500/10 backdrop-blur-xl rounded-2xl p-4 border border-green-400/30 shadow-xl">
-                            <div className="flex items-center gap-2 mb-3">
-                              <TrendingUp className="w-5 h-5 text-green-400" />
-                              <span className="text-sm font-bold text-green-300">Tác động</span>
-                            </div>
-                            <div className="text-center">
-                              <div className="text-2xl font-bold text-white mb-1">{activity.participants}</div>
-                              <div className="text-xs text-white/70">Đã tham gia</div>
-                            </div>
-                          </div>
                         </div>
                       </div>
                     </div>
