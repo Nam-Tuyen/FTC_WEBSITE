@@ -96,8 +96,7 @@ Yêu cầu:
 - Ưu tiên định nghĩa, ví dụ ứng dụng, và các ý chính có thể hành động; tránh biệt ngữ không cần thiết.
 - Nếu cần phạm vi/giới hạn dữ liệu, hãy nêu giả định ngắn gọn; không bịa nguồn.
 - Không thêm bất kỳ câu gợi ý theo sau câu trả lời. Cụ thể: KHÔNG chèn câu "Bạn có muốn thu hẹp phạm vi theo quốc gia, giai đoạn hoặc trường hợp sử dụng cụ thể không".
-- Định dạng trả lời ở dạng đoạn văn hoặc bullet ngắn, không dùng emoji trừ khi người dùng dùng trước.
-- TUYỆT ĐỐI KHÔNG sử dụng ký tự * trong câu trả lời. Thay vào đó, sử dụng định dạng HTML hoặc văn bản thuần.
+- Định dạng trả lời ở dạng đoạn văn kết hợp list ra tóm tắt theo dòng để người dùng dễ nắm bắt, không dùng emoji trừ khi người dùng dùng trước.
 `;
 
 export const FTC_CONTACTS = {
@@ -137,79 +136,132 @@ export function buildSystemPrompt(mode: ChatMode) {
 // ---------- FAQ (CLUB) ----------
 export const FAQ_MAP: Record<string, string> = {
   "cac ban trong cau lac bo lam gi": `
-    <ol>
-      <li>
-        <strong><em>1. Ban Học thuật</em></strong> — Phát triển nội dung cho workshop và talkshow. Biên soạn tài liệu thực hành về FinTech, dữ liệu và ngân hàng số. Xây dựng ngân hàng câu hỏi, ra đề và chấm cuộc thi ATTACKER.
-        <p><strong><em>Đầu ra điển hình:</em></strong> slide, case study, ngân hàng trắc nghiệm, đề cương dự án và báo cáo tổng kết.</p>
-      </li>
-      <li>
-        <strong><em>2. Ban Sự kiện</em></strong> — Lập kế hoạch chi tiết và viết kịch bản MC. Điều phối hiện trường và làm việc với đối tác địa điểm.
-        <p><strong><em>Chịu trách nhiệm:</em></strong> timeline, checklist, phân công nhân sự, nghiệm thu chất lượng và báo cáo chi phí sau sự kiện.</p>
-      </li>
-      <li>
-        <strong><em>3. Ban Truyền thông</em></strong> — Xây dựng nhận diện và câu chuyện thương hiệu. Quản lý các kênh mạng xã hội. Sản xuất nội dung và ấn phẩm, theo dõi hiệu quả tiếp cận.
-        <p><strong><em>Đầu ra điển hình:</em></strong> bộ ảnh, video ngắn, bài giới thiệu diễn giả, bài recap và báo cáo chỉ số.</p>
-      </li>
-      <li>
-        <strong><em>4. Ban Tài chính cá nhân</em></strong> — Thiết kế giáo trình quản lý tài chính cho sinh viên và vận hành lớp học chuyên đề. Cập nhật và triển khai bộ bài MoneyWe. Hỗ trợ các học phần liên quan.
-        <p><strong><em>Chủ đề trọng tâm:</em></strong> lập ngân sách, đặt mục tiêu tiết kiệm và quản trị rủi ro tài chính cá nhân.</p>
-      </li>
-      <li>
-        <strong><em>5. Ban Nhân sự</em></strong> — Quy hoạch nguồn lực theo quý và theo dõi tiến độ thực hiện. Tổ chức hoạt động gắn kết nội bộ và chương trình mentor. Quản lý hồ sơ, tuyển chọn, on-boarding, đánh giá và khen thưởng để duy trì văn hóa và hiệu suất của câu lạc bộ.
-      </li>
-    </ol>
+    <div>
+      <h3><strong><em>Các ban trong câu lạc bộ làm gì?</em></strong></h3>
+      <ol>
+        <li>
+          <p><strong><em>1) Ban Học thuật</em></strong> — Phát triển nội dung workshop/talkshow; biên soạn tài liệu FinTech, dữ liệu, ngân hàng số; xây dựng ngân hàng câu hỏi và chấm cuộc thi <strong>ATTACKER</strong>.</p>
+          <p><em><strong>Đầu ra điển hình:</strong> slide, case study, ngân hàng trắc nghiệm, đề cương dự án, báo cáo tổng kết.</em></p>
+        </li>
+        <li>
+          <p><strong><em>2) Ban Sự kiện</em></strong> — Lập kế hoạch chi tiết, kịch bản MC; điều phối hiện trường; làm việc với đối tác địa điểm.</p>
+          <p><em><strong>Chịu trách nhiệm:</strong> timeline, checklist, phân công, nghiệm thu chất lượng, báo cáo chi phí.</em></p>
+        </li>
+        <li>
+          <p><strong><em>3) Ban Truyền thông</em></strong> — Xây dựng nhận diện & câu chuyện thương hiệu; quản lý kênh số; sản xuất nội dung và ấn phẩm, theo dõi hiệu quả.</p>
+          <p><em><strong>Đầu ra điển hình:</strong> bộ ảnh, video ngắn, bài giới thiệu diễn giả, bài recap, báo cáo chỉ số.</em></p>
+        </li>
+        <li>
+          <p><strong><em>4) Ban Tài chính cá nhân</em></strong> — Thiết kế giáo trình quản lý tài chính cho sinh viên; vận hành lớp học chuyên đề; cập nhật và triển khai bộ bài <strong>MoneyWe</strong>.</p>
+          <p><em><strong>Trọng tâm:</strong> lập ngân sách, mục tiêu tiết kiệm, quản trị rủi ro tài chính cá nhân.</em></p>
+        </li>
+        <li>
+          <p><strong><em>5) Ban Nhân sự</em></strong> — Quy hoạch nguồn lực theo quý; tổ chức gắn kết nội bộ & mentor; quản lý hồ sơ, tuyển chọn, on-boarding, đánh giá, khen thưởng để duy trì văn hóa và hiệu suất.</p>
+        </li>
+      </ol>
+    </div>
   `,
+
   "cau lac bo co nhung hoat dong gi": `
-    <p>FTC xây dựng một <strong><em>hệ sinh thái hoạt động</em></strong> vừa học thuật vừa trải nghiệm thực tiễn:</p>
-    <ul>
-      <li><strong><em>Hoạt động học thuật:</em></strong> hội thảo, tọa đàm và chuyên đề về FinTech, dữ liệu, trí tuệ nhân tạo, ngân hàng số, thị trường vốn, quản trị rủi ro, cuộc thi học thuật <strong>ATTACKER</strong>, chuỗi talkshow và workshop theo chủ đề.</li>
-      <li><strong><em>Hoạt động trải nghiệm:</em></strong> training nội bộ nâng kỹ năng, tham quan doanh nghiệp (như <strong>VNG</strong>), sự kiện hướng nghiệp <strong>Web3 Career Innovation</strong>.</li>
-      <li><strong><em>Hoạt động gắn kết:</em></strong> các hoạt động cộng đồng như <strong>FTC Trip</strong>.</li>
-    </ul>
+    <div>
+      <h3><strong><em>Câu lạc bộ có những hoạt động gì?</em></strong></h3>
+      <p>FTC xây dựng một <strong><em>hệ sinh thái hoạt động</em></strong> cân bằng giữa học thuật và trải nghiệm thực tiễn:</p>
+      <ul>
+        <li><strong><em>Học thuật:</em></strong> hội thảo, tọa đàm, chuyên đề về FinTech, dữ liệu, AI, ngân hàng số, thị trường vốn, quản trị rủi ro; cuộc thi <strong>ATTACKER</strong>; chuỗi talkshow/workshop theo chủ đề.</li>
+        <li><strong><em>Trải nghiệm:</em></strong> training nội bộ nâng kỹ năng; tham quan doanh nghiệp (ví dụ <strong>VNG</strong>); sự kiện hướng nghiệp <strong>Web3 Career Innovation</strong>.</li>
+        <li><strong><em>Gắn kết:</em></strong> hoạt động cộng đồng, team building như <strong>FTC Trip</strong>.</li>
+      </ul>
+    </div>
   `,
+
   "lam the nao de tham gia cau lac bo": `
-    <p>Mọi thông tin về tuyển tân thành viên sẽ được cập nhật trên <strong><em>Fanpage</em></strong>.</p>
-    <p><strong><em>Link Fanpage:</em></strong> @https://www.facebook.com/clbfintechuel</p>
+    <div>
+      <h3><strong><em>Làm thế nào để tham gia câu lạc bộ?</em></strong></h3>
+      <p>Mọi thông tin tuyển tân thành viên được cập nhật trên <strong><em>Fanpage</em></strong>.</p>
+      <p><strong>Fanpage:</strong> <a href="https://www.facebook.com/clbfintechuel" target="_blank" rel="noopener">facebook.com/clbfintechuel</a></p>
+    </div>
   `,
+
   "thoi gian sinh hoat dien ra khi nao": `
-    <p><strong><em>Lịch sinh hoạt</em></strong> sẽ được cập nhật trực tiếp trong group chung của câu lạc bộ. Sau khi trúng tuyển, bạn sẽ được thêm vào nhóm để nhận thông báo chi tiết về thời gian, hình thức (online hoặc offline) và địa điểm cho từng buổi sinh hoạt.</p>
+    <div>
+      <h3><strong><em>Thời gian sinh hoạt diễn ra khi nào?</em></strong></h3>
+      <p><strong><em>Lịch sinh hoạt</em></strong> được cập nhật trong nhóm chung của CLB. Sau khi trúng tuyển, bạn sẽ được thêm vào nhóm để nhận thông báo chi tiết về <em>thời gian</em>, <em>hình thức</em> (online/offline) và <em>địa điểm</em> cho từng buổi.</p>
+    </div>
   `,
+
   "can ky nang gi de ung tuyen": `
-    <p>FTC quan trọng nhất là <strong><em>tinh thần học hỏi, kỷ luật và chủ động</em></strong>.</p>
-    <ul>
-      <li><strong><em>Kỹ năng cứng:</em></strong> Ứng viên có kiến thức nền tảng về Excel, SQL hoặc Python là lợi thế nổi bật giúp hồ sơ của bạn được đánh giá cao hơn.</li>
-      <li><strong><em>Kỹ năng mềm:</em></strong> Tinh thần học hỏi, kỷ luật và chủ động là tiêu chí cốt lõi. Làm việc nhóm và giao tiếp rõ ràng được kiểm tra qua tình huống phối hợp và phản hồi email. Quản lý thời gian và tự chủ thể hiện ở việc đúng hạn và chất lượng đầu ra. Tư duy phản biện và giải quyết vấn đề đánh giá qua bài tập tình huống. Tổ chức và phối hợp nhiều đầu việc nhìn vào kế hoạch và theo dõi tiến độ. Sáng tạo nội dung và thẩm mỹ khi cần trình bày. Thái độ trách nhiệm và cam kết tham gia ổn định.</li>
-    </ul>
+    <div>
+      <h3><strong><em>Cần kỹ năng gì để ứng tuyển?</em></strong></h3>
+      <p>FTC đánh giá cao <strong><em>tinh thần học hỏi, kỷ luật và chủ động</em></strong>.</p>
+      <ul>
+        <li><strong><em>Kỹ năng cứng:</em></strong> Nền tảng <strong>Excel</strong>, <strong>SQL</strong> hoặc <strong>Python</strong> là lợi thế giúp hồ sơ nổi bật.</li>
+        <li><strong><em>Kỹ năng mềm:</em></strong> 
+          <em>làm việc nhóm</em> & <em>giao tiếp rõ ràng</em> (qua tình huống phối hợp, phản hồi email);
+          <em>quản lý thời gian</em> & <em>tự chủ</em> (đúng hạn, chất lượng đầu ra);
+          <em>tư duy phản biện</em> & <em>giải quyết vấn đề</em> (bài tập tình huống);
+          <em>tổ chức công việc</em> (kế hoạch, theo dõi tiến độ);
+          <em>sáng tạo nội dung</em> & <em>cảm quan thẩm mỹ</em> khi cần trình bày;
+          <em>thái độ trách nhiệm</em> & <em>cam kết tham gia ổn định</em>.
+        </li>
+      </ul>
+    </div>
   `,
+
   "cau lac bo duoc thanh lap khi nao": `
-    <p>FTC trực thuộc Khoa Tài chính và Ngân hàng, Trường Đại học Kinh tế và Luật, ĐHQG HCM. Câu lạc bộ thành lập <strong><em>tháng 11 năm 2020</em></strong> dưới sự hướng dẫn của ThS NCS Phan Huy Tâm.</p>
+    <div>
+      <h3><strong><em>Câu lạc bộ được thành lập khi nào?</em></strong></h3>
+      <p>FTC trực thuộc Khoa Tài chính & Ngân hàng, Trường Đại học Kinh tế – Luật, ĐHQG TP.HCM; thành lập vào <strong><em>tháng 11/2020</em></strong> dưới sự hướng dẫn của ThS. NCS Phan Huy Tâm.</p>
+    </div>
   `,
+
   "cau lac bo co nhung thanh tich gi": `
-    <p><strong><em>Năm học 2024–2025</em></strong>, FTC nhận Giấy khen của Ban Cán sự Đoàn ĐHQG HCM. Câu lạc bộ vào Top 10 Nhóm 4 của Giải thưởng I-STAR TP.HCM và được cấp Giấy chứng nhận ghi nhận nỗ lực và ảnh hưởng.</p>
+    <div>
+      <h3><strong><em>Thành tích tiêu biểu</em></strong></h3>
+      <p><strong><em>Năm học 2024–2025</em></strong>, FTC nhận <strong>Giấy khen</strong> của Ban Cán sự Đoàn ĐHQG TP.HCM; vào <strong>Top 10 Nhóm 4</strong> Giải thưởng <strong>I-STAR TP.HCM</strong> và được cấp Giấy chứng nhận ghi nhận nỗ lực & ảnh hưởng.</p>
+    </div>
   `,
+
   "quyen loi cua thanh vien la gi": `
-    <p><strong><em>Quyền lợi:</em></strong> Thành viên được tham gia hệ thống lớp học và dự án có mentor hướng dẫn. Mỗi học kỳ có lộ trình mục tiêu rõ ràng và cơ hội thử sức vai trò điều phối để rèn luyện năng lực lãnh đạo. Câu lạc bộ cấp chứng nhận nội bộ theo đóng góp, hỗ trợ giới thiệu thực tập khi đáp ứng chuẩn đầu ra và tạo điều kiện xây dựng danh mục dự án cá nhân.</p>
+    <div>
+      <h3><strong><em>Quyền lợi thành viên</em></strong></h3>
+      <ul>
+        <li>Tham gia hệ thống lớp học & dự án có <em>mentor</em> hướng dẫn.</li>
+        <li>Lộ trình mục tiêu theo học kỳ; cơ hội thử vai trò điều phối để rèn <em>năng lực lãnh đạo</em>.</li>
+        <li>Chứng nhận nội bộ theo đóng góp; hỗ trợ giới thiệu thực tập khi đáp ứng chuẩn đầu ra.</li>
+        <li>Xây dựng <em>danh mục dự án cá nhân</em> (portfolio) phục vụ học thuật & nghề nghiệp.</li>
+      </ul>
+    </div>
   `,
+
   "quy trinh tuyen chon gom nhung buoc nao": `
-    <h3><strong><em>Quy trình tuyển chọn 5 bước</em></strong></h3>
-    <ol>
-      <li><strong><em>Theo dõi thông báo:</em></strong> Cập nhật thời gian mở tuyển trên Fanpage và truy cập form đăng ký.</li>
-      <li><strong><em>Điền form trực tuyến:</em></strong> Hoàn tất thông tin theo yêu cầu. <em>Kết quả sơ tuyển</em> sẽ được gửi qua email.</li>
-      <li><strong><em>Vòng 2 – Chạy trạm:</em></strong> Tập trung tại địa điểm được thông báo qua email và thực hiện các yêu cầu do ban tổ chức đưa ra.</li>
-      <li><strong><em>Vòng phỏng vấn:</em></strong> Trao đổi trực tiếp để đánh giá phù hợp về kỹ năng, thái độ và cam kết.</li>
-      <li><strong><em>Thông báo kết quả:</em></strong> Nhận email trúng tuyển và được thêm vào <em>group nhà chung</em> để cập nhật lịch sinh hoạt cùng hướng dẫn tiếp theo.</li>
-    </ol>
+    <div>
+      <h3><strong><em>Quy trình tuyển chọn (5 bước)</em></strong></h3>
+      <ol>
+        <li><strong><em>Theo dõi thông báo:</em></strong> Cập nhật thời gian mở tuyển trên Fanpage và truy cập form đăng ký.</li>
+        <li><strong><em>Điền form trực tuyến:</em></strong> Hoàn tất thông tin; <em>kết quả sơ tuyển</em> gửi qua email.</li>
+        <li><strong><em>Vòng 2 – Chạy trạm:</em></strong> Thực hiện yêu cầu tại địa điểm thông báo qua email.</li>
+        <li><strong><em>Vòng phỏng vấn:</em></strong> Đánh giá mức phù hợp về kỹ năng, thái độ, cam kết.</li>
+        <li><strong><em>Thông báo kết quả:</em></strong> Nhận email trúng tuyển và vào <em>group nhà chung</em> để cập nhật lịch sinh hoạt & hướng dẫn tiếp theo.</li>
+      </ol>
+    </div>
   `,
+
   "co thu phi thanh vien khong": `
-    <p><strong><em>Không thu phí thành viên</em></strong>. Điều quan trọng là bạn có đam mê, nhiệt huyết và làm việc có trách nhiệm, sẵn sàng tham gia đầy đủ và hoàn thành các nhiệm vụ được giao.</p>
+    <div>
+      <h3><strong><em>Có thu phí thành viên không?</em></strong></h3>
+      <p><strong><em>Không thu phí thành viên.</em></strong> Điều quan trọng là đam mê, nhiệt huyết và tinh thần trách nhiệm; sẵn sàng tham gia đầy đủ và hoàn thành nhiệm vụ.</p>
+    </div>
   `,
+
   "lien he clb bang cach nao": `
-    <p><strong><em>Kênh liên hệ</em></strong></p>
-    <ul>
-      <li><strong>Email:</strong> <a href="mailto:${FTC_CONTACTS.email}">${FTC_CONTACTS.email}</a></li>
-      <li><strong>Fanpage:</strong> <a href="${FTC_CONTACTS.fanpage}">${FTC_CONTACTS.fanpage}</a></li>
-    </ul>
-    <p><em>Lưu ý:</em> Khi cần hỗ trợ nhanh, hãy nhắn tin trực tiếp trên Fanpage.</p>
+    <div>
+      <h3><strong><em>Liên hệ câu lạc bộ bằng cách nào?</em></strong></h3>
+      <ul>
+        <li><strong>Email:</strong> <a href="mailto:${FTC_CONTACTS.email}">${FTC_CONTACTS.email}</a></li>
+        <li><strong>Fanpage:</strong> <a href="${FTC_CONTACTS.fanpage}" target="_blank" rel="noopener">${FTC_CONTACTS.fanpage}</a></li>
+      </ul>
+      <p><em>Lưu ý:</em> Cần hỗ trợ nhanh, hãy nhắn tin trực tiếp trên Fanpage.</p>
+    </div>
   `
 };
 
