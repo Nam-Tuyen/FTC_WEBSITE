@@ -315,7 +315,9 @@ export default function ChatbotPage() {
     try {
       // Gọi API mới với mode trong payload
       const history = messages.slice(-6).map((m: ChatMessage) => ({ role: m.role, content: m.content }))
+      console.log("Sending to API:", { mode: selectedMode, question: q, history })
       const out = await askServer({ mode: selectedMode, question: q, history })
+      console.log("API Response:", out)
       const botText = out || "Xin lỗi, hiện chưa thể trả lời."
 
       const botMsg: ChatMessage = {
@@ -326,7 +328,8 @@ export default function ChatbotPage() {
         ts: Date.now(),
       }
       setMessages((prev: ChatMessage[]) => [...prev, botMsg])
-    } catch {
+    } catch (error) {
+      console.error("API Error:", error)
       setMessages((prev: ChatMessage[]) => [
         ...prev,
         { id: crypto.randomUUID(), role: "assistant", content: "Xin lỗi, hiện chưa thể trả lời.", mode: selectedMode, ts: Date.now() },
