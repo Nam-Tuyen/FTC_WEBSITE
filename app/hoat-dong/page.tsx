@@ -230,10 +230,15 @@ export default function ActivitiesPage() {
                             </div>
                           </div>
                           
-                          {/* Modern Compact Title */}
-                          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold bg-gradient-to-r from-white via-blue-100 to-white bg-clip-text text-transparent leading-tight mb-3">
-                            {activity.title}
-                          </h2>
+                          {/* Modern Compact Title with Icon */}
+                          <div className="flex items-center gap-3 mb-3">
+                            <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-white/20 to-white/10 backdrop-blur-xl border border-white/30 flex items-center justify-center shadow-lg">
+                              <IconComponent className="w-4 h-4 text-white drop-shadow-lg" />
+                            </div>
+                            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold bg-gradient-to-r from-white via-blue-100 to-white bg-clip-text text-transparent leading-tight">
+                              {activity.title}
+                            </h2>
+                          </div>
                           
                           {/* Quick Features */}
                           <div className="flex flex-wrap gap-2">
@@ -310,17 +315,19 @@ export default function ActivitiesPage() {
             <div className="w-20 h-20 mx-auto mb-8 bg-gradient-to-r from-blue-500 to-purple-600 rounded-3xl flex items-center justify-center shadow-xl">
               <Sparkles className="w-10 h-10 text-white" />
             </div>
-            <h2 className="text-4xl font-bold text-white mb-6">Tham gia cùng FTC</h2>
-            <p className="text-xl text-white/80 mb-8 leading-relaxed">
+            <h2 className="text-4xl font-bold text-white mb-6">THAM GIA CÙNG FTC</h2>
+            <p className="text-xl text-white/80 mb-8 leading-relaxed italic">
               Đăng ký để không bỏ lỡ các hoạt động thú vị và cơ hội học hỏi quý báu
             </p>
             <div className="flex flex-wrap justify-center gap-4">
-              <button className="px-8 py-4 bg-gradient-to-r from-blue-500 to-purple-600 rounded-2xl text-white font-bold hover:shadow-xl hover:scale-105 transition-all">
+              <a 
+                href="https://www.facebook.com/clbfintechuel" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="px-8 py-4 bg-gradient-to-r from-blue-500 to-purple-600 rounded-2xl text-white font-bold hover:shadow-xl hover:scale-105 transition-all"
+              >
                 Theo dõi Fanpage
-              </button>
-              <button className="px-8 py-4 bg-white/10 backdrop-blur-xl border border-white/30 rounded-2xl text-white font-bold hover:bg-white/20 transition-all">
-                Xem thêm thông tin
-              </button>
+              </a>
             </div>
           </div>
         </div>
