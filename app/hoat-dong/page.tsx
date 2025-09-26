@@ -38,7 +38,7 @@ const activities = [
     status: "Đang diễn ra",
     statusColor: "bg-red-500/20 text-red-300 border-red-400/30",
     highlights: [
-      "Thi đấu cạnh tranh cao",
+      "Sân chơi năng động",
       "Kiến thức FinTech chuyên sâu",
       "Cơ hội nghề nghiệp hấp dẫn"
     ]
@@ -171,6 +171,40 @@ const activities = [
   },
 ]
 
+// Category color mapping
+const categoryColors = {
+  "Học thuật": {
+    gradient: "from-blue-500/10 to-cyan-500/10",
+    border: "border-blue-400/30",
+    icon: "text-blue-400",
+    dots: ["bg-blue-400", "bg-cyan-400", "bg-indigo-400"]
+  },
+  "Trải nghiệm": {
+    gradient: "from-green-500/10 to-emerald-500/10",
+    border: "border-green-400/30",
+    icon: "text-green-400",
+    dots: ["bg-green-400", "bg-emerald-400", "bg-teal-400"]
+  },
+  "Đào tạo": {
+    gradient: "from-purple-500/10 to-violet-500/10",
+    border: "border-purple-400/30",
+    icon: "text-purple-400",
+    dots: ["bg-purple-400", "bg-violet-400", "bg-fuchsia-400"]
+  },
+  "Nghề nghiệp": {
+    gradient: "from-orange-500/10 to-yellow-500/10",
+    border: "border-orange-400/30",
+    icon: "text-orange-400",
+    dots: ["bg-orange-400", "bg-yellow-400", "bg-amber-400"]
+  },
+  "Gắn kết": {
+    gradient: "from-pink-500/10 to-rose-500/10",
+    border: "border-pink-400/30",
+    icon: "text-pink-400",
+    dots: ["bg-pink-400", "bg-rose-400", "bg-red-400"]
+  }
+}
+
 export default function ActivitiesPage() {
   return (
     <div className="min-h-screen bg-[#003663] text-white overflow-hidden">
@@ -244,9 +278,16 @@ export default function ActivitiesPage() {
                         <div className="lg:w-3/5 flex flex-col justify-center space-y-4">
                           {/* Category and Meta Info */}
                           <div className="flex flex-wrap items-center gap-3 mb-3">
-                            <div className="px-4 py-2 rounded-full text-xs font-bold backdrop-blur-xl border shadow-lg bg-gradient-to-r from-blue-500 to-purple-600 text-white">
-                              {activity.category}
-                            </div>
+                          <div className={`px-4 py-2 rounded-full text-xs font-bold backdrop-blur-xl border shadow-lg text-white ${
+                            activity.category === "Học thuật" ? "bg-gradient-to-r from-blue-500 to-cyan-500" :
+                            activity.category === "Trải nghiệm" ? "bg-gradient-to-r from-green-500 to-emerald-500" :
+                            activity.category === "Đào tạo" ? "bg-gradient-to-r from-purple-500 to-violet-500" :
+                            activity.category === "Nghề nghiệp" ? "bg-gradient-to-r from-orange-500 to-yellow-500" :
+                            activity.category === "Gắn kết" ? "bg-gradient-to-r from-pink-500 to-rose-500" :
+                            "bg-gradient-to-r from-blue-500 to-purple-600"
+                          }`}>
+                            {activity.category}
+                          </div>
                             <div className="flex items-center gap-2 text-white/80 bg-white/10 backdrop-blur-xl px-3 py-2 rounded-full border border-white/20 shadow-lg">
                               <Clock className="w-4 h-4" />
                               <span className="text-xs font-medium">{activity.duration}</span>
@@ -303,14 +344,14 @@ export default function ActivitiesPage() {
                         {/* Enhanced Sidebar */}
                         <div className="space-y-4">
                           {/* Highlights Card */}
-                          <div className="bg-gradient-to-br from-blue-500/10 to-purple-500/10 backdrop-blur-xl rounded-2xl p-6 border border-blue-400/30 shadow-xl h-full">
+                          <div className={`bg-gradient-to-br ${categoryColors[activity.category as keyof typeof categoryColors]?.gradient || 'from-blue-500/10 to-purple-500/10'} backdrop-blur-xl rounded-2xl p-6 border ${categoryColors[activity.category as keyof typeof categoryColors]?.border || 'border-blue-400/30'} shadow-xl h-full`}>
                             <div className="flex items-center gap-2 mb-4">
-                              <Star className="w-5 h-5 text-blue-400" />
-                              <span className="text-sm font-bold text-blue-300">Điểm nổi bật</span>
+                              <Star className={`w-5 h-5 ${categoryColors[activity.category as keyof typeof categoryColors]?.icon || 'text-blue-400'}`} />
+                              <span className={`text-sm font-bold ${categoryColors[activity.category as keyof typeof categoryColors]?.icon || 'text-blue-300'}`}>Điểm nổi bật</span>
                             </div>
                             <div className="space-y-3">
                               {activity.highlights?.map((highlight, index) => {
-                                const colors = ['bg-blue-400', 'bg-purple-400', 'bg-green-400'];
+                                const colors = categoryColors[activity.category as keyof typeof categoryColors]?.dots || ['bg-blue-400', 'bg-purple-400', 'bg-green-400'];
                                 return (
                                   <div key={index} className="flex items-center gap-2 text-white/90">
                                     <div className={`w-1.5 h-1.5 ${colors[index % colors.length]} rounded-full animate-pulse`} />
