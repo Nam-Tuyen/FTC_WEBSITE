@@ -30,13 +30,18 @@ const activities = [
     alt: "Cuộc thi ATTACKER của FTC",
     category: "Học thuật",
     duration: "3 tháng",
-    participants: "1000+ sinh viên",
+    participants: "1500+ sinh viên",
     icon: Award,
     color: "from-red-500 to-pink-500",
     bgColor: "bg-red-500/10",
     borderColor: "border-red-500/20",
     status: "Đang diễn ra",
-    statusColor: "bg-red-500/20 text-red-300 border-red-400/30"
+    statusColor: "bg-red-500/20 text-red-300 border-red-400/30",
+    highlights: [
+      "Thi đấu cạnh tranh cao",
+      "Kiến thức FinTech chuyên sâu",
+      "Cơ hội nghề nghiệp hấp dẫn"
+    ]
   },
   {
     title: "TALKSHOW CHUYÊN ĐỀ",
@@ -52,7 +57,12 @@ const activities = [
     bgColor: "bg-blue-500/10",
     borderColor: "border-blue-500/20",
     status: "Thường niên",
-    statusColor: "bg-blue-500/20 text-blue-300 border-blue-400/30"
+    statusColor: "bg-blue-500/20 text-blue-300 border-blue-400/30",
+    highlights: [
+      "Chuyên gia hàng đầu",
+      "Xu hướng công nghệ mới",
+      "Kết nối mạng lưới"
+    ]
   },
   {
     title: "THAM QUAN DOANH NGHIỆP",
@@ -68,7 +78,12 @@ const activities = [
     bgColor: "bg-green-500/10",
     borderColor: "border-green-500/20",
     status: "Sắp diễn ra",
-    statusColor: "bg-green-500/20 text-green-300 border-green-400/30"
+    statusColor: "bg-green-500/20 text-green-300 border-green-400/30",
+    highlights: [
+      "Trải nghiệm thực tế",
+      "Môi trường làm việc chuyên nghiệp",
+      "Cơ hội nghề nghiệp"
+    ]
   },
   {
     title: "FTC TRAINING & SHARING",
@@ -84,23 +99,33 @@ const activities = [
     bgColor: "bg-purple-500/10",
     borderColor: "border-purple-500/20",
     status: "Hằng tuần",
-    statusColor: "bg-purple-500/20 text-purple-300 border-purple-400/30"
+    statusColor: "bg-purple-500/20 text-purple-300 border-purple-400/30",
+    highlights: [
+      "Kiến thức từ cơ bản đến nâng cao",
+      "Kỹ năng nghề nghiệp thực tế",
+      "Cộng đồng học tập"
+    ]
   },
   {
     title: "CAREER DAY",
     body:
-      "Chuỗi sự kiện Web3 Career Innovation gồm ba hoạt động chính: talkshow, doanh nghiệp đặt booth và phỏng vấn trực tiếp. Chương trình hướng đến việc giúp sinh viên tiếp cận công nghệ Blockchain & Web3, thay đổi góc nhìn tiêu cực về Crypto và mở ra cơ hội nghề nghiệp sáng tạo trong lĩnh vực công nghệ - tài chính.",
+      "Chuỗi sự kiện Web3 Career Innovation gồm ba hoạt động chính: Talkshow, doanh nghiệp đặt booth và phỏng vấn trực tiếp. Chương trình hướng đến việc giúp sinh viên tiếp cận công nghệ Blockchain & Web3, thay đổi góc nhìn tiêu cực về Crypto và mở ra cơ hội nghề nghiệp sáng tạo trong lĩnh vực công nghệ - tài chính.",
     img: IMAGES.career,
     alt: "Career Day Web3 Career Innovation",
     category: "Nghề nghiệp",
     duration: "1 ngày",
-    participants: "150+ sinh viên",
+    participants: "3000+ sinh viên",
     icon: TrendingUp,
     color: "from-orange-500 to-yellow-500",
     bgColor: "bg-orange-500/10",
     borderColor: "border-orange-500/20",
     status: "Thành công",
-    statusColor: "bg-orange-500/20 text-orange-300 border-orange-400/30"
+    statusColor: "bg-orange-500/20 text-orange-300 border-orange-400/30",
+    highlights: [
+      "Web3 & Blockchain",
+      "Phỏng vấn trực tiếp",
+      "Cơ hội nghề nghiệp sáng tạo"
+    ]
   },
   {
     title: "WORKSHOP CHUYÊN SÂU",
@@ -110,13 +135,18 @@ const activities = [
     alt: "Workshop chuyên sâu của FTC",
     category: "Đào tạo",
     duration: "3-4 giờ",
-    participants: "40+ sinh viên",
+    participants: "100+ sinh viên",
     icon: Users,
     color: "from-indigo-500 to-blue-500",
     bgColor: "bg-indigo-500/10",
     borderColor: "border-indigo-500/20",
     status: "Hằng tháng",
-    statusColor: "bg-indigo-500/20 text-indigo-300 border-indigo-400/30"
+    statusColor: "bg-indigo-500/20 text-indigo-300 border-indigo-400/30",
+    highlights: [
+      "Kiến thức chuyên môn",
+      "Kỹ năng quản lý sự kiện",
+      "Đối tác uy tín"
+    ]
   },
   {
     title: "FTC TRIP",
@@ -126,13 +156,18 @@ const activities = [
     alt: "FTC Trip gắn kết cộng đồng",
     category: "Gắn kết",
     duration: "2-3 ngày",
-    participants: "60+ thành viên",
+    participants: "30+ thành viên",
     icon: Network,
     color: "from-pink-500 to-rose-500",
     bgColor: "bg-pink-500/10",
     borderColor: "border-pink-500/20",
     status: "Sắp tới",
-    statusColor: "bg-pink-500/20 text-pink-300 border-pink-400/30"
+    statusColor: "bg-pink-500/20 text-pink-300 border-pink-400/30",
+    highlights: [
+      "Gắn kết cộng đồng",
+      "Kỷ niệm đáng nhớ",
+      "Thư giãn và giải tỏa stress"
+    ]
   },
 ]
 
@@ -157,7 +192,7 @@ export default function ActivitiesPage() {
               HOẠT ĐỘNG CỦA FTC
             </span>
           </h1>
-          <p className="text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl text-muted-foreground leading-relaxed max-w-4xl mx-auto italic px-4">
+          <p className="text-base sm:text-lg md:text-xl lg:text-2xl xl:text-2xl text-muted-foreground leading-relaxed max-w-4xl mx-auto italic px-4">
             Khám phá những sự kiện đặc sắc và hoạt động thú vị của câu lạc bộ
           </p>
 
@@ -259,7 +294,7 @@ export default function ActivitiesPage() {
                               <div className="w-2 h-2 bg-gradient-to-r from-blue-400 to-purple-400 rounded-full animate-pulse" />
                               <h3 className="text-lg font-bold text-white">Mô tả chi tiết</h3>
                             </div>
-                            <p className="text-white/90 leading-relaxed text-base font-light">
+                            <p className="text-white/90 leading-relaxed text-base font-light text-justify">
                               {activity.body}
                             </p>
                           </div>
@@ -274,18 +309,15 @@ export default function ActivitiesPage() {
                               <span className="text-sm font-bold text-blue-300">Điểm nổi bật</span>
                             </div>
                             <div className="space-y-3">
-                              <div className="flex items-center gap-2 text-white/90">
-                                <div className="w-1.5 h-1.5 bg-blue-400 rounded-full animate-pulse" />
-                                <span className="text-xs">Chuyên môn cao</span>
-                              </div>
-                              <div className="flex items-center gap-2 text-white/90">
-                                <div className="w-1.5 h-1.5 bg-purple-400 rounded-full animate-pulse" />
-                                <span className="text-xs">Thực tế ứng dụng</span>
-                              </div>
-                              <div className="flex items-center gap-2 text-white/90">
-                                <div className="w-1.5 h-1.5 bg-green-400 rounded-full animate-pulse" />
-                                <span className="text-xs">Kết nối mạng lưới</span>
-                              </div>
+                              {activity.highlights?.map((highlight, index) => {
+                                const colors = ['bg-blue-400', 'bg-purple-400', 'bg-green-400'];
+                                return (
+                                  <div key={index} className="flex items-center gap-2 text-white/90">
+                                    <div className={`w-1.5 h-1.5 ${colors[index % colors.length]} rounded-full animate-pulse`} />
+                                    <span className="text-xs">{highlight}</span>
+                                  </div>
+                                );
+                              })}
                             </div>
                           </div>
                           
@@ -328,7 +360,7 @@ export default function ActivitiesPage() {
       {/* Modern Footer */}
       <footer className="py-12 px-4 sm:px-6 lg:px-8 border-t border-white/20">
         <div className="max-w-7xl mx-auto text-center">
-          <p className="text-lg text-white/70">
+          <p className="text-lg text-white/70 italic">
             ©2025. Câu lạc bộ Công nghệ Tài chính
           </p>
         </div>
