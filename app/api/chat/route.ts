@@ -7,8 +7,6 @@ import { faqMatchOrNull } from "../../../chatbot/data/faq";
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
-type HistoryMsg = { role?: string; content?: string };
-
 function extractUserQuestion(body: any): string {
   const direct = [body?.message, body?.input, body?.prompt, body?.question].find(
     (x) => typeof x === "string" && String(x).trim()
@@ -26,31 +24,34 @@ function extractUserQuestion(body: any): string {
   return "";
 }
 
-function isFirstTurn(body: any): boolean {
-  const collect = (arr?: HistoryMsg[]) =>
-    Array.isArray(arr) ? arr.filter((m) => (m?.role || "").toLowerCase() !== "system" && !!m?.content).length : 0;
-  const histMsgs = (Array.isArray(body?.history) ? body.history : Array.isArray(body?.messages) ? body.messages : []) as HistoryMsg[];
-  const assistantCount = histMsgs.filter((m) => (m?.role || "").toLowerCase() === "assistant" || (m?.role || "").toLowerCase() === "model").length;
-  return assistantCount === 0;
-}
-
 export async function POST(req: NextRequest) {
   const started = Date.now();
   let body: any = {};
   try { body = await req.json(); } catch {}
-  
   const userQ = extractUserQuestion(body);
   if (!userQ) return NextResponse.json({ error: "Empty prompt" }, { status: 400, headers: { "Cache-Control": "no-store" } });
 
   let mode: ChatMode = (body.mode || "").toLowerCase();
   if (mode !== "club" && mode !== "industry") mode = detectMode(userQ);
 
-  console.log("API Request - Mode:", mode, "Question:", userQ);
-
-  // Check for GEMINI_API_KEY
+  // Fallback to old API if GEMINI_API_KEY not set
   if (!process.env.GEMINI_API_KEY) {
-    console.log("GEMINI_API_KEY not set");
-    return NextResponse.json({ error: "GEMINI_API_KEY not set" }, { status: 500, headers: { "Cache-Control": "no-store" } });
+    console.log("GEMINI_API_KEY not set, falling back to old API");
+    // Redirect to old API
+    try {
+      const oldApiResponse = await fetch(`${req.nextUrl.origin}/api/chat/gemini`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body)
+      });
+      const oldApiData = await oldApiResponse.json();
+      return NextResponse.json(oldApiData, { 
+        status: oldApiResponse.status, 
+        headers: { "x-route": "fallback", "Cache-Control": "no-store" } 
+      });
+    } catch (err) {
+      return NextResponse.json({ error: "GEMINI_API_KEY not set and fallback failed" }, { status: 500, headers: { "Cache-Control": "no-store" } });
+    }
   }
 
   // 1) CLUB: ưu tiên FAQ nội bộ
@@ -59,7 +60,6 @@ export async function POST(req: NextRequest) {
     console.log("Club mode - Question:", userQ);
     console.log("Club mode - Normalized:", normalize(userQ));
     console.log("Club mode - Matched:", matched);
-    
     if (matched) {
       console.log("Club mode - Returning FAQ response");
       return NextResponse.json(
@@ -88,7 +88,6 @@ export async function POST(req: NextRequest) {
   const userMsg = `CÂU HỎI: ${userQ}`;
   console.log("Gemini - User message:", userMsg);
   console.log("Gemini - System prompt length:", buildSystemPrompt(mode).length);
-  
   try {
     const result = await model.generateContent({
       contents: [{ role: "user", parts: [{ text: userMsg }] }],
@@ -114,6 +113,25 @@ export async function POST(req: NextRequest) {
     else if (msg.includes("safety")) hint = "safety_block";
     else if (msg.includes("quota") || msg.includes("rate")) hint = "quota_or_rate_limit";
     else if (msg.includes("model")) hint = "model_not_available";
+
+    // Fallback to old API on quota/rate limit errors
+    if (hint === "quota_or_rate_limit" || hint === "invalid_or_missing_key") {
+      console.log("Falling back to old API due to:", hint);
+      try {
+        const oldApiResponse = await fetch(`${req.nextUrl.origin}/api/chat/gemini`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(body)
+        });
+        const oldApiData = await oldApiResponse.json();
+        return NextResponse.json(oldApiData, { 
+          status: oldApiResponse.status, 
+          headers: { "x-route": "fallback", "x-error": hint, "Cache-Control": "no-store" } 
+        });
+      } catch (fallbackErr) {
+        console.log("Fallback also failed:", fallbackErr.message);
+      }
+    }
 
     return NextResponse.json(
       { text: "Xin lỗi, hiện chưa thể tạo câu trả lời.", detail: err?.message || String(err) },

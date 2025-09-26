@@ -86,3 +86,5 @@ Club mode - Returning FAQ response
  POST /api/chat 200 in 118ms
  ✓ Compiled in 34ms
  ✓ Compiled in 766ms (422 modules)
+ ✓ Compiled in 275ms (422 modules)
+ ✓ Compiled in 172ms (422 modules)

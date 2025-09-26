@@ -48,44 +48,6 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  color: #ffffff;
-}
-
-/* Markdown elements styling */
-.markdown-content strong {
-  font-weight: 700 !important;
-  color: #ffffff !important;
-}
-
-.markdown-content em {
-  font-style: italic !important;
-  color: #d1d5db !important;
-}
-
-.markdown-content p {
-  color: #ffffff !important;
-}
-
-.markdown-content ul {
-  color: #ffffff !important;
-}
-
-.markdown-content ol {
-  color: #ffffff !important;
-}
-
-.markdown-content li {
-  color: #ffffff !important;
-}
-
-.markdown-content h1,
-.markdown-content h2,
-.markdown-content h3,
-.markdown-content h4,
-.markdown-content h5,
-.markdown-content h6 {
-  color: #ffffff !important;
-  font-weight: 700 !important;
 }
 
 /* Modern Navigation Styles */

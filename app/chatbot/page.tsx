@@ -238,7 +238,7 @@ function MessageCard({ m }: { m: ChatMessage }) {
         <div className={cn(
           "relative rounded-3xl px-6 py-4",
           BRAND.shadows.large,
-          isUser
+          isUser 
             ? `${BRAND.text.inverse} ${BRAND.surfaces.userBubble}`
             : `${BRAND.text.primary} ${BRAND.surfaces.chatBubble} ${BRAND.borders.light} border`
         )}>
@@ -248,8 +248,8 @@ function MessageCard({ m }: { m: ChatMessage }) {
           ) : (
             <div 
               className="text-sm leading-relaxed break-words"
-              dangerouslySetInnerHTML={{ __html: (m.content || "").replace(/\n/g, "<br/>") }}
-            />
+            dangerouslySetInnerHTML={{ __html: (m.content || "").replace(/\n/g, "<br/>") }}
+          />
           )}
           
           {/* Timestamp */}
@@ -410,7 +410,7 @@ export default function ChatbotPage() {
                         </div>
                       </div>
                     </div>
-                  </div>
+        </div>
 
                   {/* Mode Selection Buttons */}
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
@@ -426,7 +426,7 @@ export default function ChatbotPage() {
                             "border backdrop-blur-sm shadow-lg",
                             "hover:scale-[1.02] hover:shadow-xl active:scale-[0.98]",
                             "animate-slide-in-up",
-                            active
+                            active 
                               ? "bg-gradient-to-br from-blue-500/30 to-purple-500/30 border-blue-400/50 shadow-blue-500/20 scale-[1.02]"
                               : "bg-white/5 border-white/20 hover:bg-white/10 hover:border-white/30"
                           )}
@@ -464,7 +464,7 @@ export default function ChatbotPage() {
                               "font-semibold text-sm sm:text-base transition-colors duration-300",
                               active ? "text-white" : "text-white/90 group-hover/btn:text-white"
                             )}>
-                              {mc.label}
+                          {mc.label}
                             </h3>
                             <p className={cn(
                               "text-xs sm:text-sm mt-1 transition-colors duration-300",
@@ -645,27 +645,27 @@ export default function ChatbotPage() {
               {/* Sidebar (4 columns) - Updated layout */}
               <div className="xl:col-span-4 flex flex-col gap-6 min-h-[600px]">
                 {/* Quick Questions - flex-1 để thẳng đáy */}
-                <div className="bg-gradient-to-br from-slate-800/90 to-slate-900/90 backdrop-blur-xl rounded-3xl shadow-2xl border border-slate-700/50 overflow-hidden flex-1 flex flex-col">
+                <div className="bg-gradient-to-br from-gray-900/90 to-gray-800/90 backdrop-blur-xl rounded-3xl shadow-2xl border border-gray-700/50 overflow-hidden flex-1 flex flex-col">
                   <div className="p-4 flex-1 flex flex-col">
                     <div className="space-y-3 flex-1 overflow-auto">
                       <div className="flex items-center gap-3 mb-4">
                         <div className="w-12 h-12 rounded-3xl flex items-center justify-center bg-gradient-to-br from-blue-500 to-purple-600 shadow-lg">
                           <span className="text-white text-2xl">❔</span>
-                        </div>
-                        <div>
+                    </div>
+                    <div>
                           <h3 className="font-semibold text-white">Câu hỏi gợi ý</h3>
-                          <p className="text-sm text-slate-300">Bấm để hỏi ngay</p>
-                        </div>
-                      </div>
-                      
-                      {SUGGESTED_QUESTIONS.map((q, idx) => (
-                        <button
-                          key={idx}
-                          onClick={() => {
-                            setSelectedMode("club")
-                            handleSendMessage(q)
-                          }}
-                          className="w-full text-left p-4 rounded-2xl bg-slate-700/50 hover:bg-slate-600/70 border border-slate-600/50 hover:border-blue-400/50 transition-all group backdrop-blur-sm"
+                          <p className="text-sm text-gray-300">Bấm để hỏi ngay</p>
+                    </div>
+                  </div>
+                  
+                    {SUGGESTED_QUESTIONS.map((q, idx) => (
+                      <button
+                        key={idx}
+                        onClick={() => {
+                          setSelectedMode("club")
+                          handleSendMessage(q)
+                        }}
+                          className="w-full text-left p-4 rounded-2xl bg-gray-800/50 hover:bg-gray-700/50 border border-gray-600/50 hover:border-blue-400/50 transition-all group backdrop-blur-sm"
                         >
                           <div className="flex items-center gap-3">
                             <div className="w-8 h-8 rounded-full bg-gradient-to-r from-blue-500 to-purple-600 flex items-center justify-center flex-shrink-0 shadow-lg">
@@ -674,52 +674,52 @@ export default function ChatbotPage() {
                             <div className="flex-1">
                               <p className="text-sm font-medium text-white group-hover:text-blue-300 leading-relaxed">{q}</p>
                             </div>
-                            <span className="text-slate-400 group-hover:text-blue-400 opacity-0 group-hover:opacity-100 transition-all">➤</span>
-                          </div>
-                        </button>
-                      ))}
+                            <span className="text-gray-400 group-hover:text-blue-400 opacity-0 group-hover:opacity-100 transition-all">➤</span>
+                        </div>
+                      </button>
+                    ))}
                     </div>
                   </div>
                 </div>
 
                 {/* Features - flex-none để cố định */}
-                <div className="bg-gradient-to-br from-slate-800/90 to-slate-900/90 backdrop-blur-xl rounded-3xl shadow-2xl border border-slate-700/50 p-6 flex-none">
+                <div className="bg-gradient-to-br from-gray-900/90 to-gray-800/90 backdrop-blur-xl rounded-3xl shadow-2xl border border-gray-700/50 p-6 flex-none">
                   <div className="flex items-center gap-3 mb-4">
                     <div className="w-12 h-12 rounded-3xl flex items-center justify-center bg-gradient-to-br from-green-500 to-blue-600 shadow-lg">
                       <span className="text-white text-2xl">⚡</span>
                     </div>
                     <div>
                       <h3 className="font-semibold text-white">Tính năng nổi bật</h3>
-                      <p className="text-sm text-slate-300">Khám phá khả năng AI</p>
+                      <p className="text-sm text-gray-300">Khám phá khả năng AI</p>
                     </div>
                   </div>
-                  
+
                   <div className="space-y-4">
-                    <div className="flex items-start gap-3 p-3 rounded-2xl hover:bg-slate-700/50 transition-all backdrop-blur-sm">
+                    <div className="flex items-start gap-3 p-3 rounded-2xl hover:bg-gray-800/50 transition-all backdrop-blur-sm">
                       <div className="w-10 h-10 rounded-xl bg-gradient-to-r from-blue-500 to-purple-600 flex items-center justify-center flex-shrink-0 shadow-lg">
                         <span className="text-white text-lg">🧠</span>
                       </div>
                       <div>
                         <p className="font-medium text-white text-sm">AI thông minh</p>
-                        <p className="text-xs text-slate-300">Hiểu ngữ cảnh và phản hồi mạch lạc</p>
+                        <p className="text-xs text-gray-300">Hiểu ngữ cảnh và phản hồi mạch lạc</p>
                       </div>
                     </div>
-                    <div className="flex items-start gap-3 p-3 rounded-2xl hover:bg-slate-700/50 transition-all backdrop-blur-sm">
+                    <div className="flex items-start gap-3 p-3 rounded-2xl hover:bg-gray-800/50 transition-all backdrop-blur-sm">
                       <div className="w-10 h-10 rounded-xl bg-gradient-to-r from-green-500 to-blue-600 flex items-center justify-center flex-shrink-0 shadow-lg">
                         <span className="text-white text-lg">🌍</span>
                       </div>
                       <div>
                         <p className="font-medium text-white text-sm">Cập nhật kịp thời</p>
-                        <p className="text-xs text-slate-300">Kiến thức FinTech tổng quan</p>
+                        <p className="text-xs text-gray-300">Kiến thức FinTech tổng quan</p>
                       </div>
                     </div>
-                    <div className="flex items-start gap-3 p-3 rounded-2xl hover:bg-slate-700/50 transition-all backdrop-blur-sm">
+                    <div className="flex items-start gap-3 p-3 rounded-2xl hover:bg-gray-800/50 transition-all backdrop-blur-sm">
                       <div className="w-10 h-10 rounded-xl bg-gradient-to-r from-yellow-500 to-orange-600 flex items-center justify-center flex-shrink-0 shadow-lg">
                         <span className="text-white text-lg">💬</span>
                       </div>
                       <div>
                         <p className="font-medium text-white text-sm">Đa chế độ chat</p>
-                        <p className="text-xs text-slate-300">Câu lạc bộ & FinTech</p>
+                        <p className="text-xs text-gray-300">Câu lạc bộ & FinTech</p>
                       </div>
                     </div>
                   </div>
