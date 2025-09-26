@@ -138,69 +138,27 @@ const activities = [
 
 export default function ActivitiesPage() {
   return (
-    <div className="min-h-screen bg-[#003663] text-white overflow-hidden">
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-indigo-900 text-white">
       <Navigation />
 
-      {/* Modern Hero Section - Similar to chatbot design */}
-      <section className="relative min-h-[70vh] flex items-center justify-center py-16 px-4 sm:px-6 lg:px-8">
-        {/* Animated Background Effects */}
-        <div className="absolute inset-0 overflow-hidden">
-          <div className="absolute top-1/4 -right-1/4 w-2/3 h-2/3 bg-gradient-to-br from-blue-500/20 via-purple-500/20 to-transparent rounded-full blur-3xl animate-float" />
-          <div className="absolute -bottom-1/4 -left-1/4 w-2/3 h-2/3 bg-gradient-to-tr from-purple-500/20 via-blue-500/20 to-transparent rounded-full blur-3xl animate-float-reverse" />
-          
-          {/* Floating Particles */}
-          <div className="absolute top-1/3 left-1/4 w-2 h-2 bg-blue-400 rounded-full animate-float opacity-70" />
-          <div className="absolute bottom-1/3 right-1/4 w-3 h-3 bg-purple-400 rounded-full animate-float-reverse opacity-60" />
-          <div className="absolute top-1/2 left-3/4 w-1.5 h-1.5 bg-cyan-400 rounded-full animate-bounce opacity-80" />
-        </div>
-
-        <div className="relative max-w-6xl mx-auto text-center space-y-8">
+      {/* Compact Hero Section */}
+      <section className="relative py-20 px-4 sm:px-6 lg:px-8">
+        <div className="relative max-w-6xl mx-auto text-center">
           {/* Modern Badge */}
-          <div className="inline-flex items-center gap-3 bg-gradient-to-r from-blue-500/10 to-purple-500/10 backdrop-blur-xl border border-blue-400/30 rounded-full px-8 py-4 shadow-2xl">
-            <div className="relative">
-              <Sparkles className="w-6 h-6 text-blue-400" />
-              <div className="absolute inset-0 w-6 h-6 bg-blue-400 rounded-full animate-ping opacity-30" />
-            </div>
-            <span className="text-lg font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
-              Hoạt động nổi bật
-            </span>
+          <div className="inline-flex items-center gap-2 bg-gradient-to-r from-blue-500/20 to-purple-500/20 backdrop-blur-md border border-blue-400/30 rounded-full px-6 py-3 mb-8">
+            <Sparkles className="w-5 h-5 text-blue-400" />
+            <span className="text-sm font-semibold text-blue-100">Hoạt động nổi bật</span>
           </div>
 
-          {/* Modern Animated Title */}
-          <div className="relative">
-            <h1 className="text-6xl sm:text-7xl lg:text-8xl font-extrabold mb-8 relative">
-              <span className="absolute inset-0 bg-gradient-to-r from-white to-white opacity-50 blur-2xl animate-pulse" />
-              <span 
-                className="relative bg-gradient-to-r from-white via-blue-100 to-purple-100 bg-clip-text text-transparent"
-                style={{
-                  animation: 'blink 1.5s infinite, gradient-shift 2s ease-in-out infinite, bounce 2s infinite'
-                }}
-              >
-                HOẠT ĐỘNG CỦA FTC
-              </span>
-            </h1>
-            
-            {/* Subtitle with modern styling */}
-            <p className="text-xl sm:text-2xl lg:text-3xl text-white/80 max-w-4xl mx-auto leading-relaxed font-light italic">
-              Khám phá những sự kiện đặc sắc và hoạt động thú vị của câu lạc bộ
-            </p>
-          </div>
+          {/* Modern Title with Animation */}
+          <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold mb-8 bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent animate-pulse">
+            HOẠT ĐỘNG CỦA FTC
+          </h1>
 
-          {/* Quick Stats */}
-          <div className="flex flex-wrap justify-center gap-6 mt-12">
-            <div className="bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-xl rounded-2xl border border-white/20 px-6 py-4 shadow-xl">
-              <div className="text-2xl font-bold text-blue-400">7+</div>
-              <div className="text-sm text-white/80">Loại hoạt động</div>
-            </div>
-            <div className="bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-xl rounded-2xl border border-white/20 px-6 py-4 shadow-xl">
-              <div className="text-2xl font-bold text-green-400">1000+</div>
-              <div className="text-sm text-white/80">Sinh viên tham gia</div>
-            </div>
-            <div className="bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-xl rounded-2xl border border-white/20 px-6 py-4 shadow-xl">
-              <div className="text-2xl font-bold text-purple-400">5</div>
-              <div className="text-sm text-white/80">Năm kinh nghiệm</div>
-            </div>
-          </div>
+          {/* Modern Description */}
+          <p className="text-xl text-slate-300 max-w-4xl mx-auto leading-relaxed font-light">
+            Khám phá những sự kiện đặc sắc và hoạt động thú vị của câu lạc bộ
+          </p>
         </div>
       </section>
 
@@ -304,18 +262,6 @@ export default function ActivitiesPage() {
                             <p className="text-white/90 leading-relaxed text-lg font-light">
                               {activity.body}
                             </p>
-                            
-                            {/* Call to Action */}
-                            <div className="mt-8 flex items-center justify-between">
-                              <div className="flex items-center gap-2 text-sm text-white/70">
-                                <Calendar className="w-4 h-4" />
-                                <span>Cập nhật thường xuyên</span>
-                              </div>
-                              <button className="flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-blue-500 to-purple-600 rounded-2xl text-white font-semibold hover:shadow-lg hover:scale-105 transition-all">
-                                <span>Tìm hiểu thêm</span>
-                                <ArrowRight className="w-4 h-4" />
-                              </button>
-                            </div>
                           </div>
                         </div>
                         
