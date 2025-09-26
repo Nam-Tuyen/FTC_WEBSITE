@@ -100,7 +100,7 @@ Yêu cầu:
 - Ưu tiên định nghĩa, ví dụ ứng dụng, và các ý chính có thể hành động; tránh biệt ngữ không cần thiết.
 - Nếu cần phạm vi/giới hạn dữ liệu, hãy nêu giả định ngắn gọn; không bịa nguồn.
 - Không thêm bất kỳ câu gợi ý theo sau câu trả lời. Cụ thể: KHÔNG chèn câu "Bạn có muốn thu hẹp phạm vi theo quốc gia, giai đoạn hoặc trường hợp sử dụng cụ thể không".
-- Định dạng trả lời ở dạng đoạn văn kết hợp list phải có bulllet point ở mỗi dòng để tóm tắt ý chính giúp người dùng dễ nắm bắt, không dùng emoji trừ khi người dùng dùng trước. Đồng thời kết hợp sử dụng in nghiêng in đậm để trình bày rõ ràng hơn.
+- Định dạng trả lời làm sao giúp người dùng dễ nắm bắt, có thể dùng emoji. Đồng thời kết hợp sử dụng in nghiêng in đậm để trình bày rõ ràng hơn.
 `;
 
 export const FTC_CONTACTS = {
