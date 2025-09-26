@@ -16,7 +16,7 @@ const animations = {
 // import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar" // Commented out to avoid conflict
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip"
 import { ChatMode } from "@/chatbot/types"
-import { SUGGESTED_QUESTIONS } from "../api/chat/gemini/route"
+import { SUGGESTED_QUESTIONS } from "./constants/suggested-questions"
 import { BRAND } from "./constants/brand"
 
 // Navigation động (giữ như project)
@@ -556,7 +556,7 @@ export default function ChatbotPage() {
                           Tôi là trợ lý AI, sẵn sàng giúp bạn tìm hiểu về câu lạc bộ FTC và kiến thức công nghệ tài chính.
                         </p>
                         <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 gap-3 w-full max-w-xl">
-                          {SUGGESTED_QUESTIONS.slice(0, 4).map((q, i) => (
+                          {(SUGGESTED_QUESTIONS || []).slice(0, 4).map((q, i) => (
                             <button
                               key={i}
                               onClick={() => handleSendMessage(q)}
