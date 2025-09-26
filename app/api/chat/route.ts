@@ -152,7 +152,6 @@ export const FAQ_MAP: Record<string, string> = {
         <li><strong> • Workshop chuyên sâu:</strong> Các buổi đào tạo thực hành chuyên sâu đến từ phía doanh nghiệp giúp các bạn nắm vững được nền tảng kiến thức.</li>
         <li><strong> • FTC Trip:</strong> Các buổi đi chơi bonding gắn kết giúp các bạn xả stress sau một thời gian dài hoạt động.</li>
       </ul>
-      <p>Lưu ý: FTC quan trọng nhất là tinh thần học hỏi, không quan trọng việc “giỏi sẵn”.</p>
     </div>
   `,
 
@@ -160,12 +159,12 @@ export const FAQ_MAP: Record<string, string> = {
     <div>
       <p>Để tham gia câu lạc bộ FTC các bạn có thể thực hiện các bước sau: </p>
       <ul>
-        <li><strong><em> • Theo dõi kênh:</em></strong> cập nhật thông báo tuyển trên <em>fanpage/Instagram</em> của FTC.</li>
-        <li><strong><em> • Đăng ký form:</em></strong> điền thông tin cá nhân, sở thích, mong muốn tham gia.</li>
-        <li><strong><em> • Phỏng vấn đầu vào:</em></strong> trao đổi với Ban Nhân sự & Ban Điều hành về nguyện vọng, kỹ năng, sự phù hợp với từng ban.</li>
-        <li><strong><em> • Kết quả:</em></strong> công bố trúng tuyển và phân bổ vào 1 trong 5 ban.</li>
+        <li><strong>• Theo dõi kênh:</strong> cập nhật thông báo tuyển trên Fanpage/Instagram của FTC.</li>
+        <li><strong>• Đăng ký form:</strong> điền thông tin cá nhân, sở thích, mong muốn tham gia.</li>
+        <li><strong>• Phỏng vấn đầu vào:</strong> trao đổi với Ban Nhân sự & Ban Điều hành về nguyện vọng, kỹ năng, sự phù hợp với từng ban.</li>
+        <li><strong>• Kết quả:</strong> công bố trúng tuyển và phân bổ vào 1 trong 5 ban.</li>
       </ul>
-      <p>Lưu ý: FTC quan trọng nhất là tinh thần học hỏi, không quan trọng việc “giỏi sẵn”.</p>
+      <p><em>Lưu ý: FTC quan trọng nhất là tinh thần học hỏi, không quan trọng việc "giỏi sẵn".</em></p>
     </div>
   `,
 
@@ -240,20 +239,13 @@ export const FAQ_MAP: Record<string, string> = {
         <li><strong><em> • Phỏng vấn:</em></strong> trao đổi trực tiếp với ban phụ trách để đánh giá phù hợp.</li>
         <li><strong><em> • Kết quả:</em></strong> công bố trúng tuyển, phân bổ vào các ban.</li>
       </ul>
-      <p>Nguyên tắc: Đánh giá công bằng, minh bạch dựa trên thái độ, tinh thần học hỏi và mức độ phù hợp với hoạt động CLB.</p>
+      <p><em>Nguyên tắc: Đánh giá công bằng, minh bạch dựa trên thái độ, tinh thần học hỏi và mức độ phù hợp với hoạt động CLB.</em></p>
     </div>
   `,
 
   "co thu phi thanh vien khong": `
     <div>
-      <p>FTC là CLB học thuật phi lợi nhuận, trực thuộc Đoàn – Hội sinh viên Trường nên câu lạc bộ không hề thu phí tham gia nhé!</p>
-      <p>Nguồn lực hoạt động:</p>
-      <ul>
-        <li> • Ngân sách Đoàn – Hội.</li>
-        <li> • Sự hỗ trợ từ doanh nghiệp, đối tác.</li>
-        <li> • Nguồn gây quỹ minh bạch trong các sự kiện.</li>
-      </ul>
-      <p>FTCer chỉ cần đóng góp tinh thần, nhiệt huyết, trách nhiệm, không cần lo chi phí khi tham gia CLB.</p>
+      <p>FTC là CLB học thuật phi lợi nhuận, trực thuộc Đoàn – Hội sinh viên Trường nên câu lạc bộ không hề thu phí tham gia nhé. FTCer chỉ cần đóng góp tinh thần, nhiệt huyết, trách nhiệm, không cần lo chi phí khi tham gia CLB!</p>
     </div>
   `
 };
