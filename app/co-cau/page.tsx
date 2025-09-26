@@ -11,7 +11,12 @@ const organizationData = [
     bgColor: "bg-red-500/10",
     borderColor: "border-red-500/20",
     cardGradient: "from-red-500 to-pink-500",
-    category: "Lãnh đạo",
+    category: "Điều hành câu lạc bộ ",
+    quickFeatures: [
+      { icon: Target, text: "Chiến lược", color: "text-red-400" },
+      { icon: Zap, text: "Lãnh đạo", color: "text-pink-400" },
+      { icon: TrendingUp, text: "Đối ngoại", color: "text-orange-400" }
+    ],
     responsibilities: [
       "Định hướng phát triển và đưa ra chiến lược dài hạn",
       "Điều phối và giám sát hoạt động của các ban, bảo đảm vận hành hiệu quả",
@@ -27,6 +32,11 @@ const organizationData = [
     borderColor: "border-blue-500/20",
     cardGradient: "from-blue-500 to-cyan-500",
     category: "Phụ trách chuyên môn học thuật",
+    quickFeatures: [
+      { icon: BookOpen, text: "Nghiên cứu", color: "text-blue-400" },
+      { icon: Target, text: "Chuyên môn", color: "text-cyan-400" },
+      { icon: TrendingUp, text: "Xu hướng", color: "text-indigo-400" }
+    ],
     responsibilities: [
       "Phụ trách nội dung chuyên môn cho các buổi workshop, talkshow",
       "Chuẩn bị câu hỏi cho các buổi tọa đàm và chuyên đề, xây dựng ngân hàng câu hỏi",
@@ -42,6 +52,11 @@ const organizationData = [
     borderColor: "border-green-500/20",
     cardGradient: "from-green-500 to-emerald-500",
     category: "Phụ trách xử lý hồ sơ giấy tờ",
+    quickFeatures: [
+      { icon: Calendar, text: "Tổ chức", color: "text-green-400" },
+      { icon: Target, text: "Logistics", color: "text-emerald-400" },
+      { icon: Zap, text: "Kịch bản", color: "text-teal-400" }
+    ],
     responsibilities: [
       "Viết kế hoạch, báo cáo và các giấy tờ liên quan tới câu lạc bộ",
       "Xây dựng kịch bản MC và timeline cho sự kiện",
@@ -57,6 +72,11 @@ const organizationData = [
     borderColor: "border-purple-500/20",
     cardGradient: "from-purple-500 to-violet-500",
     category: "Phụ trách mảng truyền thông",
+    quickFeatures: [
+      { icon: Megaphone, text: "Thương hiệu", color: "text-purple-400" },
+      { icon: Target, text: "Nội dung", color: "text-violet-400" },
+      { icon: TrendingUp, text: "Đa kênh", color: "text-fuchsia-400" }
+    ],
     responsibilities: [
       "Thiết kế ấn phẩm và truyền thông cho câu lạc bộ",
       "Quản lý các kênh truyền thông của câu lạc bộ và lên kế hoạch đăng bài truyền thông",
@@ -72,6 +92,11 @@ const organizationData = [
     borderColor: "border-amber-700/20",
     cardGradient: "from-amber-700 to-yellow-800",
     category: "Phụ trách chuyên môn về mảng tài chính cá nhân",
+    quickFeatures: [
+      { icon: Wallet, text: "Giáo dục", color: "text-amber-400" },
+      { icon: Target, text: "MoneyWe", color: "text-yellow-400" },
+      { icon: TrendingUp, text: "Tư vấn", color: "text-orange-400" }
+    ],
     responsibilities: [
       "Tổ chức đào tạo, nâng cao hiểu biết tài chính cá nhân cho sinh viên",
       "Phát triển và cập nhật nội dung cho bộ bài MoneyWe",
@@ -87,6 +112,11 @@ const organizationData = [
     borderColor: "border-indigo-500/20",
     cardGradient: "from-indigo-500 to-blue-500",
     category: "Phụ trách quản lý phân công nhân sự",
+    quickFeatures: [
+      { icon: Users, text: "Nhân lực", color: "text-indigo-400" },
+      { icon: Target, text: "Văn hóa", color: "text-blue-400" },
+      { icon: TrendingUp, text: "Phát triển", color: "text-cyan-400" }
+    ],
     responsibilities: [
       "Phân công công việc và quản lý tiến độ công việc",
       "Triển khai hoạt động gắn kết, gìn giữ văn hóa tổ chức",
@@ -147,7 +177,7 @@ export default function CoPage() {
         </div>
 
         <div className="relative max-w-6xl mx-auto text-center space-y-4 sm:space-y-6 lg:space-y-8">
-          <h1 className="relative text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-extrabold">
+          <h1 className="relative text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-extrabold">
             <span className="absolute inset-0 bg-gradient-to-r from-white to-white opacity-50 blur-2xl animate-pulse"></span>
             <span className="relative text-white animate-bounce" style={{
               animation: 'blink 1.5s infinite, gradient-shift 2s ease-in-out infinite, bounce 2s infinite'
@@ -210,18 +240,15 @@ export default function CoPage() {
 
                             {/* Quick Features */}
                             <div className="flex flex-wrap gap-2">
-                              <div className="flex items-center gap-2 text-xs text-white/80 bg-white/5 backdrop-blur-sm px-2 py-1.5 rounded-full border border-white/20">
-                                <Target className="w-3 h-3 text-blue-400" />
-                                <span>Hiệu quả</span>
-                              </div>
-                              <div className="flex items-center gap-2 text-xs text-white/80 bg-white/5 backdrop-blur-sm px-2 py-1.5 rounded-full border border-white/20">
-                                <Zap className="w-3 h-3 text-purple-400" />
-                                <span>Chuyên nghiệp</span>
-                              </div>
-                              <div className="flex items-center gap-2 text-xs text-white/80 bg-white/5 backdrop-blur-sm px-2 py-1.5 rounded-full border border-white/20">
-                                <TrendingUp className="w-3 h-3 text-green-400" />
-                                <span>Phát triển</span>
-                              </div>
+                              {dept.quickFeatures?.map((feature, index) => {
+                                const IconComponent = feature.icon
+                                return (
+                                  <div key={index} className="flex items-center gap-2 text-xs text-white/80 bg-white/5 backdrop-blur-sm px-2 py-1.5 rounded-full border border-white/20">
+                                    <IconComponent className={`w-3 h-3 ${feature.color}`} />
+                                    <span>{feature.text}</span>
+                                  </div>
+                                )
+                              })}
                             </div>
                           </div>
                         </div>
