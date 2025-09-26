@@ -174,34 +174,44 @@ const activities = [
 // Category color mapping
 const categoryColors = {
   "Học thuật": {
-    gradient: "from-blue-500/10 to-cyan-500/10",
-    border: "border-blue-400/30",
-    icon: "text-blue-400",
-    dots: ["bg-blue-400", "bg-cyan-400", "bg-indigo-400"]
+    gradient: "from-blue-500/20 to-cyan-500/20",
+    border: "border-blue-400/40",
+    icon: "text-white",
+    title: "text-white",
+    dots: ["bg-blue-300", "bg-cyan-300", "bg-indigo-300"],
+    cardGradient: "from-blue-500 to-cyan-500"
   },
   "Trải nghiệm": {
-    gradient: "from-green-500/10 to-emerald-500/10",
-    border: "border-green-400/30",
-    icon: "text-green-400",
-    dots: ["bg-green-400", "bg-emerald-400", "bg-teal-400"]
+    gradient: "from-green-500/20 to-emerald-500/20",
+    border: "border-green-400/40",
+    icon: "text-white",
+    title: "text-white",
+    dots: ["bg-green-300", "bg-emerald-300", "bg-teal-300"],
+    cardGradient: "from-green-500 to-emerald-500"
   },
   "Đào tạo": {
-    gradient: "from-purple-500/10 to-violet-500/10",
-    border: "border-purple-400/30",
-    icon: "text-purple-400",
-    dots: ["bg-purple-400", "bg-violet-400", "bg-fuchsia-400"]
+    gradient: "from-purple-500/20 to-violet-500/20",
+    border: "border-purple-400/40",
+    icon: "text-white",
+    title: "text-white",
+    dots: ["bg-purple-300", "bg-violet-300", "bg-fuchsia-300"],
+    cardGradient: "from-purple-500 to-violet-500"
   },
   "Nghề nghiệp": {
-    gradient: "from-orange-500/10 to-yellow-500/10",
-    border: "border-orange-400/30",
-    icon: "text-orange-400",
-    dots: ["bg-orange-400", "bg-yellow-400", "bg-amber-400"]
+    gradient: "from-orange-500/20 to-yellow-500/20",
+    border: "border-orange-400/40",
+    icon: "text-white",
+    title: "text-white",
+    dots: ["bg-orange-300", "bg-yellow-300", "bg-amber-300"],
+    cardGradient: "from-orange-500 to-yellow-500"
   },
   "Gắn kết": {
-    gradient: "from-pink-500/10 to-rose-500/10",
-    border: "border-pink-400/30",
-    icon: "text-pink-400",
-    dots: ["bg-pink-400", "bg-rose-400", "bg-red-400"]
+    gradient: "from-pink-500/20 to-rose-500/20",
+    border: "border-pink-400/40",
+    icon: "text-white",
+    title: "text-white",
+    dots: ["bg-pink-300", "bg-rose-300", "bg-red-300"],
+    cardGradient: "from-pink-500 to-rose-500"
   }
 }
 
@@ -344,18 +354,18 @@ export default function ActivitiesPage() {
                         {/* Enhanced Sidebar */}
                         <div className="space-y-4">
                           {/* Highlights Card */}
-                          <div className={`bg-gradient-to-br ${categoryColors[activity.category as keyof typeof categoryColors]?.gradient || 'from-blue-500/10 to-purple-500/10'} backdrop-blur-xl rounded-2xl p-6 border ${categoryColors[activity.category as keyof typeof categoryColors]?.border || 'border-blue-400/30'} shadow-xl h-full`}>
+                          <div className={`bg-gradient-to-br ${categoryColors[activity.category as keyof typeof categoryColors]?.cardGradient || 'from-blue-500 to-cyan-500'} rounded-2xl p-6 border ${categoryColors[activity.category as keyof typeof categoryColors]?.border || 'border-blue-400/40'} shadow-xl h-full`}>
                             <div className="flex items-center gap-2 mb-4">
-                              <Star className={`w-5 h-5 ${categoryColors[activity.category as keyof typeof categoryColors]?.icon || 'text-blue-400'}`} />
-                              <span className={`text-sm font-bold ${categoryColors[activity.category as keyof typeof categoryColors]?.icon || 'text-blue-300'}`}>Điểm nổi bật</span>
+                              <Star className={`w-5 h-5 ${categoryColors[activity.category as keyof typeof categoryColors]?.icon || 'text-white'}`} />
+                              <span className={`text-sm font-bold ${categoryColors[activity.category as keyof typeof categoryColors]?.title || 'text-white'}`}>Điểm nổi bật</span>
                             </div>
                             <div className="space-y-3">
                               {activity.highlights?.map((highlight, index) => {
-                                const colors = categoryColors[activity.category as keyof typeof categoryColors]?.dots || ['bg-blue-400', 'bg-purple-400', 'bg-green-400'];
+                                const colors = categoryColors[activity.category as keyof typeof categoryColors]?.dots || ['bg-blue-300', 'bg-cyan-300', 'bg-indigo-300'];
                                 return (
-                                  <div key={index} className="flex items-center gap-2 text-white/90">
+                                  <div key={index} className="flex items-center gap-2 text-white">
                                     <div className={`w-1.5 h-1.5 ${colors[index % colors.length]} rounded-full animate-pulse`} />
-                                    <span className="text-xs">{highlight}</span>
+                                    <span className="text-xs font-medium">{highlight}</span>
                                   </div>
                                 );
                               })}
