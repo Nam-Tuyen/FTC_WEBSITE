@@ -186,9 +186,9 @@ export default function ActivitiesPage() {
                     {/* Animated Background Overlay */}
                     <div className="absolute inset-0 bg-gradient-to-br from-transparent via-blue-500/5 to-purple-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
                     
-                    <div className="relative z-10 p-8 lg:p-10">
+                    <div className="relative z-10 p-6 lg:p-8">
                       {/* Header Section - Redesigned Layout */}
-                      <div className="flex flex-col lg:flex-row gap-8 mb-10">
+                      <div className="flex flex-col lg:flex-row gap-6 mb-8">
                         
                         {/* Enhanced Image Section */}
                         {activity.img && (
@@ -203,10 +203,10 @@ export default function ActivitiesPage() {
                               <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
                               
                               
-                              {/* Overlay Icon */}
+                              {/* Modern Overlay Icon */}
                               <div className="absolute bottom-6 left-6">
-                                <div className={`w-16 h-16 rounded-2xl ${activity.bgColor} ${activity.borderColor} border backdrop-blur-xl flex items-center justify-center shadow-xl`}>
-                                  <IconComponent className="w-8 h-8 text-white" />
+                                <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-white/20 to-white/10 backdrop-blur-xl border border-white/30 flex items-center justify-center shadow-2xl">
+                                  <IconComponent className="w-6 h-6 text-white drop-shadow-lg" />
                                 </div>
                               </div>
                             </div>
@@ -214,39 +214,39 @@ export default function ActivitiesPage() {
                         )}
                         
                         {/* Enhanced Info Section */}
-                        <div className="lg:w-3/5 flex flex-col justify-center space-y-6">
+                        <div className="lg:w-3/5 flex flex-col justify-center space-y-4">
                           {/* Category and Meta Info */}
-                          <div className="flex flex-wrap items-center gap-4 mb-4">
-                            <div className={`px-6 py-3 rounded-full text-sm font-bold backdrop-blur-xl border shadow-lg bg-gradient-to-r ${activity.color} text-white`}>
+                          <div className="flex flex-wrap items-center gap-3 mb-3">
+                            <div className="px-4 py-2 rounded-full text-xs font-bold backdrop-blur-xl border shadow-lg bg-gradient-to-r from-blue-500 to-purple-600 text-white">
                               {activity.category}
                             </div>
-                            <div className="flex items-center gap-2 text-white/80 bg-white/10 backdrop-blur-xl px-4 py-3 rounded-full border border-white/20 shadow-lg">
-                              <Clock className="w-5 h-5" />
-                              <span className="text-sm font-medium">{activity.duration}</span>
+                            <div className="flex items-center gap-2 text-white/80 bg-white/10 backdrop-blur-xl px-3 py-2 rounded-full border border-white/20 shadow-lg">
+                              <Clock className="w-4 h-4" />
+                              <span className="text-xs font-medium">{activity.duration}</span>
                             </div>
-                            <div className="flex items-center gap-2 text-white/80 bg-white/10 backdrop-blur-xl px-4 py-3 rounded-full border border-white/20 shadow-lg">
-                              <Users className="w-5 h-5" />
-                              <span className="text-sm font-medium">{activity.participants}</span>
+                            <div className="flex items-center gap-2 text-white/80 bg-white/10 backdrop-blur-xl px-3 py-2 rounded-full border border-white/20 shadow-lg">
+                              <Users className="w-4 h-4" />
+                              <span className="text-xs font-medium">{activity.participants}</span>
                             </div>
                           </div>
                           
-                          {/* Enhanced Title */}
-                          <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold bg-gradient-to-r from-white via-blue-100 to-white bg-clip-text text-transparent leading-tight">
+                          {/* Modern Compact Title */}
+                          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold bg-gradient-to-r from-white via-blue-100 to-white bg-clip-text text-transparent leading-tight mb-3">
                             {activity.title}
                           </h2>
                           
                           {/* Quick Features */}
-                          <div className="flex flex-wrap gap-3">
-                            <div className="flex items-center gap-2 text-sm text-white/80 bg-white/5 backdrop-blur-sm px-3 py-2 rounded-full border border-white/20">
-                              <Star className="w-4 h-4 text-blue-400" />
+                          <div className="flex flex-wrap gap-2">
+                            <div className="flex items-center gap-2 text-xs text-white/80 bg-white/5 backdrop-blur-sm px-2 py-1.5 rounded-full border border-white/20">
+                              <Star className="w-3 h-3 text-blue-400" />
                               <span>Chuyên môn</span>
                             </div>
-                            <div className="flex items-center gap-2 text-sm text-white/80 bg-white/5 backdrop-blur-sm px-3 py-2 rounded-full border border-white/20">
-                              <Users className="w-4 h-4 text-purple-400" />
+                            <div className="flex items-center gap-2 text-xs text-white/80 bg-white/5 backdrop-blur-sm px-2 py-1.5 rounded-full border border-white/20">
+                              <Users className="w-3 h-3 text-purple-400" />
                               <span>Cộng đồng</span>
                             </div>
-                            <div className="flex items-center gap-2 text-sm text-white/80 bg-white/5 backdrop-blur-sm px-3 py-2 rounded-full border border-white/20">
-                              <TrendingUp className="w-4 h-4 text-green-400" />
+                            <div className="flex items-center gap-2 text-xs text-white/80 bg-white/5 backdrop-blur-sm px-2 py-1.5 rounded-full border border-white/20">
+                              <TrendingUp className="w-3 h-3 text-green-400" />
                               <span>Phát triển</span>
                             </div>
                           </div>
@@ -254,53 +254,53 @@ export default function ActivitiesPage() {
                       </div>
                       
                       {/* Enhanced Content Section */}
-                      <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
+                      <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
                         {/* Main Description - Larger Column */}
                         <div className="lg:col-span-3">
-                          <div className="bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-xl rounded-3xl p-8 border border-white/20 shadow-xl">
-                            <div className="flex items-center gap-4 mb-6">
-                              <div className="w-3 h-3 bg-gradient-to-r from-blue-400 to-purple-400 rounded-full animate-pulse" />
-                              <h3 className="text-xl font-bold text-white">Mô tả chi tiết</h3>
+                          <div className="bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-xl rounded-2xl p-6 border border-white/20 shadow-xl">
+                            <div className="flex items-center gap-3 mb-4">
+                              <div className="w-2 h-2 bg-gradient-to-r from-blue-400 to-purple-400 rounded-full animate-pulse" />
+                              <h3 className="text-lg font-bold text-white">Mô tả chi tiết</h3>
                             </div>
-                            <p className="text-white/90 leading-relaxed text-lg font-light">
+                            <p className="text-white/90 leading-relaxed text-base font-light">
                               {activity.body}
                             </p>
                           </div>
                         </div>
                         
                         {/* Enhanced Sidebar */}
-                        <div className="space-y-6">
+                        <div className="space-y-4">
                           {/* Highlights Card */}
-                          <div className="bg-gradient-to-br from-blue-500/10 to-purple-500/10 backdrop-blur-xl rounded-2xl p-6 border border-blue-400/30 shadow-xl">
-                            <div className="flex items-center gap-3 mb-4">
-                              <Star className="w-6 h-6 text-blue-400" />
-                              <span className="text-lg font-bold text-blue-300">Điểm nổi bật</span>
+                          <div className="bg-gradient-to-br from-blue-500/10 to-purple-500/10 backdrop-blur-xl rounded-2xl p-4 border border-blue-400/30 shadow-xl">
+                            <div className="flex items-center gap-2 mb-3">
+                              <Star className="w-5 h-5 text-blue-400" />
+                              <span className="text-sm font-bold text-blue-300">Điểm nổi bật</span>
                             </div>
-                            <div className="space-y-3">
-                              <div className="flex items-center gap-3 text-white/90">
-                                <div className="w-2 h-2 bg-blue-400 rounded-full animate-pulse" />
-                                <span className="text-sm">Chuyên môn cao</span>
+                            <div className="space-y-2">
+                              <div className="flex items-center gap-2 text-white/90">
+                                <div className="w-1.5 h-1.5 bg-blue-400 rounded-full animate-pulse" />
+                                <span className="text-xs">Chuyên môn cao</span>
                               </div>
-                              <div className="flex items-center gap-3 text-white/90">
-                                <div className="w-2 h-2 bg-purple-400 rounded-full animate-pulse" />
-                                <span className="text-sm">Thực tế ứng dụng</span>
+                              <div className="flex items-center gap-2 text-white/90">
+                                <div className="w-1.5 h-1.5 bg-purple-400 rounded-full animate-pulse" />
+                                <span className="text-xs">Thực tế ứng dụng</span>
                               </div>
-                              <div className="flex items-center gap-3 text-white/90">
-                                <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
-                                <span className="text-sm">Kết nối mạng lưới</span>
+                              <div className="flex items-center gap-2 text-white/90">
+                                <div className="w-1.5 h-1.5 bg-green-400 rounded-full animate-pulse" />
+                                <span className="text-xs">Kết nối mạng lưới</span>
                               </div>
                             </div>
                           </div>
                           
                           {/* Impact Card */}
-                          <div className="bg-gradient-to-br from-green-500/10 to-blue-500/10 backdrop-blur-xl rounded-2xl p-6 border border-green-400/30 shadow-xl">
-                            <div className="flex items-center gap-3 mb-4">
-                              <TrendingUp className="w-6 h-6 text-green-400" />
-                              <span className="text-lg font-bold text-green-300">Tác động</span>
+                          <div className="bg-gradient-to-br from-green-500/10 to-blue-500/10 backdrop-blur-xl rounded-2xl p-4 border border-green-400/30 shadow-xl">
+                            <div className="flex items-center gap-2 mb-3">
+                              <TrendingUp className="w-5 h-5 text-green-400" />
+                              <span className="text-sm font-bold text-green-300">Tác động</span>
                             </div>
                             <div className="text-center">
-                              <div className="text-3xl font-bold text-white mb-2">{activity.participants}</div>
-                              <div className="text-sm text-white/70">Đã tham gia</div>
+                              <div className="text-2xl font-bold text-white mb-1">{activity.participants}</div>
+                              <div className="text-xs text-white/70">Đã tham gia</div>
                             </div>
                           </div>
                         </div>
