@@ -233,13 +233,10 @@ export default function CoPage() {
                         {/* Department Info Section */}
                         <div className="lg:w-2/5">
                           <div className="space-y-4">
-                            {/* Category and Meta Info */}
+                            {/* Category Info */}
                             <div className="flex flex-wrap items-center gap-3 mb-4">
                               <div className={`px-4 py-2 rounded-full text-xs font-bold backdrop-blur-xl border shadow-lg text-white bg-gradient-to-r ${dept.cardGradient}`}>
                                 {dept.category}
-                              </div>
-                              <div className={`px-3 py-1.5 rounded-full text-xs font-medium border ${dept.statusColor}`}>
-                                {dept.status}
                               </div>
                             </div>
                             
@@ -270,9 +267,34 @@ export default function CoPage() {
                             </div>
                           </div>
                         </div>
+                      </div>
+                      
+                      {/* Content Section - Responsibilities and Highlights */}
+                      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                        {/* Responsibilities Section */}
+                        <div className="lg:col-span-2">
+                          <div className="bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-xl rounded-2xl p-6 border border-white/20 shadow-xl">
+                            <div className="flex items-center gap-3 mb-6">
+                              <div className="w-2 h-2 bg-gradient-to-r from-blue-400 to-purple-400 rounded-full animate-pulse" />
+                              <h3 className="text-lg font-bold text-white">Nhiệm vụ và trách nhiệm</h3>
+                            </div>
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                              {dept.responsibilities.map((responsibility, index) => (
+                                <div key={index} className="flex items-start gap-3 p-4 bg-white/5 rounded-xl border border-white/10 hover:bg-white/10 transition-all duration-300">
+                                  <div className="w-6 h-6 rounded-lg bg-gradient-to-br from-blue-400/20 to-purple-400/20 border border-blue-400/30 flex items-center justify-center mt-1 flex-shrink-0">
+                                    <span className="text-xs font-bold text-blue-300">{index + 1}</span>
+                                  </div>
+                                  <p className="text-white/90 leading-relaxed text-sm">
+                                    {responsibility}
+                                  </p>
+                                </div>
+                              ))}
+                            </div>
+                          </div>
+                        </div>
                         
                         {/* Enhanced Sidebar - Highlights */}
-                        <div className="lg:w-1/5">
+                        <div className="lg:col-span-1">
                           <div className={`bg-gradient-to-br ${dept.cardGradient} rounded-2xl p-6 border ${dept.borderColor} shadow-xl h-full`}>
                             <div className="flex items-center gap-2 mb-4">
                               <Star className="w-5 h-5 text-white" />
@@ -286,28 +308,6 @@ export default function CoPage() {
                                 </div>
                               ))}
                             </div>
-                          </div>
-                        </div>
-                      </div>
-                      
-                      {/* Content Section - Responsibilities */}
-                      <div className="lg:col-span-3">
-                        <div className="bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-xl rounded-2xl p-6 border border-white/20 shadow-xl">
-                          <div className="flex items-center gap-3 mb-6">
-                            <div className="w-2 h-2 bg-gradient-to-r from-blue-400 to-purple-400 rounded-full animate-pulse" />
-                            <h3 className="text-lg font-bold text-white">Nhiệm vụ và trách nhiệm</h3>
-                          </div>
-                          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            {dept.responsibilities.map((responsibility, index) => (
-                              <div key={index} className="flex items-start gap-3 p-4 bg-white/5 rounded-xl border border-white/10 hover:bg-white/10 transition-all duration-300">
-                                <div className="w-6 h-6 rounded-lg bg-gradient-to-br from-blue-400/20 to-purple-400/20 border border-blue-400/30 flex items-center justify-center mt-1 flex-shrink-0">
-                                  <span className="text-xs font-bold text-blue-300">{index + 1}</span>
-                                </div>
-                                <p className="text-white/90 leading-relaxed text-sm">
-                                  {responsibility}
-                                </p>
-                              </div>
-                            ))}
                           </div>
                         </div>
                       </div>
@@ -405,9 +405,14 @@ export default function CoPage() {
               Khám phá cơ hội phát triển bản thân và đóng góp cho cộng đồng FinTech
             </p>
             <div className="flex flex-wrap justify-center gap-4">
-              <div className="px-8 py-4 bg-gradient-to-r from-blue-500 to-purple-600 rounded-2xl text-white font-bold hover:shadow-xl hover:scale-105 transition-all cursor-pointer">
+              <a 
+                href="https://ftc-websites.vercel.app/ung-tuyen" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="px-8 py-4 bg-gradient-to-r from-blue-500 to-purple-600 rounded-2xl text-white font-bold hover:shadow-xl hover:scale-105 transition-all cursor-pointer"
+              >
                 Đăng ký tham gia
-              </div>
+              </a>
               <div className="px-8 py-4 bg-white/10 backdrop-blur-xl border border-white/20 rounded-2xl text-white font-bold hover:bg-white/20 transition-all cursor-pointer">
                 Tìm hiểu thêm
               </div>
@@ -420,7 +425,7 @@ export default function CoPage() {
       <footer className="py-12 px-4 sm:px-6 lg:px-8 border-t border-white/20">
         <div className="max-w-7xl mx-auto text-center">
           <p className="text-lg text-white/70 italic">
-            © 2025. Câu lạc bộ Công nghệ Tài chính - Tổ chức chuyên nghiệp, hiệu quả
+            ©2025. Câu lạc bộ Công nghệ Tài chính
           </p>
         </div>
       </footer>
