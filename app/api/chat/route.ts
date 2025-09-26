@@ -140,17 +140,23 @@ export function buildSystemPrompt(mode: ChatMode) {
 // ---------- FAQ (CLUB) - No <h3> ----------
 export const FAQ_MAP: Record<string, string> = {
   "cau lac bo co nhung hoat dong gi": `
-    <div>
-      <p><strong><em>Câu lạc bộ có những hoạt động gì?</em></strong></p>
-      <p>FTC xây dựng <strong><em>hệ sinh thái hoạt động</em></strong> đa dạng, cân bằng giữa học thuật, thực hành và gắn kết cộng đồng. Một số hoạt động tiêu biểu:</p>
-      <p>• <strong><em>Cuộc thi ATTACKER:</em></strong> cuộc thi học thuật thường niên về công nghệ tài chính hiện đại, phát triển tư duy sản phẩm và nghiên cứu ứng dụng.</p>
-      <p>• <strong><em>Talkshow chuyên đề:</em></strong> trao đổi với chuyên gia về <em>Blockchain</em>, <em>AI</em>, <em>chứng khoán công nghệ</em>, <em>ngân hàng số</em>.</p>
-      <p>• <strong><em>Tham quan doanh nghiệp:</em></strong> trải nghiệm môi trường làm việc (ví dụ <strong>VNG</strong>), kết nối với nhà tuyển dụng và lãnh đạo.</p>
-      <p>• <strong><em>FTC Training & Sharing:</em></strong> đào tạo nội bộ từ cơ bản đến nâng cao, rèn kỹ năng nghề nghiệp, chia sẻ kinh nghiệm thực tế.</p>
-      <p>• <strong><em>Career Day – Web3 Career Innovation:</em></strong> giao lưu doanh nghiệp, talkshow định hướng, phỏng vấn thử.</p>
-      <p>• <strong><em>Workshop chuyên sâu:</em></strong> đi sâu một chủ đề, ví dụ "<em>VC Selection Criteria</em>".</p>
-      <p>• <strong><em>FTC Trip:</em></strong> ngoại khóa gắn kết, xây dựng tinh thần "gia đình FTC".</p>
-    </div>
+Câu lạc bộ có những hoạt động gì?
+
+FTC xây dựng hệ sinh thái hoạt động đa dạng, cân bằng giữa học thuật, thực hành và gắn kết cộng đồng. Một số hoạt động tiêu biểu:
+
+• Cuộc thi ATTACKER: cuộc thi học thuật thường niên về công nghệ tài chính hiện đại, phát triển tư duy sản phẩm và nghiên cứu ứng dụng.
+
+• Talkshow chuyên đề: trao đổi với chuyên gia về Blockchain, AI, chứng khoán công nghệ, ngân hàng số.
+
+• Tham quan doanh nghiệp: trải nghiệm môi trường làm việc (ví dụ VNG), kết nối với nhà tuyển dụng và lãnh đạo.
+
+• FTC Training & Sharing: đào tạo nội bộ từ cơ bản đến nâng cao, rèn kỹ năng nghề nghiệp, chia sẻ kinh nghiệm thực tế.
+
+• Career Day – Web3 Career Innovation: giao lưu doanh nghiệp, talkshow định hướng, phỏng vấn thử.
+
+• Workshop chuyên sâu: đi sâu một chủ đề, ví dụ "VC Selection Criteria".
+
+• FTC Trip: ngoại khóa gắn kết, xây dựng tinh thần "gia đình FTC".
   `,
 
   "lam the nao de tham gia cau lac bo": `
@@ -167,15 +173,19 @@ export const FAQ_MAP: Record<string, string> = {
   `,
 
   "cac ban trong cau lac bo lam gi": `
-    <div>
-      <p><strong><em>Các ban trong câu lạc bộ làm gì?</em></strong></p>
-      <p>FTC có <strong><em>5 ban chuyên môn</em></strong> (không tính Ban Điều hành). Mỗi ban có chức năng riêng và phối hợp chặt chẽ:</p>
-      <p>• <strong><em>Ban Học thuật:</em></strong> trái tim kiến thức; xây dựng nội dung workshop/talkshow, ra đề <strong>ATTACKER</strong>, biên soạn tài liệu thực hành dữ liệu, ngân hàng số, thuật toán giao dịch.</p>
-      <p>• <strong><em>Ban Sự kiện:</em></strong> đứng sau mọi chương trình; xây dựng timeline, kịch bản MC, điều phối hiện trường, nghiệm thu chất lượng, báo cáo tổng kết.</p>
-      <p>• <strong><em>Ban Truyền thông:</em></strong> kể câu chuyện thương hiệu; phụ trách hình ảnh, ấn phẩm, nội dung fanpage, video recap, poster, chiến dịch truyền thông.</p>
-      <p>• <strong><em>Ban Tài chính cá nhân:</em></strong> "đặc sản" của FTC; thiết kế lớp chuyên đề, chuỗi <strong>MoneyWe</strong>, workshop kỹ năng quản lý chi tiêu, tích hợp FinTech vào tài chính cá nhân.</p>
-      <p>• <strong><em>Ban Nhân sự:</em></strong> giữ văn hóa nội bộ; tuyển thành viên, phân công công việc, tổ chức gắn kết, theo dõi hiệu quả.</p>
-    </div>
+Các ban trong câu lạc bộ làm gì?
+
+FTC có 5 ban chuyên môn (không tính Ban Điều hành). Mỗi ban có chức năng riêng và phối hợp chặt chẽ:
+
+• Ban Học thuật: trái tim kiến thức; xây dựng nội dung workshop/talkshow, ra đề ATTACKER, biên soạn tài liệu thực hành dữ liệu, ngân hàng số, thuật toán giao dịch.
+
+• Ban Sự kiện: đứng sau mọi chương trình; xây dựng timeline, kịch bản MC, điều phối hiện trường, nghiệm thu chất lượng, báo cáo tổng kết.
+
+• Ban Truyền thông: kể câu chuyện thương hiệu; phụ trách hình ảnh, ấn phẩm, nội dung fanpage, video recap, poster, chiến dịch truyền thông.
+
+• Ban Tài chính cá nhân: "đặc sản" của FTC; thiết kế lớp chuyên đề, chuỗi MoneyWe, workshop kỹ năng quản lý chi tiêu, tích hợp FinTech vào tài chính cá nhân.
+
+• Ban Nhân sự: giữ văn hóa nội bộ; tuyển thành viên, phân công công việc, tổ chức gắn kết, theo dõi hiệu quả.
   `,
 
   "thoi gian sinh hoat dien ra khi nao": `
