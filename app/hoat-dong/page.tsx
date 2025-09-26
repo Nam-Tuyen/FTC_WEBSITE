@@ -141,22 +141,23 @@ export default function ActivitiesPage() {
     <div className="min-h-screen bg-[#003663] text-white overflow-hidden">
       <Navigation />
 
-      {/* Compact Hero Section */}
-      <section className="relative py-16 px-4 sm:px-6 lg:px-8">
-        <div className="relative max-w-6xl mx-auto text-center">
-          {/* Modern Badge */}
-          <div className="inline-flex items-center gap-2 bg-gradient-to-r from-blue-500/20 to-purple-500/20 backdrop-blur-md border border-blue-400/30 rounded-full px-6 py-3 mb-8">
-            <Sparkles className="w-5 h-5 text-blue-400" />
-            <span className="text-sm font-semibold text-blue-100">Hoạt động nổi bật</span>
-          </div>
+      {/* Mobile Responsive Hero Section */}
+      <section className="relative min-h-[60vh] sm:min-h-[70vh] flex items-center justify-center py-12 sm:py-16 lg:py-24 px-4 sm:px-6 lg:px-8">
+        <div className="absolute inset-0 overflow-hidden">
+          <div className="absolute top-1/4 -right-1/4 w-2/3 h-2/3 bg-gradient-to-br from-primary/20 via-accent/20 to-transparent rounded-full blur-3xl animate-float" />
+          <div className="absolute -bottom-1/4 -left-1/4 w-2/3 h-2/3 bg-gradient-to-tr from-accent/20 via-primary/20 to-transparent rounded-full blur-3xl animate-float-reverse" />
+        </div>
 
-          {/* Modern Title with Animation */}
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-8 bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent animate-pulse">
-            HOẠT ĐỘNG CỦA FTC
+        <div className="relative max-w-6xl mx-auto text-center space-y-4 sm:space-y-6 lg:space-y-8">
+          <h1 className="relative text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-extrabold">
+            <span className="absolute inset-0 bg-gradient-to-r from-white to-white opacity-50 blur-2xl animate-pulse"></span>
+            <span className="relative text-white animate-bounce" style={{
+              animation: 'blink 1.5s infinite, gradient-shift 2s ease-in-out infinite, bounce 2s infinite'
+            }}>
+              HOẠT ĐỘNG CỦA FTC
+            </span>
           </h1>
-
-          {/* Modern Description - Italic */}
-          <p className="text-lg text-slate-300 max-w-4xl mx-auto leading-relaxed font-light italic">
+          <p className="text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl text-muted-foreground leading-relaxed max-w-4xl mx-auto italic px-4">
             Khám phá những sự kiện đặc sắc và hoạt động thú vị của câu lạc bộ
           </p>
         </div>
@@ -343,29 +344,14 @@ export default function ActivitiesPage() {
         </div>
       </footer>
 
-      {/* Custom Animations */}
       <style jsx global>{`
         @keyframes float {
           0%, 100% { transform: translate(0, 0) rotate(0deg); }
-          33% { transform: translate(20px, -20px) rotate(2deg); }
-          66% { transform: translate(-20px, 20px) rotate(-2deg); }
+          50% { transform: translate(-20px, 20px) rotate(5deg); }
         }
         @keyframes float-reverse {
           0%, 100% { transform: translate(0, 0) rotate(0deg); }
-          33% { transform: translate(-20px, 20px) rotate(-2deg); }
-          66% { transform: translate(20px, -20px) rotate(2deg); }
-        }
-        @keyframes blink {
-          0%, 50%, 100% { opacity: 1; }
-          25%, 75% { opacity: 0.8; }
-        }
-        @keyframes gradient-shift {
-          0%, 100% { background-position: 0% 50%; }
-          50% { background-position: 100% 50%; }
-        }
-        @keyframes float-particle {
-          0%, 100% { transform: translateY(0px) rotate(0deg); }
-          50% { transform: translateY(-20px) rotate(180deg); }
+          50% { transform: translate(20px, -20px) rotate(-5deg); }
         }
         .animate-float {
           animation: float 20s ease-in-out infinite;
@@ -373,8 +359,12 @@ export default function ActivitiesPage() {
         .animate-float-reverse {
           animation: float-reverse 20s ease-in-out infinite;
         }
-        .animate-float-particle {
-          animation: float-particle 3s ease-in-out infinite;
+        @keyframes shimmer {
+          to { background-position: 200% center; }
+        }
+        .animate-text-shine {
+          background-size: 200% auto;
+          animation: shimmer 3s linear infinite;
         }
       `}</style>
     </div>
