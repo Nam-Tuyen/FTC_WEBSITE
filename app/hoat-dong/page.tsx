@@ -139,9 +139,9 @@ export default function ActivitiesPage() {
             <span className="text-sm font-semibold text-blue-100">Hoạt động nổi bật</span>
           </div>
 
-          {/* Modern Title */}
-          <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold mb-8 bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">
-            Hoạt Động FTC
+          {/* Modern Title with Animation */}
+          <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold mb-8 bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent animate-pulse">
+            HOẠT ĐỘNG CỦA FTC
           </h1>
 
           {/* Modern Description */}
@@ -164,66 +164,63 @@ export default function ActivitiesPage() {
                   <div className="relative bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-xl rounded-3xl border border-white/20 p-0 overflow-hidden transition-all duration-500 group-hover:scale-[1.02] group-hover:shadow-2xl group-hover:shadow-blue-500/20">
                     
                     <div className="relative z-10">
-                      {/* Image Section - Optimized Size */}
-                      {activity.img && (
-                        <div className="relative h-[300px] lg:h-[350px] overflow-hidden">
-                          <img
-                            src={activity.img}
-                            alt={activity.alt}
-                            loading="lazy"
-                            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                          />
-                          <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/20 to-transparent" />
-                          
-                          {/* Image Overlay Content */}
-                          <div className="absolute bottom-0 left-0 right-0 p-6 lg:p-8">
-                            <div className="flex items-center gap-3 mb-3">
-                              <div className={`p-3 rounded-xl ${activity.bgColor} border ${activity.borderColor} backdrop-blur-sm`}>
-                                <IconComponent className={`w-6 h-6 bg-gradient-to-r ${activity.color} bg-clip-text text-transparent`} />
-                              </div>
-                              <span className={`px-3 py-1 rounded-full text-xs font-semibold bg-gradient-to-r ${activity.color} bg-clip-text text-transparent border border-white/30 backdrop-blur-sm`}>
-                                {activity.category}
-                              </span>
+                      {/* Compact Layout with Small Image and Icon */}
+                      <div className="flex flex-col lg:flex-row gap-6 p-6 lg:p-8">
+                        {/* Small Image */}
+                        {activity.img && (
+                          <div className="lg:w-1/3">
+                            <div className="relative h-[200px] lg:h-[250px] overflow-hidden rounded-2xl">
+                              <img
+                                src={activity.img}
+                                alt={activity.alt}
+                                loading="lazy"
+                                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                              />
+                              <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent" />
                             </div>
-                            
-                            <h2 className="text-2xl sm:text-3xl font-bold mb-3 bg-gradient-to-r from-white to-white/90 bg-clip-text text-transparent">
-                              {activity.title}
-                            </h2>
-                            
-                            <div className="flex flex-wrap items-center gap-4 text-white/80">
-                              <div className="flex items-center gap-2 bg-white/10 backdrop-blur-sm px-3 py-1 rounded-full">
-                                <Clock className="w-4 h-4" />
-                                <span className="text-sm font-medium">{activity.duration}</span>
+                          </div>
+                        )}
+                        
+                        {/* Content with Icon */}
+                        <div className="lg:w-2/3">
+                          <div className="flex items-start gap-4 mb-4">
+                            <div className={`p-4 rounded-2xl ${activity.bgColor} border ${activity.borderColor} backdrop-blur-sm flex-shrink-0`}>
+                              <IconComponent className={`w-8 h-8 bg-gradient-to-r ${activity.color} bg-clip-text text-transparent`} />
+                            </div>
+                            <div className="flex-1">
+                              <div className="flex items-center gap-3 mb-3">
+                                <span className={`px-3 py-1 rounded-full text-sm font-semibold bg-gradient-to-r ${activity.color} bg-clip-text text-transparent border border-white/30 backdrop-blur-sm`}>
+                                  {activity.category}
+                                </span>
+                                <div className="flex items-center gap-2 text-slate-400 bg-white/10 backdrop-blur-sm px-3 py-1 rounded-full">
+                                  <Clock className="w-4 h-4" />
+                                  <span className="text-sm font-medium">{activity.duration}</span>
+                                </div>
+                                <div className="flex items-center gap-2 text-slate-400 bg-white/10 backdrop-blur-sm px-3 py-1 rounded-full">
+                                  <Users className="w-4 h-4" />
+                                  <span className="text-sm font-medium">{activity.participants}</span>
+                                </div>
                               </div>
-                              <div className="flex items-center gap-2 bg-white/10 backdrop-blur-sm px-3 py-1 rounded-full">
-                                <Users className="w-4 h-4" />
-                                <span className="text-sm font-medium">{activity.participants}</span>
-                              </div>
+                              
+                              <h2 className="text-2xl sm:text-3xl font-bold mb-4 bg-gradient-to-r from-white to-white/90 bg-clip-text text-transparent">
+                                {activity.title}
+                              </h2>
                             </div>
                           </div>
                         </div>
-                      )}
+                      </div>
                       
                       {/* Content Section */}
-                      <div className="p-6 lg:p-8">
+                      <div className="px-6 lg:px-8 pb-6 lg:pb-8">
                         <div className="max-w-4xl mx-auto">
                           <p className="text-slate-300 leading-relaxed text-lg font-light text-justify">
                             {activity.body}
                           </p>
                           
-                          {/* Action Section */}
-                          <div className="flex items-center justify-between pt-6 mt-6 border-t border-white/10">
-                            <div className="flex items-center gap-2 text-slate-400">
-                              <div className="w-2 h-2 bg-gradient-to-r from-blue-400 to-purple-400 rounded-full animate-pulse" />
-                              <span className="text-sm font-medium">Hoạt động đang diễn ra</span>
-                            </div>
-                            
-                            <div className="flex items-center gap-2 text-blue-400 group-hover:gap-3 transition-all duration-300 cursor-pointer">
-                              <span className="text-sm font-semibold">Tìm hiểu thêm</span>
-                              <div className="p-2 rounded-full bg-blue-500/20 border border-blue-400/30 group-hover:bg-blue-500/30 transition-all duration-300">
-                                <ArrowRight className="w-4 h-4" />
-                              </div>
-                            </div>
+                          {/* Status Indicator */}
+                          <div className="flex items-center gap-2 text-slate-400 mt-6">
+                            <div className="w-2 h-2 bg-gradient-to-r from-blue-400 to-purple-400 rounded-full animate-pulse" />
+                            <span className="text-sm font-medium">Hoạt động đang diễn ra</span>
                           </div>
                         </div>
                       </div>
