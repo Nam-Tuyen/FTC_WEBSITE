@@ -99,7 +99,7 @@ const activities = [
     color: "from-orange-500 to-yellow-500",
     bgColor: "bg-orange-500/10",
     borderColor: "border-orange-500/20",
-    status: "Thành công",
+    status: "Đang diễn ra",
     statusColor: "bg-orange-500/20 text-orange-300 border-orange-400/30"
   },
   {
@@ -138,30 +138,69 @@ const activities = [
 
 export default function ActivitiesPage() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-indigo-900 text-white">
+    <div className="min-h-screen bg-[#003663] text-white overflow-hidden">
       <Navigation />
 
-      {/* Modern Hero Section */}
-      <section className="relative py-16 px-4 sm:px-6 lg:px-8">
-        {/* Subtle Background Pattern */}
-        <div className="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg%20width%3D%2260%22%20height%3D%2260%22%20viewBox%3D%220%200%2060%2060%22%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%3E%3Cg%20fill%3D%22none%22%20fill-rule%3D%22evenodd%22%3E%3Cg%20fill%3D%22%239C92AC%22%20fill-opacity%3D%220.1%22%3E%3Ccircle%20cx%3D%2230%22%20cy%3D%2230%22%20r%3D%221%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')] opacity-30" />
-        
-        <div className="relative max-w-6xl mx-auto text-center">
+      {/* Modern Hero Section - Similar to chatbot design */}
+      <section className="relative min-h-[70vh] flex items-center justify-center py-16 px-4 sm:px-6 lg:px-8">
+        {/* Animated Background Effects */}
+        <div className="absolute inset-0 overflow-hidden">
+          <div className="absolute top-1/4 -right-1/4 w-2/3 h-2/3 bg-gradient-to-br from-blue-500/20 via-purple-500/20 to-transparent rounded-full blur-3xl animate-float" />
+          <div className="absolute -bottom-1/4 -left-1/4 w-2/3 h-2/3 bg-gradient-to-tr from-purple-500/20 via-blue-500/20 to-transparent rounded-full blur-3xl animate-float-reverse" />
+          
+          {/* Floating Particles */}
+          <div className="absolute top-1/3 left-1/4 w-2 h-2 bg-blue-400 rounded-full animate-float opacity-70" />
+          <div className="absolute bottom-1/3 right-1/4 w-3 h-3 bg-purple-400 rounded-full animate-float-reverse opacity-60" />
+          <div className="absolute top-1/2 left-3/4 w-1.5 h-1.5 bg-cyan-400 rounded-full animate-bounce opacity-80" />
+        </div>
+
+        <div className="relative max-w-6xl mx-auto text-center space-y-8">
           {/* Modern Badge */}
-          <div className="inline-flex items-center gap-2 bg-gradient-to-r from-blue-500/20 to-purple-500/20 backdrop-blur-md border border-blue-400/30 rounded-full px-6 py-3 mb-8">
-            <Sparkles className="w-5 h-5 text-blue-400" />
-            <span className="text-sm font-semibold text-blue-100">Hoạt động nổi bật</span>
+          <div className="inline-flex items-center gap-3 bg-gradient-to-r from-blue-500/10 to-purple-500/10 backdrop-blur-xl border border-blue-400/30 rounded-full px-8 py-4 shadow-2xl">
+            <div className="relative">
+              <Sparkles className="w-6 h-6 text-blue-400" />
+              <div className="absolute inset-0 w-6 h-6 bg-blue-400 rounded-full animate-ping opacity-30" />
+            </div>
+            <span className="text-lg font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
+              Hoạt động nổi bật
+            </span>
           </div>
 
-          {/* Modern Title with Animation */}
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-8 bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent animate-pulse">
-            HOẠT ĐỘNG CỦA FTC
-          </h1>
+          {/* Modern Animated Title */}
+          <div className="relative">
+            <h1 className="text-6xl sm:text-7xl lg:text-8xl font-extrabold mb-8 relative">
+              <span className="absolute inset-0 bg-gradient-to-r from-white to-white opacity-50 blur-2xl animate-pulse" />
+              <span 
+                className="relative bg-gradient-to-r from-white via-blue-100 to-purple-100 bg-clip-text text-transparent"
+                style={{
+                  animation: 'blink 1.5s infinite, gradient-shift 2s ease-in-out infinite, bounce 2s infinite'
+                }}
+              >
+                HOẠT ĐỘNG CỦA FTC
+              </span>
+            </h1>
+            
+            {/* Subtitle with modern styling */}
+            <p className="text-xl sm:text-2xl lg:text-3xl text-white/80 max-w-4xl mx-auto leading-relaxed font-light italic">
+              Khám phá những sự kiện đặc sắc và hoạt động thú vị của câu lạc bộ
+            </p>
+          </div>
 
-          {/* Modern Description - Italic */}
-          <p className="text-lg text-slate-300 max-w-4xl mx-auto leading-relaxed font-light italic">
-            Khám phá những sự kiện đặc sắc và hoạt động thú vị của câu lạc bộ
-          </p>
+          {/* Quick Stats */}
+          <div className="flex flex-wrap justify-center gap-6 mt-12">
+            <div className="bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-xl rounded-2xl border border-white/20 px-6 py-4 shadow-xl">
+              <div className="text-2xl font-bold text-blue-400">7+</div>
+              <div className="text-sm text-white/80">Loại hoạt động</div>
+            </div>
+            <div className="bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-xl rounded-2xl border border-white/20 px-6 py-4 shadow-xl">
+              <div className="text-2xl font-bold text-green-400">1000+</div>
+              <div className="text-sm text-white/80">Sinh viên tham gia</div>
+            </div>
+            <div className="bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-xl rounded-2xl border border-white/20 px-6 py-4 shadow-xl">
+              <div className="text-2xl font-bold text-purple-400">5</div>
+              <div className="text-sm text-white/80">Năm kinh nghiệm</div>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -196,13 +235,6 @@ export default function ActivitiesPage() {
                               />
                               <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
                               
-                              {/* Floating Status Badge */}
-                              <div className="absolute top-6 right-6">
-                                <div className={`px-4 py-2 rounded-full backdrop-blur-xl text-sm font-bold ${activity.statusColor} border shadow-lg`}>
-                                  {activity.status}
-                                </div>
-                              </div>
-                              
                               {/* Overlay Icon */}
                               <div className="absolute bottom-6 left-6">
                                 <div className={`w-16 h-16 rounded-2xl ${activity.bgColor} ${activity.borderColor} border backdrop-blur-xl flex items-center justify-center shadow-xl`}>
@@ -231,7 +263,7 @@ export default function ActivitiesPage() {
                           </div>
                           
                           {/* Enhanced Title */}
-                          <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold bg-gradient-to-r from-white via-blue-100 to-white bg-clip-text text-transparent leading-tight">
+                          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold bg-gradient-to-r from-white via-blue-100 to-white bg-clip-text text-transparent leading-tight">
                             {activity.title}
                           </h2>
                           
@@ -265,6 +297,18 @@ export default function ActivitiesPage() {
                             <p className="text-white/90 leading-relaxed text-lg font-light">
                               {activity.body}
                             </p>
+                            
+                            {/* Call to Action */}
+                            <div className="mt-8 flex items-center justify-between">
+                              <div className="flex items-center gap-2 text-sm text-white/70">
+                                <Calendar className="w-4 h-4" />
+                                <span>Cập nhật thường xuyên</span>
+                              </div>
+                              <button className="flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-blue-500 to-purple-600 rounded-2xl text-white font-semibold hover:shadow-lg hover:scale-105 transition-all">
+                                <span>Tìm hiểu thêm</span>
+                                <ArrowRight className="w-4 h-4" />
+                              </button>
+                            </div>
                           </div>
                         </div>
                         
@@ -325,14 +369,9 @@ export default function ActivitiesPage() {
             <p className="text-xl text-white/80 mb-8 leading-relaxed">
               Đăng ký để không bỏ lỡ các hoạt động thú vị và cơ hội học hỏi quý báu
             </p>
-            <div className="flex flex-wrap justify-center gap-4">
-              <button className="px-8 py-4 bg-gradient-to-r from-blue-500 to-purple-600 rounded-2xl text-white font-bold hover:shadow-xl hover:scale-105 transition-all">
-                Theo dõi Fanpage
-              </button>
-              <button className="px-8 py-4 bg-white/10 backdrop-blur-xl border border-white/30 rounded-2xl text-white font-bold hover:bg-white/20 transition-all">
-                Xem thêm thông tin
-              </button>
-            </div>
+            <button className="px-8 py-4 bg-gradient-to-r from-blue-500 to-purple-600 rounded-2xl text-white font-bold hover:shadow-xl hover:scale-105 transition-all">
+              Theo dõi Fanpage
+            </button>
           </div>
         </div>
       </section>
