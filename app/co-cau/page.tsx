@@ -1,7 +1,7 @@
 'use client'
 
 import { Navigation } from "@/components/navigation"
-import { Shield, BookOpen, Calendar, Megaphone, Wallet, Users, Handshake, Star, TrendingUp, Target, Sparkles, Zap, ArrowRight } from "lucide-react"
+import { Shield, BookOpen, Calendar, Megaphone, Wallet, Users, Handshake, Star, TrendingUp, Target, Sparkles, Zap, ArrowRight, Search, FileText, Settings, Palette, Video, GraduationCap, DollarSign, UserCheck, Calculator, Heart } from "lucide-react"
 
 const organizationData = [
   {
@@ -33,9 +33,9 @@ const organizationData = [
     cardGradient: "from-blue-500 to-cyan-500",
     category: "Phụ trách chuyên môn học thuật",
     quickFeatures: [
-      { icon: BookOpen, text: "Nghiên cứu", color: "text-blue-400" },
-      { icon: Target, text: "Chuyên môn", color: "text-cyan-400" },
-      { icon: TrendingUp, text: "Xu hướng", color: "text-indigo-400" }
+      { icon: Search, text: "Nghiên cứu về lĩnh vực Fintech", color: "text-blue-400" },
+      { icon: Target, text: "Đảm bảo chuyên môn", color: "text-cyan-400" },
+      { icon: BookOpen, text: "Trau dồi kiến thức học thuật", color: "text-indigo-400" }
     ],
     responsibilities: [
       "Phụ trách nội dung chuyên môn cho các buổi workshop, talkshow",
@@ -53,9 +53,9 @@ const organizationData = [
     cardGradient: "from-green-500 to-emerald-500",
     category: "Phụ trách xử lý hồ sơ giấy tờ",
     quickFeatures: [
-      { icon: Calendar, text: "Tổ chức", color: "text-green-400" },
-      { icon: Target, text: "Logistics", color: "text-emerald-400" },
-      { icon: Zap, text: "Kịch bản", color: "text-teal-400" }
+      { icon: FileText, text: "Chuẩn bị hồ sơ", color: "text-green-400" },
+      { icon: Settings, text: "Xử lý giấy tờ", color: "text-emerald-400" },
+      { icon: Calendar, text: "Lên kịch bản và timeline sự kiện", color: "text-teal-400" }
     ],
     responsibilities: [
       "Viết kế hoạch, báo cáo và các giấy tờ liên quan tới câu lạc bộ",
@@ -73,9 +73,9 @@ const organizationData = [
     cardGradient: "from-purple-500 to-violet-500",
     category: "Phụ trách mảng truyền thông",
     quickFeatures: [
-      { icon: Megaphone, text: "Thương hiệu", color: "text-purple-400" },
-      { icon: Target, text: "Nội dung", color: "text-violet-400" },
-      { icon: TrendingUp, text: "Đa kênh", color: "text-fuchsia-400" }
+      { icon: TrendingUp, text: "Phát triển truyền thông", color: "text-purple-400" },
+      { icon: Palette, text: "Thiết kế ấn phẩm", color: "text-violet-400" },
+      { icon: Video, text: "Sản xuất nội dung truyền thông", color: "text-fuchsia-400" }
     ],
     responsibilities: [
       "Thiết kế ấn phẩm và truyền thông cho câu lạc bộ",
@@ -93,9 +93,9 @@ const organizationData = [
     cardGradient: "from-amber-700 to-yellow-800",
     category: "Phụ trách chuyên môn về mảng tài chính cá nhân",
     quickFeatures: [
-      { icon: Wallet, text: "Giáo dục", color: "text-amber-400" },
-      { icon: Target, text: "MoneyWe", color: "text-yellow-400" },
-      { icon: TrendingUp, text: "Tư vấn", color: "text-orange-400" }
+      { icon: GraduationCap, text: "Giáo dục về tài chính cá nhân", color: "text-amber-400" },
+      { icon: Wallet, text: "Làm việc với bộ bài MoneyWe", color: "text-yellow-400" },
+      { icon: DollarSign, text: "Hỗ trợ giảng dạy về tài chính cá nhân", color: "text-orange-400" }
     ],
     responsibilities: [
       "Tổ chức đào tạo, nâng cao hiểu biết tài chính cá nhân cho sinh viên",
@@ -113,9 +113,9 @@ const organizationData = [
     cardGradient: "from-indigo-500 to-blue-500",
     category: "Phụ trách quản lý phân công nhân sự",
     quickFeatures: [
-      { icon: Users, text: "Nhân lực", color: "text-indigo-400" },
-      { icon: Target, text: "Văn hóa", color: "text-blue-400" },
-      { icon: TrendingUp, text: "Phát triển", color: "text-cyan-400" }
+      { icon: UserCheck, text: "Quản lý nhân sự", color: "text-indigo-400" },
+      { icon: Calculator, text: "Xây dựng dự trù kinh phí", color: "text-blue-400" },
+      { icon: Heart, text: "Duy trì văn hóa câu lạc bộ", color: "text-cyan-400" }
     ],
     responsibilities: [
       "Phân công công việc và quản lý tiến độ công việc",
