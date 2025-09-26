@@ -45,14 +45,17 @@ export async function POST(req: NextRequest) {
     console.log("Club mode - Normalized:", normalize(userQ));
     console.log("Club mode - Matched:", matched);
     if (matched) {
+      console.log("Club mode - Returning FAQ response");
       return NextResponse.json(
         { reply: matched.trim(), response: matched.trim(), text: matched.trim(), mode },
         { status: 200, headers: { "x-mode": mode, "x-route": "faq", "Cache-Control": "no-store" } }
       );
     }
+    console.log("Club mode - No FAQ match, proceeding to Gemini");
   }
 
   // 2) Gọi Gemini theo SYSTEM PROMPT từng mode
+  console.log("Calling Gemini with mode:", mode);
   const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY as string);
   const model = genAI.getGenerativeModel({
     model: process.env.GEMINI_MODEL ?? "gemini-1.5-flash",
@@ -67,12 +70,15 @@ export async function POST(req: NextRequest) {
   });
 
   const userMsg = `CÂU HỎI: ${userQ}`;
+  console.log("Gemini - User message:", userMsg);
+  console.log("Gemini - System prompt length:", buildSystemPrompt(mode).length);
   try {
     const result = await model.generateContent({
       contents: [{ role: "user", parts: [{ text: userMsg }] }],
       generationConfig: { temperature: 0.3, maxOutputTokens: 800 },
     });
     const out = result.response.text().trim();
+    console.log("Gemini - Response:", out);
 
     return new NextResponse(JSON.stringify({ reply: out, response: out, text: out, mode }), {
       status: 200,
@@ -84,6 +90,7 @@ export async function POST(req: NextRequest) {
       },
     });
   } catch (err: any) {
+    console.log("Gemini - Error:", err.message);
     const msg = (err?.message || String(err)).toLowerCase();
     let hint = "unknown";
     if (msg.includes("permission") || msg.includes("401") || msg.includes("api key")) hint = "invalid_or_missing_key";
