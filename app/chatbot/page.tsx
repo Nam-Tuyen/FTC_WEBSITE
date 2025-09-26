@@ -377,50 +377,139 @@ export default function ChatbotPage() {
             {/* Mode selector với hiệu ứng hiện đại */}
             <div className="mt-8 relative">
               <div className={`absolute inset-0 ${BRAND.gradients.ethereal} rounded-3xl transform transition-all`} />
-              <div className={`relative ${BRAND.surfaces.glass} rounded-3xl ${BRAND.borders.primary} border p-6`}>
-                <div className="flex flex-col sm:flex-row items-center gap-4">
-                  <div className="flex items-center gap-3">
-                    <div className="w-12 h-12 relative">
-                      <div className={`absolute inset-0 ${BRAND.gradients.glow} rounded-xl blur-lg animate-pulse`} />
-                      <div className={`relative w-full h-full ${BRAND.surfaces.glass} rounded-xl flex items-center justify-center`}>
-                        <span className={`text-[${BRAND.primary}] text-lg`}>🤖</span>
+              {/* Modern Mode Selection Card */}
+              <div className="relative group">
+                {/* Animated Background */}
+                <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 via-purple-500/5 to-cyan-500/10 rounded-3xl transform transition-all duration-500 group-hover:scale-[1.02] group-hover:from-blue-500/15 group-hover:via-purple-500/10 group-hover:to-cyan-500/15" />
+                
+                {/* Glassmorphism Card */}
+                <div className="relative bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-2xl rounded-3xl border border-white/20 p-6 sm:p-8 shadow-2xl shadow-black/20 transition-all duration-500 group-hover:shadow-3xl group-hover:shadow-blue-500/10">
+                  
+                  {/* Header Section */}
+                  <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 mb-6">
+                    <div className="flex items-center gap-4">
+                      {/* Animated Icon */}
+                      <div className="relative">
+                        <div className="absolute inset-0 bg-gradient-to-r from-blue-400 via-purple-400 to-cyan-400 rounded-2xl blur-xl animate-pulse opacity-60" />
+                        <div className="relative w-16 h-16 bg-gradient-to-br from-white/20 to-white/10 backdrop-blur-xl rounded-2xl flex items-center justify-center border border-white/30 shadow-lg">
+                          <span className="text-2xl animate-bounce">🤖</span>
+                        </div>
+                        {/* Floating particles */}
+                        <div className="absolute -top-1 -right-1 w-3 h-3 bg-blue-400 rounded-full animate-float-particle opacity-70" />
+                        <div className="absolute -bottom-1 -left-1 w-2 h-2 bg-purple-400 rounded-full animate-float-particle opacity-70 animation-delay-300" />
+                      </div>
+                      
+                      {/* Title Section */}
+                      <div className="space-y-1">
+                        <h2 className="text-xl sm:text-2xl font-bold bg-gradient-to-r from-white via-blue-100 to-purple-100 bg-clip-text text-transparent">
+                          Chọn chế độ
+                        </h2>
+                        <p className="text-sm sm:text-base text-white/70 font-medium">
+                          Tùy chỉnh trải nghiệm chat của bạn
+                        </p>
+                        <div className="flex items-center gap-2 text-xs text-white/50">
+                          <div className="w-1.5 h-1.5 bg-green-400 rounded-full animate-pulse" />
+                          <span>Hệ thống sẵn sàng</span>
+                        </div>
                       </div>
                     </div>
-                    <div>
-                      <h2 className={`text-lg font-bold ${BRAND.text.primary}`}>Chọn chế độ</h2>
-                      <p className={`text-sm ${BRAND.text.muted}`}>Tùy chỉnh trải nghiệm chat</p>
-                    </div>
-        </div>
+                  </div>
 
-                  <div className="flex gap-2">
-                    {CHAT_MODES.map((mc) => {
+                  {/* Mode Selection Buttons */}
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+                    {CHAT_MODES.map((mc, index) => {
                       const active = selectedMode === mc.mode
                       return (
                         <button
                           key={mc.mode}
                           onClick={() => handleModeChange(mc.mode)}
                           className={cn(
-                            "px-4 py-2 rounded-2xl text-sm font-medium flex items-center gap-2 transition-all duration-300 transform",
-                            BRAND.states.hover,
-                            active 
-                              ? `${mc.gradient} text-white ${BRAND.shadows.medium} scale-105` 
-                              : `${BRAND.surfaces.interactive} ${BRAND.text.muted} hover:${BRAND.text.secondary}`
+                            "group/btn relative overflow-hidden rounded-2xl p-4 sm:p-5 transition-all duration-500 transform",
+                            "flex items-center gap-3 sm:gap-4 text-left",
+                            "border backdrop-blur-sm shadow-lg",
+                            "hover:scale-[1.02] hover:shadow-xl active:scale-[0.98]",
+                            "animate-slide-in-up",
+                            active
+                              ? "bg-gradient-to-br from-blue-500/30 to-purple-500/30 border-blue-400/50 shadow-blue-500/20 scale-[1.02]"
+                              : "bg-white/5 border-white/20 hover:bg-white/10 hover:border-white/30"
                           )}
+                          style={{
+                            animationDelay: `${index * 150}ms`
+                          }}
                         >
-                          <span>{mc.icon}</span>
-                          {mc.label}
+                          {/* Animated Background */}
+                          <div className={cn(
+                            "absolute inset-0 transition-all duration-500",
+                            active 
+                              ? "bg-gradient-to-br from-blue-500/20 to-purple-500/20" 
+                              : "group-hover/btn:bg-gradient-to-br group-hover/btn:from-white/5 group-hover/btn:to-white/10"
+                          )} />
+                          
+                          {/* Icon */}
+                          <div className={cn(
+                            "relative w-10 h-10 sm:w-12 sm:h-12 rounded-xl flex items-center justify-center transition-all duration-300",
+                            "border backdrop-blur-sm",
+                            active
+                              ? "bg-gradient-to-br from-blue-400/30 to-purple-400/30 border-blue-300/50 shadow-lg shadow-blue-500/20"
+                              : "bg-white/10 border-white/20 group-hover/btn:bg-white/20 group-hover/btn:border-white/30"
+                          )}>
+                            <span className="text-lg sm:text-xl transition-transform duration-300 group-hover/btn:scale-110">
+                              {mc.icon}
+                            </span>
+                            {active && (
+                              <div className="absolute -top-1 -right-1 w-3 h-3 bg-green-400 rounded-full animate-pulse" />
+                            )}
+                          </div>
+                          
+                          {/* Content */}
+                          <div className="relative flex-1 min-w-0">
+                            <h3 className={cn(
+                              "font-semibold text-sm sm:text-base transition-colors duration-300",
+                              active ? "text-white" : "text-white/90 group-hover/btn:text-white"
+                            )}>
+                              {mc.label}
+                            </h3>
+                            <p className={cn(
+                              "text-xs sm:text-sm mt-1 transition-colors duration-300",
+                              active ? "text-white/80" : "text-white/60 group-hover/btn:text-white/80"
+                            )}>
+                              {mc.mode === 'club' ? 'Thông tin về câu lạc bộ FTC' : 'Kiến thức về ngành FinTech'}
+                            </p>
+                          </div>
+                          
+                          {/* Active Indicator */}
+                          {active && (
+                            <div className="relative">
+                              <div className="w-2 h-2 bg-blue-400 rounded-full animate-pulse" />
+                              <div className="absolute inset-0 w-2 h-2 bg-blue-400 rounded-full animate-ping" />
+                            </div>
+                          )}
                         </button>
                       )
                     })}
                   </div>
-                </div>
 
-                {showModeChangeNotification && (
-                  <div className={`mt-4 inline-flex items-center gap-2 text-sm ${BRAND.text.muted} animate-in slide-in-from-top-2 duration-300`}>
-                    <div className={`w-2 h-2 rounded-full bg-[${BRAND.primary}] animate-pulse`} />
-                    Đã chuyển sang chế độ: <span className={`font-semibold text-[${BRAND.primary}]`}>{CHAT_MODES.find((m) => m.mode === selectedMode)?.label}</span>
-            </div>
-                )}
+                  {/* Status Notification */}
+                  {showModeChangeNotification && (
+                    <div className="mt-6 flex items-center gap-3 p-4 bg-gradient-to-r from-green-500/10 to-blue-500/10 rounded-2xl border border-green-400/30 backdrop-blur-sm animate-in slide-in-from-top-2 duration-500">
+                      <div className="relative">
+                        <div className="w-3 h-3 bg-green-400 rounded-full animate-pulse" />
+                        <div className="absolute inset-0 w-3 h-3 bg-green-400 rounded-full animate-ping" />
+                      </div>
+                      <div className="flex-1">
+                        <p className="text-sm font-medium text-white">
+                          Đã chuyển sang chế độ: 
+                          <span className="ml-2 font-bold text-green-400">
+                            {CHAT_MODES.find((m) => m.mode === selectedMode)?.label}
+                          </span>
+                        </p>
+                        <p className="text-xs text-white/60 mt-1">
+                          Bạn có thể bắt đầu trò chuyện ngay bây giờ
+                        </p>
+                      </div>
+                    </div>
+                  )}
+                </div>
               </div>
             </div>
           </div>
