@@ -201,14 +201,6 @@ export default function ActivitiesPage() {
                                 className={`w-full h-full object-cover transition-all duration-700 group-hover:scale-110 group-hover:brightness-110 ${activity.title === "TALKSHOW CHUYÊN ĐỀ" ? "rotate-180" : ""}`}
                               />
                               <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
-                              
-                              
-                              {/* Modern Overlay Icon */}
-                              <div className="absolute bottom-6 left-6">
-                                <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-white/20 to-white/10 backdrop-blur-xl border border-white/30 flex items-center justify-center shadow-2xl">
-                                  <IconComponent className="w-6 h-6 text-white drop-shadow-lg" />
-                                </div>
-                              </div>
                             </div>
                           </div>
                         )}
@@ -276,12 +268,12 @@ export default function ActivitiesPage() {
                         {/* Enhanced Sidebar */}
                         <div className="space-y-4">
                           {/* Highlights Card */}
-                          <div className="bg-gradient-to-br from-blue-500/10 to-purple-500/10 backdrop-blur-xl rounded-2xl p-4 border border-blue-400/30 shadow-xl">
-                            <div className="flex items-center gap-2 mb-3">
+                          <div className="bg-gradient-to-br from-blue-500/10 to-purple-500/10 backdrop-blur-xl rounded-2xl p-6 border border-blue-400/30 shadow-xl h-full">
+                            <div className="flex items-center gap-2 mb-4">
                               <Star className="w-5 h-5 text-blue-400" />
                               <span className="text-sm font-bold text-blue-300">Điểm nổi bật</span>
                             </div>
-                            <div className="space-y-2">
+                            <div className="space-y-3">
                               <div className="flex items-center gap-2 text-white/90">
                                 <div className="w-1.5 h-1.5 bg-blue-400 rounded-full animate-pulse" />
                                 <span className="text-xs">Chuyên môn cao</span>
@@ -337,7 +329,7 @@ export default function ActivitiesPage() {
       <footer className="py-12 px-4 sm:px-6 lg:px-8 border-t border-white/20">
         <div className="max-w-7xl mx-auto text-center">
           <p className="text-lg text-white/70">
-            Powered by <span className="font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">FTC Team</span>
+            ©2025. Câu lạc bộ Công nghệ Tài chính
           </p>
         </div>
       </footer>

@@ -5,7 +5,6 @@ import { Analytics } from "@vercel/analytics/next"
 import { SpeedInsights } from "@vercel/speed-insights/next"
 import { Suspense } from "react"
 import Script from "next/script"
-import { FloatingChatbotGate } from "@/components/floating-chatbot-gate"
 import { AuthProvider } from "@/app/providers/auth-provider"
 import "./globals.css"
 
@@ -38,7 +37,6 @@ export default function RootLayout({
       <body className={inter.className}>
         <AuthProvider>
           <Suspense fallback={null}>{children}</Suspense>
-          <FloatingChatbotGate />
           <Analytics />
           <SpeedInsights />
           {process.env.NODE_ENV === "development" && (
