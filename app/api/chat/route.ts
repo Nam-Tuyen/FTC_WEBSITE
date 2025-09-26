@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { GoogleGenerativeAI, HarmCategory, HarmBlockThreshold } from "@google/generative-ai";
 import { ChatMode } from "@/chatbot/types";
-import { detectMode, buildSystemPrompt } from "@/chatbot/router";
+import { detectMode, buildSystemPrompt, normalize } from "@/chatbot/router";
 import { faqMatchOrNull } from "@/chatbot/data/faq";
 
 export const runtime = "nodejs";
@@ -41,6 +41,9 @@ export async function POST(req: NextRequest) {
   // 1) CLUB: ưu tiên FAQ nội bộ
   if (mode === "club") {
     const matched = faqMatchOrNull(userQ);
+    console.log("Club mode - Question:", userQ);
+    console.log("Club mode - Normalized:", normalize(userQ));
+    console.log("Club mode - Matched:", matched);
     if (matched) {
       return NextResponse.json(
         { reply: matched.trim(), response: matched.trim(), text: matched.trim(), mode },

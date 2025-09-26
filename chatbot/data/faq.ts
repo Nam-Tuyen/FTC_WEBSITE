@@ -16,9 +16,13 @@ export const FAQ_MAP: Record<string, string> = {
 - Ban Nhân sự: quy hoạch nguồn lực; gắn kết/mentor; hồ sơ; tuyển chọn/on-boarding; đánh giá/khen thưởng.
   `,
   'cau lac bo co nhung hoat dong gi': `
-- Học thuật: workshop/talkshow FinTech, dữ liệu, AI, ngân hàng số, thị trường vốn, quản trị rủi ro; ATTACKER.
-- Trải nghiệm: training nội bộ; tham quan VNG; hướng nghiệp Web3.
-- Gắn kết: FTC Trip.
+FTC xây dựng một <strong>hệ sinh thái hoạt động</strong> vừa học thuật vừa trải nghiệm thực tiễn:
+
+<strong>Hoạt động học thuật:</strong> hội thảo, tọa đàm và chuyên đề về FinTech, dữ liệu, trí tuệ nhân tạo, ngân hàng số, thị trường vốn, quản trị rủi ro; cuộc thi học thuật <strong>ATTACKER</strong>; chuỗi talkshow và workshop theo chủ đề.
+
+<strong>Hoạt động trải nghiệm:</strong> training nội bộ nâng kỹ năng; tham quan doanh nghiệp (như <strong>VNG</strong>); sự kiện hướng nghiệp <strong>Web3 Career Innovation</strong>.
+
+<strong>Hoạt động gắn kết:</strong> các hoạt động cộng đồng như <strong>FTC Trip</strong>.
   `,
   'lam the nao de tham gia cau lac bo': `
 Theo dõi Fanpage để cập nhật thông báo tuyển & form: ${FTC_CONTACTS.fanpage}
@@ -52,7 +56,7 @@ Fanpage: ${FTC_CONTACTS.fanpage}
 
 export const FAQ_INDEX: Record<string, string[]> = {
   'cac ban trong cau lac bo lam gi': ['ban nao', 'cac ban', 'phan cong', 'nhiem vu'],
-  'cau lac bo co nhung hoat dong gi': ['hoat dong', 'chuong trinh', 'workshop', 'talkshow', 'su kien'],
+  'cau lac bo co nhung hoat dong gi': ['hoat dong', 'chuong trinh', 'workshop', 'talkshow', 'su kien', 'cau lac bo co nhung', 'hoat dong gi'],
   'lam the nao de tham gia cau lac bo': ['tham gia', 'dang ky', 'tuyen thanh vien', 'gia nhap'],
   'thoi gian sinh hoat dien ra khi nao': ['lich sinh hoat', 'thoi gian', 'bao gio'],
   'can ky nang gi de ung tuyen': ['ky nang', 'yeu cau', 'ung tuyen', 'dieu kien'],
