@@ -259,17 +259,17 @@ export function faqMatchOrNull(question: string): string | null {
   if (exact) return exact;
 
   const index: Record<string, string[]> = {
-    "cac ban trong cau lac bo lam gi": ["ban nao", "cac ban", "bo may", "phan cong", "nhiem vu"],
-    "cau lac bo co nhung hoat dong gi": ["hoat dong", "chuong trinh", "su kien", "workshop", "talkshow", "cau lac bo co nhung", "hoat dong gi", "nhung hoat dong", "cau lac bo", "co nhung", "gi", "attacker", "career day", "ftc trip"],
-    "lam the nao de tham gia cau lac bo": ["tham gia", "dang ky", "tuyen thanh vien", "gia nhap", "lam the nao"],
-    "thoi gian sinh hoat dien ra khi nao": ["lich sinh hoat", "thoi gian", "bao gio"],
-    "can ky nang gi de ung tuyen": ["ky nang", "yeu cau", "dieu kien", "ung tuyen", "can gi"],
-    "cau lac bo duoc thanh lap khi nao": ["thanh lap", "ra doi", "nam nao"],
-    "cau lac bo co nhung thanh tich gi": ["thanh tich", "giai thuong", "giay khen"],
-    "quyen loi cua thanh vien la gi": ["quyen loi", "loi ich", "benefit"],
-    "quy trinh tuyen chon gom nhung buoc nao": ["quy trinh", "tuyen chon", "vong", "phong van", "thu thach"],
-    "co thu phi thanh vien khong": ["phi thanh vien", "dong phi", "hoc phi"],
-    "lien he clb bang cach nao": ["lien he", "email", "fanpage", "contact"]
+    "cac ban trong cau lac bo lam gi": ["cac ban", "ban nao", "bo may", "phan cong", "nhiem vu", "ban hoc thuat", "ban su kien", "ban truyen thong"],
+    "cau lac bo co nhung hoat dong gi": ["cau lac bo co nhung", "hoat dong gi", "nhung hoat dong", "hoat dong nao", "chuong trinh nao", "cau lac bo co nhung hoat dong", "co nhung hoat dong", "hoat dong cau lac bo"],
+    "lam the nao de tham gia cau lac bo": ["lam the nao de tham gia", "tham gia cau lac bo", "dang ky tham gia", "tuyen thanh vien", "gia nhap"],
+    "thoi gian sinh hoat dien ra khi nao": ["thoi gian sinh hoat", "lich sinh hoat", "bao gio sinh hoat", "khi nao sinh hoat"],
+    "can ky nang gi de ung tuyen": ["can ky nang gi", "ky nang de ung tuyen", "yeu cau ky nang", "dieu kien ung tuyen"],
+    "cau lac bo duoc thanh lap khi nao": ["thanh lap khi nao", "ra doi khi nao", "nam nao thanh lap"],
+    "cau lac bo co nhung thanh tich gi": ["thanh tich gi", "giai thuong nao", "giay khen nao", "thanh tich nao"],
+    "quyen loi cua thanh vien la gi": ["quyen loi cua thanh vien", "loi ich thanh vien", "benefit thanh vien", "quyen loi gi"],
+    "quy trinh tuyen chon gom nhung buoc nao": ["quy trinh tuyen chon", "buoc tuyen chon", "vong tuyen chon", "phong van tuyen"],
+    "co thu phi thanh vien khong": ["co thu phi", "dong phi thanh vien", "hoc phi thanh vien", "phi thanh vien"],
+    "lien he clb bang cach nao": ["lien he clb", "contact clb", "email clb", "fanpage clb"]
   };
 
   let bestKey = "";
