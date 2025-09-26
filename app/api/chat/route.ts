@@ -140,8 +140,7 @@ export function buildSystemPrompt(mode: ChatMode) {
 // ---------- FAQ (CLUB) - No <h3> ----------
 export const FAQ_MAP: Record<string, string> = {
   "cau lac bo co nhung hoat dong gi": `
-
-    <div> 
+     <div> 
       <p>Câu lạc bộ FTC chú trọng xây dựng hệ sinh thái hoạt động đa dạng, cân bằng giữa học thuật, thực hành và gắn kết cộng đồng với rất nhiều hoạt động tiêu biểu sau: </p>
       <ul>
         <li><strong> • Cuộc thi ATTACKER:</strong> Cuộc thi học thuật thường niên về công nghệ tài chính hiện đại, phát triển tư duy sản phẩm và nghiên cứu ứng dụng.</li>
@@ -152,7 +151,7 @@ export const FAQ_MAP: Record<string, string> = {
         <li><strong> • Workshop chuyên sâu:</strong> Các buổi đào tạo thực hành chuyên sâu đến từ phía doanh nghiệp giúp các bạn nắm vững được nền tảng kiến thức.</li>
         <li><strong> • FTC Trip:</strong> Các buổi đi chơi bonding gắn kết giúp các bạn xả stress sau một thời gian dài hoạt động.</li>
       </ul>
-    </div>
+     </div>
   `,
 
   "lam the nao de tham gia cau lac bo": `
@@ -261,8 +260,8 @@ export function faqMatchOrNull(question: string): string | null {
 
   const index: Record<string, string[]> = {
     "cac ban trong cau lac bo lam gi": ["ban nao", "cac ban", "bo may", "phan cong", "nhiem vu"],
-    "cau lac bo co nhung hoat dong gi": ["hoat dong", "chuong trinh", "su kien", "workshop", "talkshow"],
-    "lam the nao de tham gia cau lac bo": ["tham gia", "dang ky", "tuyen thanh vien", "gia nhap"],
+    "cau lac bo co nhung hoat dong gi": ["hoat dong", "chuong trinh", "su kien", "workshop", "talkshow", "cau lac bo co nhung", "hoat dong gi", "nhung hoat dong", "cau lac bo", "co nhung", "gi", "attacker", "career day", "ftc trip"],
+    "lam the nao de tham gia cau lac bo": ["tham gia", "dang ky", "tuyen thanh vien", "gia nhap", "lam the nao"],
     "thoi gian sinh hoat dien ra khi nao": ["lich sinh hoat", "thoi gian", "bao gio"],
     "can ky nang gi de ung tuyen": ["ky nang", "yeu cau", "dieu kien", "ung tuyen", "can gi"],
     "cau lac bo duoc thanh lap khi nao": ["thanh lap", "ra doi", "nam nao"],
