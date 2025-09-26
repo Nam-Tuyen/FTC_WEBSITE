@@ -56,7 +56,7 @@ Fanpage: ${FTC_CONTACTS.fanpage}
 
 export const FAQ_INDEX: Record<string, string[]> = {
   'cac ban trong cau lac bo lam gi': ['ban nao', 'cac ban', 'phan cong', 'nhiem vu'],
-  'cau lac bo co nhung hoat dong gi': ['hoat dong', 'chuong trinh', 'workshop', 'talkshow', 'su kien', 'cau lac bo co nhung', 'hoat dong gi'],
+  'cau lac bo co nhung hoat dong gi': ['cau lac bo co nhung hoat dong', 'hoat dong gi', 'chuong trinh', 'workshop', 'talkshow', 'su kien'],
   'lam the nao de tham gia cau lac bo': ['tham gia', 'dang ky', 'tuyen thanh vien', 'gia nhap'],
   'thoi gian sinh hoat dien ra khi nao': ['lich sinh hoat', 'thoi gian', 'bao gio'],
   'can ky nang gi de ung tuyen': ['ky nang', 'yeu cau', 'ung tuyen', 'dieu kien'],

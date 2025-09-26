@@ -1,8 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import { GoogleGenerativeAI, HarmCategory, HarmBlockThreshold } from "@google/generative-ai";
-import { ChatMode } from "@/chatbot/types";
-import { detectMode, buildSystemPrompt, normalize } from "@/chatbot/router";
-import { faqMatchOrNull } from "@/chatbot/data/faq";
+import { ChatMode } from "../../../chatbot/types";
+import { detectMode, buildSystemPrompt, normalize } from "../../../chatbot/router";
+import { faqMatchOrNull } from "../../../chatbot/data/faq";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -34,8 +34,24 @@ export async function POST(req: NextRequest) {
   let mode: ChatMode = (body.mode || "").toLowerCase();
   if (mode !== "club" && mode !== "industry") mode = detectMode(userQ);
 
+  // Fallback to old API if GEMINI_API_KEY not set
   if (!process.env.GEMINI_API_KEY) {
-    return NextResponse.json({ error: "GEMINI_API_KEY not set" }, { status: 500, headers: { "Cache-Control": "no-store" } });
+    console.log("GEMINI_API_KEY not set, falling back to old API");
+    // Redirect to old API
+    try {
+      const oldApiResponse = await fetch(`${req.nextUrl.origin}/api/chat/gemini`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body)
+      });
+      const oldApiData = await oldApiResponse.json();
+      return NextResponse.json(oldApiData, { 
+        status: oldApiResponse.status, 
+        headers: { "x-route": "fallback", "Cache-Control": "no-store" } 
+      });
+    } catch (err) {
+      return NextResponse.json({ error: "GEMINI_API_KEY not set and fallback failed" }, { status: 500, headers: { "Cache-Control": "no-store" } });
+    }
   }
 
   // 1) CLUB: ưu tiên FAQ nội bộ
@@ -58,7 +74,7 @@ export async function POST(req: NextRequest) {
   console.log("Calling Gemini with mode:", mode);
   const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY as string);
   const model = genAI.getGenerativeModel({
-    model: process.env.GEMINI_MODEL ?? "gemini-1.5-flash",
+    model: process.env.GEMINI_MODEL ?? "gemini-2.0-flash",
     systemInstruction: buildSystemPrompt(mode),
     safetySettings: [
       { category: HarmCategory.HARM_CATEGORY_HATE_SPEECH, threshold: HarmBlockThreshold.BLOCK_NONE },
@@ -97,6 +113,25 @@ export async function POST(req: NextRequest) {
     else if (msg.includes("safety")) hint = "safety_block";
     else if (msg.includes("quota") || msg.includes("rate")) hint = "quota_or_rate_limit";
     else if (msg.includes("model")) hint = "model_not_available";
+
+    // Fallback to old API on quota/rate limit errors
+    if (hint === "quota_or_rate_limit" || hint === "invalid_or_missing_key") {
+      console.log("Falling back to old API due to:", hint);
+      try {
+        const oldApiResponse = await fetch(`${req.nextUrl.origin}/api/chat/gemini`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(body)
+        });
+        const oldApiData = await oldApiResponse.json();
+        return NextResponse.json(oldApiData, { 
+          status: oldApiResponse.status, 
+          headers: { "x-route": "fallback", "x-error": hint, "Cache-Control": "no-store" } 
+        });
+      } catch (fallbackErr) {
+        console.log("Fallback also failed:", fallbackErr.message);
+      }
+    }
 
     return NextResponse.json(
       { text: "Xin lỗi, hiện chưa thể tạo câu trả lời.", detail: err?.message || String(err) },
