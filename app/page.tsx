@@ -45,7 +45,7 @@ export default function HomePage() {
               <Button
                 asChild
                 size="lg"
-                className="btn-futuristic text-lg px-10 py-4 font-bold shadow-2xl hover:shadow-accent/50 transition-all duration-300"
+                className="bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 hover:from-blue-600 hover:via-purple-600 hover:to-pink-600 text-white text-lg px-10 py-4 font-bold shadow-2xl hover:shadow-blue-500/50 transition-all duration-300 transform hover:scale-105"
               >
                 <Link href="/thong-tin">
                   THÔNG TIN VỀ CÂU LẠC BỘ <ArrowRight className="ml-3 h-6 w-6" />
@@ -170,8 +170,8 @@ export default function HomePage() {
             <Rocket className="h-5 w-5 text-accent mr-3" />
             <span className="text-sm font-bold text-accent uppercase tracking-wider">Tham gia câu lạc bộ </span>
           </div>
-          <h2 className="font-heading font-black text-4xl sm:text-5xl text-foreground mb-6 text-glow">
-            THAM GIA ĐỂ TRỞ THÀNH FTCER  
+          <h2 className="font-heading font-black text-3xl sm:text-5xl text-foreground mb-6 text-glow">
+            THAM GIA ĐỂ TRỞ THÀNH FTCer  
           </h2>
             <p className="text-lg sm:text-xl text-foreground/80 mb-12 font-medium leading-relaxed max-w-2xl mx-auto px-4">
               Đăng ký ngay hôm nay để cùng FTC khám phá bản thân, học điều mới, tham gia hoạt động thực tế và kết nối với cộng đồng FINTECH.
@@ -179,7 +179,7 @@ export default function HomePage() {
           <Button
             asChild
             size="lg"
-            className="btn-futuristic text-xl px-12 py-6 font-bold shadow-2xl hover:shadow-accent/50 transition-all duration-300"
+            className="bg-gradient-to-r from-emerald-500 via-teal-500 to-cyan-500 hover:from-emerald-600 hover:via-teal-600 hover:to-cyan-600 text-white text-xl px-12 py-6 font-bold shadow-2xl hover:shadow-emerald-500/50 transition-all duration-300 transform hover:scale-105"
           >
             <Link href="/ung-tuyen">
               BẮT ĐẦU NGAY HÔM NAY <ArrowRight className="ml-3 h-6 w-6" />
