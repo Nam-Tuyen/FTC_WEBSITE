@@ -340,9 +340,17 @@ export default function ChatbotPage() {
   }
 
   function handleKeyDown(e: React.KeyboardEvent<HTMLInputElement>) {
+    // Trên mobile: Enter để xuống dòng, không gửi tin nhắn
+    // Chỉ gửi tin nhắn khi bấm nút Send
     if (e.key === "Enter" && !e.shiftKey) {
-      e.preventDefault()
-      handleSendMessage()
+      // Trên desktop: Enter để gửi
+      // Trên mobile: Enter để xuống dòng
+      const isMobile = window.innerWidth <= 768
+      if (!isMobile) {
+        e.preventDefault()
+        handleSendMessage()
+      }
+      // Trên mobile, Enter sẽ tạo xuống dòng mới (default behavior)
     }
   }
 
@@ -602,13 +610,24 @@ export default function ChatbotPage() {
                           )}
                         </div>
                         <div className="relative">
-                          <Input
+                          <textarea
                             value={inputValue}
-                            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setInputValue(e.target.value)}
-                            onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => handleKeyDown(e)}
+                            onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setInputValue(e.target.value)}
+                            onKeyDown={(e: React.KeyboardEvent<HTMLTextAreaElement>) => handleKeyDown(e)}
                             placeholder={selectedMode === "club" ? "Hỏi về FTC, hoạt động, cách tham gia..." : "Hỏi về FinTech, blockchain, ngân hàng số..."}
-                            className={`w-full h-12 ${BRAND.surfaces.interactive} ${BRAND.borders.primary} border ${BRAND.text.primary} placeholder:${BRAND.text.placeholder} ${BRAND.states.focus} outline-none transition-all rounded-2xl pr-14 text-sm`}
+                            className={`w-full min-h-[48px] max-h-32 resize-none ${BRAND.surfaces.interactive} ${BRAND.borders.primary} border ${BRAND.text.primary} placeholder:${BRAND.text.placeholder} ${BRAND.states.focus} outline-none transition-all rounded-2xl pr-14 py-3 px-4 text-sm`}
                             disabled={isSending}
+                            rows={1}
+                            style={{ 
+                              height: 'auto',
+                              minHeight: '48px',
+                              maxHeight: '128px'
+                            }}
+                            onInput={(e: React.FormEvent<HTMLTextAreaElement>) => {
+                              const target = e.target as HTMLTextAreaElement
+                              target.style.height = 'auto'
+                              target.style.height = Math.min(target.scrollHeight, 128) + 'px'
+                            }}
                           />
                           {isSending && (
                             <div className="absolute right-4 top-1/2 transform -translate-y-1/2 h-5 flex items-center">
@@ -621,15 +640,19 @@ export default function ChatbotPage() {
                         onClick={handleSendMessage} 
                         disabled={!inputValue.trim() || isSending}
                         className={cn(
-                          "w-12 h-12 rounded-2xl flex items-center justify-center transition-all text-white",
-                          BRAND.shadows.medium,
+                          "w-12 h-12 rounded-2xl flex items-center justify-center transition-all text-white shadow-lg",
                           BRAND.states.hover,
                           inputValue.trim() && !isSending 
-                            ? `${CHAT_MODES.find(m => m.mode === selectedMode)?.gradient} hover:scale-105` 
-                            : `${BRAND.surfaces.interactive} ${BRAND.text.light} cursor-not-allowed`
+                            ? `bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 hover:from-blue-600 hover:via-purple-600 hover:to-pink-600 hover:scale-105 shadow-blue-500/30` 
+                            : `bg-gray-600/50 text-gray-400 cursor-not-allowed`
                         )}
+                        title="Gửi tin nhắn (Enter trên desktop)"
                       >
-                        <span className="text-lg">➤</span>
+                        {isSending ? (
+                          <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                        ) : (
+                          <span className="text-lg font-bold">➤</span>
+                        )}
                       </Button>
                     </div>
                     {isSending && (
