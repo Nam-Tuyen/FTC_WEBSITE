@@ -16,6 +16,7 @@ export default function ForumPage() {
   const [search, setSearch] = useState('')
   const [selectedCategory, setSelectedCategory] = useState<ForumCategory | ''>('')
   const [page, setPage] = useState(1)
+  const [likingQuestions, setLikingQuestions] = useState<Set<string>>(new Set())
   const pageSize = 6
 
   // Animation styles are now moved to components/sections/hero.tsx
@@ -194,7 +195,12 @@ export default function ForumPage() {
   }
 
   function handleToggleLike(qid: string) {
-    if (!currentUserId) return
+    if (!currentUserId || likingQuestions.has(qid)) return
+    
+    // Prevent double-click
+    setLikingQuestions(prev => new Set(prev).add(qid))
+    
+    // Immediate UI update for better responsiveness
     setQuestions((prev) =>
       prev.map((q) => {
         if (q.id !== qid) return q
@@ -202,6 +208,27 @@ export default function ForumPage() {
         return { ...q, likes: has ? q.likes.filter((x) => x !== currentUserId) : [...q.likes, currentUserId] }
       })
     )
+    
+    // Save to localStorage for persistence
+    try {
+      const updatedQuestions = questions.map((q) => {
+        if (q.id !== qid) return q
+        const has = q.likes.includes(currentUserId)
+        return { ...q, likes: has ? q.likes.filter((x) => x !== currentUserId) : [...q.likes, currentUserId] }
+      })
+      localStorage.setItem(STORAGE_KEYS.questions, JSON.stringify(updatedQuestions))
+    } catch (error) {
+      console.log('Error saving like state:', error)
+    }
+    
+    // Remove from liking set after a short delay
+    setTimeout(() => {
+      setLikingQuestions(prev => {
+        const newSet = new Set(prev)
+        newSet.delete(qid)
+        return newSet
+      })
+    }, 500)
   }
 
   function handleAddReply(qid: string, content: string, authorName: string) {
