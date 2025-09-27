@@ -16,7 +16,7 @@ const infoSections = [
       { icon: Calendar, text: "Thành lập tháng 11/2020", color: "text-cyan-400" },
       { icon: Users, text: "Khoa Tài chính - Ngân hàng", color: "text-indigo-400" }
     ],
-    content: "Câu lạc bộ Công nghệ tài chính FTC trực thuộc Khoa Tài chính và Ngân hàng, Trường Đại học Kinh tế và Luật, Đại học Quốc gia Thành phố Hồ Chí Minh, được thành lập vào tháng mười một năm 2020 dưới sự hướng dẫn của ThS. NCS Phan Huy Tâm (Giảng viên Khoa Tài chính - Ngân hàng) cùng đội ngũ sinh viên ngành công nghệ tài chính. UEL là một trong tám đơn vị thành viên của Đại học Quốc gia Thành phố Hồ Chí Minh, là trung tâm đào tạo và nghiên cứu đa ngành, đa lĩnh vực, có uy tín hàng đầu phía Nam trong các khối Kinh tế, Luật, Quản lý công."
+    content: "Câu lạc bộ Công nghệ Tài chính (FTC) trực thuộc Khoa Tài chính và Ngân hàng, Trường Đại học Kinh tế – Luật, ĐHQG TPHCM (UEL), được thành lập vào tháng 11 năm 2020 dưới sự hướng dẫn của ThS. NCS Phan Huy Tâm cùng đội ngũ sinh viên đam mê lĩnh vực công nghệ tài chính. FTC là một cộng đồng học thuật và trải nghiệm thực tiễn, nơi sinh viên có cơ hội tiếp cận kiến thức hiện đại về FinTech, dữ liệu và sản phẩm số, đồng thời rèn luyện kỹ năng thông qua các cuộc thi, workshop, talkshow và dự án thực tế. Với định hướng gắn kết học tập, nghiên cứu và phát triển nghề nghiệp, FTC không chỉ tạo môi trường nuôi dưỡng tri thức mà còn kết nối sinh viên với giảng viên, chuyên gia và doanh nghiệp, góp phần xây dựng thế hệ sinh viên UEL năng động, sáng tạo và sẵn sàng hội nhập."
   },
   {
     title: "SỨ MỆNH & GIÁ TRỊ",
@@ -86,17 +86,17 @@ const infoSections = [
     activities: [
       {
         title: "Hội thảo, toạ đàm, chuyên đề",
-        description: "Các chủ đề trọng tâm gồm xu hướng công nghệ tài chính, ứng dụng dữ liệu và trí tuệ nhân tạo trong hoạt động tài chính, phát triển sản phẩm ngân hàng số, diễn biến thị trường vốn và các phương pháp quản trị rủi ro hiện đại.",
+        description: "Các chủ đề trọng tâm gồm xu hướng công nghệ tài chính, ứng dụng dữ liệu và trí tuệ nhân tạo trong hoạt động tài chính, phát triển sản phẩm ngân hàng số và các phương pháp quản trị rủi ro hiện đại.",
         icon: MessageCircle
       },
       {
         title: "Cuộc thi học thuật và dự án thực tế",
-        description: "Thiết kế mô hình, phát triển công cụ phân tích và kiểm thử trên dữ liệu thực tế.",
+        description: "Thiết kế mô hình, phát triển công cụ phân tích và kiểm tra dựa trên dữ liệu thực tế.",
         icon: Trophy
       },
       {
         title: "Kết nối nghề nghiệp",
-        description: "Kết nối và trao đổi cùng chuyên gia, người hướng dẫn, tiếp cận cơ hội thực tập và ngày hội việc làm, đồng thời tham quan doanh nghiệp để hiểu rõ môi trường làm việc thực tế.",
+        description: "Kết nối và trao đổi cùng chuyên gia, người hướng dẫn giúp tiếp cận cơ hội việc làm đồng thời thăm quan doanh nghiệp để hiểu rõ môi trường làm việc thực tế.",
         icon: Network
       },
       {
@@ -130,7 +130,7 @@ export default function ThongTinPage() {
             </span>
           </h1>
           <p className="text-base sm:text-lg md:text-xl lg:text-2xl xl:text-2xl text-muted-foreground leading-relaxed max-w-4xl mx-auto italic px-4">
-            Câu lạc bộ Công nghệ Tài chính - Trường Đại học Kinh tế – Luật, ĐHQG-HCM
+            Giới thiệu tỏng quan thông tin về FTC
           </p>
 
           {/* Social Media Badges */}
@@ -326,9 +326,9 @@ export default function ThongTinPage() {
             <div className="w-20 h-20 mx-auto mb-8 bg-gradient-to-r from-blue-500 to-purple-600 rounded-3xl flex items-center justify-center shadow-xl">
               <Users className="w-10 h-10 text-white" />
             </div>
-            <h2 className="text-4xl font-bold text-white mb-6">THAM GIA CỘNG ĐỒNG FTC</h2>
+            <h2 className="text-4xl font-bold text-white mb-6">THAM GIA CÂU LẠC BỌ FTC</h2>
             <p className="text-xl text-white/80 mb-8 leading-relaxed italic">
-              Khám phá thế giới FinTech và phát triển bản thân cùng chúng tôi
+              Khám phá thế giới FinTech và phát triển bản thân cùng nàh Ép
             </p>
             <div className="flex flex-wrap justify-center gap-4">
               <a 
