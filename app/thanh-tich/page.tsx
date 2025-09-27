@@ -246,7 +246,7 @@ export default function AchievementsPage() {
                 href="https://ftc-websites.vercel.app/hoat-dong" 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="px-8 py-4 bg-gradient-to-r from-yellow-500 to-amber-600 rounded-2xl text-white font-bold hover:shadow-xl hover:scale-105 transition-all cursor-pointer flex items-center gap-2"
+                className="px-8 py-4 bg-gradient-to-r from-green-500 to-amber-600 rounded-2xl text-white font-bold hover:shadow-xl hover:scale-105 transition-all cursor-pointer flex items-center gap-2"
               >
                 <span>Hoạt động tại FTC</span>
                 <ArrowRight className="w-5 h-5" />

@@ -335,7 +335,7 @@ export default function ThongTinPage() {
                 href="https://ftc-websites.vercel.app/thanh-tich" 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="px-8 py-4 bg-gradient-to-r from-blue-500 to-purple-600 rounded-2xl text-white font-bold hover:shadow-xl hover:scale-105 transition-all cursor-pointer"
+                className="px-8 py-4 bg-gradient-to-r from-yellow-500 to-purple-600 rounded-2xl text-white font-bold hover:shadow-xl hover:scale-105 transition-all cursor-pointer"
               >
                 Thành tích của FTC
               </a>

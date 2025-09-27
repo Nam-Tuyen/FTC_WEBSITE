@@ -257,7 +257,7 @@ export default function ActivitiesPage() {
             {activities.map((activity, idx) => {
               const IconComponent = activity.icon
               
-              return (
+            return (
                 <div key={activity.title} className="group relative">
                   {/* Modern Glassmorphism Card */}
                   <div className="relative bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-xl rounded-3xl border border-white/20 overflow-hidden transition-all duration-700 group-hover:scale-[1.02] group-hover:shadow-2xl group-hover:shadow-blue-500/20 group-hover:border-blue-400/30">
@@ -276,7 +276,7 @@ export default function ActivitiesPage() {
                               <img
                                 src={activity.img}
                                 alt={activity.alt}
-                                loading="lazy"
+                            loading="lazy"
                                 className={`w-full h-full object-cover transition-all duration-700 group-hover:scale-110 group-hover:brightness-110 ${activity.title === "TALKSHOW CHUYÊN ĐỀ" ? "rotate-180" : ""}`}
                               />
                               <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
@@ -374,11 +374,11 @@ export default function ActivitiesPage() {
                           
                         </div>
                       </div>
-                    </div>
                   </div>
                 </div>
-              )
-            })}
+              </div>
+            )
+          })}
           </div>
         </div>
       </section>
@@ -390,11 +390,19 @@ export default function ActivitiesPage() {
             <div className="w-20 h-20 mx-auto mb-8 bg-gradient-to-r from-blue-500 to-purple-600 rounded-3xl flex items-center justify-center shadow-xl">
               <Sparkles className="w-10 h-10 text-white" />
             </div>
-            <h2 className="text-4xl font-bold text-white mb-6">CẬP NHẬT HOẠT ĐỘNG CỦA FTC</h2>
+            <h2 className="text-4xl font-bold text-white mb-6">TÌM HIỂU VỀ CƠ CẤU CÁC BAN TẠI FTC</h2>
             <p className="text-xl text-white/80 mb-8 leading-relaxed italic">
-              Theo dõi để không bỏ lỡ các thông tin mới nhất về các hoạt động tại FTC
+              Tìm hiểu chi tiết về các ban tại nhà Ép
             </p>
             <div className="flex flex-wrap justify-center gap-4">
+              <a 
+                href="https://ftc-websites.vercel.app/co-cau" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="px-8 py-4 bg-gradient-to-r from-yellow-500 to-purple-600 rounded-2xl text-white font-bold hover:shadow-xl hover:scale-105 transition-all"
+              >
+                Các ban tại FTC
+              </a>
               <a 
                 href="https://www.facebook.com/clbfintechuel" 
                 target="_blank" 
