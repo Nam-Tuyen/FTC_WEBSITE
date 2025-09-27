@@ -5,6 +5,7 @@ import dynamic from "next/dynamic"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
+import { Textarea } from "@/components/ui/textarea"
 import { cn } from "@/lib/utils"
 
 const animations = {
@@ -276,6 +277,7 @@ export default function ChatbotPage() {
   const [messages, setMessages] = useState<ChatMessage[]>([])
   const [isSending, setIsSending] = useState(false)
   const [showModeChangeNotification, setShowModeChangeNotification] = useState(false)
+  const textareaRef = useRef<HTMLTextAreaElement>(null)
 
   // Auto-scroll to bottom when new messages arrive (smooth scroll)
   useEffect(() => {
@@ -339,20 +341,22 @@ export default function ChatbotPage() {
     }
   }
 
-  function handleKeyDown(e: React.KeyboardEvent<HTMLInputElement>) {
-    // Trên mobile: Enter để xuống dòng, không gửi tin nhắn
-    // Chỉ gửi tin nhắn khi bấm nút Send
+  function handleKeyDown(e: React.KeyboardEvent<HTMLTextAreaElement>) {
+    // Trên mobile, Enter sẽ xuống dòng, không gửi tin nhắn
+    // Chỉ gửi tin nhắn khi bấm nút "➤" 
     if (e.key === "Enter" && !e.shiftKey) {
-      // Trên desktop: Enter để gửi
-      // Trên mobile: Enter để xuống dòng
-      const isMobile = window.innerWidth <= 768
-      if (!isMobile) {
-        e.preventDefault()
-        handleSendMessage()
-      }
-      // Trên mobile, Enter sẽ tạo xuống dòng mới (default behavior)
+      // Không preventDefault để cho phép xuống dòng trên mobile
+      return
     }
   }
+
+  // Auto-resize textarea based on content
+  useEffect(() => {
+    if (textareaRef.current) {
+      textareaRef.current.style.height = 'auto'
+      textareaRef.current.style.height = `${Math.min(textareaRef.current.scrollHeight, 128)}px`
+    }
+  }, [inputValue])
 
   return (
     <>
@@ -610,24 +614,15 @@ export default function ChatbotPage() {
                           )}
                         </div>
                         <div className="relative">
-                          <textarea
+                          <Textarea
+                            ref={textareaRef}
                             value={inputValue}
                             onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setInputValue(e.target.value)}
                             onKeyDown={(e: React.KeyboardEvent<HTMLTextAreaElement>) => handleKeyDown(e)}
                             placeholder={selectedMode === "club" ? "Hỏi về FTC, hoạt động, cách tham gia..." : "Hỏi về FinTech, blockchain, ngân hàng số..."}
-                            className={`w-full min-h-[48px] max-h-32 resize-none ${BRAND.surfaces.interactive} ${BRAND.borders.primary} border ${BRAND.text.primary} placeholder:${BRAND.text.placeholder} ${BRAND.states.focus} outline-none transition-all rounded-2xl pr-14 py-3 px-4 text-sm`}
+                            className={`w-full min-h-[48px] max-h-32 resize-none ${BRAND.surfaces.interactive} ${BRAND.borders.primary} border ${BRAND.text.primary} placeholder:${BRAND.text.placeholder} ${BRAND.states.focus} outline-none transition-all rounded-2xl pr-14 text-sm py-3`}
                             disabled={isSending}
                             rows={1}
-                            style={{ 
-                              height: 'auto',
-                              minHeight: '48px',
-                              maxHeight: '128px'
-                            }}
-                            onInput={(e: React.FormEvent<HTMLTextAreaElement>) => {
-                              const target = e.target as HTMLTextAreaElement
-                              target.style.height = 'auto'
-                              target.style.height = Math.min(target.scrollHeight, 128) + 'px'
-                            }}
                           />
                           {isSending && (
                             <div className="absolute right-4 top-1/2 transform -translate-y-1/2 h-5 flex items-center">
@@ -640,19 +635,15 @@ export default function ChatbotPage() {
                         onClick={handleSendMessage} 
                         disabled={!inputValue.trim() || isSending}
                         className={cn(
-                          "w-12 h-12 rounded-2xl flex items-center justify-center transition-all text-white shadow-lg",
+                          "w-12 h-12 rounded-2xl flex items-center justify-center transition-all text-white",
+                          BRAND.shadows.medium,
                           BRAND.states.hover,
                           inputValue.trim() && !isSending 
-                            ? `bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 hover:from-blue-600 hover:via-purple-600 hover:to-pink-600 hover:scale-105 shadow-blue-500/30` 
-                            : `bg-gray-600/50 text-gray-400 cursor-not-allowed`
+                            ? `${CHAT_MODES.find(m => m.mode === selectedMode)?.gradient} hover:scale-105` 
+                            : `${BRAND.surfaces.interactive} ${BRAND.text.light} cursor-not-allowed`
                         )}
-                        title="Gửi tin nhắn (Enter trên desktop)"
                       >
-                        {isSending ? (
-                          <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                        ) : (
-                          <span className="text-lg font-bold">➤</span>
-                        )}
+                        <span className="text-lg">➤</span>
                       </Button>
                     </div>
                     {isSending && (
