@@ -113,7 +113,7 @@ const activities = [
     img: IMAGES.career,
     alt: "Career Day Web3 Career Innovation",
     category: "Nghề nghiệp",
-    duration: "1 ngày",
+    duration: "7 ngày",
     participants: "3000+ sinh viên",
     icon: TrendingUp,
     color: "from-amber-700 to-yellow-800",

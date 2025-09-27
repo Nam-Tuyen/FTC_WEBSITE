@@ -1,16 +1,119 @@
 'use client'
 
-import { Button } from "@/components/ui/button"
 import { Navigation } from "@/components/navigation"
-import { Card, CardContent } from "@/components/ui/card"
-import { Target, Users, BookOpen, TrendingUp, Award, Network, Facebook, Instagram } from "lucide-react"
+import { Target, Users, BookOpen, TrendingUp, Award, Network, Facebook, Instagram, Sparkles, ArrowRight, Eye, Heart, Lightbulb, Rocket, Globe, Trophy, Coffee, MessageCircle, Calendar } from "lucide-react"
+
+const infoSections = [
+  {
+    title: "GIỚI THIỆU CHUNG",
+    icon: BookOpen,
+    color: "from-blue-500 to-cyan-500",
+    bgColor: "bg-blue-500/10",
+    borderColor: "border-blue-500/20",
+    cardGradient: "from-blue-500 to-cyan-500",
+    quickFeatures: [
+      { icon: Globe, text: "Đại học Quốc gia TP.HCM", color: "text-blue-400" },
+      { icon: Calendar, text: "Thành lập tháng 11/2020", color: "text-cyan-400" },
+      { icon: Users, text: "Khoa Tài chính - Ngân hàng", color: "text-indigo-400" }
+    ],
+    content: "Câu lạc bộ Công nghệ tài chính FTC trực thuộc Khoa Tài chính và Ngân hàng, Trường Đại học Kinh tế và Luật, Đại học Quốc gia Thành phố Hồ Chí Minh, được thành lập vào tháng mười một năm 2020 dưới sự hướng dẫn của ThS. NCS Phan Huy Tâm (Giảng viên Khoa Tài chính - Ngân hàng) cùng đội ngũ sinh viên ngành công nghệ tài chính. UEL là một trong tám đơn vị thành viên của Đại học Quốc gia Thành phố Hồ Chí Minh, là trung tâm đào tạo và nghiên cứu đa ngành, đa lĩnh vực, có uy tín hàng đầu phía Nam trong các khối Kinh tế, Luật, Quản lý công."
+  },
+  {
+    title: "SỨ MỆNH & GIÁ TRỊ",
+    icon: Target,
+    color: "from-green-500 to-emerald-500",
+    bgColor: "bg-green-500/10",
+    borderColor: "border-green-500/20",
+    cardGradient: "from-green-500 to-emerald-500",
+    quickFeatures: [
+      { icon: Heart, text: "Giá trị thiết thực", color: "text-green-400" },
+      { icon: Network, text: "Hệ sinh thái học thuật", color: "text-emerald-400" },
+      { icon: Rocket, text: "Thống nhất, vượt trội, tiên phong", color: "text-teal-400" }
+    ],
+    missions: [
+      {
+        title: "Sứ mệnh",
+        description: "Mang lại giá trị thiết thực cho sinh viên thông qua hệ sinh thái học thuật, thực hành và kết nối nghề nghiệp trong lĩnh vực công nghệ tài chính.",
+        icon: Target
+      },
+      {
+        title: "Giá trị cốt lõi",
+        description: "Câu lạc bộ đề cao các giá trị cốt lõi giáo dục, kết nối, chia sẻ và hoạt động theo phương châm thống nhất, vượt trội, tiên phong.",
+        icon: Award
+      }
+    ]
+  },
+  {
+    title: "TẦM NHÌN & MỤC TIÊU",
+    icon: Eye,
+    color: "from-purple-500 to-violet-500",
+    bgColor: "bg-purple-500/10",
+    borderColor: "border-purple-500/20",
+    cardGradient: "from-purple-500 to-violet-500",
+    quickFeatures: [
+      { icon: Trophy, text: "Cộng đồng lớn nhất Việt Nam", color: "text-purple-400" },
+      { icon: Globe, text: "Mở rộng Đông Nam Á", color: "text-violet-400" },
+      { icon: Network, text: "Kết nối sinh viên - doanh nghiệp", color: "text-fuchsia-400" }
+    ],
+    vision: "FTC đặt mục tiêu trở thành cộng đồng sinh viên yêu thích công nghệ tài chính lớn nhất Việt Nam và mở rộng mạng lưới hợp tác giữa sinh viên và doanh nghiệp trong khu vực Đông Nam Á.",
+    objectives: [
+      {
+        icon: BookOpen,
+        text: "Cập nhật và truyền đạt kiến thức về tài chính định lượng, dữ liệu và sản phẩm số."
+      },
+      {
+        icon: Network,
+        text: "Kết nối sinh viên với giảng viên, chuyên gia, doanh nghiệp và nhà tuyển dụng."
+      },
+      {
+        icon: Users,
+        text: "Xây dựng cộng đồng học thuật cởi mở: cùng học, cùng làm, cùng chia sẻ."
+      }
+    ]
+  },
+  {
+    title: "HOẠT ĐỘNG TIÊU BIỂU",
+    icon: TrendingUp,
+    color: "from-amber-500 to-orange-500",
+    bgColor: "bg-amber-500/10",
+    borderColor: "border-amber-500/20",
+    cardGradient: "from-amber-500 to-orange-500",
+    quickFeatures: [
+      { icon: MessageCircle, text: "Hội thảo & Tọa đàm", color: "text-amber-400" },
+      { icon: Trophy, text: "Cuộc thi học thuật", color: "text-orange-400" },
+      { icon: Coffee, text: "Cộng đồng học thuật", color: "text-yellow-400" }
+    ],
+    activities: [
+      {
+        title: "Hội thảo, toạ đàm, chuyên đề",
+        description: "Các chủ đề trọng tâm gồm xu hướng công nghệ tài chính, ứng dụng dữ liệu và trí tuệ nhân tạo trong hoạt động tài chính, phát triển sản phẩm ngân hàng số, diễn biến thị trường vốn và các phương pháp quản trị rủi ro hiện đại.",
+        icon: MessageCircle
+      },
+      {
+        title: "Cuộc thi học thuật và dự án thực tế",
+        description: "Thiết kế mô hình, phát triển công cụ phân tích và kiểm thử trên dữ liệu thực tế.",
+        icon: Trophy
+      },
+      {
+        title: "Kết nối nghề nghiệp",
+        description: "Kết nối và trao đổi cùng chuyên gia, người hướng dẫn, tiếp cận cơ hội thực tập và ngày hội việc làm, đồng thời tham quan doanh nghiệp để hiểu rõ môi trường làm việc thực tế.",
+        icon: Network
+      },
+      {
+        title: "Cộng đồng học thuật",
+        description: "Môi trường học tập và nghiên cứu cởi mở, thân thiện, khuyến khích sáng tạo và đổi mới.",
+        icon: Coffee
+      }
+    ]
+  }
+]
 
 export default function ThongTinPage() {
   return (
     <div className="min-h-screen bg-[#003663] text-white overflow-hidden">
       <Navigation />
 
-      {/* Mobile Responsive Hero Section */}
+      {/* Modern Hero Section */}
       <section className="relative min-h-[60vh] sm:min-h-[70vh] flex items-center justify-center py-12 sm:py-16 lg:py-24 px-4 sm:px-6 lg:px-8">
         <div className="absolute inset-0 overflow-hidden">
           <div className="absolute top-1/4 -right-1/4 w-2/3 h-2/3 bg-gradient-to-br from-primary/20 via-accent/20 to-transparent rounded-full blur-3xl animate-float" />
@@ -18,7 +121,7 @@ export default function ThongTinPage() {
         </div>
 
         <div className="relative max-w-6xl mx-auto text-center space-y-4 sm:space-y-6 lg:space-y-8">
-          <h1 className="relative text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-extrabold">
+          <h1 className="relative text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-extrabold">
             <span className="absolute inset-0 bg-gradient-to-r from-white to-white opacity-50 blur-2xl animate-pulse"></span>
             <span className="relative text-white animate-bounce" style={{
               animation: 'blink 1.5s infinite, gradient-shift 2s ease-in-out infinite, bounce 2s infinite'
@@ -26,211 +129,239 @@ export default function ThongTinPage() {
               THÔNG TIN VỀ CÂU LẠC BỘ
             </span>
           </h1>
-          <p className="text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl text-muted-foreground leading-relaxed max-w-4xl mx-auto italic px-4">
-            Trường Đại học Kinh tế – Luật, ĐHQG-HCM
+          <p className="text-base sm:text-lg md:text-xl lg:text-2xl xl:text-2xl text-muted-foreground leading-relaxed max-w-4xl mx-auto italic px-4">
+            Câu lạc bộ Công nghệ Tài chính - Trường Đại học Kinh tế – Luật, ĐHQG-HCM
           </p>
-          <div className="flex justify-center gap-6 pt-4">
+
+          {/* Social Media Badges */}
+          <div className="mt-8 flex flex-wrap justify-center gap-4">
             <a
               href="https://www.facebook.com/clbfintechuel"
               target="_blank"
               rel="noopener noreferrer"
-              className="group relative px-8 py-3 bg-background/40 backdrop-blur-lg rounded-2xl border border-primary/10 hover:scale-105 transition-all duration-300"
+              className="inline-flex items-center gap-2 bg-gradient-to-r from-blue-500/20 to-blue-600/20 backdrop-blur-md border border-blue-400/30 rounded-full px-6 py-3 hover:scale-105 transition-all"
             >
-              <div className="absolute inset-0 bg-gradient-to-r from-primary/10 to-accent/10 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity" />
-              <div className="relative flex items-center gap-3">
-                <span className="text-lg font-medium text-foreground">FANPAGE FTC</span>
-                <Facebook className="h-6 w-6 text-primary" />
-              </div>
+              <Facebook className="w-5 h-5 text-blue-400" />
+              <span className="text-sm font-semibold text-blue-100">FANPAGE FTC</span>
             </a>
-
             <a
               href="https://www.instagram.com/ftcers/"
               target="_blank"
               rel="noopener noreferrer"
-              className="group relative px-8 py-3 bg-background/40 backdrop-blur-lg rounded-2xl border border-primary/10 hover:scale-105 transition-all duration-300"
+              className="inline-flex items-center gap-2 bg-gradient-to-r from-pink-500/20 to-purple-500/20 backdrop-blur-md border border-pink-400/30 rounded-full px-6 py-3 hover:scale-105 transition-all"
             >
-              <div className="absolute inset-0 bg-gradient-to-r from-primary/10 to-accent/10 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity" />
-              <div className="relative flex items-center gap-3">
-                <span className="text-lg font-medium text-foreground">INSTAGRAM FTC</span>
-                <Instagram className="h-6 w-6 text-primary" />
-              </div>
+              <Instagram className="w-5 h-5 text-pink-400" />
+              <span className="text-sm font-semibold text-pink-100">INSTAGRAM FTC</span>
             </a>
           </div>
+
+          {/* Modern Badge */}
+          <div className="mt-8 relative">
+            <div className="inline-flex items-center gap-2 bg-gradient-to-r from-green-500/20 to-emerald-500/20 backdrop-blur-md border border-green-400/30 rounded-full px-6 py-3">
+              <Sparkles className="w-5 h-5 text-green-400" />
+              <span className="text-sm font-semibold text-green-100">Cộng đồng FinTech hàng đầu</span>
+            </div>
+          </div>
         </div>
       </section>
 
-      {/* Main Content */}
-      <section className="py-12 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-6xl mx-auto space-y-16">
-          {/* Giới thiệu chung */}
-          <div className="relative group">
-            <div className="absolute inset-0 bg-gradient-to-r from-primary/5 to-accent/5 rounded-3xl transform transition-all" />
-            <div className="relative bg-background/40 backdrop-blur-lg rounded-3xl border border-primary/10 p-8 space-y-6">
-              <div className="flex items-center gap-4 mb-6">
-                <div className="w-12 h-12 relative">
-                  <div className="absolute inset-0 bg-gradient-to-r from-primary/20 to-accent/20 rounded-xl blur-lg group-hover:blur-xl transition-all" />
-                  <div className="relative w-full h-full bg-background/50 rounded-xl flex items-center justify-center">
-                    <BookOpen className="h-6 w-6 text-primary" />
-                  </div>
-                </div>
-                <h2 className="text-3xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-                  GIỚI THIỆU CHUNG
-                </h2>
-              </div>
-              <p className="text-lg text-muted-foreground/90 leading-relaxed text-justify">
-                Câu lạc bộ Công nghệ tài chính FTC trực thuộc Khoa Tài chính và Ngân hàng, Trường Đại học Kinh tế và Luật, Đại học Quốc gia Thành phố Hồ Chí Minh, được thành lập vào tháng mười một năm 2020 dưới sự hướng dẫn của ThS. NCS Phan Huy Tâm (Giảng viên Khoa Tài chính - Ngân hàng) cùng đội ngũ sinh viên ngành công nghệ tài chính. UEL là một trong tám đơn vị thành viên của Đại học Quốc gia Thành phố Hồ Chí Minh, là trung tâm đào tạo và nghiên cứu đa ngành, đa lĩnh vực, có uy tín hàng đầu phía Nam trong các khối Kinh tế, Luật, Quản lý công.
-              </p>
-            </div>
-          </div>
+      {/* Modern Information Cards */}
+      <section className="py-16 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto">
+          <div className="grid gap-8 lg:gap-12">
+            {infoSections.map((section, idx) => {
+              const IconComponent = section.icon
+              
+              return (
+                <div key={section.title} className="group relative">
+                  {/* Modern Glassmorphism Card */}
+                  <div className="relative bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-xl rounded-3xl border border-white/20 overflow-hidden transition-all duration-700 group-hover:scale-[1.02] group-hover:shadow-2xl group-hover:shadow-blue-500/20 group-hover:border-blue-400/30">
+                    
+                    {/* Animated Background Overlay */}
+                    <div className="absolute inset-0 bg-gradient-to-br from-transparent via-blue-500/5 to-purple-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+                    
+                    <div className="relative z-10 p-6 lg:p-8">
+                      {/* Header Section */}
+                      <div className="flex flex-col lg:flex-row gap-6 mb-8">
+                        <div className="lg:w-full">
+                          <div className="space-y-4">
+                            {/* Title with Icon */}
+                            <div className="flex items-center gap-4 mb-6">
+                              <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-white/20 to-white/10 backdrop-blur-xl border border-white/30 flex items-center justify-center shadow-xl">
+                                <IconComponent className="w-6 h-6 text-white drop-shadow-lg" />
+                              </div>
+                              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold bg-gradient-to-r from-white via-blue-100 to-white bg-clip-text text-transparent leading-tight">
+                                {section.title}
+                              </h2>
+                            </div>
 
-          {/* Sứ mệnh & Giá trị */}
-          <div className="grid md:grid-cols-2 gap-8">
-            {/* Sứ mệnh */}
-            <div className="relative group">
-              <div className="absolute inset-0 bg-gradient-to-r from-primary/5 to-accent/5 rounded-3xl transform transition-all" />
-              <div className="relative bg-background/40 backdrop-blur-lg rounded-3xl border border-primary/10 p-8 space-y-6">
-                <div className="flex items-center gap-4 mb-6">
-                  <div className="w-12 h-12 relative">
-                    <div className="absolute inset-0 bg-gradient-to-r from-primary/20 to-accent/20 rounded-xl blur-lg group-hover:blur-xl transition-all" />
-                    <div className="relative w-full h-full bg-background/50 rounded-xl flex items-center justify-center">
-                      <Target className="h-6 w-6 text-primary" />
-                    </div>
-                  </div>
-                  <h2 className="text-2xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-                    SỨ MỆNH
-                  </h2>
-                </div>
-                <p className="text-lg text-muted-foreground/90 leading-relaxed text-justify">
-                  Mang lại giá trị thiết thực cho sinh viên thông qua hệ sinh thái học thuật, thực hành và kết nối nghề nghiệp trong lĩnh vực công nghệ tài chính.
-                </p>
-              </div>
-            </div>
-
-            {/* Giá trị */}
-            <div className="relative group">
-              <div className="absolute inset-0 bg-gradient-to-r from-primary/5 to-accent/5 rounded-3xl transform transition-all" />
-              <div className="relative bg-background/40 backdrop-blur-lg rounded-3xl border border-primary/10 p-8 space-y-6">
-                <div className="flex items-center gap-4 mb-6">
-                  <div className="w-12 h-12 relative">
-                    <div className="absolute inset-0 bg-gradient-to-r from-primary/20 to-accent/20 rounded-xl blur-lg group-hover:blur-xl transition-all" />
-                    <div className="relative w-full h-full bg-background/50 rounded-xl flex items-center justify-center">
-                      <Award className="h-6 w-6 text-primary" />
-                    </div>
-                  </div>
-                  <h2 className="text-2xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-                    GIÁ TRỊ CỐT LÕI
-                  </h2>
-                </div>
-                <p className="text-lg text-muted-foreground/90 leading-relaxed text-justify">
-                  Câu lạc bộ đề cao các giá trị cốt lõi giáo dục, kết nối, chia sẻ và hoạt động theo phương châm thống nhất, vượt trội, tiên phong.
-                </p>
-              </div>
-            </div>
-          </div>
-
-          {/* Mục tiêu */}
-          <div className="relative group">
-            <div className="absolute inset-0 bg-gradient-to-r from-primary/5 to-accent/5 rounded-3xl transform transition-all" />
-            <div className="relative bg-background/40 backdrop-blur-lg rounded-3xl border border-primary/10 p-8 space-y-8">
-              <div className="flex items-center gap-4 mb-6">
-                <div className="w-12 h-12 relative">
-                  <div className="absolute inset-0 bg-gradient-to-r from-primary/20 to-accent/20 rounded-xl blur-lg group-hover:blur-xl transition-all" />
-                  <div className="relative w-full h-full bg-background/50 rounded-xl flex items-center justify-center">
-                    <TrendingUp className="h-6 w-6 text-primary" />
-                  </div>
-                </div>
-                <h2 className="text-3xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-                  MỤC TIÊU HOẠT ĐỘNG
-                </h2>
-              </div>
-              <div className="grid md:grid-cols-3 gap-8">
-                {[
-                  {
-                    icon: BookOpen,
-                    text: "Cập nhật và truyền đạt kiến thức về tài chính định lượng, dữ liệu và sản phẩm số.",
-                  },
-                  {
-                    icon: Network,
-                    text: "Kết nối sinh viên với giảng viên, chuyên gia, doanh nghiệp và nhà tuyển dụng.",
-                  },
-                  {
-                    icon: Users,
-                    text: "Xây dựng cộng đồng học thuật cởi mở: cùng học, cùng làm, cùng chia sẻ.",
-                  },
-                ].map((item, index) => (
-                  <div key={index} className="relative group">
-                    <div className="absolute inset-0 bg-gradient-to-r from-primary/5 to-accent/5 rounded-2xl transform transition-all" />
-                    <div className="relative p-6 bg-background/40 backdrop-blur-lg rounded-2xl border border-primary/10">
-                      <div className="w-12 h-12 mb-4 relative">
-                        <div className="absolute inset-0 bg-gradient-to-r from-primary/20 to-accent/20 rounded-xl blur-lg group-hover:blur-xl transition-all" />
-                        <div className="relative w-full h-full bg-background/50 rounded-xl flex items-center justify-center">
-                          <item.icon className="h-6 w-6 text-primary" />
+                            {/* Quick Features */}
+                            <div className="flex flex-wrap gap-2">
+                              {section.quickFeatures?.map((feature, index) => {
+                                const IconComponent = feature.icon
+                                return (
+                                  <div key={index} className="flex items-center gap-2 text-xs text-white/80 bg-white/5 backdrop-blur-sm px-3 py-2 rounded-full border border-white/20">
+                                    <IconComponent className={`w-3 h-3 ${feature.color}`} />
+                                    <span>{feature.text}</span>
+                                  </div>
+                                )
+                              })}
+                            </div>
+                          </div>
                         </div>
                       </div>
-                      <p className="text-lg text-muted-foreground/90 leading-relaxed text-justify">{item.text}</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
+                      
+                      {/* Content Section */}
+                      <div className="bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-xl rounded-2xl p-6 border border-white/20 shadow-xl">
+                        {/* General Content */}
+                        {section.content && (
+                          <div className="mb-6">
+                            <p className="text-white/90 leading-relaxed text-justify">
+                              {section.content}
+                            </p>
+                          </div>
+                        )}
 
-          {/* Tầm nhìn */}
-          <div className="relative group">
-            <div className="absolute inset-0 bg-gradient-to-r from-primary/5 to-accent/5 rounded-3xl transform transition-all" />
-            <div className="relative bg-background/40 backdrop-blur-lg rounded-3xl border border-primary/10 p-8 space-y-6">
-              <h2 className="text-3xl font-bold text-center bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-                TẦM NHÌN
-              </h2>
-              <p className="text-lg text-muted-foreground/90 leading-relaxed text-center max-w-4xl mx-auto">
-                FTC đặt mục tiêu trở thành cộng đồng sinh viên yêu thích công nghệ tài chính lớn nhất Việt Nam và mở rộng mạng lưới hợp tác giữa sinh viên và doanh nghiệp trong khu vực Đông Nam Á.
-              </p>
-            </div>
-          </div>
+                        {/* Missions */}
+                        {section.missions && (
+                          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                            {section.missions.map((mission, index) => {
+                              const MissionIcon = mission.icon
+                              return (
+                                <div key={index} className="p-6 bg-white/5 rounded-xl border border-white/10 hover:bg-white/10 transition-all duration-300">
+                                  <div className="flex items-start gap-3 mb-4">
+                                    <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-blue-400/20 to-purple-400/20 border border-blue-400/30 flex items-center justify-center flex-shrink-0">
+                                      <MissionIcon className="w-4 h-4 text-blue-300" />
+                                    </div>
+                                    <h3 className="text-lg font-bold text-white">{mission.title}</h3>
+                                  </div>
+                                  <p className="text-white/80 leading-relaxed text-sm text-justify">
+                                    {mission.description}
+                                  </p>
+                                </div>
+                              )
+                            })}
+                          </div>
+                        )}
 
-          {/* Hoạt động */}
-          <div className="relative group">
-            <div className="absolute inset-0 bg-gradient-to-r from-primary/5 to-accent/5 rounded-3xl transform transition-all" />
-            <div className="relative bg-background/40 backdrop-blur-lg rounded-3xl border border-primary/10 p-8 space-y-8">
-              <h2 className="text-3xl font-bold text-center bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-                HOẠT ĐỘNG TIÊU BIỂU
-              </h2>
-              <div className="grid md:grid-cols-2 gap-8">
-                {[
-                  {
-                    title: "Hội thảo, toạ đàm, chuyên đề",
-                    text: "Các chủ đề trọng tâm gồm xu hướng công nghệ tài chính, ứng dụng dữ liệu và trí tuệ nhân tạo trong hoạt động tài chính, phát triển sản phẩm ngân hàng số, diễn biến thị trường vốn và các phương pháp quản trị rủi ro hiện đại.",
-                  },
-                  {
-                    title: "Cuộc thi học thuật và dự án thực tế",
-                    text: "Thiết kế mô hình, phát triển công cụ phân tích và kiểm thử trên dữ liệu thực tế.",
-                  },
-                  {
-                    title: "Kết nối nghề nghiệp",
-                    text: "Kết nối và trao đổi cùng chuyên gia, người hướng dẫn, tiếp cận cơ hội thực tập và ngày hội việc làm, đồng thời tham quan doanh nghiệp để hiểu rõ môi trường làm việc thực tế.",
-                  },
-                  {
-                    title: "Cộng đồng học thuật",
-                    text: "Môi trường học tập và nghiên cứu cởi mở, thân thiện, khuyến khích sáng tạo và đổi mới.",
-                  },
-                ].map((item, index) => (
-                  <div key={index} className="relative group">
-                    <div className="absolute inset-0 bg-gradient-to-r from-primary/5 to-accent/5 rounded-2xl transform transition-all" />
-                    <div className="relative p-6 bg-background/40 backdrop-blur-lg rounded-2xl border border-primary/10 h-full">
-                      <div className="flex items-center gap-4 mb-4">
-                        <div className="w-2 h-2 bg-primary rounded-full mt-2" />
-                        <h3 className="text-xl font-bold text-foreground">{item.title}</h3>
+                        {/* Vision */}
+                        {section.vision && (
+                          <div className="mb-6 p-6 bg-gradient-to-r from-purple-500/10 to-violet-500/10 rounded-xl border border-purple-400/20">
+                            <div className="flex items-center gap-3 mb-4">
+                              <Eye className="w-6 h-6 text-purple-400" />
+                              <h3 className="text-xl font-bold text-white">Tầm nhìn</h3>
+                            </div>
+                            <p className="text-white/90 leading-relaxed text-justify italic">
+                              {section.vision}
+                            </p>
+                          </div>
+                        )}
+
+                        {/* Objectives */}
+                        {section.objectives && (
+                          <div className="mb-6">
+                            <div className="flex items-center gap-3 mb-6">
+                              <div className="w-2 h-2 bg-gradient-to-r from-blue-400 to-purple-400 rounded-full animate-pulse" />
+                              <h3 className="text-lg font-bold text-white">Mục tiêu hoạt động</h3>
+                            </div>
+                            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                              {section.objectives.map((objective, index) => {
+                                const ObjectiveIcon = objective.icon
+                                return (
+                                  <div key={index} className="p-4 bg-white/5 rounded-xl border border-white/10 hover:bg-white/10 transition-all duration-300">
+                                    <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-blue-400/20 to-purple-400/20 border border-blue-400/30 flex items-center justify-center mb-3">
+                                      <ObjectiveIcon className="w-4 h-4 text-blue-300" />
+                                    </div>
+                                    <p className="text-white/80 leading-relaxed text-sm text-justify">
+                                      {objective.text}
+                                    </p>
+                                  </div>
+                                )
+                              })}
+                            </div>
+                          </div>
+                        )}
+
+                        {/* Activities */}
+                        {section.activities && (
+                          <div>
+                            <div className="flex items-center gap-3 mb-6">
+                              <div className="w-2 h-2 bg-gradient-to-r from-amber-400 to-orange-400 rounded-full animate-pulse" />
+                              <h3 className="text-lg font-bold text-white">Các hoạt động chính</h3>
+                            </div>
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                              {section.activities.map((activity, index) => {
+                                const ActivityIcon = activity.icon
+                                return (
+                                  <div key={index} className="p-4 bg-white/5 rounded-xl border border-white/10 hover:bg-white/10 transition-all duration-300">
+                                    <div className="flex items-start gap-3 mb-3">
+                                      <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-amber-400/20 to-orange-400/20 border border-amber-400/30 flex items-center justify-center flex-shrink-0 mt-1">
+                                        <ActivityIcon className="w-4 h-4 text-amber-300" />
+                                      </div>
+                                      <h4 className="text-base font-bold text-white leading-tight">{activity.title}</h4>
+                                    </div>
+                                    <p className="text-white/80 leading-relaxed text-sm pl-11 text-justify">
+                                      {activity.description}
+                                    </p>
+                                  </div>
+                                )
+                              })}
+                            </div>
+                          </div>
+                        )}
                       </div>
-                      <p className="text-lg text-muted-foreground/90 leading-relaxed pl-6 text-justify">{item.text}</p>
                     </div>
                   </div>
-                ))}
-              </div>
+                </div>
+              )
+            })}
+          </div>
+        </div>
+      </section>
+
+      {/* Call to Action Section */}
+      <section className="py-16 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-4xl mx-auto text-center">
+          <div className="bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-xl rounded-3xl border border-white/20 p-12 shadow-2xl">
+            <div className="w-20 h-20 mx-auto mb-8 bg-gradient-to-r from-blue-500 to-purple-600 rounded-3xl flex items-center justify-center shadow-xl">
+              <Users className="w-10 h-10 text-white" />
+            </div>
+            <h2 className="text-4xl font-bold text-white mb-6">THAM GIA CỘNG ĐỒNG FTC</h2>
+            <p className="text-xl text-white/80 mb-8 leading-relaxed italic">
+              Khám phá thế giới FinTech và phát triển bản thân cùng chúng tôi
+            </p>
+            <div className="flex flex-wrap justify-center gap-4">
+              <a 
+                href="https://ftc-websites.vercel.app/ung-tuyen" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="px-8 py-4 bg-gradient-to-r from-blue-500 to-purple-600 rounded-2xl text-white font-bold hover:shadow-xl hover:scale-105 transition-all cursor-pointer"
+              >
+                Đăng ký tham gia
+              </a>
+              <a 
+                href="https://www.facebook.com/clbfintechuel" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="px-8 py-4 bg-gradient-to-r from-white/10 to-white/5 backdrop-blur-xl border border-white/20 rounded-2xl text-white font-bold hover:shadow-xl hover:scale-105 transition-all cursor-pointer"
+              >
+                Theo dõi Fanpage
+              </a>
             </div>
           </div>
         </div>
       </section>
 
+      {/* Modern Footer */}
+      <footer className="py-12 px-4 sm:px-6 lg:px-8 border-t border-white/20">
+        <div className="max-w-7xl mx-auto text-center">
+          <p className="text-lg text-white/70 italic">
+            ©2025. Câu lạc bộ Công nghệ Tài chính
+          </p>
+        </div>
+      </footer>
+
+      {/* Custom Animations */}
       <style jsx global>{`
         @keyframes float {
           0%, 100% { transform: translate(0, 0) rotate(0deg); }
@@ -239,6 +370,14 @@ export default function ThongTinPage() {
         @keyframes float-reverse {
           0%, 100% { transform: translate(0, 0) rotate(0deg); }
           50% { transform: translate(20px, -20px) rotate(-5deg); }
+        }
+        @keyframes blink {
+          0%, 50%, 100% { opacity: 1; }
+          25%, 75% { opacity: 0.8; }
+        }
+        @keyframes gradient-shift {
+          0%, 100% { background-position: 0% 50%; }
+          50% { background-position: 100% 50%; }
         }
         .animate-float {
           animation: float 20s ease-in-out infinite;
