@@ -220,23 +220,23 @@ export default function CoPage() {
                         
                         {/* Department Info Section */}
                         <div className="lg:w-2/5">
-                          <div className="space-y-4">
+              <div className="space-y-4">
                             {/* Category Info */}
                             <div className="flex flex-wrap items-center gap-3 mb-4">
                               <div className={`px-4 py-2 rounded-full text-xs font-bold backdrop-blur-xl border shadow-lg text-white bg-gradient-to-r ${dept.cardGradient}`}>
                                 {dept.category}
-                              </div>
-                            </div>
-                            
+            </div>
+          </div>
+
                             {/* Title with Icon */}
-                            <div className="flex items-center gap-4 mb-6">
+              <div className="flex items-center gap-4 mb-6">
                               <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-white/20 to-white/10 backdrop-blur-xl border border-white/30 flex items-center justify-center shadow-xl">
                                 <IconComponent className="w-6 h-6 text-white drop-shadow-lg" />
-                              </div>
+                  </div>
                               <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold bg-gradient-to-r from-white via-blue-100 to-white bg-clip-text text-transparent leading-tight">
                                 {dept.title}
-                              </h2>
-                            </div>
+                </h2>
+              </div>
 
                             {/* Quick Features */}
                             <div className="flex flex-wrap gap-2">
@@ -249,11 +249,11 @@ export default function CoPage() {
                                   </div>
                                 )
                               })}
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      
+                    </div>
+                    </div>
+                  </div>
+                </div>
+
                       {/* Content Section - Responsibilities */}
                       <div className="bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-xl rounded-2xl p-6 border border-white/20 shadow-xl">
                         <div className="flex items-center gap-3 mb-6">
@@ -272,14 +272,14 @@ export default function CoPage() {
                             </div>
                           ))}
                         </div>
-                      </div>
+                    </div>
                     </div>
                   </div>
                 </div>
               )
             })}
-          </div>
-        </div>
+                    </div>
+                  </div>
       </section>
 
       {/* Modern Cooperation Principles */}
@@ -294,7 +294,7 @@ export default function CoPage() {
             <p className="text-xl text-white/80 leading-relaxed italic max-w-3xl mx-auto">
               Quy trình phối hợp chuyên nghiệp giữa các ban để đảm bảo hiệu quả tối đa
             </p>
-          </div>
+                </div>
 
           {/* Cooperation Flow */}
           <div className="relative">
@@ -333,12 +333,12 @@ export default function CoPage() {
                             <h3 className="text-2xl font-bold text-white group-hover:text-blue-200 transition-colors">
                               {principle.title}
                             </h3>
-                          </div>
-                        </div>
+                    </div>
+                  </div>
                         <p className="text-white/80 leading-relaxed text-lg">
                           {principle.description}
                         </p>
-                      </div>
+                </div>
                     </div>
 
                     {/* Arrow for mobile */}
@@ -352,7 +352,7 @@ export default function CoPage() {
               })}
             </div>
           </div>
-        </div>
+                  </div>
       </section>
 
       {/* Call to Action Section */}
@@ -361,7 +361,7 @@ export default function CoPage() {
           <div className="bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-xl rounded-3xl border border-white/20 p-12 shadow-2xl">
             <div className="w-20 h-20 mx-auto mb-8 bg-gradient-to-r from-blue-500 to-purple-600 rounded-3xl flex items-center justify-center shadow-xl">
               <Users className="w-10 h-10 text-white" />
-            </div>
+              </div>
             <h2 className="text-4xl font-bold text-white mb-6">THAM GIA ĐỘI NGŨ FTC</h2>
             <p className="text-xl text-white/80 mb-8 leading-relaxed italic">
               Khám phá cơ hội phát triển bản thân và đóng góp cho cộng đồng FinTech

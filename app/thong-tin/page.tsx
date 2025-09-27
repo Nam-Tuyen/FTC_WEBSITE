@@ -130,7 +130,7 @@ export default function ThongTinPage() {
             </span>
           </h1>
           <p className="text-base sm:text-lg md:text-xl lg:text-2xl xl:text-2xl text-muted-foreground leading-relaxed max-w-4xl mx-auto italic px-4">
-            Giới thiệu tỏng quan thông tin về FTC
+            Giới thiệu tổng quan thông tin về FTC
           </p>
 
           {/* Social Media Badges */}
@@ -326,9 +326,9 @@ export default function ThongTinPage() {
             <div className="w-20 h-20 mx-auto mb-8 bg-gradient-to-r from-blue-500 to-purple-600 rounded-3xl flex items-center justify-center shadow-xl">
               <Users className="w-10 h-10 text-white" />
             </div>
-            <h2 className="text-4xl font-bold text-white mb-6">THAM GIA CÂU LẠC BỌ FTC</h2>
+            <h2 className="text-4xl font-bold text-white mb-6">THAM GIA CÂU LẠC BỘ FTC</h2>
             <p className="text-xl text-white/80 mb-8 leading-relaxed italic">
-              Khám phá thế giới FinTech và phát triển bản thân cùng nàh Ép
+              Khám phá thế giới FinTech và phát triển bản thân cùng nhà Ép
             </p>
             <div className="flex flex-wrap justify-center gap-4">
               <a 

@@ -390,9 +390,9 @@ export default function ActivitiesPage() {
             <div className="w-20 h-20 mx-auto mb-8 bg-gradient-to-r from-blue-500 to-purple-600 rounded-3xl flex items-center justify-center shadow-xl">
               <Sparkles className="w-10 h-10 text-white" />
             </div>
-            <h2 className="text-4xl font-bold text-white mb-6">THAM GIA CÙNG FTC</h2>
+            <h2 className="text-4xl font-bold text-white mb-6">CẬP NHẬT HOẠT ĐỘNG CỦA FTC</h2>
             <p className="text-xl text-white/80 mb-8 leading-relaxed italic">
-              Đăng ký để không bỏ lỡ các hoạt động thú vị và cơ hội học hỏi quý báu
+              Theo dõi để không bỏ lỡ các thông tin mới nhất về các hoạt động tại FTC
             </p>
             <div className="flex flex-wrap justify-center gap-4">
               <a 
