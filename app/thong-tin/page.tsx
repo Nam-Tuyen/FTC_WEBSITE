@@ -332,12 +332,12 @@ export default function ThongTinPage() {
             </p>
             <div className="flex flex-wrap justify-center gap-4">
               <a 
-                href="https://ftc-websites.vercel.app/ung-tuyen" 
+                href="https://ftc-websites.vercel.app/thanh-tich" 
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="px-8 py-4 bg-gradient-to-r from-blue-500 to-purple-600 rounded-2xl text-white font-bold hover:shadow-xl hover:scale-105 transition-all cursor-pointer"
               >
-                Đăng ký tham gia
+                Tìm hiểu về thành tích của nhà Ép
               </a>
               <a 
                 href="https://www.facebook.com/clbfintechuel" 

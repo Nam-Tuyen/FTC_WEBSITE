@@ -237,18 +237,18 @@ export default function AchievementsPage() {
             <div className="w-20 h-20 mx-auto mb-8 bg-gradient-to-r from-yellow-500 to-amber-600 rounded-3xl flex items-center justify-center shadow-xl">
               <Trophy className="w-10 h-10 text-white" />
             </div>
-            <h2 className="text-4xl font-bold text-white mb-6">TÌM HIỂU VỀ THÀNH TÍCH CỦA NHÀ ÉP</h2>
+            <h2 className="text-4xl font-bold text-white mb-6">CÙNG VIẾT NÊN THÀNH TÍCH MỚI</h2>
             <p className="text-xl text-white/80 mb-8 leading-relaxed italic">
-              Khám phá thế giới FinTech và phát triển bản thân cùng nhà Ép
+              Tham gia FTC để cùng tạo nên những thành tựu đáng tự hào tiếp theo
             </p>
             <div className="flex flex-wrap justify-center gap-4">
               <a 
-                href="https://ftc-websites.vercel.app/thanh-tich" 
+                href="https://ftc-websites.vercel.app/ung-tuyen" 
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="px-8 py-4 bg-gradient-to-r from-yellow-500 to-amber-600 rounded-2xl text-white font-bold hover:shadow-xl hover:scale-105 transition-all cursor-pointer flex items-center gap-2"
               >
-                <span>Xem thành tích</span>
+                <span>Đăng ký tham gia</span>
                 <ArrowRight className="w-5 h-5" />
               </a>
               <a 
