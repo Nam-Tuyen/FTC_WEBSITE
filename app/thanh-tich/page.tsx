@@ -1,7 +1,7 @@
 'use client'
 
 import { Navigation } from "@/components/navigation"
-import { Trophy, Award, Star, Target, Sparkles, Users, Heart, Lightbulb, Rocket, Globe, Medal, Crown, Zap, ArrowRight } from "lucide-react"
+import { Trophy, Award, Star, Target, Sparkles, Users, Heart, Lightbulb, Rocket, Globe, Medal, Crown, Zap, ArrowRight, Calendar, Activity } from "lucide-react"
 
 const achievementSections = [
   {
@@ -234,8 +234,8 @@ export default function AchievementsPage() {
       <section className="py-16 px-4 sm:px-6 lg:px-8">
         <div className="max-w-4xl mx-auto text-center">
           <div className="bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-xl rounded-3xl border border-white/20 p-12 shadow-2xl">
-            <div className="w-20 h-20 mx-auto mb-8 bg-gradient-to-r from-yellow-500 to-amber-600 rounded-3xl flex items-center justify-center shadow-xl">
-              <Trophy className="w-10 h-10 text-white" />
+            <div className="w-20 h-20 mx-auto mb-8 bg-gradient-to-r from-green-500 to-emerald-600 rounded-3xl flex items-center justify-center shadow-xl">
+              <Activity className="w-10 h-10 text-white" />
             </div>
             <h2 className="text-4xl font-bold text-white mb-6">TÌM HIỂU VỀ CÁC HOẠT ĐỘNG TẠI FTC</h2>
             <p className="text-xl text-white/80 mb-8 leading-relaxed italic">
