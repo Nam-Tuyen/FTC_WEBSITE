@@ -8,6 +8,8 @@ import { MessageSquare, Search, Users, TrendingUp, Hash, Star, Clock, Heart, Mes
 import { createQuestion, fetchQuestions } from '../../googleSheetApi/sheet'
 import { CATEGORIES, STORAGE_KEYS, QuestionItem, Reply, ForumCategory } from './types'
 import { uuid, formatTime } from './utils/index'
+import { SimpleMobileSend } from './components/simple-mobile-send'
+import './components/mobile-optimizations.css'
 
 export default function ForumPage() {
   const [currentUserId, setCurrentUserId] = useState<string>('')
@@ -477,9 +479,12 @@ export default function ForumPage() {
                       </span>
                     </div>
 
-                    {/* Quick reply - Enhanced */}
+                    {/* Quick reply - Mobile Optimized */}
                     <div className="mt-6">
-                      <QuickReply onSubmit={(content)=>handleAddReply(question.id, content, '')} />
+                      <SimpleMobileSend 
+                        onSubmit={(content) => handleAddReply(question.id, content, '')} 
+                        className="mobile-send-button"
+                      />
                     </div>
                   </div>
                 </div>
@@ -596,14 +601,3 @@ function AskInline({ onSubmit, defaultStudentId, onUpdateStudentId }: { onSubmit
   )
 }
 
-function QuickReply({ onSubmit }: { onSubmit: (content: string)=>void }) {
-  const [content, setContent] = useState('')
-  return (
-    <div className="mt-4 flex items-center gap-2">
-      <Input value={content} onChange={(e)=>setContent(e.target.value)} placeholder="Viết phản hồi nhanh..." className="flex-1 bg-white/10 border-white/20 text-white placeholder-white/60" />
-      <Button onClick={()=>{ if(content.trim()){ onSubmit(content); setContent('') } }} className="bg-white/10 hover:bg-white/20 text-white border border-white/20 rounded-xl">
-        Trả lời
-      </Button>
-    </div>
-  )
-}

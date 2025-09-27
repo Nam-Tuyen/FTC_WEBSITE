@@ -1,0 +1,215 @@
+/* Mobile iOS Optimizations for Send Button */
+
+/* iOS-specific touch optimizations */
+.mobile-send-button {
+  /* Disable iOS zoom on double tap */
+  touch-action: manipulation;
+  
+  /* Remove iOS highlight */
+  -webkit-tap-highlight-color: transparent;
+  
+  /* Prevent text selection */
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  
+  /* Smooth hardware acceleration */
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+  
+  /* iOS-specific button styling */
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+/* Ripple effect animation */
+@keyframes ripple {
+  0% {
+    transform: scale(0);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(4);
+    opacity: 0;
+  }
+}
+
+/* Press animation for iOS */
+@keyframes press {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(0.95);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* Success animation */
+@keyframes success-pulse {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.4);
+  }
+  70% {
+    transform: scale(1.05);
+    box-shadow: 0 0 0 10px rgba(34, 197, 94, 0);
+  }
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(34, 197, 94, 0);
+  }
+}
+
+/* Loading spinner for iOS */
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* iOS-style button press effect */
+.mobile-send-button:active {
+  transform: scale(0.95);
+  transition: transform 0.1s ease-out;
+}
+
+/* Enhanced touch targets for iOS */
+@media (max-width: 768px) {
+  .mobile-send-button {
+    min-width: 44px;
+    min-height: 44px;
+  }
+}
+
+/* iOS Safari specific fixes */
+@supports (-webkit-touch-callout: none) {
+  .mobile-send-button {
+    /* Fix for iOS Safari button styling */
+    -webkit-appearance: none;
+    border-radius: 0;
+  }
+  
+  /* Fix for iOS Safari input styling */
+  .mobile-input {
+    -webkit-appearance: none;
+    border-radius: 0;
+  }
+}
+
+/* Dark mode optimizations for iOS */
+@media (prefers-color-scheme: dark) {
+  .mobile-send-button {
+    /* Enhanced contrast for dark mode */
+    filter: brightness(1.1);
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .mobile-send-button {
+    transition: none;
+  }
+  
+  .mobile-send-button:active {
+    transform: none;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .mobile-send-button {
+    border: 2px solid currentColor;
+  }
+}
+
+/* Focus indicators for accessibility */
+.mobile-send-button:focus-visible {
+  outline: 3px solid #3b82f6;
+  outline-offset: 2px;
+}
+
+/* iOS-specific input optimizations */
+.mobile-input {
+  /* Prevent zoom on focus */
+  font-size: 16px;
+  
+  /* iOS-specific styling */
+  -webkit-appearance: none;
+  border-radius: 0;
+  
+  /* Better touch targets */
+  padding: 12px 16px;
+  min-height: 44px;
+}
+
+/* iOS Safari viewport fixes */
+@supports (-webkit-touch-callout: none) {
+  .mobile-container {
+    /* Fix for iOS Safari viewport issues */
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
+/* Haptic feedback simulation (visual) */
+.mobile-send-button.haptic-feedback {
+  animation: haptic-pulse 0.1s ease-out;
+}
+
+@keyframes haptic-pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.02);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* iOS-style shadows */
+.mobile-send-button {
+  box-shadow: 
+    0 1px 3px rgba(0, 0, 0, 0.12),
+    0 1px 2px rgba(0, 0, 0, 0.24);
+}
+
+.mobile-send-button:hover {
+  box-shadow: 
+    0 3px 6px rgba(0, 0, 0, 0.16),
+    0 3px 6px rgba(0, 0, 0, 0.23);
+}
+
+.mobile-send-button:active {
+  box-shadow: 
+    0 1px 3px rgba(0, 0, 0, 0.12),
+    0 1px 2px rgba(0, 0, 0, 0.24);
+}
+
+/* iOS-style gradients */
+.mobile-send-button {
+  background: linear-gradient(135deg, #007AFF 0%, #0051D5 100%);
+}
+
+.mobile-send-button:disabled {
+  background: linear-gradient(135deg, #8E8E93 0%, #6D6D70 100%);
+}
+
+/* iOS-style border radius */
+.mobile-send-button {
+  border-radius: 12px;
+}
+
+/* iOS-style typography */
+.mobile-send-button {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
