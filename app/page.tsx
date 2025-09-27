@@ -32,7 +32,7 @@ export default function HomePage() {
               <span className="text-xs sm:text-sm font-bold text-accent uppercase tracking-wider">BẠN ĐÃ SẴN SÀNG CHƯA?</span>
             </div>
 
-            <h1 className="font-heading font-black text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl text-foreground mb-6 sm:mb-8 text-balance text-glow tracking-wide leading-tight">
+            <h1 className="font-heading font-black text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl text-foreground mb-6 sm:mb-8 text-balance text-glow tracking-wide leading-tight">
               CÂU LẠC BỘ <br />
               <span className="bg-gradient-to-r from-accent via-secondary to-accent bg-clip-text text-transparent animate-pulse">
                 CÔNG NGHỆ TÀI CHÍNH
@@ -60,7 +60,7 @@ export default function HomePage() {
       <section className="py-20 px-4 sm:px-6 lg:px-8 relative">
         <div className="absolute inset-0 bg-card/10 backdrop-blur-sm"></div>
         <div className="max-w-7xl mx-auto relative z-10">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 lg:gap-8">
             {[
               { number: "100+", label: "THÀNH VIÊN", icon: Users2 },
               { number: "+10", label: "DỰ ÁN", icon: Rocket },
@@ -71,13 +71,13 @@ export default function HomePage() {
               return (
                 <div key={index} className="text-center group">
                   <div className="relative mb-4">
-                    <div className="w-20 h-20 mx-auto bg-gradient-to-br from-accent/20 to-secondary/20 rounded-2xl flex items-center justify-center glow group-hover:scale-110 transition-all duration-300">
-                      <IconComponent className="h-10 w-10 text-accent" />
+                    <div className="w-16 h-16 sm:w-20 sm:h-20 mx-auto bg-gradient-to-br from-accent/20 to-secondary/20 rounded-2xl flex items-center justify-center glow group-hover:scale-110 transition-all duration-300">
+                      <IconComponent className="h-8 w-8 sm:h-10 sm:w-10 text-accent" />
                     </div>
-                    <div className="absolute inset-0 w-20 h-20 mx-auto border-2 border-accent/30 rounded-2xl animate-pulse"></div>
+                    <div className="absolute inset-0 w-16 h-16 sm:w-20 sm:h-20 mx-auto border-2 border-accent/30 rounded-2xl animate-pulse"></div>
                   </div>
-                  <div className="text-4xl font-black text-accent mb-2 text-glow">{stat.number}</div>
-                  <div className="text-sm font-bold text-foreground/80 uppercase tracking-widest">{stat.label}</div>
+                  <div className="text-2xl sm:text-3xl lg:text-4xl font-black text-accent mb-2 text-glow">{stat.number}</div>
+                  <div className="text-xs sm:text-sm font-bold text-foreground/80 uppercase tracking-widest">{stat.label}</div>
                 </div>
               )
             })}
@@ -93,7 +93,7 @@ export default function HomePage() {
               <Brain className="h-4 w-4 text-accent mr-2" />
               <span className="text-sm font-bold text-accent uppercase tracking-wider">Lợi ích khi tham gia    </span>
             </div>
-            <h2 className="font-heading font-black text-[70px] leading-[100px] text-foreground mb-6 text-glow">
+            <h2 className="font-heading font-black text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl text-foreground mb-6 text-glow leading-tight">
               TẠI SAO CHỌN CÂU LẠC BỘ CÔNG NGHỆ TÀI CHÍNH?
             </h2>
             <p className="text-xl text-foreground/70 max-w-3xl mx-auto font-medium leading-relaxed">
@@ -173,9 +173,9 @@ export default function HomePage() {
           <h2 className="font-heading font-black text-4xl sm:text-5xl text-foreground mb-6 text-glow">
             THAM GIA ĐỂ TRỞ THÀNH FTCER  
           </h2>
-          <p className="text-xl text-foreground/80 mb-12 font-medium leading-relaxed max-w-2xl mx-auto">
-            Đăng ký ngay hôm nay để cùng FTC khám phá bản thân, học điều mới, tham gia hoạt động thực tế và kết nối với cộng đồng FINTECH.
-          </p>
+            <p className="text-lg sm:text-xl text-foreground/80 mb-12 font-medium leading-relaxed max-w-2xl mx-auto px-4">
+              Đăng ký ngay hôm nay để cùng FTC khám phá bản thân, học điều mới, tham gia hoạt động thực tế và kết nối với cộng đồng FINTECH.
+            </p>
           <Button
             asChild
             size="lg"
