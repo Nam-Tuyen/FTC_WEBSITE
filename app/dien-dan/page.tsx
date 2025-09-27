@@ -432,7 +432,7 @@ export default function ForumPage() {
                           }`}>
                             <Heart className={`h-4 w-4 sm:h-5 sm:w-5 transition-colors ${
                               question.likes.includes(currentUserId) 
-                                ? 'text-red-400' 
+                                ? 'text-red-500 fill-red-500' 
                                 : 'text-white group-hover:text-red-400'
                             }`} />
                           </div>
