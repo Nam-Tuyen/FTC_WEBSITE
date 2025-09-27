@@ -186,14 +186,14 @@ export default function ThongTinPage() {
                         <div className="lg:w-full">
                           <div className="space-y-4">
                             {/* Title with Icon */}
-                            <div className="flex items-center gap-4 mb-6">
+              <div className="flex items-center gap-4 mb-6">
                               <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-white/20 to-white/10 backdrop-blur-xl border border-white/30 flex items-center justify-center shadow-xl">
                                 <IconComponent className="w-6 h-6 text-white drop-shadow-lg" />
-                              </div>
+                  </div>
                               <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold bg-gradient-to-r from-white via-blue-100 to-white bg-clip-text text-transparent leading-tight">
                                 {section.title}
-                              </h2>
-                            </div>
+                </h2>
+              </div>
 
                             {/* Quick Features */}
                             <div className="flex flex-wrap gap-2">
@@ -208,9 +208,9 @@ export default function ThongTinPage() {
                               })}
                             </div>
                           </div>
-                        </div>
-                      </div>
-                      
+            </div>
+          </div>
+
                       {/* Content Section */}
                       <div className="bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-xl rounded-2xl p-6 border border-white/20 shadow-xl">
                         {/* General Content */}
@@ -219,7 +219,7 @@ export default function ThongTinPage() {
                             <p className="text-white/90 leading-relaxed text-justify">
                               {section.content}
                             </p>
-                          </div>
+                    </div>
                         )}
 
                         {/* Missions */}
@@ -232,16 +232,16 @@ export default function ThongTinPage() {
                                   <div className="flex items-start gap-3 mb-4">
                                     <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-blue-400/20 to-purple-400/20 border border-blue-400/30 flex items-center justify-center flex-shrink-0">
                                       <MissionIcon className="w-4 h-4 text-blue-300" />
-                                    </div>
+                  </div>
                                     <h3 className="text-lg font-bold text-white">{mission.title}</h3>
-                                  </div>
+                </div>
                                   <p className="text-white/80 leading-relaxed text-sm text-justify">
                                     {mission.description}
-                                  </p>
-                                </div>
+                </p>
+              </div>
                               )
                             })}
-                          </div>
+            </div>
                         )}
 
                         {/* Vision */}
@@ -254,7 +254,7 @@ export default function ThongTinPage() {
                             <p className="text-white/90 leading-relaxed text-justify italic">
                               {section.vision}
                             </p>
-                          </div>
+                    </div>
                         )}
 
                         {/* Objectives */}
@@ -263,7 +263,7 @@ export default function ThongTinPage() {
                             <div className="flex items-center gap-3 mb-6">
                               <div className="w-2 h-2 bg-gradient-to-r from-blue-400 to-purple-400 rounded-full animate-pulse" />
                               <h3 className="text-lg font-bold text-white">Mục tiêu hoạt động</h3>
-                            </div>
+                  </div>
                             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                               {section.objectives.map((objective, index) => {
                                 const ObjectiveIcon = objective.icon
@@ -271,15 +271,15 @@ export default function ThongTinPage() {
                                   <div key={index} className="p-4 bg-white/5 rounded-xl border border-white/10 hover:bg-white/10 transition-all duration-300">
                                     <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-blue-400/20 to-purple-400/20 border border-blue-400/30 flex items-center justify-center mb-3">
                                       <ObjectiveIcon className="w-4 h-4 text-blue-300" />
-                                    </div>
+                </div>
                                     <p className="text-white/80 leading-relaxed text-sm text-justify">
                                       {objective.text}
-                                    </p>
-                                  </div>
+                </p>
+              </div>
                                 )
                               })}
-                            </div>
-                          </div>
+            </div>
+          </div>
                         )}
 
                         {/* Activities */}
@@ -299,20 +299,20 @@ export default function ThongTinPage() {
                                         <ActivityIcon className="w-4 h-4 text-amber-300" />
                                       </div>
                                       <h4 className="text-base font-bold text-white leading-tight">{activity.title}</h4>
-                                    </div>
+                  </div>
                                     <p className="text-white/80 leading-relaxed text-sm pl-11 text-justify">
                                       {activity.description}
                                     </p>
-                                  </div>
+                </div>
                                 )
                               })}
-                            </div>
-                          </div>
+              </div>
+                        </div>
                         )}
                       </div>
                     </div>
                   </div>
-                </div>
+              </div>
               )
             })}
           </div>
@@ -323,12 +323,12 @@ export default function ThongTinPage() {
       <section className="py-16 px-4 sm:px-6 lg:px-8">
         <div className="max-w-4xl mx-auto text-center">
           <div className="bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-xl rounded-3xl border border-white/20 p-12 shadow-2xl">
-            <div className="w-20 h-20 mx-auto mb-8 bg-gradient-to-r from-blue-500 to-purple-600 rounded-3xl flex items-center justify-center shadow-xl">
-              <Users className="w-10 h-10 text-white" />
+            <div className="w-20 h-20 mx-auto mb-8 bg-gradient-to-r from-yellow-500 to-amber-600 rounded-3xl flex items-center justify-center shadow-xl">
+              <Trophy className="w-10 h-10 text-white" />
             </div>
-            <h2 className="text-4xl font-bold text-white mb-6">THAM GIA CÂU LẠC BỘ FTC</h2>
+            <h2 className="text-4xl font-bold text-white mb-6">TÌM HIỂU VỀ THÀNH TÍCH CÂU LẠC BỘ FTC</h2>
             <p className="text-xl text-white/80 mb-8 leading-relaxed italic">
-              Khám phá thế giới FinTech và phát triển bản thân cùng nhà Ép
+              Khám phá những thành tích mà nhà Ép đã đạt được thời gian qua
             </p>
             <div className="flex flex-wrap justify-center gap-4">
               <a 
@@ -337,7 +337,7 @@ export default function ThongTinPage() {
                 rel="noopener noreferrer"
                 className="px-8 py-4 bg-gradient-to-r from-blue-500 to-purple-600 rounded-2xl text-white font-bold hover:shadow-xl hover:scale-105 transition-all cursor-pointer"
               >
-                Tìm hiểu về thành tích của nhà Ép
+                Thành tích của FTC
               </a>
               <a 
                 href="https://www.facebook.com/clbfintechuel" 
