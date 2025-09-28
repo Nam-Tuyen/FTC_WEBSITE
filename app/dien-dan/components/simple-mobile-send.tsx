@@ -45,7 +45,7 @@ export function SimpleMobileSend({ onSubmit, disabled = false, className = '' }:
         onChange={(e) => setContent(e.target.value)}
         onKeyPress={handleKeyPress}
         placeholder="Viết phản hồi..."
-        className="flex-1 px-4 py-3 rounded-2xl bg-white/10 border border-white/20 text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:border-purple-500/50 transition-all mobile-input backdrop-blur-sm hover:bg-white/15"
+        className="flex-1 px-4 py-3 rounded-2xl bg-gray-800/90 border border-gray-700/50 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:border-purple-500/50 transition-all mobile-input backdrop-blur-sm hover:bg-gray-700/90"
         disabled={disabled}
         style={{
           fontSize: '16px', // Prevent zoom on iOS
