@@ -21,6 +21,17 @@
   /* iOS-specific button styling */
   -webkit-appearance: none;
   appearance: none;
+  
+  /* Enhanced mobile touch targets */
+  min-width: 44px;
+  min-height: 44px;
+  
+  /* Prevent double-tap zoom */
+  touch-action: manipulation;
+  
+  /* Better touch responsiveness */
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
 }
 
 /* Ripple effect animation for chatbot */
@@ -62,6 +73,24 @@
 .chatbot-send-button:active {
   transform: scale(0.95);
   transition: transform 0.1s ease-out;
+}
+
+/* Enhanced touch feedback for mobile */
+.chatbot-send-button:active {
+  background: linear-gradient(135deg, #0051D5 0%, #003A9B 100%);
+  box-shadow: 
+    0 1px 3px rgba(0, 0, 0, 0.2),
+    0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+/* Mobile-specific hover states */
+@media (hover: hover) {
+  .chatbot-send-button:hover {
+    transform: scale(1.02);
+    box-shadow: 
+      0 4px 8px rgba(0, 0, 0, 0.2),
+      0 4px 8px rgba(0, 123, 255, 0.3);
+  }
 }
 
 /* Enhanced touch targets for iOS chatbot */

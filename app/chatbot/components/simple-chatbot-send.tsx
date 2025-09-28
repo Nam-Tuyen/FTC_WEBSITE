@@ -18,7 +18,7 @@ export function SimpleChatbotSend({
 }: SimpleChatbotSendProps) {
   const [isPressed, setIsPressed] = useState(false)
 
-  const handleTouchStart = () => {
+  const handleTouchStart = (e: React.TouchEvent) => {
     if (disabled || isLoading) return
     setIsPressed(true)
     
@@ -26,14 +26,29 @@ export function SimpleChatbotSend({
     if ('vibrate' in navigator) {
       navigator.vibrate(10)
     }
+    
+    // Prevent default to avoid double-tap zoom
+    e.preventDefault()
   }
 
-  const handleTouchEnd = () => {
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    setIsPressed(false)
+    
+    // Trigger click on touch end for better mobile experience
+    if (!disabled && !isLoading) {
+      e.preventDefault()
+      e.stopPropagation()
+      onClick()
+    }
+  }
+
+  const handleTouchCancel = () => {
     setIsPressed(false)
   }
 
-  const handleClick = () => {
+  const handleClick = (e: React.MouseEvent) => {
     if (disabled || isLoading) return
+    e.preventDefault()
     onClick()
   }
 
@@ -44,6 +59,7 @@ export function SimpleChatbotSend({
       onClick={handleClick}
       onTouchStart={handleTouchStart}
       onTouchEnd={handleTouchEnd}
+      onTouchCancel={handleTouchCancel}
       onMouseDown={() => setIsPressed(true)}
       onMouseUp={() => setIsPressed(false)}
       onMouseLeave={() => setIsPressed(false)}
@@ -65,7 +81,11 @@ export function SimpleChatbotSend({
         userSelect: 'none',
         WebkitUserSelect: 'none',
         minWidth: '44px',
-        minHeight: '44px'
+        minHeight: '44px',
+        WebkitTouchCallout: 'none',
+        WebkitUserSelect: 'none',
+        MozUserSelect: 'none',
+        msUserSelect: 'none'
       }}
     >
       {isLoading ? (
