@@ -45,7 +45,7 @@ export function SimpleMobileSend({ onSubmit, disabled = false, className = '' }:
         onChange={(e) => setContent(e.target.value)}
         onKeyPress={handleKeyPress}
         placeholder="Viết phản hồi..."
-        className="flex-1 px-4 py-3 rounded-2xl bg-white/10 border border-white/20 text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500/50 transition-all mobile-input"
+        className="flex-1 px-4 py-3 rounded-2xl bg-white/10 border border-white/20 text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:border-purple-500/50 transition-all mobile-input backdrop-blur-sm hover:bg-white/15"
         disabled={disabled}
         style={{
           fontSize: '16px', // Prevent zoom on iOS
@@ -58,11 +58,11 @@ export function SimpleMobileSend({ onSubmit, disabled = false, className = '' }:
         onClick={handleSubmit}
         disabled={isDisabled}
         className={`
-          w-12 h-12 rounded-2xl flex items-center justify-center transition-all duration-200 ease-out
+          w-12 h-12 rounded-2xl flex items-center justify-center transition-all duration-300 ease-out
           focus:outline-none focus:ring-4 focus:ring-blue-500/30
           active:scale-95 transform-gpu
           ${!isDisabled 
-            ? 'bg-gradient-to-br from-blue-500 to-blue-600 shadow-lg shadow-blue-500/25 hover:from-blue-600 hover:to-blue-700 hover:shadow-xl hover:shadow-blue-500/30' 
+            ? 'bg-gradient-to-br from-blue-500 via-purple-500 to-pink-500 shadow-lg shadow-blue-500/25 hover:from-blue-600 hover:via-purple-600 hover:to-pink-600 hover:shadow-xl hover:shadow-purple-500/30 hover:scale-105' 
             : 'bg-gradient-to-br from-gray-400 to-gray-500 shadow-md shadow-gray-400/20 cursor-not-allowed'
           }
           mobile-send-button

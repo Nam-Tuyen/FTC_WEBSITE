@@ -621,7 +621,7 @@ export default function ChatbotPage() {
                             value={inputValue}
                             onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setInputValue(e.target.value)}
                             onKeyDown={(e: React.KeyboardEvent<HTMLTextAreaElement>) => handleKeyDown(e)}
-                            placeholder={selectedMode === "club" ? "Hỏi về FTC, hoạt động, cách tham gia..." : "Hỏi về FinTech, blockchain, ngân hàng số..."}
+                            placeholder={selectedMode === "club" ? "Hãy nhập nội dung câu hỏi của bạn về FTC" : "Hỏi nhập nội dung câu hỏi ccuar bạn về ngành Fintech"}
                             className={`w-full min-h-[48px] max-h-32 resize-none ${BRAND.surfaces.interactive} ${BRAND.borders.primary} border ${BRAND.text.primary} placeholder:${BRAND.text.placeholder} ${BRAND.states.focus} outline-none transition-all rounded-2xl pr-14 text-sm py-3`}
                             disabled={isSending}
                             rows={1}
@@ -741,7 +741,7 @@ export default function ChatbotPage() {
         <footer className={`mt-16 py-8 ${BRAND.borders.light} border-t ${BRAND.surfaces.glass}`}>
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <p className={`text-sm ${BRAND.text.muted}`}>
-              Powered by ⚡ <span className={`font-semibold ${BRAND.text.gradient}`}>FTC AI</span>
+              <span className={`font-semibold ${BRAND.text.gradient}`}>©2025. Câu lạc bộ Công nghệ Tài chính</span>
               {selectedMode === "industry" && <span className="ml-2">• Demo FinTech Q&A</span>}
             </p>
           </div>

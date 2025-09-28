@@ -135,18 +135,37 @@
   outline-offset: 2px;
 }
 
-/* iOS-specific input optimizations */
+/* Modern input styling */
 .mobile-input {
   /* Prevent zoom on focus */
   font-size: 16px;
   
   /* iOS-specific styling */
   -webkit-appearance: none;
-  border-radius: 0;
+  border-radius: 12px;
   
   /* Better touch targets */
   padding: 12px 16px;
   min-height: 44px;
+  
+  /* Modern glassmorphism effect */
+  backdrop-filter: blur(10px);
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  transition: all 0.3s ease;
+}
+
+.mobile-input:focus {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(139, 92, 246, 0.5);
+  box-shadow: 
+    0 0 0 3px rgba(139, 92, 246, 0.1),
+    0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.mobile-input:hover {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.3);
 }
 
 /* iOS Safari viewport fixes */
@@ -193,18 +212,73 @@
     0 1px 2px rgba(0, 0, 0, 0.24);
 }
 
-/* iOS-style gradients */
+/* Modern gradient styles */
 .mobile-send-button {
-  background: linear-gradient(135deg, #007AFF 0%, #0051D5 100%);
+  background: linear-gradient(135deg, #3B82F6 0%, #8B5CF6 50%, #EC4899 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+.mobile-send-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, #3B82F6 0%, #8B5CF6 50%, #EC4899 100%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: -1;
+}
+
+.mobile-send-button:hover::before {
+  opacity: 1;
 }
 
 .mobile-send-button:disabled {
   background: linear-gradient(135deg, #8E8E93 0%, #6D6D70 100%);
 }
 
+.mobile-send-button:disabled::before {
+  display: none;
+}
+
 /* iOS-style border radius */
 .mobile-send-button {
   border-radius: 12px;
+}
+
+/* Modern animation effects */
+.mobile-send-button {
+  animation: gradient-shift 3s ease infinite;
+}
+
+@keyframes gradient-shift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* Enhanced hover effects */
+.mobile-send-button:hover {
+  transform: translateY(-2px) scale(1.05);
+  box-shadow: 
+    0 10px 25px rgba(59, 130, 246, 0.3),
+    0 5px 15px rgba(139, 92, 246, 0.2);
+}
+
+.mobile-send-button:active {
+  transform: translateY(0) scale(0.95);
+  box-shadow: 
+    0 2px 8px rgba(59, 130, 246, 0.4),
+    0 1px 4px rgba(139, 92, 246, 0.3);
 }
 
 /* iOS-style typography */
