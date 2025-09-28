@@ -1,0 +1,249 @@
+/* Chatbot Mobile iOS Optimizations */
+
+/* iOS-specific touch optimizations for chatbot send button */
+.chatbot-send-button {
+  /* Disable iOS zoom on double tap */
+  touch-action: manipulation;
+  
+  /* Remove iOS highlight */
+  -webkit-tap-highlight-color: transparent;
+  
+  /* Prevent text selection */
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  
+  /* Smooth hardware acceleration */
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+  
+  /* iOS-specific button styling */
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+/* Ripple effect animation for chatbot */
+@keyframes chatbot-ripple {
+  0% {
+    transform: scale(0);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(4);
+    opacity: 0;
+  }
+}
+
+/* Press animation for iOS chatbot button */
+@keyframes chatbot-press {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(0.95);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* Loading spinner for chatbot */
+@keyframes chatbot-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* iOS-style button press effect for chatbot */
+.chatbot-send-button:active {
+  transform: scale(0.95);
+  transition: transform 0.1s ease-out;
+}
+
+/* Enhanced touch targets for iOS chatbot */
+@media (max-width: 768px) {
+  .chatbot-send-button {
+    min-width: 44px;
+    min-height: 44px;
+  }
+}
+
+/* iOS Safari specific fixes for chatbot */
+@supports (-webkit-touch-callout: none) {
+  .chatbot-send-button {
+    /* Fix for iOS Safari button styling */
+    -webkit-appearance: none;
+    border-radius: 0;
+  }
+  
+  /* Fix for iOS Safari input styling */
+  .chatbot-input {
+    -webkit-appearance: none;
+    border-radius: 0;
+  }
+}
+
+/* Dark mode optimizations for iOS chatbot */
+@media (prefers-color-scheme: dark) {
+  .chatbot-send-button {
+    /* Enhanced contrast for dark mode */
+    filter: brightness(1.1);
+  }
+}
+
+/* Reduced motion support for chatbot */
+@media (prefers-reduced-motion: reduce) {
+  .chatbot-send-button {
+    transition: none;
+  }
+  
+  .chatbot-send-button:active {
+    transform: none;
+  }
+}
+
+/* High contrast mode support for chatbot */
+@media (prefers-contrast: high) {
+  .chatbot-send-button {
+    border: 2px solid currentColor;
+  }
+}
+
+/* Focus indicators for accessibility - chatbot */
+.chatbot-send-button:focus-visible {
+  outline: 3px solid #3b82f6;
+  outline-offset: 2px;
+}
+
+/* iOS-specific input optimizations for chatbot */
+.chatbot-input {
+  /* Prevent zoom on focus */
+  font-size: 16px;
+  
+  /* iOS-specific styling */
+  -webkit-appearance: none;
+  border-radius: 0;
+  
+  /* Better touch targets */
+  padding: 12px 16px;
+  min-height: 44px;
+}
+
+/* iOS Safari viewport fixes for chatbot */
+@supports (-webkit-touch-callout: none) {
+  .chatbot-container {
+    /* Fix for iOS Safari viewport issues */
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
+/* Haptic feedback simulation (visual) for chatbot */
+.chatbot-send-button.haptic-feedback {
+  animation: chatbot-haptic-pulse 0.1s ease-out;
+}
+
+@keyframes chatbot-haptic-pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.02);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* iOS-style shadows for chatbot */
+.chatbot-send-button {
+  box-shadow: 
+    0 1px 3px rgba(0, 0, 0, 0.12),
+    0 1px 2px rgba(0, 0, 0, 0.24);
+}
+
+.chatbot-send-button:hover {
+  box-shadow: 
+    0 3px 6px rgba(0, 0, 0, 0.16),
+    0 3px 6px rgba(0, 0, 0, 0.23);
+}
+
+.chatbot-send-button:active {
+  box-shadow: 
+    0 1px 3px rgba(0, 0, 0, 0.12),
+    0 1px 2px rgba(0, 0, 0, 0.24);
+}
+
+/* iOS-style gradients for chatbot */
+.chatbot-send-button {
+  background: linear-gradient(135deg, #007AFF 0%, #0051D5 100%);
+}
+
+.chatbot-send-button:disabled {
+  background: linear-gradient(135deg, #8E8E93 0%, #6D6D70 100%);
+}
+
+/* iOS-style border radius for chatbot */
+.chatbot-send-button {
+  border-radius: 12px;
+}
+
+/* iOS-style typography for chatbot */
+.chatbot-send-button {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+/* Chatbot specific animations */
+.chatbot-message-send {
+  animation: chatbot-message-send 0.3s ease-out;
+}
+
+@keyframes chatbot-message-send {
+  0% {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: translateY(-2px) scale(1.02);
+    opacity: 0.8;
+  }
+  100% {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+}
+
+/* Chatbot typing indicator */
+.chatbot-typing {
+  animation: chatbot-typing 1.5s ease-in-out infinite;
+}
+
+@keyframes chatbot-typing {
+  0%, 60%, 100% {
+    transform: translateY(0);
+  }
+  30% {
+    transform: translateY(-10px);
+  }
+}
+
+/* Chatbot message bubble animations */
+.chatbot-bubble-enter {
+  animation: chatbot-bubble-enter 0.4s ease-out;
+}
+
+@keyframes chatbot-bubble-enter {
+  0% {
+    transform: translateY(20px) scale(0.9);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+}

@@ -18,6 +18,8 @@ const animations = {
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip"
 import { ChatMode } from "@/chatbot/types"
 import { SUGGESTED_QUESTIONS } from "./constants/suggested-questions"
+import { SimpleChatbotSend } from "./components/simple-chatbot-send"
+import "./components/chatbot-mobile-optimizations.css"
 import { BRAND } from "./constants/brand"
 
 // Navigation động (giữ như project)
@@ -631,20 +633,12 @@ export default function ChatbotPage() {
                           )}
                         </div>
                       </div>
-                      <Button 
-                        onClick={handleSendMessage} 
+                      <SimpleChatbotSend
+                        onClick={handleSendMessage}
                         disabled={!inputValue.trim() || isSending}
-                        className={cn(
-                          "w-12 h-12 rounded-2xl flex items-center justify-center transition-all text-white",
-                          BRAND.shadows.medium,
-                          BRAND.states.hover,
-                          inputValue.trim() && !isSending 
-                            ? `${CHAT_MODES.find(m => m.mode === selectedMode)?.gradient} hover:scale-105` 
-                            : `${BRAND.surfaces.interactive} ${BRAND.text.light} cursor-not-allowed`
-                        )}
-                      >
-                        <span className="text-lg">➤</span>
-                      </Button>
+                        isLoading={isSending}
+                        className="chatbot-send-button"
+                      />
                     </div>
                     {isSending && (
                       <div className={`mt-3 flex items-center gap-2 text-sm ${BRAND.text.muted}`}>
