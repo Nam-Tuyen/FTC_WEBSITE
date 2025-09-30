@@ -135,205 +135,92 @@
   outline-offset: 2px;
 }
 
-/* Modern color scheme based on #003663 */
-:root {
-  --primary-50: #f0f9ff;
-  --primary-100: #e0f2fe;
-  --primary-200: #bae6fd;
-  --primary-300: #7dd3fc;
-  --primary-400: #38bdf8;
-  --primary-500: #0ea5e9;
-  --primary-600: #0284c7;
-  --primary-700: #0369a1;
-  --primary-800: #075985;
-  --primary-900: #0c4a6e;
-  
-  --secondary-50: #f8fafc;
-  --secondary-100: #f1f5f9;
-  --secondary-200: #e2e8f0;
-  --secondary-300: #cbd5e1;
-  --secondary-400: #94a3b8;
-  --secondary-500: #64748b;
-  --secondary-600: #475569;
-  --secondary-700: #334155;
-  --secondary-800: #1e293b;
-  --secondary-900: #0f172a;
-  
-  --accent-50: #fdf4ff;
-  --accent-100: #fae8ff;
-  --accent-200: #f5d0fe;
-  --accent-300: #f0abfc;
-  --accent-400: #e879f9;
-  --accent-500: #d946ef;
-  --accent-600: #c026d3;
-  --accent-700: #a21caf;
-  --accent-800: #86198f;
-  --accent-900: #701a75;
-  
-  --base-50: #f8fafc;
-  --base-100: #f1f5f9;
-  --base-200: #e2e8f0;
-  --base-300: #cbd5e1;
-  --base-400: #94a3b8;
-  --base-500: #64748b;
-  --base-600: #475569;
-  --base-700: #334155;
-  --base-800: #1e293b;
-  --base-900: #0f172a;
-}
-
-/* Modern dark theme input styling */
-.mobile-input {
+/* Subtle input styling - Unobtrusive design */
+.mobile-input-subtle {
   /* Prevent zoom on focus */
-  font-size: 16px !important;
+  font-size: 16px;
   
   /* iOS-specific styling */
-  -webkit-appearance: none !important;
-  border-radius: 20px !important;
+  -webkit-appearance: none;
+  border-radius: 0;
   
   /* Better touch targets */
-  padding: 16px 20px !important;
-  min-height: 56px !important;
+  padding: 12px 16px;
+  min-height: 44px;
   
-  /* Modern dark theme with harmonious colors */
-  background: rgba(15, 23, 42, 0.95) !important; /* base-900/95 */
-  border: 1px solid rgba(51, 65, 85, 0.6) !important; /* base-700/60 */
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
-  color: #f8fafc !important; /* base-50 */
-  font-weight: 500 !important;
-  letter-spacing: -0.01em !important;
-  box-shadow: 
-    0 4px 6px -1px rgba(0, 0, 0, 0.1),
-    0 2px 4px -1px rgba(0, 0, 0, 0.06),
-    inset 0 1px 0 rgba(248, 250, 252, 0.05) !important;
+  /* Subtle transparent background */
+  background: transparent;
+  border: none;
+  transition: all 0.2s ease;
+  color: white;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  line-height: 1.5;
+}
+
+.mobile-input-subtle:focus {
+  outline: none;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.mobile-input-subtle:hover {
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.mobile-input-subtle::placeholder {
+  color: rgba(255, 255, 255, 0.5);
+  font-weight: 400;
+  font-style: italic;
+}
+
+/* Auto-resize textarea */
+.mobile-input-subtle {
+  overflow: hidden;
+  resize: none;
+}
+
+/* Modern glassmorphism input styling (legacy) */
+.mobile-input {
+  /* Prevent zoom on focus */
+  font-size: 16px;
+  
+  /* iOS-specific styling */
+  -webkit-appearance: none;
+  border-radius: 20px;
+  
+  /* Better touch targets */
+  padding: 16px 20px;
+  min-height: 56px;
+  
+  /* Modern glassmorphism effect */
+  backdrop-filter: blur(20px);
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  color: white;
+  font-weight: 400;
+  letter-spacing: -0.01em;
 }
 
 .mobile-input:focus {
-  background: rgba(30, 41, 59, 0.95) !important; /* base-800/95 */
-  border-color: rgba(14, 165, 233, 0.6) !important; /* primary-500/60 */
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(59, 130, 246, 0.5);
   box-shadow: 
-    0 0 0 3px rgba(14, 165, 233, 0.1),
-    0 8px 32px rgba(0, 0, 0, 0.3),
-    inset 0 1px 0 rgba(248, 250, 252, 0.1),
-    0 0 0 1px rgba(14, 165, 233, 0.2);
+    0 0 0 3px rgba(59, 130, 246, 0.1),
+    0 8px 32px rgba(0, 0, 0, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
   transform: translateY(-1px);
 }
 
 .mobile-input:hover {
-  background: rgba(30, 41, 59, 0.95) !important; /* base-800/95 */
-  border-color: rgba(71, 85, 105, 0.8) !important; /* base-600/80 */
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.3);
   transform: translateY(-1px);
-  box-shadow: 
-    0 6px 8px -1px rgba(0, 0, 0, 0.15),
-    0 4px 6px -1px rgba(0, 0, 0, 0.1),
-    inset 0 1px 0 rgba(248, 250, 252, 0.08);
 }
 
 .mobile-input::placeholder {
-  color: rgba(148, 163, 184, 0.8) !important; /* base-400/80 */
+  color: rgba(255, 255, 255, 0.6);
   font-weight: 400;
-  opacity: 1;
-}
-
-/* Enhanced text visibility */
-.mobile-input:not(:placeholder-shown) {
-  color: #ffffff !important;
-  font-weight: 500;
-}
-
-/* Better contrast for selected text */
-.mobile-input::selection {
-  background: rgba(59, 130, 246, 0.3);
-  color: #ffffff;
-}
-
-/* Dark theme for all form inputs */
-input[type="text"], 
-input[type="email"], 
-input[type="password"], 
-textarea, 
-select {
-  background: rgba(17, 24, 39, 0.95) !important; /* gray-900/95 */
-  border: 1px solid rgba(55, 65, 81, 0.8) !important; /* gray-700/80 */
-  color: #ffffff !important;
-  font-weight: 500;
-}
-
-input[type="text"]:focus, 
-input[type="email"]:focus, 
-input[type="password"]:focus, 
-textarea:focus, 
-select:focus {
-  background: rgba(31, 41, 55, 0.95) !important; /* gray-800/95 */
-  border-color: rgba(59, 130, 246, 0.5) !important;
-  box-shadow: 
-    0 0 0 3px rgba(59, 130, 246, 0.1),
-    0 8px 32px rgba(0, 0, 0, 0.3),
-    inset 0 1px 0 rgba(255, 255, 255, 0.1);
-}
-
-input[type="text"]:hover, 
-input[type="email"]:hover, 
-input[type="password"]:hover, 
-textarea:hover, 
-select:hover {
-  background: rgba(31, 41, 55, 0.95) !important; /* gray-800/95 */
-  border-color: rgba(75, 85, 99, 0.8) !important; /* gray-600/80 */
-}
-
-input[type="text"]::placeholder, 
-input[type="email"]::placeholder, 
-input[type="password"]::placeholder, 
-textarea::placeholder {
-  color: rgba(156, 163, 175, 0.8) !important; /* gray-400 */
-  opacity: 1;
-}
-
-/* Dark theme for select options */
-select option {
-  background: #1f2937 !important; /* gray-800 */
-  color: #ffffff !important;
-  padding: 8px 12px;
-}
-
-/* Enhanced readability for all text inputs */
-input[type="text"]:not(:placeholder-shown), 
-input[type="email"]:not(:placeholder-shown), 
-input[type="password"]:not(:placeholder-shown), 
-textarea:not(:placeholder-shown) {
-  color: #ffffff !important;
-  font-weight: 500;
-}
-
-/* Force modern dark theme for mobile send input specifically */
-.mobile-send-button .mobile-input,
-.mobile-send-button input[type="text"] {
-  background: rgba(15, 23, 42, 0.95) !important; /* slate-900/95 */
-  border: 1px solid rgba(51, 65, 85, 0.6) !important; /* slate-700/60 */
-  color: #f8fafc !important; /* slate-50 */
-  font-weight: 500 !important;
-}
-
-.mobile-send-button .mobile-input:focus,
-.mobile-send-button input[type="text"]:focus {
-  background: rgba(30, 41, 59, 0.95) !important; /* slate-800/95 */
-  border-color: rgba(14, 165, 233, 0.6) !important; /* sky-500/60 */
-  box-shadow: 
-    0 0 0 3px rgba(14, 165, 233, 0.1),
-    0 8px 32px rgba(0, 0, 0, 0.3),
-    inset 0 1px 0 rgba(248, 250, 252, 0.1) !important;
-}
-
-.mobile-send-button .mobile-input:hover,
-.mobile-send-button input[type="text"]:hover {
-  background: rgba(30, 41, 59, 0.95) !important; /* slate-800/95 */
-  border-color: rgba(71, 85, 105, 0.8) !important; /* slate-600/80 */
-}
-
-.mobile-send-button .mobile-input::placeholder,
-.mobile-send-button input[type="text"]::placeholder {
-  color: rgba(148, 163, 184, 0.8) !important; /* slate-400/80 */
-  opacity: 1 !important;
 }
 
 /* Enhanced dark input effects */
@@ -409,65 +296,54 @@ textarea:not(:placeholder-shown) {
     0 1px 2px rgba(0, 0, 0, 0.24);
 }
 
-/* Modern brand-based design with #003663 */
+/* Modern gradient styles with enhanced effects */
 .mobile-send-button {
-  background: linear-gradient(135deg, #003663 0%, #004d7a 100%);
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0, 54, 99, 0.3);
+  background: linear-gradient(135deg, #3B82F6 0%, #2563EB 50%, #7C3AED 100%);
+  position: relative;
+  overflow: hidden;
+  border-radius: 20px;
+  box-shadow: 
+    0 4px 20px rgba(59, 130, 246, 0.3),
+    0 2px 8px rgba(0, 0, 0, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+.mobile-send-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, #2563EB 0%, #1D4ED8 50%, #6D28D9 100%);
+  opacity: 0;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 1;
 }
 
-.mobile-send-button:hover {
-  background: linear-gradient(135deg, #004d7a 0%, #005c8a 100%);
-  box-shadow: 0 6px 16px rgba(0, 54, 99, 0.4);
-  transform: translateY(-2px);
-}
-
-.mobile-send-button:active {
-  transform: translateY(0);
-  box-shadow: 0 2px 8px rgba(0, 54, 99, 0.3);
+.mobile-send-button:hover::before {
+  opacity: 1;
 }
 
 .mobile-send-button:disabled {
-  background: #001122;
-  color: #64748b;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-  transform: none;
-  cursor: not-allowed;
-}
-
-
-/* Brand-based input styling with #003663 */
-.mobile-send-button input[type="text"] {
-  background: #001122 !important; /* Dark brand background */
-  border: 1px solid rgba(0, 54, 99, 0.5) !important; /* #003663/50 */
-  color: #f1f5f9 !important; /* slate-100 */
-  border-radius: 12px !important;
-  padding: 12px 16px !important;
-  font-size: 16px !important;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
-  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.2) !important;
-}
-
-.mobile-send-button input[type="text"]:focus {
-  background: #001a2e !important; /* Slightly lighter brand background */
-  border-color: rgba(0, 54, 99, 0.7) !important; /* #003663/70 */
+  background: linear-gradient(135deg, rgba(107, 114, 128, 0.5) 0%, rgba(75, 85, 99, 0.5) 100%);
   box-shadow: 
-    0 0 0 2px rgba(0, 54, 99, 0.2) !important,
-    inset 0 1px 3px rgba(0, 0, 0, 0.3) !important;
-  outline: none !important;
-  transform: translateY(-1px) !important;
+    0 2px 8px rgba(0, 0, 0, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
 }
 
-.mobile-send-button input[type="text"]:hover {
-  background: #001a2e !important; /* Slightly lighter brand background */
-  border-color: rgba(0, 54, 99, 0.6) !important; /* #003663/60 */
-  transform: translateY(-1px) !important;
+.mobile-send-button:disabled::before {
+  display: none;
 }
 
-.mobile-send-button input[type="text"]::placeholder {
-  color: rgba(148, 163, 184, 0.8) !important; /* slate-400/80 */
-  opacity: 1 !important;
+/* Enhanced border radius for modern look */
+.mobile-send-button {
+  border-radius: 20px;
+}
+
+/* Modern animation effects */
+.mobile-send-button {
+  animation: gradient-shift 3s ease infinite;
 }
 
 @keyframes gradient-shift {
@@ -582,6 +458,86 @@ textarea:not(:placeholder-shown) {
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+/* Prominent send button styling */
+.mobile-send-button-prominent {
+  /* Enhanced gradient with more vibrant colors */
+  background: linear-gradient(135deg, #3B82F6 0%, #2563EB 50%, #7C3AED 100%);
+  position: relative;
+  overflow: hidden;
+  border-radius: 12px;
+  box-shadow: 
+    0 6px 20px rgba(59, 130, 246, 0.4),
+    0 3px 10px rgba(0, 0, 0, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.mobile-send-button-prominent::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, #2563EB 0%, #1D4ED8 50%, #6D28D9 100%);
+  opacity: 0;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 1;
+}
+
+.mobile-send-button-prominent:hover::before {
+  opacity: 1;
+}
+
+.mobile-send-button-prominent:disabled {
+  background: linear-gradient(135deg, rgba(107, 114, 128, 0.4) 0%, rgba(75, 85, 99, 0.4) 100%);
+  box-shadow: 
+    0 2px 8px rgba(0, 0, 0, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+.mobile-send-button-prominent:disabled::before {
+  display: none;
+}
+
+/* Enhanced hover effects for prominent button */
+.mobile-send-button-prominent:hover {
+  transform: translateY(-3px) scale(1.1);
+  box-shadow: 
+    0 12px 32px rgba(59, 130, 246, 0.5),
+    0 6px 20px rgba(124, 58, 237, 0.4),
+    0 0 0 1px rgba(255, 255, 255, 0.2);
+}
+
+.mobile-send-button-prominent:active {
+  transform: translateY(-1px) scale(1.05);
+  box-shadow: 
+    0 4px 16px rgba(59, 130, 246, 0.6),
+    0 2px 8px rgba(124, 58, 237, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  transition: all 0.1s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Pulse animation for when content is ready */
+@keyframes content-ready-pulse {
+  0%, 100% {
+    box-shadow: 
+      0 6px 20px rgba(59, 130, 246, 0.4),
+      0 3px 10px rgba(0, 0, 0, 0.2),
+      inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  }
+  50% {
+    box-shadow: 
+      0 8px 24px rgba(59, 130, 246, 0.6),
+      0 4px 12px rgba(124, 58, 237, 0.4),
+      inset 0 1px 0 rgba(255, 255, 255, 0.4);
+  }
+}
+
+.mobile-send-button-prominent:not(:disabled):not(:active) {
+  animation: content-ready-pulse 2s ease-in-out infinite;
+}
+
 /* Enhanced mobile touch feedback */
 @media (max-width: 768px) {
   .mobile-send-button:active {
@@ -591,5 +547,14 @@ textarea:not(:placeholder-shown) {
   
   .mobile-send-button:hover {
     transform: translateY(-2px) scale(1.02);
+  }
+  
+  .mobile-send-button-prominent:active {
+    transform: scale(0.9);
+    transition: transform 0.1s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  .mobile-send-button-prominent:hover {
+    transform: translateY(-2px) scale(1.05);
   }
 }

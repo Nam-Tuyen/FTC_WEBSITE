@@ -254,24 +254,24 @@ export default function ForumPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-800 text-white">
+    <div className="min-h-screen bg-[#003663] text-white">
       <Navigation />
 
       {/* Mobile Responsive Hero Section */}
       <section className="relative min-h-[60vh] sm:min-h-[70vh] flex items-center justify-center py-12 sm:py-16 lg:py-24 px-4 sm:px-6 lg:px-8">
         {/* Enhanced Background Effects */}
         <div className="absolute inset-0 overflow-hidden">
-          <div className="absolute top-1/4 -right-1/4 w-2/3 h-2/3 bg-gradient-to-br from-sky-500/20 via-blue-500/15 to-transparent rounded-full blur-3xl animate-float" />
-          <div className="absolute -bottom-1/4 -left-1/4 w-2/3 h-2/3 bg-gradient-to-tr from-purple-500/20 via-pink-500/15 to-transparent rounded-full blur-3xl animate-float-reverse" />
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-1/2 h-1/2 bg-gradient-to-r from-cyan-400/15 to-blue-500/15 rounded-full blur-2xl animate-pulse" />
+          <div className="absolute top-1/4 -right-1/4 w-2/3 h-2/3 bg-gradient-to-br from-blue-500/30 via-purple-500/20 to-transparent rounded-full blur-3xl animate-float" />
+          <div className="absolute -bottom-1/4 -left-1/4 w-2/3 h-2/3 bg-gradient-to-tr from-purple-500/30 via-pink-500/20 to-transparent rounded-full blur-3xl animate-float-reverse" />
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-1/2 h-1/2 bg-gradient-to-r from-cyan-500/20 to-blue-500/20 rounded-full blur-2xl animate-pulse" />
         </div>
         
         <div className="relative max-w-6xl mx-auto text-center space-y-4 sm:space-y-6 lg:space-y-8">
           {/* Mobile Responsive Title */}
           <div className="space-y-3 sm:space-y-4 lg:space-y-6">
             <h1 className="relative text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-extrabold">
-              <span className="absolute inset-0 bg-gradient-to-r from-sky-400 via-blue-300 to-purple-300 opacity-40 blur-3xl animate-pulse"></span>
-              <span className="relative bg-gradient-to-r from-sky-200 via-blue-100 to-purple-200 bg-clip-text text-transparent animate-bounce" style={{
+              <span className="absolute inset-0 bg-gradient-to-r from-white via-blue-100 to-purple-100 opacity-60 blur-3xl animate-pulse"></span>
+              <span className="relative text-white animate-bounce" style={{
                 animation: 'blink 1.5s infinite, gradient-shift 2s ease-in-out infinite, bounce 2s infinite'
               }}>
                 DIỄN ĐÀN FTC
@@ -334,10 +334,10 @@ export default function ForumPage() {
           {/* Left Sidebar - Mobile Responsive */}
           <aside className="xl:col-span-3 space-y-4 sm:space-y-6 lg:space-y-8">
             {/* Categories - Mobile Responsive Design */}
-            <div className="bg-gradient-to-br from-[#001a2e]/60 to-[#002a4a]/40 rounded-2xl sm:rounded-3xl border border-[#003663]/30 p-4 sm:p-6 lg:p-10 shadow-2xl sm:shadow-3xl backdrop-blur-2xl hover:shadow-4xl transition-all duration-500">
+            <div className="bg-gradient-to-br from-white/12 to-white/5 rounded-2xl sm:rounded-3xl border border-white/20 p-4 sm:p-6 lg:p-10 shadow-2xl sm:shadow-3xl backdrop-blur-2xl hover:shadow-4xl transition-all duration-500">
               <div className="flex items-center gap-3 sm:gap-4 mb-4 sm:mb-6 lg:mb-8">
-                <div className="w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 rounded-2xl sm:rounded-3xl bg-gradient-to-br from-[#003663]/40 to-[#004d7a]/30 flex items-center justify-center shadow-lg">
-                  <Hash className="h-4 w-4 sm:h-5 sm:w-5 lg:h-6 lg:w-6 text-[#66b3ff]" />
+                <div className="w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 rounded-2xl sm:rounded-3xl bg-gradient-to-br from-blue-500/30 to-purple-500/30 flex items-center justify-center shadow-lg">
+                  <Hash className="h-4 w-4 sm:h-5 sm:w-5 lg:h-6 lg:w-6 text-blue-200" />
                 </div>
                 <div>
                   <h3 className="text-lg sm:text-xl lg:text-2xl font-bold text-white">Danh mục</h3>
@@ -349,8 +349,8 @@ export default function ForumPage() {
                   onClick={() => setSelectedCategory('')}
                   className={`w-full text-left px-3 sm:px-4 lg:px-6 py-2 sm:py-3 lg:py-4 rounded-xl sm:rounded-2xl transition-all duration-300 group ${
                     selectedCategory === '' 
-                      ? 'bg-gradient-to-r from-sky-500/20 to-blue-500/20 border border-sky-400/30 shadow-lg shadow-sky-500/10' 
-                      : 'hover:bg-slate-700/20 border border-transparent hover:border-slate-600/30'
+                      ? 'bg-gradient-to-r from-blue-500/20 to-purple-500/20 border border-blue-400/30 shadow-lg shadow-blue-500/10' 
+                      : 'hover:bg-white/10 border border-transparent hover:border-white/20'
                   }`}
                 >
                   <div className="flex items-center justify-between">
@@ -366,8 +366,8 @@ export default function ForumPage() {
                       onClick={() => setSelectedCategory(key as ForumCategory)}
                       className={`w-full text-left px-3 sm:px-4 lg:px-6 py-2 sm:py-3 lg:py-4 rounded-xl sm:rounded-2xl transition-all duration-300 group ${
                         selectedCategory === key 
-                          ? 'bg-gradient-to-r from-sky-500/20 to-blue-500/20 border border-sky-400/30 shadow-lg shadow-sky-500/10' 
-                          : 'hover:bg-slate-700/20 border border-transparent hover:border-slate-600/30'
+                          ? 'bg-gradient-to-r from-blue-500/20 to-purple-500/20 border border-blue-400/30 shadow-lg shadow-blue-500/10' 
+                          : 'hover:bg-white/10 border border-transparent hover:border-white/20'
                       }`}
                     >
                       <div className="flex items-center justify-between">
@@ -381,7 +381,7 @@ export default function ForumPage() {
             </div>
 
             {/* Stats - Mobile Responsive Cards */}
-            <div className="bg-gradient-to-br from-slate-800/40 to-slate-900/30 rounded-2xl sm:rounded-3xl border border-slate-700/30 p-4 sm:p-6 lg:p-10 shadow-2xl sm:shadow-3xl backdrop-blur-2xl hover:shadow-4xl transition-all duration-500">
+            <div className="bg-gradient-to-br from-white/12 to-white/5 rounded-2xl sm:rounded-3xl border border-white/20 p-4 sm:p-6 lg:p-10 shadow-2xl sm:shadow-3xl backdrop-blur-2xl hover:shadow-4xl transition-all duration-500">
               <div className="flex items-center gap-3 sm:gap-4 mb-4 sm:mb-6 lg:mb-8">
                 <div className="w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 rounded-2xl sm:rounded-3xl bg-gradient-to-br from-green-500/30 to-emerald-500/30 flex items-center justify-center shadow-lg">
                   <TrendingUp className="h-4 w-4 sm:h-5 sm:w-5 lg:h-6 lg:w-6 text-green-200" />
@@ -411,7 +411,7 @@ export default function ForumPage() {
           {/* Main Content - Mobile Responsive */}
           <main className="xl:col-span-6 space-y-4 sm:space-y-6 lg:space-y-8">
             {/* Ask box - Mobile Responsive Design */}
-            <div className="bg-gradient-to-br from-slate-800/40 to-slate-900/30 rounded-2xl sm:rounded-3xl border border-slate-700/30 p-4 sm:p-6 lg:p-10 shadow-2xl sm:shadow-3xl backdrop-blur-2xl hover:shadow-4xl transition-all duration-500">
+            <div className="bg-gradient-to-br from-white/12 to-white/5 rounded-2xl sm:rounded-3xl border border-white/20 p-4 sm:p-6 lg:p-10 shadow-2xl sm:shadow-3xl backdrop-blur-2xl hover:shadow-4xl transition-all duration-500">
               <div className="flex items-center gap-3 sm:gap-4 mb-4 sm:mb-6 lg:mb-8">
                 <div className="w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 rounded-2xl sm:rounded-3xl bg-gradient-to-br from-orange-500/30 to-red-500/30 flex items-center justify-center shadow-lg">
                   <MessageSquare className="h-4 w-4 sm:h-5 sm:w-5 lg:h-6 lg:w-6 text-orange-200" />
@@ -427,7 +427,7 @@ export default function ForumPage() {
             {/* Questions list - Mobile Responsive Cards */}
             <div className="space-y-4 sm:space-y-6 lg:space-y-8">
               {isLoading ? (
-                <div className="bg-gradient-to-br from-slate-800/40 to-slate-900/30 rounded-2xl sm:rounded-3xl border border-slate-700/30 p-8 sm:p-12 lg:p-16 shadow-2xl sm:shadow-3xl backdrop-blur-2xl">
+                <div className="bg-gradient-to-br from-white/12 to-white/5 rounded-2xl sm:rounded-3xl border border-white/20 p-8 sm:p-12 lg:p-16 shadow-2xl sm:shadow-3xl backdrop-blur-2xl">
                   <div className="flex flex-col items-center justify-center space-y-4">
                     <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-blue-400"></div>
                     <p className="text-white/80 text-lg font-medium">Đang tải câu hỏi...</p>
@@ -435,13 +435,13 @@ export default function ForumPage() {
                 </div>
               ) : (
                 paginated.map((question) => (
-                <div key={question.id} className="bg-gradient-to-br from-[#001a2e]/80 to-[#002a4a]/60 rounded-2xl sm:rounded-3xl border border-[#003663]/40 hover:border-[#003663]/60 transition-all duration-300 overflow-hidden group hover:bg-[#001a2e]/90 shadow-2xl sm:shadow-3xl hover:shadow-4xl backdrop-blur-2xl hover:scale-[1.01] sm:hover:scale-[1.02]">
+                <div key={question.id} className="bg-gradient-to-br from-white/12 to-white/5 rounded-2xl sm:rounded-3xl border border-white/20 hover:border-white/30 transition-all duration-700 overflow-hidden group hover:bg-white/15 shadow-2xl sm:shadow-3xl hover:shadow-4xl backdrop-blur-2xl hover:scale-[1.01] sm:hover:scale-[1.02]">
                   <div className="p-4 sm:p-6 lg:p-10">
                     {/* Header - Mobile Responsive */}
                     <div className="flex items-start justify-between mb-4 sm:mb-6">
                       <div className="flex items-center gap-3 sm:gap-4">
-                        <div className="w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 rounded-xl sm:rounded-2xl bg-gradient-to-br from-[#003663]/30 to-[#004d7a]/20 flex items-center justify-center flex-shrink-0 shadow-lg">
-                          <MessageSquare className="h-4 w-4 sm:h-5 sm:w-5 lg:h-6 lg:w-6 text-[#66b3ff]" />
+                        <div className="w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 rounded-xl sm:rounded-2xl bg-gradient-to-br from-blue-500/20 to-purple-500/20 flex items-center justify-center flex-shrink-0 shadow-lg">
+                          <MessageSquare className="h-4 w-4 sm:h-5 sm:w-5 lg:h-6 lg:w-6 text-blue-300" />
                         </div>
                         <div>
                             <div className="flex items-center gap-2 sm:gap-3 mb-1 sm:mb-2">
@@ -469,28 +469,28 @@ export default function ForumPage() {
                     {/* Actions - Mobile Responsive */}
                     <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-4 pt-4 sm:pt-6 border-t border-white/15">
                       <div className="flex items-center gap-4 sm:gap-6 lg:gap-8">
-                        <button onClick={() => handleToggleLike(question.id)} className="flex items-center gap-2 sm:gap-3 hover:opacity-80 transition-all duration-300 hover:scale-105 group">
+                        <button onClick={() => handleToggleLike(question.id)} className="flex items-center gap-2 sm:gap-3 hover:opacity-80 transition-all duration-300 hover:scale-110 group">
                           <div className={`w-8 h-8 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl flex items-center justify-center transition-colors ${
                             question.likes.includes(currentUserId) 
                               ? 'bg-red-500/20' 
-                              : 'bg-[#003663]/20 group-hover:bg-red-500/20'
+                              : 'bg-white/10 group-hover:bg-red-500/20'
                           }`}>
                             <Heart className={`h-4 w-4 sm:h-5 sm:w-5 transition-colors ${
                               question.likes.includes(currentUserId) 
                                 ? 'text-red-500 fill-red-500' 
-                                : 'text-[#66b3ff] group-hover:text-red-400'
+                                : 'text-white group-hover:text-red-400'
                             }`} />
                           </div>
                           <span className="text-sm sm:text-base font-semibold text-white">{question.likes.length}</span>
                         </button>
                         <div className="flex items-center gap-2 sm:gap-3 opacity-90">
-                          <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl bg-[#003663]/20 flex items-center justify-center">
-                            <MessageCircle className="h-4 w-4 sm:h-5 sm:w-5 text-[#66b3ff]" />
+                          <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl bg-white/10 flex items-center justify-center">
+                            <MessageCircle className="h-4 w-4 sm:h-5 sm:w-5 text-white" />
                           </div>
                           <span className="text-sm sm:text-base font-semibold text-white">{(question.replies || []).length}</span>
                         </div>
                       </div>
-                        <span className="text-xs sm:text-sm font-bold px-3 sm:px-4 py-1.5 sm:py-2 bg-gradient-to-r from-[#003663]/30 to-[#004d7a]/20 rounded-full border border-[#003663]/40 capitalize">
+                        <span className="text-xs sm:text-sm font-bold px-3 sm:px-4 py-1.5 sm:py-2 bg-gradient-to-r from-blue-500/20 to-purple-500/20 rounded-full border border-blue-400/30 capitalize">
                           {CATEGORIES[question.category as ForumCategory] || 'Khác'}
                         </span>
                     </div>
@@ -508,9 +508,9 @@ export default function ForumPage() {
               )}
               
               {!isLoading && sorted.length === 0 && (
-                <div className="bg-gradient-to-br from-slate-800/30 to-slate-900/20 rounded-3xl border border-slate-700/30 p-20 text-center shadow-2xl backdrop-blur-xl">
-                  <div className="w-24 h-24 rounded-3xl bg-gradient-to-br from-sky-500/20 to-blue-500/20 flex items-center justify-center mx-auto mb-8">
-                    <MessageSquare className="h-12 w-12 text-sky-300" />
+                <div className="bg-gradient-to-br from-white/8 to-white/3 rounded-3xl border border-white/15 p-20 text-center shadow-2xl backdrop-blur-xl">
+                  <div className="w-24 h-24 rounded-3xl bg-gradient-to-br from-blue-500/20 to-purple-500/20 flex items-center justify-center mx-auto mb-8">
+                    <MessageSquare className="h-12 w-12 text-blue-300" />
                   </div>
                   <h3 className="text-3xl font-bold mb-4 text-white">Chưa có câu hỏi nào</h3>
                   <p className="text-white/80 text-xl">Hãy là người đầu tiên đặt câu hỏi!</p>
@@ -521,11 +521,11 @@ export default function ForumPage() {
             {/* Pagination - Enhanced */}
             {!isLoading && totalPages > 1 && (
               <div className="flex items-center justify-center gap-6 pt-8">
-                <Button variant="outline" disabled={pageSafe <= 1} onClick={() => setPage((p) => Math.max(1, p - 1))} className="rounded-2xl border-slate-600/50 text-white hover:bg-slate-700/30 px-8 py-3 font-semibold">
+                <Button variant="outline" disabled={pageSafe <= 1} onClick={() => setPage((p) => Math.max(1, p - 1))} className="rounded-2xl border-white/30 text-white hover:bg-white/10 px-8 py-3 font-semibold">
                   Trang trước
                 </Button>
-                <span className="px-6 py-3 bg-slate-700/30 rounded-2xl text-white font-semibold">{pageSafe} / {totalPages}</span>
-                <Button variant="outline" disabled={pageSafe >= totalPages} onClick={() => setPage((p) => Math.min(totalPages, p + 1))} className="rounded-2xl border-slate-600/50 text-white hover:bg-slate-700/30 px-8 py-3 font-semibold">
+                <span className="px-6 py-3 bg-white/10 rounded-2xl text-white font-semibold">{pageSafe} / {totalPages}</span>
+                <Button variant="outline" disabled={pageSafe >= totalPages} onClick={() => setPage((p) => Math.min(totalPages, p + 1))} className="rounded-2xl border-white/30 text-white hover:bg-white/10 px-8 py-3 font-semibold">
                   Trang sau
                 </Button>
               </div>
@@ -534,7 +534,7 @@ export default function ForumPage() {
 
           {/* Right Sidebar - Mobile Responsive */}
           <aside className="xl:col-span-3 space-y-4 sm:space-y-6 lg:space-y-10">
-            <div className="bg-gradient-to-br from-slate-800/40 to-slate-900/30 rounded-2xl sm:rounded-3xl border border-slate-700/30 p-4 sm:p-6 lg:p-10 shadow-2xl sm:shadow-3xl backdrop-blur-2xl hover:shadow-4xl transition-all duration-500">
+            <div className="bg-gradient-to-br from-white/12 to-white/5 rounded-2xl sm:rounded-3xl border border-white/20 p-4 sm:p-6 lg:p-10 shadow-2xl sm:shadow-3xl backdrop-blur-2xl hover:shadow-4xl transition-all duration-500">
               <div className="flex items-center gap-3 sm:gap-4 mb-4 sm:mb-6 lg:mb-10">
                 <div className="w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 rounded-2xl sm:rounded-3xl bg-gradient-to-br from-green-500/30 to-emerald-500/30 flex items-center justify-center shadow-lg">
                   <Users className="h-4 w-4 sm:h-5 sm:w-5 lg:h-6 lg:w-6 text-green-200" />
@@ -600,15 +600,15 @@ function AskInline({ onSubmit, defaultStudentId, onUpdateStudentId }: { onSubmit
   return (
     <div className="space-y-4">
       <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-        <Input value={studentId} onChange={(e)=>{ setStudentId(e.target.value); onUpdateStudentId(e.target.value) }} placeholder="MSSV (ví dụ: K21520001)" className="bg-slate-900/95 border-slate-700/60 text-slate-50 placeholder-slate-400 focus:border-sky-500/50 focus:ring-sky-500/30" />
-        <select value={category} onChange={(e)=>setCategory(e.target.value)} className="bg-slate-900/95 border border-slate-700/60 text-slate-50 rounded-xl px-3 py-2 focus:border-sky-500/50 focus:ring-sky-500/30">
+        <Input value={studentId} onChange={(e)=>{ setStudentId(e.target.value); onUpdateStudentId(e.target.value) }} placeholder="MSSV (ví dụ: K21520001)" className="bg-white/10 border-white/20 text-white placeholder-white/60" />
+        <select value={category} onChange={(e)=>setCategory(e.target.value)} className="bg-white/10 border border-white/20 rounded-xl px-3 py-2">
           {Object.entries(CATEGORIES).map(([key, label]) => (
             <option key={key} value={key} className="bg-[#003663] text-white">{label}</option>
           ))}
         </select>
-        <Input value={title} onChange={(e)=>setTitle(e.target.value)} placeholder="Tiêu đề câu hỏi" className="bg-slate-900/95 border-slate-700/60 text-slate-50 placeholder-slate-400 focus:border-sky-500/50 focus:ring-sky-500/30" />
+        <Input value={title} onChange={(e)=>setTitle(e.target.value)} placeholder="Tiêu đề câu hỏi" className="bg-white/10 border-white/20 text-white placeholder-white/60" />
       </div>
-      <textarea value={content} onChange={(e)=>setContent(e.target.value)} rows={4} placeholder="Nội dung câu hỏi" className="w-full rounded-xl bg-slate-900/95 border border-slate-700/60 text-slate-50 placeholder-slate-400 p-3 focus:border-sky-500/50 focus:ring-sky-500/30" />
+      <textarea value={content} onChange={(e)=>setContent(e.target.value)} rows={4} placeholder="Nội dung câu hỏi" className="w-full rounded-xl bg-white/10 border border-white/20 p-3 placeholder-white/60" />
       <div className="flex justify-end">
         <Button 
           disabled={!title.trim() || !content.trim()} 
@@ -619,7 +619,7 @@ function AskInline({ onSubmit, defaultStudentId, onUpdateStudentId }: { onSubmit
             // setCategory('thao-luan')
             onSubmit({ title, content, studentId, category })
           }} 
-          className="bg-gradient-to-r from-sky-600 to-blue-600 hover:from-sky-700 hover:to-blue-700 text-white border border-sky-500/30 rounded-xl font-medium shadow-lg shadow-sky-500/20"
+          className="bg-white/10 hover:bg-white/20 text-white border border-white/20 rounded-xl"
         >
           Gửi câu hỏi
         </Button>
