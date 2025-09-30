@@ -1,14 +1,32 @@
 import { QuestionItem } from "@/app/dien-dan/types";
 
-const BASE = "https://script.googleusercontent.com/macros/echo?user_content_key=AehSKLi9f_Bc9k38N6X3O1b7pzaDZMD9_hJuMpagB3mreAOGoSHheF9mOd2SLU20K53YuUEBr3dMZIt2yJ3v3R9c-1iwCgeBMu6sEFI2bpc60hx8Kpst8ETa2jJNe0mPAlOeq4_-u4K-yafFopoSf4VK85qvaK4rXyHZIDuDBvazuHYJEEYLCeWXkt3WG9xO2dF09oJqQhn5-Rq8XJWWD7XekDptm_Ph6jC9qDETXLrLWHDHSWEGgbrnx9c0uuxp46vghOty0Z_9_y3Me0bwqXQ-XEFTg5hQWdsFenlwd7_Y&lib=MclEGp6VjP9-0qP4G6G3wOYqofBADz-Xa";
+const BASE = "https://script.google.com/macros/s/AKfycbyCfakaiFBnEQT0DYiyfjTJYxSO0_yZa0MzrsqjbodAI7Ay9i3OtF2zYpXdWibIX6P_Yw/exec";
+
+// Category mapping từ frontend sang AppScript
+const CATEGORY_MAPPING = {
+  'CLUB': 'Hỏi về câu lạc bộ',
+  'MAJOR': 'Hỏi về ngành học', 
+  'DISCUSSION': 'Thảo luận'
+} as const;
 
 export const createQuestion = async (question: QuestionItem) => {
     try {
         console.log("Question submitted:", question);
 
+        // Map category to AppScript format
+        const mappedCategory = CATEGORY_MAPPING[question.category as keyof typeof CATEGORY_MAPPING] || 'Thảo luận';
+        
+        const payload = {
+            title: question.title,
+            category: mappedCategory,
+            user: question.studentId || 'K000000000', // Default MSSV if not provided
+            content: question.content,
+            anonymous: !question.studentId // Anonymous if no studentId
+        };
+
         const body = {
             function: 'createQuestion',
-            body: question,
+            body: payload,
         }
 
         const response = await baseApi(body)
@@ -31,9 +49,23 @@ export const fetchQuestions = async (queries: any): Promise<QuestionItem[]> => {
 
         const response = await baseApi(body)
         
-        // Check if response has data property
-        if (response && response.data) {
-            return response.data as QuestionItem[]
+        // Check if response has data property with items
+        if (response && response.data && response.data.items) {
+            // Map AppScript response to frontend format
+            const mappedQuestions = response.data.items.map((item: any) => ({
+                id: item.id,
+                title: item.title,
+                content: item.content,
+                category: mapCategoryFromAppScript(item.category),
+                studentId: item.user === 'anonymous' ? undefined : item.user,
+                userId: item.user === 'anonymous' ? 'anonymous' : item.user,
+                createdAt: new Date(item.createdAt).getTime(),
+                likes: item.like_count || 0,
+                replies: item.responses || [],
+                repliesCount: item.responses ? item.responses.length : 0
+            }));
+            
+            return mappedQuestions;
         }
         
         // If no data property, return empty array
@@ -43,6 +75,67 @@ export const fetchQuestions = async (queries: any): Promise<QuestionItem[]> => {
         console.error('Fetch questions error:', error);
         // Don't show alert for fetch errors, just return empty array
         return []
+    }
+}
+
+// Helper function to map AppScript categories back to frontend
+function mapCategoryFromAppScript(appScriptCategory: string): string {
+    const reverseMapping: { [key: string]: string } = {
+        'Hỏi về câu lạc bộ': 'CLUB',
+        'Hỏi về ngành học': 'MAJOR',
+        'Thảo luận': 'DISCUSSION'
+    };
+    return reverseMapping[appScriptCategory] || 'DISCUSSION';
+}
+
+// Toggle like for a question
+export const toggleLike = async (questionId: string, mssv: string, like: boolean) => {
+    try {
+        console.log("Toggle like:", { questionId, mssv, like });
+
+        const payload = {
+            questionId: questionId,
+            mssv: mssv,
+            like: like ? 1 : 0
+        };
+
+        const body = {
+            function: 'toggleLike',
+            body: payload,
+        }
+
+        const response = await baseApi(body)
+        console.log('Toggle like successfully:', response)
+        return response
+    } catch (error) {
+        console.error('Toggle like error:', error);
+        throw error;
+    }
+}
+
+// Create response to a question
+export const createResponse = async (questionId: string, content: string, mssv: string, anonymous: boolean = false) => {
+    try {
+        console.log("Create response:", { questionId, content, mssv, anonymous });
+
+        const payload = {
+            user: mssv,
+            anonymous: anonymous,
+            content: content,
+            questionId: questionId
+        };
+
+        const body = {
+            function: 'createResponse',
+            body: payload,
+        }
+
+        const response = await baseApi(body)
+        console.log('Create response successfully:', response)
+        return response
+    } catch (error) {
+        console.error('Create response error:', error);
+        throw error;
     }
 }
 

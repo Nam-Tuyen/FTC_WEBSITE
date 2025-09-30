@@ -15,7 +15,7 @@ import {
   Send, 
   X 
 } from 'lucide-react'
-import { createQuestion, fetchQuestions } from '../../googleSheetApi/sheet'
+import { createQuestion, fetchQuestions, toggleLike, createResponse } from '../../googleSheetApi/sheet'
 import { CATEGORIES, STORAGE_KEYS, QuestionItem, Reply, ForumCategory } from './types'
 import { uuid, formatTime } from './utils/index'
 import { SimpleMobileSend } from './components/simple-mobile-send'
@@ -154,6 +154,13 @@ export default function ForumPage() {
   useEffect(() => {
     const id = uuid()
     setCurrentUserId(id)
+    
+    // Load studentId from localStorage
+    const savedStudentId = localStorage.getItem(STORAGE_KEYS.studentId)
+    if (savedStudentId) {
+      setCurrentStudentId(savedStudentId)
+    }
+    
     // Fetch questions from API on component mount
     handleFetchQuestions()
   }, [])
@@ -184,11 +191,13 @@ export default function ForumPage() {
 
   const sorted = useMemo(() => {
     return [...filtered].sort((a, b) => {
-      const aLikes = Array.isArray(a.likes) ? a.likes.length : (typeof a.likes === 'number' ? a.likes : 0)
-      const bLikes = Array.isArray(b.likes) ? b.likes.length : (typeof b.likes === 'number' ? b.likes : 0)
+      const aLikes = typeof a.likes === 'number' ? a.likes : (Array.isArray(a.likes) ? a.likes.length : 0)
+      const bLikes = typeof b.likes === 'number' ? b.likes : (Array.isArray(b.likes) ? b.likes.length : 0)
       const likeDiff = bLikes - aLikes
       if (likeDiff !== 0) return likeDiff
-      return b.createdAt - a.createdAt
+      const aTime = typeof a.createdAt === 'number' ? a.createdAt : new Date(a.createdAt).getTime()
+      const bTime = typeof b.createdAt === 'number' ? b.createdAt : new Date(b.createdAt).getTime()
+      return bTime - aTime
     })
   }, [filtered])
 
@@ -205,8 +214,13 @@ export default function ForumPage() {
     studentId: string
     category: string
   }) {
+    const hasValidMssv = data.studentId && /^K\d{9}$/.test(data.studentId)
+    if (data.studentId && !hasValidMssv) {
+      window.alert("MSSV không hợp lệ!")
+      return
+    }
+
     const newId = uuid()
-    const authorName = data.studentId ? data.studentId : 'Ẩn danh'
     const newQ: QuestionItem = {
       id: newId,
       title: data.title,
@@ -228,43 +242,78 @@ export default function ForumPage() {
       setCurrentStudentId(data.studentId)
     }
 
-    const hasValidMssv = data.studentId && /^K\d{9}$/.test(data.studentId)
-    if (data.studentId && !hasValidMssv) {
-      window.alert("MSSV không hợp lệ!")
-      return
+    try {
+      await createQuestion(newQ)
+      // Refresh questions to get accurate data from server
+      handleFetchQuestions()
+    } catch (error) {
+      console.error('Error creating question:', error)
+      // Revert optimistic update on error
+      handleFetchQuestions()
     }
-
-    await createQuestion(newQ)
   }
 
 
-  function handleToggleLike(qid: string) {
-    if (!currentUserId) return
-    setQuestions((prev) =>
-      prev.map((q) => {
-        if (q.id !== qid) return q
-        if (Array.isArray(q.likes)) {
-          const has = q.likes.includes(currentUserId)
-          return { ...q, likes: has ? q.likes.filter((x) => x !== currentUserId) : [...q.likes, currentUserId] }
-        } else {
-          // If likes is a number, convert to array format
-          const likesArray = []
-          return { ...q, likes: [...likesArray, currentUserId] }
-        }
-      })
-    )
+  async function handleToggleLike(qid: string) {
+    if (!currentUserId || !currentStudentId) return
+    
+    try {
+      // Get current like status
+      const question = questions.find(q => q.id === qid)
+      if (!question) return
+      
+      const isCurrentlyLiked = Array.isArray(question.likes) 
+        ? question.likes.includes(currentUserId) 
+        : false
+      
+      // Optimistically update UI
+      setQuestions((prev) =>
+        prev.map((q) => {
+          if (q.id !== qid) return q
+          const newLikeCount = isCurrentlyLiked 
+            ? Math.max(0, (typeof q.likes === 'number' ? q.likes : 0) - 1)
+            : (typeof q.likes === 'number' ? q.likes : 0) + 1
+          return { ...q, likes: newLikeCount }
+        })
+      )
+      
+      // Call API
+      await toggleLike(qid, currentStudentId, !isCurrentlyLiked)
+      
+      // Refresh questions to get accurate data
+      handleFetchQuestions()
+    } catch (error) {
+      console.error('Error toggling like:', error)
+      // Revert optimistic update on error
+      handleFetchQuestions()
+    }
   }
 
-  function handleAddReply(qid: string, content: string, authorName: string) {
-    if (!content.trim()) return
-    const reply: Reply = {
-      id: uuid(),
-      content,
-      createdAt: Date.now(),
-      userId: currentUserId,
-      likes: [],
+  async function handleAddReply(qid: string, content: string, authorName: string) {
+    if (!content.trim() || !currentStudentId) return
+    
+    try {
+      // Optimistically update UI
+      const reply: Reply = {
+        id: uuid(),
+        content,
+        createdAt: Date.now(),
+        userId: currentUserId,
+        studentId: currentStudentId,
+        likes: [],
+      }
+      setQuestions((prev) => prev.map((q) => (q.id === qid ? { ...q, replies: [...(q.replies || []), reply] } : q)))
+      
+      // Call API
+      await createResponse(qid, content, currentStudentId, !currentStudentId)
+      
+      // Refresh questions to get accurate data
+      handleFetchQuestions()
+    } catch (error) {
+      console.error('Error creating reply:', error)
+      // Revert optimistic update on error
+      handleFetchQuestions()
     }
-    setQuestions((prev) => prev.map((q) => (q.id === qid ? { ...q, replies: [...q.replies, reply] } : q)))
   }
 
   return (
@@ -453,7 +502,7 @@ export default function ForumPage() {
                       <div>
                         <div className="flex items-center gap-2 mb-1">
                           <span className="font-bold">{question.studentId || 'Ẩn danh'}</span>
-                           {(Array.isArray(question.likes) ? question.likes.length : question.likes) >= 5 && (
+                           {(typeof question.likes === 'number' ? question.likes : (Array.isArray(question.likes) ? question.likes.length : 0)) >= 5 && (
                              <div className="flex items-center gap-1 bg-gradient-to-r from-orange-500 to-red-500 px-2 py-1 rounded-full text-xs font-bold">
                                <Star className="h-3 w-3" />
                                HOT
@@ -476,6 +525,7 @@ export default function ForumPage() {
                       <button 
                         onClick={() => handleToggleLike(question.id)} 
                         className="flex items-center gap-2 hover:opacity-80 transition-all"
+                        disabled={!currentStudentId}
                       >
                          <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${
                            Array.isArray(question.likes) && question.likes.includes(currentUserId) 
@@ -488,13 +538,13 @@ export default function ForumPage() {
                                : 'text-white'
                            }`} />
                          </div>
-                         <span className="font-semibold">{Array.isArray(question.likes) ? question.likes.length : question.likes}</span>
+                         <span className="font-semibold">{typeof question.likes === 'number' ? question.likes : (Array.isArray(question.likes) ? question.likes.length : 0)}</span>
                       </button>
                       <div className="flex items-center gap-2">
                         <div className="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center">
                           <MessageCircle className="h-5 w-5" />
                         </div>
-                         <span className="font-semibold">{Array.isArray(question.replies) ? question.replies.length : 0}</span>
+                         <span className="font-semibold">{question.repliesCount || (Array.isArray(question.replies) ? question.replies.length : 0)}</span>
                       </div>
                     </div>
                     <span className="text-sm font-bold px-4 py-2 bg-white/20 rounded-full">
@@ -504,7 +554,7 @@ export default function ForumPage() {
 
                    <div className="mt-4">
                      <SimpleMobileSend 
-                       onSubmit={(content: string) => handleAddReply(question.id, content, 'Ẩn danh')} 
+                       onSubmit={(content: string) => handleAddReply(question.id, content, currentStudentId || 'Ẩn danh')} 
                      />
                    </div>
                 </div>
@@ -570,7 +620,7 @@ export default function ForumPage() {
                     <p className="text-sm font-semibold mb-2 line-clamp-2">{q.title}</p>
                     <p className="text-xs text-white/70 flex items-center gap-2">
                       <Clock className="h-3 w-3" />
-                       {formatTime(q.createdAt)} • {Array.isArray(q.replies) ? q.replies.length : 0} phản hồi
+                       {formatTime(q.createdAt)} • {q.repliesCount || (Array.isArray(q.replies) ? q.replies.length : 0)} phản hồi
                     </p>
                   </div>
                 ))}
