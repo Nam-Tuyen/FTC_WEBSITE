@@ -1,7 +1,19 @@
 'use client'
 
 import React, { ChangeEvent, useEffect, useMemo, useState } from 'react'
-import { MessageSquare, Search, Users, TrendingUp, Hash, Star, Clock, Heart, MessageCircle, Send, X } from 'lucide-react'
+import { 
+  MessageSquare, 
+  Search, 
+  Users, 
+  TrendingUp, 
+  Hash, 
+  Star, 
+  Clock, 
+  Heart, 
+  MessageCircle, 
+  Send, 
+  X 
+} from 'lucide-react'
 import { createQuestion, fetchQuestions } from '../../googleSheetApi/sheet'
 import { CATEGORIES, STORAGE_KEYS, QuestionItem, Reply, ForumCategory } from './types'
 import { uuid, formatTime } from './utils/index'
@@ -257,64 +269,6 @@ export default function ForumPage() {
     }
 
     setQuestions((prev) => [newQ, ...prev])
-  }
-
-    // if (!hasValidMssv) {
-    //   // Still save to localStorage for non-logged-in users
-    //   const currentQuestions = JSON.parse(localStorage.getItem(STORAGE_KEYS.questions) || '[]')
-    //   localStorage.setItem(STORAGE_KEYS.questions, JSON.stringify([newQ, ...currentQuestions]))
-    //   return
-    // }
-
-    // const newBody = JSON.stringify({
-    //   studentId: data.studentId,
-    //   name: authorName,
-    //   title: data.title,
-    //   content: data.content,
-    //   category: data.category,
-    //   questionId: newId,
-    // })
-
-    // console.log('newBOdy', newBody)
-    // return
-
-    // try {
-    //   const tasks: Promise<any>[] = []
-    //   tasks.push((async () => {
-    //     try {
-    //       await fetch('/api/forum/questions', {
-    //         method: 'POST',
-    //         headers: { 'Content-Type': 'application/json' },
-    //         body: JSON.stringify({
-    //           studentId: data.studentId,
-    //           name: authorName,
-    //           title: data.title,
-    //           content: data.content,
-    //           category: data.category,
-    //           questionId: newId,
-    //         }),
-    //       })
-    //     } catch (_) { }
-    //   })())
-    //   tasks.push((async () => {
-    //     try {
-    //       await fetch('/api/forum/notion/question', {
-    //         method: 'POST',
-    //         headers: { 'Content-Type': 'application/json' },
-    //         body: JSON.stringify({
-    //           studentId: data.studentId,
-    //           name: authorName,
-    //           title: data.title,
-    //           content: data.content,
-    //           category: data.category,
-    //           questionId: newId,
-    //           authorId: currentUserId,
-    //         }),
-    //       })
-    //     } catch (_) { }
-    //   })())
-    //   await Promise.allSettled(tasks)
-    // } catch (e) { }
   }
 
 
