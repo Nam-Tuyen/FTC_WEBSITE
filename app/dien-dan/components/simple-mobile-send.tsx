@@ -39,10 +39,10 @@ export function SimpleMobileSend({ onSubmit, disabled = false, className = '' }:
 
   return (
     <div className={`relative ${className}`}>
-      {/* Main container with subtle background */}
-      <div className="relative bg-white/5 backdrop-blur-sm rounded-2xl border border-white/10 p-2 transition-all duration-300 hover:bg-white/8 hover:border-white/15">
+      {/* Main container - Very subtle, almost invisible */}
+      <div className="relative bg-transparent rounded-2xl p-2 transition-all duration-300">
         <div className="flex items-end gap-3">
-          {/* Input area - Subtle and unobtrusive */}
+          {/* Input area - Very subtle and unobtrusive */}
           <div className="flex-1 relative">
             <textarea
               value={content}
@@ -50,7 +50,7 @@ export function SimpleMobileSend({ onSubmit, disabled = false, className = '' }:
               onKeyPress={handleKeyPress}
               placeholder="Viết phản hồi..."
               rows={1}
-              className="w-full px-4 py-3 bg-transparent text-white placeholder-white/50 focus:outline-none resize-none transition-all duration-200 mobile-input-subtle"
+              className="w-full px-4 py-3 bg-transparent text-white placeholder-white/30 focus:outline-none resize-none transition-all duration-200 mobile-input-very-subtle"
               disabled={disabled}
               style={{
                 fontSize: '16px', // Prevent zoom on iOS
@@ -65,8 +65,8 @@ export function SimpleMobileSend({ onSubmit, disabled = false, className = '' }:
               }}
             />
             
-            {/* Subtle bottom border that appears on focus */}
-            <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-blue-400/0 via-blue-400/50 to-blue-400/0 transition-all duration-300 focus-within:from-blue-400/50 focus-within:via-blue-400 focus-within:to-blue-400/50" />
+            {/* Very subtle bottom border that appears on focus */}
+            <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-blue-400/0 via-blue-400/30 to-blue-400/0 transition-all duration-300 focus-within:from-blue-400/30 focus-within:via-blue-400/60 focus-within:to-blue-400/30" />
           </div>
           
           {/* Send button - Prominent and eye-catching */}
@@ -128,9 +128,9 @@ export function SimpleMobileSend({ onSubmit, disabled = false, className = '' }:
           </button>
         </div>
         
-        {/* Character count (optional) */}
+        {/* Character count (optional) - Very subtle */}
         {content.length > 0 && (
-          <div className="absolute -bottom-6 right-0 text-xs text-white/50">
+          <div className="absolute -bottom-6 right-0 text-xs text-white/20">
             {content.length}/500
           </div>
         )}
