@@ -1,20 +1,167 @@
 'use client'
 
 import React, { ChangeEvent, useEffect, useMemo, useState } from 'react'
-import { Navigation } from '@/components/navigation'
-import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
-import { MessageSquare, Search, Users, TrendingUp, Hash, Star, Clock, Heart, MessageCircle } from 'lucide-react'
+import { MessageSquare, Search, Users, TrendingUp, Hash, Star, Clock, Heart, MessageCircle, Send, X } from 'lucide-react'
 import { createQuestion, fetchQuestions } from '../../googleSheetApi/sheet'
 import { CATEGORIES, STORAGE_KEYS, QuestionItem, Reply, ForumCategory } from './types'
 import { uuid, formatTime } from './utils/index'
 import { SimpleMobileSend } from './components/simple-mobile-send'
 import './components/mobile-optimizations.css'
 
+// Mock data for demo
+const mockQuestions: QuestionItem[] = [
+  {
+    id: '1',
+    title: 'Blockchain có thể áp dụng trong lĩnh vực tài chính như thế nào?',
+    content: 'Mình đang tìm hiểu về blockchain và muốn biết các ứng dụng thực tế trong fintech. Các bạn có thể chia sẻ kinh nghiệm không?',
+    authorId: 'user1',
+    authorName: 'Ẩn danh',
+    studentId: 'K21520123',
+    category: 'DISCUSSION',
+    createdAt: Date.now() - 3600000,
+    likes: ['user2', 'user3', 'user4', 'user5'],
+    replies: [
+      {
+        id: 'r1',
+        content: 'Blockchain có thể dùng cho thanh toán xuyên biên giới, smart contracts, và DeFi!',
+        createdAt: Date.now() - 1800000,
+        authorId: 'user2',
+        authorName: 'Ẩn danh'
+      }
+    ]
+  },
+  {
+    id: '2',
+    title: 'AI trong phân tích rủi ro tín dụng',
+    content: 'Các mô hình AI nào đang được sử dụng phổ biến trong việc đánh giá rủi ro cho vay?',
+    authorId: 'user2',
+    authorName: 'Ẩn danh',
+    studentId: 'K21520456',
+    category: 'MAJOR',
+    createdAt: Date.now() - 7200000,
+    likes: ['user1', 'user3'],
+    replies: []
+  }
+]
+
+// Simple Button Component
+const Button = ({ children, onClick, disabled, variant = 'default', className = '' }: any) => {
+  const baseClass = 'px-4 py-2 rounded-xl font-semibold transition-all duration-300'
+  const variantClass = variant === 'outline' 
+    ? 'border-2 border-white/30 bg-transparent hover:bg-white/10 disabled:opacity-50' 
+    : 'bg-white/20 hover:bg-white/30 disabled:opacity-50'
+  
+  return (
+    <button 
+      onClick={onClick} 
+      disabled={disabled}
+      className={`${baseClass} ${variantClass} ${className}`}
+    >
+      {children}
+    </button>
+  )
+}
+
+// Simple Input Component
+const Input = ({ value, onChange, placeholder, className = '' }: any) => {
+  return (
+    <input
+      type="text"
+      value={value}
+      onChange={onChange}
+      placeholder={placeholder}
+      className={`w-full px-4 py-3 rounded-xl border-2 focus:outline-none focus:ring-2 focus:ring-white/40 transition-all ${className}`}
+    />
+  )
+}
+
+// Navigation Component
+const Navigation = () => {
+  return (
+    <nav className="fixed top-0 left-0 right-0 z-50 bg-[#003663]/95 backdrop-blur-lg border-b border-white/10">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between h-16">
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-400 to-purple-500 flex items-center justify-center">
+              <MessageSquare className="h-6 w-6 text-white" />
+            </div>
+            <span className="text-xl font-bold text-white">FTC Forum</span>
+          </div>
+        </div>
+      </div>
+    </nav>
+  )
+}
+
+// Ask Question Component
+const AskInline = ({ onSubmit, defaultStudentId, onUpdateStudentId }: any) => {
+  const [title, setTitle] = useState('')
+  const [content, setContent] = useState('')
+  const [studentId, setStudentId] = useState(defaultStudentId || '')
+  const [category, setCategory] = useState<string>('DISCUSSION')
+
+  const handleSubmit = () => {
+    if (!title.trim() || !content.trim()) return
+    onSubmit({ title, content, studentId, category })
+    setTitle('')
+    setContent('')
+  }
+
+  return (
+    <div className="space-y-4">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+        <Input 
+          value={studentId} 
+          onChange={(e: any) => { 
+            setStudentId(e.target.value)
+            onUpdateStudentId(e.target.value)
+          }} 
+          placeholder="MSSV (K21520001)" 
+          className="bg-white/10 border-white/30 text-white placeholder-white/60"
+        />
+        <select 
+          value={category} 
+          onChange={(e) => setCategory(e.target.value)} 
+          className="bg-white/10 border-2 border-white/30 rounded-xl px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-white/40"
+        >
+          {Object.entries(CATEGORIES).map(([key, label]) => (
+            <option key={key} value={key} className="bg-[#003663] text-white">{label}</option>
+          ))}
+        </select>
+        <Input 
+          value={title} 
+          onChange={(e: any) => setTitle(e.target.value)} 
+          placeholder="Tiêu đề câu hỏi" 
+          className="bg-white/10 border-white/30 text-white placeholder-white/60"
+        />
+      </div>
+      <textarea 
+        value={content} 
+        onChange={(e) => setContent(e.target.value)} 
+        rows={4} 
+        placeholder="Nội dung câu hỏi..." 
+        className="w-full rounded-xl bg-white/10 border-2 border-white/30 p-4 text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-white/40 resize-none"
+      />
+      <div className="flex justify-end">
+        <Button 
+          disabled={!title.trim() || !content.trim()} 
+          onClick={handleSubmit}
+          className="bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white px-6 py-3"
+        >
+          <div className="flex items-center gap-2">
+            <Send className="h-4 w-4" />
+            Gửi câu hỏi
+          </div>
+        </Button>
+      </div>
+    </div>
+  )
+}
+
 export default function ForumPage() {
   const [currentUserId, setCurrentUserId] = useState<string>('')
   const [currentStudentId, setCurrentStudentId] = useState<string>('')
-  const [questions, setQuestions] = useState<QuestionItem[]>([])
+  const [questions, setQuestions] = useState<QuestionItem[]>(mockQuestions)
   const [search, setSearch] = useState('')
   const [selectedCategory, setSelectedCategory] = useState<ForumCategory | ''>('')
   const [isLoading, setIsLoading] = useState<boolean>(false)
@@ -38,35 +185,9 @@ export default function ForumPage() {
   }
 
   useEffect(() => {
-    const id = localStorage.getItem(STORAGE_KEYS.userId) || uuid()
-    const sid = localStorage.getItem(STORAGE_KEYS.studentId) || ''
+    const id = uuid()
     setCurrentUserId(id)
-    setCurrentStudentId(sid)
-    localStorage.setItem(STORAGE_KEYS.userId, id)
-
-    // Fetch questions from the server instead of localStorage
-    // const fetchQuestions = async () => {
-    //   try {
-    //     const response = await fetch('/api/forum/questions')
-    //     if (response.ok) {
-    //       const data = await response.json()
-    //       // Sort by creation time, newest first
-    //       const sortedData = data.sort((a: QuestionItem, b: QuestionItem) => b.createdAt - a.createdAt);
-    //       setQuestions(sortedData)
-    //     } else {
-    //       // Fallback to localStorage if API fails
-    //       const saved = localStorage.getItem(STORAGE_KEYS.questions)
-    //       setQuestions(saved ? JSON.parse(saved) : [])
-    //     }
-    //   } catch (error) {
-    //     console.error("Failed to fetch questions, falling back to localStorage", error)
-    //     const saved = localStorage.getItem(STORAGE_KEYS.questions)
-    //     setQuestions(saved ? JSON.parse(saved) : [])
-    //   }
-    // }
-    handleFetchQuestions()
-    // fetchQuestions()
-  }, []) // Re-fetch when questions length changes
+  }, [])
 
   useEffect(() => {
     setPage(1)
@@ -109,14 +230,9 @@ export default function ForumPage() {
     return sorted.slice(start, start + pageSize)
   }, [sorted, pageSafe, pageSize])
 
-  async function handleCreateQuestion(data: {
-    title: string
-    content: string
-    studentId: string
-    category: string
-  }) {
+  const handleCreateQuestion = (data: any) => {
     const newId = uuid()
-    const authorName = data.studentId ? data.studentId : 'Ẩn danh'
+    const authorName = data.studentId || 'Ẩn danh'
     const newQ: QuestionItem = {
       id: newId,
       title: data.title,
@@ -130,21 +246,18 @@ export default function ForumPage() {
       replies: [],
     }
 
-    // Save student ID if it's valid and not already saved
     if (data.studentId && data.studentId !== currentStudentId) {
-      localStorage.setItem(STORAGE_KEYS.studentId, data.studentId)
       setCurrentStudentId(data.studentId)
     }
 
     const hasValidMssv = data.studentId && /^K\d{9}$/.test(data.studentId)
     if (data.studentId && !hasValidMssv) {
-      window.alert("MSSV không hợp lệ!")
+      alert("MSSV không hợp lệ!")
       return
     }
 
-    // Optimistically update the UI
     setQuestions((prev) => [newQ, ...prev])
-    await createQuestion(newQ)
+  }
 
     // if (!hasValidMssv) {
     //   // Still save to localStorage for non-logged-in users
@@ -204,34 +317,25 @@ export default function ForumPage() {
     // } catch (e) { }
   }
 
-  function handleToggleLike(qid: string) {
+
+  const handleToggleLike = (qid: string) => {
     if (!currentUserId || likingQuestions.has(qid)) return
     
-    // Prevent double-click
     setLikingQuestions(prev => new Set(prev).add(qid))
     
-    // Immediate UI update for better responsiveness
     setQuestions((prev) =>
       prev.map((q) => {
         if (q.id !== qid) return q
         const has = q.likes.includes(currentUserId)
-        return { ...q, likes: has ? q.likes.filter((x) => x !== currentUserId) : [...q.likes, currentUserId] }
+        return { 
+          ...q, 
+          likes: has 
+            ? q.likes.filter((x) => x !== currentUserId) 
+            : [...q.likes, currentUserId] 
+        }
       })
     )
     
-    // Save to localStorage for persistence
-    try {
-      const updatedQuestions = questions.map((q) => {
-        if (q.id !== qid) return q
-        const has = q.likes.includes(currentUserId)
-        return { ...q, likes: has ? q.likes.filter((x) => x !== currentUserId) : [...q.likes, currentUserId] }
-      })
-      localStorage.setItem(STORAGE_KEYS.questions, JSON.stringify(updatedQuestions))
-    } catch (error) {
-      console.log('Error saving like state:', error)
-    }
-    
-    // Remove from liking set after a short delay
     setTimeout(() => {
       setLikingQuestions(prev => {
         const newSet = new Set(prev)
@@ -241,121 +345,99 @@ export default function ForumPage() {
     }, 500)
   }
 
-  function handleAddReply(qid: string, content: string, authorName: string) {
+  const handleAddReply = (qid: string, content: string) => {
     if (!content.trim()) return
     const reply: Reply = {
       id: uuid(),
       content,
       createdAt: Date.now(),
       authorId: currentUserId,
-      authorName: authorName,
+      authorName: 'Ẩn danh',
     }
-    setQuestions((prev) => prev.map((q) => (q.id === qid ? { ...q, replies: [...q.replies, reply] } : q)))
+    setQuestions((prev) => 
+      prev.map((q) => 
+        q.id === qid ? { ...q, replies: [...q.replies, reply] } : q
+      )
+    )
   }
 
   return (
     <div className="min-h-screen bg-[#003663] text-white">
       <Navigation />
 
-      {/* Mobile Responsive Hero Section */}
-      <section className="relative min-h-[60vh] sm:min-h-[70vh] flex items-center justify-center py-12 sm:py-16 lg:py-24 px-4 sm:px-6 lg:px-8">
-        {/* Enhanced Background Effects */}
+      {/* Hero Section */}
+      <section className="relative min-h-[70vh] flex items-center justify-center pt-24 pb-16 px-4 sm:px-6 lg:px-8">
         <div className="absolute inset-0 overflow-hidden">
-          <div className="absolute top-1/4 -right-1/4 w-2/3 h-2/3 bg-gradient-to-br from-blue-500/30 via-purple-500/20 to-transparent rounded-full blur-3xl animate-float" />
-          <div className="absolute -bottom-1/4 -left-1/4 w-2/3 h-2/3 bg-gradient-to-tr from-purple-500/30 via-pink-500/20 to-transparent rounded-full blur-3xl animate-float-reverse" />
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-1/2 h-1/2 bg-gradient-to-r from-cyan-500/20 to-blue-500/20 rounded-full blur-2xl animate-pulse" />
+          <div className="absolute top-1/4 -right-1/4 w-2/3 h-2/3 bg-gradient-to-br from-blue-500/20 via-purple-500/10 to-transparent rounded-full blur-3xl" />
+          <div className="absolute -bottom-1/4 -left-1/4 w-2/3 h-2/3 bg-gradient-to-tr from-purple-500/20 via-pink-500/10 to-transparent rounded-full blur-3xl" />
         </div>
         
-        <div className="relative max-w-6xl mx-auto text-center space-y-4 sm:space-y-6 lg:space-y-8">
-          {/* Mobile Responsive Title */}
-          <div className="space-y-3 sm:space-y-4 lg:space-y-6">
-            <h1 className="relative text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-extrabold">
-              <span className="absolute inset-0 bg-gradient-to-r from-white via-blue-100 to-purple-100 opacity-60 blur-3xl animate-pulse"></span>
-              <span className="relative text-white animate-bounce" style={{
-                animation: 'blink 1.5s infinite, gradient-shift 2s ease-in-out infinite, bounce 2s infinite'
-              }}>
+        <div className="relative max-w-6xl mx-auto text-center space-y-8">
+          <div className="space-y-6">
+            <h1 className="text-5xl sm:text-6xl lg:text-7xl font-extrabold">
+              <span className="bg-gradient-to-r from-white via-blue-100 to-purple-100 bg-clip-text text-transparent">
                 DIỄN ĐÀN FTC
               </span>
             </h1>
-            <p className="text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl text-white/90 leading-relaxed max-w-4xl mx-auto font-medium px-4">
+            <p className="text-xl sm:text-2xl lg:text-3xl text-white/90 leading-relaxed max-w-4xl mx-auto font-medium">
               Nơi cộng đồng fintech chia sẻ kiến thức, thảo luận xu hướng và kết nối với nhau
             </p>
           </div>
 
-          {/* Mobile Responsive Search */}
-          <div className="max-w-xl sm:max-w-2xl mx-auto relative mt-6 sm:mt-8 lg:mt-12">
-            <div className="absolute left-3 sm:left-4 lg:left-6 top-1/2 -translate-y-1/2">
-              <Search className="h-4 w-4 sm:h-5 sm:w-5 lg:h-6 lg:w-6 text-white/80" />
+          {/* Search Box */}
+          <div className="max-w-2xl mx-auto relative mt-12">
+            <div className="absolute left-6 top-1/2 -translate-y-1/2">
+              <Search className="h-6 w-6 text-white/80" />
             </div>
             <Input
               value={search}
               onChange={(e: ChangeEvent<HTMLInputElement>) => setSearch(e.target.value)}
               placeholder="Tìm kiếm câu hỏi, thảo luận..."
-              className="pl-10 sm:pl-12 lg:pl-16 h-12 sm:h-14 lg:h-16 text-sm sm:text-base lg:text-lg bg-white/15 border-2 border-white/25 placeholder-white/70 text-white rounded-xl sm:rounded-2xl shadow-2xl focus-visible:ring-4 focus-visible:ring-white/40 backdrop-blur-xl"
+              className="pl-16 h-16 text-lg bg-white/15 border-white/25 placeholder-white/70 text-white rounded-2xl shadow-2xl focus:ring-white/40 backdrop-blur-xl"
             />
-            {!!search && (
-            <button
-              onClick={() => setSearch('')}
-                className="absolute right-2 sm:right-3 lg:right-4 top-1/2 -translate-y-1/2 w-8 h-8 sm:w-9 sm:h-9 lg:w-10 lg:h-10 grid place-items-center rounded-lg sm:rounded-xl bg-white/20 hover:bg-white/30 transition-all duration-300"
-                aria-label="Xóa tìm kiếm"
-            >
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3 sm:h-4 sm:w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <line x1="18" y1="6" x2="6" y2="18" />
-                <line x1="6" y1="6" x2="18" y2="18" />
-              </svg>
-            </button>
+            {search && (
+              <button
+                onClick={() => setSearch('')}
+                className="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 grid place-items-center rounded-xl bg-white/20 hover:bg-white/30 transition-all"
+              >
+                <X className="h-4 w-4" />
+              </button>
             )}
           </div>
-
         </div>
       </section>
 
-      {/* Spacer để tạo khoảng cách giữa header và body */}
-      <div className="h-16 bg-gradient-to-b from-transparent to-[#003663]/50"></div>
+      <div className="h-16 bg-gradient-to-b from-transparent to-[#003663]/50" />
 
-      {/* Ultra Modern Layout với enhanced spacing và visual effects */}
-      <div className="max-w-9xl mx-auto px-4 sm:px-6 lg:px-12 pb-12 sm:pb-20">
-        {/* Section Header với modern design */}
-        <div className="text-center mb-8 sm:mb-16">
-          <div className="inline-flex items-center gap-2 sm:gap-3 bg-gradient-to-r from-blue-500/20 to-purple-500/20 rounded-xl sm:rounded-2xl px-4 sm:px-6 py-2 sm:py-3 mb-4 sm:mb-6">
-            <MessageSquare className="h-4 w-4 sm:h-6 sm:w-6 text-blue-300" />
-            <span className="text-sm sm:text-lg font-semibold text-white">Cộng đồng thảo luận</span>
-          </div>
-          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white mb-3 sm:mb-4 px-4">
-            Khám phá và tham gia thảo luận
-          </h2>
-          <p className="text-base sm:text-lg lg:text-xl text-white/80 max-w-3xl mx-auto px-4">
-            Tham gia vào các cuộc thảo luận sôi nổi, chia sẻ kiến thức và kết nối với cộng đồng fintech
-          </p>
-        </div>
-
-        <div className="grid grid-cols-1 xl:grid-cols-12 gap-6 sm:gap-8 lg:gap-16">
+      {/* Main Content */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-20">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
           
-          {/* Left Sidebar - Mobile Responsive */}
-          <aside className="xl:col-span-3 space-y-4 sm:space-y-6 lg:space-y-8">
-            {/* Categories - Mobile Responsive Design */}
-            <div className="bg-gradient-to-br from-white/12 to-white/5 rounded-2xl sm:rounded-3xl border border-white/20 p-4 sm:p-6 lg:p-10 shadow-2xl sm:shadow-3xl backdrop-blur-2xl hover:shadow-4xl transition-all duration-500">
-              <div className="flex items-center gap-3 sm:gap-4 mb-4 sm:mb-6 lg:mb-8">
-                <div className="w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 rounded-2xl sm:rounded-3xl bg-gradient-to-br from-blue-500/30 to-purple-500/30 flex items-center justify-center shadow-lg">
-                  <Hash className="h-4 w-4 sm:h-5 sm:w-5 lg:h-6 lg:w-6 text-blue-200" />
+          {/* Left Sidebar */}
+          <aside className="lg:col-span-3 space-y-6">
+            {/* Categories */}
+            <div className="bg-white/10 rounded-2xl border border-white/20 p-6 backdrop-blur-xl">
+              <div className="flex items-center gap-3 mb-6">
+                <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-500/30 to-purple-500/30 flex items-center justify-center">
+                  <Hash className="h-5 w-5 text-blue-200" />
                 </div>
                 <div>
-                  <h3 className="text-lg sm:text-xl lg:text-2xl font-bold text-white">Danh mục</h3>
-                  <p className="text-xs sm:text-sm text-white/70">Lọc theo chủ đề</p>
+                  <h3 className="text-xl font-bold">Danh mục</h3>
+                  <p className="text-sm text-white/70">Lọc theo chủ đề</p>
                 </div>
               </div>
-              <div className="space-y-2 sm:space-y-3">
+              <div className="space-y-2">
                 <button
                   onClick={() => setSelectedCategory('')}
-                  className={`w-full text-left px-3 sm:px-4 lg:px-6 py-2 sm:py-3 lg:py-4 rounded-xl sm:rounded-2xl transition-all duration-300 group ${
+                  className={`w-full text-left px-4 py-3 rounded-xl transition-all ${
                     selectedCategory === '' 
-                      ? 'bg-gradient-to-r from-blue-500/20 to-purple-500/20 border border-blue-400/30 shadow-lg shadow-blue-500/10' 
-                      : 'hover:bg-white/10 border border-transparent hover:border-white/20'
+                      ? 'bg-white/20 border border-white/30' 
+                      : 'hover:bg-white/10'
                   }`}
                 >
                   <div className="flex items-center justify-between">
-                    <span className="text-sm sm:text-base font-semibold">Tất cả</span>
-                    <span className="text-xs sm:text-sm bg-white/15 px-2 sm:px-3 py-1 rounded-full font-medium">{questions.length}</span>
+                    <span className="font-semibold">Tất cả</span>
+                    <span className="text-sm bg-white/20 px-3 py-1 rounded-full">{questions.length}</span>
                   </div>
                 </button>
                 {Object.entries(CATEGORIES).map(([key, label]) => {
@@ -364,15 +446,15 @@ export default function ForumPage() {
                     <button
                       key={key}
                       onClick={() => setSelectedCategory(key as ForumCategory)}
-                      className={`w-full text-left px-3 sm:px-4 lg:px-6 py-2 sm:py-3 lg:py-4 rounded-xl sm:rounded-2xl transition-all duration-300 group ${
+                      className={`w-full text-left px-4 py-3 rounded-xl transition-all ${
                         selectedCategory === key 
-                          ? 'bg-gradient-to-r from-blue-500/20 to-purple-500/20 border border-blue-400/30 shadow-lg shadow-blue-500/10' 
-                          : 'hover:bg-white/10 border border-transparent hover:border-white/20'
+                          ? 'bg-white/20 border border-white/30' 
+                          : 'hover:bg-white/10'
                       }`}
                     >
                       <div className="flex items-center justify-between">
-                        <span className="text-sm sm:text-base font-semibold">{label}</span>
-                        <span className="text-xs sm:text-sm bg-white/15 px-2 sm:px-3 py-1 rounded-full font-medium">{count}</span>
+                        <span className="font-semibold">{label}</span>
+                        <span className="text-sm bg-white/20 px-3 py-1 rounded-full">{count}</span>
                       </div>
                     </button>
                   )
@@ -380,177 +462,179 @@ export default function ForumPage() {
               </div>
             </div>
 
-            {/* Stats - Mobile Responsive Cards */}
-            <div className="bg-gradient-to-br from-white/12 to-white/5 rounded-2xl sm:rounded-3xl border border-white/20 p-4 sm:p-6 lg:p-10 shadow-2xl sm:shadow-3xl backdrop-blur-2xl hover:shadow-4xl transition-all duration-500">
-              <div className="flex items-center gap-3 sm:gap-4 mb-4 sm:mb-6 lg:mb-8">
-                <div className="w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 rounded-2xl sm:rounded-3xl bg-gradient-to-br from-green-500/30 to-emerald-500/30 flex items-center justify-center shadow-lg">
-                  <TrendingUp className="h-4 w-4 sm:h-5 sm:w-5 lg:h-6 lg:w-6 text-green-200" />
+            {/* Stats */}
+            <div className="bg-white/10 rounded-2xl border border-white/20 p-6 backdrop-blur-xl">
+              <div className="flex items-center gap-3 mb-6">
+                <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-green-500/30 to-emerald-500/30 flex items-center justify-center">
+                  <TrendingUp className="h-5 w-5 text-green-200" />
                 </div>
                 <div>
-                  <h3 className="text-lg sm:text-xl lg:text-2xl font-bold text-white">Thống kê</h3>
-                  <p className="text-xs sm:text-sm text-white/70">Dữ liệu cộng đồng</p>
+                  <h3 className="text-xl font-bold">Thống kê</h3>
                 </div>
               </div>
-              <div className="space-y-2 sm:space-y-3 lg:space-y-4">
-                <div className="flex items-center justify-between p-3 sm:p-4 rounded-xl sm:rounded-2xl bg-white/8 border border-white/10">
-                  <span className="text-sm sm:text-base text-white/90 font-medium">Tổng câu hỏi</span>
-                  <span className="font-bold text-lg sm:text-xl text-white">{questions.length}</span>
+              <div className="space-y-3">
+                <div className="flex items-center justify-between p-3 rounded-xl bg-white/10">
+                  <span className="text-sm font-medium">Tổng câu hỏi</span>
+                  <span className="font-bold text-xl">{questions.length}</span>
                 </div>
-                <div className="flex items-center justify-between p-3 sm:p-4 rounded-xl sm:rounded-2xl bg-white/8 border border-white/10">
-                  <span className="text-sm sm:text-base text-white/90 font-medium">Hiển thị</span>
-                  <span className="font-bold text-lg sm:text-xl text-white">{sorted.length}</span>
+                <div className="flex items-center justify-between p-3 rounded-xl bg-white/10">
+                  <span className="text-sm font-medium">Hiển thị</span>
+                  <span className="font-bold text-xl">{sorted.length}</span>
                 </div>
-                <div className="flex items-center justify-between p-3 sm:p-4 rounded-xl sm:rounded-2xl bg-white/8 border border-white/10">
-                  <span className="text-sm sm:text-base text-white/90 font-medium">Trang hiện tại</span>
-                  <span className="font-bold text-lg sm:text-xl text-white">{pageSafe}/{totalPages}</span>
+                <div className="flex items-center justify-between p-3 rounded-xl bg-white/10">
+                  <span className="text-sm font-medium">Trang</span>
+                  <span className="font-bold text-xl">{pageSafe}/{totalPages}</span>
                 </div>
               </div>
             </div>
           </aside>
 
-          {/* Main Content - Mobile Responsive */}
-          <main className="xl:col-span-6 space-y-4 sm:space-y-6 lg:space-y-8">
-            {/* Ask box - Mobile Responsive Design */}
-            <div className="bg-gradient-to-br from-white/12 to-white/5 rounded-2xl sm:rounded-3xl border border-white/20 p-4 sm:p-6 lg:p-10 shadow-2xl sm:shadow-3xl backdrop-blur-2xl hover:shadow-4xl transition-all duration-500">
-              <div className="flex items-center gap-3 sm:gap-4 mb-4 sm:mb-6 lg:mb-8">
-                <div className="w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 rounded-2xl sm:rounded-3xl bg-gradient-to-br from-orange-500/30 to-red-500/30 flex items-center justify-center shadow-lg">
-                  <MessageSquare className="h-4 w-4 sm:h-5 sm:w-5 lg:h-6 lg:w-6 text-orange-200" />
+          {/* Main Content */}
+          <main className="lg:col-span-6 space-y-6">
+            {/* Ask Question */}
+            <div className="bg-white/10 rounded-2xl border border-white/20 p-6 backdrop-blur-xl">
+              <div className="flex items-center gap-3 mb-6">
+                <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-orange-500/30 to-red-500/30 flex items-center justify-center">
+                  <MessageSquare className="h-5 w-5 text-orange-200" />
                 </div>
                 <div>
-                  <h3 className="text-lg sm:text-xl lg:text-2xl font-bold text-white">Đặt câu hỏi</h3>
-                  <p className="text-xs sm:text-sm text-white/70">Chia sẻ thắc mắc của bạn</p>
+                  <h3 className="text-xl font-bold">Đặt câu hỏi</h3>
+                  <p className="text-sm text-white/70">Chia sẻ thắc mắc</p>
                 </div>
               </div>
-              <AskInline onSubmit={handleCreateQuestion} defaultStudentId={currentStudentId} onUpdateStudentId={(sid)=>{setCurrentStudentId(sid); localStorage.setItem(STORAGE_KEYS.studentId, sid)}} />
+              <AskInline 
+                onSubmit={handleCreateQuestion} 
+                defaultStudentId={currentStudentId}
+                onUpdateStudentId={setCurrentStudentId}
+              />
             </div>
 
-            {/* Questions list - Mobile Responsive Cards */}
-            <div className="space-y-4 sm:space-y-6 lg:space-y-8">
-              {isLoading ? (
-                <div className="bg-gradient-to-br from-white/12 to-white/5 rounded-2xl sm:rounded-3xl border border-white/20 p-8 sm:p-12 lg:p-16 shadow-2xl sm:shadow-3xl backdrop-blur-2xl">
-                  <div className="flex flex-col items-center justify-center space-y-4">
-                    <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-blue-400"></div>
-                    <p className="text-white/80 text-lg font-medium">Đang tải câu hỏi...</p>
-                  </div>
-                </div>
-              ) : (
-                paginated.map((question) => (
-                <div key={question.id} className="bg-gradient-to-br from-white/12 to-white/5 rounded-2xl sm:rounded-3xl border border-white/20 hover:border-white/30 transition-all duration-700 overflow-hidden group hover:bg-white/15 shadow-2xl sm:shadow-3xl hover:shadow-4xl backdrop-blur-2xl hover:scale-[1.01] sm:hover:scale-[1.02]">
-                  <div className="p-4 sm:p-6 lg:p-10">
-                    {/* Header - Mobile Responsive */}
-                    <div className="flex items-start justify-between mb-4 sm:mb-6">
-                      <div className="flex items-center gap-3 sm:gap-4">
-                        <div className="w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 rounded-xl sm:rounded-2xl bg-gradient-to-br from-blue-500/20 to-purple-500/20 flex items-center justify-center flex-shrink-0 shadow-lg">
-                          <MessageSquare className="h-4 w-4 sm:h-5 sm:w-5 lg:h-6 lg:w-6 text-blue-300" />
-                        </div>
-                        <div>
-                            <div className="flex items-center gap-2 sm:gap-3 mb-1 sm:mb-2">
-                              <span className="font-bold text-sm sm:text-base lg:text-lg text-white">{question.studentId || 'Ẩn danh'}</span>
-                              {/* Hot badge when many likes */}
-                              {question.likes.length >= 10 && (
-                                <div className="flex items-center gap-1 bg-gradient-to-r from-orange-500 to-red-500 px-2 sm:px-3 lg:px-4 py-1 sm:py-1.5 rounded-full text-xs font-bold shadow-lg">
-                                  <Star className="h-2 w-2 sm:h-3 sm:w-3 text-white" />
-                                  <span className="hidden sm:inline">HOT</span>
-                                </div>
-                              )}
+            {/* Questions List */}
+            <div className="space-y-6">
+              {paginated.map((question) => (
+                <div 
+                  key={question.id} 
+                  className="bg-white/10 rounded-2xl border border-white/20 hover:border-white/30 p-6 backdrop-blur-xl transition-all hover:bg-white/15"
+                >
+                  <div className="flex items-start justify-between mb-4">
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-500/20 to-purple-500/20 flex items-center justify-center">
+                        <MessageSquare className="h-5 w-5 text-blue-300" />
+                      </div>
+                      <div>
+                        <div className="flex items-center gap-2 mb-1">
+                          <span className="font-bold">{question.studentId || 'Ẩn danh'}</span>
+                          {question.likes.length >= 5 && (
+                            <div className="flex items-center gap-1 bg-gradient-to-r from-orange-500 to-red-500 px-2 py-1 rounded-full text-xs font-bold">
+                              <Star className="h-3 w-3" />
+                              HOT
                             </div>
-                          <div className="text-xs sm:text-sm flex items-center gap-1 sm:gap-2 text-white/70">
-                            <Clock className="h-3 w-3 sm:h-4 sm:w-4" />
-                            {formatTime(question.createdAt)}
-                          </div>
+                          )}
+                        </div>
+                        <div className="text-sm flex items-center gap-2 text-white/70">
+                          <Clock className="h-4 w-4" />
+                          {formatTime(question.createdAt)}
                         </div>
                       </div>
                     </div>
+                  </div>
 
-                    {/* Content - Mobile Responsive Typography */}
-                    <h3 className="text-lg sm:text-xl lg:text-2xl font-bold mb-3 sm:mb-4 leading-tight text-white">{question.title}</h3>
-                    <p className="mb-4 sm:mb-6 lg:mb-8 line-clamp-2 sm:line-clamp-3 text-sm sm:text-base lg:text-lg leading-relaxed text-white/90">{question.content}</p>
+                  <h3 className="text-xl font-bold mb-3">{question.title}</h3>
+                  <p className="mb-6 text-white/90">{question.content}</p>
 
-                    {/* Actions - Mobile Responsive */}
-                    <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-4 pt-4 sm:pt-6 border-t border-white/15">
-                      <div className="flex items-center gap-4 sm:gap-6 lg:gap-8">
-                        <button onClick={() => handleToggleLike(question.id)} className="flex items-center gap-2 sm:gap-3 hover:opacity-80 transition-all duration-300 hover:scale-110 group">
-                          <div className={`w-8 h-8 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl flex items-center justify-center transition-colors ${
+                  <div className="flex items-center justify-between pt-4 border-t border-white/15">
+                    <div className="flex items-center gap-6">
+                      <button 
+                        onClick={() => handleToggleLike(question.id)} 
+                        className="flex items-center gap-2 hover:opacity-80 transition-all"
+                      >
+                        <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${
+                          question.likes.includes(currentUserId) 
+                            ? 'bg-red-500/20' 
+                            : 'bg-white/10'
+                        }`}>
+                          <Heart className={`h-5 w-5 ${
                             question.likes.includes(currentUserId) 
-                              ? 'bg-red-500/20' 
-                              : 'bg-white/10 group-hover:bg-red-500/20'
-                          }`}>
-                            <Heart className={`h-4 w-4 sm:h-5 sm:w-5 transition-colors ${
-                              question.likes.includes(currentUserId) 
-                                ? 'text-red-500 fill-red-500' 
-                                : 'text-white group-hover:text-red-400'
-                            }`} />
-                          </div>
-                          <span className="text-sm sm:text-base font-semibold text-white">{question.likes.length}</span>
-                        </button>
-                        <div className="flex items-center gap-2 sm:gap-3 opacity-90">
-                          <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl bg-white/10 flex items-center justify-center">
-                            <MessageCircle className="h-4 w-4 sm:h-5 sm:w-5 text-white" />
-                          </div>
-                          <span className="text-sm sm:text-base font-semibold text-white">{(question.replies || []).length}</span>
+                              ? 'text-red-500 fill-red-500' 
+                              : 'text-white'
+                          }`} />
                         </div>
+                        <span className="font-semibold">{question.likes.length}</span>
+                      </button>
+                      <div className="flex items-center gap-2">
+                        <div className="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center">
+                          <MessageCircle className="h-5 w-5" />
+                        </div>
+                        <span className="font-semibold">{question.replies.length}</span>
                       </div>
-                        <span className="text-xs sm:text-sm font-bold px-3 sm:px-4 py-1.5 sm:py-2 bg-gradient-to-r from-blue-500/20 to-purple-500/20 rounded-full border border-blue-400/30 capitalize">
-                          {CATEGORIES[question.category as ForumCategory] || 'Khác'}
-                        </span>
                     </div>
+                    <span className="text-sm font-bold px-4 py-2 bg-white/20 rounded-full">
+                      {CATEGORIES[question.category as ForumCategory]}
+                    </span>
+                  </div>
 
-                    {/* Quick reply - Mobile Optimized */}
-                    <div className="mt-6">
-                      <SimpleMobileSend 
-                        onSubmit={(content) => handleAddReply(question.id, content, '')} 
-                        className="mobile-send-button"
-                      />
-                    </div>
+                  <div className="mt-4">
+                    <SimpleMobileSend 
+                      onSubmit={(content: string) => handleAddReply(question.id, content)} 
+                    />
                   </div>
                 </div>
-                ))
-              )}
+              ))}
               
-              {!isLoading && sorted.length === 0 && (
-                <div className="bg-gradient-to-br from-white/8 to-white/3 rounded-3xl border border-white/15 p-20 text-center shadow-2xl backdrop-blur-xl">
-                  <div className="w-24 h-24 rounded-3xl bg-gradient-to-br from-blue-500/20 to-purple-500/20 flex items-center justify-center mx-auto mb-8">
-                    <MessageSquare className="h-12 w-12 text-blue-300" />
+              {sorted.length === 0 && (
+                <div className="bg-white/10 rounded-2xl border border-white/20 p-20 text-center backdrop-blur-xl">
+                  <div className="w-20 h-20 rounded-2xl bg-white/20 flex items-center justify-center mx-auto mb-6">
+                    <MessageSquare className="h-10 w-10" />
                   </div>
-                  <h3 className="text-3xl font-bold mb-4 text-white">Chưa có câu hỏi nào</h3>
-                  <p className="text-white/80 text-xl">Hãy là người đầu tiên đặt câu hỏi!</p>
+                  <h3 className="text-2xl font-bold mb-3">Chưa có câu hỏi</h3>
+                  <p className="text-white/80">Hãy là người đầu tiên!</p>
                 </div>
               )}
             </div>
 
-            {/* Pagination - Enhanced */}
-            {!isLoading && totalPages > 1 && (
-              <div className="flex items-center justify-center gap-6 pt-8">
-                <Button variant="outline" disabled={pageSafe <= 1} onClick={() => setPage((p) => Math.max(1, p - 1))} className="rounded-2xl border-white/30 text-white hover:bg-white/10 px-8 py-3 font-semibold">
+            {/* Pagination */}
+            {totalPages > 1 && (
+              <div className="flex items-center justify-center gap-4 pt-6">
+                <Button 
+                  variant="outline" 
+                  disabled={pageSafe <= 1} 
+                  onClick={() => setPage(p => Math.max(1, p - 1))}
+                >
                   Trang trước
                 </Button>
-                <span className="px-6 py-3 bg-white/10 rounded-2xl text-white font-semibold">{pageSafe} / {totalPages}</span>
-                <Button variant="outline" disabled={pageSafe >= totalPages} onClick={() => setPage((p) => Math.min(totalPages, p + 1))} className="rounded-2xl border-white/30 text-white hover:bg-white/10 px-8 py-3 font-semibold">
+                <span className="px-6 py-2 bg-white/10 rounded-xl font-semibold">
+                  {pageSafe} / {totalPages}
+                </span>
+                <Button 
+                  variant="outline" 
+                  disabled={pageSafe >= totalPages} 
+                  onClick={() => setPage(p => Math.min(totalPages, p + 1))}
+                >
                   Trang sau
                 </Button>
               </div>
             )}
           </main>
 
-          {/* Right Sidebar - Mobile Responsive */}
-          <aside className="xl:col-span-3 space-y-4 sm:space-y-6 lg:space-y-10">
-            <div className="bg-gradient-to-br from-white/12 to-white/5 rounded-2xl sm:rounded-3xl border border-white/20 p-4 sm:p-6 lg:p-10 shadow-2xl sm:shadow-3xl backdrop-blur-2xl hover:shadow-4xl transition-all duration-500">
-              <div className="flex items-center gap-3 sm:gap-4 mb-4 sm:mb-6 lg:mb-10">
-                <div className="w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 rounded-2xl sm:rounded-3xl bg-gradient-to-br from-green-500/30 to-emerald-500/30 flex items-center justify-center shadow-lg">
-                  <Users className="h-4 w-4 sm:h-5 sm:w-5 lg:h-6 lg:w-6 text-green-200" />
+          {/* Right Sidebar */}
+          <aside className="lg:col-span-3 space-y-6">
+            <div className="bg-white/10 rounded-2xl border border-white/20 p-6 backdrop-blur-xl">
+              <div className="flex items-center gap-3 mb-6">
+                <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-green-500/30 to-emerald-500/30 flex items-center justify-center">
+                  <Users className="h-5 w-5 text-green-200" />
                 </div>
                 <div>
-                  <h3 className="text-lg sm:text-xl lg:text-2xl font-bold text-white">Hoạt động gần đây</h3>
-                  <p className="text-xs sm:text-sm text-white/70">Cập nhật mới nhất</p>
+                  <h3 className="text-xl font-bold">Hoạt động</h3>
+                  <p className="text-sm text-white/70">Mới nhất</p>
                 </div>
               </div>
-              <div className="space-y-3 sm:space-y-4 lg:space-y-6">
+              <div className="space-y-4">
                 {questions.slice(0, 5).map((q) => (
-                  <div key={q.id} className="border-l-4 border-gradient-to-b from-blue-400 to-purple-400 pl-4 sm:pl-6 py-2">
-                    <p className="text-xs sm:text-sm font-semibold line-clamp-2 mb-1 sm:mb-2 leading-relaxed text-white">{q.title}</p>
-                    <p className="text-xs text-white/70 flex items-center gap-1 sm:gap-2">
+                  <div key={q.id} className="border-l-4 border-blue-400 pl-4 py-2">
+                    <p className="text-sm font-semibold mb-2 line-clamp-2">{q.title}</p>
+                    <p className="text-xs text-white/70 flex items-center gap-2">
                       <Clock className="h-3 w-3" />
-                      {formatTime(q.createdAt)} • {(q.replies || []).length} phản hồi
+                      {formatTime(q.createdAt)} • {q.replies.length} phản hồi
                     </p>
                   </div>
                 ))}
@@ -567,63 +651,7 @@ export default function ForumPage() {
           -webkit-box-orient: vertical; 
           overflow: hidden; 
         }
-        .line-clamp-3 { 
-          display: -webkit-box; 
-          -webkit-line-clamp: 3; 
-          -webkit-box-orient: vertical; 
-          overflow: hidden; 
-        }
-        .shadow-3xl {
-          box-shadow: 0 35px 60px -12px rgba(0, 0, 0, 0.25);
-        }
-        .shadow-4xl {
-          box-shadow: 0 50px 80px -20px rgba(0, 0, 0, 0.35);
-        }
-        .border-gradient-to-b {
-          border-image: linear-gradient(to bottom, #60a5fa, #a78bfa) 1;
-        }
-        .backdrop-blur-2xl {
-          backdrop-filter: blur(40px);
-        }
       `}</style>
-    </div>
-  )
-}
-
-// --- Inline helpers to keep page self-contained ---
-function AskInline({ onSubmit, defaultStudentId, onUpdateStudentId }: { onSubmit: (d: { title: string; content: string; studentId: string; category: string }) => void; defaultStudentId?: string; onUpdateStudentId: (sid: string)=>void }) {
-  const [title, setTitle] = useState('')
-  const [content, setContent] = useState('')
-  const [studentId, setStudentId] = useState(defaultStudentId || '')
-  const [category, setCategory] = useState<string>('thao-luan')
-
-  return (
-    <div className="space-y-4">
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-        <Input value={studentId} onChange={(e)=>{ setStudentId(e.target.value); onUpdateStudentId(e.target.value) }} placeholder="MSSV (ví dụ: K21520001)" className="bg-white/10 border-white/20 text-white placeholder-white/60" />
-        <select value={category} onChange={(e)=>setCategory(e.target.value)} className="bg-white/10 border border-white/20 rounded-xl px-3 py-2">
-          {Object.entries(CATEGORIES).map(([key, label]) => (
-            <option key={key} value={key} className="bg-[#003663] text-white">{label}</option>
-          ))}
-        </select>
-        <Input value={title} onChange={(e)=>setTitle(e.target.value)} placeholder="Tiêu đề câu hỏi" className="bg-white/10 border-white/20 text-white placeholder-white/60" />
-      </div>
-      <textarea value={content} onChange={(e)=>setContent(e.target.value)} rows={4} placeholder="Nội dung câu hỏi" className="w-full rounded-xl bg-white/10 border border-white/20 p-3 placeholder-white/60" />
-      <div className="flex justify-end">
-        <Button 
-          disabled={!title.trim() || !content.trim()} 
-          onClick={() => {
-            setTitle('')
-            setContent('')
-            setStudentId('')
-            // setCategory('thao-luan')
-            onSubmit({ title, content, studentId, category })
-          }} 
-          className="bg-white/10 hover:bg-white/20 text-white border border-white/20 rounded-xl"
-        >
-          Gửi câu hỏi
-        </Button>
-      </div>
     </div>
   )
 }
