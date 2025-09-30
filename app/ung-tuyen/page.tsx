@@ -2,7 +2,7 @@
 
 import { type NextPage } from "next"
 import { Navigation } from "@/components/navigation"
-import { Button } from "@/components/ui/button"
+import { Button } from "@/components/ui/Button"
 import { ApplicationDeadlineCheck } from "./countdown-timer"
 import { RECRUITMENT_CONFIG } from "./constants"
 

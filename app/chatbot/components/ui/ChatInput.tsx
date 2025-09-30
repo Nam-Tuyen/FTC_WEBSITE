@@ -1,6 +1,6 @@
 import React from 'react'
-import { Input } from "@/components/ui/input"
-import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/Input"
+import { Button } from "@/components/ui/Button"
 import { ChatInputProps } from '../../types'
 import { BRAND, CHAT_MODES } from '../../constants'
 import { cn } from '../../lib'

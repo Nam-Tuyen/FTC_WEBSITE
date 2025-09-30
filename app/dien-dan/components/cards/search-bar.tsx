@@ -1,8 +1,8 @@
 'use client'
 
 import { Card, CardContent } from '@/components/ui/card'
-import { Input } from '@/components/ui/input'
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
+import { Input } from '@/components/ui/Input'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/Select'
 import { Search } from 'lucide-react'
 import { CATEGORIES, ForumCategory } from '@/app/dien-dan/types'
 

@@ -7,6 +7,7 @@ import { useToast } from '@/contexts/ToastContext';
 import { createQuestion } from '@/lib/api-client';
 import { AskFormData } from '@/lib/validation';
 import { QuestionForm } from '@/components/forum/QuestionForm';
+import { ClientOnly } from '@/components/ClientOnly';
 
 export default function AskPage() {
   const router = useRouter();
@@ -73,13 +74,24 @@ export default function AskPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <QuestionForm
-          onSubmit={handleSubmit}
-          loading={loading}
-        />
+    <ClientOnly fallback={
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
+          <p className="text-gray-600">Đang tải...</p>
+        </div>
       </div>
-    </div>
+    }>
+      <div className="min-h-screen bg-gray-50">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+          <QuestionForm
+            onSubmit={handleSubmit}
+            loading={loading}
+          />
+        </div>
+      </div>
+    </ClientOnly>
   );
 }
+
+export const dynamic = 'force-dynamic';

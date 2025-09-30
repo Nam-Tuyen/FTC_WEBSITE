@@ -2,18 +2,25 @@
 
 import React, { useState, useEffect } from 'react';
 import { useParams, useRouter } from 'next/navigation';
+import dynamic from 'next/dynamic';
 import { useAuth } from '@/contexts/AuthContext';
 import { useToast } from '@/contexts/ToastContext';
 import { fetchQuestions, toggleLike, createResponse, deleteQuestion, deleteResponse } from '@/lib/api-client';
 import { QuestionItem, ResponseItem } from '@/types/api';
-import { ResponseForm } from '@/components/forum/ResponseForm';
-import { ResponseItem as ResponseItemComponent } from '@/components/forum/ResponseItem';
 import { Button } from '@/components/ui/Button';
 import { Spinner } from '@/components/ui/Spinner';
 import { formatDistanceToNow } from 'date-fns';
 import { vi } from 'date-fns/locale';
 import { Heart, MessageCircle, User, Clock, ArrowLeft, Trash2 } from 'lucide-react';
 import Link from 'next/link';
+
+const ResponseForm = dynamic(() => import('@/components/forum/ResponseForm').then(mod => ({ default: mod.ResponseForm })), {
+  ssr: false
+});
+
+const ResponseItemComponent = dynamic(() => import('@/components/forum/ResponseItem').then(mod => ({ default: mod.ResponseItem })), {
+  ssr: false
+});
 
 export default function QuestionDetailPage() {
   const params = useParams();
@@ -375,3 +382,5 @@ export default function QuestionDetailPage() {
     </div>
   );
 }
+
+export const dynamic = 'force-dynamic';
