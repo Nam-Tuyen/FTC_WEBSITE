@@ -173,24 +173,31 @@ const AskInline = ({ onSubmit, defaultStudentId, onUpdateStudentId }: any) => {
 export default function ForumPage() {
   const [currentUserId, setCurrentUserId] = useState<string>('')
   const [currentStudentId, setCurrentStudentId] = useState<string>('')
-  const [questions, setQuestions] = useState<QuestionItem[]>(mockQuestions)
+  const [questions, setQuestions] = useState<QuestionItem[]>([])
   const [search, setSearch] = useState('')
   const [selectedCategory, setSelectedCategory] = useState<ForumCategory | ''>('')
-  const [isLoading, setIsLoading] = useState<boolean>(false)
+  const [isLoading, setIsLoading] = useState<boolean>(true)
   const [page, setPage] = useState(1)
   const [likingQuestions, setLikingQuestions] = useState<Set<string>>(new Set())
   const pageSize = 6
-
-  // Animation styles are now moved to components/sections/hero.tsx
 
   const handleFetchQuestions = async () => {
     setIsLoading(true)
     try {
       const questions = await fetchQuestions({})
-      console.log('questions', questions)
-      if (questions.length) setQuestions(questions)
+      console.log('Fetched questions from API:', questions)
+      if (questions && questions.length > 0) {
+        setQuestions(questions)
+      } else {
+        // Fallback to mock data if API returns empty
+        console.log('No questions from API, using mock data as fallback')
+        setQuestions(mockQuestions)
+      }
     } catch (error) {
       console.error('Error fetching questions:', error)
+      // Fallback to mock data on error
+      console.log('Error fetching from API, using mock data as fallback')
+      setQuestions(mockQuestions)
     } finally {
       setIsLoading(false)
     }
@@ -199,6 +206,8 @@ export default function ForumPage() {
   useEffect(() => {
     const id = uuid()
     setCurrentUserId(id)
+    // Fetch questions from API on component mount
+    handleFetchQuestions()
   }, [])
 
   useEffect(() => {
@@ -242,9 +251,17 @@ export default function ForumPage() {
     return sorted.slice(start, start + pageSize)
   }, [sorted, pageSafe, pageSize])
 
-  const handleCreateQuestion = (data: any) => {
+  const handleCreateQuestion = async (data: any) => {
     const newId = uuid()
     const authorName = data.studentId || 'Ẩn danh'
+    
+    // Validate MSSV format
+    const hasValidMssv = data.studentId && /^K\d{9}$/.test(data.studentId)
+    if (data.studentId && !hasValidMssv) {
+      alert("MSSV không hợp lệ!")
+      return
+    }
+
     const newQ: QuestionItem = {
       id: newId,
       title: data.title,
@@ -262,13 +279,20 @@ export default function ForumPage() {
       setCurrentStudentId(data.studentId)
     }
 
-    const hasValidMssv = data.studentId && /^K\d{9}$/.test(data.studentId)
-    if (data.studentId && !hasValidMssv) {
-      alert("MSSV không hợp lệ!")
-      return
-    }
-
+    // Optimistically update UI first
     setQuestions((prev) => [newQ, ...prev])
+
+    // Then send to API
+    try {
+      await createQuestion(newQ)
+      console.log('Question created successfully in Google Sheets')
+    } catch (error) {
+      console.error('Error creating question:', error)
+      // Optionally show error message to user
+      alert("Có lỗi xảy ra khi lưu câu hỏi. Vui lòng thử lại.")
+      // Remove from UI if API call failed
+      setQuestions((prev) => prev.filter(q => q.id !== newId))
+    }
   }
 
 
@@ -447,14 +471,28 @@ export default function ForumPage() {
           <main className="lg:col-span-6 space-y-6">
             {/* Ask Question */}
             <div className="bg-white/10 rounded-2xl border border-white/20 p-6 backdrop-blur-xl">
-              <div className="flex items-center gap-3 mb-6">
-                <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-orange-500/30 to-red-500/30 flex items-center justify-center">
-                  <MessageSquare className="h-5 w-5 text-orange-200" />
+              <div className="flex items-center justify-between mb-6">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-orange-500/30 to-red-500/30 flex items-center justify-center">
+                    <MessageSquare className="h-5 w-5 text-orange-200" />
+                  </div>
+                  <div>
+                    <h3 className="text-xl font-bold">Đặt câu hỏi</h3>
+                    <p className="text-sm text-white/70">Chia sẻ thắc mắc</p>
+                  </div>
                 </div>
-                <div>
-                  <h3 className="text-xl font-bold">Đặt câu hỏi</h3>
-                  <p className="text-sm text-white/70">Chia sẻ thắc mắc</p>
-                </div>
+                <button
+                  onClick={handleFetchQuestions}
+                  disabled={isLoading}
+                  className="px-4 py-2 bg-white/10 hover:bg-white/20 rounded-xl transition-all disabled:opacity-50 flex items-center gap-2"
+                >
+                  <div className={`w-4 h-4 ${isLoading ? 'animate-spin' : ''}`}>
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                    </svg>
+                  </div>
+                  Làm mới
+                </button>
               </div>
               <AskInline 
                 onSubmit={handleCreateQuestion} 
@@ -465,7 +503,16 @@ export default function ForumPage() {
 
             {/* Questions List */}
             <div className="space-y-6">
-              {paginated.map((question) => (
+              {isLoading ? (
+                <div className="bg-white/10 rounded-2xl border border-white/20 p-20 text-center backdrop-blur-xl">
+                  <div className="w-20 h-20 rounded-2xl bg-white/20 flex items-center justify-center mx-auto mb-6">
+                    <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-white"></div>
+                  </div>
+                  <h3 className="text-2xl font-bold mb-3">Đang tải câu hỏi...</h3>
+                  <p className="text-white/80">Vui lòng chờ trong giây lát</p>
+                </div>
+              ) : (
+                paginated.map((question) => (
                 <div 
                   key={question.id} 
                   className="bg-white/10 rounded-2xl border border-white/20 hover:border-white/30 p-6 backdrop-blur-xl transition-all hover:bg-white/15"
@@ -533,9 +580,10 @@ export default function ForumPage() {
                     />
                   </div>
                 </div>
-              ))}
+                ))
+              )}
               
-              {sorted.length === 0 && (
+              {!isLoading && sorted.length === 0 && (
                 <div className="bg-white/10 rounded-2xl border border-white/20 p-20 text-center backdrop-blur-xl">
                   <div className="w-20 h-20 rounded-2xl bg-white/20 flex items-center justify-center mx-auto mb-6">
                     <MessageSquare className="h-10 w-10" />
