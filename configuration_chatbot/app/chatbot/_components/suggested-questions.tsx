@@ -1,7 +1,7 @@
 "use client"
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
+import { Button } from "@/components/ui/Button"
 import { MessageSquare, HelpCircle } from "lucide-react"
 
 const suggestedQuestions = [

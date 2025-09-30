@@ -1,8 +1,8 @@
 "use client"
 
 import { useEffect, useRef } from "react"
-import { Input } from "@/components/ui/input"
-import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/Input"
+import { Button } from "@/components/ui/Button"
 import { Send } from "lucide-react"
 import type { KeyboardEvent } from "react"
 

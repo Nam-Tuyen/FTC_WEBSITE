@@ -1,6 +1,6 @@
 'use client'
 
-import { Button } from "@/components/ui/button"
+import { Button } from "@/components/ui/Button"
 import { Navigation } from "@/components/navigation"
 import { Card, CardContent } from "@/components/ui/card"
 import { Target, Users, BookOpen, TrendingUp, Award, Network, Facebook, Instagram } from "lucide-react"

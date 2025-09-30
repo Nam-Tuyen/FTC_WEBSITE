@@ -1,5 +1,5 @@
 import { Navigation } from "@/components/navigation"
-import { Button } from "@/components/ui/button"
+import { Button } from "@/components/ui/Button"
 import { Card, CardContent } from "@/components/ui/card"
 import { ArrowRight, Users2, Code, Database, Shield, Zap, Brain, Rocket, Globe } from "lucide-react"
 import Link from "next/link"
