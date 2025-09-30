@@ -200,8 +200,8 @@ export default function ForumPage() {
 
   const sorted = useMemo(() => {
     return [...filtered].sort((a, b) => {
-      const aLikes = Array.isArray(a.likes) ? a.likes.length : 0
-      const bLikes = Array.isArray(b.likes) ? b.likes.length : 0
+      const aLikes = Array.isArray(a.likes) ? a.likes.length : (typeof a.likes === 'number' ? a.likes : 0)
+      const bLikes = Array.isArray(b.likes) ? b.likes.length : (typeof b.likes === 'number' ? b.likes : 0)
       const likeDiff = bLikes - aLikes
       if (likeDiff !== 0) return likeDiff
       return b.createdAt - a.createdAt
@@ -215,92 +215,72 @@ export default function ForumPage() {
     return sorted.slice(start, start + pageSize)
   }, [sorted, pageSafe, pageSize])
 
-  const handleCreateQuestion = async (data: any) => {
+  async function handleCreateQuestion(data: {
+    title: string
+    content: string
+    studentId: string
+    category: string
+  }) {
     const newId = uuid()
-    const authorName = data.studentId || 'Ẩn danh'
-    
-    // Validate MSSV format
-    const hasValidMssv = data.studentId && /^K\d{9}$/.test(data.studentId)
-    if (data.studentId && !hasValidMssv) {
-      alert("MSSV không hợp lệ!")
-      return
-    }
-
+    const authorName = data.studentId ? data.studentId : 'Ẩn danh'
     const newQ: QuestionItem = {
       id: newId,
       title: data.title,
       content: data.content,
-      authorId: currentUserId,
-      authorName: authorName,
+      userId: currentUserId,
       studentId: data.studentId,
       category: data.category as ForumCategory,
       createdAt: Date.now(),
-      likes: [],
+      likes: 0,
       replies: [],
     }
 
+    // Optimistically update the UI
+    setQuestions((prev: QuestionItem[]) => [newQ, ...prev])
+
+    // Save student ID if it's valid and not already saved
     if (data.studentId && data.studentId !== currentStudentId) {
+      localStorage.setItem(STORAGE_KEYS.studentId, data.studentId)
       setCurrentStudentId(data.studentId)
     }
 
-    // Optimistically update UI first
-    setQuestions((prev) => [newQ, ...prev])
-
-    // Then send to API
-    try {
-      await createQuestion(newQ)
-      console.log('Question created successfully in Google Sheets')
-    } catch (error) {
-      console.error('Error creating question:', error)
-      // Show error message to user
-      alert("Có lỗi xảy ra khi lưu câu hỏi. Vui lòng thử lại.")
-      // Remove from UI if API call failed
-      setQuestions((prev) => prev.filter(q => q.id !== newId))
+    const hasValidMssv = data.studentId && /^K\d{9}$/.test(data.studentId)
+    if (data.studentId && !hasValidMssv) {
+      window.alert("MSSV không hợp lệ!")
+      return
     }
+
+    await createQuestion(newQ)
   }
 
 
-  const handleToggleLike = (qid: string) => {
-    if (!currentUserId || likingQuestions.has(qid)) return
-    
-    setLikingQuestions(prev => new Set(prev).add(qid))
-    
+  function handleToggleLike(qid: string) {
+    if (!currentUserId) return
     setQuestions((prev) =>
       prev.map((q) => {
         if (q.id !== qid) return q
-        const has = q.likes.includes(currentUserId)
-        return { 
-          ...q, 
-          likes: has 
-            ? q.likes.filter((x) => x !== currentUserId) 
-            : [...q.likes, currentUserId] 
+        if (Array.isArray(q.likes)) {
+          const has = q.likes.includes(currentUserId)
+          return { ...q, likes: has ? q.likes.filter((x) => x !== currentUserId) : [...q.likes, currentUserId] }
+        } else {
+          // If likes is a number, convert to array format
+          const likesArray = []
+          return { ...q, likes: [...likesArray, currentUserId] }
         }
       })
     )
-    
-    setTimeout(() => {
-      setLikingQuestions(prev => {
-        const newSet = new Set(prev)
-        newSet.delete(qid)
-        return newSet
-      })
-    }, 500)
   }
 
-  const handleAddReply = (qid: string, content: string) => {
+  function handleAddReply(qid: string, content: string, authorName: string) {
     if (!content.trim()) return
     const reply: Reply = {
       id: uuid(),
       content,
       createdAt: Date.now(),
-      authorId: currentUserId,
-      authorName: 'Ẩn danh',
+      userId: currentUserId,
+      likes: [],
     }
-    setQuestions((prev) => 
-      prev.map((q) => 
-        q.id === qid ? { ...q, replies: [...q.replies, reply] } : q
-      )
-    )
+    setQuestions((prev) => prev.map((q) => (q.id === qid ? { ...q, replies: [...q.replies, reply] } : q)))
   }
 
   return (
@@ -489,12 +469,12 @@ export default function ForumPage() {
                       <div>
                         <div className="flex items-center gap-2 mb-1">
                           <span className="font-bold">{question.studentId || 'Ẩn danh'}</span>
-                          {question.likes.length >= 5 && (
-                            <div className="flex items-center gap-1 bg-gradient-to-r from-orange-500 to-red-500 px-2 py-1 rounded-full text-xs font-bold">
-                              <Star className="h-3 w-3" />
-                              HOT
-                            </div>
-                          )}
+                           {(Array.isArray(question.likes) ? question.likes.length : question.likes) >= 5 && (
+                             <div className="flex items-center gap-1 bg-gradient-to-r from-orange-500 to-red-500 px-2 py-1 rounded-full text-xs font-bold">
+                               <Star className="h-3 w-3" />
+                               HOT
+                             </div>
+                           )}
                         </div>
                         <div className="text-sm flex items-center gap-2 text-white/70">
                           <Clock className="h-4 w-4" />
@@ -513,24 +493,24 @@ export default function ForumPage() {
                         onClick={() => handleToggleLike(question.id)} 
                         className="flex items-center gap-2 hover:opacity-80 transition-all"
                       >
-                        <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${
-                          question.likes.includes(currentUserId) 
-                            ? 'bg-red-500/20' 
-                            : 'bg-white/10'
-                        }`}>
-                          <Heart className={`h-5 w-5 ${
-                            question.likes.includes(currentUserId) 
-                              ? 'text-red-500 fill-red-500' 
-                              : 'text-white'
-                          }`} />
-                        </div>
-                        <span className="font-semibold">{question.likes.length}</span>
+                         <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${
+                           Array.isArray(question.likes) && question.likes.includes(currentUserId) 
+                             ? 'bg-red-500/20' 
+                             : 'bg-white/10'
+                         }`}>
+                           <Heart className={`h-5 w-5 ${
+                             Array.isArray(question.likes) && question.likes.includes(currentUserId) 
+                               ? 'text-red-500 fill-red-500' 
+                               : 'text-white'
+                           }`} />
+                         </div>
+                         <span className="font-semibold">{Array.isArray(question.likes) ? question.likes.length : question.likes}</span>
                       </button>
                       <div className="flex items-center gap-2">
                         <div className="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center">
                           <MessageCircle className="h-5 w-5" />
                         </div>
-                        <span className="font-semibold">{question.replies.length}</span>
+                         <span className="font-semibold">{Array.isArray(question.replies) ? question.replies.length : 0}</span>
                       </div>
                     </div>
                     <span className="text-sm font-bold px-4 py-2 bg-white/20 rounded-full">
@@ -538,11 +518,11 @@ export default function ForumPage() {
                     </span>
                   </div>
 
-                  <div className="mt-4">
-                    <SimpleMobileSend 
-                      onSubmit={(content: string) => handleAddReply(question.id, content)} 
-                    />
-                  </div>
+                   <div className="mt-4">
+                     <SimpleMobileSend 
+                       onSubmit={(content: string) => handleAddReply(question.id, content, 'Ẩn danh')} 
+                     />
+                   </div>
                 </div>
                 ))
               )}
@@ -606,7 +586,7 @@ export default function ForumPage() {
                     <p className="text-sm font-semibold mb-2 line-clamp-2">{q.title}</p>
                     <p className="text-xs text-white/70 flex items-center gap-2">
                       <Clock className="h-3 w-3" />
-                      {formatTime(q.createdAt)} • {q.replies.length} phản hồi
+                       {formatTime(q.createdAt)} • {Array.isArray(q.replies) ? q.replies.length : 0} phản hồi
                     </p>
                   </div>
                 ))}

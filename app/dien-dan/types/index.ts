@@ -5,30 +5,33 @@ export const STORAGE_KEYS = {
 } as const
 
 export const CATEGORIES = {
-  CLUB: 'Hỏi về câu lạc bộ',
-  MAJOR: 'Hỏi về ngành học',
-  DISCUSSION: 'Thảo luận'
+  CLUB: 'Câu lạc bộ',
+  MAJOR: 'Ngành học',
+  DISCUSSION: 'Thảo luận',
 } as const
 
 export type ForumCategory = keyof typeof CATEGORIES
 
 export interface Reply {
   id: string
-  authorId: string
-  authorName: string
   content: string
   createdAt: number
+  studentId?: string
+  userId?: string
+  likes?: any[]
+  authorName?: string
 }
 
 export interface QuestionItem {
   id: string
   title: string
   content: string
-  authorId: string 
-  authorName: string
-  studentId: string
-  category: string
-  createdAt: number
-  likes: string[]
-  replies: Reply[]
+  createdAt: number | string
+  category: ForumCategory
+  studentId?: string
+  userId?: string
+  likes: number | any[]
+  replies?: any[]
+  repliesCount?: number
+  authorName?: string
 }
