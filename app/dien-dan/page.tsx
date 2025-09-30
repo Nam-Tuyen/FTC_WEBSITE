@@ -254,24 +254,24 @@ export default function ForumPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#003663] text-white">
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-800 text-white">
       <Navigation />
 
       {/* Mobile Responsive Hero Section */}
       <section className="relative min-h-[60vh] sm:min-h-[70vh] flex items-center justify-center py-12 sm:py-16 lg:py-24 px-4 sm:px-6 lg:px-8">
         {/* Enhanced Background Effects */}
         <div className="absolute inset-0 overflow-hidden">
-          <div className="absolute top-1/4 -right-1/4 w-2/3 h-2/3 bg-gradient-to-br from-blue-500/30 via-purple-500/20 to-transparent rounded-full blur-3xl animate-float" />
-          <div className="absolute -bottom-1/4 -left-1/4 w-2/3 h-2/3 bg-gradient-to-tr from-purple-500/30 via-pink-500/20 to-transparent rounded-full blur-3xl animate-float-reverse" />
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-1/2 h-1/2 bg-gradient-to-r from-cyan-500/20 to-blue-500/20 rounded-full blur-2xl animate-pulse" />
+          <div className="absolute top-1/4 -right-1/4 w-2/3 h-2/3 bg-gradient-to-br from-sky-500/20 via-blue-500/15 to-transparent rounded-full blur-3xl animate-float" />
+          <div className="absolute -bottom-1/4 -left-1/4 w-2/3 h-2/3 bg-gradient-to-tr from-purple-500/20 via-pink-500/15 to-transparent rounded-full blur-3xl animate-float-reverse" />
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-1/2 h-1/2 bg-gradient-to-r from-cyan-400/15 to-blue-500/15 rounded-full blur-2xl animate-pulse" />
         </div>
         
         <div className="relative max-w-6xl mx-auto text-center space-y-4 sm:space-y-6 lg:space-y-8">
           {/* Mobile Responsive Title */}
           <div className="space-y-3 sm:space-y-4 lg:space-y-6">
             <h1 className="relative text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-extrabold">
-              <span className="absolute inset-0 bg-gradient-to-r from-white via-blue-100 to-purple-100 opacity-60 blur-3xl animate-pulse"></span>
-              <span className="relative text-white animate-bounce" style={{
+              <span className="absolute inset-0 bg-gradient-to-r from-sky-400 via-blue-300 to-purple-300 opacity-40 blur-3xl animate-pulse"></span>
+              <span className="relative bg-gradient-to-r from-sky-200 via-blue-100 to-purple-200 bg-clip-text text-transparent animate-bounce" style={{
                 animation: 'blink 1.5s infinite, gradient-shift 2s ease-in-out infinite, bounce 2s infinite'
               }}>
                 DIỄN ĐÀN FTC
@@ -334,10 +334,10 @@ export default function ForumPage() {
           {/* Left Sidebar - Mobile Responsive */}
           <aside className="xl:col-span-3 space-y-4 sm:space-y-6 lg:space-y-8">
             {/* Categories - Mobile Responsive Design */}
-            <div className="bg-gradient-to-br from-white/12 to-white/5 rounded-2xl sm:rounded-3xl border border-white/20 p-4 sm:p-6 lg:p-10 shadow-2xl sm:shadow-3xl backdrop-blur-2xl hover:shadow-4xl transition-all duration-500">
+            <div className="bg-gradient-to-br from-slate-800/40 to-slate-900/30 rounded-2xl sm:rounded-3xl border border-slate-700/30 p-4 sm:p-6 lg:p-10 shadow-2xl sm:shadow-3xl backdrop-blur-2xl hover:shadow-4xl transition-all duration-500">
               <div className="flex items-center gap-3 sm:gap-4 mb-4 sm:mb-6 lg:mb-8">
-                <div className="w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 rounded-2xl sm:rounded-3xl bg-gradient-to-br from-blue-500/30 to-purple-500/30 flex items-center justify-center shadow-lg">
-                  <Hash className="h-4 w-4 sm:h-5 sm:w-5 lg:h-6 lg:w-6 text-blue-200" />
+                <div className="w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 rounded-2xl sm:rounded-3xl bg-gradient-to-br from-sky-500/40 to-blue-600/40 flex items-center justify-center shadow-lg">
+                  <Hash className="h-4 w-4 sm:h-5 sm:w-5 lg:h-6 lg:w-6 text-sky-200" />
                 </div>
                 <div>
                   <h3 className="text-lg sm:text-xl lg:text-2xl font-bold text-white">Danh mục</h3>
@@ -349,8 +349,8 @@ export default function ForumPage() {
                   onClick={() => setSelectedCategory('')}
                   className={`w-full text-left px-3 sm:px-4 lg:px-6 py-2 sm:py-3 lg:py-4 rounded-xl sm:rounded-2xl transition-all duration-300 group ${
                     selectedCategory === '' 
-                      ? 'bg-gradient-to-r from-blue-500/20 to-purple-500/20 border border-blue-400/30 shadow-lg shadow-blue-500/10' 
-                      : 'hover:bg-white/10 border border-transparent hover:border-white/20'
+                      ? 'bg-gradient-to-r from-sky-500/20 to-blue-500/20 border border-sky-400/30 shadow-lg shadow-sky-500/10' 
+                      : 'hover:bg-slate-700/20 border border-transparent hover:border-slate-600/30'
                   }`}
                 >
                   <div className="flex items-center justify-between">
@@ -366,8 +366,8 @@ export default function ForumPage() {
                       onClick={() => setSelectedCategory(key as ForumCategory)}
                       className={`w-full text-left px-3 sm:px-4 lg:px-6 py-2 sm:py-3 lg:py-4 rounded-xl sm:rounded-2xl transition-all duration-300 group ${
                         selectedCategory === key 
-                          ? 'bg-gradient-to-r from-blue-500/20 to-purple-500/20 border border-blue-400/30 shadow-lg shadow-blue-500/10' 
-                          : 'hover:bg-white/10 border border-transparent hover:border-white/20'
+                          ? 'bg-gradient-to-r from-sky-500/20 to-blue-500/20 border border-sky-400/30 shadow-lg shadow-sky-500/10' 
+                          : 'hover:bg-slate-700/20 border border-transparent hover:border-slate-600/30'
                       }`}
                     >
                       <div className="flex items-center justify-between">
@@ -600,15 +600,15 @@ function AskInline({ onSubmit, defaultStudentId, onUpdateStudentId }: { onSubmit
   return (
     <div className="space-y-4">
       <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-        <Input value={studentId} onChange={(e)=>{ setStudentId(e.target.value); onUpdateStudentId(e.target.value) }} placeholder="MSSV (ví dụ: K21520001)" className="bg-white/10 border-white/20 text-white placeholder-white/60" />
-        <select value={category} onChange={(e)=>setCategory(e.target.value)} className="bg-white/10 border border-white/20 rounded-xl px-3 py-2">
+        <Input value={studentId} onChange={(e)=>{ setStudentId(e.target.value); onUpdateStudentId(e.target.value) }} placeholder="MSSV (ví dụ: K21520001)" className="bg-slate-900/95 border-slate-700/60 text-slate-50 placeholder-slate-400 focus:border-sky-500/50 focus:ring-sky-500/30" />
+        <select value={category} onChange={(e)=>setCategory(e.target.value)} className="bg-slate-900/95 border border-slate-700/60 text-slate-50 rounded-xl px-3 py-2 focus:border-sky-500/50 focus:ring-sky-500/30">
           {Object.entries(CATEGORIES).map(([key, label]) => (
             <option key={key} value={key} className="bg-[#003663] text-white">{label}</option>
           ))}
         </select>
-        <Input value={title} onChange={(e)=>setTitle(e.target.value)} placeholder="Tiêu đề câu hỏi" className="bg-white/10 border-white/20 text-white placeholder-white/60" />
+        <Input value={title} onChange={(e)=>setTitle(e.target.value)} placeholder="Tiêu đề câu hỏi" className="bg-slate-900/95 border-slate-700/60 text-slate-50 placeholder-slate-400 focus:border-sky-500/50 focus:ring-sky-500/30" />
       </div>
-      <textarea value={content} onChange={(e)=>setContent(e.target.value)} rows={4} placeholder="Nội dung câu hỏi" className="w-full rounded-xl bg-white/10 border border-white/20 p-3 placeholder-white/60" />
+      <textarea value={content} onChange={(e)=>setContent(e.target.value)} rows={4} placeholder="Nội dung câu hỏi" className="w-full rounded-xl bg-slate-900/95 border border-slate-700/60 text-slate-50 placeholder-slate-400 p-3 focus:border-sky-500/50 focus:ring-sky-500/30" />
       <div className="flex justify-end">
         <Button 
           disabled={!title.trim() || !content.trim()} 
@@ -619,7 +619,7 @@ function AskInline({ onSubmit, defaultStudentId, onUpdateStudentId }: { onSubmit
             // setCategory('thao-luan')
             onSubmit({ title, content, studentId, category })
           }} 
-          className="bg-white/10 hover:bg-white/20 text-white border border-white/20 rounded-xl"
+          className="bg-gradient-to-r from-sky-600 to-blue-600 hover:from-sky-700 hover:to-blue-700 text-white border border-sky-500/30 rounded-xl font-medium shadow-lg shadow-sky-500/20"
         >
           Gửi câu hỏi
         </Button>
