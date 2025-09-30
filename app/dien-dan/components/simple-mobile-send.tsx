@@ -38,7 +38,7 @@ export function SimpleMobileSend({ onSubmit, disabled = false, className = '' }:
   const isDisabled = !content.trim() || disabled || isLoading
 
   return (
-    <div className={`flex items-center gap-2 p-2 bg-[#001a2e] rounded-xl border border-[#003663]/30 backdrop-blur-sm ${className}`}>
+    <div className={`flex items-center gap-3 p-4 bg-gradient-to-r from-[#001a2e] to-[#002a4a] rounded-2xl border border-[#003663]/40 backdrop-blur-sm shadow-lg ${className}`}>
       <div className="flex-1">
         <input
           type="text"
@@ -46,12 +46,12 @@ export function SimpleMobileSend({ onSubmit, disabled = false, className = '' }:
           onChange={(e) => setContent(e.target.value)}
           onKeyPress={handleKeyPress}
           placeholder="Viết phản hồi..."
-          className="w-full px-3 py-2 bg-[#001122] border border-[#003663]/40 rounded-lg text-slate-200 placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-[#003663]/50 focus:border-[#003663]/60 transition-all duration-200 text-sm"
+          className="w-full px-4 py-3 bg-[#001122] border border-[#003663]/50 rounded-xl text-slate-100 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#003663]/60 focus:border-[#003663]/70 transition-all duration-300"
           disabled={disabled}
           style={{
-            fontSize: '14px', // Smaller font size
+            fontSize: '16px', // Prevent zoom on iOS
             WebkitAppearance: 'none',
-            borderRadius: '8px'
+            borderRadius: '12px'
           }}
         />
       </div>
@@ -60,12 +60,12 @@ export function SimpleMobileSend({ onSubmit, disabled = false, className = '' }:
         onClick={handleSubmit}
         disabled={isDisabled}
         className={`
-          w-8 h-8 rounded-lg flex items-center justify-center transition-all duration-200
-          focus:outline-none focus:ring-1 focus:ring-[#003663]/50
-          active:scale-95
+          w-12 h-12 rounded-xl flex items-center justify-center transition-all duration-300
+          focus:outline-none focus:ring-2 focus:ring-[#003663]/50
+          active:scale-95 hover:scale-105
           ${!isDisabled 
-            ? 'bg-[#003663] hover:bg-[#004d7a] text-white shadow-sm hover:shadow-md' 
-            : 'bg-[#001122] text-slate-600 cursor-not-allowed'
+            ? 'bg-gradient-to-r from-[#003663] to-[#004d7a] hover:from-[#004d7a] hover:to-[#005c8a] text-white shadow-lg hover:shadow-xl' 
+            : 'bg-[#001122] text-slate-500 cursor-not-allowed'
           }
         `}
         style={{
@@ -73,8 +73,8 @@ export function SimpleMobileSend({ onSubmit, disabled = false, className = '' }:
           touchAction: 'manipulation',
           userSelect: 'none',
           WebkitUserSelect: 'none',
-          minWidth: '32px',
-          minHeight: '32px'
+          minWidth: '48px',
+          minHeight: '48px'
         }}
         onTouchStart={(e) => {
           if (!isDisabled && 'vibrate' in navigator) {
@@ -83,9 +83,9 @@ export function SimpleMobileSend({ onSubmit, disabled = false, className = '' }:
         }}
       >
         {isLoading ? (
-          <div className="w-3 h-3 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+          <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
         ) : (
-          <Send className="h-3 w-3" />
+          <Send className="h-5 w-5" />
         )}
       </button>
     </div>
