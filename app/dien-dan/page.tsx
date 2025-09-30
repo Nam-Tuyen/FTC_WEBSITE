@@ -381,7 +381,7 @@ export default function ForumPage() {
             </div>
 
             {/* Stats - Mobile Responsive Cards */}
-            <div className="bg-gradient-to-br from-white/12 to-white/5 rounded-2xl sm:rounded-3xl border border-white/20 p-4 sm:p-6 lg:p-10 shadow-2xl sm:shadow-3xl backdrop-blur-2xl hover:shadow-4xl transition-all duration-500">
+            <div className="bg-gradient-to-br from-slate-800/40 to-slate-900/30 rounded-2xl sm:rounded-3xl border border-slate-700/30 p-4 sm:p-6 lg:p-10 shadow-2xl sm:shadow-3xl backdrop-blur-2xl hover:shadow-4xl transition-all duration-500">
               <div className="flex items-center gap-3 sm:gap-4 mb-4 sm:mb-6 lg:mb-8">
                 <div className="w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 rounded-2xl sm:rounded-3xl bg-gradient-to-br from-green-500/30 to-emerald-500/30 flex items-center justify-center shadow-lg">
                   <TrendingUp className="h-4 w-4 sm:h-5 sm:w-5 lg:h-6 lg:w-6 text-green-200" />
@@ -411,7 +411,7 @@ export default function ForumPage() {
           {/* Main Content - Mobile Responsive */}
           <main className="xl:col-span-6 space-y-4 sm:space-y-6 lg:space-y-8">
             {/* Ask box - Mobile Responsive Design */}
-            <div className="bg-gradient-to-br from-white/12 to-white/5 rounded-2xl sm:rounded-3xl border border-white/20 p-4 sm:p-6 lg:p-10 shadow-2xl sm:shadow-3xl backdrop-blur-2xl hover:shadow-4xl transition-all duration-500">
+            <div className="bg-gradient-to-br from-slate-800/40 to-slate-900/30 rounded-2xl sm:rounded-3xl border border-slate-700/30 p-4 sm:p-6 lg:p-10 shadow-2xl sm:shadow-3xl backdrop-blur-2xl hover:shadow-4xl transition-all duration-500">
               <div className="flex items-center gap-3 sm:gap-4 mb-4 sm:mb-6 lg:mb-8">
                 <div className="w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 rounded-2xl sm:rounded-3xl bg-gradient-to-br from-orange-500/30 to-red-500/30 flex items-center justify-center shadow-lg">
                   <MessageSquare className="h-4 w-4 sm:h-5 sm:w-5 lg:h-6 lg:w-6 text-orange-200" />
@@ -427,7 +427,7 @@ export default function ForumPage() {
             {/* Questions list - Mobile Responsive Cards */}
             <div className="space-y-4 sm:space-y-6 lg:space-y-8">
               {isLoading ? (
-                <div className="bg-gradient-to-br from-white/12 to-white/5 rounded-2xl sm:rounded-3xl border border-white/20 p-8 sm:p-12 lg:p-16 shadow-2xl sm:shadow-3xl backdrop-blur-2xl">
+                <div className="bg-gradient-to-br from-slate-800/40 to-slate-900/30 rounded-2xl sm:rounded-3xl border border-slate-700/30 p-8 sm:p-12 lg:p-16 shadow-2xl sm:shadow-3xl backdrop-blur-2xl">
                   <div className="flex flex-col items-center justify-center space-y-4">
                     <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-blue-400"></div>
                     <p className="text-white/80 text-lg font-medium">Đang tải câu hỏi...</p>
@@ -435,7 +435,7 @@ export default function ForumPage() {
                 </div>
               ) : (
                 paginated.map((question) => (
-                <div key={question.id} className="bg-gradient-to-br from-white/12 to-white/5 rounded-2xl sm:rounded-3xl border border-white/20 hover:border-white/30 transition-all duration-700 overflow-hidden group hover:bg-white/15 shadow-2xl sm:shadow-3xl hover:shadow-4xl backdrop-blur-2xl hover:scale-[1.01] sm:hover:scale-[1.02]">
+                <div key={question.id} className="bg-gradient-to-br from-slate-800/40 to-slate-900/30 rounded-2xl sm:rounded-3xl border border-slate-700/30 hover:border-slate-600/50 transition-all duration-300 overflow-hidden group hover:bg-slate-800/50 shadow-2xl sm:shadow-3xl hover:shadow-4xl backdrop-blur-2xl hover:scale-[1.01] sm:hover:scale-[1.02]">
                   <div className="p-4 sm:p-6 lg:p-10">
                     {/* Header - Mobile Responsive */}
                     <div className="flex items-start justify-between mb-4 sm:mb-6">
@@ -469,28 +469,28 @@ export default function ForumPage() {
                     {/* Actions - Mobile Responsive */}
                     <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-4 pt-4 sm:pt-6 border-t border-white/15">
                       <div className="flex items-center gap-4 sm:gap-6 lg:gap-8">
-                        <button onClick={() => handleToggleLike(question.id)} className="flex items-center gap-2 sm:gap-3 hover:opacity-80 transition-all duration-300 hover:scale-110 group">
+                        <button onClick={() => handleToggleLike(question.id)} className="flex items-center gap-2 sm:gap-3 hover:opacity-80 transition-all duration-200 hover:scale-105 group">
                           <div className={`w-8 h-8 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl flex items-center justify-center transition-colors ${
                             question.likes.includes(currentUserId) 
                               ? 'bg-red-500/20' 
-                              : 'bg-white/10 group-hover:bg-red-500/20'
+                              : 'bg-slate-700/30 group-hover:bg-red-500/20'
                           }`}>
                             <Heart className={`h-4 w-4 sm:h-5 sm:w-5 transition-colors ${
                               question.likes.includes(currentUserId) 
                                 ? 'text-red-500 fill-red-500' 
-                                : 'text-white group-hover:text-red-400'
+                                : 'text-slate-300 group-hover:text-red-400'
                             }`} />
                           </div>
                           <span className="text-sm sm:text-base font-semibold text-white">{question.likes.length}</span>
                         </button>
                         <div className="flex items-center gap-2 sm:gap-3 opacity-90">
-                          <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl bg-white/10 flex items-center justify-center">
-                            <MessageCircle className="h-4 w-4 sm:h-5 sm:w-5 text-white" />
+                          <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl bg-slate-700/30 flex items-center justify-center">
+                            <MessageCircle className="h-4 w-4 sm:h-5 sm:w-5 text-slate-300" />
                           </div>
                           <span className="text-sm sm:text-base font-semibold text-white">{(question.replies || []).length}</span>
                         </div>
                       </div>
-                        <span className="text-xs sm:text-sm font-bold px-3 sm:px-4 py-1.5 sm:py-2 bg-gradient-to-r from-blue-500/20 to-purple-500/20 rounded-full border border-blue-400/30 capitalize">
+                        <span className="text-xs sm:text-sm font-bold px-3 sm:px-4 py-1.5 sm:py-2 bg-gradient-to-r from-sky-500/20 to-blue-500/20 rounded-full border border-sky-400/30 capitalize">
                           {CATEGORIES[question.category as ForumCategory] || 'Khác'}
                         </span>
                     </div>
@@ -508,9 +508,9 @@ export default function ForumPage() {
               )}
               
               {!isLoading && sorted.length === 0 && (
-                <div className="bg-gradient-to-br from-white/8 to-white/3 rounded-3xl border border-white/15 p-20 text-center shadow-2xl backdrop-blur-xl">
-                  <div className="w-24 h-24 rounded-3xl bg-gradient-to-br from-blue-500/20 to-purple-500/20 flex items-center justify-center mx-auto mb-8">
-                    <MessageSquare className="h-12 w-12 text-blue-300" />
+                <div className="bg-gradient-to-br from-slate-800/30 to-slate-900/20 rounded-3xl border border-slate-700/30 p-20 text-center shadow-2xl backdrop-blur-xl">
+                  <div className="w-24 h-24 rounded-3xl bg-gradient-to-br from-sky-500/20 to-blue-500/20 flex items-center justify-center mx-auto mb-8">
+                    <MessageSquare className="h-12 w-12 text-sky-300" />
                   </div>
                   <h3 className="text-3xl font-bold mb-4 text-white">Chưa có câu hỏi nào</h3>
                   <p className="text-white/80 text-xl">Hãy là người đầu tiên đặt câu hỏi!</p>
@@ -521,11 +521,11 @@ export default function ForumPage() {
             {/* Pagination - Enhanced */}
             {!isLoading && totalPages > 1 && (
               <div className="flex items-center justify-center gap-6 pt-8">
-                <Button variant="outline" disabled={pageSafe <= 1} onClick={() => setPage((p) => Math.max(1, p - 1))} className="rounded-2xl border-white/30 text-white hover:bg-white/10 px-8 py-3 font-semibold">
+                <Button variant="outline" disabled={pageSafe <= 1} onClick={() => setPage((p) => Math.max(1, p - 1))} className="rounded-2xl border-slate-600/50 text-white hover:bg-slate-700/30 px-8 py-3 font-semibold">
                   Trang trước
                 </Button>
-                <span className="px-6 py-3 bg-white/10 rounded-2xl text-white font-semibold">{pageSafe} / {totalPages}</span>
-                <Button variant="outline" disabled={pageSafe >= totalPages} onClick={() => setPage((p) => Math.min(totalPages, p + 1))} className="rounded-2xl border-white/30 text-white hover:bg-white/10 px-8 py-3 font-semibold">
+                <span className="px-6 py-3 bg-slate-700/30 rounded-2xl text-white font-semibold">{pageSafe} / {totalPages}</span>
+                <Button variant="outline" disabled={pageSafe >= totalPages} onClick={() => setPage((p) => Math.min(totalPages, p + 1))} className="rounded-2xl border-slate-600/50 text-white hover:bg-slate-700/30 px-8 py-3 font-semibold">
                   Trang sau
                 </Button>
               </div>
@@ -534,7 +534,7 @@ export default function ForumPage() {
 
           {/* Right Sidebar - Mobile Responsive */}
           <aside className="xl:col-span-3 space-y-4 sm:space-y-6 lg:space-y-10">
-            <div className="bg-gradient-to-br from-white/12 to-white/5 rounded-2xl sm:rounded-3xl border border-white/20 p-4 sm:p-6 lg:p-10 shadow-2xl sm:shadow-3xl backdrop-blur-2xl hover:shadow-4xl transition-all duration-500">
+            <div className="bg-gradient-to-br from-slate-800/40 to-slate-900/30 rounded-2xl sm:rounded-3xl border border-slate-700/30 p-4 sm:p-6 lg:p-10 shadow-2xl sm:shadow-3xl backdrop-blur-2xl hover:shadow-4xl transition-all duration-500">
               <div className="flex items-center gap-3 sm:gap-4 mb-4 sm:mb-6 lg:mb-10">
                 <div className="w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 rounded-2xl sm:rounded-3xl bg-gradient-to-br from-green-500/30 to-emerald-500/30 flex items-center justify-center shadow-lg">
                   <Users className="h-4 w-4 sm:h-5 sm:w-5 lg:h-6 lg:w-6 text-green-200" />
