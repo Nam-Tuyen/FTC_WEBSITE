@@ -38,7 +38,7 @@ export function SimpleMobileSend({ onSubmit, disabled = false, className = '' }:
   const isDisabled = !content.trim() || disabled || isLoading
 
   return (
-    <div className={`flex items-center gap-3 ${className}`}>
+    <div className={`flex items-center gap-3 mobile-send-button ${className}`}>
       <div className="relative flex-1">
         <input
           type="text"
@@ -46,7 +46,7 @@ export function SimpleMobileSend({ onSubmit, disabled = false, className = '' }:
           onChange={(e) => setContent(e.target.value)}
           onKeyPress={handleKeyPress}
           placeholder="Viết phản hồi..."
-          className="w-full px-5 py-4 rounded-3xl bg-white/10 border border-white/20 text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-blue-400/50 focus:border-blue-400/50 transition-all duration-300 backdrop-blur-xl hover:bg-white/15 hover:border-white/30 mobile-input"
+          className="w-full px-5 py-4 rounded-3xl mobile-input"
           disabled={disabled}
           style={{
             fontSize: '16px', // Prevent zoom on iOS
@@ -69,7 +69,6 @@ export function SimpleMobileSend({ onSubmit, disabled = false, className = '' }:
             ? 'bg-gradient-to-br from-blue-500 via-blue-600 to-purple-600 shadow-lg shadow-blue-500/30 hover:from-blue-600 hover:via-blue-700 hover:to-purple-700 hover:shadow-xl hover:shadow-blue-500/40 hover:scale-105 hover:-translate-y-1' 
             : 'bg-gradient-to-br from-gray-500/50 to-gray-600/50 shadow-md shadow-gray-500/20 cursor-not-allowed'
           }
-          mobile-send-button
         `}
         style={{
           WebkitTapHighlightColor: 'transparent',
