@@ -38,32 +38,36 @@ export function SimpleMobileSend({ onSubmit, disabled = false, className = '' }:
   const isDisabled = !content.trim() || disabled || isLoading
 
   return (
-    <div className={`flex items-center gap-2 ${className}`}>
-      <input
-        type="text"
-        value={content}
-        onChange={(e) => setContent(e.target.value)}
-        onKeyPress={handleKeyPress}
-        placeholder="Viết phản hồi..."
-        className="flex-1 px-4 py-3 rounded-2xl bg-gray-800/90 border border-gray-700/50 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:border-purple-500/50 transition-all mobile-input backdrop-blur-sm hover:bg-gray-700/90"
-        disabled={disabled}
-        style={{
-          fontSize: '16px', // Prevent zoom on iOS
-          WebkitAppearance: 'none',
-          borderRadius: '12px'
-        }}
-      />
+    <div className={`flex items-center gap-3 ${className}`}>
+      <div className="relative flex-1">
+        <input
+          type="text"
+          value={content}
+          onChange={(e) => setContent(e.target.value)}
+          onKeyPress={handleKeyPress}
+          placeholder="Viết phản hồi..."
+          className="w-full px-5 py-4 rounded-3xl bg-white/10 border border-white/20 text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-blue-400/50 focus:border-blue-400/50 transition-all duration-300 backdrop-blur-xl hover:bg-white/15 hover:border-white/30 mobile-input"
+          disabled={disabled}
+          style={{
+            fontSize: '16px', // Prevent zoom on iOS
+            WebkitAppearance: 'none',
+            borderRadius: '20px'
+          }}
+        />
+        {/* Subtle glow effect on focus */}
+        <div className="absolute inset-0 rounded-3xl bg-gradient-to-r from-blue-500/20 to-purple-500/20 opacity-0 transition-opacity duration-300 pointer-events-none focus-within:opacity-100" />
+      </div>
       
       <button
         onClick={handleSubmit}
         disabled={isDisabled}
         className={`
-          w-12 h-12 rounded-2xl flex items-center justify-center transition-all duration-300 ease-out
-          focus:outline-none focus:ring-4 focus:ring-blue-500/30
-          active:scale-95 transform-gpu
+          relative w-14 h-14 rounded-3xl flex items-center justify-center transition-all duration-300 ease-out
+          focus:outline-none focus:ring-4 focus:ring-blue-400/30
+          active:scale-95 transform-gpu overflow-hidden
           ${!isDisabled 
-            ? 'bg-gradient-to-br from-blue-500 via-purple-500 to-pink-500 shadow-lg shadow-blue-500/25 hover:from-blue-600 hover:via-purple-600 hover:to-pink-600 hover:shadow-xl hover:shadow-purple-500/30 hover:scale-105' 
-            : 'bg-gradient-to-br from-gray-400 to-gray-500 shadow-md shadow-gray-400/20 cursor-not-allowed'
+            ? 'bg-gradient-to-br from-blue-500 via-blue-600 to-purple-600 shadow-lg shadow-blue-500/30 hover:from-blue-600 hover:via-blue-700 hover:to-purple-700 hover:shadow-xl hover:shadow-blue-500/40 hover:scale-105 hover:-translate-y-1' 
+            : 'bg-gradient-to-br from-gray-500/50 to-gray-600/50 shadow-md shadow-gray-500/20 cursor-not-allowed'
           }
           mobile-send-button
         `}
@@ -72,8 +76,8 @@ export function SimpleMobileSend({ onSubmit, disabled = false, className = '' }:
           touchAction: 'manipulation',
           userSelect: 'none',
           WebkitUserSelect: 'none',
-          minWidth: '44px',
-          minHeight: '44px'
+          minWidth: '56px',
+          minHeight: '56px'
         }}
         onTouchStart={(e) => {
           if (!isDisabled && 'vibrate' in navigator) {
@@ -81,10 +85,28 @@ export function SimpleMobileSend({ onSubmit, disabled = false, className = '' }:
           }
         }}
       >
-        {isLoading ? (
-          <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-        ) : (
-          <Send className="h-5 w-5 text-white" />
+        {/* Animated background gradient */}
+        {!isDisabled && (
+          <div className="absolute inset-0 bg-gradient-to-br from-blue-400 via-purple-500 to-pink-500 opacity-0 hover:opacity-100 transition-opacity duration-300 rounded-3xl" />
+        )}
+        
+        {/* Shimmer effect */}
+        {!isDisabled && (
+          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full hover:translate-x-full transition-transform duration-1000 rounded-3xl" />
+        )}
+        
+        {/* Icon container */}
+        <div className="relative z-10 flex items-center justify-center">
+          {isLoading ? (
+            <div className="w-6 h-6 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+          ) : (
+            <Send className="h-6 w-6 text-white drop-shadow-sm" />
+          )}
+        </div>
+        
+        {/* Ripple effect on click */}
+        {!isDisabled && (
+          <div className="absolute inset-0 rounded-3xl bg-white/20 scale-0 active:scale-100 transition-transform duration-150 ease-out" />
         )}
       </button>
     </div>

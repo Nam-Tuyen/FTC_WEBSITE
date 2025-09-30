@@ -135,42 +135,48 @@
   outline-offset: 2px;
 }
 
-/* Dark modern input styling */
+/* Modern glassmorphism input styling */
 .mobile-input {
   /* Prevent zoom on focus */
   font-size: 16px;
   
   /* iOS-specific styling */
   -webkit-appearance: none;
-  border-radius: 12px;
+  border-radius: 20px;
   
   /* Better touch targets */
-  padding: 12px 16px;
-  min-height: 44px;
+  padding: 16px 20px;
+  min-height: 56px;
   
-  /* Dark glassmorphism effect */
-  backdrop-filter: blur(10px);
-  background: rgba(31, 41, 55, 0.9);
-  border: 1px solid rgba(75, 85, 99, 0.5);
-  transition: all 0.3s ease;
+  /* Modern glassmorphism effect */
+  backdrop-filter: blur(20px);
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   color: white;
+  font-weight: 400;
+  letter-spacing: -0.01em;
 }
 
 .mobile-input:focus {
-  background: rgba(55, 65, 81, 0.9);
-  border-color: rgba(139, 92, 246, 0.5);
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(59, 130, 246, 0.5);
   box-shadow: 
-    0 0 0 3px rgba(139, 92, 246, 0.1),
-    0 4px 12px rgba(0, 0, 0, 0.3);
+    0 0 0 3px rgba(59, 130, 246, 0.1),
+    0 8px 32px rgba(0, 0, 0, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  transform: translateY(-1px);
 }
 
 .mobile-input:hover {
-  background: rgba(55, 65, 81, 0.9);
-  border-color: rgba(75, 85, 99, 0.7);
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.3);
+  transform: translateY(-1px);
 }
 
 .mobile-input::placeholder {
-  color: rgba(156, 163, 175, 0.8);
+  color: rgba(255, 255, 255, 0.6);
+  font-weight: 400;
 }
 
 /* Enhanced dark input effects */
@@ -246,11 +252,16 @@
     0 1px 2px rgba(0, 0, 0, 0.24);
 }
 
-/* Modern gradient styles */
+/* Modern gradient styles with enhanced effects */
 .mobile-send-button {
-  background: linear-gradient(135deg, #3B82F6 0%, #8B5CF6 50%, #EC4899 100%);
+  background: linear-gradient(135deg, #3B82F6 0%, #2563EB 50%, #7C3AED 100%);
   position: relative;
   overflow: hidden;
+  border-radius: 20px;
+  box-shadow: 
+    0 4px 20px rgba(59, 130, 246, 0.3),
+    0 2px 8px rgba(0, 0, 0, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
 }
 
 .mobile-send-button::before {
@@ -260,10 +271,10 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: linear-gradient(135deg, #3B82F6 0%, #8B5CF6 50%, #EC4899 100%);
+  background: linear-gradient(135deg, #2563EB 0%, #1D4ED8 50%, #6D28D9 100%);
   opacity: 0;
-  transition: opacity 0.3s ease;
-  z-index: -1;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 1;
 }
 
 .mobile-send-button:hover::before {
@@ -271,16 +282,19 @@
 }
 
 .mobile-send-button:disabled {
-  background: linear-gradient(135deg, #8E8E93 0%, #6D6D70 100%);
+  background: linear-gradient(135deg, rgba(107, 114, 128, 0.5) 0%, rgba(75, 85, 99, 0.5) 100%);
+  box-shadow: 
+    0 2px 8px rgba(0, 0, 0, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
 }
 
 .mobile-send-button:disabled::before {
   display: none;
 }
 
-/* iOS-style border radius */
+/* Enhanced border radius for modern look */
 .mobile-send-button {
-  border-radius: 12px;
+  border-radius: 20px;
 }
 
 /* Modern animation effects */
@@ -300,24 +314,114 @@
   }
 }
 
-/* Enhanced hover effects */
+/* Enhanced hover effects with modern animations */
 .mobile-send-button:hover {
-  transform: translateY(-2px) scale(1.05);
+  transform: translateY(-3px) scale(1.05);
   box-shadow: 
-    0 10px 25px rgba(59, 130, 246, 0.3),
-    0 5px 15px rgba(139, 92, 246, 0.2);
+    0 12px 32px rgba(59, 130, 246, 0.4),
+    0 6px 20px rgba(124, 58, 237, 0.3),
+    0 0 0 1px rgba(255, 255, 255, 0.1);
 }
 
 .mobile-send-button:active {
-  transform: translateY(0) scale(0.95);
+  transform: translateY(-1px) scale(0.95);
   box-shadow: 
-    0 2px 8px rgba(59, 130, 246, 0.4),
-    0 1px 4px rgba(139, 92, 246, 0.3);
+    0 4px 16px rgba(59, 130, 246, 0.5),
+    0 2px 8px rgba(124, 58, 237, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  transition: all 0.1s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* iOS-style typography */
+/* Modern typography and additional effects */
 .mobile-send-button {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   font-weight: 600;
   letter-spacing: -0.01em;
+}
+
+/* Enhanced shimmer effect */
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+.mobile-send-button:hover::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  animation: shimmer 1.5s ease-in-out;
+  z-index: 2;
+}
+
+/* Pulse effect for better visual feedback */
+@keyframes pulse-glow {
+  0%, 100% {
+    box-shadow: 
+      0 4px 20px rgba(59, 130, 246, 0.3),
+      0 2px 8px rgba(0, 0, 0, 0.1),
+      inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  }
+  50% {
+    box-shadow: 
+      0 6px 24px rgba(59, 130, 246, 0.4),
+      0 4px 12px rgba(0, 0, 0, 0.15),
+      inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  }
+}
+
+.mobile-send-button:not(:disabled):not(:active) {
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+/* Success state animation */
+@keyframes success-bounce {
+  0%, 20%, 50%, 80%, 100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-4px);
+  }
+  60% {
+    transform: translateY(-2px);
+  }
+}
+
+.mobile-send-button.success {
+  animation: success-bounce 0.6s ease-in-out;
+  background: linear-gradient(135deg, #10B981 0%, #059669 50%, #047857 100%);
+}
+
+/* Enhanced focus states for accessibility */
+.mobile-send-button:focus-visible {
+  outline: 3px solid rgba(59, 130, 246, 0.6);
+  outline-offset: 2px;
+  box-shadow: 
+    0 0 0 3px rgba(59, 130, 246, 0.2),
+    0 4px 20px rgba(59, 130, 246, 0.3),
+    0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Smooth transitions for all states */
+.mobile-send-button {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Enhanced mobile touch feedback */
+@media (max-width: 768px) {
+  .mobile-send-button:active {
+    transform: scale(0.92);
+    transition: transform 0.1s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  .mobile-send-button:hover {
+    transform: translateY(-2px) scale(1.02);
+  }
 }

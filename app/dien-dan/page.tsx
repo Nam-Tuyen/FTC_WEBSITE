@@ -17,6 +17,7 @@ export default function ForumPage() {
   const [questions, setQuestions] = useState<QuestionItem[]>([])
   const [search, setSearch] = useState('')
   const [selectedCategory, setSelectedCategory] = useState<ForumCategory | ''>('')
+  const [isLoading, setIsLoading] = useState<boolean>(false)
   const [page, setPage] = useState(1)
   const [likingQuestions, setLikingQuestions] = useState<Set<string>>(new Set())
   const pageSize = 6
@@ -24,9 +25,16 @@ export default function ForumPage() {
   // Animation styles are now moved to components/sections/hero.tsx
 
   const handleFetchQuestions = async () => {
-    const questions = await fetchQuestions({})
-    console.log('questions', questions)
-    if (questions.length) setQuestions(questions)
+    setIsLoading(true)
+    try {
+      const questions = await fetchQuestions({})
+      console.log('questions', questions)
+      if (questions.length) setQuestions(questions)
+    } catch (error) {
+      console.error('Error fetching questions:', error)
+    } finally {
+      setIsLoading(false)
+    }
   }
 
   useEffect(() => {
@@ -86,8 +94,8 @@ export default function ForumPage() {
 
   const sorted = useMemo(() => {
     return [...filtered].sort((a, b) => {
-      const aLikes = Array.isArray(a.likes) ? a.likes.length : (typeof a.likes === 'number' ? a.likes : 0)
-      const bLikes = Array.isArray(b.likes) ? b.likes.length : (typeof b.likes === 'number' ? b.likes : 0)
+      const aLikes = Array.isArray(a.likes) ? a.likes.length : 0
+      const bLikes = Array.isArray(b.likes) ? b.likes.length : 0
       const likeDiff = bLikes - aLikes
       if (likeDiff !== 0) return likeDiff
       return b.createdAt - a.createdAt
@@ -113,16 +121,14 @@ export default function ForumPage() {
       id: newId,
       title: data.title,
       content: data.content,
-      userId: currentUserId,
+      authorId: currentUserId,
+      authorName: authorName,
       studentId: data.studentId,
       category: data.category as ForumCategory,
       createdAt: Date.now(),
-      likes: 0,
+      likes: [],
       replies: [],
     }
-
-    // Optimistically update the UI
-    // setQuestions((prev: QuestionItem[]) => [newQ, ...prev])
 
     // Save student ID if it's valid and not already saved
     if (data.studentId && data.studentId !== currentStudentId) {
@@ -136,6 +142,8 @@ export default function ForumPage() {
       return
     }
 
+    // Optimistically update the UI
+    setQuestions((prev) => [newQ, ...prev])
     await createQuestion(newQ)
 
     // if (!hasValidMssv) {
@@ -239,8 +247,8 @@ export default function ForumPage() {
       id: uuid(),
       content,
       createdAt: Date.now(),
-      userId: currentUserId,
-      likes: [],
+      authorId: currentUserId,
+      authorName: authorName,
     }
     setQuestions((prev) => prev.map((q) => (q.id === qid ? { ...q, replies: [...q.replies, reply] } : q)))
   }
@@ -418,7 +426,15 @@ export default function ForumPage() {
 
             {/* Questions list - Mobile Responsive Cards */}
             <div className="space-y-4 sm:space-y-6 lg:space-y-8">
-              {paginated.map((question) => (
+              {isLoading ? (
+                <div className="bg-gradient-to-br from-white/12 to-white/5 rounded-2xl sm:rounded-3xl border border-white/20 p-8 sm:p-12 lg:p-16 shadow-2xl sm:shadow-3xl backdrop-blur-2xl">
+                  <div className="flex flex-col items-center justify-center space-y-4">
+                    <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-blue-400"></div>
+                    <p className="text-white/80 text-lg font-medium">Đang tải câu hỏi...</p>
+                  </div>
+                </div>
+              ) : (
+                paginated.map((question) => (
                 <div key={question.id} className="bg-gradient-to-br from-white/12 to-white/5 rounded-2xl sm:rounded-3xl border border-white/20 hover:border-white/30 transition-all duration-700 overflow-hidden group hover:bg-white/15 shadow-2xl sm:shadow-3xl hover:shadow-4xl backdrop-blur-2xl hover:scale-[1.01] sm:hover:scale-[1.02]">
                   <div className="p-4 sm:p-6 lg:p-10">
                     {/* Header - Mobile Responsive */}
@@ -428,16 +444,16 @@ export default function ForumPage() {
                           <MessageSquare className="h-4 w-4 sm:h-5 sm:w-5 lg:h-6 lg:w-6 text-blue-300" />
                         </div>
                         <div>
-                          <div className="flex items-center gap-2 sm:gap-3 mb-1 sm:mb-2">
-                            <span className="font-bold text-sm sm:text-base lg:text-lg text-white">{question.studentId || 'Ẩn danh'}</span>
-                            {/* Hot badge when many likes */}
-                            {((Array.isArray(question.likes) ? question.likes.length : 0) >= 10) && (
-                              <div className="flex items-center gap-1 bg-gradient-to-r from-orange-500 to-red-500 px-2 sm:px-3 lg:px-4 py-1 sm:py-1.5 rounded-full text-xs font-bold shadow-lg">
-                                <Star className="h-2 w-2 sm:h-3 sm:w-3 text-white" />
-                                <span className="hidden sm:inline">HOT</span>
-                              </div>
-                            )}
-                          </div>
+                            <div className="flex items-center gap-2 sm:gap-3 mb-1 sm:mb-2">
+                              <span className="font-bold text-sm sm:text-base lg:text-lg text-white">{question.studentId || 'Ẩn danh'}</span>
+                              {/* Hot badge when many likes */}
+                              {question.likes.length >= 10 && (
+                                <div className="flex items-center gap-1 bg-gradient-to-r from-orange-500 to-red-500 px-2 sm:px-3 lg:px-4 py-1 sm:py-1.5 rounded-full text-xs font-bold shadow-lg">
+                                  <Star className="h-2 w-2 sm:h-3 sm:w-3 text-white" />
+                                  <span className="hidden sm:inline">HOT</span>
+                                </div>
+                              )}
+                            </div>
                           <div className="text-xs sm:text-sm flex items-center gap-1 sm:gap-2 text-white/70">
                             <Clock className="h-3 w-3 sm:h-4 sm:w-4" />
                             {formatTime(question.createdAt)}
@@ -465,7 +481,7 @@ export default function ForumPage() {
                                 : 'text-white group-hover:text-red-400'
                             }`} />
                           </div>
-                          <span className="text-sm sm:text-base font-semibold text-white">{Array.isArray(question.likes) ? question.likes.length : 0}</span>
+                          <span className="text-sm sm:text-base font-semibold text-white">{question.likes.length}</span>
                         </button>
                         <div className="flex items-center gap-2 sm:gap-3 opacity-90">
                           <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl bg-white/10 flex items-center justify-center">
@@ -474,9 +490,9 @@ export default function ForumPage() {
                           <span className="text-sm sm:text-base font-semibold text-white">{(question.replies || []).length}</span>
                         </div>
                       </div>
-                      <span className="text-xs sm:text-sm font-bold px-3 sm:px-4 py-1.5 sm:py-2 bg-gradient-to-r from-blue-500/20 to-purple-500/20 rounded-full border border-blue-400/30 capitalize">
-                        {CATEGORIES[question.category] || 'Khác'}
-                      </span>
+                        <span className="text-xs sm:text-sm font-bold px-3 sm:px-4 py-1.5 sm:py-2 bg-gradient-to-r from-blue-500/20 to-purple-500/20 rounded-full border border-blue-400/30 capitalize">
+                          {CATEGORIES[question.category as ForumCategory] || 'Khác'}
+                        </span>
                     </div>
 
                     {/* Quick reply - Mobile Optimized */}
@@ -488,9 +504,10 @@ export default function ForumPage() {
                     </div>
                   </div>
                 </div>
-              ))}
+                ))
+              )}
               
-              {sorted.length === 0 && (
+              {!isLoading && sorted.length === 0 && (
                 <div className="bg-gradient-to-br from-white/8 to-white/3 rounded-3xl border border-white/15 p-20 text-center shadow-2xl backdrop-blur-xl">
                   <div className="w-24 h-24 rounded-3xl bg-gradient-to-br from-blue-500/20 to-purple-500/20 flex items-center justify-center mx-auto mb-8">
                     <MessageSquare className="h-12 w-12 text-blue-300" />
@@ -502,7 +519,7 @@ export default function ForumPage() {
             </div>
 
             {/* Pagination - Enhanced */}
-            {totalPages > 1 && (
+            {!isLoading && totalPages > 1 && (
               <div className="flex items-center justify-center gap-6 pt-8">
                 <Button variant="outline" disabled={pageSafe <= 1} onClick={() => setPage((p) => Math.max(1, p - 1))} className="rounded-2xl border-white/30 text-white hover:bg-white/10 px-8 py-3 font-semibold">
                   Trang trước
@@ -593,7 +610,17 @@ function AskInline({ onSubmit, defaultStudentId, onUpdateStudentId }: { onSubmit
       </div>
       <textarea value={content} onChange={(e)=>setContent(e.target.value)} rows={4} placeholder="Nội dung câu hỏi" className="w-full rounded-xl bg-white/10 border border-white/20 p-3 placeholder-white/60" />
       <div className="flex justify-end">
-        <Button disabled={!title.trim() || !content.trim()} onClick={()=>onSubmit({ title, content, studentId, category })} className="bg-white/10 hover:bg-white/20 text-white border border-white/20 rounded-xl">
+        <Button 
+          disabled={!title.trim() || !content.trim()} 
+          onClick={() => {
+            setTitle('')
+            setContent('')
+            setStudentId('')
+            // setCategory('thao-luan')
+            onSubmit({ title, content, studentId, category })
+          }} 
+          className="bg-white/10 hover:bg-white/20 text-white border border-white/20 rounded-xl"
+        >
           Gửi câu hỏi
         </Button>
       </div>
