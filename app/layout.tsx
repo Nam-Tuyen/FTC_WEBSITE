@@ -6,7 +6,6 @@ import { SpeedInsights } from "@vercel/speed-insights/next"
 import { Suspense } from "react"
 import Script from "next/script"
 import { AuthProvider } from "@/app/providers/auth-provider"
-import { ToastProvider } from "@/contexts/ToastContext"
 import "./globals.css"
 
 const inter = Inter({
@@ -37,9 +36,7 @@ export default function RootLayout({
       </head>
       <body className={inter.className}>
         <AuthProvider>
-          <ToastProvider>
-            <Suspense fallback={null}>{children}</Suspense>
-          </ToastProvider>
+          <Suspense fallback={null}>{children}</Suspense>
           <Analytics />
           <SpeedInsights />
           {process.env.NODE_ENV === "development" && (

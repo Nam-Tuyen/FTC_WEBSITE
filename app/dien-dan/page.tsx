@@ -15,7 +15,7 @@ import {
   Send, 
   X 
 } from 'lucide-react'
-import { createQuestion, fetchQuestions, toggleLike, createResponse } from '../../googleSheetApi/sheet'
+import { createQuestion, fetchQuestions, createResponse, toggleLike } from '../../googleSheetApi/sheet'
 import { CATEGORIES, STORAGE_KEYS, QuestionItem, Reply, ForumCategory } from './types'
 import { uuid, formatTime } from './utils/index'
 import { SimpleMobileSend } from './components/simple-mobile-send'
@@ -155,7 +155,7 @@ export default function ForumPage() {
     const id = uuid()
     setCurrentUserId(id)
     
-    // Load studentId from localStorage
+    // Load student ID from localStorage
     const savedStudentId = localStorage.getItem(STORAGE_KEYS.studentId)
     if (savedStudentId) {
       setCurrentStudentId(savedStudentId)
@@ -191,8 +191,8 @@ export default function ForumPage() {
 
   const sorted = useMemo(() => {
     return [...filtered].sort((a, b) => {
-      const aLikes = typeof a.likes === 'number' ? a.likes : (Array.isArray(a.likes) ? a.likes.length : 0)
-      const bLikes = typeof b.likes === 'number' ? b.likes : (Array.isArray(b.likes) ? b.likes.length : 0)
+      const aLikes = Array.isArray(a.likes) ? a.likes.length : (typeof a.likes === 'number' ? a.likes : 0)
+      const bLikes = Array.isArray(b.likes) ? b.likes.length : (typeof b.likes === 'number' ? b.likes : 0)
       const likeDiff = bLikes - aLikes
       if (likeDiff !== 0) return likeDiff
       const aTime = typeof a.createdAt === 'number' ? a.createdAt : new Date(a.createdAt).getTime()
@@ -220,99 +220,90 @@ export default function ForumPage() {
       return
     }
 
-    const newId = uuid()
-    const newQ: QuestionItem = {
-      id: newId,
-      title: data.title,
-      content: data.content,
-      userId: currentUserId,
-      studentId: data.studentId,
-      category: data.category as ForumCategory,
-      createdAt: Date.now(),
-      likes: 0,
-      replies: [],
-    }
-
-    // Optimistically update the UI
-    setQuestions((prev: QuestionItem[]) => [newQ, ...prev])
-
-    // Save student ID if it's valid and not already saved
-    if (data.studentId && data.studentId !== currentStudentId) {
-      localStorage.setItem(STORAGE_KEYS.studentId, data.studentId)
-      setCurrentStudentId(data.studentId)
-    }
-
     try {
-      await createQuestion(newQ)
-      // Refresh questions to get accurate data from server
-      handleFetchQuestions()
+      const newQ: QuestionItem = {
+        id: '', // Will be set by the API
+        title: data.title,
+        content: data.content,
+        userId: currentUserId,
+        studentId: data.studentId,
+        category: data.category as ForumCategory,
+        createdAt: Date.now(),
+        likes: 0,
+        replies: [],
+      }
+
+      // Save student ID if it's valid and not already saved
+      if (data.studentId && data.studentId !== currentStudentId) {
+        localStorage.setItem(STORAGE_KEYS.studentId, data.studentId)
+        setCurrentStudentId(data.studentId)
+      }
+
+      const response = await createQuestion(newQ)
+      
+      if (response && response.ok) {
+        // Refresh questions from server
+        await handleFetchQuestions()
+        window.alert("Câu hỏi đã được tạo thành công!")
+      } else {
+        window.alert("Có lỗi xảy ra khi tạo câu hỏi: " + (response?.message || 'Unknown error'))
+      }
     } catch (error) {
       console.error('Error creating question:', error)
-      // Revert optimistic update on error
-      handleFetchQuestions()
+      window.alert("Có lỗi xảy ra khi tạo câu hỏi!")
     }
   }
 
 
   async function handleToggleLike(qid: string) {
-    if (!currentUserId || !currentStudentId) return
-    
+    if (!currentStudentId) {
+      window.alert("Vui lòng nhập MSSV để thực hiện chức năng này!")
+      return
+    }
+
     try {
-      // Get current like status
       const question = questions.find(q => q.id === qid)
       if (!question) return
-      
+
       const isCurrentlyLiked = Array.isArray(question.likes) 
-        ? question.likes.includes(currentUserId) 
+        ? question.likes.includes(currentUserId)
         : false
+
+      const response = await toggleLike(qid, currentStudentId, !isCurrentlyLiked)
       
-      // Optimistically update UI
-      setQuestions((prev) =>
-        prev.map((q) => {
-          if (q.id !== qid) return q
-          const newLikeCount = isCurrentlyLiked 
-            ? Math.max(0, (typeof q.likes === 'number' ? q.likes : 0) - 1)
-            : (typeof q.likes === 'number' ? q.likes : 0) + 1
-          return { ...q, likes: newLikeCount }
-        })
-      )
-      
-      // Call API
-      await toggleLike(qid, currentStudentId, !isCurrentlyLiked)
-      
-      // Refresh questions to get accurate data
-      handleFetchQuestions()
+      if (response && response.ok) {
+        // Refresh questions from server to get updated like count
+        await handleFetchQuestions()
+      } else {
+        window.alert("Có lỗi xảy ra khi cập nhật like: " + (response?.message || 'Unknown error'))
+      }
     } catch (error) {
       console.error('Error toggling like:', error)
-      // Revert optimistic update on error
-      handleFetchQuestions()
+      window.alert("Có lỗi xảy ra khi cập nhật like!")
     }
   }
 
   async function handleAddReply(qid: string, content: string, authorName: string) {
-    if (!content.trim() || !currentStudentId) return
-    
+    if (!content.trim()) return
+
     try {
-      // Optimistically update UI
-      const reply: Reply = {
-        id: uuid(),
-        content,
-        createdAt: Date.now(),
-        userId: currentUserId,
+      const response = await createResponse({
+        questionId: qid,
+        content: content,
         studentId: currentStudentId,
-        likes: [],
+        anonymous: !currentStudentId
+      })
+
+      if (response && response.ok) {
+        // Refresh questions from server to get updated replies
+        await handleFetchQuestions()
+        window.alert("Phản hồi đã được thêm thành công!")
+      } else {
+        window.alert("Có lỗi xảy ra khi thêm phản hồi: " + (response?.message || 'Unknown error'))
       }
-      setQuestions((prev) => prev.map((q) => (q.id === qid ? { ...q, replies: [...(q.replies || []), reply] } : q)))
-      
-      // Call API
-      await createResponse(qid, content, currentStudentId, !currentStudentId)
-      
-      // Refresh questions to get accurate data
-      handleFetchQuestions()
     } catch (error) {
-      console.error('Error creating reply:', error)
-      // Revert optimistic update on error
-      handleFetchQuestions()
+      console.error('Error adding reply:', error)
+      window.alert("Có lỗi xảy ra khi thêm phản hồi!")
     }
   }
 
@@ -502,7 +493,7 @@ export default function ForumPage() {
                       <div>
                         <div className="flex items-center gap-2 mb-1">
                           <span className="font-bold">{question.studentId || 'Ẩn danh'}</span>
-                           {(typeof question.likes === 'number' ? question.likes : (Array.isArray(question.likes) ? question.likes.length : 0)) >= 5 && (
+                           {(Array.isArray(question.likes) ? question.likes.length : question.likes) >= 5 && (
                              <div className="flex items-center gap-1 bg-gradient-to-r from-orange-500 to-red-500 px-2 py-1 rounded-full text-xs font-bold">
                                <Star className="h-3 w-3" />
                                HOT
@@ -511,7 +502,7 @@ export default function ForumPage() {
                         </div>
                         <div className="text-sm flex items-center gap-2 text-white/70">
                           <Clock className="h-4 w-4" />
-                          {formatTime(question.createdAt)}
+                          {formatTime(typeof question.createdAt === 'number' ? question.createdAt : new Date(question.createdAt).getTime())}
                         </div>
                       </div>
                     </div>
@@ -525,7 +516,6 @@ export default function ForumPage() {
                       <button 
                         onClick={() => handleToggleLike(question.id)} 
                         className="flex items-center gap-2 hover:opacity-80 transition-all"
-                        disabled={!currentStudentId}
                       >
                          <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${
                            Array.isArray(question.likes) && question.likes.includes(currentUserId) 
@@ -538,13 +528,13 @@ export default function ForumPage() {
                                : 'text-white'
                            }`} />
                          </div>
-                         <span className="font-semibold">{typeof question.likes === 'number' ? question.likes : (Array.isArray(question.likes) ? question.likes.length : 0)}</span>
+                         <span className="font-semibold">{Array.isArray(question.likes) ? question.likes.length : question.likes}</span>
                       </button>
                       <div className="flex items-center gap-2">
                         <div className="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center">
                           <MessageCircle className="h-5 w-5" />
                         </div>
-                         <span className="font-semibold">{question.repliesCount || (Array.isArray(question.replies) ? question.replies.length : 0)}</span>
+                         <span className="font-semibold">{question.repliesCount || 0}</span>
                       </div>
                     </div>
                     <span className="text-sm font-bold px-4 py-2 bg-white/20 rounded-full">
@@ -552,9 +542,35 @@ export default function ForumPage() {
                     </span>
                   </div>
 
+                   {/* Replies Section */}
+                   {question.replies && question.replies.length > 0 && (
+                     <div className="mt-6 space-y-4">
+                       <h4 className="text-lg font-semibold text-white/90">Phản hồi ({question.replies.length})</h4>
+                       {question.replies.map((reply: any, index: number) => (
+                         <div key={reply.id || index} className="bg-white/5 rounded-xl p-4 border border-white/10">
+                           <div className="flex items-center gap-3 mb-2">
+                             <div className="w-8 h-8 rounded-full bg-gradient-to-br from-blue-500/20 to-purple-500/20 flex items-center justify-center">
+                               <MessageCircle className="h-4 w-4 text-blue-300" />
+                             </div>
+                             <div>
+                               <span className="font-semibold text-sm">
+                                 {reply.user === 'anonymous' ? 'Ẩn danh' : reply.user}
+                               </span>
+                               <p className="text-xs text-white/70 flex items-center gap-1">
+                                 <Clock className="h-3 w-3" />
+                                 {formatTime(new Date(reply.createdAt).getTime())}
+                               </p>
+                             </div>
+                           </div>
+                           <p className="text-white/90 text-sm">{reply.content}</p>
+                         </div>
+                       ))}
+                     </div>
+                   )}
+
                    <div className="mt-4">
                      <SimpleMobileSend 
-                       onSubmit={(content: string) => handleAddReply(question.id, content, currentStudentId || 'Ẩn danh')} 
+                       onSubmit={(content: string) => handleAddReply(question.id, content, 'Ẩn danh')} 
                      />
                    </div>
                 </div>
@@ -620,7 +636,7 @@ export default function ForumPage() {
                     <p className="text-sm font-semibold mb-2 line-clamp-2">{q.title}</p>
                     <p className="text-xs text-white/70 flex items-center gap-2">
                       <Clock className="h-3 w-3" />
-                       {formatTime(q.createdAt)} • {q.repliesCount || (Array.isArray(q.replies) ? q.replies.length : 0)} phản hồi
+                       {formatTime(typeof q.createdAt === 'number' ? q.createdAt : new Date(q.createdAt).getTime())} • {q.repliesCount || 0} phản hồi
                     </p>
                   </div>
                 ))}

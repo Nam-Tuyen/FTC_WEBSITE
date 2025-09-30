@@ -2,23 +2,34 @@ import { QuestionItem } from "@/app/dien-dan/types";
 
 const BASE = "https://script.google.com/macros/s/AKfycbyCfakaiFBnEQT0DYiyfjTJYxSO0_yZa0MzrsqjbodAI7Ay9i3OtF2zYpXdWibIX6P_Yw/exec";
 
-// Category mapping từ frontend sang AppScript
-const CATEGORY_MAPPING = {
-  'CLUB': 'Hỏi về câu lạc bộ',
-  'MAJOR': 'Hỏi về ngành học', 
-  'DISCUSSION': 'Thảo luận'
-} as const;
+// Map categories to match Apps Script format
+const mapCategoryToAppScript = (category: string) => {
+  const categoryMap: { [key: string]: string } = {
+    'CLUB': 'Hỏi về câu lạc bộ',
+    'MAJOR': 'Hỏi về ngành học', 
+    'DISCUSSION': 'Thảo luận'
+  };
+  return categoryMap[category] || 'Thảo luận';
+};
+
+// Map categories from Apps Script to local format
+const mapCategoryFromAppScript = (category: string) => {
+  const categoryMap: { [key: string]: string } = {
+    'Hỏi về câu lạc bộ': 'CLUB',
+    'Hỏi về ngành học': 'MAJOR',
+    'Thảo luận': 'DISCUSSION'
+  };
+  return categoryMap[category] || 'DISCUSSION';
+};
 
 export const createQuestion = async (question: QuestionItem) => {
     try {
         console.log("Question submitted:", question);
 
-        // Map category to AppScript format
-        const mappedCategory = CATEGORY_MAPPING[question.category as keyof typeof CATEGORY_MAPPING] || 'Thảo luận';
-        
-        const payload = {
+        // Transform data to match Apps Script format
+        const appScriptData = {
             title: question.title,
-            category: mappedCategory,
+            category: mapCategoryToAppScript(question.category),
             user: question.studentId || 'K000000000', // Default MSSV if not provided
             content: question.content,
             anonymous: !question.studentId // Anonymous if no studentId
@@ -26,7 +37,7 @@ export const createQuestion = async (question: QuestionItem) => {
 
         const body = {
             function: 'createQuestion',
-            body: payload,
+            body: appScriptData,
         }
 
         const response = await baseApi(body)
@@ -42,30 +53,37 @@ export const fetchQuestions = async (queries: any): Promise<QuestionItem[]> => {
     try {
         console.log("fetchQuestions -> queries:", queries);
 
+        // Transform queries to match Apps Script format
+        const appScriptQueries = {
+            take: queries.take || null,
+            category: queries.category ? mapCategoryToAppScript(queries.category) : '',
+            search: queries.search || '',
+            includeDeleted: false
+        };
+
         const body = {
             function: 'fetchQuestions',
-            body: queries,
+            body: appScriptQueries,
         }
 
         const response = await baseApi(body)
         
         // Check if response has data property with items
         if (response && response.data && response.data.items) {
-            // Map AppScript response to frontend format
-            const mappedQuestions = response.data.items.map((item: any) => ({
+            // Transform data back to local format
+            const transformedQuestions = response.data.items.map((item: any) => ({
                 id: item.id,
                 title: item.title,
                 content: item.content,
                 category: mapCategoryFromAppScript(item.category),
                 studentId: item.user === 'anonymous' ? undefined : item.user,
-                userId: item.user === 'anonymous' ? 'anonymous' : item.user,
                 createdAt: new Date(item.createdAt).getTime(),
                 likes: item.like_count || 0,
                 replies: item.responses || [],
-                repliesCount: item.responses ? item.responses.length : 0
+                repliesCount: (item.responses || []).length
             }));
             
-            return mappedQuestions;
+            return transformedQuestions;
         }
         
         // If no data property, return empty array
@@ -78,34 +96,53 @@ export const fetchQuestions = async (queries: any): Promise<QuestionItem[]> => {
     }
 }
 
-// Helper function to map AppScript categories back to frontend
-function mapCategoryFromAppScript(appScriptCategory: string): string {
-    const reverseMapping: { [key: string]: string } = {
-        'Hỏi về câu lạc bộ': 'CLUB',
-        'Hỏi về ngành học': 'MAJOR',
-        'Thảo luận': 'DISCUSSION'
-    };
-    return reverseMapping[appScriptCategory] || 'DISCUSSION';
+export const createResponse = async (responseData: {
+    questionId: string;
+    content: string;
+    studentId?: string;
+    anonymous?: boolean;
+}) => {
+    try {
+        console.log("Response submitted:", responseData);
+
+        const appScriptData = {
+            user: responseData.studentId || 'K000000000',
+            anonymous: responseData.anonymous || !responseData.studentId,
+            content: responseData.content,
+            questionId: responseData.questionId
+        };
+
+        const body = {
+            function: 'createResponse',
+            body: appScriptData,
+        }
+
+        const response = await baseApi(body)
+        console.log('Response created successfully:', response)
+        return response
+    } catch (error) {
+        console.error('Create response error:', error);
+        throw error;
+    }
 }
 
-// Toggle like for a question
-export const toggleLike = async (questionId: string, mssv: string, like: boolean) => {
+export const toggleLike = async (questionId: string, studentId: string, like: boolean) => {
     try {
-        console.log("Toggle like:", { questionId, mssv, like });
+        console.log("Toggle like:", { questionId, studentId, like });
 
-        const payload = {
+        const appScriptData = {
             questionId: questionId,
-            mssv: mssv,
+            mssv: studentId || 'K000000000',
             like: like ? 1 : 0
         };
 
         const body = {
             function: 'toggleLike',
-            body: payload,
+            body: appScriptData,
         }
 
         const response = await baseApi(body)
-        console.log('Toggle like successfully:', response)
+        console.log('Like toggled successfully:', response)
         return response
     } catch (error) {
         console.error('Toggle like error:', error);
@@ -113,28 +150,48 @@ export const toggleLike = async (questionId: string, mssv: string, like: boolean
     }
 }
 
-// Create response to a question
-export const createResponse = async (questionId: string, content: string, mssv: string, anonymous: boolean = false) => {
+export const deleteQuestion = async (questionId: string, studentId: string) => {
     try {
-        console.log("Create response:", { questionId, content, mssv, anonymous });
+        console.log("Delete question:", { questionId, studentId });
 
-        const payload = {
-            user: mssv,
-            anonymous: anonymous,
-            content: content,
-            questionId: questionId
+        const appScriptData = {
+            questionId: questionId,
+            mssv: studentId
         };
 
         const body = {
-            function: 'createResponse',
-            body: payload,
+            function: 'deleteQuestion',
+            body: appScriptData,
         }
 
         const response = await baseApi(body)
-        console.log('Create response successfully:', response)
+        console.log('Question deleted successfully:', response)
         return response
     } catch (error) {
-        console.error('Create response error:', error);
+        console.error('Delete question error:', error);
+        throw error;
+    }
+}
+
+export const deleteResponse = async (responseId: string, studentId: string) => {
+    try {
+        console.log("Delete response:", { responseId, studentId });
+
+        const appScriptData = {
+            responseId: responseId,
+            mssv: studentId
+        };
+
+        const body = {
+            function: 'deleteResponse',
+            body: appScriptData,
+        }
+
+        const response = await baseApi(body)
+        console.log('Response deleted successfully:', response)
+        return response
+    } catch (error) {
+        console.error('Delete response error:', error);
         throw error;
     }
 }

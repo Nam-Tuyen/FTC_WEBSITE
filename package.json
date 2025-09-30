@@ -92,7 +92,15 @@
     "tw-animate-css": "1.3.3",
     "typescript": "^5.9.2"
   },
+  "packageManager": "pnpm@10.15.0",
   "engines": {
     "node": ">=18 <=22"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "esbuild",
+      "sharp",
+      "@tailwindcss/oxide"
+    ]
   }
 }

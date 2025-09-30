@@ -1,273 +1,204 @@
-'use client';
-
-import React, { useState, useEffect, useMemo } from 'react';
-import { useRouter } from 'next/navigation';
-import { useAuth } from '@/contexts/AuthContext';
-import { useToast } from '@/contexts/ToastContext';
-import { fetchQuestions, toggleLike, deleteQuestion } from '@/lib/api-client';
-import { QuestionItem, Category } from '@/types/api';
-import { QuestionList } from '@/components/forum/QuestionList';
-import { Button } from '@/components/ui/Button';
-import { Input } from '@/components/ui/Input';
-import { Select } from '@/components/ui/Select';
-import { Spinner } from '@/components/ui/Spinner';
-import { Search, Plus, User, LogOut } from 'lucide-react';
-import Link from 'next/link';
-
-const categoryOptions = [
-  { value: '', label: 'Tất cả' },
-  { value: 'Hỏi về ngành học', label: 'Hỏi về ngành học' },
-  { value: 'Hỏi về câu lạc bộ', label: 'Hỏi về câu lạc bộ' },
-  { value: 'Thảo luận', label: 'Thảo luận' }
-];
+import { Navigation } from "@/components/navigation"
+import { Button } from "@/components/ui/button"
+import { Card, CardContent } from "@/components/ui/card"
+import { ArrowRight, Users2, Code, Database, Shield, Zap, Brain, Rocket, Globe } from "lucide-react"
+import Link from "next/link"
 
 export default function HomePage() {
-  const router = useRouter();
-  const { user, logout, isAuthenticated } = useAuth();
-  const { addToast } = useToast();
-  
-  const [questions, setQuestions] = useState<QuestionItem[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [search, setSearch] = useState('');
-  const [category, setCategory] = useState<Category | ''>('');
-  const [likedQuestions, setLikedQuestions] = useState<Set<string>>(new Set());
-  const [searchInput, setSearchInput] = useState('');
-
-  // Debounced search
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setSearch(searchInput);
-    }, 500);
-
-    return () => clearTimeout(timer);
-  }, [searchInput]);
-
-  const loadQuestions = async () => {
-    setLoading(true);
-    try {
-      const response = await fetchQuestions({
-        category: category || undefined,
-        search: search || undefined,
-        take: 50
-      });
-
-      if (response.ok && response.data) {
-        setQuestions(response.data.items);
-      } else {
-        addToast({
-          type: 'error',
-          message: response.message || 'Không thể tải câu hỏi!'
-        });
-      }
-    } catch (error) {
-      console.error('Load questions error:', error);
-      addToast({
-        type: 'error',
-        message: 'Có lỗi xảy ra khi tải câu hỏi!'
-      });
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    loadQuestions();
-  }, [search, category]);
-
-  const handleLike = async (questionId: string) => {
-    if (!isAuthenticated || !user) {
-      addToast({
-        type: 'warning',
-        message: 'Vui lòng đăng nhập để like câu hỏi!'
-      });
-      return;
-    }
-
-    try {
-      const isCurrentlyLiked = likedQuestions.has(questionId);
-      const response = await toggleLike({
-        questionId,
-        mssv: user.mssv,
-        like: isCurrentlyLiked ? 0 : 1
-      });
-
-      if (response.ok) {
-        // Update local state
-        setQuestions(prev => prev.map(q => 
-          q.id === questionId 
-            ? { ...q, like_count: response.data?.like_count || q.like_count }
-            : q
-        ));
-
-        // Update liked questions
-        if (isCurrentlyLiked) {
-          setLikedQuestions(prev => {
-            const newSet = new Set(prev);
-            newSet.delete(questionId);
-            return newSet;
-          });
-        } else {
-          setLikedQuestions(prev => new Set(prev).add(questionId));
-        }
-      } else {
-        addToast({
-          type: 'error',
-          message: response.message || 'Không thể like câu hỏi!'
-        });
-      }
-    } catch (error) {
-      console.error('Like error:', error);
-      addToast({
-        type: 'error',
-        message: 'Có lỗi xảy ra khi like câu hỏi!'
-      });
-    }
-  };
-
-  const handleDelete = async (questionId: string) => {
-    if (!isAuthenticated || !user) {
-      return;
-    }
-
-    if (!confirm('Bạn có chắc chắn muốn xóa câu hỏi này?')) {
-      return;
-    }
-
-    try {
-      const response = await deleteQuestion({
-        questionId,
-        mssv: user.mssv
-      });
-
-      if (response.ok) {
-        addToast({
-          type: 'success',
-          message: 'Xóa câu hỏi thành công!'
-        });
-        loadQuestions(); // Reload questions
-      } else {
-        addToast({
-          type: 'error',
-          message: response.message || 'Không thể xóa câu hỏi!'
-        });
-      }
-    } catch (error) {
-      console.error('Delete error:', error);
-      addToast({
-        type: 'error',
-        message: 'Có lỗi xảy ra khi xóa câu hỏi!'
-      });
-    }
-  };
-
-  const handleLogout = () => {
-    logout();
-    addToast({
-      type: 'success',
-      message: 'Đăng xuất thành công!'
-    });
-  };
-
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Header */}
-      <header className="bg-white shadow-sm border-b">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            <div className="flex items-center">
-              <Link href="/" className="text-2xl font-bold text-blue-600">
-                FTC Forum
-              </Link>
+    <div className="min-h-screen gradient-bg">
+      <Navigation />
+
+      {/* Mobile Responsive Hero Section */}
+      <section className="relative py-16 sm:py-24 lg:py-32 px-4 sm:px-6 lg:px-8 overflow-hidden">
+        {/* Animated background elements */}
+        <div className="absolute inset-0">
+          <div className="absolute top-20 left-10 w-72 h-72 bg-accent/10 rounded-full blur-3xl animate-pulse"></div>
+          <div className="absolute bottom-20 right-10 w-96 h-96 bg-secondary/10 rounded-full blur-3xl animate-pulse delay-1000"></div>
+          <div
+            className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] border border-accent/20 rounded-full animate-spin"
+            style={{ animationDuration: "20s" }}
+          ></div>
+          <div
+            className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] border border-accent/10 rounded-full animate-spin"
+            style={{ animationDuration: "15s", animationDirection: "reverse" }}
+          ></div>
+        </div>
+
+        <div className="max-w-7xl mx-auto relative z-10">
+          <div className="text-center">
+            <div className="inline-flex items-center px-4 sm:px-6 py-2 sm:py-3 rounded-full bg-accent/20 border border-accent/40 mb-6 sm:mb-8 glow">
+              <Zap className="h-4 w-4 sm:h-5 sm:w-5 text-accent mr-2 sm:mr-3 animate-pulse" />
+              <span className="text-xs sm:text-sm font-bold text-accent uppercase tracking-wider">BẠN ĐÃ SẴN SÀNG CHƯA?</span>
             </div>
 
-            <div className="flex items-center space-x-4">
-              {/* Search */}
-              <div className="relative">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
-                <Input
-                  placeholder="Tìm kiếm câu hỏi..."
-                  value={searchInput}
-                  onChange={(e) => setSearchInput(e.target.value)}
-                  className="pl-10 w-64"
-                />
-              </div>
-
-              {/* Category Filter */}
-              <Select
-                options={categoryOptions}
-                value={category}
-                onChange={(e) => setCategory(e.target.value as Category | '')}
-                className="w-48"
-              />
-
-              {/* Ask Question Button */}
-              {isAuthenticated ? (
-                <Link href="/ask">
-                  <Button className="flex items-center space-x-2">
-                    <Plus className="h-4 w-4" />
-                    <span>Đặt câu hỏi</span>
-                  </Button>
+            <h1 className="font-heading font-black text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl text-foreground mb-6 sm:mb-8 text-balance text-glow tracking-wide leading-tight">
+              CÂU LẠC BỘ <br />
+              <span className="bg-gradient-to-r from-accent via-secondary to-accent bg-clip-text text-transparent animate-pulse">
+                CÔNG NGHỆ TÀI CHÍNH
+              </span>
+            </h1>
+            <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-foreground/80 mb-8 sm:mb-12 max-w-4xl mx-auto text-pretty font-medium leading-relaxed px-4">
+              {""}
+            </p>
+            <div className="flex flex-col sm:flex-row gap-6 justify-center">
+              <Button
+                asChild
+                size="lg"
+                className="bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 hover:from-blue-600 hover:via-purple-600 hover:to-pink-600 text-white text-lg px-10 py-4 font-bold shadow-2xl hover:shadow-blue-500/50 transition-all duration-300 transform hover:scale-105"
+              >
+                <Link href="/thong-tin">
+                  THÔNG TIN VỀ CÂU LẠC BỘ <ArrowRight className="ml-3 h-6 w-6" />
                 </Link>
-              ) : (
-                <Link href="/auth/login">
-                  <Button variant="outline">Đăng nhập</Button>
-                </Link>
-              )}
-
-              {/* User Menu */}
-              {isAuthenticated && user && (
-                <div className="flex items-center space-x-2">
-                  <div className="flex items-center space-x-2 text-sm text-gray-700">
-                    <User className="h-4 w-4" />
-                    <span>{user.mssv}</span>
-                  </div>
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    onClick={handleLogout}
-                    className="flex items-center space-x-1"
-                  >
-                    <LogOut className="h-4 w-4" />
-                    <span>Đăng xuất</span>
-                  </Button>
-                </div>
-              )}
+              </Button>
             </div>
           </div>
         </div>
-      </header>
+      </section>
 
-      {/* Main Content */}
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="flex justify-between items-center mb-8">
-          <div>
-            <h1 className="text-3xl font-bold text-gray-900">Diễn đàn FTC</h1>
-            <p className="text-gray-600 mt-2">
-              Nơi cộng đồng fintech chia sẻ kiến thức và thảo luận
+      {/* Tech Stats Section */}
+      <section className="py-20 px-4 sm:px-6 lg:px-8 relative">
+        <div className="absolute inset-0 bg-card/10 backdrop-blur-sm"></div>
+        <div className="max-w-7xl mx-auto relative z-10">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 lg:gap-8">
+            {[
+              { number: "100+", label: "THÀNH VIÊN", icon: Users2 },
+              { number: "+10", label: "DỰ ÁN", icon: Rocket },
+              { number: "50+", label: "ĐỐI TÁC", icon: Globe },
+              { number: "100+", label: "SỰ KIỆN", icon: Zap },
+            ].map((stat, index) => {
+              const IconComponent = stat.icon
+              return (
+                <div key={index} className="text-center group">
+                  <div className="relative mb-4">
+                    <div className="w-16 h-16 sm:w-20 sm:h-20 mx-auto bg-gradient-to-br from-accent/20 to-secondary/20 rounded-2xl flex items-center justify-center glow group-hover:scale-110 transition-all duration-300">
+                      <IconComponent className="h-8 w-8 sm:h-10 sm:w-10 text-accent" />
+                    </div>
+                    <div className="absolute inset-0 w-16 h-16 sm:w-20 sm:h-20 mx-auto border-2 border-accent/30 rounded-2xl animate-pulse"></div>
+                  </div>
+                  <div className="text-2xl sm:text-3xl lg:text-4xl font-black text-accent mb-2 text-glow">{stat.number}</div>
+                  <div className="text-xs sm:text-sm font-bold text-foreground/80 uppercase tracking-widest">{stat.label}</div>
+                </div>
+              )
+            })}
+          </div>
+        </div>
+      </section>
+
+      {/* Features Section */}
+      <section className="py-20 px-4 sm:px-6 lg:px-8 relative">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-16">
+            <div className="inline-flex items-center px-4 py-2 rounded-full bg-accent/10 border border-accent/30 mb-6">
+              <Brain className="h-4 w-4 text-accent mr-2" />
+              <span className="text-sm font-bold text-accent uppercase tracking-wider">Lợi ích khi tham gia    </span>
+            </div>
+            <h2 className="font-heading font-black text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl text-foreground mb-6 text-glow leading-tight">
+              TẠI SAO CHỌN CÂU LẠC BỘ CÔNG NGHỆ TÀI CHÍNH?
+            </h2>
+            <p className="text-xl text-foreground/70 max-w-3xl mx-auto font-medium leading-relaxed">
+              Câu lạc bộ mang đến môi trường gần gũi, đầy đủ công cụ hữu ích và nhiều cơ hội mới để bạn học hỏi, trải nghiệm và phát triển.
             </p>
           </div>
-          
-          <div className="flex items-center space-x-4">
-            <Button
-              variant="outline"
-              onClick={loadQuestions}
-              disabled={loading}
-            >
-              {loading ? <Spinner size="sm" /> : 'Làm mới'}
-            </Button>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {[
+              {
+                icon: Brain,
+                title: "HỌC & HƯỚNG DẪN",
+                description: "Chuỗi hội thảo, chuyên đề, lớp bồi dưỡng về công nghệ tài chính, trí tuệ nhân tạo trong tài chính, giao dịch theo thuật toán, chuỗi khối, tài chính cá nhân.",
+                gradient: "from-accent/20 to-secondary/20",
+              },
+              {
+                icon: Database,
+                title: "DỰ ÁN THỰC TẾ",
+                description: "Thực hành trên dữ liệu và thị trường thực tế, rèn kỷ luật quản trị rủi ro, tư duy sản phẩm và cải tiến mô hình.",
+                gradient: "from-accent/20 to-secondary/20",
+              },
+              {
+                icon: Rocket,
+                title: "NGHỀ NGHIỆP & HỒ SƠ THÀNH TÍCH",
+                description: "Tham quan doanh nghiệp, ngày hội việc làm, thực tập và xây dựng hồ sơ học thuật. Giúp tăng năng lực ứng tuyển và kết nối với đơn vị tuyển dụng.",
+                gradient: "from-accent/20 to-secondary/20",
+              },
+              {
+                icon: Users2,
+                title: "KỸ NĂNG & CỘNG ĐỒNG",
+                description: "Phát triển giao tiếp, làm việc nhóm, quản lý dự án, sáng tạo nội dung và truyền thông. Môi trường cởi mở, gắn kết, chia sẻ và hỗ trợ lẫn nhau.",
+                gradient: "from-accent/20 to-secondary/20",
+              },
+            ].map((feature, index) => {
+              const IconComponent = feature.icon
+              return (
+                <Card
+                  key={index}
+                  className="relative group bg-card/20 backdrop-blur-sm border-accent/20 hover:border-accent/40 transition-all duration-500 hover:glow overflow-hidden"
+                >
+                  <div
+                    className="absolute inset-0 bg-gradient-to-br opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                    style={{
+                      background: `linear-gradient(135deg, ${feature.gradient.replace("from-", "").replace("to-", ", ")})`,
+                    }}
+                  ></div>
+                  <CardContent className="relative z-10 p-8 text-center">
+                    <div className="relative mb-6">
+                      <div className={`w-20 h-20 mx-auto bg-gradient-to-br ${feature.gradient} rounded-2xl flex items-center justify-center glow group-hover:scale-110 transition-all duration-300`}>
+                        <IconComponent className="h-10 w-10 text-accent" />
+                      </div>
+                      <div className="absolute inset-0 w-20 h-20 mx-auto border-2 border-accent/30 rounded-2xl animate-pulse"></div>
+                    </div>
+                    <h3 className="font-heading font-bold text-xl mb-4 text-foreground uppercase tracking-wide">
+                      {feature.title}
+                    </h3>
+                    <p className="text-foreground/70 font-medium leading-relaxed">{feature.description}</p>
+                  </CardContent>
+                </Card>
+              )
+            })}
           </div>
         </div>
+      </section>
 
-        {/* Questions List */}
-        <QuestionList
-          questions={questions}
-          loading={loading}
-          onLike={handleLike}
-          onDelete={handleDelete}
-          likedQuestions={likedQuestions}
-          currentUser={user?.mssv}
-        />
-      </main>
+      {/* CTA Section */}
+      <section className="py-24 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
+        <div className="absolute inset-0">
+          <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-r from-accent/20 via-transparent to-secondary/20"></div>
+          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[1000px] h-[1000px] border border-accent/10 rounded-full animate-pulse"></div>
+        </div>
+        <div className="max-w-4xl mx-auto text-center relative z-10">
+          <div className="inline-flex items-center px-6 py-3 rounded-full bg-accent/20 border border-accent/40 mb-8 glow">
+            <Rocket className="h-5 w-5 text-accent mr-3" />
+            <span className="text-sm font-bold text-accent uppercase tracking-wider">Tham gia câu lạc bộ </span>
+          </div>
+          <h2 className="font-heading font-black text-3xl sm:text-5xl text-foreground mb-6 text-glow">
+            THAM GIA ĐỂ TRỞ THÀNH FTCer  
+          </h2>
+            <p className="text-lg sm:text-xl text-foreground/80 mb-12 font-medium leading-relaxed max-w-2xl mx-auto px-4">
+              Đăng ký ngay hôm nay để cùng FTC khám phá bản thân, học điều mới, tham gia hoạt động thực tế và kết nối với cộng đồng FINTECH.
+            </p>
+          <Button
+            asChild
+            size="lg"
+            className="bg-gradient-to-r from-emerald-500 via-teal-500 to-cyan-500 hover:from-emerald-600 hover:via-teal-600 hover:to-cyan-600 text-white text-xl px-12 py-6 font-bold shadow-2xl hover:shadow-emerald-500/50 transition-all duration-300 transform hover:scale-105"
+          >
+            <Link href="/ung-tuyen">
+              BẮT ĐẦU NGAY HÔM NAY <ArrowRight className="ml-3 h-6 w-6" />
+            </Link>
+          </Button>
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer className="bg-card/10 backdrop-blur-sm border-t border-accent/20 py-16 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto">
+
+          <div className="border-t border-border mt-8 pt-8 text-center">
+            <p className="text-muted-foreground font-medium">
+              <em>©2025. Câu lạc bộ Công nghệ tài chính</em>
+            </p>
+          </div>
+        </div>
+      </footer>
     </div>
-  );
+  )
 }
