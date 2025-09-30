@@ -20,41 +20,6 @@ import { uuid, formatTime } from './utils/index'
 import { SimpleMobileSend } from './components/simple-mobile-send'
 import './components/mobile-optimizations.css'
 
-// Mock data for demo
-const mockQuestions: QuestionItem[] = [
-  {
-    id: '1',
-    title: 'Blockchain có thể áp dụng trong lĩnh vực tài chính như thế nào?',
-    content: 'Mình đang tìm hiểu về blockchain và muốn biết các ứng dụng thực tế trong fintech. Các bạn có thể chia sẻ kinh nghiệm không?',
-    authorId: 'user1',
-    authorName: 'Ẩn danh',
-    studentId: 'K21520123',
-    category: 'DISCUSSION',
-    createdAt: Date.now() - 3600000,
-    likes: ['user2', 'user3', 'user4', 'user5'],
-    replies: [
-      {
-        id: 'r1',
-        content: 'Blockchain có thể dùng cho thanh toán xuyên biên giới, smart contracts, và DeFi!',
-        createdAt: Date.now() - 1800000,
-        authorId: 'user2',
-        authorName: 'Ẩn danh'
-      }
-    ]
-  },
-  {
-    id: '2',
-    title: 'AI trong phân tích rủi ro tín dụng',
-    content: 'Các mô hình AI nào đang được sử dụng phổ biến trong việc đánh giá rủi ro cho vay?',
-    authorId: 'user2',
-    authorName: 'Ẩn danh',
-    studentId: 'K21520456',
-    category: 'MAJOR',
-    createdAt: Date.now() - 7200000,
-    likes: ['user1', 'user3'],
-    replies: []
-  }
-]
 
 // Simple Button Component
 const Button = ({ children, onClick, disabled, variant = 'default', className = '' }: any) => {
@@ -189,15 +154,14 @@ export default function ForumPage() {
       if (questions && questions.length > 0) {
         setQuestions(questions)
       } else {
-        // Fallback to mock data if API returns empty
-        console.log('No questions from API, using mock data as fallback')
-        setQuestions(mockQuestions)
+        // No questions available
+        console.log('No questions from API')
+        setQuestions([])
       }
     } catch (error) {
       console.error('Error fetching questions:', error)
-      // Fallback to mock data on error
-      console.log('Error fetching from API, using mock data as fallback')
-      setQuestions(mockQuestions)
+      // Set empty array on error
+      setQuestions([])
     } finally {
       setIsLoading(false)
     }
@@ -288,7 +252,7 @@ export default function ForumPage() {
       console.log('Question created successfully in Google Sheets')
     } catch (error) {
       console.error('Error creating question:', error)
-      // Optionally show error message to user
+      // Show error message to user
       alert("Có lỗi xảy ra khi lưu câu hỏi. Vui lòng thử lại.")
       // Remove from UI if API call failed
       setQuestions((prev) => prev.filter(q => q.id !== newId))
@@ -589,7 +553,13 @@ export default function ForumPage() {
                     <MessageSquare className="h-10 w-10" />
                   </div>
                   <h3 className="text-2xl font-bold mb-3">Chưa có câu hỏi</h3>
-                  <p className="text-white/80">Hãy là người đầu tiên!</p>
+                  <p className="text-white/80 mb-4">Hãy là người đầu tiên đặt câu hỏi!</p>
+                  <button
+                    onClick={handleFetchQuestions}
+                    className="px-6 py-3 bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white rounded-xl font-semibold transition-all"
+                  >
+                    Làm mới
+                  </button>
                 </div>
               )}
             </div>

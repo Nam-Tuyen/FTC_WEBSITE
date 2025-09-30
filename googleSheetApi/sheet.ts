@@ -11,10 +11,12 @@ export const createQuestion = async (question: QuestionItem) => {
             body: question,
         }
 
-        return await baseApi(body)
+        const response = await baseApi(body)
+        console.log('Question created successfully:', response)
+        return response
     } catch (error) {
-        console.error('Submit error:', error);
-        alert("Có lỗi xảy ra khi đăng câu hỏi. Vui lòng thử lại.");
+        console.error('Create question error:', error);
+        throw error; // Re-throw to let the component handle it
     }
 }
 
@@ -28,33 +30,45 @@ export const fetchQuestions = async (queries: any): Promise<QuestionItem[]> => {
         }
 
         const response = await baseApi(body)
-        return response.data! as QuestionItem[]
+        
+        // Check if response has data property
+        if (response && response.data) {
+            return response.data as QuestionItem[]
+        }
+        
+        // If no data property, return empty array
+        console.log('No data in response:', response)
+        return []
     } catch (error) {
-        console.error('Submit error:', error);
-        alert("Có lỗi xảy ra khi đăng câu hỏi. Vui lòng thử lại.");
+        console.error('Fetch questions error:', error);
+        // Don't show alert for fetch errors, just return empty array
         return []
     }
 }
 
 const baseApi = async (body: any) => {
-    const response = await fetch(BASE, {
-        method: 'POST',
-        body: JSON.stringify(body),
-    });
+    try {
+        const response = await fetch(BASE, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(body),
+        });
 
-    console.log('Response:', response);
-    console.log('Response status:', response.status);
-    console.log('Response headers:', response.headers);
+        console.log('Response:', response);
+        console.log('Response status:', response.status);
 
-    if (!response.ok) {
-        return {
-            ok: false,
-            error: new Error(`HTTP error! status: ${response.status}`)
-        };
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`)
+        }
+
+        const result = await response.json();
+        console.log('Result:', result);
+
+        return result
+    } catch (error) {
+        console.error('Base API error:', error);
+        throw error;
     }
-
-    const result = await response.json();
-    console.log('Result:', result);
-
-    return result
 }
