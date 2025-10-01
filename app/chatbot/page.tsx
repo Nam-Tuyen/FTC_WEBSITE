@@ -412,8 +412,8 @@ export default function ChatbotPage() {
                       
                       {/* Title Section */}
                       <div className="space-y-1">
-                        <h2 className="text-xl sm:text-2xl font-bold bg-gradient-to-r from-white via-blue-100 to-purple-100 bg-clip-text text-transparent">
-                          Chọn chế độ
+                        <h2 className="text-2xl sm:text-3xl font-black uppercase tracking-wider text-glow mb-2">
+                          CHỌN CHẾ ĐỘ
                         </h2>
                         <p className="text-sm sm:text-base text-white/70 font-medium">
                           Tùy chỉnh trải nghiệm chat của bạn
