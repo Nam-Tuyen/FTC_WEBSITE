@@ -15,7 +15,13 @@ import {
   Star, 
   TrendingUp, 
   Play, 
-  CheckCircle
+  CheckCircle,
+  Mail,
+  Phone,
+  MapPin,
+  Instagram,
+  Facebook,
+  Linkedin
 } from "lucide-react"
 import Link from "next/link"
 import { useState, useEffect } from "react"
@@ -389,12 +395,94 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Footer - Simple */}
-      <footer className="bg-card/10 backdrop-blur-sm border-t border-accent/20 py-8 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto text-center">
-          <p className="text-foreground/60 font-medium italic">
-            ©2025. Câu lạc bộ Công nghệ Tài chính
-          </p>
+      {/* Footer - Enhanced */}
+      <footer className="bg-card/10 backdrop-blur-sm border-t border-accent/20 py-12 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+            {/* Quick Links */}
+            <div className="space-y-4">
+              <h4 className="font-bold text-lg text-foreground uppercase tracking-wide">Liên kết nhanh</h4>
+              <div className="grid grid-cols-2 gap-2">
+                <Link href="/thong-tin" className="text-foreground/70 hover:text-accent transition-colors duration-300 text-sm">
+                  THÔNG TIN
+                </Link>
+                <Link href="/thanh-tich" className="text-foreground/70 hover:text-accent transition-colors duration-300 text-sm">
+                  THÀNH TÍCH
+                </Link>
+                <Link href="/hoat-dong" className="text-foreground/70 hover:text-accent transition-colors duration-300 text-sm">
+                  HOẠT ĐỘNG
+                </Link>
+                <Link href="/co-cau" className="text-foreground/70 hover:text-accent transition-colors duration-300 text-sm">
+                  CƠ CẤU
+                </Link>
+                <Link href="/dien-dan" className="text-foreground/70 hover:text-accent transition-colors duration-300 text-sm">
+                  DIỄN ĐÀN
+                </Link>
+                <Link href="/ung-tuyen" className="text-foreground/70 hover:text-accent transition-colors duration-300 text-sm">
+                  ỨNG TUYỂN
+                </Link>
+                <Link href="/chatbot" className="text-foreground/70 hover:text-accent transition-colors duration-300 text-sm col-span-2">
+                  CHATBOT
+                </Link>
+              </div>
+            </div>
+
+            {/* Social Media */}
+            <div className="space-y-4">
+              <h4 className="font-bold text-lg text-foreground uppercase tracking-wide">Mạng xã hội</h4>
+              <div className="flex space-x-4">
+                <a 
+                  href="https://www.instagram.com/ftcers/" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="p-3 bg-gradient-to-br from-pink-500 to-purple-600 rounded-lg hover:scale-110 transition-all duration-300"
+                >
+                  <Instagram className="h-5 w-5 text-white" />
+                </a>
+                <a 
+                  href="https://www.facebook.com/clbfintechuel" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="p-3 bg-gradient-to-br from-blue-600 to-blue-800 rounded-lg hover:scale-110 transition-all duration-300"
+                >
+                  <Facebook className="h-5 w-5 text-white" />
+                </a>
+                <a 
+                  href="https://www.linkedin.com/company/ftc-financial-technology-club/" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="p-3 bg-gradient-to-br from-blue-700 to-blue-900 rounded-lg hover:scale-110 transition-all duration-300"
+                >
+                  <Linkedin className="h-5 w-5 text-white" />
+                </a>
+              </div>
+            </div>
+
+            {/* Contact Info */}
+            <div className="space-y-4">
+              <h4 className="font-bold text-lg text-foreground uppercase tracking-wide">Liên hệ</h4>
+              <div className="space-y-3">
+                <div className="flex items-center text-foreground/70">
+                  <Mail className="h-4 w-4 text-accent mr-3 flex-shrink-0" />
+                  <span className="text-sm">clbcongnghetaichinh@st.uel.edu.vn</span>
+                </div>
+                <div className="flex items-center text-foreground/70">
+                  <Phone className="h-4 w-4 text-accent mr-3 flex-shrink-0" />
+                  <span className="text-sm">0564032119</span>
+                </div>
+                <div className="flex items-center text-foreground/70">
+                  <MapPin className="h-4 w-4 text-accent mr-3 flex-shrink-0" />
+                  <span className="text-sm">Trường đại học Kinh tế - Luật, ĐHQG-HCM</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="border-t border-accent/20 pt-6 text-center">
+            <p className="text-foreground/60 font-medium italic">
+              ©2025. Câu lạc bộ Công nghệ Tài chính
+            </p>
+          </div>
         </div>
       </footer>
     </div>
