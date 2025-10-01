@@ -1,53 +1,89 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
-/* Custom animations for FTC Chatbot */
-@keyframes blink {
-  0%, 50% { opacity: 1; }
-  51%, 100% { opacity: 0.7; }
+@custom-variant dark (&:is(.dark *));
+
+:root {
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.145 0 0);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.145 0 0);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.145 0 0);
+  --primary: oklch(0.205 0 0);
+  --primary-foreground: oklch(0.985 0 0);
+  --secondary: oklch(0.97 0 0);
+  --secondary-foreground: oklch(0.205 0 0);
+  --muted: oklch(0.97 0 0);
+  --muted-foreground: oklch(0.556 0 0);
+  --accent: oklch(0.97 0 0);
+  --accent-foreground: oklch(0.205 0 0);
+  --destructive: oklch(0.577 0.245 27.325);
+  --destructive-foreground: oklch(0.577 0.245 27.325);
+  --border: oklch(0.922 0 0);
+  --input: oklch(0.922 0 0);
+  --ring: oklch(0.708 0 0);
+  --chart-1: oklch(0.646 0.222 41.116);
+  --chart-2: oklch(0.6 0.118 184.704);
+  --chart-3: oklch(0.398 0.07 227.392);
+  --chart-4: oklch(0.828 0.189 84.429);
+  --chart-5: oklch(0.769 0.188 70.08);
+  --radius: 0.625rem;
+  --sidebar: oklch(0.985 0 0);
+  --sidebar-foreground: oklch(0.145 0 0);
+  --sidebar-primary: oklch(0.205 0 0);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.97 0 0);
+  --sidebar-accent-foreground: oklch(0.205 0 0);
+  --sidebar-border: oklch(0.922 0 0);
+  --sidebar-ring: oklch(0.708 0 0);
 }
 
-@keyframes gradient-shift {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-}
+@theme inline {
+  /* Updated font configuration to use Montserrat for all font families */
+  --font-sans: var(--font-montserrat);
+  --font-mono: var(--font-montserrat);
+  --font-serif: var(--font-montserrat);
+  --font-heading: var(--font-montserrat);
+  --font-body: var(--font-montserrat);
 
-@keyframes float {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-20px); }
-}
+  /* Updated all text colors to bright white for better contrast */
+  --color-foreground: #ffffff;
+  --color-muted-foreground: rgba(255, 255, 255, 0.8);
+  --color-card-foreground: #ffffff;
+  --color-popover-foreground: #ffffff;
+  --color-primary-foreground: #003663;
+  --color-secondary-foreground: #ffffff;
+  --color-accent-foreground: #ffffff;
+  --color-destructive-foreground: #ffffff;
 
-@keyframes float-reverse {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(20px); }
-}
+  /* High-tech color scheme with #003663 background */
+  --color-background: #003663;
+  --color-card: rgba(255, 255, 255, 0.05);
+  --color-popover: #003663;
+  --color-primary: #00bfff;
+  --color-secondary: rgba(255, 255, 255, 0.1);
+  --color-muted: rgba(255, 255, 255, 0.1);
+  --color-accent: #00c4ff;
+  --color-destructive: #ff4444;
+  --color-border: rgba(255, 255, 255, 0.2);
+  --color-input: rgba(255, 255, 255, 0.1);
+  --color-ring: #00bfff;
 
-.animate-float {
-  animation: float 6s ease-in-out infinite;
-}
-
-.animate-float-reverse {
-  animation: float-reverse 6s ease-in-out infinite;
-}
-
-.animate-text-shine {
-  background: linear-gradient(45deg, #003663, #1a5490, #4a9fff, #7fb8ff);
-  background-size: 400% 400%;
-  animation: gradient-shift 3s ease-in-out infinite;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-/* Font Inter optimization for markdown rendering */
-.markdown-content {
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
-  font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
-  font-variant-ligatures: common-ligatures;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  /* Enhanced border radius for modern look */
+  --radius: 0.75rem;
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
 }
 
 /* Modern Navigation Styles */
@@ -1094,4 +1130,114 @@ nav > div > div {
   .nav-link { font-size: 0.75rem; }
   .nav-label { max-width: 4.5rem; font-size: 0.7rem; }
   .nav-link svg, nav .nav-link svg { height: 0.95em; width: 0.95em; }
+}
+
+/* ===========================================
+   MODERN ANIMATIONS & EFFECTS
+   =========================================== */
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+@keyframes float-reverse {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(20px);
+  }
+}
+
+@keyframes text-shine {
+  to {
+    background-position: 200% center;
+  }
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+.animate-float-reverse {
+  animation: float-reverse 7s ease-in-out infinite;
+}
+
+.animate-text-shine {
+  background-size: 200% auto;
+  animation: text-shine 5s linear infinite;
+}
+
+body {
+  color: #ffffff;
+  background-color: #003663;
+  font-family: var(--font-montserrat), system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+}
+
+.font-heading {
+  font-family: var(--font-heading), var(--font-montserrat), system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+}
+
+.font-body {
+  font-family: var(--font-body), var(--font-montserrat), system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: #ffffff;
+  font-family: var(--font-montserrat), sans-serif;
+}
+
+p, span, div, a, button, input, textarea, select {
+  color: #ffffff;
+  font-family: var(--font-montserrat), sans-serif;
+}
+
+.glow {
+  box-shadow: 0 0 20px rgba(0, 191, 255, 0.3);
+}
+
+.text-glow {
+  text-shadow: 0 0 10px rgba(0, 191, 255, 0.5);
+  color: #ffffff;
+}
+
+.gradient-bg {
+  background: linear-gradient(135deg, #003663 0%, #001122 50%, #003663 100%);
+  background-size: 200% 200%;
+  animation: gradientShift 8s ease infinite;
+}
+
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.btn-futuristic {
+  background: linear-gradient(45deg, #00bfff, #00c4ff);
+  border: 1px solid #00bfff;
+  color: #003663;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  transition: all 0.3s ease;
+}
+
+.btn-futuristic:hover {
+  box-shadow: 0 0 25px rgba(0, 191, 255, 0.6);
+  transform: translateY(-2px);
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
 }
