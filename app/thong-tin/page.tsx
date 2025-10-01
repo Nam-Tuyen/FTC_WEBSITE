@@ -341,13 +341,13 @@ export default function ThongTinPage() {
                      <BookOpen className="w-8 h-8 text-white" />
                    </div>
                    <div>
-                     <h3 className="text-3xl font-bold text-white">THÔNG TIN CÂU LẠC BỘ</h3>
-                     <p className="text-blue-200 text-lg">Cộng đồng FinTech hàng đầu</p>
+                     <h3 className="text-3xl font-bold text-white">CHATBOT AI FTC</h3>
+                     <p className="text-blue-200 text-lg">Trợ lý thông minh 24/7</p>
                    </div>
                  </div>
                  
                  <p className="text-white/90 mb-8 leading-relaxed text-lg italic">
-                   Tìm hiểu chi tiết về sứ mệnh, tầm nhìn và các hoạt động của câu lạc bộ Công nghệ Tài chính
+                   Trải nghiệm chatbot AI thông minh để tìm hiểu về câu lạc bộ, hoạt động và nhận tư vấn chuyên môn
                  </p>
                  
                  <a 
