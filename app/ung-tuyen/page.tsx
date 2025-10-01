@@ -33,27 +33,27 @@ const RecruitmentPage: NextPage = () => {
       />
 
       {/* Call to Action Section */}
-      <section className="py-16 px-4 sm:px-6 lg:px-8">
+      <section className="py-8 sm:py-12 lg:py-16 px-4 sm:px-6 lg:px-8">
         <div className="max-w-4xl mx-auto text-center">
-          <div className="space-y-8">
+          <div className="space-y-6 sm:space-y-8">
             {status === "OPEN" ? (
               <>
                 <a 
                   href={RECRUITMENT_CONFIG.formUrl}
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className="inline-block group"
+                  className="inline-block group w-full sm:w-auto"
                 >
-                  <div className="relative">
+                  <div className="relative w-full">
                     <div className="absolute -inset-1 bg-gradient-to-r from-purple-500 to-pink-500 rounded-lg blur-lg opacity-70 group-hover:opacity-100 transition duration-1000 group-hover:duration-200"></div>
                     <Button 
                       size="lg" 
-                      className="relative px-8 py-6 text-lg bg-background hover:bg-background/90 border-0 shadow-xl"
+                      className="relative w-full sm:w-auto px-6 sm:px-8 py-4 sm:py-6 text-base sm:text-lg bg-background hover:bg-background/90 border-0 shadow-xl"
                     >
                       <span className="bg-gradient-to-r from-purple-500 to-pink-500 bg-clip-text text-transparent font-semibold">
                         Nộp đơn ngay
                       </span>
-                      <ArrowRight className="w-5 h-5 ml-2" />
+                      <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 ml-2" />
                     </Button>
                   </div>
                 </a>
@@ -67,19 +67,19 @@ const RecruitmentPage: NextPage = () => {
       </section>
 
       {/* Features Section with Modern Cards */}
-      <section className="relative py-24 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-background/80 to-background">
+      <section className="relative py-12 sm:py-16 lg:py-24 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-background/80 to-background">
         <div className="max-w-6xl mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
             {/* Feature 1: Networking */}
             <div className="group relative">
               <div className="absolute inset-0 bg-gradient-to-r from-primary/10 to-accent/10 rounded-2xl transform group-hover:scale-[1.02] transition-transform duration-500" />
-              <div className="relative p-8 bg-background/40 backdrop-blur-lg rounded-2xl border border-primary/10">
-                <div className="w-16 h-16 mb-6 relative">
+              <div className="relative p-6 sm:p-8 bg-background/40 backdrop-blur-lg rounded-2xl border border-primary/10">
+                <div className="w-12 h-12 sm:w-16 sm:h-16 mb-4 sm:mb-6 relative">
                   <div className="absolute inset-0 bg-gradient-to-r from-primary/20 to-accent/20 rounded-xl blur-lg group-hover:blur-xl transition-all"></div>
                   <div className="relative w-full h-full bg-background/50 rounded-xl flex items-center justify-center">
                     <svg 
                       xmlns="http://www.w3.org/2000/svg" 
-                      className="h-8 w-8 text-primary group-hover:scale-110 transition-transform"
+                      className="h-6 w-6 sm:h-8 sm:w-8 text-primary group-hover:scale-110 transition-transform"
                       fill="none"
                       viewBox="0 0 24 24"
                       stroke="currentColor"
@@ -88,8 +88,8 @@ const RecruitmentPage: NextPage = () => {
                     </svg>
                   </div>
                 </div>
-                <h3 className="text-xl font-bold mb-3 bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">NETWORKING</h3>
-                <p className="text-muted-foreground/80">
+                <h3 className="text-lg sm:text-xl font-bold mb-2 sm:mb-3 bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">NETWORKING</h3>
+                <p className="text-sm sm:text-base text-muted-foreground/80 leading-relaxed">
                   Kết nối với cộng đồng sinh viên và chuyên gia trong lĩnh vực Fintech
                 </p>
               </div>
@@ -98,13 +98,13 @@ const RecruitmentPage: NextPage = () => {
             {/* Feature 2: Learning */}
             <div className="group relative">
               <div className="absolute inset-0 bg-gradient-to-r from-primary/10 to-accent/10 rounded-2xl transform group-hover:scale-[1.02] transition-transform duration-500" />
-              <div className="relative p-8 bg-background/40 backdrop-blur-lg rounded-2xl border border-primary/10">
-                <div className="w-16 h-16 mb-6 relative">
+              <div className="relative p-6 sm:p-8 bg-background/40 backdrop-blur-lg rounded-2xl border border-primary/10">
+                <div className="w-12 h-12 sm:w-16 sm:h-16 mb-4 sm:mb-6 relative">
                   <div className="absolute inset-0 bg-gradient-to-r from-primary/20 to-accent/20 rounded-xl blur-lg group-hover:blur-xl transition-all"></div>
                   <div className="relative w-full h-full bg-background/50 rounded-xl flex items-center justify-center">
                     <svg 
                       xmlns="http://www.w3.org/2000/svg" 
-                      className="h-8 w-8 text-primary group-hover:scale-110 transition-transform"
+                      className="h-6 w-6 sm:h-8 sm:w-8 text-primary group-hover:scale-110 transition-transform"
                       fill="none"
                       viewBox="0 0 24 24"
                       stroke="currentColor"
@@ -113,23 +113,23 @@ const RecruitmentPage: NextPage = () => {
                     </svg>
                   </div>
                 </div>
-                <h3 className="text-xl font-bold mb-3 bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">HỌC TẬP & PHÁT TRIỂN</h3>
-                <p className="text-muted-foreground/80">
+                <h3 className="text-lg sm:text-xl font-bold mb-2 sm:mb-3 bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">HỌC TẬP & PHÁT TRIỂN</h3>
+                <p className="text-sm sm:text-base text-muted-foreground/80 leading-relaxed">
                   Cơ hội học hỏi qua các workshop, training và dự án thực tế
                 </p>
               </div>
             </div>
 
             {/* Feature 3: Career */}
-            <div className="group relative">
+            <div className="group relative sm:col-span-2 lg:col-span-1">
               <div className="absolute inset-0 bg-gradient-to-r from-primary/10 to-accent/10 rounded-2xl transform group-hover:scale-[1.02] transition-transform duration-500" />
-              <div className="relative p-8 bg-background/40 backdrop-blur-lg rounded-2xl border border-primary/10">
-                <div className="w-16 h-16 mb-6 relative">
+              <div className="relative p-6 sm:p-8 bg-background/40 backdrop-blur-lg rounded-2xl border border-primary/10">
+                <div className="w-12 h-12 sm:w-16 sm:h-16 mb-4 sm:mb-6 relative">
                   <div className="absolute inset-0 bg-gradient-to-r from-primary/20 to-accent/20 rounded-xl blur-lg group-hover:blur-xl transition-all"></div>
                   <div className="relative w-full h-full bg-background/50 rounded-xl flex items-center justify-center">
                     <svg 
                       xmlns="http://www.w3.org/2000/svg" 
-                      className="h-8 w-8 text-primary group-hover:scale-110 transition-transform"
+                      className="h-6 w-6 sm:h-8 sm:w-8 text-primary group-hover:scale-110 transition-transform"
                       fill="none"
                       viewBox="0 0 24 24"
                       stroke="currentColor"
@@ -138,8 +138,8 @@ const RecruitmentPage: NextPage = () => {
                     </svg>
                   </div>
                 </div>
-                <h3 className="text-xl font-bold mb-3 bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">CƠ HỘI NGHỀ NGHIỆP</h3>
-                <p className="text-muted-foreground/80">
+                <h3 className="text-lg sm:text-xl font-bold mb-2 sm:mb-3 bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">CƠ HỘI NGHỀ NGHIỆP</h3>
+                <p className="text-sm sm:text-base text-muted-foreground/80 leading-relaxed">
                   Tiếp cận với các cơ hội thực tập và việc làm trong ngành Fintech
                 </p>
               </div>
