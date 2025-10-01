@@ -4,6 +4,7 @@ import React, { useEffect, useMemo, useRef, useState } from "react"
 import dynamic from "next/dynamic"
 import { Navigation } from "@/components/navigation"
 import { Footer } from "@/components/footer"
+import { PageHeader } from "@/components/page-header"
 import { Button } from "@/components/ui/Button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/Input"
@@ -18,6 +19,7 @@ const animations = {
 }
 // import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar" // Commented out to avoid conflict
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip"
+import { MessageSquare } from "lucide-react"
 import { ChatMode } from "@/chatbot/types"
 import { SUGGESTED_QUESTIONS } from "./constants/suggested-questions"
 import { SimpleChatbotSend } from "./components/simple-chatbot-send"
@@ -367,28 +369,24 @@ export default function ChatbotPage() {
       <div className="min-h-screen bg-[#003663] text-white overflow-hidden">
         <Navigation />
 
-        {/* Mobile Responsive Hero Section */}
-        <section className="relative min-h-[60vh] sm:min-h-[70vh] flex items-center justify-center py-12 sm:py-16 lg:py-24 px-4 sm:px-6 lg:px-8">
-          <div className="absolute inset-0 overflow-hidden">
-            <div className="absolute top-1/4 -right-1/4 w-2/3 h-2/3 bg-gradient-to-br from-primary/20 via-accent/20 to-transparent rounded-full blur-3xl animate-float" />
-            <div className="absolute -bottom-1/4 -left-1/4 w-2/3 h-2/3 bg-gradient-to-tr from-accent/20 via-primary/20 to-transparent rounded-full blur-3xl animate-float-reverse" />
-          </div>
+        {/* Page Header */}
+        <PageHeader
+          title="FTC CHATBOT"
+          subtitle="Trợ lý AI thông minh, hỗ trợ giải đáp thông tin về câu lạc bộ và ngành Fintech cho các bạn tân sinh viên"
+          showSocialMedia={false}
+          badgeText="AI Assistant"
+          badgeIcon={MessageSquare}
+          badgeColor="from-blue-500/20 to-purple-500/20"
+          badgeBorderColor="border-blue-400/30"
+          badgeIconColor="text-blue-400"
+          badgeTextColor="text-blue-100"
+          badgeShadowColor="shadow-blue-500/10"
+        />
 
-          <div className="relative max-w-6xl mx-auto text-center space-y-4 sm:space-y-6 lg:space-y-8">
-            <h1 className="relative text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-extrabold">
-              <span className="absolute inset-0 bg-gradient-to-r from-white to-white opacity-50 blur-2xl animate-pulse"></span>
-              <span className="relative text-white animate-bounce" style={{
-                animation: 'blink 1.5s infinite, gradient-shift 2s ease-in-out infinite, bounce 2s infinite'
-              }}>
-                FTC CHATBOT
-              </span>
-            </h1>
-            <p className="text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl text-muted-foreground leading-relaxed max-w-4xl mx-auto italic px-4">
-              Trợ lý AI thông minh, hỗ trợ giải đáp thông tin về câu lạc bộ và ngành Fintech cho các bạn tân sinh viên
-            </p>
-
-            {/* Mode selector với hiệu ứng hiện đại */}
-            <div className="mt-8 relative">
+        {/* Mode selector với hiệu ứng hiện đại */}
+        <section className="py-8 sm:py-12 lg:py-16 px-4 sm:px-6 lg:px-8">
+          <div className="max-w-6xl mx-auto">
+            <div className="relative">
               <div className={`absolute inset-0 ${BRAND.gradients.ethereal} rounded-3xl transform transition-all`} />
               {/* Modern Mode Selection Card */}
               <div className="relative group">
@@ -403,40 +401,40 @@ export default function ChatbotPage() {
                     {/* Animated Icon */}
                     <div className="relative inline-block mb-6">
                       <div className="absolute inset-0 bg-gradient-to-r from-blue-400 via-purple-400 to-cyan-400 rounded-3xl blur-2xl animate-pulse opacity-60 scale-110" />
-                      <div className="relative w-20 h-20 sm:w-24 sm:h-24 bg-gradient-to-br from-white/20 to-white/10 backdrop-blur-xl rounded-3xl flex items-center justify-center border border-white/30 shadow-2xl">
-                        <span className="text-3xl sm:text-4xl animate-bounce">🤖</span>
+                      <div className="relative w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-br from-white/20 to-white/10 backdrop-blur-xl rounded-3xl flex items-center justify-center border border-white/30 shadow-2xl">
+                        <span className="text-2xl sm:text-3xl animate-bounce">🤖</span>
                       </div>
                       {/* Enhanced Floating particles */}
-                      <div className="absolute -top-2 -right-2 w-4 h-4 bg-blue-400 rounded-full animate-float-particle opacity-80" />
-                      <div className="absolute -bottom-2 -left-2 w-3 h-3 bg-purple-400 rounded-full animate-float-particle opacity-80 animation-delay-300" />
-                      <div className="absolute top-1/2 -left-3 w-2 h-2 bg-cyan-400 rounded-full animate-float-particle opacity-70 animation-delay-600" />
-                      <div className="absolute top-1/2 -right-3 w-2 h-2 bg-green-400 rounded-full animate-float-particle opacity-70 animation-delay-900" />
+                      <div className="absolute -top-2 -right-2 w-3 h-3 bg-blue-400 rounded-full animate-float-particle opacity-80" />
+                      <div className="absolute -bottom-2 -left-2 w-2 h-2 bg-purple-400 rounded-full animate-float-particle opacity-80 animation-delay-300" />
+                      <div className="absolute top-1/2 -left-2 w-2 h-2 bg-cyan-400 rounded-full animate-float-particle opacity-70 animation-delay-600" />
+                      <div className="absolute top-1/2 -right-2 w-2 h-2 bg-green-400 rounded-full animate-float-particle opacity-70 animation-delay-900" />
                     </div>
                     
                     {/* Title Section */}
                     <div className="space-y-4">
-                      <div className="inline-flex items-center px-6 py-3 rounded-full bg-gradient-to-r from-blue-500/20 to-purple-500/20 border border-blue-400/30 backdrop-blur-sm mb-4">
-                        <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse mr-3" />
-                        <span className="text-sm font-bold text-blue-300 uppercase tracking-wider">
+                      <div className="inline-flex items-center px-4 py-2 rounded-full bg-gradient-to-r from-blue-500/20 to-purple-500/20 border border-blue-400/30 backdrop-blur-sm mb-4">
+                        <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse mr-2" />
+                        <span className="text-xs font-bold text-blue-300 uppercase tracking-wider">
                           AI CHATBOT
                         </span>
                       </div>
                       
-                      <h2 className="text-3xl sm:text-4xl md:text-5xl font-black uppercase tracking-wider text-glow mb-4">
+                      <h2 className="text-2xl sm:text-3xl font-black uppercase tracking-wider text-glow mb-4">
                         CHỌN CHẾ ĐỘ
                       </h2>
                       
-                      <p className="text-lg sm:text-xl text-white/80 font-medium max-w-2xl mx-auto leading-relaxed">
+                      <p className="text-base sm:text-lg text-white/80 font-medium max-w-2xl mx-auto leading-relaxed">
                         Tùy chỉnh trải nghiệm chat của bạn với các chế độ chuyên biệt
                       </p>
                       
                       {/* Status Indicator */}
                       <div className="flex items-center justify-center gap-3 mt-6">
-                        <div className="flex items-center gap-2 px-4 py-2 bg-green-500/20 rounded-full border border-green-400/30">
+                        <div className="flex items-center gap-2 px-3 py-1.5 bg-green-500/20 rounded-full border border-green-400/30">
                           <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
-                          <span className="text-sm font-medium text-green-300">Hệ thống sẵn sàng</span>
+                          <span className="text-xs font-medium text-green-300">Hệ thống sẵn sàng</span>
                         </div>
-                        <div className="flex items-center gap-2 px-4 py-2 bg-blue-500/20 rounded-full border border-blue-400/30">
+                        <div className="flex items-center gap-2 px-3 py-1.5 bg-blue-500/20 rounded-full border border-blue-400/30">
                           <div className="w-2 h-2 bg-blue-400 rounded-full animate-pulse" />
                           <span className="text-sm font-medium text-blue-300">AI Online</span>
                         </div>
