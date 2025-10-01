@@ -215,59 +215,99 @@ export default function AchievementsPage() {
         </div>
       </section>
 
-      {/* Call to Action Section */}
+      {/* Call to Action Section - Split Layout */}
       <section className="py-16 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-6xl mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {/* Hoạt động */}
-            <div className="group relative bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-xl rounded-3xl border border-white/20 p-8 shadow-2xl hover:scale-105 transition-all duration-300 hover:shadow-purple-500/20 hover:border-purple-400/30">
-              <div className="w-16 h-16 mx-auto mb-6 bg-gradient-to-r from-purple-500 to-pink-600 rounded-2xl flex items-center justify-center shadow-xl group-hover:scale-110 transition-transform duration-300">
-                <Activity className="w-8 h-8 text-white" />
+        <div className="max-w-7xl mx-auto">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            {/* Left Side - Main CTA */}
+            <div className="relative bg-gradient-to-br from-yellow-500/20 to-amber-500/20 backdrop-blur-xl rounded-3xl border border-yellow-400/30 p-10 shadow-2xl overflow-hidden">
+              <div className="absolute inset-0 bg-gradient-to-br from-yellow-500/10 to-amber-500/10 animate-pulse"></div>
+              <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-yellow-400 to-amber-400"></div>
+              
+              <div className="relative z-10">
+                <div className="flex items-center gap-4 mb-6">
+                  <div className="w-16 h-16 bg-gradient-to-r from-yellow-500 to-amber-600 rounded-2xl flex items-center justify-center shadow-xl">
+                    <Trophy className="w-8 h-8 text-white" />
+                  </div>
+                  <div>
+                    <h3 className="text-3xl font-bold text-white">THÀNH TÍCH NỔI BẬT</h3>
+                    <p className="text-yellow-200 text-lg">Những thành tựu đáng tự hào</p>
+                  </div>
+                </div>
+                
+                <p className="text-white/90 mb-8 leading-relaxed text-lg italic">
+                  Khám phá những thành tích và giải thưởng mà câu lạc bộ đã đạt được trong suốt quá trình phát triển
+                </p>
+                
+                <a 
+                  href="/thanh-tich"
+                  className="inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-yellow-500 to-amber-600 rounded-2xl text-white font-bold hover:shadow-xl hover:scale-105 transition-all duration-300 hover:shadow-yellow-500/25"
+                >
+                  <Trophy className="w-6 h-6" />
+                  <span>Xem chi tiết thành tích</span>
+                  <ArrowRight className="w-5 h-5" />
+                </a>
               </div>
-              <h3 className="text-2xl font-bold text-white mb-4 text-center">HOẠT ĐỘNG</h3>
-              <p className="text-white/80 mb-6 leading-relaxed text-center italic">
-                Tham gia các sự kiện và hoạt động thú vị
-              </p>
-              <a 
-                href="/hoat-dong"
-                className="block w-full px-6 py-3 bg-gradient-to-r from-purple-500 to-pink-600 rounded-2xl text-white font-bold hover:shadow-xl hover:scale-105 transition-all text-center"
-              >
-                Xem hoạt động
-              </a>
             </div>
 
-            {/* Cơ cấu */}
-            <div className="group relative bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-xl rounded-3xl border border-white/20 p-8 shadow-2xl hover:scale-105 transition-all duration-300 hover:shadow-emerald-500/20 hover:border-emerald-400/30">
-              <div className="w-16 h-16 mx-auto mb-6 bg-gradient-to-r from-emerald-500 to-teal-600 rounded-2xl flex items-center justify-center shadow-xl group-hover:scale-110 transition-transform duration-300">
-                <Users className="w-8 h-8 text-white" />
+            {/* Right Side - Secondary CTAs */}
+            <div className="space-y-6">
+              {/* Hoạt động */}
+              <div className="group relative bg-gradient-to-r from-purple-500/20 to-pink-500/20 backdrop-blur-xl rounded-2xl border border-purple-400/30 p-6 shadow-xl hover:scale-105 transition-all duration-300 hover:shadow-purple-500/20">
+                <div className="flex items-center gap-4">
+                  <div className="w-12 h-12 bg-gradient-to-r from-purple-500 to-pink-600 rounded-xl flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
+                    <Activity className="w-6 h-6 text-white" />
+                  </div>
+                  <div className="flex-1">
+                    <h4 className="text-xl font-bold text-white mb-2">Hoạt động</h4>
+                    <p className="text-white/80 text-sm italic">Sự kiện và hoạt động thú vị</p>
+                  </div>
+                  <a 
+                    href="/hoat-dong"
+                    className="px-4 py-2 bg-gradient-to-r from-purple-500 to-pink-600 rounded-xl text-white font-semibold hover:shadow-lg transition-all duration-300"
+                  >
+                    Xem
+                  </a>
+                </div>
               </div>
-              <h3 className="text-2xl font-bold text-white mb-4 text-center">CƠ CẤU</h3>
-              <p className="text-white/80 mb-6 leading-relaxed text-center italic">
-                Tìm hiểu cấu trúc tổ chức của câu lạc bộ
-              </p>
-              <a 
-                href="/co-cau"
-                className="block w-full px-6 py-3 bg-gradient-to-r from-emerald-500 to-teal-600 rounded-2xl text-white font-bold hover:shadow-xl hover:scale-105 transition-all text-center"
-              >
-                Xem cơ cấu
-              </a>
-            </div>
 
-            {/* Diễn đàn */}
-            <div className="group relative bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-xl rounded-3xl border border-white/20 p-8 shadow-2xl hover:scale-105 transition-all duration-300 hover:shadow-orange-500/20 hover:border-orange-400/30 md:col-span-2 lg:col-span-1">
-              <div className="w-16 h-16 mx-auto mb-6 bg-gradient-to-r from-orange-500 to-red-600 rounded-2xl flex items-center justify-center shadow-xl group-hover:scale-110 transition-transform duration-300">
-                <MessageCircle className="w-8 h-8 text-white" />
+              {/* Cơ cấu */}
+              <div className="group relative bg-gradient-to-r from-emerald-500/20 to-teal-500/20 backdrop-blur-xl rounded-2xl border border-emerald-400/30 p-6 shadow-xl hover:scale-105 transition-all duration-300 hover:shadow-emerald-500/20">
+                <div className="flex items-center gap-4">
+                  <div className="w-12 h-12 bg-gradient-to-r from-emerald-500 to-teal-600 rounded-xl flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
+                    <Users className="w-6 h-6 text-white" />
+                  </div>
+                  <div className="flex-1">
+                    <h4 className="text-xl font-bold text-white mb-2">Cơ cấu</h4>
+                    <p className="text-white/80 text-sm italic">Tổ chức và cấu trúc</p>
+                  </div>
+                  <a 
+                    href="/co-cau"
+                    className="px-4 py-2 bg-gradient-to-r from-emerald-500 to-teal-600 rounded-xl text-white font-semibold hover:shadow-lg transition-all duration-300"
+                  >
+                    Xem
+                  </a>
+                </div>
               </div>
-              <h3 className="text-2xl font-bold text-white mb-4 text-center">DIỄN ĐÀN</h3>
-              <p className="text-white/80 mb-6 leading-relaxed text-center italic">
-                Tham gia thảo luận và chia sẻ kiến thức
-              </p>
-              <a 
-                href="/dien-dan"
-                className="block w-full px-6 py-3 bg-gradient-to-r from-orange-500 to-red-600 rounded-2xl text-white font-bold hover:shadow-xl hover:scale-105 transition-all text-center"
-              >
-                Xem diễn đàn
-              </a>
+
+              {/* Diễn đàn */}
+              <div className="group relative bg-gradient-to-r from-orange-500/20 to-red-500/20 backdrop-blur-xl rounded-2xl border border-orange-400/30 p-6 shadow-xl hover:scale-105 transition-all duration-300 hover:shadow-orange-500/20">
+                <div className="flex items-center gap-4">
+                  <div className="w-12 h-12 bg-gradient-to-r from-orange-500 to-red-600 rounded-xl flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
+                    <MessageCircle className="w-6 h-6 text-white" />
+                  </div>
+                  <div className="flex-1">
+                    <h4 className="text-xl font-bold text-white mb-2">Diễn đàn</h4>
+                    <p className="text-white/80 text-sm italic">Thảo luận và chia sẻ</p>
+                  </div>
+                  <a 
+                    href="/dien-dan"
+                    className="px-4 py-2 bg-gradient-to-r from-orange-500 to-red-600 rounded-xl text-white font-semibold hover:shadow-lg transition-all duration-300"
+                  >
+                    Xem
+                  </a>
+                </div>
+              </div>
             </div>
           </div>
         </div>

@@ -326,59 +326,61 @@ export default function ThongTinPage() {
         </div>
       </section>
 
-       {/* Call to Action Section */}
+       {/* Call to Action Section - Horizontal Layout */}
        <section className="py-16 px-4 sm:px-6 lg:px-8">
-         <div className="max-w-6xl mx-auto">
-           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-             {/* Thành tích */}
-             <div className="group relative bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-xl rounded-3xl border border-white/20 p-8 shadow-2xl hover:scale-105 transition-all duration-300 hover:shadow-yellow-500/20 hover:border-yellow-400/30">
-               <div className="w-16 h-16 mx-auto mb-6 bg-gradient-to-r from-yellow-500 to-amber-600 rounded-2xl flex items-center justify-center shadow-xl group-hover:scale-110 transition-transform duration-300">
-                 <Trophy className="w-8 h-8 text-white" />
-               </div>
-               <h3 className="text-2xl font-bold text-white mb-4 text-center">THÀNH TÍCH</h3>
-               <p className="text-white/80 mb-6 leading-relaxed text-center italic">
-                 Khám phá những thành tích nổi bật của câu lạc bộ
+         <div className="max-w-7xl mx-auto">
+           {/* Main CTA Banner */}
+           <div className="relative bg-gradient-to-r from-blue-500/20 via-purple-500/20 to-emerald-500/20 backdrop-blur-xl rounded-3xl border border-white/20 p-12 shadow-2xl overflow-hidden">
+             {/* Animated Background */}
+             <div className="absolute inset-0 bg-gradient-to-r from-blue-500/10 via-purple-500/10 to-emerald-500/10 animate-pulse"></div>
+             <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-400 via-purple-400 to-emerald-400"></div>
+             
+             <div className="relative z-10 text-center">
+               <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-6">
+                 <span className="bg-gradient-to-r from-blue-400 via-purple-400 to-emerald-400 bg-clip-text text-transparent">
+                   KHÁM PHÁ THÊM VỀ FTC
+                 </span>
+               </h2>
+               <p className="text-xl sm:text-2xl text-white/80 mb-8 leading-relaxed italic max-w-4xl mx-auto">
+                 Tìm hiểu sâu hơn về thành tích, hoạt động và cơ cấu tổ chức của câu lạc bộ
                </p>
-               <a 
-                 href="/thanh-tich"
-                 className="block w-full px-6 py-3 bg-gradient-to-r from-yellow-500 to-amber-600 rounded-2xl text-white font-bold hover:shadow-xl hover:scale-105 transition-all text-center"
-               >
-                 Xem thành tích
-               </a>
-             </div>
-
-             {/* Hoạt động */}
-             <div className="group relative bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-xl rounded-3xl border border-white/20 p-8 shadow-2xl hover:scale-105 transition-all duration-300 hover:shadow-purple-500/20 hover:border-purple-400/30">
-               <div className="w-16 h-16 mx-auto mb-6 bg-gradient-to-r from-purple-500 to-pink-600 rounded-2xl flex items-center justify-center shadow-xl group-hover:scale-110 transition-transform duration-300">
-                 <Calendar className="w-8 h-8 text-white" />
+               
+               {/* Navigation Links - Horizontal */}
+               <div className="flex flex-wrap justify-center gap-4 sm:gap-6">
+                 <a 
+                   href="/thanh-tich"
+                   className="group flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-yellow-500 to-amber-600 rounded-2xl text-white font-bold hover:shadow-xl hover:scale-105 transition-all duration-300 hover:shadow-yellow-500/25"
+                 >
+                   <Trophy className="w-6 h-6 group-hover:rotate-12 transition-transform duration-300" />
+                   <span>Thành tích</span>
+                   <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" />
+                 </a>
+                 
+                 <a 
+                   href="/hoat-dong"
+                   className="group flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-purple-500 to-pink-600 rounded-2xl text-white font-bold hover:shadow-xl hover:scale-105 transition-all duration-300 hover:shadow-purple-500/25"
+                 >
+                   <Calendar className="w-6 h-6 group-hover:rotate-12 transition-transform duration-300" />
+                   <span>Hoạt động</span>
+                   <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" />
+                 </a>
+                 
+                 <a 
+                   href="/co-cau"
+                   className="group flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-emerald-500 to-teal-600 rounded-2xl text-white font-bold hover:shadow-xl hover:scale-105 transition-all duration-300 hover:shadow-emerald-500/25"
+                 >
+                   <Users className="w-6 h-6 group-hover:rotate-12 transition-transform duration-300" />
+                   <span>Cơ cấu</span>
+                   <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" />
+                 </a>
                </div>
-               <h3 className="text-2xl font-bold text-white mb-4 text-center">HOẠT ĐỘNG</h3>
-               <p className="text-white/80 mb-6 leading-relaxed text-center italic">
-                 Tham gia các sự kiện và hoạt động thú vị
-               </p>
-               <a 
-                 href="/hoat-dong"
-                 className="block w-full px-6 py-3 bg-gradient-to-r from-purple-500 to-pink-600 rounded-2xl text-white font-bold hover:shadow-xl hover:scale-105 transition-all text-center"
-               >
-                 Xem hoạt động
-               </a>
-             </div>
-
-             {/* Cơ cấu */}
-             <div className="group relative bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-xl rounded-3xl border border-white/20 p-8 shadow-2xl hover:scale-105 transition-all duration-300 hover:shadow-emerald-500/20 hover:border-emerald-400/30 md:col-span-2 lg:col-span-1">
-               <div className="w-16 h-16 mx-auto mb-6 bg-gradient-to-r from-emerald-500 to-teal-600 rounded-2xl flex items-center justify-center shadow-xl group-hover:scale-110 transition-transform duration-300">
-                 <Users className="w-8 h-8 text-white" />
+               
+               {/* Decorative Elements */}
+               <div className="mt-8 flex justify-center items-center gap-2">
+                 <div className="w-2 h-2 bg-blue-400 rounded-full animate-pulse"></div>
+                 <div className="w-2 h-2 bg-purple-400 rounded-full animate-pulse" style={{animationDelay: '0.2s'}}></div>
+                 <div className="w-2 h-2 bg-emerald-400 rounded-full animate-pulse" style={{animationDelay: '0.4s'}}></div>
                </div>
-               <h3 className="text-2xl font-bold text-white mb-4 text-center">CƠ CẤU</h3>
-               <p className="text-white/80 mb-6 leading-relaxed text-center italic">
-                 Tìm hiểu cấu trúc tổ chức của câu lạc bộ
-               </p>
-               <a 
-                 href="/co-cau"
-                 className="block w-full px-6 py-3 bg-gradient-to-r from-emerald-500 to-teal-600 rounded-2xl text-white font-bold hover:shadow-xl hover:scale-105 transition-all text-center"
-               >
-                 Xem cơ cấu
-               </a>
              </div>
            </div>
          </div>
