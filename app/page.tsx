@@ -383,91 +383,101 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Footer - Enhanced */}
-      <footer className="bg-card/10 backdrop-blur-sm border-t border-accent/20 py-12 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
-            {/* Quick Links */}
-            <div className="space-y-6">
-              <h4 className="font-bold text-xl text-foreground uppercase tracking-wide text-center">Liên kết nhanh</h4>
-              <div className="space-y-3">
-                <Link href="/thong-tin" className="block w-full p-3 bg-card/20 hover:bg-accent/10 border border-accent/20 hover:border-accent/40 rounded-lg text-center text-foreground/80 hover:text-accent transition-all duration-300 font-medium">
+      {/* Footer - Compact & Modern */}
+      <footer className="bg-card/5 backdrop-blur-sm border-t border-accent/10 py-8 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-6xl mx-auto">
+          {/* Main Footer Content */}
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-6">
+            {/* Quick Links - Compact */}
+            <div className="space-y-3">
+              <h4 className="font-bold text-sm text-foreground uppercase tracking-wide">Liên kết</h4>
+              <div className="grid grid-cols-2 gap-1 text-xs">
+                <Link href="/thong-tin" className="text-foreground/60 hover:text-accent transition-colors duration-200 py-1">
                   THÔNG TIN
                 </Link>
-                <Link href="/thanh-tich" className="block w-full p-3 bg-card/20 hover:bg-accent/10 border border-accent/20 hover:border-accent/40 rounded-lg text-center text-foreground/80 hover:text-accent transition-all duration-300 font-medium">
+                <Link href="/thanh-tich" className="text-foreground/60 hover:text-accent transition-colors duration-200 py-1">
                   THÀNH TÍCH
                 </Link>
-                <Link href="/hoat-dong" className="block w-full p-3 bg-card/20 hover:bg-accent/10 border border-accent/20 hover:border-accent/40 rounded-lg text-center text-foreground/80 hover:text-accent transition-all duration-300 font-medium">
+                <Link href="/hoat-dong" className="text-foreground/60 hover:text-accent transition-colors duration-200 py-1">
                   HOẠT ĐỘNG
                 </Link>
-                <Link href="/co-cau" className="block w-full p-3 bg-card/20 hover:bg-accent/10 border border-accent/20 hover:border-accent/40 rounded-lg text-center text-foreground/80 hover:text-accent transition-all duration-300 font-medium">
+                <Link href="/co-cau" className="text-foreground/60 hover:text-accent transition-colors duration-200 py-1">
                   CƠ CẤU
                 </Link>
-                <Link href="/dien-dan" className="block w-full p-3 bg-card/20 hover:bg-accent/10 border border-accent/20 hover:border-accent/40 rounded-lg text-center text-foreground/80 hover:text-accent transition-all duration-300 font-medium">
+                <Link href="/dien-dan" className="text-foreground/60 hover:text-accent transition-colors duration-200 py-1">
                   DIỄN ĐÀN
                 </Link>
-                <Link href="/ung-tuyen" className="block w-full p-3 bg-card/20 hover:bg-accent/10 border border-accent/20 hover:border-accent/40 rounded-lg text-center text-foreground/80 hover:text-accent transition-all duration-300 font-medium">
+                <Link href="/ung-tuyen" className="text-foreground/60 hover:text-accent transition-colors duration-200 py-1">
                   ỨNG TUYỂN
                 </Link>
-                <Link href="/chatbot" className="block w-full p-3 bg-gradient-to-r from-accent/20 to-secondary/20 hover:from-accent/30 hover:to-secondary/30 border border-accent/40 hover:border-accent/60 rounded-lg text-center text-accent hover:text-accent/80 transition-all duration-300 font-bold">
+                <Link href="/chatbot" className="text-foreground/60 hover:text-accent transition-colors duration-200 py-1 col-span-2 font-bold">
                   CHATBOT
                 </Link>
               </div>
             </div>
 
-            {/* Social Media */}
-            <div className="space-y-4">
-              <h4 className="font-bold text-lg text-foreground uppercase tracking-wide">Mạng xã hội</h4>
-              <div className="flex space-x-4">
+            {/* Social Media - Compact */}
+            <div className="space-y-3">
+              <h4 className="font-bold text-sm text-foreground uppercase tracking-wide">Mạng xã hội</h4>
+              <div className="flex space-x-3">
                 <a 
                   href="https://www.instagram.com/ftcers/" 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className="p-3 bg-gradient-to-br from-pink-500 to-purple-600 rounded-lg hover:scale-110 transition-all duration-300"
+                  className="p-2 bg-gradient-to-br from-pink-500 to-purple-600 rounded-md hover:scale-105 transition-all duration-200"
                 >
-                  <Instagram className="h-5 w-5 text-white" />
+                  <Instagram className="h-4 w-4 text-white" />
                 </a>
                 <a 
                   href="https://www.facebook.com/clbfintechuel" 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className="p-3 bg-gradient-to-br from-blue-600 to-blue-800 rounded-lg hover:scale-110 transition-all duration-300"
+                  className="p-2 bg-gradient-to-br from-blue-600 to-blue-800 rounded-md hover:scale-105 transition-all duration-200"
                 >
-                  <Facebook className="h-5 w-5 text-white" />
+                  <Facebook className="h-4 w-4 text-white" />
                 </a>
                 <a 
                   href="https://www.linkedin.com/company/ftc-financial-technology-club/" 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className="p-3 bg-gradient-to-br from-blue-700 to-blue-900 rounded-lg hover:scale-110 transition-all duration-300"
+                  className="p-2 bg-gradient-to-br from-blue-700 to-blue-900 rounded-md hover:scale-105 transition-all duration-200"
                 >
-                  <Linkedin className="h-5 w-5 text-white" />
+                  <Linkedin className="h-4 w-4 text-white" />
                 </a>
               </div>
             </div>
 
-            {/* Contact Info */}
-            <div className="space-y-4">
-              <h4 className="font-bold text-lg text-foreground uppercase tracking-wide">Liên hệ</h4>
-              <div className="space-y-3">
-                <div className="flex items-center text-foreground/70">
-                  <Mail className="h-4 w-4 text-accent mr-3 flex-shrink-0" />
-                  <span className="text-sm">clbcongnghetaichinh@st.uel.edu.vn</span>
+            {/* Contact Info - Compact */}
+            <div className="space-y-3">
+              <h4 className="font-bold text-sm text-foreground uppercase tracking-wide">Liên hệ</h4>
+              <div className="space-y-2 text-xs text-foreground/60">
+                <div className="flex items-center">
+                  <Mail className="h-3 w-3 text-accent mr-2 flex-shrink-0" />
+                  <span className="break-all">clbcongnghetaichinh@st.uel.edu.vn</span>
                 </div>
-                <div className="flex items-center text-foreground/70">
-                  <Phone className="h-4 w-4 text-accent mr-3 flex-shrink-0" />
-                  <span className="text-sm">0564032119</span>
+                <div className="flex items-center">
+                  <Phone className="h-3 w-3 text-accent mr-2 flex-shrink-0" />
+                  <span>0564032119</span>
                 </div>
-                <div className="flex items-center text-foreground/70">
-                  <MapPin className="h-4 w-4 text-accent mr-3 flex-shrink-0" />
-                  <span className="text-sm">Trường đại học Kinh tế - Luật, ĐHQG-HCM</span>
+                <div className="flex items-start">
+                  <MapPin className="h-3 w-3 text-accent mr-2 flex-shrink-0 mt-0.5" />
+                  <span>Trường đại học Kinh tế - Luật, ĐHQG-HCM</span>
                 </div>
               </div>
             </div>
+
+            {/* Brand Info - Compact */}
+            <div className="space-y-3">
+              <h4 className="font-bold text-sm text-foreground uppercase tracking-wide">FTC</h4>
+              <p className="text-xs text-foreground/60 leading-relaxed">
+                Câu lạc bộ Công nghệ Tài chính - Nơi kết nối những người đam mê fintech
+              </p>
+            </div>
           </div>
 
-          <div className="border-t border-accent/20 pt-6 text-center">
-            <p className="text-foreground/60 font-medium italic">
+          {/* Copyright - Compact */}
+          <div className="border-t border-accent/10 pt-4 text-center">
+            <p className="text-xs text-foreground/50 italic">
               ©2025. Câu lạc bộ Công nghệ Tài chính
             </p>
           </div>
