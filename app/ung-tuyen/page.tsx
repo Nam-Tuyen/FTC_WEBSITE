@@ -3,9 +3,11 @@
 import { type NextPage } from "next"
 import { Navigation } from "@/components/navigation"
 import { Footer } from "@/components/footer"
+import { PageHeader } from "@/components/page-header"
 import { Button } from "@/components/ui/Button"
 import { ApplicationDeadlineCheck } from "./countdown-timer"
 import { RECRUITMENT_CONFIG } from "./constants"
+import { UserPlus, Sparkles } from "lucide-react"
 
 const RecruitmentPage: NextPage = () => {
   // Sử dụng getStatus để kiểm tra trạng thái
@@ -16,70 +18,54 @@ const RecruitmentPage: NextPage = () => {
     <div className="min-h-screen bg-[#003663] text-white overflow-hidden">
       <Navigation />
       
-      {/* Mobile Responsive Hero Section */}
-      <section className="relative min-h-[60vh] sm:min-h-[70vh] lg:min-h-[80vh] flex items-center justify-center py-12 sm:py-16 lg:py-24 px-4 sm:px-6 lg:px-8">
-        {/* Animated background elements */}
-        <div className="absolute inset-0 overflow-hidden">
-          <div 
-            className="absolute top-1/4 -right-1/4 w-2/3 h-2/3 bg-gradient-to-br from-primary/20 via-accent/20 to-transparent rounded-full blur-3xl" 
-            style={{ animation: "float 20s ease-in-out infinite" }}
-          />
-          <div 
-            className="absolute -bottom-1/4 -left-1/4 w-2/3 h-2/3 bg-gradient-to-tr from-accent/20 via-primary/20 to-transparent rounded-full blur-3xl"
-            style={{ animation: "float 20s ease-in-out infinite reverse" }}
-          />
-          <div
-            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-[radial-gradient(ellipse_at_center,rgba(var(--primary-rgb),0.05),transparent)] pointer-events-none"
-            style={{ animation: "pulse 8s infinite" }}
-          />
-        </div>
+      {/* Page Header */}
+      <PageHeader
+        title="ỨNG TUYỂN FTC"
+        subtitle="Gia nhập cộng đồng FinTech hàng đầu và phát triển cùng chúng tôi"
+        showSocialMedia={false}
+        badgeText="Cơ hội nghề nghiệp"
+        badgeIcon={UserPlus}
+        badgeColor="from-purple-500/20 to-pink-500/20"
+        badgeBorderColor="border-purple-400/30"
+        badgeIconColor="text-purple-400"
+        badgeTextColor="text-purple-100"
+        badgeShadowColor="shadow-purple-500/10"
+      />
 
-        <div className="relative max-w-6xl mx-auto">
-          <div className="text-center space-y-4 sm:space-y-6 lg:space-y-8">
-            {/* Mobile Responsive Title */}
-            <h1 className="relative text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-extrabold inline-block">
-              <span className="absolute inset-0 bg-gradient-to-r from-white to-white opacity-50 blur-2xl animate-pulse"></span>
-              <span className="relative text-white animate-bounce" style={{
-                animation: 'blink 1.5s infinite, gradient-shift 2s ease-in-out infinite, bounce 2s infinite'
-              }}>
-                GIA NHẬP CÂU LẠC BỘ FTC
-              </span>
-            </h1>
-            
-            {/* Mobile Responsive Subtitle */}
-            <p className="text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl text-muted-foreground leading-relaxed max-w-4xl mx-auto italic px-4">
+      {/* Call to Action Section */}
+      <section className="py-16 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-4xl mx-auto text-center">
+          <div className="space-y-8">
+            <p className="text-lg sm:text-xl text-white/80 leading-relaxed italic">
               Tụi mình đang tìm kiếm những người bạn đam mê công nghệ và tài chính, 
               sẵn sàng học hỏi và phát triển cùng FTC.
             </p>
-
-            {/* Call to Action Section */}
-            <div className="mt-12 space-y-8">
-              {status === "OPEN" ? (
-                <>
-                  <a 
-                    href={RECRUITMENT_CONFIG.formUrl}
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    className="inline-block group"
-                  >
-                    <div className="relative">
-                      <div className="absolute -inset-1 bg-gradient-to-r from-primary to-accent rounded-lg blur-lg opacity-70 group-hover:opacity-100 transition duration-1000 group-hover:duration-200"></div>
-                      <Button 
-                        size="lg" 
-                        className="relative px-8 py-6 text-lg bg-background hover:bg-background/90 border-0 shadow-xl"
-                      >
-                        <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent font-semibold">
-                          Nộp đơn ngay
-                        </span>
-                      </Button>
-                    </div>
-                  </a>
-                  <ApplicationDeadlineCheck recruitmentStatus={status} />
-                </>
-              ) : (
+            
+            {status === "OPEN" ? (
+              <>
+                <a 
+                  href={RECRUITMENT_CONFIG.formUrl}
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="inline-block group"
+                >
+                  <div className="relative">
+                    <div className="absolute -inset-1 bg-gradient-to-r from-primary to-accent rounded-lg blur-lg opacity-70 group-hover:opacity-100 transition duration-1000 group-hover:duration-200"></div>
+                    <Button 
+                      size="lg" 
+                      className="relative px-8 py-6 text-lg bg-background hover:bg-background/90 border-0 shadow-xl"
+                    >
+                      <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent font-semibold">
+                        Nộp đơn ngay
+                      </span>
+                    </Button>
+                  </div>
+                </a>
                 <ApplicationDeadlineCheck recruitmentStatus={status} />
-              )}
-            </div>
+              </>
+            ) : (
+              <ApplicationDeadlineCheck recruitmentStatus={status} />
+            )}
           </div>
         </div>
       </section>
