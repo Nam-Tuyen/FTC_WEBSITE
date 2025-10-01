@@ -1,54 +1,138 @@
+"use client"
+
 import { Navigation } from "@/components/navigation"
 import { Button } from "@/components/ui/Button"
 import { Card, CardContent } from "@/components/ui/card"
-import { ArrowRight, Users2, Code, Database, Shield, Zap, Brain, Rocket, Globe } from "lucide-react"
+import { Input } from "@/components/ui/Input"
+import { 
+  ArrowRight, 
+  Users, 
+  Database, 
+  Zap, 
+  Brain, 
+  Rocket, 
+  Globe, 
+  Star, 
+  TrendingUp, 
+  Play, 
+  CheckCircle, 
+  Calendar, 
+  MapPin, 
+  Mail, 
+  Phone, 
+  Linkedin, 
+  Twitter, 
+  Instagram, 
+  Youtube 
+} from "lucide-react"
 import Link from "next/link"
+import { useState, useEffect } from "react"
 
 export default function HomePage() {
+  const [isVisible, setIsVisible] = useState(false)
+  const [counters, setCounters] = useState({ members: 0, projects: 0, partners: 0, events: 0 })
+
+  useEffect(() => {
+    setIsVisible(true)
+    
+    // Animate counters
+    const animateCounter = (key: keyof typeof counters, target: number) => {
+      let current = 0
+      const increment = target / 50
+      const timer = setInterval(() => {
+        current += increment
+        if (current >= target) {
+          current = target
+          clearInterval(timer)
+        }
+        setCounters((prev: any) => ({ ...prev, [key]: Math.floor(current) }))
+      }, 30)
+    }
+
+    setTimeout(() => {
+      animateCounter('members', 100)
+      animateCounter('projects', 10)
+      animateCounter('partners', 50)
+      animateCounter('events', 100)
+    }, 1000)
+  }, [])
+
   return (
     <div className="min-h-screen gradient-bg">
       <Navigation />
 
-      {/* Hero Section */}
-      <section className="relative py-32 px-4 sm:px-6 lg:px-8 overflow-hidden">
-        {/* Animated background elements */}
+      {/* Hero Section - Modern with Video Background Effect */}
+      <section className="relative min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8 overflow-hidden">
+        {/* Advanced Background Effects */}
         <div className="absolute inset-0">
-          <div className="absolute top-20 left-10 w-72 h-72 bg-accent/10 rounded-full blur-3xl animate-pulse"></div>
-          <div className="absolute bottom-20 right-10 w-96 h-96 bg-secondary/10 rounded-full blur-3xl animate-pulse delay-1000"></div>
-          <div
-            className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] border border-accent/20 rounded-full animate-spin"
-            style={{ animationDuration: "20s" }}
-          ></div>
-          <div
-            className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] border border-accent/10 rounded-full animate-spin"
-            style={{ animationDuration: "15s", animationDirection: "reverse" }}
-          ></div>
+          {/* Gradient Mesh Background */}
+          <div className="absolute inset-0 bg-gradient-to-br from-background via-background/95 to-background/90"></div>
+          
+          {/* Animated Grid Pattern */}
+          <div className="absolute inset-0 opacity-20">
+            <div className="absolute inset-0" style={{
+              backgroundImage: `radial-gradient(circle at 1px 1px, rgba(0,191,255,0.3) 1px, transparent 0)`,
+              backgroundSize: '50px 50px',
+              animation: 'gridMove 20s linear infinite'
+            }}></div>
+          </div>
+          
+          {/* Floating Geometric Shapes */}
+          <div className="absolute top-20 left-10 w-32 h-32 bg-accent/20 rounded-full blur-xl animate-float"></div>
+          <div className="absolute top-40 right-20 w-24 h-24 bg-secondary/20 rounded-full blur-xl animate-float delay-1000"></div>
+          <div className="absolute bottom-32 left-1/4 w-40 h-40 bg-accent/15 rounded-full blur-xl animate-float delay-2000"></div>
+          <div className="absolute bottom-20 right-1/3 w-28 h-28 bg-secondary/15 rounded-full blur-xl animate-float delay-3000"></div>
+          
+          {/* Rotating Rings */}
+          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+            <div className="w-[600px] h-[600px] border border-accent/10 rounded-full animate-spin" style={{ animationDuration: "30s" }}></div>
+            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] border border-accent/20 rounded-full animate-spin" style={{ animationDuration: "20s", animationDirection: "reverse" }}></div>
+            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[200px] h-[200px] border border-accent/30 rounded-full animate-spin" style={{ animationDuration: "10s" }}></div>
+          </div>
         </div>
 
-        <div className="max-w-7xl mx-auto relative z-10">
-          <div className="text-center">
-            <div className="inline-flex items-center px-6 py-3 rounded-full bg-accent/20 border border-accent/40 mb-8 glow">
-              <Zap className="h-5 w-5 text-accent mr-3 animate-pulse" />
-              <span className="text-sm font-bold text-accent uppercase tracking-wider">BẠN ĐÃ SẴN SÀNG CHƯA?</span>
+        <div className="max-w-7xl mx-auto relative z-10 text-center">
+          <div className={`transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+            {/* Badge */}
+            <div className="inline-flex items-center px-8 py-4 rounded-full bg-gradient-to-r from-accent/20 to-secondary/20 border border-accent/40 mb-8 glow hover:scale-105 transition-transform duration-300">
+              <Zap className="h-6 w-6 text-accent mr-3 animate-pulse" />
+              <span className="text-sm font-bold text-accent uppercase tracking-wider">TƯƠNG LAI CỦA FINTECH</span>
             </div>
 
-            <h1 className="font-heading font-black text-5xl sm:text-6xl text-foreground mb-8 text-balance text-glow lg:text-7xl tracking-wide leading-tight">
-              CÂU LẠC BỘ <br />
-              <span className="bg-gradient-to-r from-accent via-secondary to-accent bg-clip-text text-transparent animate-pulse">
+            {/* Main Heading */}
+            <h1 className="font-heading font-black text-6xl sm:text-7xl lg:text-8xl text-foreground mb-8 text-balance text-glow leading-tight">
+              <span className="block">CÂU LẠC BỘ</span>
+              <span className="block bg-gradient-to-r from-accent via-white to-secondary bg-clip-text text-transparent animate-gradient-x">
                 CÔNG NGHỆ TÀI CHÍNH
               </span>
             </h1>
-            <p className="text-xl sm:text-2xl text-foreground/80 mb-12 max-w-4xl mx-auto text-pretty font-medium leading-relaxed">
+            
+            {/* Subtitle */}
+            <p className="text-2xl sm:text-3xl text-foreground/90 mb-12 max-w-5xl mx-auto text-pretty font-medium leading-relaxed">
               Nơi kết nối những người đam mê công nghệ tài chính, học hỏi kiến thức mới và phát triển sự nghiệp trong lĩnh vực Fintech
             </p>
-            <div className="flex flex-col sm:flex-row gap-6 justify-center">
+            
+            {/* CTA Buttons */}
+            <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
               <Button
                 asChild
                 size="lg"
-                className="btn-futuristic text-lg px-10 py-4 font-bold shadow-2xl hover:shadow-accent/50 transition-all duration-300"
+                className="btn-futuristic text-xl px-12 py-6 font-bold shadow-2xl hover:shadow-accent/50 transition-all duration-300 group"
               >
-                <Link href="/thong-tin">
-                  THÔNG TIN VỀ CÂU LẠC BỘ <ArrowRight className="ml-3 h-6 w-6" />
+                <Link href="/thong-tin" className="flex items-center">
+                  KHÁM PHÁ NGAY <ArrowRight className="ml-3 h-6 w-6 group-hover:translate-x-1 transition-transform" />
+                </Link>
+              </Button>
+              
+              <Button
+                asChild
+                variant="outline"
+                size="lg"
+                className="text-xl px-12 py-6 font-bold border-2 border-accent/50 text-accent hover:bg-accent/10 transition-all duration-300 group"
+              >
+                <Link href="/dien-dan" className="flex items-center">
+                  <Play className="mr-3 h-6 w-6 group-hover:scale-110 transition-transform" />
+                  XEM DIỄN ĐÀN
                 </Link>
               </Button>
             </div>
@@ -56,28 +140,51 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Tech Stats Section */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8 relative">
-        <div className="absolute inset-0 bg-card/10 backdrop-blur-sm"></div>
+      {/* Tech Stats Section - Enhanced with Animated Counters */}
+      <section className="py-24 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-r from-card/5 via-card/10 to-card/5 backdrop-blur-sm"></div>
+        <div className="absolute inset-0">
+          <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-accent/50 to-transparent"></div>
+          <div className="absolute bottom-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-accent/50 to-transparent"></div>
+        </div>
+        
         <div className="max-w-7xl mx-auto relative z-10">
+          <div className="text-center mb-16">
+            <div className="inline-flex items-center px-6 py-3 rounded-full bg-accent/10 border border-accent/30 mb-6">
+              <TrendingUp className="h-5 w-5 text-accent mr-2" />
+              <span className="text-sm font-bold text-accent uppercase tracking-wider">Thành tựu nổi bật</span>
+            </div>
+            <h2 className="font-heading font-black text-4xl sm:text-5xl text-foreground mb-4 text-glow">
+              SỐ LIỆU ẤN TƯỢNG
+            </h2>
+            <p className="text-xl text-foreground/70 max-w-2xl mx-auto font-medium">
+              Những con số biết nói về sự phát triển và tác động của câu lạc bộ
+            </p>
+          </div>
+
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
             {[
-              { number: "100+", label: "THÀNH VIÊN", icon: Users2 },
-              { number: "+10", label: "DỰ ÁN", icon: Rocket },
-              { number: "50+", label: "ĐỐI TÁC", icon: Globe },
-              { number: "100+", label: "SỰ KIỆN", icon: Zap },
+              { key: 'members', number: counters.members, suffix: '+', label: "THÀNH VIÊN", icon: Users, color: "from-accent to-cyan-400" },
+              { key: 'projects', number: counters.projects, suffix: '+', label: "DỰ ÁN", icon: Rocket, color: "from-secondary to-purple-400" },
+              { key: 'partners', number: counters.partners, suffix: '+', label: "ĐỐI TÁC", icon: Globe, color: "from-accent to-blue-400" },
+              { key: 'events', number: counters.events, suffix: '+', label: "SỰ KIỆN", icon: Zap, color: "from-secondary to-pink-400" },
             ].map((stat, index) => {
               const IconComponent = stat.icon
               return (
-                <div key={index} className="text-center group">
-                  <div className="relative mb-4">
-                    <div className="w-20 h-20 mx-auto bg-gradient-to-br from-accent/20 to-secondary/20 rounded-2xl flex items-center justify-center glow group-hover:scale-110 transition-all duration-300">
-                      <IconComponent className="h-10 w-10 text-accent" />
+                <div key={index} className="text-center group relative">
+                  <div className="relative mb-6">
+                    <div className={`w-24 h-24 mx-auto bg-gradient-to-br ${stat.color} rounded-3xl flex items-center justify-center glow group-hover:scale-110 transition-all duration-500 shadow-2xl`}>
+                      <IconComponent className="h-12 w-12 text-white" />
                     </div>
-                    <div className="absolute inset-0 w-20 h-20 mx-auto border-2 border-accent/30 rounded-2xl animate-pulse"></div>
+                    <div className={`absolute inset-0 w-24 h-24 mx-auto border-2 border-gradient-to-r ${stat.color} rounded-3xl animate-pulse`}></div>
+                    <div className="absolute -top-2 -right-2 w-6 h-6 bg-accent rounded-full animate-ping"></div>
                   </div>
-                  <div className="text-4xl font-black text-accent mb-2 text-glow">{stat.number}</div>
-                  <div className="text-sm font-bold text-foreground/80 uppercase tracking-widest">{stat.label}</div>
+                  <div className="text-5xl font-black text-accent mb-3 text-glow group-hover:scale-110 transition-transform duration-300">
+                    {stat.number}{stat.suffix}
+                  </div>
+                  <div className="text-sm font-bold text-foreground/80 uppercase tracking-widest group-hover:text-accent transition-colors duration-300">
+                    {stat.label}
+                  </div>
                 </div>
               )
             })}
@@ -85,18 +192,26 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Features Section */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8 relative">
+      {/* Features Section - Enhanced with Modern Cards */}
+      <section className="py-24 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
+        <div className="absolute inset-0">
+          <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-accent/30 to-transparent"></div>
+          <div className="absolute bottom-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-accent/30 to-transparent"></div>
+        </div>
+        
         <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16">
-            <div className="inline-flex items-center px-4 py-2 rounded-full bg-accent/10 border border-accent/30 mb-6">
-              <Brain className="h-4 w-4 text-accent mr-2" />
+          <div className="text-center mb-20">
+            <div className="inline-flex items-center px-6 py-3 rounded-full bg-accent/10 border border-accent/30 mb-6">
+              <Brain className="h-5 w-5 text-accent mr-2" />
               <span className="text-sm font-bold text-accent uppercase tracking-wider">Lợi ích khi tham gia</span>
             </div>
-            <h2 className="font-heading font-black text-4xl sm:text-5xl lg:text-6xl text-foreground mb-6 text-glow leading-tight">
-              TẠI SAO CHỌN CÂU LẠC BỘ<br />CÔNG NGHỆ TÀI CHÍNH?
+            <h2 className="font-heading font-black text-5xl sm:text-6xl lg:text-7xl text-foreground mb-6 text-glow leading-tight">
+              TẠI SAO CHỌN<br />
+              <span className="bg-gradient-to-r from-accent via-white to-secondary bg-clip-text text-transparent">
+                CÂU LẠC BỘ FINTECH?
+              </span>
             </h2>
-            <p className="text-xl text-foreground/70 max-w-3xl mx-auto font-medium leading-relaxed">
+            <p className="text-xl text-foreground/70 max-w-4xl mx-auto font-medium leading-relaxed">
               Câu lạc bộ mang đến môi trường gần gũi, đầy đủ công cụ hữu ích và nhiều cơ hội mới để bạn học hỏi, trải nghiệm và phát triển.
             </p>
           </div>
@@ -107,50 +222,66 @@ export default function HomePage() {
                 icon: Brain,
                 title: "HỌC & HƯỚNG DẪN",
                 description: "Chuỗi hội thảo, chuyên đề, lớp bồi dưỡng về công nghệ tài chính, trí tuệ nhân tạo trong tài chính, giao dịch theo thuật toán, chuỗi khối, tài chính cá nhân.",
-                gradient: "from-accent/20 to-secondary/20",
+                gradient: "from-accent/30 to-cyan-400/30",
+                iconColor: "from-accent to-cyan-400",
+                features: ["AI & Machine Learning", "Blockchain Technology", "Algorithmic Trading", "Personal Finance"]
               },
               {
                 icon: Database,
                 title: "DỰ ÁN THỰC TẾ",
                 description: "Thực hành trên dữ liệu và thị trường thực tế, rèn kỷ luật quản trị rủi ro, tư duy sản phẩm và cải tiến mô hình.",
-                gradient: "from-accent/20 to-secondary/20",
+                gradient: "from-secondary/30 to-purple-400/30",
+                iconColor: "from-secondary to-purple-400",
+                features: ["Real Market Data", "Risk Management", "Product Thinking", "Model Improvement"]
               },
               {
                 icon: Rocket,
-                title: "NGHỀ NGHIỆP & HỒ SƠ THÀNH TÍCH",
+                title: "NGHỀ NGHIỆP & HỒ SƠ",
                 description: "Tham quan doanh nghiệp, ngày hội việc làm, thực tập và xây dựng hồ sơ học thuật. Giúp tăng năng lực ứng tuyển và kết nối với đơn vị tuyển dụng.",
-                gradient: "from-accent/20 to-secondary/20",
+                gradient: "from-accent/30 to-blue-400/30",
+                iconColor: "from-accent to-blue-400",
+                features: ["Company Visits", "Job Fairs", "Internships", "Academic Portfolio"]
               },
               {
-                icon: Users2,
+                icon: Users,
                 title: "KỸ NĂNG & CỘNG ĐỒNG",
                 description: "Phát triển giao tiếp, làm việc nhóm, quản lý dự án, sáng tạo nội dung và truyền thông. Môi trường cởi mở, gắn kết, chia sẻ và hỗ trợ lẫn nhau.",
-                gradient: "from-accent/20 to-secondary/20",
+                gradient: "from-secondary/30 to-pink-400/30",
+                iconColor: "from-secondary to-pink-400",
+                features: ["Communication", "Teamwork", "Project Management", "Content Creation"]
               },
             ].map((feature, index) => {
               const IconComponent = feature.icon
               return (
                 <Card
                   key={index}
-                  className="relative group bg-card/20 backdrop-blur-sm border-accent/20 hover:border-accent/40 transition-all duration-500 hover:glow overflow-hidden"
+                  className="relative group bg-card/10 backdrop-blur-sm border-accent/20 hover:border-accent/50 transition-all duration-700 hover:glow overflow-hidden h-full"
                 >
-                  <div
-                    className="absolute inset-0 bg-gradient-to-br opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                    style={{
-                      background: `linear-gradient(135deg, ${feature.gradient.replace("from-", "").replace("to-", ", ")})`,
-                    }}
-                  ></div>
-                  <CardContent className="relative z-10 p-8 text-center">
+                  <div className={`absolute inset-0 bg-gradient-to-br ${feature.gradient} opacity-0 group-hover:opacity-100 transition-opacity duration-700`}></div>
+                  <CardContent className="relative z-10 p-8 h-full flex flex-col">
                     <div className="relative mb-6">
-                      <div className={`w-20 h-20 mx-auto bg-gradient-to-br ${feature.gradient} rounded-2xl flex items-center justify-center glow group-hover:scale-110 transition-all duration-300`}>
-                        <IconComponent className="h-10 w-10 text-accent" />
+                      <div className={`w-24 h-24 mx-auto bg-gradient-to-br ${feature.iconColor} rounded-3xl flex items-center justify-center glow group-hover:scale-110 transition-all duration-500 shadow-2xl`}>
+                        <IconComponent className="h-12 w-12 text-white" />
                       </div>
-                      <div className="absolute inset-0 w-20 h-20 mx-auto border-2 border-accent/30 rounded-2xl animate-pulse"></div>
+                      <div className="absolute inset-0 w-24 h-24 mx-auto border-2 border-accent/30 rounded-3xl animate-pulse"></div>
                     </div>
-                    <h3 className="font-heading font-bold text-xl mb-4 text-foreground uppercase tracking-wide">
+                    
+                    <h3 className="font-heading font-bold text-xl mb-4 text-foreground uppercase tracking-wide group-hover:text-accent transition-colors duration-300">
                       {feature.title}
                     </h3>
-                    <p className="text-foreground/70 font-medium leading-relaxed">{feature.description}</p>
+                    
+                    <p className="text-foreground/70 font-medium leading-relaxed mb-6 flex-grow">
+                      {feature.description}
+                    </p>
+                    
+                    <div className="space-y-2">
+                      {feature.features.map((item, idx) => (
+                        <div key={idx} className="flex items-center text-sm text-foreground/60 group-hover:text-accent/80 transition-colors duration-300">
+                          <CheckCircle className="h-4 w-4 mr-2 text-accent" />
+                          <span>{item}</span>
+                        </div>
+                      ))}
+                    </div>
                   </CardContent>
                 </Card>
               )
@@ -159,46 +290,281 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* CTA Section */}
+      {/* Testimonials Section */}
+      <section className="py-24 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-br from-card/5 via-card/10 to-card/5"></div>
+        <div className="max-w-7xl mx-auto relative z-10">
+          <div className="text-center mb-16">
+            <div className="inline-flex items-center px-6 py-3 rounded-full bg-accent/10 border border-accent/30 mb-6">
+              <Star className="h-5 w-5 text-accent mr-2" />
+              <span className="text-sm font-bold text-accent uppercase tracking-wider">Cảm nhận từ thành viên</span>
+            </div>
+            <h2 className="font-heading font-black text-4xl sm:text-5xl text-foreground mb-4 text-glow">
+              THÀNH VIÊN NÓI GÌ VỀ FTC?
+            </h2>
+            <p className="text-xl text-foreground/70 max-w-2xl mx-auto font-medium">
+              Những chia sẻ chân thực từ các thành viên đã và đang tham gia câu lạc bộ
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {[
+              {
+                name: "Nguyễn Văn A",
+                role: "Sinh viên năm 3 - Khoa Công nghệ thông tin",
+                content: "FTC đã giúp tôi hiểu sâu hơn về fintech và có cơ hội thực hành với dữ liệu thực tế. Cộng đồng rất hỗ trợ và nhiệt tình!",
+                rating: 5
+              },
+              {
+                name: "Trần Thị B",
+                role: "Sinh viên năm 2 - Khoa Tài chính",
+                content: "Tham gia FTC, tôi đã học được nhiều kỹ năng mới về blockchain và AI trong tài chính. Các workshop rất bổ ích!",
+                rating: 5
+              },
+              {
+                name: "Lê Văn C",
+                role: "Cựu sinh viên - Software Engineer",
+                content: "FTC đã mở ra cho tôi nhiều cơ hội nghề nghiệp trong lĩnh vực fintech. Tôi rất biết ơn câu lạc bộ!",
+                rating: 5
+              }
+            ].map((testimonial, index) => (
+              <Card key={index} className="relative group bg-card/20 backdrop-blur-sm border-accent/20 hover:border-accent/40 transition-all duration-500 hover:glow">
+                <CardContent className="p-8">
+                  <div className="flex items-center mb-4">
+                    {[...Array(testimonial.rating)].map((_, i) => (
+                      <Star key={i} className="h-5 w-5 text-accent fill-current" />
+                    ))}
+                  </div>
+                  <p className="text-foreground/80 font-medium leading-relaxed mb-6 italic">
+                    "{testimonial.content}"
+                  </p>
+                  <div className="border-t border-accent/20 pt-4">
+                    <div className="font-bold text-foreground text-lg">{testimonial.name}</div>
+                    <div className="text-foreground/60 text-sm">{testimonial.role}</div>
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Timeline Section */}
+      <section className="py-24 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-16">
+            <div className="inline-flex items-center px-6 py-3 rounded-full bg-accent/10 border border-accent/30 mb-6">
+              <Calendar className="h-5 w-5 text-accent mr-2" />
+              <span className="text-sm font-bold text-accent uppercase tracking-wider">Hành trình phát triển</span>
+            </div>
+            <h2 className="font-heading font-black text-4xl sm:text-5xl text-foreground mb-4 text-glow">
+              LỊCH SỬ CÂU LẠC BỘ
+            </h2>
+            <p className="text-xl text-foreground/70 max-w-2xl mx-auto font-medium">
+              Những cột mốc quan trọng trong quá trình phát triển của FTC
+            </p>
+          </div>
+
+          <div className="relative">
+            <div className="absolute left-1/2 transform -translate-x-1/2 w-1 h-full bg-gradient-to-b from-accent via-secondary to-accent"></div>
+            
+            {[
+              { year: "2020", title: "Thành lập câu lạc bộ", description: "FTC được thành lập với mục tiêu kết nối sinh viên đam mê fintech" },
+              { year: "2021", title: "Mở rộng hoạt động", description: "Tổ chức workshop đầu tiên và thu hút 50+ thành viên" },
+              { year: "2022", title: "Dự án thực tế", description: "Bắt đầu triển khai các dự án fintech với đối tác doanh nghiệp" },
+              { year: "2023", title: "Phát triển mạnh mẽ", description: "Đạt 100+ thành viên và tổ chức 20+ sự kiện" },
+              { year: "2024", title: "Tương lai", description: "Mở rộng quy mô và phát triển nền tảng số" }
+            ].map((milestone, index) => (
+              <div key={index} className={`relative flex items-center mb-12 ${index % 2 === 0 ? 'flex-row' : 'flex-row-reverse'}`}>
+                <div className="w-1/2 px-8">
+                  <div className={`bg-card/20 backdrop-blur-sm border border-accent/20 rounded-2xl p-6 hover:glow transition-all duration-300 ${index % 2 === 0 ? 'text-right' : 'text-left'}`}>
+                    <div className="text-2xl font-black text-accent mb-2">{milestone.year}</div>
+                    <div className="text-xl font-bold text-foreground mb-2">{milestone.title}</div>
+                    <div className="text-foreground/70">{milestone.description}</div>
+                  </div>
+                </div>
+                <div className="absolute left-1/2 transform -translate-x-1/2 w-6 h-6 bg-accent rounded-full border-4 border-background glow"></div>
+                <div className="w-1/2"></div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Newsletter Section */}
+      <section className="py-24 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-r from-accent/10 via-secondary/10 to-accent/10"></div>
+        <div className="max-w-4xl mx-auto text-center relative z-10">
+          <div className="inline-flex items-center px-6 py-3 rounded-full bg-accent/20 border border-accent/40 mb-8 glow">
+            <Mail className="h-5 w-5 text-accent mr-3" />
+            <span className="text-sm font-bold text-accent uppercase tracking-wider">Đăng ký nhận tin</span>
+          </div>
+          <h2 className="font-heading font-black text-4xl sm:text-5xl text-foreground mb-6 text-glow">
+            CẬP NHẬT TIN TỨC MỚI NHẤT
+          </h2>
+          <p className="text-xl text-foreground/80 mb-12 font-medium leading-relaxed max-w-2xl mx-auto">
+            Nhận thông báo về các sự kiện, workshop và cơ hội mới từ FTC
+          </p>
+          
+          <div className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
+            <Input 
+              type="email" 
+              placeholder="Nhập email của bạn" 
+              className="flex-1 bg-card/20 border-accent/30 text-foreground placeholder:text-foreground/50 focus:border-accent/50"
+            />
+            <Button className="btn-futuristic px-8 py-3 font-bold">
+              ĐĂNG KÝ
+            </Button>
+          </div>
+        </div>
+      </section>
+
+      {/* CTA Section - Enhanced */}
       <section className="py-24 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
         <div className="absolute inset-0">
           <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-r from-accent/20 via-transparent to-secondary/20"></div>
           <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[1000px] h-[1000px] border border-accent/10 rounded-full animate-pulse"></div>
+          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] border border-accent/5 rounded-full animate-pulse delay-1000"></div>
         </div>
         <div className="max-w-4xl mx-auto text-center relative z-10">
-          <div className="inline-flex items-center px-6 py-3 rounded-full bg-accent/20 border border-accent/40 mb-8 glow">
-            <Rocket className="h-5 w-5 text-accent mr-3" />
+          <div className="inline-flex items-center px-8 py-4 rounded-full bg-accent/20 border border-accent/40 mb-8 glow hover:scale-105 transition-transform duration-300">
+            <Rocket className="h-6 w-6 text-accent mr-3" />
             <span className="text-sm font-bold text-accent uppercase tracking-wider">Tham gia câu lạc bộ</span>
           </div>
-          <h2 className="font-heading font-black text-4xl sm:text-5xl text-foreground mb-6 text-glow">
-            THAM GIA ĐỂ TRỞ THÀNH FTCER  
+          <h2 className="font-heading font-black text-5xl sm:text-6xl text-foreground mb-6 text-glow leading-tight">
+            THAM GIA ĐỂ TRỞ THÀNH<br />
+            <span className="bg-gradient-to-r from-accent via-white to-secondary bg-clip-text text-transparent">
+              FTCER NGAY HÔM NAY
+            </span>
           </h2>
-          <p className="text-xl text-foreground/80 mb-12 font-medium leading-relaxed max-w-2xl mx-auto">
+          <p className="text-xl text-foreground/80 mb-12 font-medium leading-relaxed max-w-3xl mx-auto">
             Đăng ký ngay hôm nay để cùng FTC khám phá bản thân, học điều mới, tham gia hoạt động thực tế và kết nối với cộng đồng FINTECH.
           </p>
-          <Button
-            asChild
-            size="lg"
-            className="btn-futuristic text-xl px-12 py-6 font-bold shadow-2xl hover:shadow-accent/50 transition-all duration-300"
-          >
-            <Link href="/ung-tuyen">
-              BẮT ĐẦU NGAY HÔM NAY <ArrowRight className="ml-3 h-6 w-6" />
-            </Link>
-          </Button>
+          <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
+            <Button
+              asChild
+              size="lg"
+              className="btn-futuristic text-xl px-12 py-6 font-bold shadow-2xl hover:shadow-accent/50 transition-all duration-300 group"
+            >
+              <Link href="/ung-tuyen" className="flex items-center">
+                BẮT ĐẦU NGAY HÔM NAY <ArrowRight className="ml-3 h-6 w-6 group-hover:translate-x-1 transition-transform" />
+              </Link>
+            </Button>
+            
+            <Button
+              asChild
+              variant="outline"
+              size="lg"
+              className="text-xl px-12 py-6 font-bold border-2 border-accent/50 text-accent hover:bg-accent/10 transition-all duration-300 group"
+            >
+              <Link href="/dien-dan" className="flex items-center">
+                <Users className="mr-3 h-6 w-6 group-hover:scale-110 transition-transform" />
+                THAM GIA DIỄN ĐÀN
+              </Link>
+            </Button>
+          </div>
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="bg-card/10 backdrop-blur-sm border-t border-accent/20 py-16 px-4 sm:px-6 lg:px-8">
+      {/* Footer - Enhanced */}
+      <footer className="bg-card/10 backdrop-blur-sm border-t border-accent/20 py-20 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
-          <div className="border-t border-border mt-8 pt-8 text-center">
-            <p className="text-muted-foreground font-medium">
-              <em>©2025. Câu lạc bộ Công nghệ tài chính</em>
-            </p>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
+            {/* Company Info */}
+            <div className="space-y-6">
+              <div>
+                <h3 className="font-heading font-bold text-2xl text-foreground mb-4 text-glow">
+                  FTC
+                </h3>
+                <p className="text-foreground/70 font-medium leading-relaxed">
+                  Câu lạc bộ Công nghệ Tài chính - Nơi kết nối những người đam mê fintech
+                </p>
+              </div>
+              <div className="flex space-x-4">
+                <Button variant="outline" size="sm" className="border-accent/30 text-accent hover:bg-accent/10">
+                  <Linkedin className="h-4 w-4" />
+                </Button>
+                <Button variant="outline" size="sm" className="border-accent/30 text-accent hover:bg-accent/10">
+                  <Twitter className="h-4 w-4" />
+                </Button>
+                <Button variant="outline" size="sm" className="border-accent/30 text-accent hover:bg-accent/10">
+                  <Instagram className="h-4 w-4" />
+                </Button>
+                <Button variant="outline" size="sm" className="border-accent/30 text-accent hover:bg-accent/10">
+                  <Youtube className="h-4 w-4" />
+                </Button>
+              </div>
+            </div>
+
+            {/* Quick Links */}
+            <div className="space-y-6">
+              <h4 className="font-bold text-lg text-foreground uppercase tracking-wide">Liên kết nhanh</h4>
+              <div className="space-y-3">
+                <Link href="/thong-tin" className="block text-foreground/70 hover:text-accent transition-colors duration-300">
+                  Thông tin câu lạc bộ
+                </Link>
+                <Link href="/dien-dan" className="block text-foreground/70 hover:text-accent transition-colors duration-300">
+                  Diễn đàn
+                </Link>
+                <Link href="/chatbot" className="block text-foreground/70 hover:text-accent transition-colors duration-300">
+                  AI Chatbot
+                </Link>
+                <Link href="/ung-tuyen" className="block text-foreground/70 hover:text-accent transition-colors duration-300">
+                  Đăng ký tham gia
+                </Link>
+              </div>
+            </div>
+
+            {/* Activities */}
+            <div className="space-y-6">
+              <h4 className="font-bold text-lg text-foreground uppercase tracking-wide">Hoạt động</h4>
+              <div className="space-y-3">
+                <div className="text-foreground/70">Workshop & Hội thảo</div>
+                <div className="text-foreground/70">Dự án thực tế</div>
+                <div className="text-foreground/70">Tham quan doanh nghiệp</div>
+                <div className="text-foreground/70">Ngày hội việc làm</div>
+              </div>
+            </div>
+
+            {/* Contact Info */}
+            <div className="space-y-6">
+              <h4 className="font-bold text-lg text-foreground uppercase tracking-wide">Liên hệ</h4>
+              <div className="space-y-4">
+                <div className="flex items-center text-foreground/70">
+                  <Mail className="h-5 w-5 text-accent mr-3" />
+                  <span>ftc@university.edu.vn</span>
+                </div>
+                <div className="flex items-center text-foreground/70">
+                  <Phone className="h-5 w-5 text-accent mr-3" />
+                  <span>+84 123 456 789</span>
+                </div>
+                <div className="flex items-center text-foreground/70">
+                  <MapPin className="h-5 w-5 text-accent mr-3" />
+                  <span>Trường Đại học ABC</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="border-t border-accent/20 pt-8">
+            <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
+              <p className="text-foreground/60 font-medium">
+                ©2025. Câu lạc bộ Công nghệ Tài chính. Tất cả quyền được bảo lưu.
+              </p>
+              <div className="flex space-x-6 text-sm">
+                <Link href="/privacy" className="text-foreground/60 hover:text-accent transition-colors duration-300">
+                  Chính sách bảo mật
+                </Link>
+                <Link href="/terms" className="text-foreground/60 hover:text-accent transition-colors duration-300">
+                  Điều khoản sử dụng
+                </Link>
+              </div>
+            </div>
           </div>
         </div>
       </footer>
     </div>
   )
 }
+
 
