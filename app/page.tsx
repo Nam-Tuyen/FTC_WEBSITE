@@ -106,7 +106,7 @@ export default function HomePage() {
             </h1>
             
             {/* Subtitle */}
-            <p className="text-2xl sm:text-3xl text-foreground/90 mb-12 max-w-5xl mx-auto text-pretty font-medium leading-relaxed">
+            <p className="text-2xl sm:text-3xl text-foreground/90 mb-12 max-w-5xl mx-auto text-pretty font-medium leading-relaxed italic">
               Nơi kết nối những người đam mê công nghệ tài chính, học hỏi kiến thức mới và phát triển sự nghiệp trong lĩnh vực Fintech
             </p>
             
@@ -155,7 +155,7 @@ export default function HomePage() {
             <h2 className="font-heading font-black text-4xl sm:text-5xl text-foreground mb-4 text-glow">
               SỐ LIỆU ẤN TƯỢNG
             </h2>
-            <p className="text-xl text-foreground/70 max-w-2xl mx-auto font-medium">
+            <p className="text-xl text-foreground/70 max-w-2xl mx-auto font-medium italic">
               Những con số biết nói về sự phát triển và tác động của câu lạc bộ
             </p>
           </div>
@@ -209,7 +209,7 @@ export default function HomePage() {
                 CÂU LẠC BỘ FINTECH?
               </span>
             </h2>
-            <p className="text-xl text-foreground/70 max-w-4xl mx-auto font-medium leading-relaxed">
+            <p className="text-xl text-foreground/70 max-w-4xl mx-auto font-medium leading-relaxed italic">
               Câu lạc bộ mang đến môi trường gần gũi, đầy đủ công cụ hữu ích và nhiều cơ hội mới để bạn học hỏi, trải nghiệm và phát triển.
             </p>
           </div>
@@ -300,7 +300,7 @@ export default function HomePage() {
             <h2 className="font-heading font-black text-4xl sm:text-5xl text-foreground mb-4 text-glow">
               THÀNH VIÊN NÓI GÌ VỀ FTC?
             </h2>
-            <p className="text-xl text-foreground/70 max-w-2xl mx-auto font-medium">
+            <p className="text-xl text-foreground/70 max-w-2xl mx-auto font-medium italic">
               Những chia sẻ chân thực từ các thành viên đã và đang tham gia câu lạc bộ
             </p>
           </div>
@@ -366,7 +366,7 @@ export default function HomePage() {
               FTCER NGAY HÔM NAY
             </span>
           </h2>
-          <p className="text-xl text-foreground/80 mb-12 font-medium leading-relaxed max-w-3xl mx-auto">
+          <p className="text-xl text-foreground/80 mb-12 font-medium leading-relaxed max-w-3xl mx-auto italic">
             Đăng ký ngay hôm nay để cùng FTC khám phá bản thân, học điều mới, tham gia hoạt động thực tế và kết nối với cộng đồng FINTECH.
           </p>
           <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
