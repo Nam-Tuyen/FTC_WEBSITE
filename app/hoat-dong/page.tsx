@@ -368,65 +368,103 @@ export default function ActivitiesPage() {
         </div>
       </section>
 
-       {/* Call to Action Section - Horizontal Layout */}
-       <section className="py-16 px-4 sm:px-6 lg:px-8">
-         <div className="max-w-7xl mx-auto">
-           {/* Main CTA Banner */}
-           <div className="relative bg-gradient-to-r from-purple-500/20 via-pink-500/20 to-orange-500/20 backdrop-blur-xl rounded-3xl border border-white/20 p-12 shadow-2xl overflow-hidden">
-             {/* Animated Background */}
-             <div className="absolute inset-0 bg-gradient-to-r from-purple-500/10 via-pink-500/10 to-orange-500/10 animate-pulse"></div>
-             <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-purple-400 via-pink-400 to-orange-400"></div>
-             
-             <div className="relative z-10 text-center">
-               <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-6">
-                 <span className="bg-gradient-to-r from-purple-400 via-pink-400 to-orange-400 bg-clip-text text-transparent">
-                   THAM GIA CÙNG FTC
-                 </span>
-               </h2>
-               <p className="text-xl sm:text-2xl text-white/80 mb-8 leading-relaxed italic max-w-4xl mx-auto">
-                 Khám phá thêm về cơ cấu tổ chức, thành tích nổi bật và cộng đồng diễn đàn
-               </p>
-               
-               {/* Navigation Links - Horizontal */}
-               <div className="flex flex-wrap justify-center gap-4 sm:gap-6">
-                 <a 
-                   href="/co-cau"
-                   className="group flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-emerald-500 to-teal-600 rounded-2xl text-white font-bold hover:shadow-xl hover:scale-105 transition-all duration-300 hover:shadow-emerald-500/25"
-                 >
-                   <Users className="w-6 h-6 group-hover:rotate-12 transition-transform duration-300" />
-                   <span>Cơ cấu</span>
-                   <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" />
-                 </a>
-                 
-                 <a 
-                   href="/thanh-tich"
-                   className="group flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-yellow-500 to-amber-600 rounded-2xl text-white font-bold hover:shadow-xl hover:scale-105 transition-all duration-300 hover:shadow-yellow-500/25"
-                 >
-                   <Trophy className="w-6 h-6 group-hover:rotate-12 transition-transform duration-300" />
-                   <span>Thành tích</span>
-                   <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" />
-                 </a>
-                 
-                 <a 
-                   href="/dien-dan"
-                   className="group flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-orange-500 to-red-600 rounded-2xl text-white font-bold hover:shadow-xl hover:scale-105 transition-all duration-300 hover:shadow-orange-500/25"
-                 >
-                   <MessageCircle className="w-6 h-6 group-hover:rotate-12 transition-transform duration-300" />
-                   <span>Diễn đàn</span>
-                   <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" />
-                 </a>
-               </div>
-               
-               {/* Decorative Elements */}
-               <div className="mt-8 flex justify-center items-center gap-2">
-                 <div className="w-2 h-2 bg-purple-400 rounded-full animate-pulse"></div>
-                 <div className="w-2 h-2 bg-pink-400 rounded-full animate-pulse" style={{animationDelay: '0.2s'}}></div>
-                 <div className="w-2 h-2 bg-orange-400 rounded-full animate-pulse" style={{animationDelay: '0.4s'}}></div>
-               </div>
-             </div>
-           </div>
-         </div>
-       </section>
+      {/* Call to Action Section - Split Layout */}
+      <section className="py-16 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            {/* Left Side - Main CTA */}
+            <div className="relative bg-gradient-to-br from-yellow-500/20 to-amber-500/20 backdrop-blur-xl rounded-3xl border border-yellow-400/30 p-10 shadow-2xl overflow-hidden">
+              <div className="absolute inset-0 bg-gradient-to-br from-yellow-500/10 to-amber-500/10 animate-pulse"></div>
+              <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-yellow-400 to-amber-400"></div>
+              
+              <div className="relative z-10">
+                <div className="flex items-center gap-4 mb-6">
+                  <div className="w-16 h-16 bg-gradient-to-r from-yellow-500 to-amber-600 rounded-2xl flex items-center justify-center shadow-xl">
+                    <Trophy className="w-8 h-8 text-white" />
+                  </div>
+                  <div>
+                    <h3 className="text-3xl font-bold text-white">THÀNH TÍCH NỔI BẬT</h3>
+                    <p className="text-yellow-200 text-lg">Những thành tựu đáng tự hào</p>
+                  </div>
+                </div>
+                
+                <p className="text-white/90 mb-8 leading-relaxed text-lg italic">
+                  Khám phá những thành tích và giải thưởng mà câu lạc bộ đã đạt được trong suốt quá trình phát triển
+                </p>
+                
+                <a 
+                  href="/thanh-tich"
+                  className="inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-yellow-500 to-amber-600 rounded-2xl text-white font-bold hover:shadow-xl hover:scale-105 transition-all duration-300 hover:shadow-yellow-500/25"
+                >
+                  <Trophy className="w-6 h-6" />
+                  <span>Xem chi tiết thành tích</span>
+                  <ArrowRight className="w-5 h-5" />
+                </a>
+              </div>
+            </div>
+
+            {/* Right Side - Secondary CTAs */}
+            <div className="space-y-6">
+              {/* Cơ cấu */}
+              <div className="group relative bg-gradient-to-r from-emerald-500/20 to-teal-500/20 backdrop-blur-xl rounded-2xl border border-emerald-400/30 p-6 shadow-xl hover:scale-105 transition-all duration-300 hover:shadow-emerald-500/20">
+                <div className="flex items-center gap-4">
+                  <div className="w-12 h-12 bg-gradient-to-r from-emerald-500 to-teal-600 rounded-xl flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
+                    <Users className="w-6 h-6 text-white" />
+                  </div>
+                  <div className="flex-1">
+                    <h4 className="text-xl font-bold text-white mb-2">Cơ cấu</h4>
+                    <p className="text-white/80 text-sm italic">Tổ chức và cấu trúc</p>
+                  </div>
+                  <a 
+                    href="/co-cau"
+                    className="px-4 py-2 bg-gradient-to-r from-emerald-500 to-teal-600 rounded-xl text-white font-semibold hover:shadow-lg transition-all duration-300"
+                  >
+                    Xem
+                  </a>
+                </div>
+              </div>
+
+              {/* Diễn đàn */}
+              <div className="group relative bg-gradient-to-r from-orange-500/20 to-red-500/20 backdrop-blur-xl rounded-2xl border border-orange-400/30 p-6 shadow-xl hover:scale-105 transition-all duration-300 hover:shadow-orange-500/20">
+                <div className="flex items-center gap-4">
+                  <div className="w-12 h-12 bg-gradient-to-r from-orange-500 to-red-600 rounded-xl flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
+                    <MessageCircle className="w-6 h-6 text-white" />
+                  </div>
+                  <div className="flex-1">
+                    <h4 className="text-xl font-bold text-white mb-2">Diễn đàn</h4>
+                    <p className="text-white/80 text-sm italic">Thảo luận và chia sẻ</p>
+                  </div>
+                  <a 
+                    href="/dien-dan"
+                    className="px-4 py-2 bg-gradient-to-r from-orange-500 to-red-600 rounded-xl text-white font-semibold hover:shadow-lg transition-all duration-300"
+                  >
+                    Xem
+                  </a>
+                </div>
+              </div>
+
+              {/* Chatbot */}
+              <div className="group relative bg-gradient-to-r from-blue-500/20 to-cyan-500/20 backdrop-blur-xl rounded-2xl border border-blue-400/30 p-6 shadow-xl hover:scale-105 transition-all duration-300 hover:shadow-blue-500/20">
+                <div className="flex items-center gap-4">
+                  <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-cyan-600 rounded-xl flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
+                    <BookOpen className="w-6 h-6 text-white" />
+                  </div>
+                  <div className="flex-1">
+                    <h4 className="text-xl font-bold text-white mb-2">Chatbot AI</h4>
+                    <p className="text-white/80 text-sm italic">Trợ lý thông minh 24/7</p>
+                  </div>
+                  <a 
+                    href="/chatbot"
+                    className="px-4 py-2 bg-gradient-to-r from-blue-500 to-cyan-600 rounded-xl text-white font-semibold hover:shadow-lg transition-all duration-300"
+                  >
+                    Xem
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
 
       <Footer />
 
