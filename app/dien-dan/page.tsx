@@ -1,232 +1,62 @@
-'use client'
+"use client"
 
-import React, { ChangeEvent, useEffect, useMemo, useState } from 'react'
-import { Navigation } from '@/components/navigation'
-import { 
-  MessageSquare, 
-  Search, 
-  Users, 
-  TrendingUp, 
-  Hash, 
-  Star, 
-  Clock, 
-  Heart, 
-  MessageCircle, 
-  Send, 
+import { useState, useEffect, useMemo, type ChangeEvent } from "react"
+import { useRouter } from "next/navigation"
+import Link from "next/link"
+import { Button } from "@/components/ui/Button"
+import { Input } from "@/components/ui/Input"
+import {
+  MessageSquare,
+  Search,
+  Users,
+  TrendingUp,
+  Hash,
+  Star,
+  Clock,
+  Heart,
+  MessageCircle,
   X,
-  Plus
-} from 'lucide-react'
-import { createQuestion, fetchQuestions, createResponse, toggleLike } from '../../googleSheetApi/sheet'
-import { CATEGORIES, STORAGE_KEYS, QuestionItem, Reply, ForumCategory } from './types'
-import { uuid, formatTime } from './utils/index'
-import { SimpleMobileSend } from './components/simple-mobile-send'
-import { QuestionCard } from './components/cards/question-card'
-import './components/mobile-optimizations.css'
-
-// Import UI components
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { Button } from '@/components/ui/Button'
-import { Input } from '@/components/ui/Input'
-import { Textarea } from '@/components/ui/Textarea'
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/Select'
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from '@/components/ui/dialog'
-
-
-
-
-// Ask Question Component - Twitter-style
-const AskQuestionCard = ({ onSubmit, defaultStudentId, onUpdateStudentId }: any) => {
-  const [title, setTitle] = useState('')
-  const [content, setContent] = useState('')
-  const [studentId, setStudentId] = useState(defaultStudentId || '')
-  const [category, setCategory] = useState<string>('DISCUSSION')
-  const [error, setError] = useState('')
-  const [mode, setMode] = useState<'anonymous' | 'mssv'>('anonymous')
-  const [showProfileModal, setShowProfileModal] = useState(false)
-  const [modalInput, setModalInput] = useState(defaultStudentId || '')
-
-  useEffect(() => {
-    if (mode === 'mssv' && !studentId && defaultStudentId) {
-      setStudentId(defaultStudentId)
-    }
-  }, [mode, defaultStudentId, studentId])
-
-  function validate() {
-    if (!title.trim() || !content.trim()) {
-      setError('Vui lòng nhập đầy đủ tiêu đề và nội dung')
-      return false
-    }
-    if (mode === 'mssv') {
-      const id = (studentId || defaultStudentId || '').trim()
-      if (!id) {
-        setModalInput(defaultStudentId || '')
-        setShowProfileModal(true)
-        return false
-      }
-      if (!/^K\d{9}$/.test(id)) {
-        setModalInput(id)
-        setShowProfileModal(true)
-        return false
-      }
-    }
-    setError('')
-    return true
-  }
-
-  const handlePostQuestion = () => {
-    if (!validate()) return
-    const sid = mode === 'mssv' ? (studentId || defaultStudentId).trim() : ''
-    onSubmit({ title: title.trim(), content: content.trim(), studentId: sid, category })
-    setTitle('')
-    setContent('')
-    setStudentId('')
-    setCategory('DISCUSSION')
-    setMode('anonymous')
-  }
-
-  return (
-    <div id="ask-question-form" className="p-6 border-b border-border/50">
-      <div className="flex gap-4">
-        <div className="flex-shrink-0">
-          <div className="w-12 h-12 rounded-full bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center text-foreground font-semibold border border-border/30">
-            {defaultStudentId ? defaultStudentId.charAt(0).toUpperCase() : '?'}
-          </div>
-        </div>
-        
-        <div className="flex-1 space-y-4">
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4">
-            <div className="sm:col-span-2">
-              <Input 
-                value={title} 
-                onChange={(e) => setTitle(e.target.value)} 
-                placeholder="Bạn đang thắc mắc điều gì?" 
-                className="text-base sm:text-lg border-0 bg-transparent p-0 placeholder:text-muted-foreground focus-visible:ring-0 font-medium"
-              />
-            </div>
-
-            <div>
-              <Select value={category} onValueChange={setCategory}>
-                <SelectTrigger className="border-border/50 rounded-full text-sm">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  {Object.entries(CATEGORIES).map(([key, label]) => (
-                    <SelectItem key={key} value={key}>{label}</SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-          </div>
-
-          <div>
-            <Textarea 
-              value={content} 
-              onChange={(e) => setContent(e.target.value)} 
-              placeholder="Mô tả chi tiết câu hỏi của bạn..." 
-              className="min-h-[120px] border-0 bg-transparent p-0 placeholder:text-muted-foreground focus-visible:ring-0 resize-none"
-            />
-          </div>
-
-          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between pt-4 border-t border-border/50 gap-4">
-            <div className="flex flex-col sm:flex-row sm:items-center gap-4">
-              <div className="flex items-center gap-4">
-                <label className="flex items-center gap-2 text-sm text-foreground cursor-pointer">
-                  <input 
-                    type="radio" 
-                    checked={mode === 'anonymous'} 
-                    onChange={() => setMode('anonymous')}
-                    className="text-primary focus:ring-primary"
-                  />
-                  <span>Ẩn danh</span>
-                </label>
-                <label className="flex items-center gap-2 text-sm text-foreground cursor-pointer">
-                  <input 
-                    type="radio" 
-                    checked={mode === 'mssv'} 
-                    onChange={() => setMode('mssv')}
-                    className="text-primary focus:ring-primary"
-                  />
-                  <span>MSSV</span>
-                </label>
-              </div>
-              
-              {defaultStudentId && (
-                <div className="text-sm text-muted-foreground">
-                  MSSV: {defaultStudentId}
-                </div>
-              )}
-            </div>
-
-            <Button 
-              onClick={handlePostQuestion}
-              className="rounded-full px-6 w-full sm:w-auto"
-              disabled={!title.trim() || !content.trim()}
-            >
-              <Plus className="w-4 h-4 mr-2" />
-              Đăng câu hỏi
-            </Button>
-          </div>
-
-          {error && (
-            <div className="text-sm text-destructive bg-destructive/10 border border-destructive/20 rounded-lg p-3">
-              {error}
-            </div>
-          )}
-        </div>
-      </div>
-
-      <Dialog open={showProfileModal} onOpenChange={(v) => setShowProfileModal(v)}>
-        <DialogContent showCloseButton>
-          <DialogHeader>
-            <DialogTitle>Yêu cầu cập nhật hồ sơ</DialogTitle>
-          </DialogHeader>
-          <div className="space-y-2">
-            <p className="text-sm text-muted-foreground">Bạn đã chọn chế độ MSSV nhưng chưa có MSSV hợp lệ. Vui lòng nhập MSSV (dạng K#########) để tiếp tục.</p>
-            <Input value={modalInput} onChange={(e) => setModalInput(e.target.value)} placeholder="K#########" />
-          </div>
-          <DialogFooter>
-            <div className="flex justify-end gap-2">
-              <Button variant="outline" onClick={() => setShowProfileModal(false)}>Hủy</Button>
-              <Button onClick={() => {
-                const v = (modalInput || '').trim()
-                if (!/^K\d{9}$/.test(v)) return
-                onUpdateStudentId(v)
-                setShowProfileModal(false)
-              }}>Lưu MSSV</Button>
-            </div>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
-    </div>
-  )
-}
+  Loader2,
+  Send,
+} from "lucide-react"
+import { fetchQuestions, createQuestion, toggleLike, type QuestionItem, type Category } from "@/lib/api"
+import { CATEGORIES } from "@/lib/constants"
+import { formatTime } from "@/lib/utils/format"
+import { useAuthStore } from "@/lib/auth-store"
+import { useToast } from "@/hooks/use-toast"
 
 export default function ForumPage() {
-  const [currentUserId, setCurrentUserId] = useState<string>('')
-  const [currentStudentId, setCurrentStudentId] = useState<string>('')
+  const router = useRouter()
+  const { user } = useAuthStore()
+  const { toast } = useToast()
+
   const [questions, setQuestions] = useState<QuestionItem[]>([])
-  const [search, setSearch] = useState('')
-  const [selectedCategory, setSelectedCategory] = useState<ForumCategory | ''>('')
-  const [isLoading, setIsLoading] = useState<boolean>(true)
+  const [search, setSearch] = useState("")
+  const [selectedCategory, setSelectedCategory] = useState<Category | "">("")
+  const [isLoading, setIsLoading] = useState(true)
   const [page, setPage] = useState(1)
-  const [likingQuestions, setLikingQuestions] = useState<Set<string>>(new Set())
   const pageSize = 6
+
+  // Ask question form state
+  const [showAskForm, setShowAskForm] = useState(false)
+  const [askForm, setAskForm] = useState({
+    title: "",
+    content: "",
+    category: "Thảo luận" as Category,
+    anonymous: false,
+  })
 
   const handleFetchQuestions = async () => {
     setIsLoading(true)
     try {
-      const questions = await fetchQuestions({})
-      console.log('Fetched questions from API:', questions)
-      if (questions && questions.length > 0) {
-        setQuestions(questions)
+      const response = await fetchQuestions({})
+      if (response.ok && response.data) {
+        setQuestions(response.data.items)
       } else {
-        // No questions available
-        console.log('No questions from API')
         setQuestions([])
       }
     } catch (error) {
-      console.error('Error fetching questions:', error)
-      // Set empty array on error
+      console.error("Error fetching questions:", error)
       setQuestions([])
     } finally {
       setIsLoading(false)
@@ -234,16 +64,6 @@ export default function ForumPage() {
   }
 
   useEffect(() => {
-    const id = uuid()
-    setCurrentUserId(id)
-    
-    // Load student ID from localStorage
-    const savedStudentId = localStorage.getItem(STORAGE_KEYS.studentId)
-    if (savedStudentId) {
-      setCurrentStudentId(savedStudentId)
-    }
-    
-    // Fetch questions from API on component mount
     handleFetchQuestions()
   }, [])
 
@@ -254,16 +74,16 @@ export default function ForumPage() {
   const filtered = useMemo(() => {
     let result = questions
 
-    // Filter by search text
     const q = search.trim().toLowerCase()
     if (q) {
-      result = result.filter((item: QuestionItem) =>
-        item.title.toLowerCase().includes(search.toLowerCase()) ||
-        item.content.toLowerCase().includes(search.toLowerCase())
+      result = result.filter(
+        (item) =>
+          item.title.toLowerCase().includes(q) ||
+          item.content.toLowerCase().includes(q) ||
+          item.user.toLowerCase().includes(q),
       )
     }
 
-    // Filter by category
     if (selectedCategory) {
       result = result.filter((item) => item.category === selectedCategory)
     }
@@ -273,12 +93,10 @@ export default function ForumPage() {
 
   const sorted = useMemo(() => {
     return [...filtered].sort((a, b) => {
-      const aLikes = Array.isArray(a.likes) ? a.likes.length : (typeof a.likes === 'number' ? a.likes : 0)
-      const bLikes = Array.isArray(b.likes) ? b.likes.length : (typeof b.likes === 'number' ? b.likes : 0)
-      const likeDiff = bLikes - aLikes
+      const likeDiff = b.like_count - a.like_count
       if (likeDiff !== 0) return likeDiff
-      const aTime = typeof a.createdAt === 'number' ? a.createdAt : new Date(a.createdAt).getTime()
-      const bTime = typeof b.createdAt === 'number' ? b.createdAt : new Date(b.createdAt).getTime()
+      const aTime = typeof a.createdAt === "number" ? a.createdAt : new Date(a.createdAt).getTime()
+      const bTime = typeof b.createdAt === "number" ? b.createdAt : new Date(b.createdAt).getTime()
       return bTime - aTime
     })
   }, [filtered])
@@ -288,277 +106,391 @@ export default function ForumPage() {
   const paginated = useMemo(() => {
     const start = (pageSafe - 1) * pageSize
     return sorted.slice(start, start + pageSize)
-  }, [sorted, pageSafe, pageSize])
+  }, [sorted, pageSafe])
 
-  async function handleCreateQuestion(data: {
-    title: string
-    content: string
-    studentId: string
-    category: string
-  }) {
-    const hasValidMssv = data.studentId && /^K\d{9}$/.test(data.studentId)
-    if (data.studentId && !hasValidMssv) {
-      window.alert("MSSV không hợp lệ!")
+  const handleCreateQuestion = async () => {
+    if (!user) {
+      toast({
+        title: "Lỗi",
+        description: "Vui lòng đăng nhập để đặt câu hỏi",
+        variant: "destructive",
+      })
+      router.push("/auth/login")
+      return
+    }
+
+    if (!askForm.title.trim() || !askForm.content.trim()) {
+      toast({
+        title: "Lỗi",
+        description: "Vui lòng điền đầy đủ tiêu đề và nội dung",
+        variant: "destructive",
+      })
       return
     }
 
     try {
-      const newQ: QuestionItem = {
-        id: '', // Will be set by the API
-        title: data.title,
-        content: data.content,
-        userId: currentUserId,
-        studentId: data.studentId,
-        category: data.category as ForumCategory,
-        createdAt: Date.now(),
-        likes: 0,
-        replies: [],
-      }
-
-      // Save student ID if it's valid and not already saved
-      if (data.studentId && data.studentId !== currentStudentId) {
-        localStorage.setItem(STORAGE_KEYS.studentId, data.studentId)
-        setCurrentStudentId(data.studentId)
-      }
-
-      const response = await createQuestion(newQ)
-      
-      if (response && response.ok) {
-        // Refresh questions from server
-        await handleFetchQuestions()
-        window.alert("Câu hỏi đã được tạo thành công!")
-      } else {
-        window.alert("Có lỗi xảy ra khi tạo câu hỏi: " + (response?.message || 'Unknown error'))
-      }
-    } catch (error) {
-      console.error('Error creating question:', error)
-      window.alert("Có lỗi xảy ra khi tạo câu hỏi!")
-    }
-  }
-
-
-  async function handleToggleLike(qid: string) {
-    if (!currentStudentId) {
-      window.alert("Vui lòng nhập MSSV để thực hiện chức năng này!")
-      return
-    }
-
-    try {
-      const question = questions.find(q => q.id === qid)
-      if (!question) return
-
-      const isCurrentlyLiked = Array.isArray(question.likes) 
-        ? question.likes.includes(currentUserId)
-        : false
-
-      const response = await toggleLike(qid, currentStudentId, !isCurrentlyLiked)
-      
-      if (response && response.ok) {
-        // Refresh questions from server to get updated like count
-        await handleFetchQuestions()
-      } else {
-        window.alert("Có lỗi xảy ra khi cập nhật like: " + (response?.message || 'Unknown error'))
-      }
-    } catch (error) {
-      console.error('Error toggling like:', error)
-      window.alert("Có lỗi xảy ra khi cập nhật like!")
-    }
-  }
-
-  async function handleAddReply(qid: string, content: string, authorName: string) {
-    if (!content.trim()) return
-
-    try {
-      const response = await createResponse({
-        questionId: qid,
-        content: content,
-        studentId: currentStudentId,
-        anonymous: !currentStudentId
+      const response = await createQuestion({
+        title: askForm.title,
+        content: askForm.content,
+        category: askForm.category,
+        user: user.mssv,
+        anonymous: askForm.anonymous,
       })
 
-      if (response && response.ok) {
-        // Refresh questions from server to get updated replies
+      if (response.ok) {
+        toast({
+          title: "Thành công",
+          description: "Câu hỏi đã được tạo thành công!",
+        })
+        setAskForm({ title: "", content: "", category: "Thảo luận", anonymous: false })
+        setShowAskForm(false)
         await handleFetchQuestions()
-        window.alert("Phản hồi đã được thêm thành công!")
       } else {
-        window.alert("Có lỗi xảy ra khi thêm phản hồi: " + (response?.message || 'Unknown error'))
+        toast({
+          title: "Lỗi",
+          description: response.message || "Có lỗi xảy ra khi tạo câu hỏi",
+          variant: "destructive",
+        })
       }
     } catch (error) {
-      console.error('Error adding reply:', error)
-      window.alert("Có lỗi xảy ra khi thêm phản hồi!")
+      toast({
+        title: "Lỗi",
+        description: "Có lỗi xảy ra khi tạo câu hỏi",
+        variant: "destructive",
+      })
+    }
+  }
+
+  const handleToggleLike = async (questionId: string) => {
+    if (!user) {
+      toast({
+        title: "Lỗi",
+        description: "Vui lòng đăng nhập để thích câu hỏi",
+        variant: "destructive",
+      })
+      return
+    }
+
+    try {
+      const response = await toggleLike({
+        questionId,
+        mssv: user.mssv,
+        like: 1,
+      })
+
+      if (response.ok) {
+        await handleFetchQuestions()
+      }
+    } catch (error) {
+      console.error("Error toggling like:", error)
     }
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-background to-background/80 text-foreground">
-      <Navigation />
-
-      {/* Hero Section - Twitter-style minimal */}
-      <section className="relative py-12 lg:py-16 overflow-hidden">
-        <div className="absolute inset-0 pointer-events-none">
-          <div className="absolute top-0 right-0 w-[40%] h-[60%] bg-gradient-to-br from-primary/20 to-accent/10 rounded-full blur-3xl transform translate-x-24 -translate-y-8" />
-          <div className="absolute bottom-0 left-0 w-[35%] h-[50%] bg-gradient-to-tr from-accent/10 to-primary/20 rounded-full blur-3xl -translate-x-24 translate-y-8" />
+    <div className="min-h-screen bg-[#003663] text-white">
+      {/* Hero Section */}
+      <section className="relative min-h-[70vh] flex items-center justify-center pt-24 pb-16 px-4 sm:px-6 lg:px-8">
+        <div className="absolute inset-0 overflow-hidden">
+          <div className="absolute top-1/4 -right-1/4 w-2/3 h-2/3 bg-gradient-to-br from-blue-500/20 via-purple-500/10 to-transparent rounded-full blur-3xl" />
+          <div className="absolute -bottom-1/4 -left-1/4 w-2/3 h-2/3 bg-gradient-to-tr from-purple-500/20 via-pink-500/10 to-transparent rounded-full blur-3xl" />
         </div>
-        
-        <div className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <div className="inline-flex items-center justify-center w-12 h-12 lg:w-16 lg:h-16 bg-gradient-to-tr from-primary to-accent rounded-full shadow-lg mb-4 lg:mb-6">
-            <MessageSquare className="h-6 w-6 lg:h-8 lg:w-8 text-white" />
+
+        <div className="relative max-w-6xl mx-auto text-center space-y-8">
+          <div className="space-y-6">
+            <h1 className="text-5xl sm:text-6xl lg:text-7xl font-extrabold">
+              <span className="bg-gradient-to-r from-white via-blue-100 to-purple-100 bg-clip-text text-transparent">
+                DIỄN ĐÀN FTC
+              </span>
+            </h1>
+            <p className="text-xl sm:text-2xl lg:text-3xl text-white/90 leading-relaxed max-w-4xl mx-auto font-medium">
+              Nơi cộng đồng fintech chia sẻ kiến thức, thảo luận xu hướng và kết nối với nhau
+            </p>
           </div>
-          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent mb-3 lg:mb-4">
-            DIỄN ĐÀN SINH VIÊN
-          </h1>
-          <p className="text-base lg:text-lg text-muted-foreground max-w-2xl mx-auto mb-6 lg:mb-8 px-4">
-            Nơi sinh viên chia sẻ, thảo luận và tìm kiếm giải đáp cho mọi thắc mắc
-          </p>
-          
-          {/* Search Bar */}
-          <div className="max-w-xl mx-auto relative px-4">
-            <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-muted-foreground" />
+
+          <div className="max-w-2xl mx-auto relative mt-12">
+            <div className="absolute left-6 top-1/2 -translate-y-1/2">
+              <Search className="h-6 w-6 text-white/80" />
+            </div>
             <Input
               value={search}
               onChange={(e: ChangeEvent<HTMLInputElement>) => setSearch(e.target.value)}
-              placeholder="Tìm kiếm câu hỏi..."
-              className="pl-12 h-12 text-base bg-background/50 backdrop-blur-sm border-border/50 focus:border-primary/50 rounded-full w-full"
+              placeholder="Tìm kiếm câu hỏi, thảo luận..."
+              className="pl-16 h-16 text-lg bg-white/15 border-white/25 placeholder-white/70 text-white rounded-2xl shadow-2xl focus:ring-white/40 backdrop-blur-xl"
             />
+            {search && (
+              <button
+                onClick={() => setSearch("")}
+                className="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 grid place-items-center rounded-xl bg-white/20 hover:bg-white/30 transition-all"
+              >
+                <X className="h-4 w-4" />
+              </button>
+            )}
           </div>
         </div>
       </section>
 
-      {/* Main Layout - Twitter-style 3-column */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-12">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 lg:gap-8">
-          
-          {/* Left Sidebar - Navigation */}
-          <aside className="lg:col-span-3 space-y-4 lg:space-y-6">
-            <div className="bg-card/50 backdrop-blur-sm rounded-2xl border border-border/50 p-4 lg:p-6">
-              <h3 className="font-semibold text-lg mb-4 flex items-center gap-2">
-                <Hash className="h-5 w-5" />
-                Danh mục
-              </h3>
+      <div className="h-16 bg-gradient-to-b from-transparent to-[#003663]/50" />
+
+      {/* Main Content */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-20">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+          {/* Left Sidebar */}
+          <aside className="lg:col-span-3 space-y-6">
+            <div className="bg-white/10 rounded-2xl border border-white/20 p-6 backdrop-blur-xl">
+              <div className="flex items-center gap-3 mb-6">
+                <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-500/30 to-purple-500/30 flex items-center justify-center">
+                  <Hash className="h-5 w-5 text-blue-200" />
+                </div>
+                <div>
+                  <h3 className="text-xl font-bold">Danh mục</h3>
+                  <p className="text-sm text-white/70">Lọc theo chủ đề</p>
+                </div>
+              </div>
               <div className="space-y-2">
                 <button
+                  onClick={() => setSelectedCategory("")}
                   className={`w-full text-left px-4 py-3 rounded-xl transition-all ${
-                    selectedCategory === '' 
-                      ? 'bg-primary text-primary-foreground shadow-lg' 
-                      : 'hover:bg-muted/50 text-muted-foreground hover:text-foreground'
+                    selectedCategory === "" ? "bg-white/20 border border-white/30" : "hover:bg-white/10"
                   }`}
-                  onClick={() => setSelectedCategory('')}
                 >
                   <div className="flex items-center justify-between">
-                    <span>Tất cả</span>
-                    <span className="text-sm">{questions.length}</span>
+                    <span className="font-semibold">Tất cả</span>
+                    <span className="text-sm bg-white/20 px-3 py-1 rounded-full">{questions.length}</span>
                   </div>
                 </button>
-                {CATEGORIES && Object.entries(CATEGORIES).map(([key, label]) => {
-                  const count = questions.filter(q => q.category === key).length;
+                {Object.entries(CATEGORIES).map(([key, label]) => {
+                  const count = questions.filter((q) => q.category === key).length
                   return (
                     <button
                       key={key}
+                      onClick={() => setSelectedCategory(key as Category)}
                       className={`w-full text-left px-4 py-3 rounded-xl transition-all ${
-                        selectedCategory === key 
-                          ? 'bg-primary text-primary-foreground shadow-lg' 
-                          : 'hover:bg-muted/50 text-muted-foreground hover:text-foreground'
+                        selectedCategory === key ? "bg-white/20 border border-white/30" : "hover:bg-white/10"
                       }`}
-                      onClick={() => setSelectedCategory(key as any)}
                     >
                       <div className="flex items-center justify-between">
-                        <span>{label}</span>
-                        <span className="text-sm">{count}</span>
+                        <span className="font-semibold">{label}</span>
+                        <span className="text-sm bg-white/20 px-3 py-1 rounded-full">{count}</span>
                       </div>
                     </button>
-                  );
+                  )
                 })}
               </div>
             </div>
 
-            {/* Stats Card */}
-            <div className="bg-card/50 backdrop-blur-sm rounded-2xl border border-border/50 p-4 lg:p-6">
-              <h3 className="font-semibold text-lg mb-4 flex items-center gap-2">
-                <TrendingUp className="h-5 w-5" />
-                Thống kê
-              </h3>
-              <div className="space-y-4">
-                <div className="flex items-center justify-between">
-                  <span className="text-muted-foreground">Tổng câu hỏi</span>
-                  <span className="font-semibold">{questions.length}</span>
+            <div className="bg-white/10 rounded-2xl border border-white/20 p-6 backdrop-blur-xl">
+              <div className="flex items-center gap-3 mb-6">
+                <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-green-500/30 to-emerald-500/30 flex items-center justify-center">
+                  <TrendingUp className="h-5 w-5 text-green-200" />
                 </div>
-                <div className="flex items-center justify-between">
-                  <span className="text-muted-foreground">Hiển thị</span>
-                  <span className="font-semibold">{sorted.length}</span>
+                <div>
+                  <h3 className="text-xl font-bold">Thống kê</h3>
                 </div>
-                <div className="flex items-center justify-between">
-                  <span className="text-muted-foreground">Trang hiện tại</span>
-                  <span className="font-semibold">{pageSafe}/{totalPages}</span>
+              </div>
+              <div className="space-y-3">
+                <div className="flex items-center justify-between p-3 rounded-xl bg-white/10">
+                  <span className="text-sm font-medium">Tổng câu hỏi</span>
+                  <span className="font-bold text-xl">{questions.length}</span>
+                </div>
+                <div className="flex items-center justify-between p-3 rounded-xl bg-white/10">
+                  <span className="text-sm font-medium">Hiển thị</span>
+                  <span className="font-bold text-xl">{sorted.length}</span>
+                </div>
+                <div className="flex items-center justify-between p-3 rounded-xl bg-white/10">
+                  <span className="text-sm font-medium">Trang</span>
+                  <span className="font-bold text-xl">
+                    {pageSafe}/{totalPages}
+                  </span>
                 </div>
               </div>
             </div>
           </aside>
 
-          {/* Main Content - Feed */}
-          <main className="lg:col-span-6 space-y-4 lg:space-y-6">
-            {/* Create Question Card */}
-            <div className="bg-card/50 backdrop-blur-sm rounded-2xl border border-border/50">
-              <AskQuestionCard
-                currentStudentId={currentStudentId}
-                onUpdateStudentId={(sid) => {
-                  setCurrentStudentId(sid)
-                  localStorage.setItem(STORAGE_KEYS.studentId, sid)
-                }}
-                onSubmit={handleCreateQuestion}
-              />
-            </div>
-
-            {/* Questions Feed */}
-            <div className="space-y-4">
-              {isLoading ? (
-                <div className="bg-card/50 backdrop-blur-sm rounded-2xl border border-border/50 p-20 text-center">
-                  <div className="w-20 h-20 rounded-2xl bg-muted/20 flex items-center justify-center mx-auto mb-6">
-                    <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-primary"></div>
+          {/* Main Content */}
+          <main className="lg:col-span-6 space-y-6">
+            <div className="bg-white/10 rounded-2xl border border-white/20 p-6 backdrop-blur-xl">
+              <div className="flex items-center justify-between mb-6">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-orange-500/30 to-red-500/30 flex items-center justify-center">
+                    <MessageSquare className="h-5 w-5 text-orange-200" />
                   </div>
-                  <h3 className="text-2xl font-bold mb-3">Đang tải câu hỏi...</h3>
-                  <p className="text-muted-foreground">Vui lòng chờ trong giây lát</p>
+                  <div>
+                    <h3 className="text-xl font-bold">Đặt câu hỏi</h3>
+                    <p className="text-sm text-white/70">Chia sẻ thắc mắc</p>
+                  </div>
                 </div>
-              ) : (
-                paginated.map((question) => (
-                  <div key={question.id} className="bg-card/50 backdrop-blur-sm rounded-2xl border border-border/50 hover:border-border transition-all">
-                    <QuestionCard
-                      q={question}
-                      defaultStudentId={currentStudentId}
-                      onLike={() => handleToggleLike(question.id)}
-                      onReply={(content, authorName) => handleAddReply(question.id, content, authorName)}
+                <button
+                  onClick={handleFetchQuestions}
+                  disabled={isLoading}
+                  className="px-4 py-2 bg-white/10 hover:bg-white/20 rounded-xl transition-all disabled:opacity-50 flex items-center gap-2"
+                >
+                  <div className={`w-4 h-4 ${isLoading ? "animate-spin" : ""}`}>
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
+                      />
+                    </svg>
+                  </div>
+                  Làm mới
+                </button>
+              </div>
+
+              {showAskForm ? (
+                <div className="space-y-4">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                    <select
+                      value={askForm.category}
+                      onChange={(e) => setAskForm({ ...askForm, category: e.target.value as Category })}
+                      className="bg-white/10 border-2 border-white/30 rounded-xl px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-white/40"
+                    >
+                      {Object.entries(CATEGORIES).map(([key, label]) => (
+                        <option key={key} value={key} className="bg-[#003663] text-white">
+                          {label}
+                        </option>
+                      ))}
+                    </select>
+                    <Input
+                      value={askForm.title}
+                      onChange={(e) => setAskForm({ ...askForm, title: e.target.value })}
+                      placeholder="Tiêu đề câu hỏi"
+                      className="bg-white/10 border-white/30 text-white placeholder-white/60"
                     />
                   </div>
-                ))
+                  <textarea
+                    value={askForm.content}
+                    onChange={(e) => setAskForm({ ...askForm, content: e.target.value })}
+                    rows={4}
+                    placeholder="Nội dung câu hỏi..."
+                    className="w-full rounded-xl bg-white/10 border-2 border-white/30 p-4 text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-white/40 resize-none"
+                  />
+                  <div className="flex items-center gap-4">
+                    <label className="flex items-center gap-2 cursor-pointer">
+                      <input
+                        type="checkbox"
+                        checked={askForm.anonymous}
+                        onChange={(e) => setAskForm({ ...askForm, anonymous: e.target.checked })}
+                        className="w-4 h-4 rounded"
+                      />
+                      <span className="text-sm">Ẩn danh</span>
+                    </label>
+                  </div>
+                  <div className="flex justify-end gap-3">
+                    <Button variant="outline" onClick={() => setShowAskForm(false)}>
+                      Hủy
+                    </Button>
+                    <Button
+                      onClick={handleCreateQuestion}
+                      disabled={!askForm.title.trim() || !askForm.content.trim()}
+                      className="bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700"
+                    >
+                      <Send className="h-4 w-4 mr-2" />
+                      Gửi câu hỏi
+                    </Button>
+                  </div>
+                </div>
+              ) : (
+                <Button onClick={() => setShowAskForm(true)} className="w-full">
+                  <MessageSquare className="h-4 w-4 mr-2" />
+                  Đặt câu hỏi mới
+                </Button>
               )}
-              
-              {!isLoading && sorted.length === 0 && (
-                <div className="bg-card/50 backdrop-blur-sm rounded-2xl border border-border/50 p-8 text-center">
-                  <MessageSquare className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
-                  <h3 className="text-lg font-semibold mb-2">Chưa có câu hỏi nào</h3>
-                  <p className="text-muted-foreground">Hãy là người đầu tiên đặt câu hỏi!</p>
+            </div>
+
+            <div className="space-y-6">
+              {isLoading ? (
+                <div className="bg-white/10 rounded-2xl border border-white/20 p-20 text-center backdrop-blur-xl">
+                  <Loader2 className="h-10 w-10 animate-spin mx-auto mb-4" />
+                  <h3 className="text-2xl font-bold mb-3">Đang tải câu hỏi...</h3>
+                  <p className="text-white/80">Vui lòng chờ trong giây lát</p>
+                </div>
+              ) : paginated.length > 0 ? (
+                paginated.map((question) => (
+                  <Link
+                    key={question.id}
+                    href={`/dien-dan/question/${question.id}`}
+                    className="block bg-white/10 rounded-2xl border border-white/20 hover:border-white/30 p-6 backdrop-blur-xl transition-all hover:bg-white/15"
+                  >
+                    <div className="flex items-start justify-between mb-4">
+                      <div className="flex items-center gap-3">
+                        <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-500/20 to-purple-500/20 flex items-center justify-center">
+                          <MessageSquare className="h-5 w-5 text-blue-300" />
+                        </div>
+                        <div>
+                          <div className="flex items-center gap-2 mb-1">
+                            <span className="font-bold">
+                              {question.user === "anonymous" ? "Ẩn danh" : question.user}
+                            </span>
+                            {question.like_count >= 5 && (
+                              <div className="flex items-center gap-1 bg-gradient-to-r from-orange-500 to-red-500 px-2 py-1 rounded-full text-xs font-bold">
+                                <Star className="h-3 w-3" />
+                                HOT
+                              </div>
+                            )}
+                          </div>
+                          <div className="text-sm flex items-center gap-2 text-white/70">
+                            <Clock className="h-4 w-4" />
+                            {formatTime(
+                              typeof question.createdAt === "number"
+                                ? question.createdAt
+                                : new Date(question.createdAt).getTime(),
+                            )}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <h3 className="text-xl font-bold mb-3">{question.title}</h3>
+                    <p className="mb-6 text-white/90 line-clamp-2">{question.content}</p>
+
+                    <div className="flex items-center justify-between pt-4 border-t border-white/15">
+                      <div className="flex items-center gap-6">
+                        <button
+                          onClick={(e) => {
+                            e.preventDefault()
+                            handleToggleLike(question.id)
+                          }}
+                          className="flex items-center gap-2 hover:opacity-80 transition-all"
+                        >
+                          <div className="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center">
+                            <Heart className="h-5 w-5 text-white" />
+                          </div>
+                          <span className="font-semibold">{question.like_count}</span>
+                        </button>
+                        <div className="flex items-center gap-2">
+                          <div className="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center">
+                            <MessageCircle className="h-5 w-5" />
+                          </div>
+                          <span className="font-semibold">{question.responses?.length || 0}</span>
+                        </div>
+                      </div>
+                      <span className="text-sm font-bold px-4 py-2 bg-white/20 rounded-full">{question.category}</span>
+                    </div>
+                  </Link>
+                ))
+              ) : (
+                <div className="bg-white/10 rounded-2xl border border-white/20 p-20 text-center backdrop-blur-xl">
+                  <MessageSquare className="h-16 w-16 mx-auto mb-4 text-white/50" />
+                  <h3 className="text-2xl font-bold mb-3">Chưa có câu hỏi</h3>
+                  <p className="text-white/80 mb-4">Hãy là người đầu tiên đặt câu hỏi!</p>
                 </div>
               )}
             </div>
 
-            {/* Pagination */}
             {totalPages > 1 && (
               <div className="flex items-center justify-center gap-4 pt-6">
-                <Button 
-                  variant="outline" 
-                  disabled={pageSafe <= 1} 
-                  onClick={() => setPage((p) => Math.max(1, p - 1))}
-                  className="rounded-full"
-                >
+                <Button variant="outline" disabled={pageSafe <= 1} onClick={() => setPage((p) => Math.max(1, p - 1))}>
                   Trang trước
                 </Button>
-                <span className="text-sm text-muted-foreground px-4">
+                <span className="px-6 py-2 bg-white/10 rounded-xl font-semibold">
                   {pageSafe} / {totalPages}
                 </span>
-                <Button 
-                  variant="outline" 
-                  disabled={pageSafe >= totalPages} 
+                <Button
+                  variant="outline"
+                  disabled={pageSafe >= totalPages}
                   onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
-                  className="rounded-full"
                 >
                   Trang sau
                 </Button>
@@ -566,21 +498,32 @@ export default function ForumPage() {
             )}
           </main>
 
-          {/* Right Sidebar - Widgets */}
-          <aside className="lg:col-span-3 space-y-4 lg:space-y-6">
-            <div className="bg-card/50 backdrop-blur-sm rounded-2xl border border-border/50 p-4 lg:p-6">
-              <h3 className="font-semibold text-lg mb-4 flex items-center gap-2">
-                <Users className="h-5 w-5" />
-                Hoạt động gần đây
-              </h3>
-              <div className="space-y-3">
+          {/* Right Sidebar */}
+          <aside className="lg:col-span-3 space-y-6">
+            <div className="bg-white/10 rounded-2xl border border-white/20 p-6 backdrop-blur-xl">
+              <div className="flex items-center gap-3 mb-6">
+                <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-green-500/30 to-emerald-500/30 flex items-center justify-center">
+                  <Users className="h-5 w-5 text-green-200" />
+                </div>
+                <div>
+                  <h3 className="text-xl font-bold">Hoạt động</h3>
+                  <p className="text-sm text-white/70">Mới nhất</p>
+                </div>
+              </div>
+              <div className="space-y-4">
                 {questions.slice(0, 5).map((q) => (
-                  <div key={q.id} className="border-l-2 border-primary/30 pl-3">
-                    <p className="text-sm font-medium truncate">{q.title}</p>
-                    <p className="text-xs text-muted-foreground">
-                      {formatTime(typeof q.createdAt === 'number' ? q.createdAt : new Date(q.createdAt).getTime())} • {(q.replies || []).length} phản hồi
+                  <Link
+                    key={q.id}
+                    href={`/dien-dan/question/${q.id}`}
+                    className="block border-l-4 border-blue-400 pl-4 py-2 hover:bg-white/5 rounded transition-colors"
+                  >
+                    <p className="text-sm font-semibold mb-2 line-clamp-2">{q.title}</p>
+                    <p className="text-xs text-white/70 flex items-center gap-2">
+                      <Clock className="h-3 w-3" />
+                      {formatTime(typeof q.createdAt === "number" ? q.createdAt : new Date(q.createdAt).getTime())} •{" "}
+                      {q.responses?.length || 0} phản hồi
                     </p>
-                  </div>
+                  </Link>
                 ))}
               </div>
             </div>
@@ -589,32 +532,13 @@ export default function ForumPage() {
       </div>
 
       <style jsx global>{`
-        @keyframes gradient {
-          0% { background-position: 0% 50%; }
-          50% { background-position: 100% 50%; }
-          100% { background-position: 0% 50%; }
-        }
-        @keyframes blob {
-          0%, 100% { transform: translate(0, 0) scale(1); }
-          25% { transform: translate(20px, -30px) scale(1.1); }
-          50% { transform: translate(-20px, 20px) scale(0.9); }
-          75% { transform: translate(30px, 30px) scale(1.05); }
-        }
-        .animate-gradient-slow {
-          animation: gradient 15s ease infinite;
-          background-size: 200% 200%;
-        }
-        .animate-blob {
-          animation: blob 20s ease-in-out infinite;
-        }
-        .line-clamp-2 { 
-          display: -webkit-box; 
-          -webkit-line-clamp: 2; 
-          -webkit-box-orient: vertical; 
-          overflow: hidden; 
+        .line-clamp-2 {
+          display: -webkit-box;
+          -webkit-line-clamp: 2;
+          -webkit-box-orient: vertical;
+          overflow: hidden;
         }
       `}</style>
     </div>
   )
 }
-
