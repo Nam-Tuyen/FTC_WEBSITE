@@ -270,15 +270,15 @@ export default function HomePage() {
                       {feature.title}
                     </h3>
                     
-                    <p className="text-foreground/70 font-medium leading-relaxed mb-6 flex-grow text-sm text-center">
+                    <p className="text-foreground/70 font-medium leading-relaxed mb-6 flex-grow text-sm text-justify px-4">
                       {feature.description}
                     </p>
                     
-                    <div className="space-y-2 w-full">
+                    <div className="grid grid-cols-2 gap-2 w-full">
                       {feature.features.map((item, idx) => (
-                        <div key={idx} className="flex items-center justify-center text-xs text-foreground/60 group-hover:text-accent/80 transition-colors duration-300">
-                          <CheckCircle className="h-3 w-3 mr-2 text-accent" />
-                          <span>{item}</span>
+                        <div key={idx} className="flex items-center text-xs text-foreground/60 group-hover:text-accent/80 transition-colors duration-300 bg-card/20 rounded-lg p-2 border border-accent/10">
+                          <CheckCircle className="h-3 w-3 mr-2 text-accent flex-shrink-0" />
+                          <span className="text-center flex-1">{item}</span>
                         </div>
                       ))}
                     </div>
