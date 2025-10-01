@@ -67,10 +67,11 @@ export default function QuestionDetailPage() {
   const handleToggleLike = async () => {
     if (!user) {
       toast({
-        title: "Lỗi",
+        title: "Yêu cầu đăng nhập",
         description: "Vui lòng đăng nhập để thích câu hỏi",
         variant: "destructive",
       })
+      setTimeout(() => router.push("/auth/login"), 1000)
       return
     }
 
@@ -92,11 +93,11 @@ export default function QuestionDetailPage() {
   const handleAddReply = async () => {
     if (!user) {
       toast({
-        title: "Lỗi",
+        title: "Yêu cầu đăng nhập",
         description: "Vui lòng đăng nhập để phản hồi",
         variant: "destructive",
       })
-      router.push("/auth/login")
+      setTimeout(() => router.push("/auth/login"), 1000)
       return
     }
 
@@ -316,30 +317,44 @@ export default function QuestionDetailPage() {
             placeholder="Nhập phản hồi của bạn..."
             className="w-full rounded-xl bg-white/10 border-2 border-white/30 p-4 text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-white/40 resize-none mb-4"
           />
-          <div className="flex items-center justify-between">
-            <label className="flex items-center gap-2 cursor-pointer">
-              <input
-                type="checkbox"
-                checked={replyAnonymous}
-                onChange={(e) => setReplyAnonymous(e.target.checked)}
-                className="w-4 h-4 rounded"
-              />
-              <span className="text-sm">Ẩn danh</span>
-            </label>
-            <Button onClick={handleAddReply} disabled={isSubmitting || !replyContent.trim()}>
-              {isSubmitting ? (
-                <>
-                  <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                  Đang gửi...
-                </>
-              ) : (
-                <>
-                  <Send className="h-4 w-4 mr-2" />
-                  Gửi phản hồi
-                </>
-              )}
-            </Button>
-          </div>
+            <div className="flex items-center justify-between">
+              <label className="flex items-center gap-2 cursor-pointer">
+                <input
+                  type="checkbox"
+                  checked={replyAnonymous}
+                  onChange={(e) => setReplyAnonymous(e.target.checked)}
+                  className="w-4 h-4 rounded"
+                />
+                <span className="text-sm">Ẩn danh</span>
+              </label>
+              <Button 
+                onClick={() => {
+                  if (!user) {
+                    toast({
+                      title: "Yêu cầu đăng nhập",
+                      description: "Vui lòng đăng nhập để phản hồi",
+                      variant: "destructive",
+                    })
+                    setTimeout(() => router.push("/auth/login"), 1000)
+                    return
+                  }
+                  handleAddReply()
+                }} 
+                disabled={isSubmitting || !replyContent.trim()}
+              >
+                {isSubmitting ? (
+                  <>
+                    <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                    Đang gửi...
+                  </>
+                ) : (
+                  <>
+                    <Send className="h-4 w-4 mr-2" />
+                    Gửi phản hồi
+                  </>
+                )}
+              </Button>
+            </div>
         </div>
 
         {/* Responses */}

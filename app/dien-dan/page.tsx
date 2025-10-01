@@ -111,11 +111,11 @@ export default function ForumPage() {
   const handleCreateQuestion = async () => {
     if (!user) {
       toast({
-        title: "Lỗi",
+        title: "Yêu cầu đăng nhập",
         description: "Vui lòng đăng nhập để đặt câu hỏi",
         variant: "destructive",
       })
-      router.push("/auth/login")
+      setTimeout(() => router.push("/auth/login"), 1000)
       return
     }
 
@@ -164,10 +164,11 @@ export default function ForumPage() {
   const handleToggleLike = async (questionId: string) => {
     if (!user) {
       toast({
-        title: "Lỗi",
+        title: "Yêu cầu đăng nhập",
         description: "Vui lòng đăng nhập để thích câu hỏi",
         variant: "destructive",
       })
+      setTimeout(() => router.push("/auth/login"), 1000)
       return
     }
 
@@ -348,7 +349,7 @@ export default function ForumPage() {
                     >
                       {Object.entries(CATEGORIES).map(([key, label]) => (
                         <option key={key} value={key} className="bg-[#003663] text-white">
-                          {label}
+                          {String(label)}
                         </option>
                       ))}
                     </select>
@@ -392,7 +393,21 @@ export default function ForumPage() {
                   </div>
                 </div>
               ) : (
-                <Button onClick={() => setShowAskForm(true)} className="w-full">
+                <Button 
+                  onClick={() => {
+                    if (!user) {
+                      toast({
+                        title: "Yêu cầu đăng nhập",
+                        description: "Vui lòng đăng nhập để đặt câu hỏi",
+                        variant: "destructive",
+                      })
+                      setTimeout(() => router.push("/auth/login"), 1000)
+                      return
+                    }
+                    setShowAskForm(true)
+                  }} 
+                  className="w-full"
+                >
                   <MessageSquare className="h-4 w-4 mr-2" />
                   Đặt câu hỏi mới
                 </Button>
