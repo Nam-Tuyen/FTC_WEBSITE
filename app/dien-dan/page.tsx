@@ -270,7 +270,7 @@ export default function ForumPage() {
                       }`}
                     >
                       <div className="flex items-center justify-between">
-                        <span className="font-semibold">{label}</span>
+                        <span className="font-semibold">{String(label)}</span>
                         <span className="text-sm bg-white/20 px-3 py-1 rounded-full">{count}</span>
                       </div>
                     </button>
@@ -481,7 +481,7 @@ export default function ForumPage() {
                           <span className="font-semibold">{question.responses?.length || 0}</span>
                         </div>
                       </div>
-                      <span className="text-sm font-bold px-4 py-2 bg-white/20 rounded-full">{question.category}</span>
+                      <span className="text-sm font-bold px-4 py-2 bg-white/20 rounded-full">{String(question.category)}</span>
                     </div>
                   </Link>
                 ))

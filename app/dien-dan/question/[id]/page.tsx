@@ -303,7 +303,7 @@ export default function QuestionDetailPage() {
                 <span className="font-semibold text-lg">{question.responses?.length || 0}</span>
               </div>
             </div>
-            <span className="text-sm font-bold px-4 py-2 bg-white/20 rounded-full">{question.category}</span>
+            <span className="text-sm font-bold px-4 py-2 bg-white/20 rounded-full">{String(question.category)}</span>
           </div>
         </div>
 

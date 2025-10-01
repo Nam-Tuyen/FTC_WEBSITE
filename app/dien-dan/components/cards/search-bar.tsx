@@ -43,7 +43,7 @@ export function SearchBar({
               <SelectItem value="">Tất cả chủ đề</SelectItem>
               {Object.entries(CATEGORIES).map(([key, label]) => (
                 <SelectItem key={key} value={key}>
-                  {label}
+                  {String(label)}
                 </SelectItem>
               ))}
             </SelectContent>

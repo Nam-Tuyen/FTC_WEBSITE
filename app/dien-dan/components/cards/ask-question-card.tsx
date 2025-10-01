@@ -94,8 +94,7 @@ export function AskQuestionCard({
                 </SelectTrigger>
                 <SelectContent>
                   {Object.entries(CATEGORIES).map(([key, label]) => (
-                    // @ts-ignore
-                    <SelectItem key={key} value={key}>{label}</SelectItem>
+                    <SelectItem key={key} value={key}>{String(label)}</SelectItem>
                   ))}
                 </SelectContent>
               </Select>
