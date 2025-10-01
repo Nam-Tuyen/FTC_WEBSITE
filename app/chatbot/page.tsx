@@ -402,8 +402,8 @@ export default function ChatbotPage() {
                       {/* Animated Icon */}
                       <div className="relative">
                         <div className="absolute inset-0 bg-gradient-to-r from-blue-400 via-purple-400 to-cyan-400 rounded-2xl blur-xl animate-pulse opacity-60" />
-                        <div className="relative w-16 h-16 bg-gradient-to-br from-white/20 to-white/10 backdrop-blur-xl rounded-2xl flex items-center justify-center border border-white/30 shadow-lg">
-                          <span className="text-2xl animate-bounce">🤖</span>
+                        <div className="relative w-14 h-14 sm:w-16 sm:h-16 bg-gradient-to-br from-white/20 to-white/10 backdrop-blur-xl rounded-2xl flex items-center justify-center border border-white/30 shadow-lg">
+                          <span className="text-xl sm:text-2xl animate-bounce">🤖</span>
                         </div>
                         {/* Floating particles */}
                         <div className="absolute -top-1 -right-1 w-3 h-3 bg-blue-400 rounded-full animate-float-particle opacity-70" />
@@ -412,7 +412,7 @@ export default function ChatbotPage() {
                       
                       {/* Title Section */}
                       <div className="space-y-1">
-                        <h2 className="text-2xl sm:text-3xl font-black uppercase tracking-wider text-glow mb-2">
+                        <h2 className="text-xl sm:text-2xl md:text-3xl font-black uppercase tracking-wider text-glow mb-2">
                           CHỌN CHẾ ĐỘ
                         </h2>
                         <p className="text-sm sm:text-base text-white/70 font-medium">
