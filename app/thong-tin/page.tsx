@@ -1,6 +1,7 @@
 'use client'
 
 import { Navigation } from "@/components/navigation"
+import { Footer } from "@/components/footer"
 import { Target, Users, BookOpen, TrendingUp, Award, Network, Facebook, Instagram, Sparkles, ArrowRight, Eye, Heart, Lightbulb, Rocket, Globe, Trophy, Coffee, MessageCircle, Calendar } from "lucide-react"
 
 const infoSections = [
@@ -352,14 +353,7 @@ export default function ThongTinPage() {
         </div>
       </section>
 
-      {/* Modern Footer */}
-      <footer className="py-12 px-4 sm:px-6 lg:px-8 border-t border-white/20">
-        <div className="max-w-7xl mx-auto text-center">
-          <p className="text-lg text-white/70 italic">
-            ©2025. Câu lạc bộ Công nghệ Tài chính
-          </p>
-        </div>
-      </footer>
+      <Footer />
 
       {/* Custom Animations */}
       <style jsx global>{`

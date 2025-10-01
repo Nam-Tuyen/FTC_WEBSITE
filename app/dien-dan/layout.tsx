@@ -3,6 +3,7 @@ import type { Metadata } from "next"
 import { GeistSans } from "geist/font/sans"
 import { GeistMono } from "geist/font/mono"
 import { Navigation } from "@/components/navigation"
+import { Footer } from "@/components/footer"
 import { Toaster } from "@/components/ui/toaster"
 import { Suspense } from "react"
 import "../globals.css"
@@ -31,6 +32,7 @@ export default function ForumLayout({
       <main className="pt-16">
         {children}
       </main>
+      <Footer />
       <Toaster />
     </div>
   )

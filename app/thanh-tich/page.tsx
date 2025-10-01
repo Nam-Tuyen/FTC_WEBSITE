@@ -1,6 +1,7 @@
 'use client'
 
 import { Navigation } from "@/components/navigation"
+import { Footer } from "@/components/footer"
 import { Trophy, Award, Star, Target, Sparkles, Users, Heart, Lightbulb, Rocket, Globe, Medal, Crown, Zap, ArrowRight, Calendar, Activity } from "lucide-react"
 
 const achievementSections = [
@@ -264,14 +265,7 @@ export default function AchievementsPage() {
         </div>
       </section>
 
-      {/* Modern Footer */}
-      <footer className="py-12 px-4 sm:px-6 lg:px-8 border-t border-white/20">
-        <div className="max-w-7xl mx-auto text-center">
-          <p className="text-lg text-white/70 italic">
-            ©2025. Câu lạc bộ Công nghệ Tài chính
-          </p>
-        </div>
-      </footer>
+      <Footer />
 
       {/* Custom Animations */}
       <style jsx global>{`

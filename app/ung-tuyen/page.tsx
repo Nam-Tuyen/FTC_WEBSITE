@@ -2,6 +2,7 @@
 
 import { type NextPage } from "next"
 import { Navigation } from "@/components/navigation"
+import { Footer } from "@/components/footer"
 import { Button } from "@/components/ui/Button"
 import { ApplicationDeadlineCheck } from "./countdown-timer"
 import { RECRUITMENT_CONFIG } from "./constants"
@@ -166,6 +167,8 @@ const RecruitmentPage: NextPage = () => {
       </section>
 
       {/* Add animation keyframes */}
+      <Footer />
+
       <style jsx global>{`
         @keyframes float {
           0%, 100% { transform: translate(0, 0); }

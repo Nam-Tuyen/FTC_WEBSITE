@@ -2,6 +2,8 @@
 
 import React, { useEffect, useMemo, useRef, useState } from "react"
 import dynamic from "next/dynamic"
+import { Navigation } from "@/components/navigation"
+import { Footer } from "@/components/footer"
 import { Button } from "@/components/ui/Button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/Input"
@@ -363,7 +365,7 @@ export default function ChatbotPage() {
   return (
     <>
       <div className="min-h-screen bg-[#003663] text-white overflow-hidden">
-      <Navigation />
+        <Navigation />
 
         {/* Mobile Responsive Hero Section */}
         <section className="relative min-h-[60vh] sm:min-h-[70vh] flex items-center justify-center py-12 sm:py-16 lg:py-24 px-4 sm:px-6 lg:px-8">
@@ -787,16 +789,7 @@ export default function ChatbotPage() {
             </div>
           </div>
         </section>
-        {/* Footer */}
-        {/* Footer */}
-        <footer className={`mt-16 py-8 ${BRAND.borders.light} border-t ${BRAND.surfaces.glass}`}>
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <p className={`text-sm ${BRAND.text.muted}`}>
-              <span className={`font-semibold ${BRAND.text.gradient}`}>©2025. Câu lạc bộ Công nghệ Tài chính</span>
-              {selectedMode === "industry" && <span className="ml-2">• Demo FinTech Q&A</span>}
-            </p>
-          </div>
-        </footer>
+        <Footer />
       </div>
     </>
   )
