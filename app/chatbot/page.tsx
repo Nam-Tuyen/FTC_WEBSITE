@@ -383,197 +383,118 @@ export default function ChatbotPage() {
           badgeShadowColor="shadow-blue-500/10"
         />
 
-        {/* Mode selector với hiệu ứng hiện đại */}
-        <section className="py-8 sm:py-12 lg:py-16 px-4 sm:px-6 lg:px-8">
-          <div className="max-w-6xl mx-auto">
-            <div className="relative">
-              <div className={`absolute inset-0 ${BRAND.gradients.ethereal} rounded-3xl transform transition-all`} />
-              {/* Modern Mode Selection Card */}
-              <div className="relative group">
-                {/* Animated Background */}
-                <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 via-purple-500/5 to-cyan-500/10 rounded-3xl transform transition-all duration-500 group-hover:scale-[1.02] group-hover:from-blue-500/15 group-hover:via-purple-500/10 group-hover:to-cyan-500/15" />
-                
-                {/* Glassmorphism Card */}
-                <div className="relative bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-2xl rounded-3xl border border-white/20 p-6 sm:p-8 shadow-2xl shadow-black/20 transition-all duration-500 group-hover:shadow-3xl group-hover:shadow-blue-500/10">
-                  
-                  {/* Modern Header Section */}
-                  <div className="text-center mb-8">
-                    {/* Animated Icon */}
-                    <div className="relative inline-block mb-6">
-                      <div className="absolute inset-0 bg-gradient-to-r from-blue-400 via-purple-400 to-cyan-400 rounded-3xl blur-2xl animate-pulse opacity-60 scale-110" />
-                      <div className="relative w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-br from-white/20 to-white/10 backdrop-blur-xl rounded-3xl flex items-center justify-center border border-white/30 shadow-2xl">
-                        <span className="text-2xl sm:text-3xl animate-bounce">🤖</span>
-                      </div>
-                      {/* Enhanced Floating particles */}
-                      <div className="absolute -top-2 -right-2 w-3 h-3 bg-blue-400 rounded-full animate-float-particle opacity-80" />
-                      <div className="absolute -bottom-2 -left-2 w-2 h-2 bg-purple-400 rounded-full animate-float-particle opacity-80 animation-delay-300" />
-                      <div className="absolute top-1/2 -left-2 w-2 h-2 bg-cyan-400 rounded-full animate-float-particle opacity-70 animation-delay-600" />
-                      <div className="absolute top-1/2 -right-2 w-2 h-2 bg-green-400 rounded-full animate-float-particle opacity-70 animation-delay-900" />
+        {/* Compact Mode Selector */}
+        <section className="py-4 sm:py-6 px-4 sm:px-6 lg:px-8">
+          <div className="max-w-4xl mx-auto">
+            {/* Compact Header */}
+            <div className="text-center mb-6">
+              <div className="inline-flex items-center px-3 py-1.5 rounded-full bg-gradient-to-r from-blue-500/20 to-purple-500/20 border border-blue-400/30 backdrop-blur-sm mb-3">
+                <div className="w-1.5 h-1.5 bg-green-400 rounded-full animate-pulse mr-2" />
+                <span className="text-xs font-bold text-blue-300 uppercase tracking-wider">
+                  CHỌN CHẾ ĐỘ
+                </span>
+              </div>
+              <p className="text-sm text-white/70 max-w-lg mx-auto">
+                Tùy chỉnh trải nghiệm chat của bạn
+              </p>
+            </div>
+
+            {/* Ultra Compact Mode Selection Cards */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 max-w-xl mx-auto">
+              {CHAT_MODES.map((mc, index) => {
+                const active = selectedMode === mc.mode
+                return (
+                  <button
+                    key={mc.mode}
+                    onClick={() => handleModeChange(mc.mode)}
+                    className={cn(
+                      "group/btn relative overflow-hidden rounded-lg p-3 transition-all duration-300 transform",
+                      "flex items-center gap-3 text-left",
+                      "border backdrop-blur-sm shadow-sm",
+                      "hover:scale-[1.01] hover:shadow-md active:scale-[0.99]",
+                      active 
+                        ? "bg-gradient-to-r from-blue-500/30 to-purple-500/20 border-blue-400/50 shadow-blue-500/20"
+                        : "bg-white/10 border-white/20 hover:bg-white/15 hover:border-white/30"
+                    )}
+                    style={{
+                      animationDelay: `${index * 100}ms`
+                    }}
+                  >
+                    {/* Icon Container - Very Small */}
+                    <div className={cn(
+                      "relative w-8 h-8 rounded-lg flex items-center justify-center transition-all duration-300 flex-shrink-0",
+                      "border backdrop-blur-sm",
+                      active
+                        ? "bg-gradient-to-br from-blue-400/30 to-purple-400/30 border-blue-300/50"
+                        : "bg-white/15 border-white/25 group-hover/btn:bg-white/20 group-hover/btn:border-white/35"
+                    )}>
+                      <span className="relative text-sm transition-all duration-300 group-hover/btn:scale-110">
+                        {mc.icon}
+                      </span>
+                      
+                      {/* Active Status Indicator - Tiny */}
+                      {active && (
+                        <div className="absolute -top-0.5 -right-0.5 w-2 h-2 bg-green-400 rounded-full flex items-center justify-center">
+                          <div className="w-1 h-1 bg-white rounded-full" />
+                        </div>
+                      )}
                     </div>
                     
-                    {/* Title Section */}
-                    <div className="space-y-4">
-                      <div className="inline-flex items-center px-4 py-2 rounded-full bg-gradient-to-r from-blue-500/20 to-purple-500/20 border border-blue-400/30 backdrop-blur-sm mb-4">
-                        <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse mr-2" />
-                        <span className="text-xs font-bold text-blue-300 uppercase tracking-wider">
-                          AI CHATBOT
-                        </span>
-                      </div>
-                      
-                      <h2 className="text-2xl sm:text-3xl font-black uppercase tracking-wider text-glow mb-4">
-                        CHỌN CHẾ ĐỘ
-                      </h2>
-                      
-                      <p className="text-base sm:text-lg text-white/80 font-medium max-w-2xl mx-auto leading-relaxed">
-                        Tùy chỉnh trải nghiệm chat của bạn với các chế độ chuyên biệt
+                    {/* Content Container - Ultra Compact */}
+                    <div className="flex-1 min-w-0">
+                      <h3 className={cn(
+                        "text-sm font-bold transition-all duration-300 truncate",
+                        active ? "text-white" : "text-white/90 group-hover/btn:text-white"
+                      )}>
+                        {mc.label}
+                      </h3>
+                      <p className={cn(
+                        "text-xs transition-all duration-300 truncate",
+                        active ? "text-white/80" : "text-white/60 group-hover/btn:text-white/80"
+                      )}>
+                        {mc.mode === 'club' ? 'Thông tin câu lạc bộ FTC' : 'Kiến thức FinTech'}
                       </p>
-                      
-                      {/* Status Indicator */}
-                      <div className="flex items-center justify-center gap-3 mt-6">
-                        <div className="flex items-center gap-2 px-3 py-1.5 bg-green-500/20 rounded-full border border-green-400/30">
-                          <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
-                          <span className="text-xs font-medium text-green-300">Hệ thống sẵn sàng</span>
-                        </div>
-                        <div className="flex items-center gap-2 px-3 py-1.5 bg-blue-500/20 rounded-full border border-blue-400/30">
-                          <div className="w-2 h-2 bg-blue-400 rounded-full animate-pulse" />
-                          <span className="text-sm font-medium text-blue-300">AI Online</span>
-                        </div>
-                      </div>
                     </div>
-                  </div>
+                    
+                    {/* Selection Indicator - Compact */}
+                    <div className={cn(
+                      "w-2 h-2 rounded-full transition-all duration-300 flex-shrink-0",
+                      active 
+                        ? "bg-gradient-to-r from-blue-400 to-purple-400" 
+                        : "bg-white/30 group-hover/btn:bg-white/50"
+                    )} />
+                  </button>
+                )
+              })}
+            </div>
 
-                  {/* Compact Mode Selection Cards */}
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
-                    {CHAT_MODES.map((mc, index) => {
-                      const active = selectedMode === mc.mode
-                      return (
-                        <button
-                          key={mc.mode}
-                          onClick={() => handleModeChange(mc.mode)}
-                          className={cn(
-                            "group/btn relative overflow-hidden rounded-2xl p-4 sm:p-5 transition-all duration-500 transform",
-                            "flex flex-col items-center text-center gap-3",
-                            "border backdrop-blur-sm shadow-lg",
-                            "hover:scale-[1.02] hover:shadow-xl active:scale-[0.98]",
-                            "animate-slide-in-up",
-                            active 
-                              ? "bg-gradient-to-br from-blue-500/30 via-purple-500/20 to-cyan-500/30 border-blue-400/50 shadow-blue-500/20 scale-[1.01]"
-                              : "bg-white/10 border-white/20 hover:bg-white/15 hover:border-white/30 hover:shadow-white/5"
-                          )}
-                          style={{
-                            animationDelay: `${index * 150}ms`
-                          }}
-                        >
-                          {/* Simplified Background */}
-                          <div className={cn(
-                            "absolute inset-0 transition-all duration-500 rounded-2xl",
-                            active 
-                              ? "bg-gradient-to-br from-blue-500/15 via-purple-500/10 to-cyan-500/15" 
-                              : "group-hover/btn:bg-gradient-to-br group-hover/btn:from-white/5 group-hover/btn:to-white/10"
-                          )} />
-                          
-                          {/* Icon Container - Smaller */}
-                          <div className={cn(
-                            "relative w-12 h-12 sm:w-14 sm:h-14 rounded-xl flex items-center justify-center transition-all duration-300",
-                            "border backdrop-blur-sm shadow-md",
-                            active
-                              ? "bg-gradient-to-br from-blue-400/30 to-purple-400/30 border-blue-300/50 shadow-blue-500/20 scale-105"
-                              : "bg-white/15 border-white/25 group-hover/btn:bg-white/20 group-hover/btn:border-white/35 group-hover/btn:scale-102"
-                          )}>
-                            <span className="relative text-lg sm:text-xl transition-all duration-300 group-hover/btn:scale-110">
-                              {mc.icon}
-                            </span>
-                            
-                            {/* Active Status Indicator - Smaller */}
-                            {active && (
-                              <div className="absolute -top-1 -right-1 w-3 h-3 bg-green-400 rounded-full flex items-center justify-center shadow-md">
-                                <div className="w-1.5 h-1.5 bg-white rounded-full animate-pulse" />
-                              </div>
-                            )}
-                          </div>
-                          
-                          {/* Content Section - Compact */}
-                          <div className="relative space-y-1">
-                            <h3 className={cn(
-                              "font-bold text-sm sm:text-base transition-all duration-300",
-                              active ? "text-white text-glow" : "text-white/90 group-hover/btn:text-white"
-                            )}>
-                              {mc.label}
-                            </h3>
-                            <p className={cn(
-                              "text-xs sm:text-sm transition-all duration-300 leading-relaxed",
-                              active ? "text-white/80" : "text-white/60 group-hover/btn:text-white/80"
-                            )}>
-                              {mc.mode === 'club' ? 'Thông tin câu lạc bộ FTC' : 'Kiến thức FinTech'}
-                            </p>
-                            
-                            {/* Feature Tags - Smaller */}
-                            <div className="flex flex-wrap gap-1 justify-center mt-2">
-                              {mc.mode === 'club' ? (
-                                <>
-                                  <span className="px-2 py-0.5 bg-blue-500/20 text-blue-300 text-xs rounded-full border border-blue-400/30">
-                                    CLB
-                                  </span>
-                                  <span className="px-2 py-0.5 bg-purple-500/20 text-purple-300 text-xs rounded-full border border-purple-400/30">
-                                    Hoạt động
-                                  </span>
-                                </>
-                              ) : (
-                                <>
-                                  <span className="px-2 py-0.5 bg-cyan-500/20 text-cyan-300 text-xs rounded-full border border-cyan-400/30">
-                                    FinTech
-                                  </span>
-                                  <span className="px-2 py-0.5 bg-green-500/20 text-green-300 text-xs rounded-full border border-green-400/30">
-                                    Kiến thức
-                                  </span>
-                                </>
-                              )}
-                            </div>
-                          </div>
-                          
-                          {/* Selection Indicator - Smaller */}
-                          <div className={cn(
-                            "absolute bottom-2 left-1/2 transform -translate-x-1/2 transition-all duration-300",
-                            active 
-                              ? "w-6 h-0.5 bg-gradient-to-r from-blue-400 to-purple-400 rounded-full shadow-md" 
-                              : "w-0 h-0.5 bg-gradient-to-r from-blue-400 to-purple-400 rounded-full group-hover/btn:w-4"
-                          )} />
-                        </button>
-                      )
-                    })}
+            {/* Compact Status Notification */}
+            {showModeChangeNotification && (
+              <div className="mt-4 relative">
+                <div className="relative flex items-center gap-3 p-4 bg-gradient-to-r from-green-500/15 to-blue-500/15 rounded-xl border border-green-400/40 backdrop-blur-xl shadow-lg animate-in slide-in-from-top-2 duration-500 max-w-md mx-auto">
+                  <div className="relative">
+                    <div className="w-3 h-3 bg-green-400 rounded-full animate-pulse shadow-md" />
+                    <div className="absolute inset-0 w-3 h-3 bg-green-400 rounded-full animate-ping" />
                   </div>
-
-                  {/* Enhanced Status Notification */}
-                  {showModeChangeNotification && (
-                    <div className="mt-8 relative">
-                      <div className="absolute inset-0 bg-gradient-to-r from-green-500/20 via-blue-500/10 to-purple-500/20 rounded-3xl blur-sm" />
-                      <div className="relative flex items-center gap-4 p-6 bg-gradient-to-r from-green-500/15 to-blue-500/15 rounded-3xl border border-green-400/40 backdrop-blur-xl shadow-2xl animate-in slide-in-from-top-2 duration-700">
-                        <div className="relative">
-                          <div className="w-4 h-4 bg-green-400 rounded-full animate-pulse shadow-lg" />
-                          <div className="absolute inset-0 w-4 h-4 bg-green-400 rounded-full animate-ping" />
-                        </div>
-                        <div className="flex-1">
-                          <p className="text-base font-bold text-white mb-1">
-                            ✅ Đã chuyển sang chế độ: 
-                            <span className="ml-2 text-green-400 text-glow">
-                              {CHAT_MODES.find((m) => m.mode === selectedMode)?.label}
-                            </span>
-                          </p>
-                          <p className="text-sm text-white/80">
-                            Bạn có thể bắt đầu trò chuyện ngay bây giờ
-                          </p>
-                        </div>
-                        <div className="flex items-center gap-2">
-                          <div className="w-2 h-2 bg-blue-400 rounded-full animate-pulse" />
-                          <div className="w-2 h-2 bg-purple-400 rounded-full animate-pulse animation-delay-300" />
-                          <div className="w-2 h-2 bg-cyan-400 rounded-full animate-pulse animation-delay-600" />
-                        </div>
-                      </div>
-                    </div>
-                  )}
+                  <div className="flex-1">
+                    <p className="text-sm font-bold text-white">
+                      ✅ Đã chuyển sang chế độ: 
+                      <span className="ml-1 text-green-400">
+                        {CHAT_MODES.find((m) => m.mode === selectedMode)?.label}
+                      </span>
+                    </p>
+                    <p className="text-xs text-white/80">
+                      Bạn có thể bắt đầu trò chuyện ngay bây giờ
+                    </p>
+                  </div>
+                  <div className="flex items-center gap-1">
+                    <div className="w-1.5 h-1.5 bg-blue-400 rounded-full animate-pulse" />
+                    <div className="w-1.5 h-1.5 bg-purple-400 rounded-full animate-pulse animation-delay-300" />
+                    <div className="w-1.5 h-1.5 bg-cyan-400 rounded-full animate-pulse animation-delay-600" />
+                  </div>
                 </div>
               </div>
-            </div>
+            )}
           </div>
         </section>
 
