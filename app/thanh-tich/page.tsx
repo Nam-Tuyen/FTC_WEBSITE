@@ -3,7 +3,7 @@
 import { Navigation } from "@/components/navigation"
 import { Footer } from "@/components/footer"
 import { PageHeader } from "@/components/page-header"
-import { Trophy, Award, Star, Target, Sparkles, Users, Heart, Lightbulb, Rocket, Globe, Medal, Crown, Zap, ArrowRight, Calendar, Activity } from "lucide-react"
+import { Trophy, Award, Star, Target, Sparkles, Users, Heart, Lightbulb, Rocket, Globe, Medal, Crown, Zap, ArrowRight, Calendar, Activity, MessageCircle } from "lucide-react"
 
 const achievementSections = [
   {
@@ -217,32 +217,56 @@ export default function AchievementsPage() {
 
       {/* Call to Action Section */}
       <section className="py-16 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-4xl mx-auto text-center">
-          <div className="bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-xl rounded-3xl border border-white/20 p-12 shadow-2xl">
-            <div className="w-20 h-20 mx-auto mb-8 bg-gradient-to-r from-green-500 to-emerald-600 rounded-3xl flex items-center justify-center shadow-xl">
-              <Activity className="w-10 h-10 text-white" />
-            </div>
-            <h2 className="text-4xl font-bold text-white mb-6">TÌM HIỂU VỀ CÁC HOẠT ĐỘNG TẠI FTC</h2>
-            <p className="text-xl text-white/80 mb-8 leading-relaxed italic">
-              Tìm hiểu về các hoạt động tại nhà Ép
-            </p>
-            <div className="flex flex-wrap justify-center gap-4">
+        <div className="max-w-6xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {/* Hoạt động */}
+            <div className="group relative bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-xl rounded-3xl border border-white/20 p-8 shadow-2xl hover:scale-105 transition-all duration-300 hover:shadow-purple-500/20 hover:border-purple-400/30">
+              <div className="w-16 h-16 mx-auto mb-6 bg-gradient-to-r from-purple-500 to-pink-600 rounded-2xl flex items-center justify-center shadow-xl group-hover:scale-110 transition-transform duration-300">
+                <Activity className="w-8 h-8 text-white" />
+              </div>
+              <h3 className="text-2xl font-bold text-white mb-4 text-center">HOẠT ĐỘNG</h3>
+              <p className="text-white/80 mb-6 leading-relaxed text-center italic">
+                Tham gia các sự kiện và hoạt động thú vị
+              </p>
               <a 
-                href="https://ftc-websites.vercel.app/hoat-dong" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="px-8 py-4 bg-gradient-to-r from-green-500 to-amber-600 rounded-2xl text-white font-bold hover:shadow-xl hover:scale-105 transition-all cursor-pointer flex items-center gap-2"
+                href="/hoat-dong"
+                className="block w-full px-6 py-3 bg-gradient-to-r from-purple-500 to-pink-600 rounded-2xl text-white font-bold hover:shadow-xl hover:scale-105 transition-all text-center"
               >
-                <span>Hoạt động tại FTC</span>
-                <ArrowRight className="w-5 h-5" />
+                Xem hoạt động
               </a>
+            </div>
+
+            {/* Cơ cấu */}
+            <div className="group relative bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-xl rounded-3xl border border-white/20 p-8 shadow-2xl hover:scale-105 transition-all duration-300 hover:shadow-emerald-500/20 hover:border-emerald-400/30">
+              <div className="w-16 h-16 mx-auto mb-6 bg-gradient-to-r from-emerald-500 to-teal-600 rounded-2xl flex items-center justify-center shadow-xl group-hover:scale-110 transition-transform duration-300">
+                <Users className="w-8 h-8 text-white" />
+              </div>
+              <h3 className="text-2xl font-bold text-white mb-4 text-center">CƠ CẤU</h3>
+              <p className="text-white/80 mb-6 leading-relaxed text-center italic">
+                Tìm hiểu cấu trúc tổ chức của câu lạc bộ
+              </p>
               <a 
-                href="https://www.facebook.com/clbfintechuel" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="px-8 py-4 bg-gradient-to-r from-white/10 to-white/5 backdrop-blur-xl border border-white/20 rounded-2xl text-white font-bold hover:shadow-xl hover:scale-105 transition-all cursor-pointer"
+                href="/co-cau"
+                className="block w-full px-6 py-3 bg-gradient-to-r from-emerald-500 to-teal-600 rounded-2xl text-white font-bold hover:shadow-xl hover:scale-105 transition-all text-center"
               >
-                Theo dõi Fanpage
+                Xem cơ cấu
+              </a>
+            </div>
+
+            {/* Diễn đàn */}
+            <div className="group relative bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-xl rounded-3xl border border-white/20 p-8 shadow-2xl hover:scale-105 transition-all duration-300 hover:shadow-orange-500/20 hover:border-orange-400/30 md:col-span-2 lg:col-span-1">
+              <div className="w-16 h-16 mx-auto mb-6 bg-gradient-to-r from-orange-500 to-red-600 rounded-2xl flex items-center justify-center shadow-xl group-hover:scale-110 transition-transform duration-300">
+                <MessageCircle className="w-8 h-8 text-white" />
+              </div>
+              <h3 className="text-2xl font-bold text-white mb-4 text-center">DIỄN ĐÀN</h3>
+              <p className="text-white/80 mb-6 leading-relaxed text-center italic">
+                Tham gia thảo luận và chia sẻ kiến thức
+              </p>
+              <a 
+                href="/dien-dan"
+                className="block w-full px-6 py-3 bg-gradient-to-r from-orange-500 to-red-600 rounded-2xl text-white font-bold hover:shadow-xl hover:scale-105 transition-all text-center"
+              >
+                Xem diễn đàn
               </a>
             </div>
           </div>

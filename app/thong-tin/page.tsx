@@ -3,7 +3,6 @@
 import { Navigation } from "@/components/navigation"
 import { Footer } from "@/components/footer"
 import { Target, Users, BookOpen, TrendingUp, Award, Network, Facebook, Instagram, Linkedin, Sparkles, ArrowRight, Eye, Heart, Lightbulb, Rocket, Globe, Trophy, Coffee, MessageCircle, Calendar } from "lucide-react"
-import Link from "next/link"
 
 const infoSections = [
   {
@@ -327,38 +326,63 @@ export default function ThongTinPage() {
         </div>
       </section>
 
-      {/* Call to Action Section */}
-      <section className="py-16 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-4xl mx-auto text-center">
-          <div className="bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-xl rounded-3xl border border-white/20 p-12 shadow-2xl">
-            <div className="w-20 h-20 mx-auto mb-8 bg-gradient-to-r from-yellow-500 to-amber-600 rounded-3xl flex items-center justify-center shadow-xl">
-              <Trophy className="w-10 h-10 text-white" />
-            </div>
-            <h2 className="text-4xl font-bold text-white mb-6">TÌM HIỂU VỀ THÀNH TÍCH CÂU LẠC BỘ FTC</h2>
-            <p className="text-xl text-white/80 mb-8 leading-relaxed italic">
-              Khám phá những thành tích mà câu lạc bộ đã đạt được thời gian qua
-            </p>
-            <div className="flex flex-wrap justify-center gap-4">
-              <Link 
-                href="/thanh-tich"
-                className="px-8 py-4 bg-gradient-to-r from-yellow-500 to-amber-600 rounded-2xl text-white font-bold hover:shadow-xl hover:scale-105 transition-all cursor-pointer inline-flex items-center gap-2"
-              >
-                <Trophy className="w-5 h-5" />
-                Thành tích của FTC
-              </Link>
-              <a 
-                href="https://www.facebook.com/clbfintechuel" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="px-8 py-4 bg-gradient-to-r from-blue-500 to-blue-600 rounded-2xl text-white font-bold hover:shadow-xl hover:scale-105 transition-all cursor-pointer inline-flex items-center gap-2"
-              >
-                <Facebook className="w-5 h-5" />
-                Theo dõi Fanpage
-              </a>
-            </div>
-          </div>
-        </div>
-      </section>
+       {/* Call to Action Section */}
+       <section className="py-16 px-4 sm:px-6 lg:px-8">
+         <div className="max-w-6xl mx-auto">
+           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+             {/* Thành tích */}
+             <div className="group relative bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-xl rounded-3xl border border-white/20 p-8 shadow-2xl hover:scale-105 transition-all duration-300 hover:shadow-yellow-500/20 hover:border-yellow-400/30">
+               <div className="w-16 h-16 mx-auto mb-6 bg-gradient-to-r from-yellow-500 to-amber-600 rounded-2xl flex items-center justify-center shadow-xl group-hover:scale-110 transition-transform duration-300">
+                 <Trophy className="w-8 h-8 text-white" />
+               </div>
+               <h3 className="text-2xl font-bold text-white mb-4 text-center">THÀNH TÍCH</h3>
+               <p className="text-white/80 mb-6 leading-relaxed text-center italic">
+                 Khám phá những thành tích nổi bật của câu lạc bộ
+               </p>
+               <a 
+                 href="/thanh-tich"
+                 className="block w-full px-6 py-3 bg-gradient-to-r from-yellow-500 to-amber-600 rounded-2xl text-white font-bold hover:shadow-xl hover:scale-105 transition-all text-center"
+               >
+                 Xem thành tích
+               </a>
+             </div>
+
+             {/* Hoạt động */}
+             <div className="group relative bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-xl rounded-3xl border border-white/20 p-8 shadow-2xl hover:scale-105 transition-all duration-300 hover:shadow-purple-500/20 hover:border-purple-400/30">
+               <div className="w-16 h-16 mx-auto mb-6 bg-gradient-to-r from-purple-500 to-pink-600 rounded-2xl flex items-center justify-center shadow-xl group-hover:scale-110 transition-transform duration-300">
+                 <Calendar className="w-8 h-8 text-white" />
+               </div>
+               <h3 className="text-2xl font-bold text-white mb-4 text-center">HOẠT ĐỘNG</h3>
+               <p className="text-white/80 mb-6 leading-relaxed text-center italic">
+                 Tham gia các sự kiện và hoạt động thú vị
+               </p>
+               <a 
+                 href="/hoat-dong"
+                 className="block w-full px-6 py-3 bg-gradient-to-r from-purple-500 to-pink-600 rounded-2xl text-white font-bold hover:shadow-xl hover:scale-105 transition-all text-center"
+               >
+                 Xem hoạt động
+               </a>
+             </div>
+
+             {/* Cơ cấu */}
+             <div className="group relative bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-xl rounded-3xl border border-white/20 p-8 shadow-2xl hover:scale-105 transition-all duration-300 hover:shadow-emerald-500/20 hover:border-emerald-400/30 md:col-span-2 lg:col-span-1">
+               <div className="w-16 h-16 mx-auto mb-6 bg-gradient-to-r from-emerald-500 to-teal-600 rounded-2xl flex items-center justify-center shadow-xl group-hover:scale-110 transition-transform duration-300">
+                 <Users className="w-8 h-8 text-white" />
+               </div>
+               <h3 className="text-2xl font-bold text-white mb-4 text-center">CƠ CẤU</h3>
+               <p className="text-white/80 mb-6 leading-relaxed text-center italic">
+                 Tìm hiểu cấu trúc tổ chức của câu lạc bộ
+               </p>
+               <a 
+                 href="/co-cau"
+                 className="block w-full px-6 py-3 bg-gradient-to-r from-emerald-500 to-teal-600 rounded-2xl text-white font-bold hover:shadow-xl hover:scale-105 transition-all text-center"
+               >
+                 Xem cơ cấu
+               </a>
+             </div>
+           </div>
+         </div>
+       </section>
 
       <Footer />
 
