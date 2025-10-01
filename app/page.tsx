@@ -15,15 +15,7 @@ import {
   Star, 
   TrendingUp, 
   Play, 
-  CheckCircle, 
-  Calendar, 
-  MapPin, 
-  Mail, 
-  Phone, 
-  Linkedin, 
-  Twitter, 
-  Instagram, 
-  Youtube 
+  CheckCircle
 } from "lucide-react"
 import Link from "next/link"
 import { useState, useEffect } from "react"
@@ -397,101 +389,12 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Footer - Enhanced */}
-      <footer className="bg-card/10 backdrop-blur-sm border-t border-accent/20 py-20 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
-            {/* Company Info */}
-            <div className="space-y-6">
-              <div>
-                <h3 className="font-heading font-bold text-2xl text-foreground mb-4 text-glow">
-                  FTC
-                </h3>
-                <p className="text-foreground/70 font-medium leading-relaxed">
-                  Câu lạc bộ Công nghệ Tài chính - Nơi kết nối những người đam mê fintech
-                </p>
-              </div>
-              <div className="flex space-x-4">
-                <Button variant="outline" size="sm" className="border-accent/30 text-accent hover:bg-accent/10">
-                  <Linkedin className="h-4 w-4" />
-                </Button>
-                <Button variant="outline" size="sm" className="border-accent/30 text-accent hover:bg-accent/10">
-                  <Twitter className="h-4 w-4" />
-                </Button>
-                <Button variant="outline" size="sm" className="border-accent/30 text-accent hover:bg-accent/10">
-                  <Instagram className="h-4 w-4" />
-                </Button>
-                <Button variant="outline" size="sm" className="border-accent/30 text-accent hover:bg-accent/10">
-                  <Youtube className="h-4 w-4" />
-                </Button>
-              </div>
-            </div>
-
-            {/* Quick Links */}
-            <div className="space-y-6">
-              <h4 className="font-bold text-lg text-foreground uppercase tracking-wide">Liên kết nhanh</h4>
-              <div className="space-y-3">
-                <Link href="/thong-tin" className="block text-foreground/70 hover:text-accent transition-colors duration-300">
-                  Thông tin câu lạc bộ
-                </Link>
-                <Link href="/dien-dan" className="block text-foreground/70 hover:text-accent transition-colors duration-300">
-                  Diễn đàn
-                </Link>
-                <Link href="/chatbot" className="block text-foreground/70 hover:text-accent transition-colors duration-300">
-                  AI Chatbot
-                </Link>
-                <Link href="/ung-tuyen" className="block text-foreground/70 hover:text-accent transition-colors duration-300">
-                  Đăng ký tham gia
-                </Link>
-              </div>
-            </div>
-
-            {/* Activities */}
-            <div className="space-y-6">
-              <h4 className="font-bold text-lg text-foreground uppercase tracking-wide">Hoạt động</h4>
-              <div className="space-y-3">
-                <div className="text-foreground/70">Workshop & Hội thảo</div>
-                <div className="text-foreground/70">Dự án thực tế</div>
-                <div className="text-foreground/70">Tham quan doanh nghiệp</div>
-                <div className="text-foreground/70">Ngày hội việc làm</div>
-              </div>
-            </div>
-
-            {/* Contact Info */}
-            <div className="space-y-6">
-              <h4 className="font-bold text-lg text-foreground uppercase tracking-wide">Liên hệ</h4>
-              <div className="space-y-4">
-                <div className="flex items-center text-foreground/70">
-                  <Mail className="h-5 w-5 text-accent mr-3" />
-                  <span>ftc@university.edu.vn</span>
-                </div>
-                <div className="flex items-center text-foreground/70">
-                  <Phone className="h-5 w-5 text-accent mr-3" />
-                  <span>+84 123 456 789</span>
-                </div>
-                <div className="flex items-center text-foreground/70">
-                  <MapPin className="h-5 w-5 text-accent mr-3" />
-                  <span>Trường Đại học ABC</span>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div className="border-t border-accent/20 pt-8">
-            <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
-              <p className="text-foreground/60 font-medium">
-                ©2025. Câu lạc bộ Công nghệ Tài chính. Tất cả quyền được bảo lưu.
-              </p>
-              <div className="flex space-x-6 text-sm">
-                <Link href="/privacy" className="text-foreground/60 hover:text-accent transition-colors duration-300">
-                  Chính sách bảo mật
-                </Link>
-                <Link href="/terms" className="text-foreground/60 hover:text-accent transition-colors duration-300">
-                  Điều khoản sử dụng
-                </Link>
-              </div>
-            </div>
-          </div>
+      {/* Footer - Simple */}
+      <footer className="bg-card/10 backdrop-blur-sm border-t border-accent/20 py-8 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto text-center">
+          <p className="text-foreground/60 font-medium italic">
+            ©2025. Câu lạc bộ Công nghệ Tài chính
+          </p>
         </div>
       </footer>
     </div>
