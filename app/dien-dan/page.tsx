@@ -13,108 +13,190 @@ import {
   Heart, 
   MessageCircle, 
   Send, 
-  X 
+  X,
+  Plus
 } from 'lucide-react'
 import { createQuestion, fetchQuestions, createResponse, toggleLike } from '../../googleSheetApi/sheet'
 import { CATEGORIES, STORAGE_KEYS, QuestionItem, Reply, ForumCategory } from './types'
 import { uuid, formatTime } from './utils/index'
 import { SimpleMobileSend } from './components/simple-mobile-send'
+import { QuestionCard } from './components/cards/question-card'
 import './components/mobile-optimizations.css'
 
-
-// Simple Button Component
-const Button = ({ children, onClick, disabled, variant = 'default', className = '' }: any) => {
-  const baseClass = 'px-4 py-2 rounded-xl font-semibold transition-all duration-300'
-  const variantClass = variant === 'outline' 
-    ? 'border-2 border-white/30 bg-transparent hover:bg-white/10 disabled:opacity-50' 
-    : 'bg-white/20 hover:bg-white/30 disabled:opacity-50'
-  
-  return (
-    <button 
-      onClick={onClick} 
-      disabled={disabled}
-      className={`${baseClass} ${variantClass} ${className}`}
-    >
-      {children}
-    </button>
-  )
-}
-
-// Simple Input Component
-const Input = ({ value, onChange, placeholder, className = '' }: any) => {
-  return (
-    <input
-      type="text"
-      value={value}
-      onChange={onChange}
-      placeholder={placeholder}
-      className={`w-full px-4 py-3 rounded-xl border-2 focus:outline-none focus:ring-2 focus:ring-white/40 transition-all ${className}`}
-    />
-  )
-}
+// Import UI components
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { Button } from '@/components/ui/Button'
+import { Input } from '@/components/ui/Input'
+import { Textarea } from '@/components/ui/Textarea'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/Select'
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from '@/components/ui/dialog'
 
 
-// Ask Question Component
-const AskInline = ({ onSubmit, defaultStudentId, onUpdateStudentId }: any) => {
+
+
+// Ask Question Component - Twitter-style
+const AskQuestionCard = ({ onSubmit, defaultStudentId, onUpdateStudentId }: any) => {
   const [title, setTitle] = useState('')
   const [content, setContent] = useState('')
   const [studentId, setStudentId] = useState(defaultStudentId || '')
   const [category, setCategory] = useState<string>('DISCUSSION')
+  const [error, setError] = useState('')
+  const [mode, setMode] = useState<'anonymous' | 'mssv'>('anonymous')
+  const [showProfileModal, setShowProfileModal] = useState(false)
+  const [modalInput, setModalInput] = useState(defaultStudentId || '')
 
-  const handleSubmit = () => {
-    if (!title.trim() || !content.trim()) return
-    onSubmit({ title, content, studentId, category })
+  useEffect(() => {
+    if (mode === 'mssv' && !studentId && defaultStudentId) {
+      setStudentId(defaultStudentId)
+    }
+  }, [mode, defaultStudentId, studentId])
+
+  function validate() {
+    if (!title.trim() || !content.trim()) {
+      setError('Vui lòng nhập đầy đủ tiêu đề và nội dung')
+      return false
+    }
+    if (mode === 'mssv') {
+      const id = (studentId || defaultStudentId || '').trim()
+      if (!id) {
+        setModalInput(defaultStudentId || '')
+        setShowProfileModal(true)
+        return false
+      }
+      if (!/^K\d{9}$/.test(id)) {
+        setModalInput(id)
+        setShowProfileModal(true)
+        return false
+      }
+    }
+    setError('')
+    return true
+  }
+
+  const handlePostQuestion = () => {
+    if (!validate()) return
+    const sid = mode === 'mssv' ? (studentId || defaultStudentId).trim() : ''
+    onSubmit({ title: title.trim(), content: content.trim(), studentId: sid, category })
     setTitle('')
     setContent('')
+    setStudentId('')
+    setCategory('DISCUSSION')
+    setMode('anonymous')
   }
 
   return (
-    <div className="space-y-4">
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-        <Input 
-          value={studentId} 
-          onChange={(e: any) => { 
-            setStudentId(e.target.value)
-            onUpdateStudentId(e.target.value)
-          }} 
-          placeholder="MSSV (K21520001)" 
-          className="bg-white/10 border-white/30 text-white placeholder-white/60"
-        />
-        <select 
-          value={category} 
-          onChange={(e) => setCategory(e.target.value)} 
-          className="bg-white/10 border-2 border-white/30 rounded-xl px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-white/40"
-        >
-          {Object.entries(CATEGORIES).map(([key, label]) => (
-            <option key={key} value={key} className="bg-[#003663] text-white">{label}</option>
-          ))}
-        </select>
-        <Input 
-          value={title} 
-          onChange={(e: any) => setTitle(e.target.value)} 
-          placeholder="Tiêu đề câu hỏi" 
-          className="bg-white/10 border-white/30 text-white placeholder-white/60"
-        />
-      </div>
-      <textarea 
-        value={content} 
-        onChange={(e) => setContent(e.target.value)} 
-        rows={4} 
-        placeholder="Nội dung câu hỏi..." 
-        className="w-full rounded-xl bg-white/10 border-2 border-white/30 p-4 text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-white/40 resize-none"
-      />
-      <div className="flex justify-end">
-        <Button 
-          disabled={!title.trim() || !content.trim()} 
-          onClick={handleSubmit}
-          className="bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white px-6 py-3"
-        >
-          <div className="flex items-center gap-2">
-            <Send className="h-4 w-4" />
-            Gửi câu hỏi
+    <div id="ask-question-form" className="p-6 border-b border-border/50">
+      <div className="flex gap-4">
+        <div className="flex-shrink-0">
+          <div className="w-12 h-12 rounded-full bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center text-foreground font-semibold border border-border/30">
+            {defaultStudentId ? defaultStudentId.charAt(0).toUpperCase() : '?'}
           </div>
-        </Button>
+        </div>
+        
+        <div className="flex-1 space-y-4">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4">
+            <div className="sm:col-span-2">
+              <Input 
+                value={title} 
+                onChange={(e) => setTitle(e.target.value)} 
+                placeholder="Bạn đang thắc mắc điều gì?" 
+                className="text-base sm:text-lg border-0 bg-transparent p-0 placeholder:text-muted-foreground focus-visible:ring-0 font-medium"
+              />
+            </div>
+
+            <div>
+              <Select value={category} onValueChange={setCategory}>
+                <SelectTrigger className="border-border/50 rounded-full text-sm">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  {Object.entries(CATEGORIES).map(([key, label]) => (
+                    <SelectItem key={key} value={key}>{label}</SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+          </div>
+
+          <div>
+            <Textarea 
+              value={content} 
+              onChange={(e) => setContent(e.target.value)} 
+              placeholder="Mô tả chi tiết câu hỏi của bạn..." 
+              className="min-h-[120px] border-0 bg-transparent p-0 placeholder:text-muted-foreground focus-visible:ring-0 resize-none"
+            />
+          </div>
+
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between pt-4 border-t border-border/50 gap-4">
+            <div className="flex flex-col sm:flex-row sm:items-center gap-4">
+              <div className="flex items-center gap-4">
+                <label className="flex items-center gap-2 text-sm text-foreground cursor-pointer">
+                  <input 
+                    type="radio" 
+                    checked={mode === 'anonymous'} 
+                    onChange={() => setMode('anonymous')}
+                    className="text-primary focus:ring-primary"
+                  />
+                  <span>Ẩn danh</span>
+                </label>
+                <label className="flex items-center gap-2 text-sm text-foreground cursor-pointer">
+                  <input 
+                    type="radio" 
+                    checked={mode === 'mssv'} 
+                    onChange={() => setMode('mssv')}
+                    className="text-primary focus:ring-primary"
+                  />
+                  <span>MSSV</span>
+                </label>
+              </div>
+              
+              {defaultStudentId && (
+                <div className="text-sm text-muted-foreground">
+                  MSSV: {defaultStudentId}
+                </div>
+              )}
+            </div>
+
+            <Button 
+              onClick={handlePostQuestion}
+              className="rounded-full px-6 w-full sm:w-auto"
+              disabled={!title.trim() || !content.trim()}
+            >
+              <Plus className="w-4 h-4 mr-2" />
+              Đăng câu hỏi
+            </Button>
+          </div>
+
+          {error && (
+            <div className="text-sm text-destructive bg-destructive/10 border border-destructive/20 rounded-lg p-3">
+              {error}
+            </div>
+          )}
+        </div>
       </div>
+
+      <Dialog open={showProfileModal} onOpenChange={(v) => setShowProfileModal(v)}>
+        <DialogContent showCloseButton>
+          <DialogHeader>
+            <DialogTitle>Yêu cầu cập nhật hồ sơ</DialogTitle>
+          </DialogHeader>
+          <div className="space-y-2">
+            <p className="text-sm text-muted-foreground">Bạn đã chọn chế độ MSSV nhưng chưa có MSSV hợp lệ. Vui lòng nhập MSSV (dạng K#########) để tiếp tục.</p>
+            <Input value={modalInput} onChange={(e) => setModalInput(e.target.value)} placeholder="K#########" />
+          </div>
+          <DialogFooter>
+            <div className="flex justify-end gap-2">
+              <Button variant="outline" onClick={() => setShowProfileModal(false)}>Hủy</Button>
+              <Button onClick={() => {
+                const v = (modalInput || '').trim()
+                if (!/^K\d{9}$/.test(v)) return
+                onUpdateStudentId(v)
+                setShowProfileModal(false)
+              }}>Lưu MSSV</Button>
+            </div>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   )
 }
@@ -308,288 +390,152 @@ export default function ForumPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#003663] text-white">
+    <div className="min-h-screen bg-gradient-to-b from-background to-background/80 text-foreground">
       <Navigation />
 
-      {/* Hero Section */}
-      <section className="relative min-h-[70vh] flex items-center justify-center pt-24 pb-16 px-4 sm:px-6 lg:px-8">
-        <div className="absolute inset-0 overflow-hidden">
-          <div className="absolute top-1/4 -right-1/4 w-2/3 h-2/3 bg-gradient-to-br from-blue-500/20 via-purple-500/10 to-transparent rounded-full blur-3xl" />
-          <div className="absolute -bottom-1/4 -left-1/4 w-2/3 h-2/3 bg-gradient-to-tr from-purple-500/20 via-pink-500/10 to-transparent rounded-full blur-3xl" />
+      {/* Hero Section - Twitter-style minimal */}
+      <section className="relative py-12 lg:py-16 overflow-hidden">
+        <div className="absolute inset-0 pointer-events-none">
+          <div className="absolute top-0 right-0 w-[40%] h-[60%] bg-gradient-to-br from-primary/20 to-accent/10 rounded-full blur-3xl transform translate-x-24 -translate-y-8" />
+          <div className="absolute bottom-0 left-0 w-[35%] h-[50%] bg-gradient-to-tr from-accent/10 to-primary/20 rounded-full blur-3xl -translate-x-24 translate-y-8" />
         </div>
         
-        <div className="relative max-w-6xl mx-auto text-center space-y-8">
-          <div className="space-y-6">
-            <h1 className="text-5xl sm:text-6xl lg:text-7xl font-extrabold">
-              <span className="bg-gradient-to-r from-white via-blue-100 to-purple-100 bg-clip-text text-transparent">
-                DIỄN ĐÀN FTC
-              </span>
-            </h1>
-            <p className="text-xl sm:text-2xl lg:text-3xl text-white/90 leading-relaxed max-w-4xl mx-auto font-medium">
-              Nơi cộng đồng fintech chia sẻ kiến thức, thảo luận xu hướng và kết nối với nhau
-            </p>
+        <div className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <div className="inline-flex items-center justify-center w-12 h-12 lg:w-16 lg:h-16 bg-gradient-to-tr from-primary to-accent rounded-full shadow-lg mb-4 lg:mb-6">
+            <MessageSquare className="h-6 w-6 lg:h-8 lg:w-8 text-white" />
           </div>
-
-          {/* Search Box */}
-          <div className="max-w-2xl mx-auto relative mt-12">
-            <div className="absolute left-6 top-1/2 -translate-y-1/2">
-              <Search className="h-6 w-6 text-white/80" />
-            </div>
+          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent mb-3 lg:mb-4">
+            DIỄN ĐÀN SINH VIÊN
+          </h1>
+          <p className="text-base lg:text-lg text-muted-foreground max-w-2xl mx-auto mb-6 lg:mb-8 px-4">
+            Nơi sinh viên chia sẻ, thảo luận và tìm kiếm giải đáp cho mọi thắc mắc
+          </p>
+          
+          {/* Search Bar */}
+          <div className="max-w-xl mx-auto relative px-4">
+            <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-muted-foreground" />
             <Input
               value={search}
               onChange={(e: ChangeEvent<HTMLInputElement>) => setSearch(e.target.value)}
-              placeholder="Tìm kiếm câu hỏi, thảo luận..."
-              className="pl-16 h-16 text-lg bg-white/15 border-white/25 placeholder-white/70 text-white rounded-2xl shadow-2xl focus:ring-white/40 backdrop-blur-xl"
+              placeholder="Tìm kiếm câu hỏi..."
+              className="pl-12 h-12 text-base bg-background/50 backdrop-blur-sm border-border/50 focus:border-primary/50 rounded-full w-full"
             />
-            {search && (
-              <button
-                onClick={() => setSearch('')}
-                className="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 grid place-items-center rounded-xl bg-white/20 hover:bg-white/30 transition-all"
-              >
-                <X className="h-4 w-4" />
-              </button>
-            )}
           </div>
         </div>
       </section>
 
-      <div className="h-16 bg-gradient-to-b from-transparent to-[#003663]/50" />
-
-      {/* Main Content */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-20">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+      {/* Main Layout - Twitter-style 3-column */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-12">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 lg:gap-8">
           
-          {/* Left Sidebar */}
-          <aside className="lg:col-span-3 space-y-6">
-            {/* Categories */}
-            <div className="bg-white/10 rounded-2xl border border-white/20 p-6 backdrop-blur-xl">
-              <div className="flex items-center gap-3 mb-6">
-                <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-500/30 to-purple-500/30 flex items-center justify-center">
-                  <Hash className="h-5 w-5 text-blue-200" />
-                </div>
-                <div>
-                  <h3 className="text-xl font-bold">Danh mục</h3>
-                  <p className="text-sm text-white/70">Lọc theo chủ đề</p>
-                </div>
-              </div>
+          {/* Left Sidebar - Navigation */}
+          <aside className="lg:col-span-3 space-y-4 lg:space-y-6">
+            <div className="bg-card/50 backdrop-blur-sm rounded-2xl border border-border/50 p-4 lg:p-6">
+              <h3 className="font-semibold text-lg mb-4 flex items-center gap-2">
+                <Hash className="h-5 w-5" />
+                Danh mục
+              </h3>
               <div className="space-y-2">
                 <button
-                  onClick={() => setSelectedCategory('')}
                   className={`w-full text-left px-4 py-3 rounded-xl transition-all ${
                     selectedCategory === '' 
-                      ? 'bg-white/20 border border-white/30' 
-                      : 'hover:bg-white/10'
+                      ? 'bg-primary text-primary-foreground shadow-lg' 
+                      : 'hover:bg-muted/50 text-muted-foreground hover:text-foreground'
                   }`}
+                  onClick={() => setSelectedCategory('')}
                 >
                   <div className="flex items-center justify-between">
-                    <span className="font-semibold">Tất cả</span>
-                    <span className="text-sm bg-white/20 px-3 py-1 rounded-full">{questions.length}</span>
+                    <span>Tất cả</span>
+                    <span className="text-sm">{questions.length}</span>
                   </div>
                 </button>
-                {Object.entries(CATEGORIES).map(([key, label]) => {
-                  const count = questions.filter((q) => q.category === key).length
+                {CATEGORIES && Object.entries(CATEGORIES).map(([key, label]) => {
+                  const count = questions.filter(q => q.category === key).length;
                   return (
                     <button
                       key={key}
-                      onClick={() => setSelectedCategory(key as ForumCategory)}
                       className={`w-full text-left px-4 py-3 rounded-xl transition-all ${
                         selectedCategory === key 
-                          ? 'bg-white/20 border border-white/30' 
-                          : 'hover:bg-white/10'
+                          ? 'bg-primary text-primary-foreground shadow-lg' 
+                          : 'hover:bg-muted/50 text-muted-foreground hover:text-foreground'
                       }`}
+                      onClick={() => setSelectedCategory(key as any)}
                     >
                       <div className="flex items-center justify-between">
-                        <span className="font-semibold">{label}</span>
-                        <span className="text-sm bg-white/20 px-3 py-1 rounded-full">{count}</span>
+                        <span>{label}</span>
+                        <span className="text-sm">{count}</span>
                       </div>
                     </button>
-                  )
+                  );
                 })}
               </div>
             </div>
 
-            {/* Stats */}
-            <div className="bg-white/10 rounded-2xl border border-white/20 p-6 backdrop-blur-xl">
-              <div className="flex items-center gap-3 mb-6">
-                <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-green-500/30 to-emerald-500/30 flex items-center justify-center">
-                  <TrendingUp className="h-5 w-5 text-green-200" />
+            {/* Stats Card */}
+            <div className="bg-card/50 backdrop-blur-sm rounded-2xl border border-border/50 p-4 lg:p-6">
+              <h3 className="font-semibold text-lg mb-4 flex items-center gap-2">
+                <TrendingUp className="h-5 w-5" />
+                Thống kê
+              </h3>
+              <div className="space-y-4">
+                <div className="flex items-center justify-between">
+                  <span className="text-muted-foreground">Tổng câu hỏi</span>
+                  <span className="font-semibold">{questions.length}</span>
                 </div>
-                <div>
-                  <h3 className="text-xl font-bold">Thống kê</h3>
+                <div className="flex items-center justify-between">
+                  <span className="text-muted-foreground">Hiển thị</span>
+                  <span className="font-semibold">{sorted.length}</span>
                 </div>
-              </div>
-              <div className="space-y-3">
-                <div className="flex items-center justify-between p-3 rounded-xl bg-white/10">
-                  <span className="text-sm font-medium">Tổng câu hỏi</span>
-                  <span className="font-bold text-xl">{questions.length}</span>
-                </div>
-                <div className="flex items-center justify-between p-3 rounded-xl bg-white/10">
-                  <span className="text-sm font-medium">Hiển thị</span>
-                  <span className="font-bold text-xl">{sorted.length}</span>
-                </div>
-                <div className="flex items-center justify-between p-3 rounded-xl bg-white/10">
-                  <span className="text-sm font-medium">Trang</span>
-                  <span className="font-bold text-xl">{pageSafe}/{totalPages}</span>
+                <div className="flex items-center justify-between">
+                  <span className="text-muted-foreground">Trang hiện tại</span>
+                  <span className="font-semibold">{pageSafe}/{totalPages}</span>
                 </div>
               </div>
             </div>
           </aside>
 
-          {/* Main Content */}
-          <main className="lg:col-span-6 space-y-6">
-            {/* Ask Question */}
-            <div className="bg-white/10 rounded-2xl border border-white/20 p-6 backdrop-blur-xl">
-              <div className="flex items-center justify-between mb-6">
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-orange-500/30 to-red-500/30 flex items-center justify-center">
-                    <MessageSquare className="h-5 w-5 text-orange-200" />
-                  </div>
-                  <div>
-                    <h3 className="text-xl font-bold">Đặt câu hỏi</h3>
-                    <p className="text-sm text-white/70">Chia sẻ thắc mắc</p>
-                  </div>
-                </div>
-                <button
-                  onClick={handleFetchQuestions}
-                  disabled={isLoading}
-                  className="px-4 py-2 bg-white/10 hover:bg-white/20 rounded-xl transition-all disabled:opacity-50 flex items-center gap-2"
-                >
-                  <div className={`w-4 h-4 ${isLoading ? 'animate-spin' : ''}`}>
-                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
-                    </svg>
-                  </div>
-                  Làm mới
-                </button>
-              </div>
-              <AskInline 
-                onSubmit={handleCreateQuestion} 
-                defaultStudentId={currentStudentId}
-                onUpdateStudentId={setCurrentStudentId}
+          {/* Main Content - Feed */}
+          <main className="lg:col-span-6 space-y-4 lg:space-y-6">
+            {/* Create Question Card */}
+            <div className="bg-card/50 backdrop-blur-sm rounded-2xl border border-border/50">
+              <AskQuestionCard
+                currentStudentId={currentStudentId}
+                onUpdateStudentId={(sid) => {
+                  setCurrentStudentId(sid)
+                  localStorage.setItem(STORAGE_KEYS.studentId, sid)
+                }}
+                onSubmit={handleCreateQuestion}
               />
             </div>
 
-            {/* Questions List */}
-            <div className="space-y-6">
+            {/* Questions Feed */}
+            <div className="space-y-4">
               {isLoading ? (
-                <div className="bg-white/10 rounded-2xl border border-white/20 p-20 text-center backdrop-blur-xl">
-                  <div className="w-20 h-20 rounded-2xl bg-white/20 flex items-center justify-center mx-auto mb-6">
-                    <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-white"></div>
+                <div className="bg-card/50 backdrop-blur-sm rounded-2xl border border-border/50 p-20 text-center">
+                  <div className="w-20 h-20 rounded-2xl bg-muted/20 flex items-center justify-center mx-auto mb-6">
+                    <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-primary"></div>
                   </div>
                   <h3 className="text-2xl font-bold mb-3">Đang tải câu hỏi...</h3>
-                  <p className="text-white/80">Vui lòng chờ trong giây lát</p>
+                  <p className="text-muted-foreground">Vui lòng chờ trong giây lát</p>
                 </div>
               ) : (
                 paginated.map((question) => (
-                <div 
-                  key={question.id} 
-                  className="bg-white/10 rounded-2xl border border-white/20 hover:border-white/30 p-6 backdrop-blur-xl transition-all hover:bg-white/15"
-                >
-                  <div className="flex items-start justify-between mb-4">
-                    <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-500/20 to-purple-500/20 flex items-center justify-center">
-                        <MessageSquare className="h-5 w-5 text-blue-300" />
-                      </div>
-                      <div>
-                        <div className="flex items-center gap-2 mb-1">
-                          <span className="font-bold">{question.studentId || 'Ẩn danh'}</span>
-                           {(Array.isArray(question.likes) ? question.likes.length : question.likes) >= 5 && (
-                             <div className="flex items-center gap-1 bg-gradient-to-r from-orange-500 to-red-500 px-2 py-1 rounded-full text-xs font-bold">
-                               <Star className="h-3 w-3" />
-                               HOT
-                             </div>
-                           )}
-                        </div>
-                        <div className="text-sm flex items-center gap-2 text-white/70">
-                          <Clock className="h-4 w-4" />
-                          {formatTime(typeof question.createdAt === 'number' ? question.createdAt : new Date(question.createdAt).getTime())}
-                        </div>
-                      </div>
-                    </div>
+                  <div key={question.id} className="bg-card/50 backdrop-blur-sm rounded-2xl border border-border/50 hover:border-border transition-all">
+                    <QuestionCard
+                      q={question}
+                      defaultStudentId={currentStudentId}
+                      onLike={() => handleToggleLike(question.id)}
+                      onReply={(content, authorName) => handleAddReply(question.id, content, authorName)}
+                    />
                   </div>
-
-                  <h3 className="text-xl font-bold mb-3">{question.title}</h3>
-                  <p className="mb-6 text-white/90">{question.content}</p>
-
-                  <div className="flex items-center justify-between pt-4 border-t border-white/15">
-                    <div className="flex items-center gap-6">
-                      <button 
-                        onClick={() => handleToggleLike(question.id)} 
-                        className="flex items-center gap-2 hover:opacity-80 transition-all"
-                      >
-                         <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${
-                           Array.isArray(question.likes) && question.likes.includes(currentUserId) 
-                             ? 'bg-red-500/20' 
-                             : 'bg-white/10'
-                         }`}>
-                           <Heart className={`h-5 w-5 ${
-                             Array.isArray(question.likes) && question.likes.includes(currentUserId) 
-                               ? 'text-red-500 fill-red-500' 
-                               : 'text-white'
-                           }`} />
-                         </div>
-                         <span className="font-semibold">{Array.isArray(question.likes) ? question.likes.length : question.likes}</span>
-                      </button>
-                      <div className="flex items-center gap-2">
-                        <div className="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center">
-                          <MessageCircle className="h-5 w-5" />
-                        </div>
-                         <span className="font-semibold">{question.repliesCount || 0}</span>
-                      </div>
-                    </div>
-                    <span className="text-sm font-bold px-4 py-2 bg-white/20 rounded-full">
-                      {CATEGORIES[question.category as ForumCategory]}
-                    </span>
-                  </div>
-
-                   {/* Replies Section */}
-                   {question.replies && question.replies.length > 0 && (
-                     <div className="mt-6 space-y-4">
-                       <h4 className="text-lg font-semibold text-white/90">Phản hồi ({question.replies.length})</h4>
-                       {question.replies.map((reply: any, index: number) => (
-                         <div key={reply.id || index} className="bg-white/5 rounded-xl p-4 border border-white/10">
-                           <div className="flex items-center gap-3 mb-2">
-                             <div className="w-8 h-8 rounded-full bg-gradient-to-br from-blue-500/20 to-purple-500/20 flex items-center justify-center">
-                               <MessageCircle className="h-4 w-4 text-blue-300" />
-                             </div>
-                             <div>
-                               <span className="font-semibold text-sm">
-                                 {reply.user === 'anonymous' ? 'Ẩn danh' : reply.user}
-                               </span>
-                               <p className="text-xs text-white/70 flex items-center gap-1">
-                                 <Clock className="h-3 w-3" />
-                                 {formatTime(new Date(reply.createdAt).getTime())}
-                               </p>
-                             </div>
-                           </div>
-                           <p className="text-white/90 text-sm">{reply.content}</p>
-                         </div>
-                       ))}
-                     </div>
-                   )}
-
-                   <div className="mt-4">
-                     <SimpleMobileSend 
-                       onSubmit={(content: string) => handleAddReply(question.id, content, 'Ẩn danh')} 
-                     />
-                   </div>
-                </div>
                 ))
               )}
               
               {!isLoading && sorted.length === 0 && (
-                <div className="bg-white/10 rounded-2xl border border-white/20 p-20 text-center backdrop-blur-xl">
-                  <div className="w-20 h-20 rounded-2xl bg-white/20 flex items-center justify-center mx-auto mb-6">
-                    <MessageSquare className="h-10 w-10" />
-                  </div>
-                  <h3 className="text-2xl font-bold mb-3">Chưa có câu hỏi</h3>
-                  <p className="text-white/80 mb-4">Hãy là người đầu tiên đặt câu hỏi!</p>
-                  <button
-                    onClick={handleFetchQuestions}
-                    className="px-6 py-3 bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white rounded-xl font-semibold transition-all"
-                  >
-                    Làm mới
-                  </button>
+                <div className="bg-card/50 backdrop-blur-sm rounded-2xl border border-border/50 p-8 text-center">
+                  <MessageSquare className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
+                  <h3 className="text-lg font-semibold mb-2">Chưa có câu hỏi nào</h3>
+                  <p className="text-muted-foreground">Hãy là người đầu tiên đặt câu hỏi!</p>
                 </div>
               )}
             </div>
@@ -600,17 +546,19 @@ export default function ForumPage() {
                 <Button 
                   variant="outline" 
                   disabled={pageSafe <= 1} 
-                  onClick={() => setPage(p => Math.max(1, p - 1))}
+                  onClick={() => setPage((p) => Math.max(1, p - 1))}
+                  className="rounded-full"
                 >
                   Trang trước
                 </Button>
-                <span className="px-6 py-2 bg-white/10 rounded-xl font-semibold">
+                <span className="text-sm text-muted-foreground px-4">
                   {pageSafe} / {totalPages}
                 </span>
                 <Button 
                   variant="outline" 
                   disabled={pageSafe >= totalPages} 
-                  onClick={() => setPage(p => Math.min(totalPages, p + 1))}
+                  onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
+                  className="rounded-full"
                 >
                   Trang sau
                 </Button>
@@ -618,25 +566,19 @@ export default function ForumPage() {
             )}
           </main>
 
-          {/* Right Sidebar */}
-          <aside className="lg:col-span-3 space-y-6">
-            <div className="bg-white/10 rounded-2xl border border-white/20 p-6 backdrop-blur-xl">
-              <div className="flex items-center gap-3 mb-6">
-                <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-green-500/30 to-emerald-500/30 flex items-center justify-center">
-                  <Users className="h-5 w-5 text-green-200" />
-                </div>
-                <div>
-                  <h3 className="text-xl font-bold">Hoạt động</h3>
-                  <p className="text-sm text-white/70">Mới nhất</p>
-                </div>
-              </div>
-              <div className="space-y-4">
+          {/* Right Sidebar - Widgets */}
+          <aside className="lg:col-span-3 space-y-4 lg:space-y-6">
+            <div className="bg-card/50 backdrop-blur-sm rounded-2xl border border-border/50 p-4 lg:p-6">
+              <h3 className="font-semibold text-lg mb-4 flex items-center gap-2">
+                <Users className="h-5 w-5" />
+                Hoạt động gần đây
+              </h3>
+              <div className="space-y-3">
                 {questions.slice(0, 5).map((q) => (
-                  <div key={q.id} className="border-l-4 border-blue-400 pl-4 py-2">
-                    <p className="text-sm font-semibold mb-2 line-clamp-2">{q.title}</p>
-                    <p className="text-xs text-white/70 flex items-center gap-2">
-                      <Clock className="h-3 w-3" />
-                       {formatTime(typeof q.createdAt === 'number' ? q.createdAt : new Date(q.createdAt).getTime())} • {q.repliesCount || 0} phản hồi
+                  <div key={q.id} className="border-l-2 border-primary/30 pl-3">
+                    <p className="text-sm font-medium truncate">{q.title}</p>
+                    <p className="text-xs text-muted-foreground">
+                      {formatTime(typeof q.createdAt === 'number' ? q.createdAt : new Date(q.createdAt).getTime())} • {(q.replies || []).length} phản hồi
                     </p>
                   </div>
                 ))}
@@ -647,6 +589,24 @@ export default function ForumPage() {
       </div>
 
       <style jsx global>{`
+        @keyframes gradient {
+          0% { background-position: 0% 50%; }
+          50% { background-position: 100% 50%; }
+          100% { background-position: 0% 50%; }
+        }
+        @keyframes blob {
+          0%, 100% { transform: translate(0, 0) scale(1); }
+          25% { transform: translate(20px, -30px) scale(1.1); }
+          50% { transform: translate(-20px, 20px) scale(0.9); }
+          75% { transform: translate(30px, 30px) scale(1.05); }
+        }
+        .animate-gradient-slow {
+          animation: gradient 15s ease infinite;
+          background-size: 200% 200%;
+        }
+        .animate-blob {
+          animation: blob 20s ease-in-out infinite;
+        }
         .line-clamp-2 { 
           display: -webkit-box; 
           -webkit-line-clamp: 2; 
