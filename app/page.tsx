@@ -216,7 +216,7 @@ export default function HomePage() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {[
               {
                 icon: Brain,
@@ -260,24 +260,24 @@ export default function HomePage() {
                   <div className={`absolute inset-0 bg-gradient-to-br ${feature.gradient} opacity-0 group-hover:opacity-100 transition-opacity duration-700`}></div>
                   <CardContent className="relative z-10 p-8 h-full flex flex-col">
                     <div className="relative mb-6">
-                      <div className={`w-24 h-24 mx-auto bg-gradient-to-br ${feature.iconColor} rounded-3xl flex items-center justify-center glow group-hover:scale-110 transition-all duration-500 shadow-2xl`}>
-                        <IconComponent className="h-12 w-12 text-white" />
+                      <div className={`w-20 h-20 mx-auto bg-gradient-to-br ${feature.iconColor} rounded-2xl flex items-center justify-center glow group-hover:scale-110 transition-all duration-500 shadow-xl`}>
+                        <IconComponent className="h-10 w-10 text-white" />
                       </div>
-                      <div className="absolute inset-0 w-24 h-24 mx-auto border-2 border-accent/30 rounded-3xl animate-pulse"></div>
+                      <div className="absolute inset-0 w-20 h-20 mx-auto border-2 border-accent/30 rounded-2xl animate-pulse"></div>
                     </div>
                     
-                    <h3 className="font-heading font-bold text-xl mb-4 text-foreground uppercase tracking-wide group-hover:text-accent transition-colors duration-300">
+                    <h3 className="font-heading font-bold text-lg mb-4 text-foreground uppercase tracking-wide group-hover:text-accent transition-colors duration-300">
                       {feature.title}
                     </h3>
                     
-                    <p className="text-foreground/70 font-medium leading-relaxed mb-6 flex-grow">
+                    <p className="text-foreground/70 font-medium leading-relaxed mb-6 flex-grow text-sm">
                       {feature.description}
                     </p>
                     
                     <div className="space-y-2">
                       {feature.features.map((item, idx) => (
-                        <div key={idx} className="flex items-center text-sm text-foreground/60 group-hover:text-accent/80 transition-colors duration-300">
-                          <CheckCircle className="h-4 w-4 mr-2 text-accent" />
+                        <div key={idx} className="flex items-center text-xs text-foreground/60 group-hover:text-accent/80 transition-colors duration-300">
+                          <CheckCircle className="h-3 w-3 mr-2 text-accent" />
                           <span>{item}</span>
                         </div>
                       ))}
@@ -307,7 +307,7 @@ export default function HomePage() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {[
               {
                 name: "Nguyễn Văn A",
@@ -349,75 +349,6 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Timeline Section */}
-      <section className="py-24 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16">
-            <div className="inline-flex items-center px-6 py-3 rounded-full bg-accent/10 border border-accent/30 mb-6">
-              <Calendar className="h-5 w-5 text-accent mr-2" />
-              <span className="text-sm font-bold text-accent uppercase tracking-wider">Hành trình phát triển</span>
-            </div>
-            <h2 className="font-heading font-black text-4xl sm:text-5xl text-foreground mb-4 text-glow">
-              LỊCH SỬ CÂU LẠC BỘ
-            </h2>
-            <p className="text-xl text-foreground/70 max-w-2xl mx-auto font-medium">
-              Những cột mốc quan trọng trong quá trình phát triển của FTC
-            </p>
-          </div>
-
-          <div className="relative">
-            <div className="absolute left-1/2 transform -translate-x-1/2 w-1 h-full bg-gradient-to-b from-accent via-secondary to-accent"></div>
-            
-            {[
-              { year: "2020", title: "Thành lập câu lạc bộ", description: "FTC được thành lập với mục tiêu kết nối sinh viên đam mê fintech" },
-              { year: "2021", title: "Mở rộng hoạt động", description: "Tổ chức workshop đầu tiên và thu hút 50+ thành viên" },
-              { year: "2022", title: "Dự án thực tế", description: "Bắt đầu triển khai các dự án fintech với đối tác doanh nghiệp" },
-              { year: "2023", title: "Phát triển mạnh mẽ", description: "Đạt 100+ thành viên và tổ chức 20+ sự kiện" },
-              { year: "2024", title: "Tương lai", description: "Mở rộng quy mô và phát triển nền tảng số" }
-            ].map((milestone, index) => (
-              <div key={index} className={`relative flex items-center mb-12 ${index % 2 === 0 ? 'flex-row' : 'flex-row-reverse'}`}>
-                <div className="w-1/2 px-8">
-                  <div className={`bg-card/20 backdrop-blur-sm border border-accent/20 rounded-2xl p-6 hover:glow transition-all duration-300 ${index % 2 === 0 ? 'text-right' : 'text-left'}`}>
-                    <div className="text-2xl font-black text-accent mb-2">{milestone.year}</div>
-                    <div className="text-xl font-bold text-foreground mb-2">{milestone.title}</div>
-                    <div className="text-foreground/70">{milestone.description}</div>
-                  </div>
-                </div>
-                <div className="absolute left-1/2 transform -translate-x-1/2 w-6 h-6 bg-accent rounded-full border-4 border-background glow"></div>
-                <div className="w-1/2"></div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Newsletter Section */}
-      <section className="py-24 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-r from-accent/10 via-secondary/10 to-accent/10"></div>
-        <div className="max-w-4xl mx-auto text-center relative z-10">
-          <div className="inline-flex items-center px-6 py-3 rounded-full bg-accent/20 border border-accent/40 mb-8 glow">
-            <Mail className="h-5 w-5 text-accent mr-3" />
-            <span className="text-sm font-bold text-accent uppercase tracking-wider">Đăng ký nhận tin</span>
-          </div>
-          <h2 className="font-heading font-black text-4xl sm:text-5xl text-foreground mb-6 text-glow">
-            CẬP NHẬT TIN TỨC MỚI NHẤT
-          </h2>
-          <p className="text-xl text-foreground/80 mb-12 font-medium leading-relaxed max-w-2xl mx-auto">
-            Nhận thông báo về các sự kiện, workshop và cơ hội mới từ FTC
-          </p>
-          
-          <div className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
-            <Input 
-              type="email" 
-              placeholder="Nhập email của bạn" 
-              className="flex-1 bg-card/20 border-accent/30 text-foreground placeholder:text-foreground/50 focus:border-accent/50"
-            />
-            <Button className="btn-futuristic px-8 py-3 font-bold">
-              ĐĂNG KÝ
-            </Button>
-          </div>
-        </div>
-      </section>
 
       {/* CTA Section - Enhanced */}
       <section className="py-24 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
