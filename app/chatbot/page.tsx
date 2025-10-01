@@ -442,8 +442,8 @@ export default function ChatbotPage() {
                     </div>
                   </div>
 
-                  {/* Modern Mode Selection Cards */}
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
+                  {/* Compact Mode Selection Cards */}
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                     {CHAT_MODES.map((mc, index) => {
                       const active = selectedMode === mc.mode
                       return (
@@ -451,93 +451,79 @@ export default function ChatbotPage() {
                           key={mc.mode}
                           onClick={() => handleModeChange(mc.mode)}
                           className={cn(
-                            "group/btn relative overflow-hidden rounded-3xl p-6 sm:p-8 transition-all duration-700 transform",
-                            "flex flex-col items-center text-center gap-4",
-                            "border backdrop-blur-xl shadow-2xl",
-                            "hover:scale-[1.03] hover:shadow-3xl active:scale-[0.98]",
+                            "group/btn relative overflow-hidden rounded-2xl p-4 sm:p-5 transition-all duration-500 transform",
+                            "flex flex-col items-center text-center gap-3",
+                            "border backdrop-blur-sm shadow-lg",
+                            "hover:scale-[1.02] hover:shadow-xl active:scale-[0.98]",
                             "animate-slide-in-up",
                             active 
-                              ? "bg-gradient-to-br from-blue-500/40 via-purple-500/30 to-cyan-500/40 border-blue-400/60 shadow-blue-500/30 scale-[1.02]"
-                              : "bg-white/10 border-white/30 hover:bg-white/15 hover:border-white/40 hover:shadow-white/10"
+                              ? "bg-gradient-to-br from-blue-500/30 via-purple-500/20 to-cyan-500/30 border-blue-400/50 shadow-blue-500/20 scale-[1.01]"
+                              : "bg-white/10 border-white/20 hover:bg-white/15 hover:border-white/30 hover:shadow-white/5"
                           )}
                           style={{
-                            animationDelay: `${index * 200}ms`
+                            animationDelay: `${index * 150}ms`
                           }}
                         >
-                          {/* Animated Background Layers */}
-                          <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent rounded-3xl" />
+                          {/* Simplified Background */}
                           <div className={cn(
-                            "absolute inset-0 transition-all duration-700 rounded-3xl",
+                            "absolute inset-0 transition-all duration-500 rounded-2xl",
                             active 
-                              ? "bg-gradient-to-br from-blue-500/20 via-purple-500/15 to-cyan-500/20" 
-                              : "group-hover/btn:bg-gradient-to-br group-hover/btn:from-white/10 group-hover/btn:via-white/5 group-hover/btn:to-white/10"
+                              ? "bg-gradient-to-br from-blue-500/15 via-purple-500/10 to-cyan-500/15" 
+                              : "group-hover/btn:bg-gradient-to-br group-hover/btn:from-white/5 group-hover/btn:to-white/10"
                           )} />
                           
-                          {/* Floating Particles */}
-                          <div className="absolute top-2 right-2 w-2 h-2 bg-blue-400/60 rounded-full animate-float-particle" />
-                          <div className="absolute bottom-2 left-2 w-1.5 h-1.5 bg-purple-400/60 rounded-full animate-float-particle animation-delay-300" />
-                          
-                          {/* Icon Container */}
+                          {/* Icon Container - Smaller */}
                           <div className={cn(
-                            "relative w-16 h-16 sm:w-20 sm:h-20 rounded-2xl flex items-center justify-center transition-all duration-500",
-                            "border backdrop-blur-sm shadow-lg",
+                            "relative w-12 h-12 sm:w-14 sm:h-14 rounded-xl flex items-center justify-center transition-all duration-300",
+                            "border backdrop-blur-sm shadow-md",
                             active
-                              ? "bg-gradient-to-br from-blue-400/40 to-purple-400/40 border-blue-300/60 shadow-blue-500/30 scale-110"
-                              : "bg-white/15 border-white/30 group-hover/btn:bg-white/25 group-hover/btn:border-white/40 group-hover/btn:scale-105"
+                              ? "bg-gradient-to-br from-blue-400/30 to-purple-400/30 border-blue-300/50 shadow-blue-500/20 scale-105"
+                              : "bg-white/15 border-white/25 group-hover/btn:bg-white/20 group-hover/btn:border-white/35 group-hover/btn:scale-102"
                           )}>
-                            {/* Icon Glow Effect */}
-                            <div className={cn(
-                              "absolute inset-0 rounded-2xl transition-all duration-500",
-                              active 
-                                ? "bg-gradient-to-br from-blue-400/20 to-purple-400/20 blur-sm" 
-                                : "group-hover/btn:bg-gradient-to-br group-hover/btn:from-white/10 group-hover/btn:to-white/5 group-hover/btn:blur-sm"
-                            )} />
-                            
-                            <span className="relative text-2xl sm:text-3xl transition-all duration-500 group-hover/btn:scale-110 group-hover/btn:rotate-6">
+                            <span className="relative text-lg sm:text-xl transition-all duration-300 group-hover/btn:scale-110">
                               {mc.icon}
                             </span>
                             
-                            {/* Active Status Indicator */}
+                            {/* Active Status Indicator - Smaller */}
                             {active && (
-                              <div className="absolute -top-2 -right-2 w-4 h-4 bg-green-400 rounded-full flex items-center justify-center shadow-lg">
-                                <div className="w-2 h-2 bg-white rounded-full animate-pulse" />
-                                <div className="absolute inset-0 w-4 h-4 bg-green-400 rounded-full animate-ping" />
+                              <div className="absolute -top-1 -right-1 w-3 h-3 bg-green-400 rounded-full flex items-center justify-center shadow-md">
+                                <div className="w-1.5 h-1.5 bg-white rounded-full animate-pulse" />
                               </div>
                             )}
                           </div>
                           
-                          {/* Content Section */}
-                          <div className="relative space-y-2">
+                          {/* Content Section - Compact */}
+                          <div className="relative space-y-1">
                             <h3 className={cn(
-                              "font-bold text-lg sm:text-xl transition-all duration-300",
-                              active ? "text-white text-glow" : "text-white/90 group-hover/btn:text-white group-hover/btn:text-glow"
+                              "font-bold text-sm sm:text-base transition-all duration-300",
+                              active ? "text-white text-glow" : "text-white/90 group-hover/btn:text-white"
                             )}>
                               {mc.label}
                             </h3>
                             <p className={cn(
-                              "text-sm sm:text-base transition-all duration-300 leading-relaxed",
-                              active ? "text-white/90" : "text-white/70 group-hover/btn:text-white/90"
+                              "text-xs sm:text-sm transition-all duration-300 leading-relaxed",
+                              active ? "text-white/80" : "text-white/60 group-hover/btn:text-white/80"
                             )}>
-                              {mc.mode === 'club' ? 'Thông tin về câu lạc bộ FTC' : 'Kiến thức về ngành FinTech'}
+                              {mc.mode === 'club' ? 'Thông tin câu lạc bộ FTC' : 'Kiến thức FinTech'}
                             </p>
                             
-                            {/* Feature Tags */}
-                            <div className="flex flex-wrap gap-2 justify-center mt-3">
+                            {/* Feature Tags - Smaller */}
+                            <div className="flex flex-wrap gap-1 justify-center mt-2">
                               {mc.mode === 'club' ? (
                                 <>
-                                  <span className="px-3 py-1 bg-blue-500/20 text-blue-300 text-xs rounded-full border border-blue-400/30">
-                                    Thông tin CLB
+                                  <span className="px-2 py-0.5 bg-blue-500/20 text-blue-300 text-xs rounded-full border border-blue-400/30">
+                                    CLB
                                   </span>
-                                  <span className="px-3 py-1 bg-purple-500/20 text-purple-300 text-xs rounded-full border border-purple-400/30">
+                                  <span className="px-2 py-0.5 bg-purple-500/20 text-purple-300 text-xs rounded-full border border-purple-400/30">
                                     Hoạt động
                                   </span>
                                 </>
                               ) : (
                                 <>
-                                  <span className="px-3 py-1 bg-cyan-500/20 text-cyan-300 text-xs rounded-full border border-cyan-400/30">
+                                  <span className="px-2 py-0.5 bg-cyan-500/20 text-cyan-300 text-xs rounded-full border border-cyan-400/30">
                                     FinTech
                                   </span>
-                                  <span className="px-3 py-1 bg-green-500/20 text-green-300 text-xs rounded-full border border-green-400/30">
+                                  <span className="px-2 py-0.5 bg-green-500/20 text-green-300 text-xs rounded-full border border-green-400/30">
                                     Kiến thức
                                   </span>
                                 </>
@@ -545,12 +531,12 @@ export default function ChatbotPage() {
                             </div>
                           </div>
                           
-                          {/* Selection Indicator */}
+                          {/* Selection Indicator - Smaller */}
                           <div className={cn(
-                            "absolute bottom-4 left-1/2 transform -translate-x-1/2 transition-all duration-500",
+                            "absolute bottom-2 left-1/2 transform -translate-x-1/2 transition-all duration-300",
                             active 
-                              ? "w-8 h-1 bg-gradient-to-r from-blue-400 to-purple-400 rounded-full shadow-lg" 
-                              : "w-0 h-1 bg-gradient-to-r from-blue-400 to-purple-400 rounded-full group-hover/btn:w-6"
+                              ? "w-6 h-0.5 bg-gradient-to-r from-blue-400 to-purple-400 rounded-full shadow-md" 
+                              : "w-0 h-0.5 bg-gradient-to-r from-blue-400 to-purple-400 rounded-full group-hover/btn:w-4"
                           )} />
                         </button>
                       )
