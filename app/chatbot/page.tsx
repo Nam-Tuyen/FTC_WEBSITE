@@ -396,35 +396,51 @@ export default function ChatbotPage() {
                 {/* Glassmorphism Card */}
                 <div className="relative bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-2xl rounded-3xl border border-white/20 p-6 sm:p-8 shadow-2xl shadow-black/20 transition-all duration-500 group-hover:shadow-3xl group-hover:shadow-blue-500/10">
                   
-                  {/* Header Section */}
-                  <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 mb-6">
-                    <div className="flex items-center gap-4">
-                      {/* Animated Icon */}
-                      <div className="relative">
-                        <div className="absolute inset-0 bg-gradient-to-r from-blue-400 via-purple-400 to-cyan-400 rounded-2xl blur-xl animate-pulse opacity-60" />
-                        <div className="relative w-14 h-14 sm:w-16 sm:h-16 bg-gradient-to-br from-white/20 to-white/10 backdrop-blur-xl rounded-2xl flex items-center justify-center border border-white/30 shadow-lg">
-                          <span className="text-xl sm:text-2xl animate-bounce">🤖</span>
-                        </div>
-                        {/* Floating particles */}
-                        <div className="absolute -top-1 -right-1 w-3 h-3 bg-blue-400 rounded-full animate-float-particle opacity-70" />
-                        <div className="absolute -bottom-1 -left-1 w-2 h-2 bg-purple-400 rounded-full animate-float-particle opacity-70 animation-delay-300" />
+                  {/* Modern Header Section */}
+                  <div className="text-center mb-8">
+                    {/* Animated Icon */}
+                    <div className="relative inline-block mb-6">
+                      <div className="absolute inset-0 bg-gradient-to-r from-blue-400 via-purple-400 to-cyan-400 rounded-3xl blur-2xl animate-pulse opacity-60 scale-110" />
+                      <div className="relative w-20 h-20 sm:w-24 sm:h-24 bg-gradient-to-br from-white/20 to-white/10 backdrop-blur-xl rounded-3xl flex items-center justify-center border border-white/30 shadow-2xl">
+                        <span className="text-3xl sm:text-4xl animate-bounce">🤖</span>
+                      </div>
+                      {/* Enhanced Floating particles */}
+                      <div className="absolute -top-2 -right-2 w-4 h-4 bg-blue-400 rounded-full animate-float-particle opacity-80" />
+                      <div className="absolute -bottom-2 -left-2 w-3 h-3 bg-purple-400 rounded-full animate-float-particle opacity-80 animation-delay-300" />
+                      <div className="absolute top-1/2 -left-3 w-2 h-2 bg-cyan-400 rounded-full animate-float-particle opacity-70 animation-delay-600" />
+                      <div className="absolute top-1/2 -right-3 w-2 h-2 bg-green-400 rounded-full animate-float-particle opacity-70 animation-delay-900" />
+                    </div>
+                    
+                    {/* Title Section */}
+                    <div className="space-y-4">
+                      <div className="inline-flex items-center px-6 py-3 rounded-full bg-gradient-to-r from-blue-500/20 to-purple-500/20 border border-blue-400/30 backdrop-blur-sm mb-4">
+                        <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse mr-3" />
+                        <span className="text-sm font-bold text-blue-300 uppercase tracking-wider">
+                          AI CHATBOT
+                        </span>
                       </div>
                       
-                      {/* Title Section */}
-                      <div className="space-y-1">
-                        <h2 className="text-xl sm:text-2xl md:text-3xl font-black uppercase tracking-wider text-glow mb-2">
-                          CHỌN CHẾ ĐỘ
-                        </h2>
-                        <p className="text-sm sm:text-base text-white/70 font-medium">
-                          Tùy chỉnh trải nghiệm chat của bạn
-                        </p>
-                        <div className="flex items-center gap-2 text-xs text-white/50">
-                          <div className="w-1.5 h-1.5 bg-green-400 rounded-full animate-pulse" />
-                          <span>Hệ thống sẵn sàng</span>
+                      <h2 className="text-3xl sm:text-4xl md:text-5xl font-black uppercase tracking-wider text-glow mb-4">
+                        CHỌN CHẾ ĐỘ
+                      </h2>
+                      
+                      <p className="text-lg sm:text-xl text-white/80 font-medium max-w-2xl mx-auto leading-relaxed">
+                        Tùy chỉnh trải nghiệm chat của bạn với các chế độ chuyên biệt
+                      </p>
+                      
+                      {/* Status Indicator */}
+                      <div className="flex items-center justify-center gap-3 mt-6">
+                        <div className="flex items-center gap-2 px-4 py-2 bg-green-500/20 rounded-full border border-green-400/30">
+                          <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
+                          <span className="text-sm font-medium text-green-300">Hệ thống sẵn sàng</span>
+                        </div>
+                        <div className="flex items-center gap-2 px-4 py-2 bg-blue-500/20 rounded-full border border-blue-400/30">
+                          <div className="w-2 h-2 bg-blue-400 rounded-full animate-pulse" />
+                          <span className="text-sm font-medium text-blue-300">AI Online</span>
                         </div>
                       </div>
                     </div>
-        </div>
+                  </div>
 
                   {/* Modern Mode Selection Cards */}
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
