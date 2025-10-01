@@ -53,7 +53,7 @@ export function ApplicationDeadlineCheck({ recruitmentStatus }: ApplicationDeadl
             
             {/* Title */}
             <div className="space-y-3 sm:space-y-4">
-              <h3 className="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-bold bg-gradient-to-r from-purple-400 via-pink-400 to-orange-400 bg-clip-text text-transparent animate-pulse leading-tight">
+              <h3 className="text-xl sm:text-2xl lg:text-3xl xl:text-3xl font-bold bg-gradient-to-r from-purple-400 via-pink-400 to-orange-400 bg-clip-text text-transparent animate-pulse leading-tight">
                 CHƯA TỚI THỜI GIAN ỨNG TUYỂN
               </h3>
               <div className="w-16 sm:w-24 h-1 bg-gradient-to-r from-purple-400 to-pink-400 mx-auto rounded-full"></div>
@@ -101,7 +101,7 @@ export function ApplicationDeadlineCheck({ recruitmentStatus }: ApplicationDeadl
             
             {/* Title */}
             <div className="space-y-3 sm:space-y-4">
-              <h3 className="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-bold bg-gradient-to-r from-red-400 via-orange-400 to-yellow-400 bg-clip-text text-transparent animate-pulse leading-tight">
+              <h3 className="text-xl sm:text-2xl lg:text-3xl xl:text-4xl font-bold bg-gradient-to-r from-red-400 via-orange-400 to-yellow-400 bg-clip-text text-transparent animate-pulse leading-tight">
                 ĐÃ KẾT THÚC THỜI GIAN ỨNG TUYỂN
               </h3>
               <div className="w-16 sm:w-24 h-1 bg-gradient-to-r from-red-400 to-orange-400 mx-auto rounded-full"></div>
