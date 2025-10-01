@@ -14,7 +14,6 @@ import {
   Globe, 
   Star, 
   TrendingUp, 
-  Play, 
   CheckCircle,
   Mail,
   Phone,
@@ -122,17 +121,6 @@ export default function HomePage() {
                 </Link>
               </Button>
               
-              <Button
-                asChild
-                variant="outline"
-                size="lg"
-                className="text-xl px-12 py-6 font-bold border-2 border-accent/50 text-accent hover:bg-accent/10 transition-all duration-300 group"
-              >
-                <Link href="/dien-dan" className="flex items-center">
-                  <Play className="mr-3 h-6 w-6 group-hover:scale-110 transition-transform" />
-                  XEM DIỄN ĐÀN
-                </Link>
-              </Button>
             </div>
           </div>
         </div>
@@ -363,11 +351,11 @@ export default function HomePage() {
           <h2 className="font-heading font-black text-5xl sm:text-6xl text-foreground mb-6 text-glow leading-tight">
             THAM GIA ĐỂ TRỞ THÀNH<br />
             <span className="bg-gradient-to-r from-accent via-white to-secondary bg-clip-text text-transparent">
-              FTCER NGAY HÔM NAY
+              FTCer NGAY HÔM NAY
             </span>
           </h2>
           <p className="text-xl text-foreground/80 mb-12 font-medium leading-relaxed max-w-3xl mx-auto italic">
-            Đăng ký ngay hôm nay để cùng FTC khám phá bản thân, học điều mới, tham gia hoạt động thực tế và kết nối với cộng đồng FINTECH.
+            Đăng ký ngay hôm nay để cùng FTC khám phá bản thân, học điều mới, tham gia hoạt động thực tế và kết nối với cộng đồng FINTECH
           </p>
           <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
             <Button
@@ -400,28 +388,28 @@ export default function HomePage() {
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
             {/* Quick Links */}
-            <div className="space-y-4">
-              <h4 className="font-bold text-lg text-foreground uppercase tracking-wide">Liên kết nhanh</h4>
-              <div className="grid grid-cols-2 gap-2">
-                <Link href="/thong-tin" className="text-foreground/70 hover:text-accent transition-colors duration-300 text-sm">
+            <div className="space-y-6">
+              <h4 className="font-bold text-xl text-foreground uppercase tracking-wide text-center">Liên kết nhanh</h4>
+              <div className="space-y-3">
+                <Link href="/thong-tin" className="block w-full p-3 bg-card/20 hover:bg-accent/10 border border-accent/20 hover:border-accent/40 rounded-lg text-center text-foreground/80 hover:text-accent transition-all duration-300 font-medium">
                   THÔNG TIN
                 </Link>
-                <Link href="/thanh-tich" className="text-foreground/70 hover:text-accent transition-colors duration-300 text-sm">
+                <Link href="/thanh-tich" className="block w-full p-3 bg-card/20 hover:bg-accent/10 border border-accent/20 hover:border-accent/40 rounded-lg text-center text-foreground/80 hover:text-accent transition-all duration-300 font-medium">
                   THÀNH TÍCH
                 </Link>
-                <Link href="/hoat-dong" className="text-foreground/70 hover:text-accent transition-colors duration-300 text-sm">
+                <Link href="/hoat-dong" className="block w-full p-3 bg-card/20 hover:bg-accent/10 border border-accent/20 hover:border-accent/40 rounded-lg text-center text-foreground/80 hover:text-accent transition-all duration-300 font-medium">
                   HOẠT ĐỘNG
                 </Link>
-                <Link href="/co-cau" className="text-foreground/70 hover:text-accent transition-colors duration-300 text-sm">
+                <Link href="/co-cau" className="block w-full p-3 bg-card/20 hover:bg-accent/10 border border-accent/20 hover:border-accent/40 rounded-lg text-center text-foreground/80 hover:text-accent transition-all duration-300 font-medium">
                   CƠ CẤU
                 </Link>
-                <Link href="/dien-dan" className="text-foreground/70 hover:text-accent transition-colors duration-300 text-sm">
+                <Link href="/dien-dan" className="block w-full p-3 bg-card/20 hover:bg-accent/10 border border-accent/20 hover:border-accent/40 rounded-lg text-center text-foreground/80 hover:text-accent transition-all duration-300 font-medium">
                   DIỄN ĐÀN
                 </Link>
-                <Link href="/ung-tuyen" className="text-foreground/70 hover:text-accent transition-colors duration-300 text-sm">
+                <Link href="/ung-tuyen" className="block w-full p-3 bg-card/20 hover:bg-accent/10 border border-accent/20 hover:border-accent/40 rounded-lg text-center text-foreground/80 hover:text-accent transition-all duration-300 font-medium">
                   ỨNG TUYỂN
                 </Link>
-                <Link href="/chatbot" className="text-foreground/70 hover:text-accent transition-colors duration-300 text-sm col-span-2">
+                <Link href="/chatbot" className="block w-full p-3 bg-gradient-to-r from-accent/20 to-secondary/20 hover:from-accent/30 hover:to-secondary/30 border border-accent/40 hover:border-accent/60 rounded-lg text-center text-accent hover:text-accent/80 transition-all duration-300 font-bold">
                   CHATBOT
                 </Link>
               </div>
