@@ -351,11 +351,11 @@ export default function ThongTinPage() {
                  </p>
                  
                  <a 
-                   href="/thong-tin"
+                   href="/chatbot"
                    className="inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-blue-500 to-cyan-600 rounded-2xl text-white font-bold hover:shadow-xl hover:scale-105 transition-all duration-300 hover:shadow-blue-500/25"
                  >
                    <BookOpen className="w-6 h-6" />
-                   <span>Xem chi tiết thông tin</span>
+                   <span>Trải nghiệm Chatbot AI</span>
                    <ArrowRight className="w-5 h-5" />
                  </a>
                </div>
