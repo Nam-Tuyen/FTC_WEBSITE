@@ -1,6 +1,7 @@
 "use client"
 
 import { Navigation } from "@/components/navigation"
+import { Footer } from "@/components/footer"
 import { Button } from "@/components/ui/Button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Input } from "@/components/ui/Input"
@@ -59,7 +60,7 @@ export default function HomePage() {
       <Navigation />
 
       {/* Hero Section - Modern with Video Background Effect */}
-      <section className="relative min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8 overflow-hidden">
+      <section className="relative min-h-screen flex items-center justify-center px-3 sm:px-4 md:px-6 lg:px-8 overflow-hidden">
         {/* Advanced Background Effects */}
         <div className="absolute inset-0">
           {/* Gradient Mesh Background */}
@@ -74,50 +75,50 @@ export default function HomePage() {
             }}></div>
           </div>
           
-          {/* Floating Geometric Shapes */}
-          <div className="absolute top-20 left-10 w-32 h-32 bg-accent/20 rounded-full blur-xl animate-float"></div>
-          <div className="absolute top-40 right-20 w-24 h-24 bg-secondary/20 rounded-full blur-xl animate-float delay-1000"></div>
-          <div className="absolute bottom-32 left-1/4 w-40 h-40 bg-accent/15 rounded-full blur-xl animate-float delay-2000"></div>
-          <div className="absolute bottom-20 right-1/3 w-28 h-28 bg-secondary/15 rounded-full blur-xl animate-float delay-3000"></div>
+          {/* Floating Geometric Shapes - Responsive */}
+          <div className="absolute top-20 left-4 sm:left-10 w-16 h-16 sm:w-32 sm:h-32 bg-accent/20 rounded-full blur-xl animate-float"></div>
+          <div className="absolute top-40 right-4 sm:right-20 w-12 h-12 sm:w-24 sm:h-24 bg-secondary/20 rounded-full blur-xl animate-float delay-1000"></div>
+          <div className="absolute bottom-32 left-1/4 w-20 h-20 sm:w-40 sm:h-40 bg-accent/15 rounded-full blur-xl animate-float delay-2000"></div>
+          <div className="absolute bottom-20 right-1/3 w-14 h-14 sm:w-28 sm:h-28 bg-secondary/15 rounded-full blur-xl animate-float delay-3000"></div>
           
-          {/* Rotating Rings */}
+          {/* Rotating Rings - Responsive */}
           <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-            <div className="w-[600px] h-[600px] border border-accent/10 rounded-full animate-spin" style={{ animationDuration: "30s" }}></div>
-            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] border border-accent/20 rounded-full animate-spin" style={{ animationDuration: "20s", animationDirection: "reverse" }}></div>
-            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[200px] h-[200px] border border-accent/30 rounded-full animate-spin" style={{ animationDuration: "10s" }}></div>
+            <div className="w-[300px] h-[300px] sm:w-[400px] sm:h-[400px] md:w-[500px] md:h-[500px] lg:w-[600px] lg:h-[600px] border border-accent/10 rounded-full animate-spin" style={{ animationDuration: "30s" }}></div>
+            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[200px] h-[200px] sm:w-[300px] sm:h-[300px] md:w-[350px] md:h-[350px] lg:w-[400px] lg:h-[400px] border border-accent/20 rounded-full animate-spin" style={{ animationDuration: "20s", animationDirection: "reverse" }}></div>
+            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[100px] h-[100px] sm:w-[150px] sm:h-[150px] md:w-[200px] md:h-[200px] lg:w-[200px] lg:h-[200px] border border-accent/30 rounded-full animate-spin" style={{ animationDuration: "10s" }}></div>
           </div>
         </div>
 
         <div className="max-w-7xl mx-auto relative z-10 text-center">
           <div className={`transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-            {/* Badge */}
-            <div className="inline-flex items-center px-8 py-4 rounded-full bg-gradient-to-r from-accent/20 to-secondary/20 border border-accent/40 mb-8 glow hover:scale-105 transition-transform duration-300">
-              <Zap className="h-6 w-6 text-accent mr-3 animate-pulse" />
-              <span className="text-sm font-bold text-accent uppercase tracking-wider">TƯƠNG LAI CỦA FINTECH</span>
+            {/* Badge - Responsive */}
+            <div className="inline-flex items-center px-4 py-2 sm:px-6 sm:py-3 md:px-8 md:py-4 rounded-full bg-gradient-to-r from-accent/20 to-secondary/20 border border-accent/40 mb-6 sm:mb-8 glow hover:scale-105 transition-transform duration-300">
+              <Zap className="h-4 w-4 sm:h-5 sm:w-5 md:h-6 md:w-6 text-accent mr-2 sm:mr-3 animate-pulse" />
+              <span className="text-xs sm:text-sm font-bold text-accent uppercase tracking-wider">TƯƠNG LAI CỦA FINTECH</span>
             </div>
 
-            {/* Main Heading */}
-            <h1 className="font-heading font-black text-6xl sm:text-7xl lg:text-8xl text-foreground mb-8 text-balance text-glow leading-tight">
+            {/* Main Heading - Responsive */}
+            <h1 className="font-heading font-black text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl text-foreground mb-6 sm:mb-8 text-balance text-glow leading-tight">
               <span className="block">CÂU LẠC BỘ</span>
               <span className="block bg-gradient-to-r from-accent via-white to-secondary bg-clip-text text-transparent animate-gradient-x">
                 CÔNG NGHỆ TÀI CHÍNH
               </span>
             </h1>
             
-            {/* Subtitle */}
-            <p className="text-2xl sm:text-3xl text-foreground/90 mb-12 max-w-5xl mx-auto text-pretty font-medium leading-relaxed italic">
+            {/* Subtitle - Responsive */}
+            <p className="text-lg sm:text-xl md:text-2xl lg:text-3xl text-foreground/90 mb-8 sm:mb-10 md:mb-12 max-w-4xl mx-auto text-pretty font-medium leading-relaxed italic px-4">
               Nơi kết nối những người đam mê công nghệ tài chính, học hỏi kiến thức mới và phát triển sự nghiệp trong lĩnh vực Fintech
             </p>
             
-            {/* CTA Buttons */}
-            <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
+            {/* CTA Buttons - Responsive */}
+            <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center items-center px-4">
               <Button
                 asChild
                 size="lg"
-                className="btn-futuristic text-xl px-12 py-6 font-bold shadow-2xl hover:shadow-accent/50 transition-all duration-300 group"
+                className="btn-futuristic text-lg sm:text-xl px-8 sm:px-10 md:px-12 py-4 sm:py-5 md:py-6 font-bold shadow-2xl hover:shadow-accent/50 transition-all duration-300 group w-full sm:w-auto"
               >
-                <Link href="/thong-tin" className="flex items-center">
-                  KHÁM PHÁ NGAY <ArrowRight className="ml-3 h-6 w-6 group-hover:translate-x-1 transition-transform" />
+                <Link href="/thong-tin" className="flex items-center justify-center">
+                  KHÁM PHÁ NGAY <ArrowRight className="ml-2 sm:ml-3 h-5 w-5 sm:h-6 sm:w-6 group-hover:translate-x-1 transition-transform" />
                 </Link>
               </Button>
               
@@ -127,7 +128,7 @@ export default function HomePage() {
       </section>
 
       {/* Tech Stats Section - Enhanced with Animated Counters */}
-      <section className="py-24 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
+      <section className="py-16 sm:py-20 md:py-24 px-3 sm:px-4 md:px-6 lg:px-8 relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-r from-card/5 via-card/10 to-card/5 backdrop-blur-sm"></div>
         <div className="absolute inset-0">
           <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-accent/50 to-transparent"></div>
@@ -135,20 +136,20 @@ export default function HomePage() {
         </div>
         
         <div className="max-w-7xl mx-auto relative z-10">
-          <div className="text-center mb-16">
-            <div className="inline-flex items-center px-6 py-3 rounded-full bg-accent/10 border border-accent/30 mb-6">
-              <TrendingUp className="h-5 w-5 text-accent mr-2" />
-              <span className="text-sm font-bold text-accent uppercase tracking-wider">Thành tựu nổi bật</span>
+          <div className="text-center mb-12 sm:mb-16">
+            <div className="inline-flex items-center px-4 py-2 sm:px-6 sm:py-3 rounded-full bg-accent/10 border border-accent/30 mb-4 sm:mb-6">
+              <TrendingUp className="h-4 w-4 sm:h-5 sm:w-5 text-accent mr-2" />
+              <span className="text-xs sm:text-sm font-bold text-accent uppercase tracking-wider">Thành tựu nổi bật</span>
             </div>
-            <h2 className="font-heading font-black text-4xl sm:text-5xl text-foreground mb-4 text-glow">
+            <h2 className="font-heading font-black text-3xl sm:text-4xl md:text-5xl text-foreground mb-3 sm:mb-4 text-glow">
               SỐ LIỆU ẤN TƯỢNG
             </h2>
-            <p className="text-xl text-foreground/70 max-w-2xl mx-auto font-medium italic">
+            <p className="text-lg sm:text-xl text-foreground/70 max-w-2xl mx-auto font-medium italic px-4">
               Những con số biết nói về sự phát triển và tác động của câu lạc bộ
             </p>
           </div>
 
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 md:gap-8">
             {[
               { key: 'members', number: counters.members, suffix: '+', label: "THÀNH VIÊN", icon: Users, color: "from-accent to-cyan-400" },
               { key: 'projects', number: counters.projects, suffix: '+', label: "DỰ ÁN", icon: Rocket, color: "from-secondary to-purple-400" },
@@ -179,30 +180,30 @@ export default function HomePage() {
       </section>
 
       {/* Features Section - Enhanced with Modern Cards */}
-      <section className="py-24 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
+      <section className="py-16 sm:py-20 md:py-24 px-3 sm:px-4 md:px-6 lg:px-8 relative overflow-hidden">
         <div className="absolute inset-0">
           <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-accent/30 to-transparent"></div>
           <div className="absolute bottom-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-accent/30 to-transparent"></div>
         </div>
         
         <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-20">
-            <div className="inline-flex items-center px-6 py-3 rounded-full bg-accent/10 border border-accent/30 mb-6">
-              <Brain className="h-5 w-5 text-accent mr-2" />
-              <span className="text-sm font-bold text-accent uppercase tracking-wider">Lợi ích khi tham gia</span>
+          <div className="text-center mb-12 sm:mb-16 md:mb-20">
+            <div className="inline-flex items-center px-4 py-2 sm:px-6 sm:py-3 rounded-full bg-accent/10 border border-accent/30 mb-4 sm:mb-6">
+              <Brain className="h-4 w-4 sm:h-5 sm:w-5 text-accent mr-2" />
+              <span className="text-xs sm:text-sm font-bold text-accent uppercase tracking-wider">Lợi ích khi tham gia</span>
             </div>
-            <h2 className="font-heading font-black text-5xl sm:text-6xl lg:text-7xl text-foreground mb-6 text-glow leading-tight">
+            <h2 className="font-heading font-black text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl text-foreground mb-4 sm:mb-6 text-glow leading-tight">
               TẠI SAO CHỌN<br />
               <span className="bg-gradient-to-r from-accent via-white to-secondary bg-clip-text text-transparent">
                 CÂU LẠC BỘ FINTECH?
               </span>
             </h2>
-            <p className="text-xl text-foreground/70 max-w-4xl mx-auto font-medium leading-relaxed italic">
+            <p className="text-lg sm:text-xl text-foreground/70 max-w-4xl mx-auto font-medium leading-relaxed italic px-4">
               Câu lạc bộ mang đến môi trường gần gũi, đầy đủ công cụ hữu ích và nhiều cơ hội mới để bạn học hỏi, trải nghiệm và phát triển.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8">
             {[
               {
                 icon: Brain,
@@ -277,23 +278,23 @@ export default function HomePage() {
       </section>
 
       {/* Testimonials Section */}
-      <section className="py-24 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
+      <section className="py-16 sm:py-20 md:py-24 px-3 sm:px-4 md:px-6 lg:px-8 relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-card/5 via-card/10 to-card/5"></div>
         <div className="max-w-7xl mx-auto relative z-10">
-          <div className="text-center mb-16">
-            <div className="inline-flex items-center px-6 py-3 rounded-full bg-accent/10 border border-accent/30 mb-6">
-              <Star className="h-5 w-5 text-accent mr-2" />
-              <span className="text-sm font-bold text-accent uppercase tracking-wider">Cảm nhận từ thành viên</span>
+          <div className="text-center mb-12 sm:mb-16">
+            <div className="inline-flex items-center px-4 py-2 sm:px-6 sm:py-3 rounded-full bg-accent/10 border border-accent/30 mb-4 sm:mb-6">
+              <Star className="h-4 w-4 sm:h-5 sm:w-5 text-accent mr-2" />
+              <span className="text-xs sm:text-sm font-bold text-accent uppercase tracking-wider">Cảm nhận từ thành viên</span>
             </div>
-            <h2 className="font-heading font-black text-4xl sm:text-5xl text-foreground mb-4 text-glow">
+            <h2 className="font-heading font-black text-3xl sm:text-4xl md:text-5xl text-foreground mb-3 sm:mb-4 text-glow">
               THÀNH VIÊN NÓI GÌ VỀ FTC?
             </h2>
-            <p className="text-xl text-foreground/70 max-w-2xl mx-auto font-medium italic">
+            <p className="text-lg sm:text-xl text-foreground/70 max-w-2xl mx-auto font-medium italic px-4">
               Những chia sẻ chân thực từ các thành viên đã và đang tham gia câu lạc bộ
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8">
             {[
               {
                 name: "Nguyễn Văn A",
@@ -337,34 +338,34 @@ export default function HomePage() {
 
 
       {/* CTA Section - Enhanced */}
-      <section className="py-24 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
+      <section className="py-16 sm:py-20 md:py-24 px-3 sm:px-4 md:px-6 lg:px-8 relative overflow-hidden">
         <div className="absolute inset-0">
           <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-r from-accent/20 via-transparent to-secondary/20"></div>
-          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[1000px] h-[1000px] border border-accent/10 rounded-full animate-pulse"></div>
-          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] border border-accent/5 rounded-full animate-pulse delay-1000"></div>
+          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] sm:w-[700px] sm:h-[700px] md:w-[900px] md:h-[900px] lg:w-[1000px] lg:h-[1000px] border border-accent/10 rounded-full animate-pulse"></div>
+          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] sm:w-[600px] sm:h-[600px] md:w-[700px] md:h-[700px] lg:w-[800px] lg:h-[800px] border border-accent/5 rounded-full animate-pulse delay-1000"></div>
         </div>
         <div className="max-w-4xl mx-auto text-center relative z-10">
-          <div className="inline-flex items-center px-8 py-4 rounded-full bg-accent/20 border border-accent/40 mb-8 glow hover:scale-105 transition-transform duration-300">
-            <Rocket className="h-6 w-6 text-accent mr-3" />
-            <span className="text-sm font-bold text-accent uppercase tracking-wider">Tham gia câu lạc bộ</span>
+          <div className="inline-flex items-center px-4 py-2 sm:px-6 sm:py-3 md:px-8 md:py-4 rounded-full bg-accent/20 border border-accent/40 mb-6 sm:mb-8 glow hover:scale-105 transition-transform duration-300">
+            <Rocket className="h-4 w-4 sm:h-5 sm:w-5 md:h-6 md:w-6 text-accent mr-2 sm:mr-3" />
+            <span className="text-xs sm:text-sm font-bold text-accent uppercase tracking-wider">Tham gia câu lạc bộ</span>
           </div>
-          <h2 className="font-heading font-black text-5xl sm:text-6xl text-foreground mb-6 text-glow leading-tight">
+          <h2 className="font-heading font-black text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-foreground mb-4 sm:mb-6 text-glow leading-tight">
             THAM GIA ĐỂ TRỞ THÀNH<br />
             <span className="bg-gradient-to-r from-accent via-white to-secondary bg-clip-text text-transparent">
               FTCer NGAY HÔM NAY
             </span>
           </h2>
-          <p className="text-xl text-foreground/80 mb-12 font-medium leading-relaxed max-w-3xl mx-auto italic">
+          <p className="text-lg sm:text-xl text-foreground/80 mb-8 sm:mb-10 md:mb-12 font-medium leading-relaxed max-w-3xl mx-auto italic px-4">
             Đăng ký ngay hôm nay để cùng FTC khám phá bản thân, học điều mới, tham gia hoạt động thực tế và kết nối với cộng đồng FINTECH
           </p>
-          <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
+          <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center items-center px-4">
             <Button
               asChild
               size="lg"
-              className="btn-futuristic text-xl px-12 py-6 font-bold shadow-2xl hover:shadow-accent/50 transition-all duration-300 group"
+              className="btn-futuristic text-lg sm:text-xl px-8 sm:px-10 md:px-12 py-4 sm:py-5 md:py-6 font-bold shadow-2xl hover:shadow-accent/50 transition-all duration-300 group w-full sm:w-auto"
             >
-              <Link href="/ung-tuyen" className="flex items-center">
-                BẮT ĐẦU NGAY HÔM NAY <ArrowRight className="ml-3 h-6 w-6 group-hover:translate-x-1 transition-transform" />
+              <Link href="/ung-tuyen" className="flex items-center justify-center">
+                BẮT ĐẦU NGAY HÔM NAY <ArrowRight className="ml-2 sm:ml-3 h-5 w-5 sm:h-6 sm:w-6 group-hover:translate-x-1 transition-transform" />
               </Link>
             </Button>
             
@@ -372,10 +373,10 @@ export default function HomePage() {
               asChild
               variant="outline"
               size="lg"
-              className="text-xl px-12 py-6 font-bold border-2 border-accent/50 text-accent hover:bg-accent/10 transition-all duration-300 group"
+              className="text-lg sm:text-xl px-8 sm:px-10 md:px-12 py-4 sm:py-5 md:py-6 font-bold border-2 border-accent/50 text-accent hover:bg-accent/10 transition-all duration-300 group w-full sm:w-auto"
             >
-              <Link href="/dien-dan" className="flex items-center">
-                <Users className="mr-3 h-6 w-6 group-hover:scale-110 transition-transform" />
+              <Link href="/dien-dan" className="flex items-center justify-center">
+                <Users className="mr-2 sm:mr-3 h-5 w-5 sm:h-6 sm:w-6 group-hover:scale-110 transition-transform" />
                 THAM GIA DIỄN ĐÀN
               </Link>
             </Button>
@@ -383,106 +384,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Footer - Compact & Modern */}
-      <footer className="bg-card/5 backdrop-blur-sm border-t border-accent/10 py-8 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-6xl mx-auto">
-          {/* Main Footer Content */}
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-6">
-            {/* Quick Links - Compact */}
-            <div className="space-y-3">
-              <h4 className="font-bold text-sm text-foreground uppercase tracking-wide">Liên kết</h4>
-              <div className="grid grid-cols-2 gap-1 text-xs">
-                <Link href="/thong-tin" className="text-foreground/60 hover:text-accent transition-colors duration-200 py-1">
-                  THÔNG TIN
-                </Link>
-                <Link href="/thanh-tich" className="text-foreground/60 hover:text-accent transition-colors duration-200 py-1">
-                  THÀNH TÍCH
-                </Link>
-                <Link href="/hoat-dong" className="text-foreground/60 hover:text-accent transition-colors duration-200 py-1">
-                  HOẠT ĐỘNG
-                </Link>
-                <Link href="/co-cau" className="text-foreground/60 hover:text-accent transition-colors duration-200 py-1">
-                  CƠ CẤU
-                </Link>
-                <Link href="/dien-dan" className="text-foreground/60 hover:text-accent transition-colors duration-200 py-1">
-                  DIỄN ĐÀN
-                </Link>
-                <Link href="/ung-tuyen" className="text-foreground/60 hover:text-accent transition-colors duration-200 py-1">
-                  ỨNG TUYỂN
-                </Link>
-                <Link href="/chatbot" className="text-foreground/60 hover:text-accent transition-colors duration-200 py-1 col-span-2 font-bold">
-                  CHATBOT
-                </Link>
-              </div>
-            </div>
-
-            {/* Social Media - Compact */}
-            <div className="space-y-3">
-              <h4 className="font-bold text-sm text-foreground uppercase tracking-wide">Mạng xã hội</h4>
-              <div className="flex space-x-3">
-                <a 
-                  href="https://www.instagram.com/ftcers/" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="p-2 bg-gradient-to-br from-pink-500 to-purple-600 rounded-md hover:scale-105 transition-all duration-200"
-                >
-                  <Instagram className="h-4 w-4 text-white" />
-                </a>
-                <a 
-                  href="https://www.facebook.com/clbfintechuel" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="p-2 bg-gradient-to-br from-blue-600 to-blue-800 rounded-md hover:scale-105 transition-all duration-200"
-                >
-                  <Facebook className="h-4 w-4 text-white" />
-                </a>
-                <a 
-                  href="https://www.linkedin.com/company/ftc-financial-technology-club/" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="p-2 bg-gradient-to-br from-blue-700 to-blue-900 rounded-md hover:scale-105 transition-all duration-200"
-                >
-                  <Linkedin className="h-4 w-4 text-white" />
-                </a>
-              </div>
-            </div>
-
-            {/* Contact Info - Compact */}
-            <div className="space-y-3">
-              <h4 className="font-bold text-sm text-foreground uppercase tracking-wide">Liên hệ</h4>
-              <div className="space-y-2 text-xs text-foreground/60">
-                <div className="flex items-center">
-                  <Mail className="h-3 w-3 text-accent mr-2 flex-shrink-0" />
-                  <span className="break-all">clbcongnghetaichinh@st.uel.edu.vn</span>
-                </div>
-                <div className="flex items-center">
-                  <Phone className="h-3 w-3 text-accent mr-2 flex-shrink-0" />
-                  <span>0564032119</span>
-                </div>
-                <div className="flex items-start">
-                  <MapPin className="h-3 w-3 text-accent mr-2 flex-shrink-0 mt-0.5" />
-                  <span>Trường đại học Kinh tế - Luật, ĐHQG-HCM</span>
-                </div>
-              </div>
-            </div>
-
-            {/* Brand Info - Compact */}
-            <div className="space-y-3">
-              <h4 className="font-bold text-sm text-foreground uppercase tracking-wide">FTC</h4>
-              <p className="text-xs text-foreground/60 leading-relaxed">
-                Câu lạc bộ Công nghệ Tài chính - Nơi kết nối những người đam mê fintech
-              </p>
-            </div>
-          </div>
-
-          {/* Copyright - Compact */}
-          <div className="border-t border-accent/10 pt-4 text-center">
-            <p className="text-xs text-foreground/50 italic">
-              ©2025. Câu lạc bộ Công nghệ Tài chính
-            </p>
-          </div>
-        </div>
-      </footer>
+      <Footer />
     </div>
   )
 }
