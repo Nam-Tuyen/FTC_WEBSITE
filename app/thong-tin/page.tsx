@@ -3,6 +3,7 @@
 import { Navigation } from "@/components/navigation"
 import { Footer } from "@/components/footer"
 import { Target, Users, BookOpen, TrendingUp, Award, Network, Facebook, Instagram, Linkedin, Sparkles, ArrowRight, Eye, Heart, Lightbulb, Rocket, Globe, Trophy, Coffee, MessageCircle, Calendar } from "lucide-react"
+import Link from "next/link"
 
 const infoSections = [
   {
@@ -335,23 +336,23 @@ export default function ThongTinPage() {
             </div>
             <h2 className="text-4xl font-bold text-white mb-6">TÌM HIỂU VỀ THÀNH TÍCH CÂU LẠC BỘ FTC</h2>
             <p className="text-xl text-white/80 mb-8 leading-relaxed italic">
-              Khám phá những thành tích mà nhà Ép đã đạt được thời gian qua
+              Khám phá những thành tích mà câu lạc bộ đã đạt được thời gian qua
             </p>
             <div className="flex flex-wrap justify-center gap-4">
-              <a 
-                href="https://ftc-websites.vercel.app/thanh-tich" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="px-8 py-4 bg-gradient-to-r from-yellow-500 to-purple-600 rounded-2xl text-white font-bold hover:shadow-xl hover:scale-105 transition-all cursor-pointer"
+              <Link 
+                href="/thanh-tich"
+                className="px-8 py-4 bg-gradient-to-r from-yellow-500 to-amber-600 rounded-2xl text-white font-bold hover:shadow-xl hover:scale-105 transition-all cursor-pointer inline-flex items-center gap-2"
               >
+                <Trophy className="w-5 h-5" />
                 Thành tích của FTC
-              </a>
+              </Link>
               <a 
                 href="https://www.facebook.com/clbfintechuel" 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="px-8 py-4 bg-gradient-to-r from-white/10 to-white/5 backdrop-blur-xl border border-white/20 rounded-2xl text-white font-bold hover:shadow-xl hover:scale-105 transition-all cursor-pointer"
+                className="px-8 py-4 bg-gradient-to-r from-blue-500 to-blue-600 rounded-2xl text-white font-bold hover:shadow-xl hover:scale-105 transition-all cursor-pointer inline-flex items-center gap-2"
               >
+                <Facebook className="w-5 h-5" />
                 Theo dõi Fanpage
               </a>
             </div>
