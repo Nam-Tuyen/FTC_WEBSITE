@@ -1,12 +1,9 @@
 import * as React from "react"
 import type { Metadata } from "next"
 import { Inter } from "next/font/google"
-import { Analytics } from "@vercel/analytics/next"
-import { SpeedInsights } from "@vercel/speed-insights/next"
 import { Suspense } from "react"
 import Script from "next/script"
-import { AuthProvider } from "@/app/providers/auth-provider"
-import { Toaster } from "@/components/ui/toaster"
+import { ClientWrapper } from "@/app/providers/client-wrapper"
 import "./globals.css"
 
 const inter = Inter({
@@ -31,16 +28,13 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="vi">
+    <html lang="vi" suppressHydrationWarning>
       <head>
         <link rel="icon" href="https://cdn.builder.io/api/v1/image/assets%2F28c01978106541d5baa7b8a043c11d9b%2Fa73c2f3c74b94de7814f011b7387bea0?format=webp&width=800" />
       </head>
-      <body className={inter.className}>
-        <AuthProvider>
+      <body className={inter.className} suppressHydrationWarning>
+        <ClientWrapper>
           <Suspense fallback={null}>{children}</Suspense>
-          <Toaster />
-          <Analytics />
-          <SpeedInsights />
           {process.env.NODE_ENV === "development" && (
             <Script id="suppress-clipboard-policy-error" strategy="beforeInteractive">
               {`
@@ -128,7 +122,7 @@ export default function RootLayout({
               `}
             </Script>
           )}
-        </AuthProvider>
+        </ClientWrapper>
       </body>
     </html>
   )
