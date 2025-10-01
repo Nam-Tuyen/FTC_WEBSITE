@@ -7,7 +7,7 @@ import { PageHeader } from "@/components/page-header"
 import { Button } from "@/components/ui/Button"
 import { ApplicationDeadlineCheck } from "./countdown-timer"
 import { RECRUITMENT_CONFIG } from "./constants"
-import { UserPlus, Sparkles } from "lucide-react"
+import { UserPlus, ArrowRight } from "lucide-react"
 
 const RecruitmentPage: NextPage = () => {
   // Sử dụng getStatus để kiểm tra trạng thái
@@ -21,7 +21,7 @@ const RecruitmentPage: NextPage = () => {
       {/* Page Header */}
       <PageHeader
         title="ỨNG TUYỂN FTC"
-        subtitle="Gia nhập cộng đồng FinTech hàng đầu và phát triển cùng chúng tôi"
+        subtitle="Gia nhập câu lạc bộ Công nghệ Tài chính và trở thành một phần của cộng đồng fintech hàng đầu"
         showSocialMedia={false}
         badgeText="Cơ hội nghề nghiệp"
         badgeIcon={UserPlus}
@@ -36,11 +36,6 @@ const RecruitmentPage: NextPage = () => {
       <section className="py-16 px-4 sm:px-6 lg:px-8">
         <div className="max-w-4xl mx-auto text-center">
           <div className="space-y-8">
-            <p className="text-lg sm:text-xl text-white/80 leading-relaxed italic">
-              Tụi mình đang tìm kiếm những người bạn đam mê công nghệ và tài chính, 
-              sẵn sàng học hỏi và phát triển cùng FTC.
-            </p>
-            
             {status === "OPEN" ? (
               <>
                 <a 
@@ -50,14 +45,15 @@ const RecruitmentPage: NextPage = () => {
                   className="inline-block group"
                 >
                   <div className="relative">
-                    <div className="absolute -inset-1 bg-gradient-to-r from-primary to-accent rounded-lg blur-lg opacity-70 group-hover:opacity-100 transition duration-1000 group-hover:duration-200"></div>
+                    <div className="absolute -inset-1 bg-gradient-to-r from-purple-500 to-pink-500 rounded-lg blur-lg opacity-70 group-hover:opacity-100 transition duration-1000 group-hover:duration-200"></div>
                     <Button 
                       size="lg" 
                       className="relative px-8 py-6 text-lg bg-background hover:bg-background/90 border-0 shadow-xl"
                     >
-                      <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent font-semibold">
+                      <span className="bg-gradient-to-r from-purple-500 to-pink-500 bg-clip-text text-transparent font-semibold">
                         Nộp đơn ngay
                       </span>
+                      <ArrowRight className="w-5 h-5 ml-2" />
                     </Button>
                   </div>
                 </a>
