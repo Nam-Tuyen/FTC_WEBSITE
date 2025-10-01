@@ -2,7 +2,7 @@
 
 import { Navigation } from "@/components/navigation"
 import { Footer } from "@/components/footer"
-import { Target, Users, BookOpen, TrendingUp, Award, Network, Facebook, Instagram, Sparkles, ArrowRight, Eye, Heart, Lightbulb, Rocket, Globe, Trophy, Coffee, MessageCircle, Calendar } from "lucide-react"
+import { Target, Users, BookOpen, TrendingUp, Award, Network, Facebook, Instagram, Linkedin, Sparkles, ArrowRight, Eye, Heart, Lightbulb, Rocket, Globe, Trophy, Coffee, MessageCircle, Calendar } from "lucide-react"
 
 const infoSections = [
   {
@@ -134,25 +134,31 @@ export default function ThongTinPage() {
             Giới thiệu tổng quan thông tin về FTC
           </p>
 
-          {/* Social Media Badges */}
-          <div className="mt-8 flex flex-wrap justify-center gap-4">
+          {/* Social Media Badges - 3 logos centered */}
+          <div className="mt-8 flex justify-center items-center gap-6">
             <a
               href="https://www.facebook.com/clbfintechuel"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 bg-gradient-to-r from-blue-500/20 to-blue-600/20 backdrop-blur-md border border-blue-400/30 rounded-full px-6 py-3 hover:scale-105 transition-all"
+              className="p-4 bg-gradient-to-br from-blue-500 to-blue-600 rounded-full hover:scale-110 transition-all duration-300 shadow-lg hover:shadow-blue-500/25"
             >
-              <Facebook className="w-5 h-5 text-blue-400" />
-              <span className="text-sm font-semibold text-blue-100">FANPAGE FTC</span>
+              <Facebook className="w-6 h-6 text-white" />
             </a>
             <a
               href="https://www.instagram.com/ftcers/"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 bg-gradient-to-r from-pink-500/20 to-purple-500/20 backdrop-blur-md border border-pink-400/30 rounded-full px-6 py-3 hover:scale-105 transition-all"
+              className="p-4 bg-gradient-to-br from-pink-500 to-purple-600 rounded-full hover:scale-110 transition-all duration-300 shadow-lg hover:shadow-pink-500/25"
             >
-              <Instagram className="w-5 h-5 text-pink-400" />
-              <span className="text-sm font-semibold text-pink-100">INSTAGRAM FTC</span>
+              <Instagram className="w-6 h-6 text-white" />
+            </a>
+            <a
+              href="https://www.linkedin.com/company/ftc-financial-technology-club/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="p-4 bg-gradient-to-br from-blue-700 to-blue-900 rounded-full hover:scale-110 transition-all duration-300 shadow-lg hover:shadow-blue-700/25"
+            >
+              <Linkedin className="w-6 h-6 text-white" />
             </a>
           </div>
 
