@@ -162,11 +162,11 @@ export default function ThongTinPage() {
             </a>
           </div>
 
-          {/* Modern Badge */}
+          {/* Modern Badge - Blue Theme */}
           <div className="mt-8 relative">
-            <div className="inline-flex items-center gap-2 bg-gradient-to-r from-green-500/20 to-emerald-500/20 backdrop-blur-md border border-green-400/30 rounded-full px-6 py-3">
-              <Sparkles className="w-5 h-5 text-green-400" />
-              <span className="text-sm font-semibold text-green-100">Cộng đồng FinTech hàng đầu</span>
+            <div className="inline-flex items-center gap-2 bg-gradient-to-r from-blue-500/20 to-cyan-500/20 backdrop-blur-md border border-blue-400/30 rounded-full px-6 py-3 shadow-lg shadow-blue-500/10">
+              <Sparkles className="w-5 h-5 text-blue-400" />
+              <span className="text-sm font-semibold text-blue-100">Cộng đồng FinTech hàng đầu</span>
             </div>
           </div>
         </div>

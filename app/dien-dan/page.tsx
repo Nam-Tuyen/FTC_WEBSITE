@@ -196,6 +196,11 @@ export default function ForumPage() {
         showSocialMedia={false}
         badgeText="Cộng đồng học thuật"
         badgeIcon={MessageSquare}
+        badgeColor="from-orange-500/20 to-red-500/20"
+        badgeBorderColor="border-orange-400/30"
+        badgeIconColor="text-orange-400"
+        badgeTextColor="text-orange-100"
+        badgeShadowColor="shadow-orange-500/10"
       />
 
       {/* Search Section */}

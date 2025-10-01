@@ -228,6 +228,11 @@ export default function ActivitiesPage() {
         showSocialMedia={false}
         badgeText="Hoạt động nổi bật"
         badgeIcon={Sparkles}
+        badgeColor="from-purple-500/20 to-pink-500/20"
+        badgeBorderColor="border-purple-400/30"
+        badgeIconColor="text-purple-400"
+        badgeTextColor="text-purple-100"
+        badgeShadowColor="shadow-purple-500/10"
       />
 
       {/* Modern Activities Grid */}

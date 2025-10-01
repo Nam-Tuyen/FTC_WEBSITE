@@ -177,6 +177,11 @@ export default function CoPage() {
         showSocialMedia={false}
         badgeText="Tổ chức chuyên nghiệp"
         badgeIcon={Sparkles}
+        badgeColor="from-emerald-500/20 to-teal-500/20"
+        badgeBorderColor="border-emerald-400/30"
+        badgeIconColor="text-emerald-400"
+        badgeTextColor="text-emerald-100"
+        badgeShadowColor="shadow-emerald-500/10"
       />
 
       {/* Modern Organization Cards */}

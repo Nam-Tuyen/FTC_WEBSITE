@@ -70,6 +70,11 @@ export default function AchievementsPage() {
         showSocialMedia={false}
         badgeText="Thành tích xuất sắc"
         badgeIcon={Trophy}
+        badgeColor="from-yellow-500/20 to-amber-500/20"
+        badgeBorderColor="border-yellow-400/30"
+        badgeIconColor="text-yellow-400"
+        badgeTextColor="text-yellow-100"
+        badgeShadowColor="shadow-yellow-500/10"
       />
 
       {/* Modern Achievement Cards */}

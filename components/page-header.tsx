@@ -8,6 +8,11 @@ interface PageHeaderProps {
   showSocialMedia?: boolean
   badgeText?: string
   badgeIcon?: React.ComponentType<{ className?: string }>
+  badgeColor?: string
+  badgeBorderColor?: string
+  badgeIconColor?: string
+  badgeTextColor?: string
+  badgeShadowColor?: string
 }
 
 export function PageHeader({ 
@@ -15,7 +20,12 @@ export function PageHeader({
   subtitle, 
   showSocialMedia = true, 
   badgeText = "Cộng đồng FinTech hàng đầu",
-  badgeIcon: BadgeIcon = Sparkles
+  badgeIcon: BadgeIcon = Sparkles,
+  badgeColor = "from-green-500/20 to-emerald-500/20",
+  badgeBorderColor = "border-green-400/30",
+  badgeIconColor = "text-green-400",
+  badgeTextColor = "text-green-100",
+  badgeShadowColor = "shadow-green-500/10"
 }: PageHeaderProps) {
   return (
     <section className="relative min-h-[60vh] sm:min-h-[70vh] flex items-center justify-center py-12 sm:py-16 lg:py-24 px-4 sm:px-6 lg:px-8">
@@ -69,9 +79,9 @@ export function PageHeader({
 
         {/* Modern Badge */}
         <div className="mt-8 relative">
-          <div className="inline-flex items-center gap-2 bg-gradient-to-r from-green-500/20 to-emerald-500/20 backdrop-blur-md border border-green-400/30 rounded-full px-6 py-3">
-            <BadgeIcon className="w-5 h-5 text-green-400" />
-            <span className="text-sm font-semibold text-green-100">{badgeText}</span>
+          <div className={`inline-flex items-center gap-2 bg-gradient-to-r ${badgeColor} backdrop-blur-md border ${badgeBorderColor} rounded-full px-6 py-3 shadow-lg ${badgeShadowColor}`}>
+            <BadgeIcon className={`w-5 h-5 ${badgeIconColor}`} />
+            <span className={`text-sm font-semibold ${badgeTextColor}`}>{badgeText}</span>
           </div>
         </div>
       </div>
