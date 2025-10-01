@@ -426,8 +426,8 @@ export default function ChatbotPage() {
                     </div>
         </div>
 
-                  {/* Mode Selection Buttons */}
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+                  {/* Modern Mode Selection Cards */}
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
                     {CHAT_MODES.map((mc, index) => {
                       const active = selectedMode === mc.mode
                       return (
@@ -435,88 +435,137 @@ export default function ChatbotPage() {
                           key={mc.mode}
                           onClick={() => handleModeChange(mc.mode)}
                           className={cn(
-                            "group/btn relative overflow-hidden rounded-2xl p-4 sm:p-5 transition-all duration-500 transform",
-                            "flex items-center gap-3 sm:gap-4 text-left",
-                            "border backdrop-blur-sm shadow-lg",
-                            "hover:scale-[1.02] hover:shadow-xl active:scale-[0.98]",
+                            "group/btn relative overflow-hidden rounded-3xl p-6 sm:p-8 transition-all duration-700 transform",
+                            "flex flex-col items-center text-center gap-4",
+                            "border backdrop-blur-xl shadow-2xl",
+                            "hover:scale-[1.03] hover:shadow-3xl active:scale-[0.98]",
                             "animate-slide-in-up",
                             active 
-                              ? "bg-gradient-to-br from-blue-500/30 to-purple-500/30 border-blue-400/50 shadow-blue-500/20 scale-[1.02]"
-                              : "bg-white/5 border-white/20 hover:bg-white/10 hover:border-white/30"
+                              ? "bg-gradient-to-br from-blue-500/40 via-purple-500/30 to-cyan-500/40 border-blue-400/60 shadow-blue-500/30 scale-[1.02]"
+                              : "bg-white/10 border-white/30 hover:bg-white/15 hover:border-white/40 hover:shadow-white/10"
                           )}
                           style={{
-                            animationDelay: `${index * 150}ms`
+                            animationDelay: `${index * 200}ms`
                           }}
                         >
-                          {/* Animated Background */}
+                          {/* Animated Background Layers */}
+                          <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent rounded-3xl" />
                           <div className={cn(
-                            "absolute inset-0 transition-all duration-500",
+                            "absolute inset-0 transition-all duration-700 rounded-3xl",
                             active 
-                              ? "bg-gradient-to-br from-blue-500/20 to-purple-500/20" 
-                              : "group-hover/btn:bg-gradient-to-br group-hover/btn:from-white/5 group-hover/btn:to-white/10"
+                              ? "bg-gradient-to-br from-blue-500/20 via-purple-500/15 to-cyan-500/20" 
+                              : "group-hover/btn:bg-gradient-to-br group-hover/btn:from-white/10 group-hover/btn:via-white/5 group-hover/btn:to-white/10"
                           )} />
                           
-                          {/* Icon */}
+                          {/* Floating Particles */}
+                          <div className="absolute top-2 right-2 w-2 h-2 bg-blue-400/60 rounded-full animate-float-particle" />
+                          <div className="absolute bottom-2 left-2 w-1.5 h-1.5 bg-purple-400/60 rounded-full animate-float-particle animation-delay-300" />
+                          
+                          {/* Icon Container */}
                           <div className={cn(
-                            "relative w-10 h-10 sm:w-12 sm:h-12 rounded-xl flex items-center justify-center transition-all duration-300",
-                            "border backdrop-blur-sm",
+                            "relative w-16 h-16 sm:w-20 sm:h-20 rounded-2xl flex items-center justify-center transition-all duration-500",
+                            "border backdrop-blur-sm shadow-lg",
                             active
-                              ? "bg-gradient-to-br from-blue-400/30 to-purple-400/30 border-blue-300/50 shadow-lg shadow-blue-500/20"
-                              : "bg-white/10 border-white/20 group-hover/btn:bg-white/20 group-hover/btn:border-white/30"
+                              ? "bg-gradient-to-br from-blue-400/40 to-purple-400/40 border-blue-300/60 shadow-blue-500/30 scale-110"
+                              : "bg-white/15 border-white/30 group-hover/btn:bg-white/25 group-hover/btn:border-white/40 group-hover/btn:scale-105"
                           )}>
-                            <span className="text-lg sm:text-xl transition-transform duration-300 group-hover/btn:scale-110">
+                            {/* Icon Glow Effect */}
+                            <div className={cn(
+                              "absolute inset-0 rounded-2xl transition-all duration-500",
+                              active 
+                                ? "bg-gradient-to-br from-blue-400/20 to-purple-400/20 blur-sm" 
+                                : "group-hover/btn:bg-gradient-to-br group-hover/btn:from-white/10 group-hover/btn:to-white/5 group-hover/btn:blur-sm"
+                            )} />
+                            
+                            <span className="relative text-2xl sm:text-3xl transition-all duration-500 group-hover/btn:scale-110 group-hover/btn:rotate-6">
                               {mc.icon}
                             </span>
+                            
+                            {/* Active Status Indicator */}
                             {active && (
-                              <div className="absolute -top-1 -right-1 w-3 h-3 bg-green-400 rounded-full animate-pulse" />
+                              <div className="absolute -top-2 -right-2 w-4 h-4 bg-green-400 rounded-full flex items-center justify-center shadow-lg">
+                                <div className="w-2 h-2 bg-white rounded-full animate-pulse" />
+                                <div className="absolute inset-0 w-4 h-4 bg-green-400 rounded-full animate-ping" />
+                              </div>
                             )}
                           </div>
                           
-                          {/* Content */}
-                          <div className="relative flex-1 min-w-0">
+                          {/* Content Section */}
+                          <div className="relative space-y-2">
                             <h3 className={cn(
-                              "font-semibold text-sm sm:text-base transition-colors duration-300",
-                              active ? "text-white" : "text-white/90 group-hover/btn:text-white"
+                              "font-bold text-lg sm:text-xl transition-all duration-300",
+                              active ? "text-white text-glow" : "text-white/90 group-hover/btn:text-white group-hover/btn:text-glow"
                             )}>
-                          {mc.label}
+                              {mc.label}
                             </h3>
                             <p className={cn(
-                              "text-xs sm:text-sm mt-1 transition-colors duration-300",
-                              active ? "text-white/80" : "text-white/60 group-hover/btn:text-white/80"
+                              "text-sm sm:text-base transition-all duration-300 leading-relaxed",
+                              active ? "text-white/90" : "text-white/70 group-hover/btn:text-white/90"
                             )}>
                               {mc.mode === 'club' ? 'Thông tin về câu lạc bộ FTC' : 'Kiến thức về ngành FinTech'}
                             </p>
+                            
+                            {/* Feature Tags */}
+                            <div className="flex flex-wrap gap-2 justify-center mt-3">
+                              {mc.mode === 'club' ? (
+                                <>
+                                  <span className="px-3 py-1 bg-blue-500/20 text-blue-300 text-xs rounded-full border border-blue-400/30">
+                                    Thông tin CLB
+                                  </span>
+                                  <span className="px-3 py-1 bg-purple-500/20 text-purple-300 text-xs rounded-full border border-purple-400/30">
+                                    Hoạt động
+                                  </span>
+                                </>
+                              ) : (
+                                <>
+                                  <span className="px-3 py-1 bg-cyan-500/20 text-cyan-300 text-xs rounded-full border border-cyan-400/30">
+                                    FinTech
+                                  </span>
+                                  <span className="px-3 py-1 bg-green-500/20 text-green-300 text-xs rounded-full border border-green-400/30">
+                                    Kiến thức
+                                  </span>
+                                </>
+                              )}
+                            </div>
                           </div>
                           
-                          {/* Active Indicator */}
-                          {active && (
-                            <div className="relative">
-                              <div className="w-2 h-2 bg-blue-400 rounded-full animate-pulse" />
-                              <div className="absolute inset-0 w-2 h-2 bg-blue-400 rounded-full animate-ping" />
-                            </div>
-                          )}
+                          {/* Selection Indicator */}
+                          <div className={cn(
+                            "absolute bottom-4 left-1/2 transform -translate-x-1/2 transition-all duration-500",
+                            active 
+                              ? "w-8 h-1 bg-gradient-to-r from-blue-400 to-purple-400 rounded-full shadow-lg" 
+                              : "w-0 h-1 bg-gradient-to-r from-blue-400 to-purple-400 rounded-full group-hover/btn:w-6"
+                          )} />
                         </button>
                       )
                     })}
                   </div>
 
-                  {/* Status Notification */}
+                  {/* Enhanced Status Notification */}
                   {showModeChangeNotification && (
-                    <div className="mt-6 flex items-center gap-3 p-4 bg-gradient-to-r from-green-500/10 to-blue-500/10 rounded-2xl border border-green-400/30 backdrop-blur-sm animate-in slide-in-from-top-2 duration-500">
-                      <div className="relative">
-                        <div className="w-3 h-3 bg-green-400 rounded-full animate-pulse" />
-                        <div className="absolute inset-0 w-3 h-3 bg-green-400 rounded-full animate-ping" />
-                      </div>
-                      <div className="flex-1">
-                        <p className="text-sm font-medium text-white">
-                          Đã chuyển sang chế độ: 
-                          <span className="ml-2 font-bold text-green-400">
-                            {CHAT_MODES.find((m) => m.mode === selectedMode)?.label}
-                          </span>
-                        </p>
-                        <p className="text-xs text-white/60 mt-1">
-                          Bạn có thể bắt đầu trò chuyện ngay bây giờ
-                        </p>
+                    <div className="mt-8 relative">
+                      <div className="absolute inset-0 bg-gradient-to-r from-green-500/20 via-blue-500/10 to-purple-500/20 rounded-3xl blur-sm" />
+                      <div className="relative flex items-center gap-4 p-6 bg-gradient-to-r from-green-500/15 to-blue-500/15 rounded-3xl border border-green-400/40 backdrop-blur-xl shadow-2xl animate-in slide-in-from-top-2 duration-700">
+                        <div className="relative">
+                          <div className="w-4 h-4 bg-green-400 rounded-full animate-pulse shadow-lg" />
+                          <div className="absolute inset-0 w-4 h-4 bg-green-400 rounded-full animate-ping" />
+                        </div>
+                        <div className="flex-1">
+                          <p className="text-base font-bold text-white mb-1">
+                            ✅ Đã chuyển sang chế độ: 
+                            <span className="ml-2 text-green-400 text-glow">
+                              {CHAT_MODES.find((m) => m.mode === selectedMode)?.label}
+                            </span>
+                          </p>
+                          <p className="text-sm text-white/80">
+                            Bạn có thể bắt đầu trò chuyện ngay bây giờ
+                          </p>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <div className="w-2 h-2 bg-blue-400 rounded-full animate-pulse" />
+                          <div className="w-2 h-2 bg-purple-400 rounded-full animate-pulse animation-delay-300" />
+                          <div className="w-2 h-2 bg-cyan-400 rounded-full animate-pulse animation-delay-600" />
+                        </div>
                       </div>
                     </div>
                   )}
