@@ -258,7 +258,7 @@ export default function HomePage() {
                   className="relative group bg-card/10 backdrop-blur-sm border-accent/20 hover:border-accent/50 transition-all duration-700 hover:glow overflow-hidden h-full"
                 >
                   <div className={`absolute inset-0 bg-gradient-to-br ${feature.gradient} opacity-0 group-hover:opacity-100 transition-opacity duration-700`}></div>
-                  <CardContent className="relative z-10 p-8 h-full flex flex-col">
+                  <CardContent className="relative z-10 p-8 h-full flex flex-col items-center text-center">
                     <div className="relative mb-6">
                       <div className={`w-20 h-20 mx-auto bg-gradient-to-br ${feature.iconColor} rounded-2xl flex items-center justify-center glow group-hover:scale-110 transition-all duration-500 shadow-xl`}>
                         <IconComponent className="h-10 w-10 text-white" />
@@ -266,17 +266,17 @@ export default function HomePage() {
                       <div className="absolute inset-0 w-20 h-20 mx-auto border-2 border-accent/30 rounded-2xl animate-pulse"></div>
                     </div>
                     
-                    <h3 className="font-heading font-bold text-lg mb-4 text-foreground uppercase tracking-wide group-hover:text-accent transition-colors duration-300">
+                    <h3 className="font-heading font-bold text-lg mb-4 text-foreground uppercase tracking-wide group-hover:text-accent transition-colors duration-300 text-center">
                       {feature.title}
                     </h3>
                     
-                    <p className="text-foreground/70 font-medium leading-relaxed mb-6 flex-grow text-sm">
+                    <p className="text-foreground/70 font-medium leading-relaxed mb-6 flex-grow text-sm text-center">
                       {feature.description}
                     </p>
                     
-                    <div className="space-y-2">
+                    <div className="space-y-2 w-full">
                       {feature.features.map((item, idx) => (
-                        <div key={idx} className="flex items-center text-xs text-foreground/60 group-hover:text-accent/80 transition-colors duration-300">
+                        <div key={idx} className="flex items-center justify-center text-xs text-foreground/60 group-hover:text-accent/80 transition-colors duration-300">
                           <CheckCircle className="h-3 w-3 mr-2 text-accent" />
                           <span>{item}</span>
                         </div>
