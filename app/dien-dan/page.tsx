@@ -3,6 +3,7 @@
 import { useState, useEffect, useMemo, type ChangeEvent } from "react"
 import { useRouter } from "next/navigation"
 import Link from "next/link"
+import { PageHeader } from "@/components/page-header"
 import { Button } from "@/components/ui/Button"
 import { Input } from "@/components/ui/Input"
 import {
@@ -189,44 +190,34 @@ export default function ForumPage() {
 
   return (
     <div className="min-h-screen bg-[#003663] text-white">
-      {/* Hero Section */}
-      <section className="relative min-h-[70vh] flex items-center justify-center pt-24 pb-16 px-4 sm:px-6 lg:px-8">
-        <div className="absolute inset-0 overflow-hidden">
-          <div className="absolute top-1/4 -right-1/4 w-2/3 h-2/3 bg-gradient-to-br from-blue-500/20 via-purple-500/10 to-transparent rounded-full blur-3xl" />
-          <div className="absolute -bottom-1/4 -left-1/4 w-2/3 h-2/3 bg-gradient-to-tr from-purple-500/20 via-pink-500/10 to-transparent rounded-full blur-3xl" />
-        </div>
+      <PageHeader 
+        title="DIỄN ĐÀN FTC"
+        subtitle="Nơi cộng đồng fintech chia sẻ kiến thức, thảo luận xu hướng và kết nối với nhau"
+        showSocialMedia={false}
+        badgeText="Cộng đồng học thuật"
+        badgeIcon={MessageSquare}
+      />
 
-        <div className="relative max-w-6xl mx-auto text-center space-y-8">
-          <div className="space-y-6">
-            <h1 className="text-5xl sm:text-6xl lg:text-7xl font-extrabold">
-              <span className="bg-gradient-to-r from-white via-blue-100 to-purple-100 bg-clip-text text-transparent">
-                DIỄN ĐÀN FTC
-              </span>
-            </h1>
-            <p className="text-xl sm:text-2xl lg:text-3xl text-white/90 leading-relaxed max-w-4xl mx-auto font-medium">
-              Nơi cộng đồng fintech chia sẻ kiến thức, thảo luận xu hướng và kết nối với nhau
-            </p>
+      {/* Search Section */}
+      <section className="py-8 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-2xl mx-auto relative">
+          <div className="absolute left-6 top-1/2 -translate-y-1/2">
+            <Search className="h-6 w-6 text-white/80" />
           </div>
-
-          <div className="max-w-2xl mx-auto relative mt-12">
-            <div className="absolute left-6 top-1/2 -translate-y-1/2">
-              <Search className="h-6 w-6 text-white/80" />
-            </div>
-            <Input
-              value={search}
-              onChange={(e: ChangeEvent<HTMLInputElement>) => setSearch(e.target.value)}
-              placeholder="Tìm kiếm câu hỏi, thảo luận..."
-              className="pl-16 h-16 text-lg bg-white/15 border-white/25 placeholder-white/70 text-white rounded-2xl shadow-2xl focus:ring-white/40 backdrop-blur-xl"
-            />
-            {search && (
-              <button
-                onClick={() => setSearch("")}
-                className="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 grid place-items-center rounded-xl bg-white/20 hover:bg-white/30 transition-all"
-              >
-                <X className="h-4 w-4" />
-              </button>
-            )}
-          </div>
+          <Input
+            value={search}
+            onChange={(e: ChangeEvent<HTMLInputElement>) => setSearch(e.target.value)}
+            placeholder="Tìm kiếm câu hỏi, thảo luận..."
+            className="pl-16 h-16 text-lg bg-white/15 border-white/25 placeholder-white/70 text-white rounded-2xl shadow-2xl focus:ring-white/40 backdrop-blur-xl"
+          />
+          {search && (
+            <button
+              onClick={() => setSearch("")}
+              className="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 grid place-items-center rounded-xl bg-white/20 hover:bg-white/30 transition-all"
+            >
+              <X className="h-4 w-4" />
+            </button>
+          )}
         </div>
       </section>
 

@@ -2,6 +2,7 @@
 
 import { Navigation } from "@/components/navigation"
 import { Footer } from "@/components/footer"
+import { PageHeader } from "@/components/page-header"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Target, Users, BookOpen, TrendingUp, Award, Network, Facebook, Instagram, Calendar, MapPin, Clock, Star, ArrowRight, Sparkles, Zap, Eye, Heart } from "lucide-react"
 
@@ -221,35 +222,13 @@ export default function ActivitiesPage() {
     <div className="min-h-screen bg-[#003663] text-white overflow-hidden">
       <Navigation />
 
-      {/* Mobile Responsive Hero Section */}
-      <section className="relative min-h-[60vh] sm:min-h-[70vh] flex items-center justify-center py-12 sm:py-16 lg:py-24 px-4 sm:px-6 lg:px-8">
-        <div className="absolute inset-0 overflow-hidden">
-          <div className="absolute top-1/4 -right-1/4 w-2/3 h-2/3 bg-gradient-to-br from-primary/20 via-accent/20 to-transparent rounded-full blur-3xl animate-float" />
-          <div className="absolute -bottom-1/4 -left-1/4 w-2/3 h-2/3 bg-gradient-to-tr from-accent/20 via-primary/20 to-transparent rounded-full blur-3xl animate-float-reverse" />
-        </div>
-
-        <div className="relative max-w-6xl mx-auto text-center space-y-4 sm:space-y-6 lg:space-y-8">
-          <h1 className="relative text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-extrabold">
-            <span className="absolute inset-0 bg-gradient-to-r from-white to-white opacity-50 blur-2xl animate-pulse"></span>
-            <span className="relative text-white animate-bounce" style={{
-              animation: 'blink 1.5s infinite, gradient-shift 2s ease-in-out infinite, bounce 2s infinite'
-            }}>
-              HOẠT ĐỘNG CỦA FTC
-            </span>
-          </h1>
-          <p className="text-base sm:text-lg md:text-xl lg:text-2xl xl:text-2xl text-muted-foreground leading-relaxed max-w-4xl mx-auto italic px-4">
-            Khám phá những sự kiện đặc sắc và hoạt động thú vị của câu lạc bộ
-          </p>
-
-          {/* Modern Badge */}
-          <div className="mt-8 relative">
-            <div className="inline-flex items-center gap-2 bg-gradient-to-r from-blue-500/20 to-purple-500/20 backdrop-blur-md border border-blue-400/30 rounded-full px-6 py-3">
-              <Sparkles className="w-5 h-5 text-blue-400" />
-              <span className="text-sm font-semibold text-blue-100">Hoạt động nổi bật</span>
-            </div>
-          </div>
-        </div>
-      </section>
+      <PageHeader 
+        title="HOẠT ĐỘNG CỦA FTC"
+        subtitle="Khám phá những sự kiện đặc sắc và hoạt động thú vị của câu lạc bộ"
+        showSocialMedia={false}
+        badgeText="Hoạt động nổi bật"
+        badgeIcon={Sparkles}
+      />
 
       {/* Modern Activities Grid */}
       <section className="py-16 px-4 sm:px-6 lg:px-8">

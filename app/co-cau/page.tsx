@@ -2,6 +2,7 @@
 
 import { Navigation } from "@/components/navigation"
 import { Footer } from "@/components/footer"
+import { PageHeader } from "@/components/page-header"
 import { Shield, BookOpen, Calendar, Megaphone, Wallet, Users, Handshake, Star, TrendingUp, Target, Sparkles, Zap, ArrowRight, Search, FileText, Settings, Palette, Video, GraduationCap, DollarSign, UserCheck, Calculator, Heart } from "lucide-react"
 
 const organizationData = [
@@ -170,35 +171,13 @@ export default function CoPage() {
     <div className="min-h-screen bg-[#003663] text-white overflow-hidden">
       <Navigation />
 
-      {/* Modern Hero Section */}
-      <section className="relative min-h-[60vh] sm:min-h-[70vh] flex items-center justify-center py-12 sm:py-16 lg:py-24 px-4 sm:px-6 lg:px-8">
-        <div className="absolute inset-0 overflow-hidden">
-          <div className="absolute top-1/4 -right-1/4 w-2/3 h-2/3 bg-gradient-to-br from-primary/20 via-accent/20 to-transparent rounded-full blur-3xl animate-float" />
-          <div className="absolute -bottom-1/4 -left-1/4 w-2/3 h-2/3 bg-gradient-to-tr from-accent/20 via-primary/20 to-transparent rounded-full blur-3xl animate-float-reverse" />
-        </div>
-
-        <div className="relative max-w-6xl mx-auto text-center space-y-4 sm:space-y-6 lg:space-y-8">
-          <h1 className="relative text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-extrabold">
-            <span className="absolute inset-0 bg-gradient-to-r from-white to-white opacity-50 blur-2xl animate-pulse"></span>
-            <span className="relative text-white animate-bounce" style={{
-              animation: 'blink 1.5s infinite, gradient-shift 2s ease-in-out infinite, bounce 2s infinite'
-            }}>
-              CƠ CẤU TỔ CHỨC
-            </span>
-          </h1>
-          <p className="text-base sm:text-lg md:text-xl lg:text-2xl xl:text-2xl text-muted-foreground leading-relaxed max-w-4xl mx-auto italic px-4">
-            Khám phá cấu trúc tổ chức và vai trò của các ban trong câu lạc bộ
-          </p>
-
-          {/* Modern Badge */}
-          <div className="mt-8 relative">
-            <div className="inline-flex items-center gap-2 bg-gradient-to-r from-blue-500/20 to-purple-500/20 backdrop-blur-md border border-blue-400/30 rounded-full px-6 py-3">
-              <Sparkles className="w-5 h-5 text-blue-400" />
-              <span className="text-sm font-semibold text-blue-100">Tổ chức chuyên nghiệp</span>
-            </div>
-          </div>
-        </div>
-      </section>
+      <PageHeader 
+        title="CƠ CẤU TỔ CHỨC"
+        subtitle="Khám phá cấu trúc tổ chức và vai trò của các ban trong câu lạc bộ"
+        showSocialMedia={false}
+        badgeText="Tổ chức chuyên nghiệp"
+        badgeIcon={Sparkles}
+      />
 
       {/* Modern Organization Cards */}
       <section className="py-16 px-4 sm:px-6 lg:px-8">
