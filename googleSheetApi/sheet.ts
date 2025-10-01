@@ -8,8 +8,8 @@
 
 import { CATEGORIES } from "./constants"
 
-const WEB_APP_URL =
-  "https://script.google.com/macros/s/AKfycbyCfakaiFBnEQT0DYiyfjTJYxSO0_yZa0MzrsqjbodAI7Ay9i3OtF2zYpXdWibIX6P_Yw/exec"
+// Use Next.js API route as proxy to avoid CORS issues
+const WEB_APP_URL = "/api/forum"
 
 /**
  * Allowed categories matching Apps Script ALLOWED_CATEGORIES
@@ -91,26 +91,18 @@ async function apiCall<T>(action: string, body: any): Promise<ApiResp<T>> {
       body: JSON.stringify({ function: action, body }),
     })
     
-    const text = await res.text()
-    
-    try {
-      const json = JSON.parse(text)
-      return json
-    } catch (parseError) {
-      // If response is not JSON, return error response
-      return {
-        ok: false,
-        message: "Lỗi: Phản hồi từ server không hợp lệ",
-        error: text,
-        timestamp: new Date().toISOString(),
-      } as ApiResp<T>
+    if (!res.ok) {
+      throw new Error(`HTTP error! status: ${res.status}`)
     }
+    
+    const json = await res.json()
+    return json as ApiResp<T>
   } catch (networkError) {
     // Network or fetch error
     return {
       ok: false,
       message: "Lỗi kết nối: Không thể kết nối đến server",
-      error: String(networkError),
+      error: networkError instanceof Error ? networkError.message : "Unknown error",
       timestamp: new Date().toISOString(),
     } as ApiResp<T>
   }
