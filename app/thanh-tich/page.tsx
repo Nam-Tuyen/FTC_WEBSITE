@@ -3,7 +3,7 @@
 import { Navigation } from "@/components/navigation"
 import { Footer } from "@/components/footer"
 import { PageHeader } from "@/components/page-header"
-import { Trophy, Award, Star, Target, Sparkles, Users, Heart, Lightbulb, Rocket, Globe, Medal, Crown, Zap, ArrowRight, Calendar, Activity, MessageCircle } from "lucide-react"
+import { Trophy, Award, Star, Target, Sparkles, Users, Heart, Lightbulb, Rocket, Globe, Medal, Crown, Zap, ArrowRight, Calendar, Activity, MessageCircle, Network, Handshake } from "lucide-react"
 
 const achievementSections = [
   {
@@ -215,97 +215,144 @@ export default function AchievementsPage() {
         </div>
       </section>
 
-      {/* Call to Action Section - Split Layout */}
+      {/* Call to Action Section - Achievement Focus */}
       <section className="py-16 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            {/* Left Side - Main CTA */}
-            <div className="relative bg-gradient-to-br from-yellow-500/20 to-amber-500/20 backdrop-blur-xl rounded-3xl border border-yellow-400/30 p-10 shadow-2xl overflow-hidden">
-              <div className="absolute inset-0 bg-gradient-to-br from-yellow-500/10 to-amber-500/10 animate-pulse"></div>
-              <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-yellow-400 to-amber-400"></div>
-              
-              <div className="relative z-10">
-                <div className="flex items-center gap-4 mb-6">
-                  <div className="w-16 h-16 bg-gradient-to-r from-yellow-500 to-amber-600 rounded-2xl flex items-center justify-center shadow-xl">
-                    <Trophy className="w-8 h-8 text-white" />
-                  </div>
-                  <div>
-                    <h3 className="text-3xl font-bold text-white">THÀNH TÍCH NỔI BẬT</h3>
-                    <p className="text-yellow-200 text-lg">Những thành tựu đáng tự hào</p>
-                  </div>
+          {/* Main Achievement Stats */}
+          <div className="relative bg-gradient-to-br from-yellow-500/20 to-amber-500/20 backdrop-blur-xl rounded-3xl border border-yellow-400/30 p-12 shadow-2xl overflow-hidden mb-12">
+            <div className="absolute inset-0 bg-gradient-to-br from-yellow-500/10 to-amber-500/10 animate-pulse"></div>
+            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-yellow-400 to-amber-400"></div>
+            
+            <div className="relative z-10 text-center">
+              <div className="flex items-center justify-center gap-4 mb-8">
+                <div className="w-20 h-20 bg-gradient-to-r from-yellow-500 to-amber-600 rounded-3xl flex items-center justify-center shadow-xl">
+                  <Trophy className="w-10 h-10 text-white" />
                 </div>
-                
-                <p className="text-white/90 mb-8 leading-relaxed text-lg italic">
-                  Khám phá những thành tích và giải thưởng mà câu lạc bộ đã đạt được trong suốt quá trình phát triển
-                </p>
-                
-                <a 
-                  href="/thanh-tich"
-                  className="inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-yellow-500 to-amber-600 rounded-2xl text-white font-bold hover:shadow-xl hover:scale-105 transition-all duration-300 hover:shadow-yellow-500/25"
-                >
-                  <Trophy className="w-6 h-6" />
-                  <span>Xem chi tiết thành tích</span>
-                  <ArrowRight className="w-5 h-5" />
-                </a>
+                <div>
+                  <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white">
+                    <span className="bg-gradient-to-r from-yellow-400 to-amber-400 bg-clip-text text-transparent">
+                      THÀNH TÍCH VINH DANH
+                    </span>
+                  </h2>
+                  <p className="text-yellow-200 text-xl sm:text-2xl italic">Những thành tựu đáng tự hào của FTC</p>
+                </div>
+              </div>
+              
+              {/* Achievement Stats */}
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-8">
+                <div className="text-center">
+                  <div className="text-4xl sm:text-5xl font-bold text-white mb-2">15+</div>
+                  <div className="text-yellow-200 text-sm sm:text-base">Giải thưởng</div>
+                </div>
+                <div className="text-center">
+                  <div className="text-4xl sm:text-5xl font-bold text-white mb-2">8</div>
+                  <div className="text-yellow-200 text-sm sm:text-base">Cuộc thi</div>
+                </div>
+                <div className="text-center">
+                  <div className="text-4xl sm:text-5xl font-bold text-white mb-2">3</div>
+                  <div className="text-yellow-200 text-sm sm:text-base">Năm liên tiếp</div>
+                </div>
+                <div className="text-center">
+                  <div className="text-4xl sm:text-5xl font-bold text-white mb-2">100%</div>
+                  <div className="text-yellow-200 text-sm sm:text-base">Thành công</div>
+                </div>
+              </div>
+              
+              <p className="text-white/90 text-lg sm:text-xl leading-relaxed italic max-w-4xl mx-auto">
+                Từ những ngày đầu thành lập, FTC đã không ngừng phấn đấu và đạt được những thành tích xuất sắc, 
+                khẳng định vị thế là câu lạc bộ FinTech hàng đầu tại UEL
+              </p>
+            </div>
+          </div>
+
+          {/* Achievement Categories */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {/* Giải thưởng học thuật */}
+            <div className="group relative bg-gradient-to-br from-blue-500/20 to-cyan-500/20 backdrop-blur-xl rounded-2xl border border-blue-400/30 p-8 shadow-xl hover:scale-105 transition-all duration-300 hover:shadow-blue-500/20">
+              <div className="flex items-center gap-4 mb-6">
+                <div className="w-16 h-16 bg-gradient-to-r from-blue-500 to-cyan-600 rounded-2xl flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
+                  <Award className="w-8 h-8 text-white" />
+                </div>
+                <div>
+                  <h3 className="text-2xl font-bold text-white">Giải thưởng học thuật</h3>
+                  <p className="text-blue-200 text-sm">Cuộc thi và nghiên cứu</p>
+                </div>
+              </div>
+              <p className="text-white/80 mb-6 leading-relaxed text-sm italic">
+                Các giải thưởng trong các cuộc thi học thuật, hackathon và nghiên cứu khoa học
+              </p>
+              <div className="space-y-2">
+                <div className="flex items-center gap-2 text-blue-200 text-sm">
+                  <Star className="w-4 h-4" />
+                  <span>Hackathon FinTech 2023 - Giải Nhất</span>
+                </div>
+                <div className="flex items-center gap-2 text-blue-200 text-sm">
+                  <Star className="w-4 h-4" />
+                  <span>Cuộc thi nghiên cứu khoa học - Giải Nhì</span>
+                </div>
+                <div className="flex items-center gap-2 text-blue-200 text-sm">
+                  <Star className="w-4 h-4" />
+                  <span>FinTech Innovation Challenge - Top 3</span>
+                </div>
               </div>
             </div>
 
-            {/* Right Side - Secondary CTAs */}
-            <div className="space-y-6">
-              {/* Hoạt động */}
-              <div className="group relative bg-gradient-to-r from-purple-500/20 to-pink-500/20 backdrop-blur-xl rounded-2xl border border-purple-400/30 p-6 shadow-xl hover:scale-105 transition-all duration-300 hover:shadow-purple-500/20">
-                <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 bg-gradient-to-r from-purple-500 to-pink-600 rounded-xl flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
-                    <Activity className="w-6 h-6 text-white" />
-                  </div>
-                  <div className="flex-1">
-                    <h4 className="text-xl font-bold text-white mb-2">Hoạt động</h4>
-                    <p className="text-white/80 text-sm italic">Sự kiện và hoạt động thú vị</p>
-                  </div>
-                  <a 
-                    href="/hoat-dong"
-                    className="px-4 py-2 bg-gradient-to-r from-purple-500 to-pink-600 rounded-xl text-white font-semibold hover:shadow-lg transition-all duration-300"
-                  >
-                    Xem
-                  </a>
+            {/* Thành tích cộng đồng */}
+            <div className="group relative bg-gradient-to-br from-green-500/20 to-emerald-500/20 backdrop-blur-xl rounded-2xl border border-green-400/30 p-8 shadow-xl hover:scale-105 transition-all duration-300 hover:shadow-green-500/20">
+              <div className="flex items-center gap-4 mb-6">
+                <div className="w-16 h-16 bg-gradient-to-r from-green-500 to-emerald-600 rounded-2xl flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
+                  <Users className="w-8 h-8 text-white" />
+                </div>
+                <div>
+                  <h3 className="text-2xl font-bold text-white">Thành tích cộng đồng</h3>
+                  <p className="text-green-200 text-sm">Hoạt động xã hội</p>
                 </div>
               </div>
-
-              {/* Cơ cấu */}
-              <div className="group relative bg-gradient-to-r from-emerald-500/20 to-teal-500/20 backdrop-blur-xl rounded-2xl border border-emerald-400/30 p-6 shadow-xl hover:scale-105 transition-all duration-300 hover:shadow-emerald-500/20">
-                <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 bg-gradient-to-r from-emerald-500 to-teal-600 rounded-xl flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
-                    <Users className="w-6 h-6 text-white" />
-                  </div>
-                  <div className="flex-1">
-                    <h4 className="text-xl font-bold text-white mb-2">Cơ cấu</h4>
-                    <p className="text-white/80 text-sm italic">Tổ chức và cấu trúc</p>
-                  </div>
-                  <a 
-                    href="/co-cau"
-                    className="px-4 py-2 bg-gradient-to-r from-emerald-500 to-teal-600 rounded-xl text-white font-semibold hover:shadow-lg transition-all duration-300"
-                  >
-                    Xem
-                  </a>
+              <p className="text-white/80 mb-6 leading-relaxed text-sm italic">
+                Các hoạt động và dự án cộng đồng, đóng góp cho xã hội và phát triển bền vững
+              </p>
+              <div className="space-y-2">
+                <div className="flex items-center gap-2 text-green-200 text-sm">
+                  <Heart className="w-4 h-4" />
+                  <span>Dự án giáo dục tài chính - 500+ học sinh</span>
+                </div>
+                <div className="flex items-center gap-2 text-green-200 text-sm">
+                  <Heart className="w-4 h-4" />
+                  <span>Chương trình mentoring - 200+ sinh viên</span>
+                </div>
+                <div className="flex items-center gap-2 text-green-200 text-sm">
+                  <Heart className="w-4 h-4" />
+                  <span>Workshop miễn phí - 50+ sự kiện</span>
                 </div>
               </div>
+            </div>
 
-              {/* Diễn đàn */}
-              <div className="group relative bg-gradient-to-r from-orange-500/20 to-red-500/20 backdrop-blur-xl rounded-2xl border border-orange-400/30 p-6 shadow-xl hover:scale-105 transition-all duration-300 hover:shadow-orange-500/20">
-                <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 bg-gradient-to-r from-orange-500 to-red-600 rounded-xl flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
-                    <MessageCircle className="w-6 h-6 text-white" />
-                  </div>
-                  <div className="flex-1">
-                    <h4 className="text-xl font-bold text-white mb-2">Diễn đàn</h4>
-                    <p className="text-white/80 text-sm italic">Thảo luận và chia sẻ</p>
-                  </div>
-                  <a 
-                    href="/dien-dan"
-                    className="px-4 py-2 bg-gradient-to-r from-orange-500 to-red-600 rounded-xl text-white font-semibold hover:shadow-lg transition-all duration-300"
-                  >
-                    Xem
-                  </a>
+            {/* Đối tác và hợp tác */}
+            <div className="group relative bg-gradient-to-br from-purple-500/20 to-pink-500/20 backdrop-blur-xl rounded-2xl border border-purple-400/30 p-8 shadow-xl hover:scale-105 transition-all duration-300 hover:shadow-purple-500/20 md:col-span-2 lg:col-span-1">
+              <div className="flex items-center gap-4 mb-6">
+                <div className="w-16 h-16 bg-gradient-to-r from-purple-500 to-pink-600 rounded-2xl flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
+                  <Network className="w-8 h-8 text-white" />
+                </div>
+                <div>
+                  <h3 className="text-2xl font-bold text-white">Đối tác & Hợp tác</h3>
+                  <p className="text-purple-200 text-sm">Mạng lưới kết nối</p>
+                </div>
+              </div>
+              <p className="text-white/80 mb-6 leading-relaxed text-sm italic">
+                Xây dựng mạng lưới đối tác và hợp tác với các tổ chức, doanh nghiệp trong lĩnh vực FinTech
+              </p>
+              <div className="space-y-2">
+                <div className="flex items-center gap-2 text-purple-200 text-sm">
+                  <Handshake className="w-4 h-4" />
+                  <span>10+ đối tác doanh nghiệp</span>
+                </div>
+                <div className="flex items-center gap-2 text-purple-200 text-sm">
+                  <Handshake className="w-4 h-4" />
+                  <span>5+ trường đại học</span>
+                </div>
+                <div className="flex items-center gap-2 text-purple-200 text-sm">
+                  <Handshake className="w-4 h-4" />
+                  <span>3+ tổ chức quốc tế</span>
                 </div>
               </div>
             </div>
