@@ -27,49 +27,62 @@ function ForumHome() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#003663] via-[#004a7c] to-[#003663] text-white">
+      <style jsx>{`
+        @keyframes blink {
+          0%, 50%, 100% { opacity: 1; }
+          25%, 75% { opacity: 0.7; }
+        }
+        @keyframes gradient-shift {
+          0%, 100% { background-position: 0% 50%; }
+          50% { background-position: 100% 50%; }
+        }
+      `}</style>
       <div className="max-w-7xl mx-auto px-6 py-12">
-        {/* Header Section */}
-        <div className="text-center mb-16">
-          <div className="relative">
-            {/* Animated background elements */}
-            <div className="absolute inset-0 flex items-center justify-center">
-              <div className="w-96 h-96 bg-gradient-to-r from-blue-500/10 to-cyan-500/10 rounded-full blur-3xl animate-pulse"></div>
-            </div>
-            
-            <div className="relative z-10">
-              <div className="inline-flex items-center gap-3 px-6 py-3 rounded-full bg-gradient-to-r from-blue-500/20 to-cyan-500/20 border border-blue-400/30 backdrop-blur-xl mb-8">
-                <div className="w-3 h-3 bg-gradient-to-r from-blue-400 to-cyan-400 rounded-full animate-pulse"></div>
-                <span className="text-sm font-semibold text-blue-200 uppercase tracking-wider">
-                  Cộng đồng FinTech
-                </span>
-              </div>
-              
-              <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold bg-gradient-to-r from-white via-blue-100 to-cyan-200 bg-clip-text text-transparent mb-6 leading-tight">
+        {/* Header Section - Similar to Chatbot */}
+        <section className="relative min-h-[60vh] sm:min-h-[70vh] flex items-center justify-center py-12 sm:py-16 lg:py-24 px-4 sm:px-6 lg:px-8">
+          {/* Animated Background */}
+          <div className="absolute inset-0 overflow-hidden">
+            <div className="absolute -top-40 -right-40 w-80 h-80 bg-gradient-to-r from-blue-500/20 to-cyan-500/20 rounded-full blur-3xl animate-pulse"></div>
+            <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-gradient-to-r from-purple-500/20 to-pink-500/20 rounded-full blur-3xl animate-pulse"></div>
+            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-gradient-to-r from-orange-500/10 to-red-500/10 rounded-full blur-3xl animate-pulse"></div>
+          </div>
+
+          <div className="relative max-w-6xl mx-auto text-center space-y-4 sm:space-y-6 lg:space-y-8">
+            <h1 className="relative text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-extrabold">
+              <span className="absolute inset-0 bg-gradient-to-r from-white to-white opacity-50 blur-2xl animate-pulse"></span>
+              <span className="relative text-white animate-bounce" style={{ animation: 'blink 1.5s infinite, gradient-shift 2s ease-in-out infinite, bounce 2s infinite' }}>
                 Diễn đàn FTC
-              </h1>
-              
-              <p className="text-xl sm:text-2xl text-blue-200 max-w-4xl mx-auto leading-relaxed mb-8">
-                Nơi cộng đồng fintech chia sẻ kiến thức, thảo luận xu hướng và kết nối với nhau
-              </p>
-              
-              {/* Feature highlights */}
-              <div className="flex flex-wrap justify-center gap-6 text-sm text-blue-300">
-                <div className="flex items-center gap-2">
-                  <span className="text-orange-400">💬</span>
-                  <span>Thảo luận chuyên môn</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <span className="text-green-400">🤝</span>
-                  <span>Kết nối cộng đồng</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <span className="text-purple-400">🚀</span>
-                  <span>Xu hướng mới nhất</span>
-                </div>
+              </span>
+            </h1>
+            <p className="text-base sm:text-lg md:text-xl lg:text-2xl xl:text-2xl text-muted-foreground leading-relaxed max-w-4xl mx-auto italic px-4">
+              Nơi cộng đồng fintech chia sẻ kiến thức, thảo luận xu hướng và kết nối với nhau
+            </p>
+            
+            {/* Feature highlights */}
+            <div className="flex flex-wrap justify-center gap-6 text-sm text-blue-300 mt-8">
+              <div className="flex items-center gap-2">
+                <span className="text-orange-400">💬</span>
+                <span>Thảo luận chuyên môn</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <span className="text-green-400">🤝</span>
+                <span>Kết nối cộng đồng</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <span className="text-purple-400">🚀</span>
+                <span>Xu hướng mới nhất</span>
+              </div>
+            </div>
+
+            {/* Modern Badge */}
+            <div className="mt-8 relative">
+              <div className="inline-flex items-center gap-2 bg-gradient-to-r from-blue-500/20 to-cyan-500/20 backdrop-blur-md border border-blue-400/30 rounded-full px-6 py-3 shadow-lg shadow-blue-500/10">
+                <div className="w-2 h-2 bg-gradient-to-r from-blue-400 to-cyan-400 rounded-full animate-pulse"></div>
+                <span className="text-sm font-semibold text-blue-100">Cộng đồng FinTech</span>
               </div>
             </div>
           </div>
-        </div>
+        </section>
 
         {/* Auth Tabs - Only show when not logged in */}
         {!user && (
@@ -108,7 +121,7 @@ function ForumHome() {
             {/* Auth Forms */}
             <div className="flex justify-center">
               {tab==="login" && (
-                <div className="w-full max-w-lg">
+                <div className="w-full max-w-4xl">
                   <div className="bg-gradient-to-br from-[#003663]/90 to-[#004a7c]/90 backdrop-blur-xl rounded-3xl border border-blue-400/30 p-10 shadow-2xl">
                     <div className="text-center mb-10">
                       <div className="w-24 h-24 bg-gradient-to-r from-blue-500 to-cyan-600 rounded-full flex items-center justify-center mx-auto mb-8">

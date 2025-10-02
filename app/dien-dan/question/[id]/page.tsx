@@ -5,6 +5,7 @@ import { ForumApi } from "@/lib/forumApi";
 import type { QuestionItem } from "@/types/forum";
 import LikeButton from "@/components/forum/LikeButton";
 import NewResponseForm from "@/components/forum/NewResponseForm";
+import CommentSection from "@/components/forum/CommentSection";
 import { AuthProvider } from "@/context/AuthContext";
 
 function DetailInner({ questionId }: { questionId: string }) {
@@ -78,41 +79,19 @@ function DetailInner({ questionId }: { questionId: string }) {
 
             {/* Responses Section */}
             <div className="bg-gradient-to-br from-[#003663]/90 to-[#004a7c]/90 backdrop-blur-xl rounded-3xl border border-blue-400/30 p-8 shadow-2xl">
-              <h3 className="text-2xl font-bold text-white mb-6 flex items-center gap-3">
-                <span className="text-2xl">💬</span>
-                Phản hồi
-                <span className="text-lg text-blue-300">({q.responses?.length || 0})</span>
-              </h3>
-              
-              <div className="space-y-6">
-                {(q.responses || []).map(r => (
-                  <div key={r.id} className="bg-gradient-to-r from-blue-500/5 to-cyan-500/5 border border-blue-400/20 rounded-2xl p-6">
-                    <div className="flex items-center gap-3 mb-3">
-                      <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-cyan-600 rounded-full flex items-center justify-center">
-                        <span className="text-sm">👤</span>
-                      </div>
-                      <div>
-                        <div className="text-sm text-blue-200 font-semibold">{r.user}</div>
-                        <div className="text-xs text-blue-400">
-                          {new Date(r.createdAt).toLocaleDateString('vi-VN')}
-                        </div>
-                      </div>
-                    </div>
-                    <div className="text-blue-100 leading-relaxed whitespace-pre-wrap text-base">
-                      {r.content}
-                    </div>
-                  </div>
-                ))}
-                {q.responses?.length===0 && (
-                  <div className="text-center py-12">
-                    <div className="text-6xl mb-4">💬</div>
-                    <p className="text-blue-200 text-xl mb-2">Chưa có phản hồi</p>
-                    <p className="text-blue-300">Hãy là người đầu tiên trả lời!</p>
-                  </div>
-                )}
-              </div>
+              {/* Comment Section */}
+              <CommentSection 
+                questionId={q.id} 
+                initialComments={q.responses || []} 
+                onCommentAdded={load}
+              />
 
-              <div className="mt-8">
+              {/* New Response Form */}
+              <div className="mt-8 pt-8 border-t border-blue-400/30">
+                <h4 className="text-xl font-bold text-white mb-6 flex items-center gap-3">
+                  <span className="text-xl">✍️</span>
+                  Viết phản hồi mới
+                </h4>
                 <NewResponseForm questionId={q.id} onCreated={load} />
               </div>
             </div>
