@@ -34,8 +34,6 @@ export default function RootLayout({
     <html lang="vi" suppressHydrationWarning>
       <head>
         <link rel="icon" href="https://cdn.builder.io/api/v1/image/assets%2F28c01978106541d5baa7b8a043c11d9b%2Fa73c2f3c74b94de7814f011b7387bea0?format=webp&width=800" />
-        <link rel="preload" href="/_next/static/css/app/globals.css" as="style" onLoad="this.onload=null;this.rel='stylesheet'" />
-        <noscript><link rel="stylesheet" href="/_next/static/css/app/globals.css" /></noscript>
         <script
           dangerouslySetInnerHTML={{
             __html: `
@@ -48,13 +46,8 @@ export default function RootLayout({
                       // Convert preload to stylesheet immediately
                       link.rel = 'stylesheet';
                       link.removeAttribute('as');
-                      link.removeAttribute('onload');
                     }
                   });
-                  
-                  // Remove unused preload links
-                  const unusedPreloads = document.querySelectorAll('link[rel="preload"][as="style"]:not([href*="globals"])');
-                  unusedPreloads.forEach(link => link.remove());
                 };
                 
                 if (document.readyState === 'loading') {
