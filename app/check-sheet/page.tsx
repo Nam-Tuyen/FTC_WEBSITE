@@ -176,9 +176,19 @@ export default function CheckSheetPage() {
 
           {result && (
             <div className="mt-4">
-              <h3 className="font-bold mb-2">Analysis Results:</h3>
-              <div className="bg-white p-4 rounded shadow">
-                <pre className="text-sm overflow-auto">
+              <h3 className="font-bold mb-2 text-gray-800">Analysis Results:</h3>
+              <div className="bg-gradient-to-br from-indigo-50 to-purple-100 p-6 rounded-xl shadow-lg border border-indigo-200">
+                <div className={`p-4 rounded-lg mb-4 font-semibold ${
+                  result.success 
+                    ? 'bg-gradient-to-r from-indigo-500 to-purple-600 text-white border-2 border-indigo-400' 
+                    : 'bg-gradient-to-r from-red-500 to-pink-600 text-white border-2 border-red-400'
+                }`}>
+                  <div className="flex items-center gap-2">
+                    <span className="text-xl">{result.success ? '📊' : '❌'}</span>
+                    <span>{result.success ? 'Data Analysis Complete' : 'Analysis Failed'}</span>
+                  </div>
+                </div>
+                <pre className="text-sm overflow-auto bg-gray-900 text-cyan-400 p-4 rounded-lg">
                   {JSON.stringify(result, null, 2)}
                 </pre>
               </div>

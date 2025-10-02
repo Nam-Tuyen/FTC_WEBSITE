@@ -165,9 +165,19 @@ export default function DebugSheetPage() {
 
           {result && (
             <div className="mt-4">
-              <h3 className="font-bold mb-2">Test Results:</h3>
-              <div className="bg-white p-4 rounded shadow">
-                <pre className="text-sm overflow-auto">
+              <h3 className="font-bold mb-2 text-gray-800">Test Results:</h3>
+              <div className="bg-gradient-to-br from-slate-50 to-gray-100 p-6 rounded-xl shadow-lg border border-gray-200">
+                <div className={`p-4 rounded-lg mb-4 font-semibold ${
+                  result.success 
+                    ? 'bg-gradient-to-r from-blue-500 to-cyan-600 text-white border-2 border-blue-400' 
+                    : 'bg-gradient-to-r from-orange-500 to-red-600 text-white border-2 border-orange-400'
+                }`}>
+                  <div className="flex items-center gap-2">
+                    <span className="text-xl">{result.success ? '✅' : '❌'}</span>
+                    <span>{result.success ? 'API Call Successful' : 'API Call Failed'}</span>
+                  </div>
+                </div>
+                <pre className="text-sm overflow-auto bg-gray-900 text-green-400 p-4 rounded-lg">
                   {JSON.stringify(result, null, 2)}
                 </pre>
               </div>

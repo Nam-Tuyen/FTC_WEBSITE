@@ -191,9 +191,20 @@ export default function TestTokenPage() {
 
           {result && (
             <div className="mt-4">
-              <h3 className="font-bold mb-2">Test Results:</h3>
-              <div className="bg-white p-4 rounded shadow">
-                <pre className="text-sm overflow-auto">
+              <h3 className="font-bold mb-2 text-gray-800">Test Results:</h3>
+              <div className="bg-gradient-to-br from-yellow-50 to-orange-100 p-6 rounded-xl shadow-lg border border-yellow-200">
+                <div className={`p-4 rounded-lg mb-4 font-semibold ${
+                  result.success 
+                    ? 'bg-gradient-to-r from-green-500 to-teal-600 text-white border-2 border-green-400' 
+                    : 'bg-gradient-to-r from-red-500 to-pink-600 text-white border-2 border-red-400'
+                }`}>
+                  <div className="flex items-center gap-2">
+                    <span className="text-xl">{result.success ? '🔑' : '❌'}</span>
+                    <span>{result.success ? 'Token Test Successful' : 'Token Test Failed'}</span>
+                    {result.token && <span className="text-sm opacity-80">({result.token})</span>}
+                  </div>
+                </div>
+                <pre className="text-sm overflow-auto bg-gray-900 text-yellow-400 p-4 rounded-lg">
                   {JSON.stringify(result, null, 2)}
                 </pre>
               </div>

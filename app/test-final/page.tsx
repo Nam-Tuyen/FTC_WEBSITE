@@ -186,10 +186,15 @@ export default function TestFinalPage() {
               <h3 className="font-bold mb-2">Test Results:</h3>
               <div className="bg-white p-4 rounded shadow">
                 {result.message && (
-                  <div className={`p-3 rounded mb-4 ${
-                    result.message.includes('✅') ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
+                  <div className={`p-4 rounded-lg mb-4 border-2 font-semibold ${
+                    result.message.includes('✅') 
+                      ? 'bg-gradient-to-r from-green-500 to-emerald-600 text-white border-green-400 shadow-lg' 
+                      : 'bg-gradient-to-r from-red-500 to-pink-600 text-white border-red-400 shadow-lg'
                   }`}>
-                    {result.message}
+                    <div className="flex items-center gap-2">
+                      <span className="text-xl">{result.message.includes('✅') ? '✅' : '❌'}</span>
+                      <span>{result.message}</span>
+                    </div>
                   </div>
                 )}
                 <pre className="text-sm overflow-auto">
