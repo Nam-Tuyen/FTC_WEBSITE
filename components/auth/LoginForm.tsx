@@ -24,20 +24,31 @@ export default function LoginForm() {
 
   return (
     <form onSubmit={onSubmit} className="space-y-4">
-      <div className="space-y-2">
-        <input 
-          className="w-full border-2 border-gray-300 rounded-lg p-3 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-all duration-200" 
-          placeholder="MSSV (K+9 số)" 
-          value={mssv} 
-          onChange={e=>setMssv(e.target.value)} 
-        />
-        <input 
-          className="w-full border-2 border-gray-300 rounded-lg p-3 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-all duration-200" 
-          type="password" 
-          placeholder="Mật khẩu" 
-          value={password} 
-          onChange={e=>setPassword(e.target.value)} 
-        />
+      <div className="space-y-4">
+        <div>
+          <label className="block text-sm font-semibold text-blue-200 mb-2">
+            Mã số sinh viên của bạn
+          </label>
+          <input 
+            className="w-full border-2 border-blue-400/30 rounded-lg p-3 bg-[#003663]/50 text-white placeholder-blue-300 focus:border-orange-500 focus:ring-2 focus:ring-orange-500/20 transition-all duration-200" 
+            placeholder="Nhập MSSV (VD: K225123456)" 
+            value={mssv} 
+            onChange={e=>setMssv(e.target.value)} 
+          />
+        </div>
+        
+        <div>
+          <label className="block text-sm font-semibold text-blue-200 mb-2">
+            Mật khẩu của bạn
+          </label>
+          <input 
+            className="w-full border-2 border-blue-400/30 rounded-lg p-3 bg-[#003663]/50 text-white placeholder-blue-300 focus:border-orange-500 focus:ring-2 focus:ring-orange-500/20 transition-all duration-200" 
+            type="password" 
+            placeholder="Nhập mật khẩu" 
+            value={password} 
+            onChange={e=>setPassword(e.target.value)} 
+          />
+        </div>
       </div>
       {err && (
         <div className="p-3 rounded-lg bg-gradient-to-r from-red-500 to-pink-600 text-white border-2 border-red-400 shadow-lg">
