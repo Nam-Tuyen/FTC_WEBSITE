@@ -21,40 +21,102 @@ function DetailInner({ questionId }: { questionId: string }) {
   useEffect(() => { if(questionId) load(); }, [questionId]);
 
   return (
-    <div className="min-h-screen bg-[#003663] text-white">
-      <div className="max-w-3xl mx-auto p-4 space-y-4">
-        <button onClick={() => window.history.back()} className="text-sm underline">← Quay lại danh sách</button>
+    <div className="min-h-screen bg-gradient-to-br from-[#003663] via-[#004a7c] to-[#003663] text-white">
+      <div className="max-w-5xl mx-auto px-6 py-12">
+        {/* Back Button */}
+        <div className="mb-8">
+          <button 
+            onClick={() => window.history.back()} 
+            className="inline-flex items-center gap-3 px-6 py-3 bg-gradient-to-r from-slate-600/50 to-slate-700/50 hover:from-slate-500/50 hover:to-slate-600/50 text-slate-200 hover:text-white rounded-xl font-semibold transition-all duration-200 hover:scale-105"
+          >
+            <span className="text-xl">←</span>
+            <span>Quay lại danh sách</span>
+          </button>
+        </div>
 
-        {loading ? <p>Đang tải...</p> : !q ? <p>Không tìm thấy câu hỏi.</p> : (
-          <>
-            <div className="border rounded p-4 bg-white/10 backdrop-blur-xl">
-              <div className="flex items-start justify-between">
-                <div>
-                  <h2 className="text-xl font-semibold">{q.title}</h2>
-                  <div className="text-xs text-white/70">{q.category} • người đăng: {q.user}</div>
+        {loading ? (
+          <div className="text-center py-16">
+            <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-orange-400"></div>
+            <p className="text-blue-200 mt-4 text-lg">Đang tải câu hỏi...</p>
+          </div>
+        ) : !q ? (
+          <div className="text-center py-16">
+            <div className="text-6xl mb-4">❓</div>
+            <p className="text-blue-200 text-xl">Không tìm thấy câu hỏi</p>
+          </div>
+        ) : (
+          <div className="space-y-8">
+            {/* Question Card */}
+            <div className="bg-gradient-to-br from-[#003663]/90 to-[#004a7c]/90 backdrop-blur-xl rounded-3xl border border-blue-400/30 p-8 shadow-2xl">
+              <div className="flex items-start justify-between gap-6 mb-6">
+                <div className="flex-1">
+                  <div className="flex items-center gap-4 mb-4">
+                    <span className="px-4 py-2 rounded-full text-sm font-semibold bg-gradient-to-r from-orange-500/20 to-red-500/20 text-orange-300 border border-orange-400/30">
+                      {q.category || 'Thảo luận'}
+                    </span>
+                    <span className="text-sm text-blue-300">
+                      {new Date(q.createdAt).toLocaleDateString('vi-VN')}
+                    </span>
+                  </div>
+                  <h2 className="text-3xl font-bold text-white mb-4 leading-tight">{q.title}</h2>
+                  <div className="flex items-center gap-2 text-base text-blue-200">
+                    <span className="w-2 h-2 bg-gradient-to-r from-blue-400 to-cyan-400 rounded-full"></span>
+                    <span>Người đăng: <span className="text-white font-semibold">{q.user}</span></span>
+                  </div>
                 </div>
-                <LikeButton questionId={q.id} initialLikes={q.like_count} />
+                <div className="flex-shrink-0">
+                  <LikeButton questionId={q.id} initialLikes={q.like_count} />
+                </div>
               </div>
-              <p className="mt-2 whitespace-pre-wrap">{q.content}</p>
+              
+              <div className="bg-gradient-to-r from-blue-500/5 to-cyan-500/5 border border-blue-400/20 rounded-2xl p-6">
+                <p className="text-blue-100 leading-relaxed whitespace-pre-wrap text-lg">
+                  {q.content}
+                </p>
+              </div>
             </div>
 
-            <div className="border rounded p-4 bg-white/10 backdrop-blur-xl">
-              <h3 className="font-semibold mb-2">Phản hồi</h3>
-              <div className="space-y-3">
+            {/* Responses Section */}
+            <div className="bg-gradient-to-br from-[#003663]/90 to-[#004a7c]/90 backdrop-blur-xl rounded-3xl border border-blue-400/30 p-8 shadow-2xl">
+              <h3 className="text-2xl font-bold text-white mb-6 flex items-center gap-3">
+                <span className="text-2xl">💬</span>
+                Phản hồi
+                <span className="text-lg text-blue-300">({q.responses?.length || 0})</span>
+              </h3>
+              
+              <div className="space-y-6">
                 {(q.responses || []).map(r => (
-                  <div key={r.id} className="border rounded p-3 bg-white/5">
-                    <div className="text-xs text-white/70 mb-1">{r.user}</div>
-                    <div className="whitespace-pre-wrap">{r.content}</div>
+                  <div key={r.id} className="bg-gradient-to-r from-blue-500/5 to-cyan-500/5 border border-blue-400/20 rounded-2xl p-6">
+                    <div className="flex items-center gap-3 mb-3">
+                      <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-cyan-600 rounded-full flex items-center justify-center">
+                        <span className="text-sm">👤</span>
+                      </div>
+                      <div>
+                        <div className="text-sm text-blue-200 font-semibold">{r.user}</div>
+                        <div className="text-xs text-blue-400">
+                          {new Date(r.createdAt).toLocaleDateString('vi-VN')}
+                        </div>
+                      </div>
+                    </div>
+                    <div className="text-blue-100 leading-relaxed whitespace-pre-wrap text-base">
+                      {r.content}
+                    </div>
                   </div>
                 ))}
-                {q.responses?.length===0 && <p className="text-white/70 text-sm">Chưa có phản hồi.</p>}
+                {q.responses?.length===0 && (
+                  <div className="text-center py-12">
+                    <div className="text-6xl mb-4">💬</div>
+                    <p className="text-blue-200 text-xl mb-2">Chưa có phản hồi</p>
+                    <p className="text-blue-300">Hãy là người đầu tiên trả lời!</p>
+                  </div>
+                )}
               </div>
 
-              <div className="mt-4">
+              <div className="mt-8">
                 <NewResponseForm questionId={q.id} onCreated={load} />
               </div>
             </div>
-          </>
+          </div>
         )}
       </div>
     </div>

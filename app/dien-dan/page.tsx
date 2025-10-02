@@ -27,74 +27,117 @@ function ForumHome() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#003663] via-[#004a7c] to-[#003663] text-white">
-      <div className="max-w-6xl mx-auto px-4 py-8">
+      <div className="max-w-7xl mx-auto px-6 py-12">
         {/* Header Section */}
-        <div className="text-center mb-12">
-          <h1 className="text-4xl sm:text-5xl font-bold bg-gradient-to-r from-white to-blue-200 bg-clip-text text-transparent mb-4">
-            Diễn đàn FTC
-          </h1>
-          <p className="text-xl text-blue-200 max-w-2xl mx-auto">
-            Nơi cộng đồng fintech chia sẻ kiến thức, thảo luận xu hướng và kết nối với nhau
-          </p>
-        </div>
-
-        {/* Auth Tabs */}
-        <div className="flex justify-center mb-12">
-          <div className="flex bg-[#003663]/30 backdrop-blur-xl rounded-2xl p-2 border border-blue-400/30">
-            <button 
-              className={`px-8 py-4 rounded-xl font-semibold transition-all duration-200 ${
-                tab==="login" 
-                  ? "bg-gradient-to-r from-blue-500 to-cyan-600 text-white shadow-lg" 
-                  : "text-blue-200 hover:text-white hover:bg-[#004a7c]/50"
-              }`} 
-              onClick={()=>setTab("login")}
-            >
-              Đăng nhập
-            </button>
-            <button 
-              className={`px-8 py-4 rounded-xl font-semibold transition-all duration-200 ${
-                tab==="register" 
-                  ? "bg-gradient-to-r from-green-500 to-emerald-600 text-white shadow-lg" 
-                  : "text-blue-200 hover:text-white hover:bg-[#004a7c]/50"
-              }`} 
-              onClick={()=>setTab("register")}
-            >
-              Đăng ký
-            </button>
+        <div className="text-center mb-16">
+          <div className="relative">
+            {/* Animated background elements */}
+            <div className="absolute inset-0 flex items-center justify-center">
+              <div className="w-96 h-96 bg-gradient-to-r from-blue-500/10 to-cyan-500/10 rounded-full blur-3xl animate-pulse"></div>
+            </div>
+            
+            <div className="relative z-10">
+              <div className="inline-flex items-center gap-3 px-6 py-3 rounded-full bg-gradient-to-r from-blue-500/20 to-cyan-500/20 border border-blue-400/30 backdrop-blur-xl mb-8">
+                <div className="w-3 h-3 bg-gradient-to-r from-blue-400 to-cyan-400 rounded-full animate-pulse"></div>
+                <span className="text-sm font-semibold text-blue-200 uppercase tracking-wider">
+                  Cộng đồng FinTech
+                </span>
+              </div>
+              
+              <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold bg-gradient-to-r from-white via-blue-100 to-cyan-200 bg-clip-text text-transparent mb-6 leading-tight">
+                Diễn đàn FTC
+              </h1>
+              
+              <p className="text-xl sm:text-2xl text-blue-200 max-w-4xl mx-auto leading-relaxed mb-8">
+                Nơi cộng đồng fintech chia sẻ kiến thức, thảo luận xu hướng và kết nối với nhau
+              </p>
+              
+              {/* Feature highlights */}
+              <div className="flex flex-wrap justify-center gap-6 text-sm text-blue-300">
+                <div className="flex items-center gap-2">
+                  <span className="text-orange-400">💬</span>
+                  <span>Thảo luận chuyên môn</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className="text-green-400">🤝</span>
+                  <span>Kết nối cộng đồng</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className="text-purple-400">🚀</span>
+                  <span>Xu hướng mới nhất</span>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
 
-        {/* Auth Forms */}
-        <div className="flex justify-center">
-          {tab==="login" && (
-            <div className="w-full max-w-md">
-              <div className="bg-gradient-to-br from-[#003663]/90 to-[#004a7c]/90 backdrop-blur-xl rounded-3xl border border-blue-400/30 p-8 shadow-2xl">
-                <div className="text-center mb-8">
-                  <div className="w-20 h-20 bg-gradient-to-r from-blue-500 to-cyan-600 rounded-full flex items-center justify-center mx-auto mb-6">
-                    <span className="text-3xl">🔐</span>
-                  </div>
-                  <h3 className="text-3xl font-bold text-white mb-2">Đăng nhập</h3>
-                  <p className="text-blue-200 text-lg">Chào mừng bạn quay trở lại</p>
-                </div>
-                <LoginForm />
+        {/* Auth Tabs - Only show when not logged in */}
+        {!user && (
+          <>
+            <div className="flex justify-center mb-16">
+              <div className="flex bg-[#003663]/30 backdrop-blur-xl rounded-3xl p-3 border border-blue-400/30 shadow-2xl">
+                <button 
+                  className={`px-12 py-5 rounded-2xl font-bold text-lg transition-all duration-300 ${
+                    tab==="login" 
+                      ? "bg-gradient-to-r from-blue-500 to-cyan-600 text-white shadow-xl scale-105" 
+                      : "text-blue-200 hover:text-white hover:bg-[#004a7c]/50 hover:scale-105"
+                  }`} 
+                  onClick={()=>setTab("login")}
+                >
+                  <span className="flex items-center gap-3">
+                    <span className="text-xl">🔐</span>
+                    <span>Đăng nhập</span>
+                  </span>
+                </button>
+                <button 
+                  className={`px-12 py-5 rounded-2xl font-bold text-lg transition-all duration-300 ${
+                    tab==="register" 
+                      ? "bg-gradient-to-r from-green-500 to-emerald-600 text-white shadow-xl scale-105" 
+                      : "text-blue-200 hover:text-white hover:bg-[#004a7c]/50 hover:scale-105"
+                  }`} 
+                  onClick={()=>setTab("register")}
+                >
+                  <span className="flex items-center gap-3">
+                    <span className="text-xl">👤</span>
+                    <span>Đăng ký</span>
+                  </span>
+                </button>
               </div>
             </div>
-          )}
-          {tab==="register" && (
-            <div className="w-full max-w-2xl">
-              <div className="bg-gradient-to-br from-[#003663]/90 to-[#004a7c]/90 backdrop-blur-xl rounded-3xl border border-blue-400/30 p-8 shadow-2xl">
-                <div className="text-center mb-8">
-                  <div className="w-20 h-20 bg-gradient-to-r from-green-500 to-emerald-600 rounded-full flex items-center justify-center mx-auto mb-6">
-                    <span className="text-3xl">👤</span>
+
+            {/* Auth Forms */}
+            <div className="flex justify-center">
+              {tab==="login" && (
+                <div className="w-full max-w-lg">
+                  <div className="bg-gradient-to-br from-[#003663]/90 to-[#004a7c]/90 backdrop-blur-xl rounded-3xl border border-blue-400/30 p-10 shadow-2xl">
+                    <div className="text-center mb-10">
+                      <div className="w-24 h-24 bg-gradient-to-r from-blue-500 to-cyan-600 rounded-full flex items-center justify-center mx-auto mb-8">
+                        <span className="text-4xl">🔐</span>
+                      </div>
+                      <h3 className="text-4xl font-bold text-white mb-3">Đăng nhập</h3>
+                      <p className="text-blue-200 text-xl">Chào mừng bạn quay trở lại</p>
+                    </div>
+                    <LoginForm />
                   </div>
-                  <h3 className="text-3xl font-bold text-white mb-2">Đăng ký</h3>
-                  <p className="text-blue-200 text-lg">Tham gia cộng đồng FTC</p>
                 </div>
-                <RegisterForm />
-              </div>
+              )}
+              {tab==="register" && (
+                <div className="w-full max-w-4xl">
+                  <div className="bg-gradient-to-br from-[#003663]/90 to-[#004a7c]/90 backdrop-blur-xl rounded-3xl border border-blue-400/30 p-10 shadow-2xl">
+                    <div className="text-center mb-10">
+                      <div className="w-24 h-24 bg-gradient-to-r from-green-500 to-emerald-600 rounded-full flex items-center justify-center mx-auto mb-8">
+                        <span className="text-4xl">👤</span>
+                      </div>
+                      <h3 className="text-4xl font-bold text-white mb-3">Đăng ký</h3>
+                      <p className="text-blue-200 text-xl">Tham gia cộng đồng FTC</p>
+                    </div>
+                    <RegisterForm />
+                  </div>
+                </div>
+              )}
             </div>
-          )}
-        </div>
+          </>
+        )}
 
         {/* User Dashboard - Show after login */}
         {user && (
