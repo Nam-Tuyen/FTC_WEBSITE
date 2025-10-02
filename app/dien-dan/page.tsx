@@ -27,7 +27,7 @@ function ForumHome() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#003663] via-[#004a7c] to-[#003663] text-white flex items-center justify-center p-4">
-      <div className="w-full max-w-md">
+      <div className="w-full max-w-lg">
         {/* Auth Tabs */}
         <div className="flex mb-8 bg-[#003663]/30 backdrop-blur-xl rounded-2xl p-2 border border-blue-400/30">
           <button 
@@ -54,7 +54,7 @@ function ForumHome() {
 
         {/* Auth Forms */}
         {tab==="login" && (
-          <div className="bg-gradient-to-br from-[#003663]/90 to-[#004a7c]/90 backdrop-blur-xl rounded-2xl border border-blue-400/30 p-8 shadow-2xl">
+          <div className="bg-gradient-to-br from-[#003663]/90 to-[#004a7c]/90 backdrop-blur-xl rounded-2xl border border-blue-400/30 p-6 sm:p-8 shadow-2xl">
             <div className="text-center mb-6">
               <div className="w-16 h-16 bg-gradient-to-r from-blue-500 to-cyan-600 rounded-full flex items-center justify-center mx-auto mb-4">
                 <span className="text-2xl">🔐</span>
@@ -66,7 +66,7 @@ function ForumHome() {
           </div>
         )}
         {tab==="register" && (
-          <div className="bg-gradient-to-br from-[#003663]/90 to-[#004a7c]/90 backdrop-blur-xl rounded-2xl border border-blue-400/30 p-8 shadow-2xl">
+          <div className="bg-gradient-to-br from-[#003663]/90 to-[#004a7c]/90 backdrop-blur-xl rounded-2xl border border-blue-400/30 p-6 sm:p-8 shadow-2xl">
             <div className="text-center mb-6">
               <div className="w-16 h-16 bg-gradient-to-r from-green-500 to-emerald-600 rounded-full flex items-center justify-center mx-auto mb-4">
                 <span className="text-2xl">👤</span>
