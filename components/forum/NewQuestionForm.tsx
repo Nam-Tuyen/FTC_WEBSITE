@@ -83,17 +83,27 @@ export default function NewQuestionForm({ onCreated }: { onCreated?: () => void 
 
       <button 
         disabled={loading} 
-        className="w-full bg-gradient-to-r from-orange-500 to-red-600 text-white rounded-xl px-8 py-4 font-semibold hover:shadow-lg hover:scale-[1.02] transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-3 text-lg"
+        className="group relative w-full bg-gradient-to-r from-orange-500 to-red-600 text-white rounded-xl px-8 py-4 font-semibold hover:shadow-lg hover:scale-[1.02] transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-3 text-lg overflow-hidden"
       >
         {loading ? (
           <>
-            <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
-            <span>Đang tạo câu hỏi...</span>
+            {/* Enhanced Loading Animation */}
+            <div className="relative">
+              <div className="w-6 h-6 border-3 border-white/30 border-t-white rounded-full animate-spin"></div>
+              <div className="absolute inset-0 w-6 h-6 border-3 border-orange-300/50 border-r-transparent rounded-full animate-spin" style={{ animationDirection: 'reverse', animationDuration: '0.8s' }}></div>
+            </div>
+            <span className="animate-pulse">Đang tạo câu hỏi...</span>
+            
+            {/* Loading Progress Effect */}
+            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
           </>
         ) : (
           <>
-            <span className="text-xl">💬</span>
+            <span className="text-xl group-hover:scale-110 transition-transform duration-200">💬</span>
             <span>Đăng câu hỏi</span>
+            
+            {/* Hover Effect */}
+            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-500"></div>
           </>
         )}
       </button>

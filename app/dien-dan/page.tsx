@@ -91,68 +91,123 @@ function ForumHome() {
         }
       `}</style>
       <div className="max-w-7xl mx-auto px-6 py-12">
-        {/* Header Section - Similar to Chatbot */}
-        <section className="relative min-h-[60vh] sm:min-h-[70vh] flex items-center justify-center py-12 sm:py-16 lg:py-24 px-4 sm:px-6 lg:px-8">
-          {/* Enhanced Animated Background */}
-          <div className="absolute inset-0 overflow-hidden">
-            {/* Floating Geometric Shapes */}
-            <div className="absolute top-20 left-10 w-32 h-32 bg-gradient-to-br from-blue-500/30 to-cyan-500/30 rounded-full blur-2xl floating-particle"></div>
-            <div className="absolute top-40 right-20 w-48 h-48 bg-gradient-to-br from-purple-500/25 to-pink-500/25 rounded-full blur-3xl floating-particle" style={{ animationDelay: '1s' }}></div>
-            <div className="absolute bottom-20 left-1/4 w-40 h-40 bg-gradient-to-br from-orange-500/20 to-red-500/20 rounded-full blur-2xl floating-particle" style={{ animationDelay: '2s' }}></div>
-            <div className="absolute bottom-40 right-1/3 w-36 h-36 bg-gradient-to-br from-green-500/25 to-emerald-500/25 rounded-full blur-2xl floating-particle" style={{ animationDelay: '0.5s' }}></div>
-            
-            {/* Gradient Overlay */}
-            <div className="absolute inset-0 bg-gradient-to-br from-[#003663]/40 via-[#004a7c]/30 to-[#002244]/50"></div>
-            
-            {/* Animated Grid Pattern */}
-            <div className="absolute inset-0 opacity-10">
-              <div className="absolute inset-0" style={{
-                backgroundImage: `radial-gradient(circle at 25% 25%, rgba(59, 130, 246, 0.3) 0%, transparent 50%),
-                                radial-gradient(circle at 75% 75%, rgba(147, 51, 234, 0.3) 0%, transparent 50%)`,
-                backgroundSize: '100px 100px'
-              }}></div>
+        {/* Modern Tech-Style Header Section */}
+        <section className="relative min-h-screen flex items-center justify-center py-12 sm:py-16 lg:py-24 px-4 sm:px-6 lg:px-8 overflow-hidden">
+          {/* Hexagon Pattern Background */}
+          <div className="absolute inset-0 opacity-50 pointer-events-none">
+            <div className="absolute inset-0" style={{
+              backgroundImage: `radial-gradient(circle at 25% 25%, rgba(0, 174, 239, 0.1) 0%, transparent 50%),
+                              radial-gradient(circle at 75% 75%, rgba(0, 174, 239, 0.1) 0%, transparent 50%)`
+            }}></div>
+          </div>
+
+          {/* Digital Rain Effect */}
+          <div className="absolute inset-0 pointer-events-none">
+            {[...Array(10)].map((_, i) => (
+              <div
+                key={i}
+                className="absolute w-0.5 h-24 bg-gradient-to-b from-transparent via-cyan-400 to-transparent opacity-30 animate-rain"
+                style={{
+                  left: `${5 + i * 10}%`,
+                  animationDuration: `${3 + Math.random() * 2}s`,
+                  animationDelay: `${i * 0.2}s`
+                }}
+              />
+            ))}
+          </div>
+
+          {/* Animated Tech Grid */}
+          <div className="absolute inset-0 opacity-10 pointer-events-none">
+            <div className="absolute inset-0" style={{
+              backgroundImage: `linear-gradient(rgba(0, 174, 239, 0.1) 1px, transparent 1px),
+                              linear-gradient(90deg, rgba(0, 174, 239, 0.1) 1px, transparent 1px)`,
+              backgroundSize: '50px 50px',
+              animation: 'gridMove 20s linear infinite'
+            }}></div>
+          </div>
+
+          {/* Floating Particles */}
+          <div className="absolute inset-0 pointer-events-none">
+            {[...Array(9)].map((_, i) => (
+              <div
+                key={i}
+                className="absolute w-1 h-1 bg-cyan-400 rounded-full shadow-lg shadow-cyan-400/80 animate-float-particle"
+                style={{
+                  left: `${10 + i * 10}%`,
+                  animationDelay: `${i * 2}s`
+                }}
+              />
+            ))}
+          </div>
+
+          {/* Circuit Lines */}
+          <div className="absolute inset-0 pointer-events-none opacity-15">
+            <div className="absolute top-1/5 left-1/10 w-48 h-px bg-cyan-400 shadow-lg shadow-cyan-400/50"></div>
+            <div className="absolute top-1/6 right-1/6 w-px h-36 bg-cyan-400 shadow-lg shadow-cyan-400/50"></div>
+            <div className="absolute bottom-1/4 left-1/5 w-48 h-px bg-cyan-400 shadow-lg shadow-cyan-400/50"></div>
+            <div className="absolute bottom-1/5 right-1/10 w-px h-36 bg-cyan-400 shadow-lg shadow-cyan-400/50"></div>
+          </div>
+
+          <div className="relative max-w-6xl mx-auto text-center space-y-8 sm:space-y-10 lg:space-y-12 z-10">
+            {/* Logo Section */}
+            <div className="space-y-6">
+              <h1 className="relative text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-black tracking-widest text-white">
+                <span className="absolute inset-0 filter blur-2xl opacity-50 text-cyan-400 animate-glow">DIỄN ĐÀN FTC</span>
+                <span className="relative animate-glow" style={{
+                  textShadow: '0 0 30px rgba(0, 174, 239, 0.6), 0 0 60px rgba(0, 174, 239, 0.4), 0 4px 25px rgba(0, 0, 0, 0.6)'
+                }}>
+                  DIỄN ĐÀN FTC
+                </span>
+              </h1>
+              
+              {/* Animated Line */}
+              <div className="w-48 h-0.5 bg-gradient-to-r from-transparent via-cyan-400 to-transparent mx-auto animate-line-expand"></div>
             </div>
-        </div>
-        
-          <div className="relative max-w-6xl mx-auto text-center space-y-6 sm:space-y-8 lg:space-y-10">
-            {/* Main Title */}
-            <h1 className="relative text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-black tracking-tight">
-              <span className="absolute inset-0 bg-gradient-to-r from-white via-blue-100 to-cyan-200 opacity-60 blur-3xl animate-pulse"></span>
-              <span className="relative bg-gradient-to-r from-white via-blue-100 to-cyan-200 bg-clip-text text-transparent animate-bounce" style={{ animation: 'blink 2s infinite, gradient-shift 3s ease-in-out infinite, bounce 3s infinite' }}>
-                DIỄN ĐÀN FTC
-              </span>
-            </h1>
             
             {/* Subtitle */}
-            <p className="text-lg sm:text-xl md:text-2xl lg:text-3xl text-blue-200 leading-relaxed max-w-5xl mx-auto italic font-light px-4">
+            <p className="text-lg sm:text-xl md:text-2xl text-white/85 leading-relaxed max-w-4xl mx-auto italic font-light tracking-wide">
               Nơi cộng đồng fintech chia sẻ kiến thức, thảo luận xu hướng và kết nối
             </p>
             
-            {/* Enhanced Feature Cards */}
-            <div className="flex flex-wrap justify-center gap-6 sm:gap-8 text-lg sm:text-xl text-blue-200 mt-16">
-              <div className="group feature-card flex items-center gap-4 bg-gradient-to-r from-orange-500/15 to-red-500/15 backdrop-blur-xl border border-orange-400/30 rounded-3xl px-8 py-6 hover:scale-110 hover:shadow-2xl hover:shadow-orange-500/20 transition-all duration-500">
-                <span className="text-3xl group-hover:scale-125 transition-transform duration-300">💬</span>
-                <span className="font-bold">Thảo luận chuyên môn</span>
-              </div>
-              <div className="group feature-card flex items-center gap-4 bg-gradient-to-r from-green-500/15 to-emerald-500/15 backdrop-blur-xl border border-green-400/30 rounded-3xl px-8 py-6 hover:scale-110 hover:shadow-2xl hover:shadow-green-500/20 transition-all duration-500">
-                <span className="text-3xl group-hover:scale-125 transition-transform duration-300">🤝</span>
-                <span className="font-bold">Kết nối cộng đồng</span>
-              </div>
-              <div className="group feature-card flex items-center gap-4 bg-gradient-to-r from-purple-500/15 to-pink-500/15 backdrop-blur-xl border border-purple-400/30 rounded-3xl px-8 py-6 hover:scale-110 hover:shadow-2xl hover:shadow-purple-500/20 transition-all duration-500">
-                <span className="text-3xl group-hover:scale-125 transition-transform duration-300">🚀</span>
-                <span className="font-bold">Xu hướng mới nhất</span>
-              </div>
-          </div>
+            {/* Feature Buttons */}
+            <div className="flex flex-wrap justify-center gap-6 sm:gap-8 mt-16">
+              <button className="group relative overflow-hidden bg-gradient-to-br from-cyan-500/10 to-cyan-500/5 backdrop-blur-xl border border-cyan-400/30 text-white px-10 py-5 rounded-xl font-semibold text-lg transition-all duration-400 hover:scale-105 hover:shadow-2xl hover:shadow-cyan-500/20 hover:border-cyan-400/60">
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-cyan-400/30 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-500"></div>
+                <div className="relative flex items-center gap-4">
+                  <span className="text-2xl filter drop-shadow-lg drop-shadow-cyan-400/80">💬</span>
+                  <span>Thảo luận chuyên môn</span>
+                </div>
+              </button>
+              
+              <button className="group relative overflow-hidden bg-gradient-to-br from-cyan-500/10 to-cyan-500/5 backdrop-blur-xl border border-cyan-400/30 text-white px-10 py-5 rounded-xl font-semibold text-lg transition-all duration-400 hover:scale-105 hover:shadow-2xl hover:shadow-cyan-500/20 hover:border-cyan-400/60">
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-cyan-400/30 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-500"></div>
+                <div className="relative flex items-center gap-4">
+                  <span className="text-2xl filter drop-shadow-lg drop-shadow-cyan-400/80">🤝</span>
+                  <span>Kết nối cộng đồng</span>
+                </div>
+              </button>
+              
+              <button className="group relative overflow-hidden bg-gradient-to-br from-cyan-500/10 to-cyan-500/5 backdrop-blur-xl border border-cyan-400/30 text-white px-10 py-5 rounded-xl font-semibold text-lg transition-all duration-400 hover:scale-105 hover:shadow-2xl hover:shadow-cyan-500/20 hover:border-cyan-400/60">
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-cyan-400/30 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-500"></div>
+                <div className="relative flex items-center gap-4">
+                  <span className="text-2xl filter drop-shadow-lg drop-shadow-cyan-400/80">🚀</span>
+                  <span>Xu hướng mới nhất</span>
+                </div>
+              </button>
+            </div>
 
-            {/* Enhanced Modern Badge */}
-            <div className="mt-16 relative">
-              <div className="inline-flex items-center gap-4 bg-gradient-to-r from-blue-500/25 to-cyan-500/25 backdrop-blur-2xl border border-blue-400/50 rounded-full px-10 py-5 shadow-2xl shadow-blue-500/30 hover:shadow-blue-500/40 transition-all duration-300 hover:scale-105">
-                <div className="w-4 h-4 bg-gradient-to-r from-blue-400 to-cyan-400 rounded-full animate-pulse"></div>
-                <span className="text-lg font-bold text-blue-100 uppercase tracking-wider">Cộng đồng FinTech</span>
+            {/* Community Badge */}
+            <div className="mt-16">
+              <button className="group relative overflow-hidden bg-gradient-to-r from-cyan-500 to-blue-600 border-none text-white px-12 py-5 rounded-full font-bold text-lg transition-all duration-400 hover:scale-105 hover:shadow-2xl hover:shadow-cyan-500/40 uppercase tracking-widest">
+                <div className="absolute inset-0 bg-white/20 rounded-full scale-0 group-hover:scale-150 transition-transform duration-600"></div>
+                <div className="relative flex items-center gap-3">
+                  <div className="w-3 h-3 bg-green-400 rounded-full animate-pulse shadow-lg shadow-green-400/50"></div>
+                  <span>CỘNG ĐỒNG FINTECH</span>
+                </div>
+              </button>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
 
         {/* Auth Tabs - Only show when not logged in */}
         {!user && (
