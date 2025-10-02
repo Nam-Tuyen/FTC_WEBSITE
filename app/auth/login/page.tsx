@@ -1,59 +1,84 @@
 "use client"
 
-import type React from "react"
-
 import { useState } from "react"
 import { useRouter } from "next/navigation"
 import Link from "next/link"
 import { Button } from "@/components/ui/Button"
 import { Input } from "@/components/ui/Input"
-import { Label } from "@/components/ui/label"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { login } from "@/lib/api"
-import { useAuthStore } from "@/lib/auth-store"
+import { PageHeader } from "@/components/page-header"
+import { User, Lock, ArrowLeft, Loader2 } from "lucide-react"
 import { useToast } from "@/hooks/use-toast"
-import { Loader2 } from "lucide-react"
+
+// API functions
+const API_BASE = '/api/forum'
+const API_TOKEN = 'ftc-2025-secret'
+
+async function apiCall(functionName: string, payload: any) {
+  const response = await fetch(API_BASE, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      function: functionName,
+      body: {
+        ...payload,
+        token: API_TOKEN
+      }
+    }),
+  })
+  
+  if (!response.ok) {
+    throw new Error(`HTTP error! status: ${response.status}`)
+  }
+  
+  return response.json()
+}
+
+async function login(payload: any) {
+  return apiCall('login', payload)
+}
 
 export default function LoginPage() {
   const router = useRouter()
-  const { setUser } = useAuthStore()
   const { toast } = useToast()
-  const [isLoading, setIsLoading] = useState(false)
 
-  const [formData, setFormData] = useState({
+  const [form, setForm] = useState({
     mssv: "",
     password: "",
   })
+  const [isLoading, setIsLoading] = useState(false)
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault()
-
-    if (!/^K\d{9}$/i.test(formData.mssv)) {
+    
+    if (!form.mssv.trim() || !form.password.trim()) {
       toast({
         title: "Lỗi",
-        description: "MSSV phải theo định dạng K + 9 số",
+        description: "Vui lòng điền đầy đủ thông tin",
         variant: "destructive",
       })
       return
     }
 
     setIsLoading(true)
-
     try {
       const response = await login({
-        mssv: formData.mssv,
-        password: formData.password,
+        mssv: form.mssv.trim(),
+        password: form.password,
       })
 
       if (response.ok && response.data) {
-        setUser(response.data)
-
+        // Save user to localStorage
+        localStorage.setItem('user', JSON.stringify(response.data))
+        
         toast({
           title: "Thành công",
-          description: response.message || "Đăng nhập thành công!",
+          description: "Đăng nhập thành công!",
         })
-
-        router.push("/")
+        
+        // Redirect to forum
+        router.push('/dien-dan')
       } else {
         toast({
           title: "Lỗi",
@@ -62,6 +87,7 @@ export default function LoginPage() {
         })
       }
     } catch (error) {
+      console.error("Error logging in:", error)
       toast({
         title: "Lỗi",
         description: "Có lỗi xảy ra khi đăng nhập",
@@ -73,65 +99,96 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#003663] flex items-center justify-center p-4">
-      <Card className="w-full max-w-md bg-white/10 border-white/20 text-white backdrop-blur-xl">
-        <CardHeader>
-          <CardTitle className="text-3xl font-bold text-center">Đăng nhập</CardTitle>
-          <CardDescription className="text-white/70 text-center">Đăng nhập để tham gia diễn đàn FTC</CardDescription>
-        </CardHeader>
-        <CardContent>
-          <form onSubmit={handleSubmit} className="space-y-4">
-            <div className="space-y-2">
-              <Label htmlFor="mssv">MSSV</Label>
-              <Input
-                id="mssv"
-                placeholder="K225123456"
-                value={formData.mssv}
-                onChange={(e) => setFormData({ ...formData, mssv: e.target.value.toUpperCase() })}
-                className="bg-white/10 border-white/30 text-white placeholder-white/60"
-                required
-              />
+    <div className="min-h-screen bg-[#003663] text-white">
+      <PageHeader 
+        title="ĐĂNG NHẬP"
+        subtitle="Đăng nhập để tham gia diễn đàn và đặt câu hỏi"
+        showSocialMedia={false}
+        badgeText="Tài khoản"
+        badgeIcon={User}
+        badgeColor="from-blue-500/20 to-purple-500/20"
+        badgeBorderColor="border-blue-400/30"
+        badgeIconColor="text-blue-400"
+        badgeTextColor="text-blue-100"
+        badgeShadowColor="shadow-blue-500/10"
+      />
+
+      <div className="max-w-md mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div className="bg-white/10 rounded-2xl border border-white/20 p-8 backdrop-blur-xl">
+          <div className="text-center mb-8">
+            <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-blue-500/30 to-purple-500/30 flex items-center justify-center mx-auto mb-4">
+              <User className="h-8 w-8 text-blue-200" />
+            </div>
+            <h2 className="text-2xl font-bold mb-2">Đăng nhập</h2>
+            <p className="text-white/70">Nhập thông tin để truy cập diễn đàn</p>
+          </div>
+
+          <form onSubmit={handleLogin} className="space-y-6">
+            <div>
+              <label className="block text-sm font-medium mb-2">MSSV</label>
+              <div className="relative">
+                <div className="absolute left-4 top-1/2 -translate-y-1/2">
+                  <User className="h-5 w-5 text-white/60" />
+                </div>
+                <Input
+                  type="text"
+                  value={form.mssv}
+                  onChange={(e) => setForm({ ...form, mssv: e.target.value })}
+                  placeholder="Nhập MSSV (VD: K225123456)"
+                  className="pl-12 bg-white/10 border-white/30 text-white placeholder-white/60"
+                  required
+                />
+              </div>
             </div>
 
-            <div className="space-y-2">
-              <Label htmlFor="password">Mật khẩu</Label>
-              <Input
-                id="password"
-                type="password"
-                value={formData.password}
-                onChange={(e) => setFormData({ ...formData, password: e.target.value })}
-                className="bg-white/10 border-white/30 text-white placeholder-white/60"
-                required
-              />
+            <div>
+              <label className="block text-sm font-medium mb-2">Mật khẩu</label>
+              <div className="relative">
+                <div className="absolute left-4 top-1/2 -translate-y-1/2">
+                  <Lock className="h-5 w-5 text-white/60" />
+                </div>
+                <Input
+                  type="password"
+                  value={form.password}
+                  onChange={(e) => setForm({ ...form, password: e.target.value })}
+                  placeholder="Nhập mật khẩu"
+                  className="pl-12 bg-white/10 border-white/30 text-white placeholder-white/60"
+                  required
+                />
+              </div>
             </div>
 
-            <div className="text-right">
-              <Link href="/auth/forgot" className="text-sm text-blue-300 hover:text-blue-200 underline">
-                Quên mật khẩu?
-              </Link>
-            </div>
-
-            <Button type="submit" className="w-full" disabled={isLoading}>
+            <Button
+              type="submit"
+              disabled={isLoading}
+              className="w-full bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700"
+            >
               {isLoading ? (
-                <>
-                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                  Đang đăng nhập...
-                </>
+                <Loader2 className="h-4 w-4 mr-2 animate-spin" />
               ) : (
-                "Đăng nhập"
+                <User className="h-4 w-4 mr-2" />
               )}
+              Đăng nhập
             </Button>
-
-            <p className="text-center text-sm text-white/70">
-              Chưa có tài khoản?{" "}
-              <Link href="/auth/register" className="text-blue-300 hover:text-blue-200 underline">
-                Đăng ký ngay
-              </Link>
-            </p>
           </form>
-        </CardContent>
-      </Card>
+
+          <div className="mt-8 text-center">
+            <p className="text-white/70 mb-4">Chưa có tài khoản?</p>
+            <Link href="/auth/register">
+              <Button variant="outline" className="w-full">
+                Đăng ký tài khoản mới
+              </Button>
+            </Link>
+          </div>
+
+          <div className="mt-6 text-center">
+            <Link href="/dien-dan" className="inline-flex items-center gap-2 text-white/70 hover:text-white transition-colors">
+              <ArrowLeft className="h-4 w-4" />
+              Quay lại diễn đàn
+            </Link>
+          </div>
+        </div>
+      </div>
     </div>
   )
 }
-

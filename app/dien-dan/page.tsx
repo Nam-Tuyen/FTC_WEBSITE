@@ -19,19 +19,113 @@ import {
   X,
   Loader2,
   Send,
+  Plus,
+  Filter,
+  Eye,
+  ThumbsUp,
+  Reply,
+  Trash2,
+  Edit,
 } from "lucide-react"
-import { fetchQuestions, createQuestion, toggleLike, type QuestionItem, type Category } from "@/lib/api"
-import { CATEGORIES } from "@/lib/constants"
-import { formatTime } from "@/lib/utils/format"
-import { useAuthStore } from "@/lib/auth-store"
 import { useToast } from "@/hooks/use-toast"
+
+// Types based on Google Apps Script API
+interface Question {
+  id: string
+  title: string
+  category: string
+  user: string
+  content: string
+  like_count: number
+  createdAt: string | Date
+  isDeleted: boolean
+  anonymous: boolean
+  responses?: Response[]
+}
+
+interface Response {
+  id: string
+  user: string
+  anonymous: boolean
+  content: string
+  questionId: string
+  reaction: number
+  createdAt: string | Date
+  isDeleted: boolean
+}
+
+interface User {
+  mssv: string
+  full_name: string
+  email: string
+}
+
+// Categories from Google Apps Script
+const CATEGORIES = {
+  'Hỏi về ngành học': 'Hỏi về ngành học',
+  'Hỏi về câu lạc bộ': 'Hỏi về câu lạc bộ',
+  'Thảo luận': 'Thảo luận'
+} as const
+
+type Category = keyof typeof CATEGORIES
+
+// API functions
+const API_BASE = '/api/forum'
+const API_TOKEN = 'ftc-2025-secret'
+
+async function apiCall(functionName: string, payload: any) {
+  const response = await fetch(API_BASE, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      function: functionName,
+      body: {
+        ...payload,
+        token: API_TOKEN
+      }
+    }),
+  })
+  
+  if (!response.ok) {
+    throw new Error(`HTTP error! status: ${response.status}`)
+  }
+  
+  return response.json()
+}
+
+// API functions
+async function fetchQuestions(payload: any = {}) {
+  return apiCall('fetchQuestions', payload)
+}
+
+async function createQuestion(payload: any) {
+  return apiCall('createQuestion', payload)
+}
+
+async function createResponse(payload: any) {
+  return apiCall('createResponse', payload)
+}
+
+async function toggleLike(payload: any) {
+  return apiCall('toggleLike', payload)
+}
+
+async function deleteQuestion(payload: any) {
+  return apiCall('deleteQuestion', payload)
+}
+
+async function deleteResponse(payload: any) {
+  return apiCall('deleteResponse', payload)
+}
 
 export default function ForumPage() {
   const router = useRouter()
-  const { user } = useAuthStore()
   const { toast } = useToast()
 
-  const [questions, setQuestions] = useState<QuestionItem[]>([])
+  // State
+  const [questions, setQuestions] = useState<Question[]>([])
   const [search, setSearch] = useState("")
   const [selectedCategory, setSelectedCategory] = useState<Category | "">("")
   const [isLoading, setIsLoading] = useState(true)
@@ -47,17 +141,44 @@ export default function ForumPage() {
     anonymous: false,
   })
 
+  // User state (simplified for demo)
+  const [user, setUser] = useState<User | null>(null)
+
+  // Load user from localStorage (simplified)
+  useEffect(() => {
+    const savedUser = localStorage.getItem('user')
+    if (savedUser) {
+      try {
+        setUser(JSON.parse(savedUser))
+      } catch (e) {
+        console.error('Error parsing user:', e)
+      }
+    }
+  }, [])
+
   const handleFetchQuestions = async () => {
     setIsLoading(true)
     try {
-      const response = await fetchQuestions({})
+      const response = await fetchQuestions({
+        take: 50, // Limit to 50 questions
+        category: selectedCategory || undefined,
+        search: search || undefined,
+        includeDeleted: false
+      })
+      
       if (response.ok && response.data) {
-        setQuestions(response.data.items)
+        setQuestions(response.data.items || [])
       } else {
+        console.error('Error fetching questions:', response.message)
         setQuestions([])
       }
     } catch (error) {
       console.error("Error fetching questions:", error)
+      toast({
+        title: "Lỗi",
+        description: "Không thể tải câu hỏi. Vui lòng thử lại.",
+        variant: "destructive",
+      })
       setQuestions([])
     } finally {
       setIsLoading(false)
@@ -66,7 +187,7 @@ export default function ForumPage() {
 
   useEffect(() => {
     handleFetchQuestions()
-  }, [])
+  }, [selectedCategory, search])
 
   useEffect(() => {
     setPage(1)
@@ -154,6 +275,7 @@ export default function ForumPage() {
         })
       }
     } catch (error) {
+      console.error("Error creating question:", error)
       toast({
         title: "Lỗi",
         description: "Có lỗi xảy ra khi tạo câu hỏi",
@@ -177,15 +299,78 @@ export default function ForumPage() {
       const response = await toggleLike({
         questionId,
         mssv: user.mssv,
-        like: 1,
+        like: 1, // Always like for now
       })
 
       if (response.ok) {
         await handleFetchQuestions()
+      } else {
+        toast({
+          title: "Lỗi",
+          description: response.message || "Có lỗi xảy ra khi thích câu hỏi",
+          variant: "destructive",
+        })
       }
     } catch (error) {
       console.error("Error toggling like:", error)
+      toast({
+        title: "Lỗi",
+        description: "Có lỗi xảy ra khi thích câu hỏi",
+        variant: "destructive",
+      })
     }
+  }
+
+  const handleDeleteQuestion = async (questionId: string) => {
+    if (!user) {
+      toast({
+        title: "Yêu cầu đăng nhập",
+        description: "Vui lòng đăng nhập để xóa câu hỏi",
+        variant: "destructive",
+      })
+      return
+    }
+
+    try {
+      const response = await deleteQuestion({
+        questionId,
+        mssv: user.mssv,
+      })
+
+      if (response.ok) {
+        toast({
+          title: "Thành công",
+          description: "Câu hỏi đã được xóa thành công!",
+        })
+        await handleFetchQuestions()
+      } else {
+        toast({
+          title: "Lỗi",
+          description: response.message || "Có lỗi xảy ra khi xóa câu hỏi",
+          variant: "destructive",
+        })
+      }
+    } catch (error) {
+      console.error("Error deleting question:", error)
+      toast({
+        title: "Lỗi",
+        description: "Có lỗi xảy ra khi xóa câu hỏi",
+        variant: "destructive",
+      })
+    }
+  }
+
+  const formatTime = (timestamp: number) => {
+    const now = Date.now()
+    const diff = now - timestamp
+    const minutes = Math.floor(diff / 60000)
+    const hours = Math.floor(diff / 3600000)
+    const days = Math.floor(diff / 86400000)
+
+    if (minutes < 1) return "Vừa xong"
+    if (minutes < 60) return `${minutes} phút trước`
+    if (hours < 24) return `${hours} giờ trước`
+    return `${days} ngày trước`
   }
 
   return (
@@ -419,9 +604,8 @@ export default function ForumPage() {
                 </div>
               ) : paginated.length > 0 ? (
                 paginated.map((question) => (
-                  <Link
+                  <div
                     key={question.id}
-                    href={`/question/${question.id}`}
                     className="block bg-white/10 rounded-2xl border border-white/20 hover:border-white/30 p-6 backdrop-blur-xl transition-all hover:bg-white/15"
                   >
                     <div className="flex items-start justify-between mb-4">
@@ -432,7 +616,7 @@ export default function ForumPage() {
                         <div>
                           <div className="flex items-center gap-2 mb-1">
                             <span className="font-bold">
-                              {question.user === "anonymous" ? "Ẩn danh" : question.user}
+                              {question.anonymous ? "Ẩn danh" : question.user}
                             </span>
                             {question.like_count >= 5 && (
                               <div className="flex items-center gap-1 bg-gradient-to-r from-orange-500 to-red-500 px-2 py-1 rounded-full text-xs font-bold">
@@ -451,6 +635,17 @@ export default function ForumPage() {
                           </div>
                         </div>
                       </div>
+                      {user && user.mssv === question.user && (
+                        <div className="flex items-center gap-2">
+                          <button
+                            onClick={() => handleDeleteQuestion(question.id)}
+                            className="p-2 hover:bg-red-500/20 rounded-lg transition-colors"
+                            title="Xóa câu hỏi"
+                          >
+                            <Trash2 className="h-4 w-4 text-red-400" />
+                          </button>
+                        </div>
+                      )}
                     </div>
 
                     <h3 className="text-xl font-bold mb-3">{question.title}</h3>
@@ -459,10 +654,7 @@ export default function ForumPage() {
                     <div className="flex items-center justify-between pt-4 border-t border-white/15">
                       <div className="flex items-center gap-6">
                         <button
-                          onClick={(e) => {
-                            e.preventDefault()
-                            handleToggleLike(question.id)
-                          }}
+                          onClick={() => handleToggleLike(question.id)}
                           className="flex items-center gap-2 hover:opacity-80 transition-all"
                         >
                           <div className="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center">
@@ -479,7 +671,7 @@ export default function ForumPage() {
                       </div>
                       <span className="text-sm font-bold px-4 py-2 bg-white/20 rounded-full">{String(question.category)}</span>
                     </div>
-                  </Link>
+                  </div>
                 ))
               ) : (
                 <div className="bg-white/10 rounded-2xl border border-white/20 p-20 text-center backdrop-blur-xl">
@@ -523,10 +715,9 @@ export default function ForumPage() {
               </div>
               <div className="space-y-4">
                 {questions.slice(0, 5).map((q) => (
-                  <Link
+                  <div
                     key={q.id}
-                    href={`/question/${q.id}`}
-                    className="block border-l-4 border-blue-400 pl-4 py-2 hover:bg-white/5 rounded transition-colors"
+                    className="block border-l-4 border-blue-400 pl-4 py-2 hover:bg-white/5 rounded transition-colors cursor-pointer"
                   >
                     <p className="text-sm font-semibold mb-2 line-clamp-2">{q.title}</p>
                     <p className="text-xs text-white/70 flex items-center gap-2">
@@ -534,7 +725,7 @@ export default function ForumPage() {
                       {formatTime(typeof q.createdAt === "number" ? q.createdAt : new Date(q.createdAt).getTime())} •{" "}
                       {q.responses?.length || 0} phản hồi
                     </p>
-                  </Link>
+                  </div>
                 ))}
               </div>
             </div>

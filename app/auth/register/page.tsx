@@ -1,111 +1,127 @@
 "use client"
 
-import type React from "react"
-
 import { useState } from "react"
 import { useRouter } from "next/navigation"
 import Link from "next/link"
 import { Button } from "@/components/ui/Button"
 import { Input } from "@/components/ui/Input"
-import { Label } from "@/components/ui/label"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { registerUser } from "@/lib/api"
-import { useAuthStore } from "@/lib/auth-store"
+import { PageHeader } from "@/components/page-header"
+import { User, Lock, Mail, UserPlus, ArrowLeft, Loader2 } from "lucide-react"
 import { useToast } from "@/hooks/use-toast"
-import { Loader2 } from "lucide-react"
+
+// API functions
+const API_BASE = '/api/forum'
+const API_TOKEN = 'ftc-2025-secret'
+
+async function apiCall(functionName: string, payload: any) {
+  const response = await fetch(API_BASE, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      function: functionName,
+      body: {
+        ...payload,
+        token: API_TOKEN
+      }
+    }),
+  })
+  
+  if (!response.ok) {
+    throw new Error(`HTTP error! status: ${response.status}`)
+  }
+  
+  return response.json()
+}
+
+async function registerUser(payload: any) {
+  return apiCall('registerUser', payload)
+}
 
 export default function RegisterPage() {
   const router = useRouter()
-  const { setUser } = useAuthStore()
   const { toast } = useToast()
-  const [isLoading, setIsLoading] = useState(false)
 
-  const [formData, setFormData] = useState({
+  const [form, setForm] = useState({
     mssv: "",
     password: "",
-    confirmPassword: "",
     full_name: "",
     email: "",
-    sec_q1: "",
+    sec_q1: "Tên thú cưng đầu tiên của bạn là gì?",
     sec_a1: "",
-    sec_q2: "",
+    sec_q2: "Tên trường cấp 3 của bạn là gì?",
     sec_a2: "",
-    sec_q3: "",
+    sec_q3: "Tên người bạn thân nhất thời cấp 3?",
     sec_a3: "",
   })
+  const [isLoading, setIsLoading] = useState(false)
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault()
+    
+    // Validation
+    if (!form.mssv.trim() || !form.password.trim() || !form.full_name.trim() || !form.email.trim()) {
+      toast({
+        title: "Lỗi",
+        description: "Vui lòng điền đầy đủ thông tin bắt buộc",
+        variant: "destructive",
+      })
+      return
+    }
+
+    if (!form.sec_a1.trim() || !form.sec_a2.trim() || !form.sec_a3.trim()) {
+      toast({
+        title: "Lỗi",
+        description: "Vui lòng trả lời đầy đủ 3 câu hỏi bảo mật",
+        variant: "destructive",
+      })
+      return
+    }
 
     // Validate MSSV format
-    if (!/^K\d{9}$/i.test(formData.mssv)) {
+    if (!/^K\d{9}$/i.test(form.mssv.trim())) {
       toast({
         title: "Lỗi",
-        description: "MSSV phải theo định dạng K + 9 số (ví dụ: K225123456)",
+        description: "MSSV không đúng định dạng (VD: K225123456)",
         variant: "destructive",
       })
       return
     }
 
-    // Validate password match
-    if (formData.password !== formData.confirmPassword) {
+    // Validate email format
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email.trim())) {
       toast({
         title: "Lỗi",
-        description: "Mật khẩu xác nhận không khớp",
-        variant: "destructive",
-      })
-      return
-    }
-
-    // Validate all fields
-    if (
-      !formData.full_name ||
-      !formData.email ||
-      !formData.sec_q1 ||
-      !formData.sec_a1 ||
-      !formData.sec_q2 ||
-      !formData.sec_a2 ||
-      !formData.sec_q3 ||
-      !formData.sec_a3
-    ) {
-      toast({
-        title: "Lỗi",
-        description: "Vui lòng điền đầy đủ thông tin",
+        description: "Email không đúng định dạng",
         variant: "destructive",
       })
       return
     }
 
     setIsLoading(true)
-
     try {
       const response = await registerUser({
-        mssv: formData.mssv,
-        password: formData.password,
-        full_name: formData.full_name,
-        email: formData.email,
-        sec_q1: formData.sec_q1,
-        sec_a1: formData.sec_a1,
-        sec_q2: formData.sec_q2,
-        sec_a2: formData.sec_a2,
-        sec_q3: formData.sec_q3,
-        sec_a3: formData.sec_a3,
+        mssv: form.mssv.trim().toUpperCase(),
+        password: form.password,
+        full_name: form.full_name.trim(),
+        email: form.email.trim(),
+        sec_q1: form.sec_q1,
+        sec_a1: form.sec_a1.trim(),
+        sec_q2: form.sec_q2,
+        sec_a2: form.sec_a2.trim(),
+        sec_q3: form.sec_q3,
+        sec_a3: form.sec_a3.trim(),
       })
 
       if (response.ok && response.data) {
-        setUser({
-          userId: response.data.userId,
-          mssv: response.data.mssv,
-          full_name: formData.full_name,
-          email: formData.email,
-        })
-
         toast({
           title: "Thành công",
-          description: response.message || "Đăng ký thành công!",
+          description: "Đăng ký thành công! Bạn có thể đăng nhập ngay bây giờ.",
         })
-
-        router.push("/")
+        
+        // Redirect to login
+        router.push('/auth/login')
       } else {
         toast({
           title: "Lỗi",
@@ -114,6 +130,7 @@ export default function RegisterPage() {
         })
       }
     } catch (error) {
+      console.error("Error registering:", error)
       toast({
         title: "Lỗi",
         description: "Có lỗi xảy ra khi đăng ký",
@@ -125,77 +142,99 @@ export default function RegisterPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#003663] flex items-center justify-center p-4">
-      <Card className="w-full max-w-2xl bg-white/10 border-white/20 text-white backdrop-blur-xl">
-        <CardHeader>
-          <CardTitle className="text-3xl font-bold text-center">Đăng ký tài khoản</CardTitle>
-          <CardDescription className="text-white/70 text-center">
-            Tạo tài khoản mới để tham gia diễn đàn FTC
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <form onSubmit={handleSubmit} className="space-y-6">
+    <div className="min-h-screen bg-[#003663] text-white">
+      <PageHeader 
+        title="ĐĂNG KÝ"
+        subtitle="Tạo tài khoản mới để tham gia diễn đàn FTC"
+        showSocialMedia={false}
+        badgeText="Tài khoản mới"
+        badgeIcon={UserPlus}
+        badgeColor="from-green-500/20 to-emerald-500/20"
+        badgeBorderColor="border-green-400/30"
+        badgeIconColor="text-green-400"
+        badgeTextColor="text-green-100"
+        badgeShadowColor="shadow-green-500/10"
+      />
+
+      <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div className="bg-white/10 rounded-2xl border border-white/20 p-8 backdrop-blur-xl">
+          <div className="text-center mb-8">
+            <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-green-500/30 to-emerald-500/30 flex items-center justify-center mx-auto mb-4">
+              <UserPlus className="h-8 w-8 text-green-200" />
+            </div>
+            <h2 className="text-2xl font-bold mb-2">Đăng ký tài khoản</h2>
+            <p className="text-white/70">Điền thông tin để tạo tài khoản mới</p>
+          </div>
+
+          <form onSubmit={handleRegister} className="space-y-6">
             {/* Basic Info */}
-            <div className="space-y-4">
-              <h3 className="text-lg font-semibold">Thông tin cơ bản</h3>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <Label htmlFor="mssv">MSSV *</Label>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label className="block text-sm font-medium mb-2">MSSV *</label>
+                <div className="relative">
+                  <div className="absolute left-4 top-1/2 -translate-y-1/2">
+                    <User className="h-5 w-5 text-white/60" />
+                  </div>
                   <Input
-                    id="mssv"
+                    type="text"
+                    value={form.mssv}
+                    onChange={(e) => setForm({ ...form, mssv: e.target.value })}
                     placeholder="K225123456"
-                    value={formData.mssv}
-                    onChange={(e) => setFormData({ ...formData, mssv: e.target.value.toUpperCase() })}
-                    className="bg-white/10 border-white/30 text-white placeholder-white/60"
+                    className="pl-12 bg-white/10 border-white/30 text-white placeholder-white/60"
                     required
                   />
                 </div>
-                <div className="space-y-2">
-                  <Label htmlFor="full_name">Họ và tên *</Label>
+                <p className="text-xs text-white/60 mt-1">Định dạng: K + 9 số</p>
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium mb-2">Họ và tên *</label>
+                <div className="relative">
+                  <div className="absolute left-4 top-1/2 -translate-y-1/2">
+                    <User className="h-5 w-5 text-white/60" />
+                  </div>
                   <Input
-                    id="full_name"
+                    type="text"
+                    value={form.full_name}
+                    onChange={(e) => setForm({ ...form, full_name: e.target.value })}
                     placeholder="Nguyễn Văn A"
-                    value={formData.full_name}
-                    onChange={(e) => setFormData({ ...formData, full_name: e.target.value })}
-                    className="bg-white/10 border-white/30 text-white placeholder-white/60"
+                    className="pl-12 bg-white/10 border-white/30 text-white placeholder-white/60"
+                    required
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label className="block text-sm font-medium mb-2">Email *</label>
+                <div className="relative">
+                  <div className="absolute left-4 top-1/2 -translate-y-1/2">
+                    <Mail className="h-5 w-5 text-white/60" />
+                  </div>
+                  <Input
+                    type="email"
+                    value={form.email}
+                    onChange={(e) => setForm({ ...form, email: e.target.value })}
+                    placeholder="example@email.com"
+                    className="pl-12 bg-white/10 border-white/30 text-white placeholder-white/60"
                     required
                   />
                 </div>
               </div>
 
-              <div className="space-y-2">
-                <Label htmlFor="email">Email *</Label>
-                <Input
-                  id="email"
-                  type="email"
-                  placeholder="example@student.hcmus.edu.vn"
-                  value={formData.email}
-                  onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                  className="bg-white/10 border-white/30 text-white placeholder-white/60"
-                  required
-                />
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <Label htmlFor="password">Mật khẩu *</Label>
+              <div>
+                <label className="block text-sm font-medium mb-2">Mật khẩu *</label>
+                <div className="relative">
+                  <div className="absolute left-4 top-1/2 -translate-y-1/2">
+                    <Lock className="h-5 w-5 text-white/60" />
+                  </div>
                   <Input
-                    id="password"
                     type="password"
-                    value={formData.password}
-                    onChange={(e) => setFormData({ ...formData, password: e.target.value })}
-                    className="bg-white/10 border-white/30 text-white placeholder-white/60"
-                    required
-                  />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="confirmPassword">Xác nhận mật khẩu *</Label>
-                  <Input
-                    id="confirmPassword"
-                    type="password"
-                    value={formData.confirmPassword}
-                    onChange={(e) => setFormData({ ...formData, confirmPassword: e.target.value })}
-                    className="bg-white/10 border-white/30 text-white placeholder-white/60"
+                    value={form.password}
+                    onChange={(e) => setForm({ ...form, password: e.target.value })}
+                    placeholder="Mật khẩu mạnh"
+                    className="pl-12 bg-white/10 border-white/30 text-white placeholder-white/60"
                     required
                   />
                 </div>
@@ -203,55 +242,80 @@ export default function RegisterPage() {
             </div>
 
             {/* Security Questions */}
-            <div className="space-y-4">
-              <h3 className="text-lg font-semibold">Câu hỏi bảo mật</h3>
-              <p className="text-sm text-white/70">Dùng để khôi phục mật khẩu khi quên</p>
-
-              {[1, 2, 3].map((num) => (
-                <div key={num} className="space-y-2">
-                  <Label htmlFor={`sec_q${num}`}>Câu hỏi {num} *</Label>
+            <div className="border-t border-white/20 pt-6">
+              <h3 className="text-lg font-semibold mb-4">Câu hỏi bảo mật *</h3>
+              <p className="text-sm text-white/70 mb-4">Trả lời 3 câu hỏi để bảo mật tài khoản</p>
+              
+              <div className="space-y-4">
+                <div>
+                  <label className="block text-sm font-medium mb-2">Câu hỏi 1: {form.sec_q1}</label>
                   <Input
-                    id={`sec_q${num}`}
-                    placeholder={`Ví dụ: Tên thú cưng của bạn là gì?`}
-                    value={formData[`sec_q${num}` as keyof typeof formData]}
-                    onChange={(e) => setFormData({ ...formData, [`sec_q${num}`]: e.target.value })}
-                    className="bg-white/10 border-white/30 text-white placeholder-white/60"
-                    required
-                  />
-                  <Label htmlFor={`sec_a${num}`}>Đáp án {num} *</Label>
-                  <Input
-                    id={`sec_a${num}`}
-                    placeholder="Nhập đáp án"
-                    value={formData[`sec_a${num}` as keyof typeof formData]}
-                    onChange={(e) => setFormData({ ...formData, [`sec_a${num}`]: e.target.value })}
+                    type="text"
+                    value={form.sec_a1}
+                    onChange={(e) => setForm({ ...form, sec_a1: e.target.value })}
+                    placeholder="Trả lời câu hỏi 1"
                     className="bg-white/10 border-white/30 text-white placeholder-white/60"
                     required
                   />
                 </div>
-              ))}
+
+                <div>
+                  <label className="block text-sm font-medium mb-2">Câu hỏi 2: {form.sec_q2}</label>
+                  <Input
+                    type="text"
+                    value={form.sec_a2}
+                    onChange={(e) => setForm({ ...form, sec_a2: e.target.value })}
+                    placeholder="Trả lời câu hỏi 2"
+                    className="bg-white/10 border-white/30 text-white placeholder-white/60"
+                    required
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium mb-2">Câu hỏi 3: {form.sec_q3}</label>
+                  <Input
+                    type="text"
+                    value={form.sec_a3}
+                    onChange={(e) => setForm({ ...form, sec_a3: e.target.value })}
+                    placeholder="Trả lời câu hỏi 3"
+                    className="bg-white/10 border-white/30 text-white placeholder-white/60"
+                    required
+                  />
+                </div>
+              </div>
             </div>
 
-            <Button type="submit" className="w-full" disabled={isLoading}>
+            <Button
+              type="submit"
+              disabled={isLoading}
+              className="w-full bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700"
+            >
               {isLoading ? (
-                <>
-                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                  Đang đăng ký...
-                </>
+                <Loader2 className="h-4 w-4 mr-2 animate-spin" />
               ) : (
-                "Đăng ký"
+                <UserPlus className="h-4 w-4 mr-2" />
               )}
+              Đăng ký tài khoản
             </Button>
-
-            <p className="text-center text-sm text-white/70">
-              Đã có tài khoản?{" "}
-              <Link href="/auth/login" className="text-blue-300 hover:text-blue-200 underline">
-                Đăng nhập
-              </Link>
-            </p>
           </form>
-        </CardContent>
-      </Card>
+
+          <div className="mt-8 text-center">
+            <p className="text-white/70 mb-4">Đã có tài khoản?</p>
+            <Link href="/auth/login">
+              <Button variant="outline" className="w-full">
+                Đăng nhập ngay
+              </Button>
+            </Link>
+          </div>
+
+          <div className="mt-6 text-center">
+            <Link href="/dien-dan" className="inline-flex items-center gap-2 text-white/70 hover:text-white transition-colors">
+              <ArrowLeft className="h-4 w-4" />
+              Quay lại diễn đàn
+            </Link>
+          </div>
+        </div>
+      </div>
     </div>
   )
 }
-
