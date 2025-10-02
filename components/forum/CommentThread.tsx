@@ -17,7 +17,6 @@ interface CommentThreadProps {
   comment: Comment;
   questionId: string;
   onReply: (parentId: string, content: string, anonymous: boolean) => void;
-  onLike: (commentId: string) => void;
   level?: number;
 }
 
@@ -25,7 +24,6 @@ export default function CommentThread({
   comment, 
   questionId, 
   onReply, 
-  onLike, 
   level = 0 
 }: CommentThreadProps) {
   const { user } = useAuth();
@@ -68,13 +66,6 @@ export default function CommentThread({
             {new Date(comment.createdAt).toLocaleDateString('vi-VN')}
           </div>
         </div>
-        <button
-          onClick={() => onLike(comment.id)}
-          className="flex items-center gap-1 px-3 py-1 bg-red-500/20 hover:bg-red-500/30 text-red-300 rounded-lg transition-all duration-200"
-        >
-          <span className="text-sm">❤️</span>
-          <span className="text-sm">{comment.like_count}</span>
-        </button>
       </div>
 
       {/* Comment Content */}
@@ -146,7 +137,6 @@ export default function CommentThread({
               comment={reply}
               questionId={questionId}
               onReply={onReply}
-              onLike={onLike}
               level={level + 1}
             />
           ))}

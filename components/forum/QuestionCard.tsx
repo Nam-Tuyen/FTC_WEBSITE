@@ -1,5 +1,6 @@
 "use client";
 import Link from "next/link";
+import LikeButton from "./LikeButton";
 
 export default function QuestionCard({ q }: { q: any }) {
   return (
@@ -37,21 +38,17 @@ export default function QuestionCard({ q }: { q: any }) {
             <span className="text-orange-400 text-lg">💬</span>
             <span>{q.responses?.length || 0} phản hồi</span>
           </span>
+          <span className="flex items-center gap-2">
+            <span className="text-red-400 text-lg">❤️</span>
+            <span>{q.like_count} lượt thích</span>
+          </span>
         </div>
         <Link 
           href={`/dien-dan/question/${q.id}`} 
-          className="group relative px-8 py-4 bg-gradient-to-r from-orange-500 to-red-600 rounded-2xl text-white font-bold hover:shadow-2xl hover:shadow-orange-500/25 transition-all duration-300 hover:scale-105 active:scale-95 flex items-center gap-3"
+          className="px-6 py-3 bg-gradient-to-r from-orange-500 to-red-600 rounded-xl text-white font-semibold hover:shadow-lg hover:scale-105 transition-all duration-200 flex items-center gap-2"
         >
-          {/* Animated Background */}
-          <div className="absolute inset-0 bg-gradient-to-r from-orange-400 to-red-500 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-          
-          {/* Text */}
-          <span className="relative">Xem chi tiết</span>
-          
-          {/* Arrow Icon with Animation */}
-          <div className="relative flex items-center justify-center w-6 h-6 bg-white/20 rounded-full group-hover:scale-110 transition-transform duration-300">
-            <span className="text-lg group-hover:translate-x-0.5 transition-transform duration-300">→</span>
-          </div>
+          <span>Xem chi tiết</span>
+          <span className="text-lg">→</span>
         </Link>
       </div>
     </div>

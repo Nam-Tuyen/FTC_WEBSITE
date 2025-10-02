@@ -57,16 +57,6 @@ export default function CommentSection({
     }
   };
 
-  const handleLike = async (commentId: string) => {
-    if (!user) return;
-    
-    try {
-      // Implement like functionality
-      console.log("Like comment:", commentId);
-    } catch (error) {
-      console.error("Error liking comment:", error);
-    }
-  };
 
   return (
     <div className="space-y-6">
@@ -95,7 +85,6 @@ export default function CommentSection({
                 comment={comment}
                 questionId={questionId}
                 onReply={handleReply}
-                onLike={handleLike}
                 level={0}
               />
             ))}

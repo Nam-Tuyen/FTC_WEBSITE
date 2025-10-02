@@ -112,8 +112,8 @@ function ForumHome() {
                 backgroundSize: '100px 100px'
               }}></div>
             </div>
-          </div>
-
+        </div>
+        
           <div className="relative max-w-6xl mx-auto text-center space-y-6 sm:space-y-8 lg:space-y-10">
             {/* Main Title */}
             <h1 className="relative text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-black tracking-tight">
@@ -142,24 +142,24 @@ function ForumHome() {
                 <span className="text-3xl group-hover:scale-125 transition-transform duration-300">🚀</span>
                 <span className="font-bold">Xu hướng mới nhất</span>
               </div>
-            </div>
+          </div>
 
             {/* Enhanced Modern Badge */}
             <div className="mt-16 relative">
               <div className="inline-flex items-center gap-4 bg-gradient-to-r from-blue-500/25 to-cyan-500/25 backdrop-blur-2xl border border-blue-400/50 rounded-full px-10 py-5 shadow-2xl shadow-blue-500/30 hover:shadow-blue-500/40 transition-all duration-300 hover:scale-105">
                 <div className="w-4 h-4 bg-gradient-to-r from-blue-400 to-cyan-400 rounded-full animate-pulse"></div>
                 <span className="text-lg font-bold text-blue-100 uppercase tracking-wider">Cộng đồng FinTech</span>
-              </div>
             </div>
           </div>
-        </section>
+        </div>
+      </section>
 
         {/* Auth Tabs - Only show when not logged in */}
         {!user && (
           <>
             <div className="flex justify-center mb-20">
               <div className="flex bg-gradient-to-r from-[#003663]/40 to-[#004a7c]/40 backdrop-blur-2xl rounded-3xl p-4 border border-blue-400/40 shadow-2xl shadow-blue-500/20">
-                <button 
+                <button
                   className={`px-16 py-6 rounded-2xl font-black text-xl transition-all duration-500 ${
                     tab==="login" 
                       ? "bg-gradient-to-r from-blue-500 to-cyan-600 text-white shadow-2xl scale-110 border-2 border-blue-400/50" 
@@ -172,7 +172,7 @@ function ForumHome() {
                     <span>Đăng nhập</span>
                   </span>
                 </button>
-                <button 
+                    <button
                   className={`px-16 py-6 rounded-2xl font-black text-xl transition-all duration-500 ${
                     tab==="register" 
                       ? "bg-gradient-to-r from-green-500 to-emerald-600 text-white shadow-2xl scale-110 border-2 border-green-400/50" 
@@ -184,7 +184,7 @@ function ForumHome() {
                     <span className="text-2xl">👤</span>
                     <span>Đăng ký</span>
                   </span>
-                </button>
+                    </button>
               </div>
             </div>
 
@@ -199,10 +199,10 @@ function ForumHome() {
                       </div>
                       <h3 className="text-4xl font-bold text-white mb-3">Đăng nhập</h3>
                       <p className="text-blue-200 text-xl">Chào mừng bạn quay trở lại</p>
-                    </div>
-                    <LoginForm />
-                  </div>
                 </div>
+                    <LoginForm />
+                </div>
+              </div>
               )}
               {tab==="register" && (
                 <div className="w-full max-w-4xl">
@@ -210,13 +210,13 @@ function ForumHome() {
                     <div className="text-center mb-10">
                       <div className="w-24 h-24 bg-gradient-to-r from-green-500 to-emerald-600 rounded-full flex items-center justify-center mx-auto mb-8">
                         <span className="text-4xl">👤</span>
-                      </div>
+                </div>
                       <h3 className="text-4xl font-bold text-white mb-3">Đăng ký</h3>
                       <p className="text-blue-200 text-xl">Tham gia cộng đồng FTC</p>
-                    </div>
-                    <RegisterForm />
-                  </div>
                 </div>
+                    <RegisterForm />
+                </div>
+              </div>
               )}
             </div>
           </>
@@ -238,7 +238,7 @@ function ForumHome() {
                     <p className="text-blue-300">({user.mssv})</p>
                   </div>
                 </div>
-                <button 
+                <button
                   onClick={logout}
                   className="px-6 py-3 bg-gradient-to-r from-red-500 to-pink-600 rounded-xl text-white font-semibold hover:shadow-lg transition-all duration-200"
                 >
@@ -273,8 +273,8 @@ function ForumHome() {
                       selectedCategory={selectedCategory}
                       selectedSort={selectedSort}
                       stats={stats}
-                    />
-                  </div>
+              />
+            </div>
 
                   {/* Loading State */}
                   {loading ? (
@@ -290,20 +290,20 @@ function ForumHome() {
                           <div className="text-8xl mb-6">💬</div>
                           <p className="text-blue-200 text-2xl mb-2">Chưa có câu hỏi nào</p>
                           <p className="text-blue-300 text-lg">Hãy là người đầu tiên đặt câu hỏi!</p>
-                        </div>
-                      ) : (
+                </div>
+              ) : (
                         <div className="space-y-6">
                           {items.map(q => <QuestionCard key={q.id} q={q} />)}
-                        </div>
-                      )}
+                             </div>
+                           )}
                     </>
                   )}
+                        </div>
+                      </div>
+                    </div>
                 </div>
-              </div>
+              )}
             </div>
-          </div>
-        )}
-      </div>
     </div>
   )
 }
