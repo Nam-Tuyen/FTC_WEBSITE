@@ -421,7 +421,7 @@ export default function ForumPage() {
                 paginated.map((question) => (
                   <Link
                     key={question.id}
-                    href={`/dien-dan/question/${question.id}`}
+                    href={`/question/${question.id}`}
                     className="block bg-white/10 rounded-2xl border border-white/20 hover:border-white/30 p-6 backdrop-blur-xl transition-all hover:bg-white/15"
                   >
                     <div className="flex items-start justify-between mb-4">
@@ -525,7 +525,7 @@ export default function ForumPage() {
                 {questions.slice(0, 5).map((q) => (
                   <Link
                     key={q.id}
-                    href={`/dien-dan/question/${q.id}`}
+                    href={`/question/${q.id}`}
                     className="block border-l-4 border-blue-400 pl-4 py-2 hover:bg-white/5 rounded transition-colors"
                   >
                     <p className="text-sm font-semibold mb-2 line-clamp-2">{q.title}</p>
