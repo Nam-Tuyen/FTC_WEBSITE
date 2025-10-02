@@ -106,52 +106,64 @@ export default function LoginForm() {
         )}
 
         {forgotPasswordStep === 'questions' && (
-          <div className="space-y-4">
-            <div className="bg-gradient-to-r from-orange-500/10 to-red-500/10 border border-orange-400/30 rounded-lg p-4">
-              <h4 className="text-lg font-semibold text-white mb-2 flex items-center gap-2">
-                <span className="text-orange-400">🔐</span>
+          <div className="space-y-6">
+            <div className="bg-gradient-to-r from-orange-500/10 to-red-500/10 border border-orange-400/30 rounded-xl p-6">
+              <h4 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+                <span className="text-orange-400 text-2xl">🔐</span>
                 Câu hỏi bảo mật
               </h4>
-              <p className="text-sm text-orange-200">Hãy trả lời các câu hỏi bảo mật để xác thực danh tính</p>
+              <p className="text-base text-orange-200">Hãy trả lời các câu hỏi bảo mật để xác thực danh tính</p>
             </div>
             
-            <div className="space-y-4">
+            <div className="space-y-6">
               {forgotPasswordData.questions.map((question, index) => (
-                <div key={index}>
-                  <label className="block text-sm font-semibold text-blue-200 mb-2">
-                    {question}
-                  </label>
-                  <input 
-                    className="w-full border-2 border-blue-400/30 rounded-lg p-3 bg-[#003663]/50 text-white placeholder-blue-300 focus:border-orange-500 focus:ring-2 focus:ring-orange-500/20 transition-all duration-200" 
-                    placeholder={`Trả lời câu hỏi ${index + 1}`}
-                    value={forgotPasswordData.answers[`a${index + 1}` as keyof typeof forgotPasswordData.answers]}
-                    onChange={e=>setForgotPasswordData({
-                      ...forgotPasswordData, 
-                      answers: { ...forgotPasswordData.answers, [`a${index + 1}`]: e.target.value }
-                    })}
-                  />
+                <div key={index} className="bg-gradient-to-r from-blue-500/5 to-cyan-500/5 border border-blue-400/20 rounded-xl p-6">
+                  <h5 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
+                    <span className="w-6 h-6 bg-gradient-to-r from-blue-500 to-cyan-600 rounded-full flex items-center justify-center text-sm">{index + 1}</span>
+                    Câu hỏi bảo mật {index + 1}
+                  </h5>
+                  <div>
+                    <label className="block text-base font-semibold text-blue-200 mb-3">
+                      {question}
+                    </label>
+                    <input 
+                      className="w-full border-2 border-blue-400/30 rounded-xl p-4 bg-[#003663]/50 text-white placeholder-blue-300 focus:border-orange-500 focus:ring-2 focus:ring-orange-500/20 transition-all duration-200 text-lg" 
+                      placeholder={`Trả lời câu hỏi ${index + 1}`}
+                      value={forgotPasswordData.answers[`a${index + 1}` as keyof typeof forgotPasswordData.answers]}
+                      onChange={e=>setForgotPasswordData({
+                        ...forgotPasswordData, 
+                        answers: { ...forgotPasswordData.answers, [`a${index + 1}`]: e.target.value }
+                      })}
+                    />
+                  </div>
                 </div>
               ))}
               
-              <div>
-                <label className="block text-sm font-semibold text-blue-200 mb-2">
+              <div className="bg-gradient-to-r from-green-500/5 to-emerald-500/5 border border-green-400/20 rounded-xl p-6">
+                <h5 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
+                  <span className="w-6 h-6 bg-gradient-to-r from-green-500 to-emerald-600 rounded-full flex items-center justify-center text-sm">🔑</span>
                   Mật khẩu mới
-                </label>
-                <input 
-                  className="w-full border-2 border-blue-400/30 rounded-lg p-3 bg-[#003663]/50 text-white placeholder-blue-300 focus:border-orange-500 focus:ring-2 focus:ring-orange-500/20 transition-all duration-200" 
-                  type="password"
-                  placeholder="Nhập mật khẩu mới"
-                  value={forgotPasswordData.newPassword}
-                  onChange={e=>setForgotPasswordData({...forgotPasswordData, newPassword: e.target.value})}
-                />
+                </h5>
+                <div>
+                  <label className="block text-base font-semibold text-blue-200 mb-3">
+                    Nhập mật khẩu mới
+                  </label>
+                  <input 
+                    className="w-full border-2 border-blue-400/30 rounded-xl p-4 bg-[#003663]/50 text-white placeholder-blue-300 focus:border-orange-500 focus:ring-2 focus:ring-orange-500/20 transition-all duration-200 text-lg" 
+                    type="password"
+                    placeholder="Nhập mật khẩu mới"
+                    value={forgotPasswordData.newPassword}
+                    onChange={e=>setForgotPasswordData({...forgotPasswordData, newPassword: e.target.value})}
+                  />
+                </div>
               </div>
             </div>
             
-            <div className="flex gap-3">
+            <div className="flex gap-4">
               <button 
                 type="button"
                 onClick={() => setForgotPasswordStep('email')}
-                className="flex-1 px-4 py-2 bg-slate-600/50 text-slate-300 rounded-lg font-semibold hover:bg-slate-500/50 transition-all duration-200"
+                className="flex-1 px-6 py-3 bg-slate-600/50 text-slate-300 rounded-xl font-semibold hover:bg-slate-500/50 transition-all duration-200"
               >
                 Quay lại
               </button>
@@ -159,7 +171,7 @@ export default function LoginForm() {
                 type="button"
                 onClick={handleResetPassword}
                 disabled={loading || !forgotPasswordData.answers.a1 || !forgotPasswordData.answers.a2 || !forgotPasswordData.answers.a3 || !forgotPasswordData.newPassword}
-                className="flex-1 px-4 py-2 bg-gradient-to-r from-green-500 to-emerald-600 text-white rounded-lg font-semibold hover:shadow-lg transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+                className="flex-1 px-6 py-3 bg-gradient-to-r from-green-500 to-emerald-600 text-white rounded-xl font-semibold hover:shadow-lg transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {loading ? "Đang đặt lại..." : "Đặt lại mật khẩu"}
               </button>
