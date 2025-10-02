@@ -1,5 +1,5 @@
-const API_URL = process.env.NEXT_PUBLIC_FORUM_API_URL!;
-const TOKEN = process.env.NEXT_PUBLIC_FORUM_API_TOKEN;
+const API_URL = process.env.NEXT_PUBLIC_FORUM_API_URL || '/api/forum';
+const TOKEN = process.env.NEXT_PUBLIC_FORUM_API_TOKEN || 'ftc-2025-secret';
 
 export async function callAPI<T = any>(action: string, body: any): Promise<T> {
   const payload = {

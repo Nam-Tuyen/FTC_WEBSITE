@@ -7,21 +7,21 @@ import LikeButton from "@/components/forum/LikeButton";
 import NewResponseForm from "@/components/forum/NewResponseForm";
 import { AuthProvider } from "@/context/AuthContext";
 
-function DetailInner({ qid }: { qid: string }) {
+function DetailInner({ questionId }: { questionId: string }) {
   const [q, setQ] = useState<QuestionItem | null>(null);
   const [loading, setLoading] = useState(true);
 
   async function load() {
     setLoading(true);
     const res = await ForumApi.fetchQuestions({ take: 100 });
-    const found = res.data?.items?.find(x => x.id === qid) || null;
+    const found = res.data?.items?.find(x => x.id === questionId) || null;
     setQ(found);
     setLoading(false);
   }
-  useEffect(() => { if(qid) load(); }, [qid]);
+  useEffect(() => { if(questionId) load(); }, [questionId]);
 
   return (
-    <div className="min-h-screen bg-gray-100">
+    <div className="min-h-screen bg-gray-50">
       <div className="max-w-3xl mx-auto p-4 space-y-4">
         <button onClick={() => window.history.back()} className="text-sm underline">← Quay lại danh sách</button>
 
@@ -64,7 +64,7 @@ function DetailInner({ qid }: { qid: string }) {
 export default function Page({ params }: { params: { id: string } }) {
   return (
     <AuthProvider>
-      <DetailInner qid={params.id} />
+      <DetailInner questionId={params.id} />
     </AuthProvider>
   );
 }

@@ -16,7 +16,7 @@ export default function QuestionCard({ q }: { q: any }) {
       </div>
       <p className="mt-2 whitespace-pre-wrap">{q.content}</p>
       <div className="mt-3 text-sm">
-        <Link href={`/forum/${q.id}`} className="underline">Xem chi tiết & phản hồi ({q.responses?.length || 0})</Link>
+        <Link href={`/dien-dan/question/${q.id}`} className="underline">Xem chi tiết & phản hồi ({q.responses?.length || 0})</Link>
       </div>
     </div>
   );

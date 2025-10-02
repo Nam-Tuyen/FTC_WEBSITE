@@ -1,4 +1,3 @@
-"use client";
 import { useEffect, useState } from "react";
 import { ForumApi } from "@/lib/forumApi";
 import type { QuestionItem } from "@/types/forum";
@@ -23,9 +22,9 @@ function ForumHome() {
   useEffect(() => { load(); }, []);
 
   return (
-    <div className="min-h-screen bg-gray-100">
+    <div className="min-h-screen bg-gray-50">
       <div className="max-w-3xl mx-auto p-4 space-y-4">
-        <header className="flex items-center justify-between bg-white p-4 rounded shadow">
+        <header className="flex items-center justify-between">
           <h1 className="text-2xl font-bold">Diễn đàn FTC</h1>
           <div className="flex items-center gap-2">
             {user ? (

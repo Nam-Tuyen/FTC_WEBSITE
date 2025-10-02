@@ -17,7 +17,7 @@ export default function RegisterForm() {
       const res = await ForumApi.registerUser(form);
       if(!res.ok) throw new Error(res.message || "Đăng ký thất bại");
       setMsg("Đăng ký thành công. Hãy đăng nhập.");
-    }catch(e:any){ setErr(e.message); }
+    } catch(e:any){ setErr(e.message); }
   }
 
   return (
