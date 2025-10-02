@@ -1,3 +1,4 @@
+"use client";
 import { useEffect, useState } from "react";
 import { ForumApi } from "@/lib/forumApi";
 import type { QuestionItem } from "@/types/forum";

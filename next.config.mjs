@@ -14,8 +14,6 @@ const nextConfig = {
   compiler: {
     removeConsole: process.env.NODE_ENV === "production",
   },
-  optimizeFonts: true,
-  swcMinify: true,
   serverExternalPackages: [
     '@genkit-ai/core',
     '@genkit-ai/googleai', 
