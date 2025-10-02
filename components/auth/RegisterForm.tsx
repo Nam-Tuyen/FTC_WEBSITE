@@ -22,138 +22,138 @@ export default function RegisterForm() {
 
   return (
     <form onSubmit={submit} className="space-y-6">
-      {/* Thông tin cơ bản */}
-      <div className="space-y-4">
-        <h4 className="text-lg font-semibold text-white mb-3 flex items-center gap-2">
-          <span className="w-2 h-2 bg-gradient-to-r from-blue-400 to-cyan-400 rounded-full"></span>
-          Thông tin cơ bản
-        </h4>
-        
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <div>
-            <label className="block text-sm font-semibold text-blue-200 mb-2">
-              Mã số sinh viên của bạn
-            </label>
-            <input 
-              className="w-full border-2 border-blue-400/30 rounded-lg p-3 bg-[#003663]/50 text-white placeholder-blue-300 focus:border-orange-500 focus:ring-2 focus:ring-orange-500/20 transition-all duration-200"
-              type="text"
-              placeholder="Nhập MSSV (VD: K225123456)"
-              value={form.mssv}
-              onChange={e=>setForm({...form, mssv: e.target.value})}
-            />
-          </div>
-          
-          <div>
-            <label className="block text-sm font-semibold text-blue-200 mb-2">
-              Hãy đặt mật khẩu cho tài khoản của bạn
-            </label>
-            <input 
-              className="w-full border-2 border-blue-400/30 rounded-lg p-3 bg-[#003663]/50 text-white placeholder-blue-300 focus:border-orange-500 focus:ring-2 focus:ring-orange-500/20 transition-all duration-200"
-              type="password"
-              placeholder="Nhập mật khẩu mạnh"
-              value={form.password}
-              onChange={e=>setForm({...form, password: e.target.value})}
-            />
-          </div>
-          
-          <div>
-            <label className="block text-sm font-semibold text-blue-200 mb-2">
-              Họ và tên đầy đủ của bạn
-            </label>
-            <input 
-              className="w-full border-2 border-blue-400/30 rounded-lg p-3 bg-[#003663]/50 text-white placeholder-blue-300 focus:border-orange-500 focus:ring-2 focus:ring-orange-500/20 transition-all duration-200"
-              type="text"
-              placeholder="Nhập họ tên đầy đủ"
-              value={form.full_name}
-              onChange={e=>setForm({...form, full_name: e.target.value})}
-            />
-          </div>
-          
-          <div>
-            <label className="block text-sm font-semibold text-blue-200 mb-2">
-              Hãy nhập email của bạn
-            </label>
-            <input 
-              className="w-full border-2 border-blue-400/30 rounded-lg p-3 bg-[#003663]/50 text-white placeholder-blue-300 focus:border-orange-500 focus:ring-2 focus:ring-orange-500/20 transition-all duration-200"
-              type="email"
-              placeholder="Nhập email liên hệ"
-              value={form.email}
-              onChange={e=>setForm({...form, email: e.target.value})}
-            />
-          </div>
-        </div>
-      </div>
+            {/* Thông tin cơ bản */}
+            <div className="space-y-6">
+              <h4 className="text-xl font-semibold text-white mb-6 flex items-center gap-3">
+                <span className="w-3 h-3 bg-gradient-to-r from-blue-400 to-cyan-400 rounded-full"></span>
+                Thông tin cơ bản
+              </h4>
+              
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                <div>
+                  <label className="block text-lg font-semibold text-blue-200 mb-3">
+                    Mã số sinh viên của bạn
+                  </label>
+                  <input 
+                    className="w-full border-2 border-blue-400/30 rounded-xl p-4 bg-[#003663]/50 text-white placeholder-blue-300 focus:border-orange-500 focus:ring-2 focus:ring-orange-500/20 transition-all duration-200 text-lg"
+                    type="text"
+                    placeholder="Nhập MSSV (VD: K225123456)"
+                    value={form.mssv}
+                    onChange={e=>setForm({...form, mssv: e.target.value})}
+                  />
+                </div>
+                
+                <div>
+                  <label className="block text-lg font-semibold text-blue-200 mb-3">
+                    Hãy đặt mật khẩu cho tài khoản của bạn
+                  </label>
+                  <input 
+                    className="w-full border-2 border-blue-400/30 rounded-xl p-4 bg-[#003663]/50 text-white placeholder-blue-300 focus:border-orange-500 focus:ring-2 focus:ring-orange-500/20 transition-all duration-200 text-lg"
+                    type="password"
+                    placeholder="Nhập mật khẩu mạnh"
+                    value={form.password}
+                    onChange={e=>setForm({...form, password: e.target.value})}
+                  />
+                </div>
+                
+                <div>
+                  <label className="block text-lg font-semibold text-blue-200 mb-3">
+                    Họ và tên đầy đủ của bạn
+                  </label>
+                  <input 
+                    className="w-full border-2 border-blue-400/30 rounded-xl p-4 bg-[#003663]/50 text-white placeholder-blue-300 focus:border-orange-500 focus:ring-2 focus:ring-orange-500/20 transition-all duration-200 text-lg"
+                    type="text"
+                    placeholder="Nhập họ tên đầy đủ"
+                    value={form.full_name}
+                    onChange={e=>setForm({...form, full_name: e.target.value})}
+                  />
+                </div>
+                
+                <div>
+                  <label className="block text-lg font-semibold text-blue-200 mb-3">
+                    Hãy nhập email của bạn
+                  </label>
+                  <input 
+                    className="w-full border-2 border-blue-400/30 rounded-xl p-4 bg-[#003663]/50 text-white placeholder-blue-300 focus:border-orange-500 focus:ring-2 focus:ring-orange-500/20 transition-all duration-200 text-lg"
+                    type="email"
+                    placeholder="Nhập email liên hệ"
+                    value={form.email}
+                    onChange={e=>setForm({...form, email: e.target.value})}
+                  />
+                </div>
+              </div>
+            </div>
 
-      {/* Từ khóa bí mật */}
-      <div className="space-y-4">
-        <div className="bg-gradient-to-r from-orange-500/10 to-red-500/10 border border-orange-400/30 rounded-lg p-4">
-          <h4 className="text-lg font-semibold text-white mb-2 flex items-center gap-2">
-            <span className="text-orange-400">🔐</span>
-            Từ khóa bí mật
-          </h4>
-          <p className="text-sm text-orange-200 leading-relaxed">
-            Nhằm mục đích hỗ trợ bạn khôi phục tài khoản khi xảy ra sự cố hãy nhập 3 từ khóa bí mật của riêng bạn để sau này sử dụng làm phương thức xác thực để cài đặt lại mật khẩu
-          </p>
-        </div>
-        
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-          <div>
-            <label className="block text-sm font-semibold text-blue-200 mb-2">
-              Từ khóa 1
-            </label>
-            <input 
-              className="w-full border-2 border-blue-400/30 rounded-lg p-3 bg-[#003663]/50 text-white placeholder-blue-300 focus:border-orange-500 focus:ring-2 focus:ring-orange-500/20 transition-all duration-200"
-              type="text"
-              placeholder="Từ khóa bí mật 1"
-              value={form.sec_a1}
-              onChange={e=>setForm({...form, sec_a1: e.target.value})}
-            />
-          </div>
-          
-          <div>
-            <label className="block text-sm font-semibold text-blue-200 mb-2">
-              Từ khóa 2
-            </label>
-            <input 
-              className="w-full border-2 border-blue-400/30 rounded-lg p-3 bg-[#003663]/50 text-white placeholder-blue-300 focus:border-orange-500 focus:ring-2 focus:ring-orange-500/20 transition-all duration-200"
-              type="text"
-              placeholder="Từ khóa bí mật 2"
-              value={form.sec_a2}
-              onChange={e=>setForm({...form, sec_a2: e.target.value})}
-            />
-          </div>
-          
-          <div>
-            <label className="block text-sm font-semibold text-blue-200 mb-2">
-              Từ khóa 3
-            </label>
-            <input 
-              className="w-full border-2 border-blue-400/30 rounded-lg p-3 bg-[#003663]/50 text-white placeholder-blue-300 focus:border-orange-500 focus:ring-2 focus:ring-orange-500/20 transition-all duration-200"
-              type="text"
-              placeholder="Từ khóa bí mật 3"
-              value={form.sec_a3}
-              onChange={e=>setForm({...form, sec_a3: e.target.value})}
-            />
-          </div>
-        </div>
-      </div>
+            {/* Câu hỏi bảo mật */}
+            <div className="space-y-6">
+              <div className="bg-gradient-to-r from-orange-500/10 to-red-500/10 border border-orange-400/30 rounded-xl p-6">
+                <h4 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+                  <span className="text-orange-400 text-2xl">🔐</span>
+                  Câu hỏi bảo mật
+                </h4>
+                <p className="text-base text-orange-200 leading-relaxed">
+                  Nhằm mục đích hỗ trợ bạn khôi phục tài khoản khi xảy ra sự cố hãy nhập câu trả lời ứng với 3 câu hỏi dưới đây để sử dụng làm phương thức xác thực để cài đặt lại mật khẩu
+                </p>
+              </div>
+              
+              <div className="space-y-6">
+                <div>
+                  <label className="block text-lg font-semibold text-blue-200 mb-3">
+                    Câu trả lời 1
+                  </label>
+                  <input 
+                    className="w-full border-2 border-blue-400/30 rounded-xl p-4 bg-[#003663]/50 text-white placeholder-blue-300 focus:border-orange-500 focus:ring-2 focus:ring-orange-500/20 transition-all duration-200 text-lg"
+                    type="text"
+                    placeholder="Nhập câu trả lời cho câu hỏi bảo mật 1"
+                    value={form.sec_a1}
+                    onChange={e=>setForm({...form, sec_a1: e.target.value})}
+                  />
+                </div>
+                
+                <div>
+                  <label className="block text-lg font-semibold text-blue-200 mb-3">
+                    Câu trả lời 2
+                  </label>
+                  <input 
+                    className="w-full border-2 border-blue-400/30 rounded-xl p-4 bg-[#003663]/50 text-white placeholder-blue-300 focus:border-orange-500 focus:ring-2 focus:ring-orange-500/20 transition-all duration-200 text-lg"
+                    type="text"
+                    placeholder="Nhập câu trả lời cho câu hỏi bảo mật 2"
+                    value={form.sec_a2}
+                    onChange={e=>setForm({...form, sec_a2: e.target.value})}
+                  />
+                </div>
+                
+                <div>
+                  <label className="block text-lg font-semibold text-blue-200 mb-3">
+                    Câu trả lời 3
+                  </label>
+                  <input 
+                    className="w-full border-2 border-blue-400/30 rounded-xl p-4 bg-[#003663]/50 text-white placeholder-blue-300 focus:border-orange-500 focus:ring-2 focus:ring-orange-500/20 transition-all duration-200 text-lg"
+                    type="text"
+                    placeholder="Nhập câu trả lời cho câu hỏi bảo mật 3"
+                    value={form.sec_a3}
+                    onChange={e=>setForm({...form, sec_a3: e.target.value})}
+                  />
+                </div>
+              </div>
+            </div>
       {err && (
-        <div className="p-3 rounded-lg bg-gradient-to-r from-red-500 to-pink-600 text-white border-2 border-red-400 shadow-lg">
-          <div className="flex items-center gap-2">
-            <span className="text-lg">❌</span>
-            <span className="font-semibold">{err}</span>
+        <div className="p-4 rounded-xl bg-gradient-to-r from-red-500 to-pink-600 text-white border-2 border-red-400 shadow-lg">
+          <div className="flex items-center gap-3">
+            <span className="text-xl">❌</span>
+            <span className="font-semibold text-lg">{err}</span>
           </div>
         </div>
       )}
       {msg && (
-        <div className="p-3 rounded-lg bg-gradient-to-r from-green-500 to-emerald-600 text-white border-2 border-green-400 shadow-lg">
-          <div className="flex items-center gap-2">
-            <span className="text-lg">✅</span>
-            <span className="font-semibold">{msg}</span>
+        <div className="p-4 rounded-xl bg-gradient-to-r from-green-500 to-emerald-600 text-white border-2 border-green-400 shadow-lg">
+          <div className="flex items-center gap-3">
+            <span className="text-xl">✅</span>
+            <span className="font-semibold text-lg">{msg}</span>
           </div>
         </div>
       )}
-      <button className="w-full bg-gradient-to-r from-green-500 to-emerald-600 text-white rounded-lg px-6 py-3 font-semibold hover:shadow-lg transition-all duration-200">
+      <button className="w-full bg-gradient-to-r from-green-500 to-emerald-600 text-white rounded-xl px-8 py-4 font-semibold hover:shadow-lg transition-all duration-200 text-lg">
         Đăng ký
       </button>
     </form>
