@@ -66,7 +66,14 @@ function DetailInner({ questionId }: { questionId: string }) {
                   </div>
                 </div>
                 <div className="flex-shrink-0">
-                  <LikeButton questionId={q.id} initialLikes={q.like_count} />
+                  <LikeButton 
+                    questionId={q.id} 
+                    initialLikes={q.like_count} 
+                    onLikeChange={(liked, likeCount) => {
+                      // Update the question's like count in the parent component
+                      setQ(prev => prev ? { ...prev, like_count: likeCount } : null);
+                    }}
+                  />
                 </div>
               </div>
               

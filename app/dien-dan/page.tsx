@@ -7,6 +7,8 @@ import QuestionCard from "@/components/forum/QuestionCard";
 import NewQuestionForm from "@/components/forum/NewQuestionForm";
 import LoginForm from "@/components/auth/LoginForm";
 import RegisterForm from "@/components/auth/RegisterForm";
+import LoadingSpinner from "@/components/forum/LoadingSpinner";
+import SearchAndFilter from "@/components/forum/SearchAndFilter";
 import { AuthProvider, useAuth } from "@/context/AuthContext";
 import { PageHeader } from "@/components/page-header"
 import { MessageSquare } from "lucide-react"
@@ -15,15 +17,46 @@ function ForumHome() {
   const [items, setItems] = useState<QuestionItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [tab, setTab] = useState<"forum"|"login"|"register">("forum");
+  const [searchQuery, setSearchQuery] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("");
+  const [selectedSort, setSelectedSort] = useState("newest");
+  const [stats, setStats] = useState({
+    totalQuestions: 0,
+    totalResponses: 0,
+    totalLikes: 0,
+    activeUsers: 0
+  });
   const { user, logout } = useAuth();
 
   async function load() {
     setLoading(true);
-    const res = await ForumApi.fetchQuestions({ take: 30 });
-    setItems(res.data?.items || []);
+    try {
+      const res = await ForumApi.fetchQuestions({ 
+        take: 50,
+        category: selectedCategory || undefined,
+        search: searchQuery || undefined
+      });
+      setItems(res.data?.items || []);
+      
+      // Calculate stats
+      const questions = res.data?.items || [];
+      const totalResponses = questions.reduce((sum, q) => sum + (q.responses?.length || 0), 0);
+      const totalLikes = questions.reduce((sum, q) => sum + (q.like_count || 0), 0);
+      const uniqueUsers = new Set(questions.map(q => q.user)).size;
+      
+      setStats({
+        totalQuestions: questions.length,
+        totalResponses,
+        totalLikes,
+        activeUsers: uniqueUsers
+      });
+    } catch (error) {
+      console.error("Error loading questions:", error);
+    }
     setLoading(false);
   }
-  useEffect(() => { load(); }, []);
+
+  useEffect(() => { load(); }, [searchQuery, selectedCategory, selectedSort]);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#003663] via-[#004a7c] to-[#003663] text-white">
@@ -40,6 +73,10 @@ function ForumHome() {
           0%, 100% { transform: translateY(0px); }
           50% { transform: translateY(-10px); }
         }
+        @keyframes float-particle {
+          0%, 100% { transform: translateY(0px) rotate(0deg); }
+          50% { transform: translateY(-20px) rotate(180deg); }
+        }
         .feature-card {
           animation: float 6s ease-in-out infinite;
         }
@@ -49,15 +86,32 @@ function ForumHome() {
         .feature-card:nth-child(3) {
           animation-delay: 4s;
         }
+        .floating-particle {
+          animation: float-particle 8s ease-in-out infinite;
+        }
       `}</style>
       <div className="max-w-7xl mx-auto px-6 py-12">
         {/* Header Section - Similar to Chatbot */}
         <section className="relative min-h-[60vh] sm:min-h-[70vh] flex items-center justify-center py-12 sm:py-16 lg:py-24 px-4 sm:px-6 lg:px-8">
-          {/* Animated Background */}
+          {/* Enhanced Animated Background */}
           <div className="absolute inset-0 overflow-hidden">
-            <div className="absolute -top-40 -right-40 w-80 h-80 bg-gradient-to-r from-blue-500/20 to-cyan-500/20 rounded-full blur-3xl animate-pulse"></div>
-            <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-gradient-to-r from-purple-500/20 to-pink-500/20 rounded-full blur-3xl animate-pulse"></div>
-            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-gradient-to-r from-orange-500/10 to-red-500/10 rounded-full blur-3xl animate-pulse"></div>
+            {/* Floating Geometric Shapes */}
+            <div className="absolute top-20 left-10 w-32 h-32 bg-gradient-to-br from-blue-500/30 to-cyan-500/30 rounded-full blur-2xl floating-particle"></div>
+            <div className="absolute top-40 right-20 w-48 h-48 bg-gradient-to-br from-purple-500/25 to-pink-500/25 rounded-full blur-3xl floating-particle" style={{ animationDelay: '1s' }}></div>
+            <div className="absolute bottom-20 left-1/4 w-40 h-40 bg-gradient-to-br from-orange-500/20 to-red-500/20 rounded-full blur-2xl floating-particle" style={{ animationDelay: '2s' }}></div>
+            <div className="absolute bottom-40 right-1/3 w-36 h-36 bg-gradient-to-br from-green-500/25 to-emerald-500/25 rounded-full blur-2xl floating-particle" style={{ animationDelay: '0.5s' }}></div>
+            
+            {/* Gradient Overlay */}
+            <div className="absolute inset-0 bg-gradient-to-br from-[#003663]/40 via-[#004a7c]/30 to-[#002244]/50"></div>
+            
+            {/* Animated Grid Pattern */}
+            <div className="absolute inset-0 opacity-10">
+              <div className="absolute inset-0" style={{
+                backgroundImage: `radial-gradient(circle at 25% 25%, rgba(59, 130, 246, 0.3) 0%, transparent 50%),
+                                radial-gradient(circle at 75% 75%, rgba(147, 51, 234, 0.3) 0%, transparent 50%)`,
+                backgroundSize: '100px 100px'
+              }}></div>
+            </div>
           </div>
 
           <div className="relative max-w-6xl mx-auto text-center space-y-6 sm:space-y-8 lg:space-y-10">
@@ -74,27 +128,27 @@ function ForumHome() {
               Nơi cộng đồng fintech chia sẻ kiến thức, thảo luận xu hướng và kết nối
             </p>
             
-            {/* Feature highlights */}
-            <div className="flex flex-wrap justify-center gap-8 text-base sm:text-lg text-blue-300 mt-12">
-              <div className="feature-card flex items-center gap-3 bg-gradient-to-r from-orange-500/10 to-red-500/10 backdrop-blur-sm border border-orange-400/20 rounded-2xl px-6 py-4 hover:scale-110 transition-all duration-500">
-                <span className="text-2xl">💬</span>
-                <span className="font-semibold">Thảo luận chuyên môn</span>
+            {/* Enhanced Feature Cards */}
+            <div className="flex flex-wrap justify-center gap-6 sm:gap-8 text-lg sm:text-xl text-blue-200 mt-16">
+              <div className="group feature-card flex items-center gap-4 bg-gradient-to-r from-orange-500/15 to-red-500/15 backdrop-blur-xl border border-orange-400/30 rounded-3xl px-8 py-6 hover:scale-110 hover:shadow-2xl hover:shadow-orange-500/20 transition-all duration-500">
+                <span className="text-3xl group-hover:scale-125 transition-transform duration-300">💬</span>
+                <span className="font-bold">Thảo luận chuyên môn</span>
               </div>
-              <div className="feature-card flex items-center gap-3 bg-gradient-to-r from-green-500/10 to-emerald-500/10 backdrop-blur-sm border border-green-400/20 rounded-2xl px-6 py-4 hover:scale-110 transition-all duration-500">
-                <span className="text-2xl">🤝</span>
-                <span className="font-semibold">Kết nối cộng đồng</span>
+              <div className="group feature-card flex items-center gap-4 bg-gradient-to-r from-green-500/15 to-emerald-500/15 backdrop-blur-xl border border-green-400/30 rounded-3xl px-8 py-6 hover:scale-110 hover:shadow-2xl hover:shadow-green-500/20 transition-all duration-500">
+                <span className="text-3xl group-hover:scale-125 transition-transform duration-300">🤝</span>
+                <span className="font-bold">Kết nối cộng đồng</span>
               </div>
-              <div className="feature-card flex items-center gap-3 bg-gradient-to-r from-purple-500/10 to-pink-500/10 backdrop-blur-sm border border-purple-400/20 rounded-2xl px-6 py-4 hover:scale-110 transition-all duration-500">
-                <span className="text-2xl">🚀</span>
-                <span className="font-semibold">Xu hướng mới nhất</span>
+              <div className="group feature-card flex items-center gap-4 bg-gradient-to-r from-purple-500/15 to-pink-500/15 backdrop-blur-xl border border-purple-400/30 rounded-3xl px-8 py-6 hover:scale-110 hover:shadow-2xl hover:shadow-purple-500/20 transition-all duration-500">
+                <span className="text-3xl group-hover:scale-125 transition-transform duration-300">🚀</span>
+                <span className="font-bold">Xu hướng mới nhất</span>
               </div>
             </div>
 
-            {/* Modern Badge */}
-            <div className="mt-12 relative">
-              <div className="inline-flex items-center gap-3 bg-gradient-to-r from-blue-500/20 to-cyan-500/20 backdrop-blur-xl border border-blue-400/40 rounded-full px-8 py-4 shadow-2xl shadow-blue-500/20 hover:shadow-blue-500/30 transition-all duration-300">
-                <div className="w-3 h-3 bg-gradient-to-r from-blue-400 to-cyan-400 rounded-full animate-pulse"></div>
-                <span className="text-base font-bold text-blue-100 uppercase tracking-wider">Cộng đồng FinTech</span>
+            {/* Enhanced Modern Badge */}
+            <div className="mt-16 relative">
+              <div className="inline-flex items-center gap-4 bg-gradient-to-r from-blue-500/25 to-cyan-500/25 backdrop-blur-2xl border border-blue-400/50 rounded-full px-10 py-5 shadow-2xl shadow-blue-500/30 hover:shadow-blue-500/40 transition-all duration-300 hover:scale-105">
+                <div className="w-4 h-4 bg-gradient-to-r from-blue-400 to-cyan-400 rounded-full animate-pulse"></div>
+                <span className="text-lg font-bold text-blue-100 uppercase tracking-wider">Cộng đồng FinTech</span>
               </div>
             </div>
           </div>
@@ -209,11 +263,26 @@ function ForumHome() {
               {/* Questions List - Right Column */}
               <div className="lg:col-span-2">
                 <div className="space-y-6">
+                  {/* Search and Filter */}
+                  <div className="bg-gradient-to-br from-[#003663]/90 to-[#004a7c]/90 backdrop-blur-xl rounded-3xl border border-blue-400/30 p-6 shadow-2xl">
+                    <SearchAndFilter
+                      onSearch={setSearchQuery}
+                      onCategoryFilter={setSelectedCategory}
+                      onSortChange={setSelectedSort}
+                      searchQuery={searchQuery}
+                      selectedCategory={selectedCategory}
+                      selectedSort={selectedSort}
+                      stats={stats}
+                    />
+                  </div>
+
+                  {/* Loading State */}
                   {loading ? (
-                    <div className="text-center py-16">
-                      <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-orange-400"></div>
-                      <p className="text-blue-200 mt-4 text-lg">Đang tải câu hỏi...</p>
-                    </div>
+                    <LoadingSpinner 
+                      message="Đang tải câu hỏi..." 
+                      showEncouragement={true}
+                      size="lg"
+                    />
                   ) : (
                     <>
                       {items.length === 0 ? (
