@@ -28,7 +28,7 @@ export default function LikeButton({ questionId, initialLikes }: { questionId: s
       className={`group flex items-center gap-2 px-4 py-2 rounded-lg font-semibold transition-all duration-200 ${
         liked 
           ? "bg-gradient-to-r from-red-500 to-pink-600 text-white shadow-lg hover:shadow-red-500/25" 
-          : "bg-slate-700/50 text-slate-300 hover:bg-slate-600/50 border border-slate-600/30"
+          : "bg-[#003663]/50 text-blue-200 hover:bg-[#004a7c]/50 border border-blue-400/30"
       } ${loading ? "opacity-50 cursor-not-allowed" : "hover:scale-105"}`}
     >
       <span className={`text-lg transition-transform duration-200 ${liked ? "animate-pulse" : ""}`}>

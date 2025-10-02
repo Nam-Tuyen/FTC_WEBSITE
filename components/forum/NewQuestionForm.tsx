@@ -29,30 +29,30 @@ export default function NewQuestionForm({ onCreated }: { onCreated?: () => void 
     <form onSubmit={submit} className="space-y-4">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div>
-          <label className="block text-sm font-semibold text-slate-300 mb-2">Tiêu đề câu hỏi</label>
+          <label className="block text-sm font-semibold text-blue-200 mb-2">Tiêu đề câu hỏi</label>
           <input 
-            className="w-full border-2 border-slate-600/30 rounded-lg p-3 bg-slate-700/50 text-white placeholder-slate-400 focus:border-orange-500 focus:ring-2 focus:ring-orange-500/20 transition-all duration-200" 
+            className="w-full border-2 border-blue-400/30 rounded-lg p-3 bg-[#003663]/50 text-white placeholder-blue-300 focus:border-orange-500 focus:ring-2 focus:ring-orange-500/20 transition-all duration-200" 
             placeholder="Nhập tiêu đề câu hỏi..." 
             value={title} 
             onChange={e=>setTitle(e.target.value)} 
           />
         </div>
         <div>
-          <label className="block text-sm font-semibold text-slate-300 mb-2">Danh mục</label>
+          <label className="block text-sm font-semibold text-blue-200 mb-2">Danh mục</label>
           <select 
-            className="w-full border-2 border-slate-600/30 rounded-lg p-3 bg-slate-700/50 text-white focus:border-orange-500 focus:ring-2 focus:ring-orange-500/20 transition-all duration-200" 
+            className="w-full border-2 border-blue-400/30 rounded-lg p-3 bg-[#003663]/50 text-white focus:border-orange-500 focus:ring-2 focus:ring-orange-500/20 transition-all duration-200" 
             value={category} 
             onChange={e=>setCategory(e.target.value as any)}
           >
-            {CATS.map(c=> <option key={c} value={c} className="bg-slate-700">{c}</option>)}
+            {CATS.map(c=> <option key={c} value={c} className="bg-[#003663]">{c}</option>)}
           </select>
         </div>
       </div>
       
       <div>
-        <label className="block text-sm font-semibold text-slate-300 mb-2">Nội dung câu hỏi</label>
+        <label className="block text-sm font-semibold text-blue-200 mb-2">Nội dung câu hỏi</label>
         <textarea 
-          className="w-full border-2 border-slate-600/30 rounded-lg p-3 bg-slate-700/50 text-white placeholder-slate-400 focus:border-orange-500 focus:ring-2 focus:ring-orange-500/20 transition-all duration-200 resize-none" 
+          className="w-full border-2 border-blue-400/30 rounded-lg p-3 bg-[#003663]/50 text-white placeholder-blue-300 focus:border-orange-500 focus:ring-2 focus:ring-orange-500/20 transition-all duration-200 resize-none" 
           rows={4} 
           placeholder="Mô tả chi tiết câu hỏi của bạn..." 
           value={content} 
@@ -61,12 +61,12 @@ export default function NewQuestionForm({ onCreated }: { onCreated?: () => void 
       </div>
 
       <div className="flex items-center gap-3">
-        <label className="flex items-center gap-2 text-sm text-slate-300 cursor-pointer">
+        <label className="flex items-center gap-2 text-sm text-blue-200 cursor-pointer">
           <input 
             type="checkbox" 
             checked={anonymous} 
             onChange={e=>setAnonymous(e.target.checked)}
-            className="w-4 h-4 text-orange-500 bg-slate-700 border-slate-600 rounded focus:ring-orange-500 focus:ring-2"
+            className="w-4 h-4 text-orange-500 bg-[#003663] border-blue-400 rounded focus:ring-orange-500 focus:ring-2"
           />
           <span>Đăng ẩn danh</span>
         </label>
