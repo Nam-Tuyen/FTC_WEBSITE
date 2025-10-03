@@ -1054,6 +1054,34 @@ select {
   transform-style: preserve-3d;
 }
 
+/* Smooth scroll behavior */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Enhanced mobile gallery */
+@media (max-width: 1023px) {
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* Mobile-optimized animations */
+@media (max-width: 768px) {
+  .group:hover .group-hover\:scale-110 {
+    transform: scale(1.05);
+  }
+  
+  .group:hover .group-hover\:translate-x-full {
+    transform: translateX(100%);
+  }
+}
+
 /* Chatbot specific animations */
 @keyframes float {
   0%, 100% { transform: translate(0, 0) rotate(0deg); }

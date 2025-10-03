@@ -33,6 +33,8 @@ export default function HomePage() {
   const [counters, setCounters] = useState({ members: 0, projects: 0, partners: 0, events: 0 })
   const [currentImageIndex, setCurrentImageIndex] = useState(0)
   const [isHovered, setIsHovered] = useState(false)
+  const [touchStart, setTouchStart] = useState(0)
+  const [touchEnd, setTouchEnd] = useState(0)
 
   useEffect(() => {
     setIsVisible(true)
@@ -136,6 +138,30 @@ export default function HomePage() {
     window.addEventListener('keydown', handleKeyDown)
     return () => window.removeEventListener('keydown', handleKeyDown)
   }, [])
+
+  // Touch gesture handling
+  const handleTouchStart = (e: React.TouchEvent) => {
+    setTouchEnd(0)
+    setTouchStart(e.targetTouches[0].clientX)
+  }
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    setTouchEnd(e.targetTouches[0].clientX)
+  }
+
+  const handleTouchEnd = () => {
+    if (!touchStart || !touchEnd) return
+    
+    const distance = touchStart - touchEnd
+    const isLeftSwipe = distance > 50
+    const isRightSwipe = distance < -50
+
+    if (isLeftSwipe) {
+      goToNext()
+    } else if (isRightSwipe) {
+      goToPrevious()
+    }
+  }
 
   return (
     <div className="min-h-screen gradient-bg">
@@ -373,93 +399,124 @@ export default function HomePage() {
             </h2>
           </div>
 
-          {/* 3D Carousel Gallery */}
+          {/* Modern Responsive Gallery */}
           <div 
-            className="relative w-full max-w-7xl mx-auto h-[600px] perspective-2000"
+            className="relative w-full max-w-7xl mx-auto"
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
           >
-            {/* Carousel Wrapper */}
-            <div className="relative w-full h-full transform-style-preserve-3d">
-              {/* Activity Cards */}
-              {activities.map((activity, index) => {
-                const position = (index - currentImageIndex + activities.length) % activities.length;
-                let transformClass = '';
-                let opacity = 1;
-                let zIndex = 1;
+            {/* Desktop 3D Carousel */}
+            <div className="hidden lg:block relative h-[600px] perspective-2000">
+              <div className="relative w-full h-full transform-style-preserve-3d">
+                {activities.map((activity, index) => {
+                  const position = (index - currentImageIndex + activities.length) % activities.length;
+                  let transformClass = '';
+                  let opacity = 1;
+                  let zIndex = 1;
 
-                if (position === 0) {
-                  transformClass = 'translate(-50%, -50%) translateX(-650px) translateZ(-200px) rotateY(25deg) scale(0.85)';
-                  opacity = 0.6;
-                  zIndex = 1;
-                } else if (position === 1) {
-                  transformClass = 'translate(-50%, -50%) translateX(-350px) translateZ(-100px) rotateY(15deg) scale(0.92)';
-                  opacity = 0.8;
-                  zIndex = 2;
-                } else if (position === 2) {
-                  transformClass = 'translate(-50%, -50%) translateX(0) translateZ(0) rotateY(0deg) scale(1)';
-                  opacity = 1;
-                  zIndex = 3;
-                } else if (position === 3) {
-                  transformClass = 'translate(-50%, -50%) translateX(350px) translateZ(-100px) rotateY(-15deg) scale(0.92)';
-                  opacity = 0.8;
-                  zIndex = 2;
-                } else if (position === 4) {
-                  transformClass = 'translate(-50%, -50%) translateX(650px) translateZ(-200px) rotateY(-25deg) scale(0.85)';
-                  opacity = 0.6;
-                  zIndex = 1;
-                } else {
-                  transformClass = 'translate(-50%, -50%) translateX(0) translateZ(-300px) rotateY(0deg) scale(0.7)';
-                  opacity = 0;
-                  zIndex = 0;
-                }
+                  if (position === 0) {
+                    transformClass = 'translate(-50%, -50%) translateX(-650px) translateZ(-200px) rotateY(25deg) scale(0.85)';
+                    opacity = 0.6;
+                    zIndex = 1;
+                  } else if (position === 1) {
+                    transformClass = 'translate(-50%, -50%) translateX(-350px) translateZ(-100px) rotateY(15deg) scale(0.92)';
+                    opacity = 0.8;
+                    zIndex = 2;
+                  } else if (position === 2) {
+                    transformClass = 'translate(-50%, -50%) translateX(0) translateZ(0) rotateY(0deg) scale(1)';
+                    opacity = 1;
+                    zIndex = 3;
+                  } else if (position === 3) {
+                    transformClass = 'translate(-50%, -50%) translateX(350px) translateZ(-100px) rotateY(-15deg) scale(0.92)';
+                    opacity = 0.8;
+                    zIndex = 2;
+                  } else if (position === 4) {
+                    transformClass = 'translate(-50%, -50%) translateX(650px) translateZ(-200px) rotateY(-25deg) scale(0.85)';
+                    opacity = 0.6;
+                    zIndex = 1;
+                  } else {
+                    transformClass = 'translate(-50%, -50%) translateX(0) translateZ(-300px) rotateY(0deg) scale(0.7)';
+                    opacity = 0;
+                    zIndex = 0;
+                  }
 
-                return (
-                  <div
-                    key={index}
-                    className="absolute w-[450px] h-[500px] left-1/2 top-1/2 transform-style-preserve-3d transition-all duration-700 ease-out cursor-pointer group"
-                    style={{
-                      transform: transformClass,
-                      opacity,
-                      zIndex
-                    }}
-                    onClick={() => setCurrentImageIndex(index)}
-                  >
-                    {/* Card Inner */}
-                    <div className="relative w-full h-full rounded-3xl overflow-hidden bg-card/10 backdrop-blur-xl border-2 border-accent/30 shadow-2xl group-hover:shadow-accent/20 transition-all duration-500">
-                      {/* Card Image */}
-                      <div className="relative w-full h-[70%] overflow-hidden">
-                        <img
-                          src={activity.src}
-                          alt={activity.alt}
-                          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
-                        />
-                        {/* Shimmer Effect */}
-                        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
-                      </div>
-
-                      {/* Card Content */}
-                      <div className="relative h-[30%] flex items-center justify-center bg-card/5 backdrop-blur-sm overflow-hidden">
-                        {/* Scan Line Effect */}
-                        <div className="absolute top-0 left-0 w-full h-0.5 bg-gradient-to-r from-transparent via-accent to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-2000"></div>
-                        
-                        {/* Title */}
-                        <h3 className="text-xl font-bold text-foreground uppercase tracking-wider text-center px-4 relative leading-tight">
-                          {activity.title}
-                          {/* Underline Effect */}
-                          <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-16 h-0.5 bg-gradient-to-r from-transparent via-accent to-transparent"></div>
-                        </h3>
+                  return (
+                    <div
+                      key={index}
+                      className="absolute w-[450px] h-[500px] left-1/2 top-1/2 transform-style-preserve-3d transition-all duration-700 ease-out cursor-pointer group"
+                      style={{
+                        transform: transformClass,
+                        opacity,
+                        zIndex
+                      }}
+                      onClick={() => setCurrentImageIndex(index)}
+                    >
+                      <div className="relative w-full h-full rounded-3xl overflow-hidden bg-card/10 backdrop-blur-xl border-2 border-accent/30 shadow-2xl group-hover:shadow-accent/20 transition-all duration-500">
+                        <div className="relative w-full h-[70%] overflow-hidden">
+                          <img
+                            src={activity.src}
+                            alt={activity.alt}
+                            className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                          />
+                          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
+                        </div>
+                        <div className="relative h-[30%] flex items-center justify-center bg-card/5 backdrop-blur-sm overflow-hidden">
+                          <div className="absolute top-0 left-0 w-full h-0.5 bg-gradient-to-r from-transparent via-accent to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-2000"></div>
+                          <h3 className="text-xl font-bold text-foreground uppercase tracking-wider text-center px-4 relative leading-tight">
+                            {activity.title}
+                            <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-16 h-0.5 bg-gradient-to-r from-transparent via-accent to-transparent"></div>
+                          </h3>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                );
-              })}
+                  );
+                })}
+              </div>
             </div>
 
-            {/* Navigation Buttons */}
+            {/* Mobile/Tablet Horizontal Scroll */}
+            <div 
+              className="lg:hidden relative"
+              onTouchStart={handleTouchStart}
+              onTouchMove={handleTouchMove}
+              onTouchEnd={handleTouchEnd}
+            >
+              <div className="overflow-x-auto scrollbar-hide pb-4">
+                <div className="flex gap-4 px-4" style={{ scrollSnapType: 'x mandatory' }}>
+                  {activities.map((activity, index) => (
+                    <div
+                      key={index}
+                      className="flex-shrink-0 w-80 sm:w-96 group cursor-pointer"
+                      style={{ scrollSnapAlign: 'start' }}
+                      onClick={() => setCurrentImageIndex(index)}
+                    >
+                      <div className="relative w-full h-80 sm:h-96 rounded-2xl overflow-hidden bg-card/10 backdrop-blur-xl border-2 border-accent/30 shadow-xl group-hover:shadow-accent/20 transition-all duration-500">
+                        <div className="relative w-full h-[70%] overflow-hidden">
+                          <img
+                            src={activity.src}
+                            alt={activity.alt}
+                            className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                          />
+                          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
+                        </div>
+                        <div className="relative h-[30%] flex items-center justify-center bg-card/5 backdrop-blur-sm overflow-hidden">
+                          <div className="absolute top-0 left-0 w-full h-0.5 bg-gradient-to-r from-transparent via-accent to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-2000"></div>
+                          <h3 className="text-lg font-bold text-foreground uppercase tracking-wider text-center px-4 relative leading-tight">
+                            {activity.title}
+                            <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-12 h-0.5 bg-gradient-to-r from-transparent via-accent to-transparent"></div>
+                          </h3>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {/* Navigation Buttons - Desktop Only */}
             <button
               onClick={goToPrevious}
-              className="absolute left-5 top-1/2 transform -translate-y-1/2 w-16 h-16 bg-accent/15 backdrop-blur-lg border-2 border-accent/30 rounded-full flex items-center justify-center hover:bg-accent/25 transition-all duration-300 hover:scale-110 group z-50"
+              className="hidden lg:flex absolute left-5 top-1/2 transform -translate-y-1/2 w-16 h-16 bg-accent/15 backdrop-blur-lg border-2 border-accent/30 rounded-full items-center justify-center hover:bg-accent/25 transition-all duration-300 hover:scale-110 group z-50"
               aria-label="Previous image"
             >
               <ChevronLeft className="h-8 w-8 text-accent group-hover:text-white transition-colors" />
@@ -467,21 +524,39 @@ export default function HomePage() {
 
             <button
               onClick={goToNext}
-              className="absolute right-5 top-1/2 transform -translate-y-1/2 w-16 h-16 bg-accent/15 backdrop-blur-lg border-2 border-accent/30 rounded-full flex items-center justify-center hover:bg-accent/25 transition-all duration-300 hover:scale-110 group z-50"
+              className="hidden lg:flex absolute right-5 top-1/2 transform -translate-y-1/2 w-16 h-16 bg-accent/15 backdrop-blur-lg border-2 border-accent/30 rounded-full items-center justify-center hover:bg-accent/25 transition-all duration-300 hover:scale-110 group z-50"
               aria-label="Next image"
             >
               <ChevronRight className="h-8 w-8 text-accent group-hover:text-white transition-colors" />
             </button>
 
+            {/* Mobile Navigation Buttons */}
+            <div className="lg:hidden flex justify-center gap-4 mt-6">
+              <button
+                onClick={goToPrevious}
+                className="w-12 h-12 bg-accent/15 backdrop-blur-lg border-2 border-accent/30 rounded-full flex items-center justify-center hover:bg-accent/25 transition-all duration-300 hover:scale-110 group"
+                aria-label="Previous image"
+              >
+                <ChevronLeft className="h-6 w-6 text-accent group-hover:text-white transition-colors" />
+              </button>
+              <button
+                onClick={goToNext}
+                className="w-12 h-12 bg-accent/15 backdrop-blur-lg border-2 border-accent/30 rounded-full flex items-center justify-center hover:bg-accent/25 transition-all duration-300 hover:scale-110 group"
+                aria-label="Next image"
+              >
+                <ChevronRight className="h-6 w-6 text-accent group-hover:text-white transition-colors" />
+              </button>
+            </div>
+
             {/* Indicators */}
-            <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex gap-3 z-50">
+            <div className="flex justify-center mt-6 lg:mt-8 gap-3 z-50">
               {activities.map((_, index) => (
                 <button
                   key={index}
                   onClick={() => setCurrentImageIndex(index)}
                   className={`transition-all duration-300 border-2 border-accent/50 ${
                     index === currentImageIndex
-                      ? 'w-10 h-3 bg-accent rounded-full shadow-lg shadow-accent/60'
+                      ? 'w-8 h-3 sm:w-10 sm:h-3 bg-accent rounded-full shadow-lg shadow-accent/60'
                       : 'w-3 h-3 bg-accent/30 rounded-full hover:bg-accent/50 hover:scale-110'
                   }`}
                   aria-label={`Go to image ${index + 1}`}
@@ -490,10 +565,12 @@ export default function HomePage() {
             </div>
 
             {/* Image Counter */}
-            <div className="absolute top-8 right-8 bg-card/20 backdrop-blur-sm px-4 py-2 rounded-full border border-accent/20 z-50">
-              <span className="text-sm text-foreground/80 font-medium">
-                {currentImageIndex + 1} / {activities.length}
-              </span>
+            <div className="flex justify-center mt-4">
+              <div className="bg-card/20 backdrop-blur-sm px-4 py-2 rounded-full border border-accent/20">
+                <span className="text-sm text-foreground/80 font-medium">
+                  {currentImageIndex + 1} / {activities.length}
+                </span>
+              </div>
             </div>
           </div>
 
