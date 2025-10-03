@@ -36,10 +36,15 @@ function ForumHome() {
         category: selectedCategory || undefined,
         search: searchQuery || undefined
       });
-      setItems(res.data?.items || []);
+      
+      let questions = res.data?.items || [];
+      
+      // Apply client-side sorting
+      questions = sortQuestions(questions, selectedSort);
+      
+      setItems(questions);
       
       // Calculate stats
-      const questions = res.data?.items || [];
       const totalResponses = questions.reduce((sum, q) => sum + (q.responses?.length || 0), 0);
       const totalLikes = questions.reduce((sum, q) => sum + (q.like_count || 0), 0);
       const uniqueUsers = new Set(questions.map(q => q.user)).size;
@@ -54,6 +59,83 @@ function ForumHome() {
       console.error("Error loading questions:", error);
     }
     setLoading(false);
+  }
+
+  // Enhanced sorting function with more accurate algorithms
+  function sortQuestions(questions: QuestionItem[], sortBy: string): QuestionItem[] {
+    const sortedQuestions = [...questions];
+    
+    switch (sortBy) {
+      case 'newest':
+        return sortedQuestions.sort((a, b) => {
+          const dateA = new Date(a.createdAt || 0);
+          const dateB = new Date(b.createdAt || 0);
+          return dateB.getTime() - dateA.getTime();
+        });
+        
+      case 'oldest':
+        return sortedQuestions.sort((a, b) => {
+          const dateA = new Date(a.createdAt || 0);
+          const dateB = new Date(b.createdAt || 0);
+          return dateA.getTime() - dateB.getTime();
+        });
+        
+      case 'most_liked':
+        return sortedQuestions.sort((a, b) => {
+          const likesA = a.like_count || 0;
+          const likesB = b.like_count || 0;
+          if (likesA !== likesB) {
+            return likesB - likesA; // Descending order
+          }
+          // If likes are equal, sort by newest
+          const dateA = new Date(a.createdAt || 0);
+          const dateB = new Date(b.createdAt || 0);
+          return dateB.getTime() - dateA.getTime();
+        });
+        
+      case 'most_responses':
+        return sortedQuestions.sort((a, b) => {
+          const responsesA = a.responses?.length || 0;
+          const responsesB = b.responses?.length || 0;
+          if (responsesA !== responsesB) {
+            return responsesB - responsesA; // Descending order
+          }
+          // If responses are equal, sort by newest
+          const dateA = new Date(a.createdAt || 0);
+          const dateB = new Date(b.createdAt || 0);
+          return dateB.getTime() - dateA.getTime();
+        });
+        
+      case 'alphabetical':
+        return sortedQuestions.sort((a, b) => {
+          const titleA = (a.title || '').toLowerCase();
+          const titleB = (b.title || '').toLowerCase();
+          return titleA.localeCompare(titleB, 'vi'); // Vietnamese locale support
+        });
+        
+      case 'trending':
+        return sortedQuestions.sort((a, b) => {
+          // Calculate trending score: (likes + responses * 2) / days_since_creation
+          const now = new Date();
+          const dateA = new Date(a.createdAt || 0);
+          const dateB = new Date(b.createdAt || 0);
+          
+          const daysA = Math.max(1, (now.getTime() - dateA.getTime()) / (1000 * 60 * 60 * 24));
+          const daysB = Math.max(1, (now.getTime() - dateB.getTime()) / (1000 * 60 * 60 * 24));
+          
+          const scoreA = ((a.like_count || 0) + (a.responses?.length || 0) * 2) / daysA;
+          const scoreB = ((b.like_count || 0) + (b.responses?.length || 0) * 2) / daysB;
+          
+          if (scoreA !== scoreB) {
+            return scoreB - scoreA; // Descending order
+          }
+          // If scores are equal, sort by newest
+          return dateB.getTime() - dateA.getTime();
+        });
+        
+      default:
+        return sortedQuestions;
+    }
   }
 
   useEffect(() => { load(); }, [searchQuery, selectedCategory, selectedSort]);
@@ -217,7 +299,7 @@ function ForumHome() {
               {/* Auth Tabs - Modern Design */}
               <div className="flex justify-center mb-6 sm:mb-8 lg:mb-12">
                 <div className="flex bg-gradient-to-r from-[#003663]/50 to-[#004a7c]/50 backdrop-blur-2xl rounded-2xl sm:rounded-3xl p-1.5 sm:p-2 border border-blue-400/50 shadow-2xl shadow-blue-500/30 w-full max-w-sm sm:max-w-md">
-                  <button
+                <button
                     className={`flex-1 px-4 py-3 sm:px-6 sm:py-4 lg:px-8 lg:py-5 rounded-xl sm:rounded-2xl font-bold text-sm sm:text-base lg:text-lg transition-all duration-500 ${
                       tab==="login" 
                         ? "bg-gradient-to-r from-blue-500 to-cyan-600 text-white shadow-2xl scale-105 border-2 border-blue-400/60" 
@@ -229,8 +311,8 @@ function ForumHome() {
                       <span className="text-base sm:text-lg lg:text-xl">🔐</span>
                       <span>Đăng nhập</span>
                     </span>
-                  </button>
-                  <button
+                </button>
+                    <button
                     className={`flex-1 px-4 py-3 sm:px-6 sm:py-4 lg:px-8 lg:py-5 rounded-xl sm:rounded-2xl font-bold text-sm sm:text-base lg:text-lg transition-all duration-500 ${
                       tab==="register" 
                         ? "bg-gradient-to-r from-green-500 to-emerald-600 text-white shadow-2xl scale-105 border-2 border-green-400/60" 
@@ -242,9 +324,9 @@ function ForumHome() {
                       <span className="text-base sm:text-lg lg:text-xl">👤</span>
                       <span>Đăng ký</span>
                     </span>
-                  </button>
-                </div>
+                    </button>
               </div>
+            </div>
 
               {/* Auth Forms - Centered & Modern */}
               <div className="flex justify-center">
@@ -256,18 +338,18 @@ function ForumHome() {
                         <div className="relative mb-4 sm:mb-6">
                           <div className="w-16 h-16 sm:w-20 sm:h-20 lg:w-24 lg:h-24 bg-gradient-to-r from-blue-500 to-cyan-600 rounded-full flex items-center justify-center mx-auto shadow-2xl shadow-blue-500/30">
                             <span className="text-2xl sm:text-3xl lg:text-4xl">🔐</span>
-                          </div>
+                </div>
                           <div className="absolute -top-1 -right-1 w-6 h-6 sm:w-7 sm:h-7 lg:w-8 lg:h-8 bg-gradient-to-r from-green-500 to-emerald-600 rounded-full flex items-center justify-center animate-pulse">
                             <span className="text-xs sm:text-sm lg:text-base">✓</span>
-                          </div>
-                        </div>
+                </div>
+              </div>
                         <h3 className="text-xl sm:text-2xl lg:text-3xl font-bold text-white mb-2 sm:mb-3">Đăng nhập</h3>
                         <p className="text-blue-200 text-sm sm:text-base lg:text-lg">Chào mừng bạn quay trở lại cộng đồng FTC</p>
                         <div className="w-16 sm:w-20 lg:w-24 h-0.5 bg-gradient-to-r from-transparent via-cyan-400 to-transparent mx-auto mt-3 sm:mt-4"></div>
-                      </div>
+                </div>
                       <LoginForm />
-                    </div>
-                  </div>
+                </div>
+              </div>
                 )}
                 {tab==="register" && (
                   <div className="w-full max-w-sm sm:max-w-md lg:max-w-lg xl:max-w-xl">
@@ -277,20 +359,20 @@ function ForumHome() {
                         <div className="relative mb-4 sm:mb-6">
                           <div className="w-16 h-16 sm:w-20 sm:h-20 lg:w-24 lg:h-24 bg-gradient-to-r from-green-500 to-emerald-600 rounded-full flex items-center justify-center mx-auto shadow-2xl shadow-green-500/30">
                             <span className="text-2xl sm:text-3xl lg:text-4xl">👤</span>
-                          </div>
+            </div>
                           <div className="absolute -top-1 -right-1 w-6 h-6 sm:w-7 sm:h-7 lg:w-8 lg:h-8 bg-gradient-to-r from-blue-500 to-cyan-600 rounded-full flex items-center justify-center animate-pulse">
                             <span className="text-xs sm:text-sm lg:text-base">+</span>
-                          </div>
-                        </div>
+                  </div>
+                </div>
                         <h3 className="text-xl sm:text-2xl lg:text-3xl font-bold text-white mb-2 sm:mb-3">Đăng ký</h3>
                         <p className="text-blue-200 text-sm sm:text-base lg:text-lg">Tham gia cộng đồng FinTech hàng đầu</p>
                         <div className="w-16 sm:w-20 lg:w-24 h-0.5 bg-gradient-to-r from-transparent via-green-400 to-transparent mx-auto mt-3 sm:mt-4"></div>
-                      </div>
-                      <RegisterForm />
-                    </div>
                   </div>
-                )}
-              </div>
+                      <RegisterForm />
+                      </div>
+                             </div>
+                           )}
+                        </div>
 
               {/* Additional Info - Modern */}
               <div className="mt-6 sm:mt-8 lg:mt-12 text-center">
@@ -305,10 +387,10 @@ function ForumHome() {
                       : "Hãy tạo câu hỏi bảo mật dễ nhớ để có thể khôi phục tài khoản khi cần thiết."
                     }
                   </p>
-                </div>
-              </div>
-            </div>
-          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
         )}
 
         {/* User Dashboard - Mobile Optimized */}
@@ -327,14 +409,14 @@ function ForumHome() {
                     <p className="text-xs sm:text-sm lg:text-base text-blue-300 truncate">({user.mssv})</p>
                   </div>
                 </div>
-                <button 
+                      <button 
                   onClick={logout}
                   className="px-2 py-1.5 sm:px-3 sm:py-2 lg:px-4 lg:py-2.5 bg-gradient-to-r from-red-500 to-pink-600 rounded-lg text-white font-semibold text-xs sm:text-sm lg:text-base hover:shadow-lg transition-all duration-200 flex-shrink-0"
                 >
                   Đăng xuất
-                </button>
-              </div>
-            </div>
+                      </button>
+                      </div>
+                  </div>
 
             {/* Main Content Grid - Mobile Responsive */}
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-3 sm:gap-4 lg:gap-6">
@@ -346,8 +428,8 @@ function ForumHome() {
                     <span className="text-sm sm:text-base lg:text-lg">Tạo câu hỏi mới</span>
                   </h3>
                   <NewQuestionForm onCreated={load} />
-                </div>
-              </div>
+                             </div>
+                           </div>
 
               {/* Questions List - Mobile Responsive */}
               <div className="lg:col-span-2 order-1 lg:order-2">
@@ -362,8 +444,8 @@ function ForumHome() {
                       selectedCategory={selectedCategory}
                       selectedSort={selectedSort}
                       stats={stats}
-              />
-            </div>
+                     />
+                   </div>
 
                   {/* Loading State - Mobile Responsive */}
                   {loading ? (
@@ -379,20 +461,20 @@ function ForumHome() {
                           <div className="text-3xl sm:text-4xl lg:text-6xl mb-3 sm:mb-4">💬</div>
                           <p className="text-blue-200 text-base sm:text-lg lg:text-xl mb-2">Chưa có câu hỏi nào</p>
                           <p className="text-blue-300 text-sm sm:text-base lg:text-lg">Hãy là người đầu tiên đặt câu hỏi!</p>
-                </div>
+                  </div>
               ) : (
                         <div className="space-y-3 sm:space-y-4 lg:space-y-6">
                           {items.map(q => <QuestionCard key={q.id} q={q} />)}
-                             </div>
-                           )}
-                    </>
-                  )}
-                        </div>
-                      </div>
-                    </div>
                 </div>
               )}
+                    </>
+                  )}
+                </div>
+              </div>
+              </div>
             </div>
+              )}
+        </div>
     </div>
   )
 }

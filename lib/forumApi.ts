@@ -38,6 +38,6 @@ export const ForumApi = {
   deleteResponse: (p: { responseId: string; mssv: string }) =>
     callAPI<ApiResponse>( "deleteResponse", p ),
 
-  fetchQuestions: (p: { take?: number; category?: string; search?: string; includeDeleted?: boolean } = {}) =>
+  fetchQuestions: (p: { take?: number; category?: string; search?: string; sortBy?: string; includeDeleted?: boolean } = {}) =>
     callAPI<ApiResponse<{ items: QuestionItem[] }>>( "fetchQuestions", p ),
 };

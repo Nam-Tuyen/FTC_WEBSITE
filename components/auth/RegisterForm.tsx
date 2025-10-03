@@ -57,7 +57,7 @@ export default function RegisterForm() {
                 Thông tin cơ bản
               </h4>
               
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+              <div className="space-y-6">
                 <div>
                   <label className="block text-lg font-semibold text-blue-200 mb-3">
                     Mã số sinh viên của bạn
