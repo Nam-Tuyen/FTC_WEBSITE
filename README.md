@@ -18,7 +18,7 @@ Website chính thức của Câu lạc bộ Công nghệ Tài chính (FTC) - Nơ
 - **Styling**: Tailwind CSS với thiết kế responsive
 - **UI Components**: Shadcn/ui
 - **Authentication**: Custom auth system với Google Sheets API
-- **Database**: Google Sheets làm backend
+- **Database**: Google Sheets làm backend database
 - **AI**: Google Gemini API cho chatbot
 - **Deployment**: Vercel
 

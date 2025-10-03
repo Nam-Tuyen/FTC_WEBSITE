@@ -1,6 +1,6 @@
 import { z } from 'zod'
 
-// Enum khớp Supabase enum public.forum_category
+// Forum category enum
 export const ForumCategory = z.enum(['CLUB', 'MAJOR', 'DISCUSSION'])
 
 export const QuestionCreate = z.object({

@@ -21,10 +21,9 @@ File `.env.local` đã được tạo với template. Bạn cần cập nhật c
 # Lấy API key từ: https://makersuite.google.com/app/apikey
 GEMINI_API_KEY=your_actual_gemini_api_key_here
 
-# Cấu hình Supabase (nếu sử dụng)
-NEXT_PUBLIC_SUPABASE_URL=your_supabase_url_here
-NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key_here
-SUPABASE_SERVICE_ROLE_KEY=your_supabase_service_role_key_here
+# Cấu hình Forum API (Google Sheets)
+NEXT_PUBLIC_FORUM_API_URL=your_forum_api_url_here
+NEXT_PUBLIC_FORUM_API_TOKEN=your_forum_api_token_here
 ```
 
 #### 3. Chạy development server
@@ -60,8 +59,8 @@ Truy cập: `http://localhost:3000/api/chat/gemini`
 
 1. Thêm biến môi trường trong Vercel Dashboard:
    - `GEMINI_API_KEY`
-   - `NEXT_PUBLIC_SUPABASE_URL` (nếu cần)
-   - `NEXT_PUBLIC_SUPABASE_ANON_KEY` (nếu cần)
+   - `NEXT_PUBLIC_FORUM_API_URL`
+   - `NEXT_PUBLIC_FORUM_API_TOKEN`
 
 2. Deploy:
 ```bash
