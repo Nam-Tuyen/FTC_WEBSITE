@@ -209,72 +209,106 @@ function ForumHome() {
         </div>
       </section>
 
-        {/* Auth Tabs - Mobile Optimized */}
+        {/* Modern Centered Auth Section - Mobile Optimized */}
         {!user && (
-          <>
-            <div className="flex justify-center mb-8 sm:mb-12 lg:mb-16 px-2 sm:px-4">
-              <div className="flex flex-col sm:flex-row bg-gradient-to-r from-[#003663]/40 to-[#004a7c]/40 backdrop-blur-2xl rounded-xl sm:rounded-2xl p-1.5 sm:p-2 border border-blue-400/40 shadow-2xl shadow-blue-500/20 w-full max-w-sm sm:max-w-md lg:max-w-lg">
-                <button
-                  className={`px-4 py-3 sm:px-6 sm:py-4 lg:px-8 lg:py-5 rounded-lg sm:rounded-xl font-black text-xs sm:text-sm lg:text-base transition-all duration-500 ${
-                    tab==="login" 
-                      ? "bg-gradient-to-r from-blue-500 to-cyan-600 text-white shadow-2xl scale-105 sm:scale-110 border-2 border-blue-400/50" 
-                      : "text-blue-200 hover:text-white hover:bg-gradient-to-r hover:from-blue-500/20 hover:to-cyan-500/20 hover:scale-105 hover:border hover:border-blue-400/30"
-                  }`} 
-                  onClick={()=>setTab("login")}
-                >
-                  <span className="flex items-center justify-center gap-1 sm:gap-2 lg:gap-3">
-                    <span className="text-sm sm:text-base lg:text-lg">🔐</span>
-                    <span>Đăng nhập</span>
-                  </span>
-                </button>
-                    <button
-                  className={`px-4 py-3 sm:px-6 sm:py-4 lg:px-8 lg:py-5 rounded-lg sm:rounded-xl font-black text-xs sm:text-sm lg:text-base transition-all duration-500 ${
-                    tab==="register" 
-                      ? "bg-gradient-to-r from-green-500 to-emerald-600 text-white shadow-2xl scale-105 sm:scale-110 border-2 border-green-400/50" 
-                      : "text-blue-200 hover:text-white hover:bg-gradient-to-r hover:from-green-500/20 hover:to-emerald-500/20 hover:scale-105 hover:border hover:border-green-400/30"
-                  }`} 
-                  onClick={()=>setTab("register")}
-                >
-                  <span className="flex items-center justify-center gap-1 sm:gap-2 lg:gap-3">
-                    <span className="text-sm sm:text-base lg:text-lg">👤</span>
-                    <span>Đăng ký</span>
-                  </span>
-                    </button>
+          <div className="flex flex-col items-center justify-center min-h-[60vh] sm:min-h-[70vh] lg:min-h-[80vh] px-2 sm:px-4 lg:px-6 py-8 sm:py-12 lg:py-16">
+            {/* Auth Container - Centered & Modern */}
+            <div className="w-full max-w-md sm:max-w-lg lg:max-w-2xl xl:max-w-4xl">
+              {/* Auth Tabs - Modern Design */}
+              <div className="flex justify-center mb-6 sm:mb-8 lg:mb-12">
+                <div className="flex bg-gradient-to-r from-[#003663]/50 to-[#004a7c]/50 backdrop-blur-2xl rounded-2xl sm:rounded-3xl p-1.5 sm:p-2 border border-blue-400/50 shadow-2xl shadow-blue-500/30 w-full max-w-sm sm:max-w-md">
+                  <button
+                    className={`flex-1 px-4 py-3 sm:px-6 sm:py-4 lg:px-8 lg:py-5 rounded-xl sm:rounded-2xl font-bold text-sm sm:text-base lg:text-lg transition-all duration-500 ${
+                      tab==="login" 
+                        ? "bg-gradient-to-r from-blue-500 to-cyan-600 text-white shadow-2xl scale-105 border-2 border-blue-400/60" 
+                        : "text-blue-200 hover:text-white hover:bg-gradient-to-r hover:from-blue-500/30 hover:to-cyan-500/30 hover:scale-105 hover:border hover:border-blue-400/40"
+                    }`} 
+                    onClick={()=>setTab("login")}
+                  >
+                    <span className="flex items-center justify-center gap-2 sm:gap-3">
+                      <span className="text-base sm:text-lg lg:text-xl">🔐</span>
+                      <span>Đăng nhập</span>
+                    </span>
+                  </button>
+                  <button
+                    className={`flex-1 px-4 py-3 sm:px-6 sm:py-4 lg:px-8 lg:py-5 rounded-xl sm:rounded-2xl font-bold text-sm sm:text-base lg:text-lg transition-all duration-500 ${
+                      tab==="register" 
+                        ? "bg-gradient-to-r from-green-500 to-emerald-600 text-white shadow-2xl scale-105 border-2 border-green-400/60" 
+                        : "text-blue-200 hover:text-white hover:bg-gradient-to-r hover:from-green-500/30 hover:to-emerald-500/30 hover:scale-105 hover:border hover:border-green-400/40"
+                    }`} 
+                    onClick={()=>setTab("register")}
+                  >
+                    <span className="flex items-center justify-center gap-2 sm:gap-3">
+                      <span className="text-base sm:text-lg lg:text-xl">👤</span>
+                      <span>Đăng ký</span>
+                    </span>
+                  </button>
+                </div>
               </div>
-            </div>
 
-            {/* Auth Forms - Mobile Optimized */}
-            <div className="flex justify-center px-2 sm:px-4">
-              {tab==="login" && (
-                <div className="w-full max-w-sm sm:max-w-md lg:max-w-2xl">
-                  <div className="bg-gradient-to-br from-[#003663]/90 to-[#004a7c]/90 backdrop-blur-xl rounded-xl sm:rounded-2xl border border-blue-400/30 p-4 sm:p-6 lg:p-8 shadow-2xl">
-                    <div className="text-center mb-4 sm:mb-6 lg:mb-8">
-                      <div className="w-12 h-12 sm:w-16 sm:h-16 lg:w-20 lg:h-20 bg-gradient-to-r from-blue-500 to-cyan-600 rounded-full flex items-center justify-center mx-auto mb-3 sm:mb-4 lg:mb-6">
-                        <span className="text-lg sm:text-xl lg:text-2xl">🔐</span>
+              {/* Auth Forms - Centered & Modern */}
+              <div className="flex justify-center">
+                {tab==="login" && (
+                  <div className="w-full max-w-sm sm:max-w-md lg:max-w-lg xl:max-w-xl">
+                    <div className="bg-gradient-to-br from-[#003663]/95 to-[#004a7c]/95 backdrop-blur-2xl rounded-2xl sm:rounded-3xl border border-blue-400/40 p-6 sm:p-8 lg:p-10 shadow-2xl shadow-blue-500/20">
+                      {/* Login Header - Modern */}
+                      <div className="text-center mb-6 sm:mb-8 lg:mb-10">
+                        <div className="relative mb-4 sm:mb-6">
+                          <div className="w-16 h-16 sm:w-20 sm:h-20 lg:w-24 lg:h-24 bg-gradient-to-r from-blue-500 to-cyan-600 rounded-full flex items-center justify-center mx-auto shadow-2xl shadow-blue-500/30">
+                            <span className="text-2xl sm:text-3xl lg:text-4xl">🔐</span>
+                          </div>
+                          <div className="absolute -top-1 -right-1 w-6 h-6 sm:w-7 sm:h-7 lg:w-8 lg:h-8 bg-gradient-to-r from-green-500 to-emerald-600 rounded-full flex items-center justify-center animate-pulse">
+                            <span className="text-xs sm:text-sm lg:text-base">✓</span>
+                          </div>
+                        </div>
+                        <h3 className="text-xl sm:text-2xl lg:text-3xl font-bold text-white mb-2 sm:mb-3">Đăng nhập</h3>
+                        <p className="text-blue-200 text-sm sm:text-base lg:text-lg">Chào mừng bạn quay trở lại cộng đồng FTC</p>
+                        <div className="w-16 sm:w-20 lg:w-24 h-0.5 bg-gradient-to-r from-transparent via-cyan-400 to-transparent mx-auto mt-3 sm:mt-4"></div>
                       </div>
-                      <h3 className="text-lg sm:text-xl lg:text-2xl font-bold text-white mb-2">Đăng nhập</h3>
-                      <p className="text-blue-200 text-xs sm:text-sm lg:text-base">Chào mừng bạn quay trở lại</p>
-                </div>
-                    <LoginForm />
+                      <LoginForm />
+                    </div>
+                  </div>
+                )}
+                {tab==="register" && (
+                  <div className="w-full max-w-sm sm:max-w-md lg:max-w-lg xl:max-w-xl">
+                    <div className="bg-gradient-to-br from-[#003663]/95 to-[#004a7c]/95 backdrop-blur-2xl rounded-2xl sm:rounded-3xl border border-green-400/40 p-6 sm:p-8 lg:p-10 shadow-2xl shadow-green-500/20">
+                      {/* Register Header - Modern */}
+                      <div className="text-center mb-6 sm:mb-8 lg:mb-10">
+                        <div className="relative mb-4 sm:mb-6">
+                          <div className="w-16 h-16 sm:w-20 sm:h-20 lg:w-24 lg:h-24 bg-gradient-to-r from-green-500 to-emerald-600 rounded-full flex items-center justify-center mx-auto shadow-2xl shadow-green-500/30">
+                            <span className="text-2xl sm:text-3xl lg:text-4xl">👤</span>
+                          </div>
+                          <div className="absolute -top-1 -right-1 w-6 h-6 sm:w-7 sm:h-7 lg:w-8 lg:h-8 bg-gradient-to-r from-blue-500 to-cyan-600 rounded-full flex items-center justify-center animate-pulse">
+                            <span className="text-xs sm:text-sm lg:text-base">+</span>
+                          </div>
+                        </div>
+                        <h3 className="text-xl sm:text-2xl lg:text-3xl font-bold text-white mb-2 sm:mb-3">Đăng ký</h3>
+                        <p className="text-blue-200 text-sm sm:text-base lg:text-lg">Tham gia cộng đồng FinTech hàng đầu</p>
+                        <div className="w-16 sm:w-20 lg:w-24 h-0.5 bg-gradient-to-r from-transparent via-green-400 to-transparent mx-auto mt-3 sm:mt-4"></div>
+                      </div>
+                      <RegisterForm />
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              {/* Additional Info - Modern */}
+              <div className="mt-6 sm:mt-8 lg:mt-12 text-center">
+                <div className="bg-gradient-to-r from-blue-500/10 to-cyan-500/10 backdrop-blur-xl rounded-xl sm:rounded-2xl border border-blue-400/30 p-4 sm:p-6 max-w-md mx-auto">
+                  <div className="flex items-center justify-center gap-2 sm:gap-3 mb-2 sm:mb-3">
+                    <span className="text-lg sm:text-xl lg:text-2xl">💡</span>
+                    <h4 className="text-sm sm:text-base lg:text-lg font-semibold text-white">Mẹo nhỏ</h4>
+                  </div>
+                  <p className="text-blue-200 text-xs sm:text-sm lg:text-base leading-relaxed">
+                    {tab === "login" 
+                      ? "Nếu quên mật khẩu, hãy sử dụng tính năng 'Quên mật khẩu' để khôi phục tài khoản của bạn."
+                      : "Hãy tạo câu hỏi bảo mật dễ nhớ để có thể khôi phục tài khoản khi cần thiết."
+                    }
+                  </p>
                 </div>
               </div>
-              )}
-              {tab==="register" && (
-                <div className="w-full max-w-sm sm:max-w-md lg:max-w-2xl">
-                  <div className="bg-gradient-to-br from-[#003663]/90 to-[#004a7c]/90 backdrop-blur-xl rounded-xl sm:rounded-2xl border border-blue-400/30 p-4 sm:p-6 lg:p-8 shadow-2xl">
-                    <div className="text-center mb-4 sm:mb-6 lg:mb-8">
-                      <div className="w-12 h-12 sm:w-16 sm:h-16 lg:w-20 lg:h-20 bg-gradient-to-r from-green-500 to-emerald-600 rounded-full flex items-center justify-center mx-auto mb-3 sm:mb-4 lg:mb-6">
-                        <span className="text-lg sm:text-xl lg:text-2xl">👤</span>
-                </div>
-                      <h3 className="text-lg sm:text-xl lg:text-2xl font-bold text-white mb-2">Đăng ký</h3>
-                      <p className="text-blue-200 text-xs sm:text-sm lg:text-base">Tham gia cộng đồng FTC</p>
-                </div>
-                    <RegisterForm />
-                </div>
-              </div>
-              )}
             </div>
-          </>
+          </div>
         )}
 
         {/* User Dashboard - Mobile Optimized */}
