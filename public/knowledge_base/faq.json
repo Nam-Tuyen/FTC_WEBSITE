@@ -1,9 +1,0 @@
-[
-  { "id": "faq-01", "question": "Câu lạc bộ có những hoạt động gì?", "answer": "FTC tổ chức talkshow, workshop, lớp bồi dưỡng về Fintech, AI tài chính, blockchain..." },
-  { "id": "faq-02", "question": "Làm thế nào để tham gia câu lạc bộ?", "answer": "Vào mục Ứng tuyển trên website, điền form; Ban Nhân sự liên hệ hướng dẫn các bước tiếp theo." },
-  { "id": "faq-03", "question": "Các ban trong câu lạc bộ làm gì?", "answer": "Ban Chủ nhiệm điều phối; Ban Học thuật xây nội dung; Ban Truyền thông quản lý kênh nội dung; ..." },
-  { "id": "faq-04", "question": "Thời gian sinh hoạt diễn ra khi nào?", "answer": "Thông báo theo đợt trên fanpage/website, thường vào cuối tuần." },
-  { "id": "faq-05", "question": "Cần kỹ năng gì để ứng tuyển?", "answer": "Tư duy phân tích, tinh thần học hỏi; nhóm kỹ thuật ưu tiên Python/SQL cơ bản..." },
-  { "id": "faq-06", "question": "Câu lạc bộ được thành lập khi nào?", "answer": "FTC thành lập năm .... (cập nhật theo thực tế CLB)." },
-  { "id": "faq-07", "question": "Câu lạc bộ có những thành tích gì?", "answer": "Giải Hackathon..., hợp tác doanh nghiệp..., (cập nhật theo thực tế CLB)." }
-]
