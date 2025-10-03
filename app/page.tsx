@@ -145,7 +145,7 @@ export default function HomePage() {
               SỐ LIỆU ẤN TƯỢNG
             </h2>
             <p className="text-lg sm:text-xl text-foreground/70 max-w-2xl mx-auto font-medium italic px-4">
-              Những con số biết nói về sự phát triển và tác động của câu lạc bộ
+              Những con số minh chứng cho sự phát triển và tác động của câu lạc bộ
             </p>
           </div>
 
@@ -277,62 +277,118 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Testimonials Section */}
+      {/* Activity Gallery Section */}
       <section className="py-16 sm:py-20 md:py-24 px-3 sm:px-4 md:px-6 lg:px-8 relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-card/5 via-card/10 to-card/5"></div>
         <div className="max-w-7xl mx-auto relative z-10">
           <div className="text-center mb-12 sm:mb-16">
             <div className="inline-flex items-center px-4 py-2 sm:px-6 sm:py-3 rounded-full bg-accent/10 border border-accent/30 mb-4 sm:mb-6">
               <Star className="h-4 w-4 sm:h-5 sm:w-5 text-accent mr-2" />
-              <span className="text-xs sm:text-sm font-bold text-accent uppercase tracking-wider">Cảm nhận từ thành viên</span>
+              <span className="text-xs sm:text-sm font-bold text-accent uppercase tracking-wider">Hoạt động nổi bật</span>
             </div>
             <h2 className="font-heading font-black text-3xl sm:text-4xl md:text-5xl text-foreground mb-3 sm:mb-4 text-glow">
               THÀNH VIÊN NÓI GÌ VỀ FTC?
             </h2>
             <p className="text-lg sm:text-xl text-foreground/70 max-w-2xl mx-auto font-medium italic px-4">
-              Những chia sẻ chân thực từ các thành viên đã và đang tham gia câu lạc bộ
+              Những hoạt động đa dạng và bổ ích mà FTC tổ chức cho các thành viên
             </p>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8">
-            {[
-              {
-                name: "Nguyễn Văn A",
-                role: "Sinh viên năm 3 - Khoa Công nghệ thông tin",
-                content: "FTC đã giúp tôi hiểu sâu hơn về fintech và có cơ hội thực hành với dữ liệu thực tế. Cộng đồng rất hỗ trợ và nhiệt tình!",
-                rating: 5
-              },
-              {
-                name: "Trần Thị B",
-                role: "Sinh viên năm 2 - Khoa Tài chính",
-                content: "Tham gia FTC, tôi đã học được nhiều kỹ năng mới về blockchain và AI trong tài chính. Các workshop rất bổ ích!",
-                rating: 5
-              },
-              {
-                name: "Lê Văn C",
-                role: "Cựu sinh viên - Software Engineer",
-                content: "FTC đã mở ra cho tôi nhiều cơ hội nghề nghiệp trong lĩnh vực fintech. Tôi rất biết ơn câu lạc bộ!",
-                rating: 5
-              }
-            ].map((testimonial, index) => (
-              <Card key={index} className="relative group bg-card/20 backdrop-blur-sm border-accent/20 hover:border-accent/40 transition-all duration-500 hover:glow">
-                <CardContent className="p-8">
-                  <div className="flex items-center mb-4">
-                    {[...Array(testimonial.rating)].map((_, i) => (
-                      <Star key={i} className="h-5 w-5 text-accent fill-current" />
-                    ))}
+          {/* Horizontal Scrollable Image Gallery */}
+          <div className="relative">
+            <div className="overflow-x-auto scrollbar-hide">
+              <div className="flex gap-4 sm:gap-6 md:gap-8 pb-4" style={{ scrollSnapType: 'x mandatory' }}>
+                {[
+                  {
+                    src: "/Ảnh câu lạc bộ FTC.JPG",
+                    alt: "Câu lạc bộ FTC - Group photo",
+                    title: "Câu lạc bộ FTC",
+                    description: "Tập thể thành viên FTC tại sự kiện"
+                  },
+                  {
+                    src: "/Cuộc thi học thuật ATTACKER.jpg",
+                    alt: "Cuộc thi học thuật ATTACKER",
+                    title: "Cuộc thi ATTACKER",
+                    description: "Cuộc thi fintech và tài sản số 2025"
+                  },
+                  {
+                    src: "/Cuộc thi Web3 Quizzes unlock the future.jpg",
+                    alt: "Cuộc thi Web3 Quizzes",
+                    title: "Web3 Quizzes",
+                    description: "Chung kết cuộc thi Web3"
+                  },
+                  {
+                    src: "/Hoạt động thăm quan doanh nghiệp VNG.jpg",
+                    alt: "Thăm quan VNG Campus",
+                    title: "Thăm quan VNG",
+                    description: "Hoạt động thăm quan doanh nghiệp"
+                  },
+                  {
+                    src: "/Hoạt động tuyển tân thành viên FTC.jpg",
+                    alt: "Tuyển tân thành viên FTC",
+                    title: "Tuyển tân thành viên",
+                    description: "Chương trình tuyển thành viên mới"
+                  },
+                  {
+                    src: "/Talkshow định huống nguồn nhân lực trong bối cảnh chuyển đổi số và tài sản số.jpg",
+                    alt: "Talkshow định hướng nguồn nhân lực",
+                    title: "Talkshow định hướng",
+                    description: "Định hướng nguồn nhân lực số"
+                  },
+                  {
+                    src: "/Talkshow người mới nên tiếp cận thị trường công nghệ tài chính như thế nào.jpg",
+                    alt: "Talkshow tiếp cận thị trường fintech",
+                    title: "Talkshow fintech",
+                    description: "Hướng dẫn tiếp cận thị trường fintech"
+                  },
+                  {
+                    src: "/Talkshow Web3 Carrer Innovation.jpg",
+                    alt: "Talkshow Web3 Career Innovation",
+                    title: "Web3 Career Innovation",
+                    description: "Tương lai nghề nghiệp Web3"
+                  }
+                ].map((activity, index) => (
+                  <div
+                    key={index}
+                    className="flex-shrink-0 w-80 sm:w-96 md:w-[28rem] lg:w-[32rem] group cursor-pointer"
+                    style={{ scrollSnapAlign: 'start' }}
+                  >
+                    <Card className="relative overflow-hidden bg-card/20 backdrop-blur-sm border-accent/20 hover:border-accent/40 transition-all duration-500 hover:glow h-full">
+                      <div className="relative aspect-[4/3] overflow-hidden">
+                        <img
+                          src={activity.src}
+                          alt={activity.alt}
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                        <div className="absolute bottom-4 left-4 right-4 text-white transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
+                          <h3 className="font-bold text-lg sm:text-xl mb-2 text-glow">
+                            {activity.title}
+                          </h3>
+                          <p className="text-sm sm:text-base opacity-90">
+                            {activity.description}
+                          </p>
+                        </div>
+                      </div>
+                    </Card>
                   </div>
-                  <p className="text-foreground/80 font-medium leading-relaxed mb-6 italic">
-                    "{testimonial.content}"
-                  </p>
-                  <div className="border-t border-accent/20 pt-4">
-                    <div className="font-bold text-foreground text-lg">{testimonial.name}</div>
-                    <div className="text-foreground/60 text-sm">{testimonial.role}</div>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
+                ))}
+              </div>
+            </div>
+            
+            {/* Scroll indicators */}
+            <div className="flex justify-center mt-6 space-x-2">
+              <div className="w-2 h-2 bg-accent/30 rounded-full"></div>
+              <div className="w-2 h-2 bg-accent/60 rounded-full"></div>
+              <div className="w-2 h-2 bg-accent/30 rounded-full"></div>
+              <div className="w-2 h-2 bg-accent/30 rounded-full"></div>
+              <div className="w-2 h-2 bg-accent/30 rounded-full"></div>
+              <div className="w-2 h-2 bg-accent/30 rounded-full"></div>
+              <div className="w-2 h-2 bg-accent/30 rounded-full"></div>
+              <div className="w-2 h-2 bg-accent/30 rounded-full"></div>
+            </div>
           </div>
+
         </div>
       </section>
 
