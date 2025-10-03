@@ -378,7 +378,7 @@ export default function CoPage() {
       />
 
       {/* Department Photo Carousel Section */}
-      <section className="py-12 px-4 sm:px-6 lg:px-8">
+      <section className="py-12 px-4 sm:px-6 lg:px-8 mb-8">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-8">
             <div className="w-16 h-16 mx-auto mb-6 bg-gradient-to-r from-cyan-500 to-blue-600 rounded-2xl flex items-center justify-center shadow-xl">
@@ -487,77 +487,67 @@ export default function CoPage() {
         </div>
       </section>
 
-      {/* Modern Cooperation Principles */}
-      <section className="py-16 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto">
+      {/* Modern Cooperation Principles - Mobile Optimized */}
+      <section className="py-12 px-4 sm:px-6 lg:px-8 mt-8">
+        <div className="max-w-6xl mx-auto">
           {/* Section Header */}
-          <div className="text-center mb-16">
-            <div className="w-20 h-20 mx-auto mb-8 bg-gradient-to-r from-blue-500 to-purple-600 rounded-3xl flex items-center justify-center shadow-2xl">
-              <Handshake className="w-10 h-10 text-white" />
+          <div className="text-center mb-12">
+            <div className="w-16 h-16 mx-auto mb-6 bg-gradient-to-r from-blue-500 to-purple-600 rounded-2xl flex items-center justify-center shadow-xl">
+              <Handshake className="w-8 h-8 text-white" />
             </div>
-            <h2 className="text-4xl lg:text-5xl font-bold text-white mb-6">NGUYÊN TẮC PHỐI HỢP</h2>
-            <p className="text-xl text-white/80 leading-relaxed italic max-w-3xl mx-auto">
+            <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4">NGUYÊN TẮC PHỐI HỢP</h2>
+            <p className="text-lg text-white/80 leading-relaxed italic max-w-2xl mx-auto">
               Quy trình phối hợp chuyên nghiệp giữa các ban để đảm bảo hiệu quả tối đa
             </p>
-                </div>
+          </div>
 
-          {/* Cooperation Flow */}
-          <div className="relative">
-            {/* Connection Lines */}
-            <div className="hidden lg:block absolute left-1/2 top-0 bottom-0 w-0.5 bg-gradient-to-b from-blue-500 via-purple-500 to-pink-500 transform -translate-x-1/2 opacity-30" />
-            
-            <div className="space-y-12 lg:space-y-16">
-              {cooperationPrinciples.map((principle, index) => {
-                const IconComponent = principle.icon
-                const isEven = index % 2 === 0
-                
-                return (
-                  <div key={index} className={`relative flex items-center ${isEven ? 'lg:flex-row' : 'lg:flex-row-reverse'}`}>
-                    {/* Step Number Circle */}
-                    <div className="absolute left-1/2 transform -translate-x-1/2 z-20 hidden lg:block">
-                      <div className="w-16 h-16 bg-gradient-to-br from-white/20 to-white/10 backdrop-blur-xl border-2 border-white/30 rounded-2xl flex items-center justify-center shadow-2xl">
-                        <span className="text-2xl font-bold bg-gradient-to-r from-white to-blue-200 bg-clip-text text-transparent">
+          {/* Mobile-First Cooperation Flow */}
+          <div className="space-y-6">
+            {cooperationPrinciples.map((principle, index) => {
+              const IconComponent = principle.icon
+              
+              return (
+                <div key={index} className="relative">
+                  {/* Mobile Card Design */}
+                  <div className="bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-xl rounded-2xl border border-white/20 p-6 shadow-xl hover:shadow-blue-500/20 transition-all duration-300">
+                    {/* Step Number - Mobile */}
+                    <div className="flex items-center gap-4 mb-4">
+                      <div className="w-10 h-10 rounded-xl bg-gradient-to-r from-blue-500 to-purple-600 flex items-center justify-center shadow-lg">
+                        <span className="text-lg font-bold text-white">
                           {principle.step}
                         </span>
                       </div>
-                    </div>
-
-                    {/* Content Card */}
-                    <div className={`lg:w-5/12 ${isEven ? 'lg:pr-16' : 'lg:pl-16'}`}>
-                      <div className="group bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-xl rounded-3xl border border-white/20 p-8 shadow-2xl hover:scale-105 transition-all duration-500 hover:shadow-blue-500/20">
-                        <div className="flex items-center gap-4 mb-6">
-                          <div className={`w-14 h-14 rounded-2xl bg-gradient-to-r ${principle.color} flex items-center justify-center shadow-xl`}>
-                            <IconComponent className="w-7 h-7 text-white" />
-                          </div>
-                          <div>
-                            <div className="lg:hidden mb-2">
-                              <span className="inline-block px-3 py-1 bg-gradient-to-r from-blue-500/20 to-purple-500/20 rounded-full text-sm font-bold text-blue-200 border border-blue-400/30">
-                                Bước {principle.step}
-                              </span>
-                            </div>
-                            <h3 className="text-2xl font-bold text-white group-hover:text-blue-200 transition-colors">
-                              {principle.title}
-                            </h3>
-                    </div>
-                  </div>
-                        <p className="text-white/80 leading-relaxed text-lg">
-                          {principle.description}
-                        </p>
-                </div>
-                    </div>
-
-                    {/* Arrow for mobile */}
-                    <div className="lg:hidden flex justify-center my-8">
-                      <div className="w-12 h-12 bg-gradient-to-r from-blue-500/20 to-purple-500/20 rounded-full flex items-center justify-center border border-blue-400/30">
-                        <ArrowRight className="w-6 h-6 text-blue-300 rotate-90" />
+                      <div className="flex-1">
+                        <h3 className="text-xl font-bold text-white">
+                          {principle.title}
+                        </h3>
                       </div>
                     </div>
+                    
+                    {/* Icon and Description */}
+                    <div className="flex items-start gap-4">
+                      <div className={`w-12 h-12 rounded-xl bg-gradient-to-r ${principle.color} flex items-center justify-center shadow-lg flex-shrink-0`}>
+                        <IconComponent className="w-6 h-6 text-white" />
+                      </div>
+                      <p className="text-white/80 leading-relaxed text-sm sm:text-base">
+                        {principle.description}
+                      </p>
+                    </div>
                   </div>
-                )
-              })}
-            </div>
+                  
+                  {/* Connection Arrow - Mobile */}
+                  {index < cooperationPrinciples.length - 1 && (
+                    <div className="flex justify-center my-4">
+                      <div className="w-8 h-8 bg-gradient-to-r from-blue-500/20 to-purple-500/20 rounded-full flex items-center justify-center border border-blue-400/30">
+                        <ArrowRight className="w-4 h-4 text-blue-300 rotate-90" />
+                      </div>
+                    </div>
+                  )}
+                </div>
+              )
+            })}
           </div>
-                  </div>
+        </div>
       </section>
 
       {/* Call to Action Section */}
