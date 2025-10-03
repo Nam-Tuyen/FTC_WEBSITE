@@ -63,49 +63,49 @@ export default function HomePage() {
     {
       src: "/Ảnh câu lạc bộ FTC.JPG",
       alt: "Câu lạc bộ FTC - Group photo",
-      title: "Câu lạc bộ FTC",
+      title: "Tập thể câu lạc bộ FTC",
       description: "Tập thể thành viên FTC tại sự kiện"
     },
     {
       src: "/Cuộc thi học thuật ATTACKER.jpg",
       alt: "Cuộc thi học thuật ATTACKER",
-      title: "Cuộc thi ATTACKER",
+      title: "Cuộc thi học thuật ATTACKER",
       description: "Cuộc thi fintech và tài sản số 2025"
     },
     {
       src: "/Cuộc thi Web3 Quizzes unlock the future.jpg",
       alt: "Cuộc thi Web3 Quizzes",
-      title: "Web3 Quizzes",
+      title: "Cuộc thi học thuật Web3 Quizzes",
       description: "Chung kết cuộc thi Web3"
     },
     {
       src: "/Hoạt động thăm quan doanh nghiệp VNG.jpg",
       alt: "Thăm quan VNG Campus",
-      title: "Thăm quan VNG",
+      title: "Thăm quan doanh nghiệp VNG Campus",
       description: "Hoạt động thăm quan doanh nghiệp"
     },
     {
       src: "/Hoạt động tuyển tân thành viên FTC.jpg",
       alt: "Tuyển tân thành viên FTC",
-      title: "Tuyển tân thành viên",
+      title: "Tuyển tân thành viên FTC",
       description: "Chương trình tuyển thành viên mới"
     },
     {
       src: "/Talkshow định huống nguồn nhân lực trong bối cảnh chuyển đổi số và tài sản số.jpg",
       alt: "Talkshow định hướng nguồn nhân lực",
-      title: "Talkshow định hướng",
+      title: "Talkshow định huống nguồn nhân lực trong bối cảnh chuyển đổi số và tài sản số",
       description: "Định hướng nguồn nhân lực số"
     },
     {
       src: "/Talkshow người mới nên tiếp cận thị trường công nghệ tài chính như thế nào.jpg",
       alt: "Talkshow tiếp cận thị trường fintech",
-      title: "Talkshow fintech",
+      title: "Talkshow người mới nên tiếp cận thị trường công nghệ tài chính như thế nào",
       description: "Hướng dẫn tiếp cận thị trường fintech"
     },
     {
       src: "/Talkshow Web3 Carrer Innovation.jpg",
       alt: "Talkshow Web3 Career Innovation",
-      title: "Web3 Career Innovation",
+      title: "Talkshow Web3 Carrer Innovation",
       description: "Tương lai nghề nghiệp Web3"
     }
   ]
@@ -358,57 +358,117 @@ export default function HomePage() {
             </p>
           </div>
 
-          {/* Image Gallery with Navigation */}
-          <div className="relative max-w-4xl mx-auto">
-            {/* Main Image Display */}
-            <div className="relative group">
-              <Card className="relative overflow-hidden bg-card/20 backdrop-blur-sm border-accent/20 hover:border-accent/40 transition-all duration-500 hover:glow">
-                <div className="relative aspect-[16/10] overflow-hidden">
-                  <img
-                    src={activities[currentImageIndex].src}
-                    alt={activities[currentImageIndex].alt}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
-                  <div className="absolute bottom-4 left-4 right-4 text-white">
-                    <h3 className="font-bold text-xl sm:text-2xl mb-2 text-glow">
-                      {activities[currentImageIndex].title}
-                    </h3>
-                    <p className="text-base sm:text-lg opacity-90">
-                      {activities[currentImageIndex].description}
-                    </p>
-                  </div>
-                </div>
-              </Card>
+          {/* Modern Layered Slide Gallery */}
+          <div className="relative max-w-6xl mx-auto">
+            {/* Slide Container */}
+            <div className="relative h-96 sm:h-[28rem] md:h-[32rem] lg:h-[36rem] overflow-hidden rounded-2xl">
+              {/* Background Images - Layered Effect */}
+              <div className="absolute inset-0 flex">
+                {activities.map((activity, index) => {
+                  const isActive = index === currentImageIndex;
+                  const isPrev = index === (currentImageIndex - 1 + activities.length) % activities.length;
+                  const isNext = index === (currentImageIndex + 1) % activities.length;
+                  const isPrev2 = index === (currentImageIndex - 2 + activities.length) % activities.length;
+                  const isNext2 = index === (currentImageIndex + 2) % activities.length;
+                  
+                  let transformClass = '';
+                  let zIndex = 0;
+                  let opacity = 0;
+                  let scale = 0.8;
+                  
+                  if (isActive) {
+                    transformClass = 'translate-x-0 scale-100';
+                    zIndex = 50;
+                    opacity = 1;
+                    scale = 1;
+                  } else if (isPrev) {
+                    transformClass = '-translate-x-1/2 scale-90';
+                    zIndex = 40;
+                    opacity = 0.7;
+                    scale = 0.9;
+                  } else if (isNext) {
+                    transformClass = 'translate-x-1/2 scale-90';
+                    zIndex = 40;
+                    opacity = 0.7;
+                    scale = 0.9;
+                  } else if (isPrev2) {
+                    transformClass = '-translate-x-full scale-80';
+                    zIndex = 30;
+                    opacity = 0.4;
+                    scale = 0.8;
+                  } else if (isNext2) {
+                    transformClass = 'translate-x-full scale-80';
+                    zIndex = 30;
+                    opacity = 0.4;
+                    scale = 0.8;
+                  } else {
+                    transformClass = 'translate-x-full scale-70';
+                    zIndex = 20;
+                    opacity = 0;
+                    scale = 0.7;
+                  }
+
+                  return (
+                    <div
+                      key={index}
+                      className={`absolute inset-0 transition-all duration-700 ease-out ${transformClass}`}
+                      style={{ zIndex, opacity }}
+                    >
+                      <div className="relative w-full h-full group cursor-pointer" onClick={() => setCurrentImageIndex(index)}>
+                        <img
+                          src={activity.src}
+                          alt={activity.alt}
+                          className="w-full h-full object-cover rounded-2xl shadow-2xl group-hover:scale-105 transition-transform duration-500"
+                          style={{ transform: `scale(${scale})` }}
+                        />
+                        
+                        {/* Hover Overlay - Only show on active image */}
+                        {isActive && (
+                          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl">
+                            <div className="absolute bottom-6 left-6 right-6 text-white transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
+                              <h3 className="font-bold text-2xl sm:text-3xl mb-3 text-glow">
+                                {activity.title}
+                              </h3>
+                              <p className="text-lg sm:text-xl opacity-90 leading-relaxed">
+                                {activity.description}
+                              </p>
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
 
               {/* Navigation Buttons */}
               <button
                 onClick={goToPrevious}
-                className="absolute left-4 top-1/2 transform -translate-y-1/2 w-12 h-12 bg-accent/20 backdrop-blur-sm border border-accent/40 rounded-full flex items-center justify-center hover:bg-accent/30 transition-all duration-300 hover:scale-110 group z-10"
+                className="absolute left-4 top-1/2 transform -translate-y-1/2 w-14 h-14 bg-accent/20 backdrop-blur-md border border-accent/40 rounded-full flex items-center justify-center hover:bg-accent/30 transition-all duration-300 hover:scale-110 group z-50"
                 aria-label="Previous image"
               >
-                <ChevronLeft className="h-6 w-6 text-accent group-hover:text-white transition-colors" />
+                <ChevronLeft className="h-7 w-7 text-accent group-hover:text-white transition-colors" />
               </button>
 
               <button
                 onClick={goToNext}
-                className="absolute right-4 top-1/2 transform -translate-y-1/2 w-12 h-12 bg-accent/20 backdrop-blur-sm border border-accent/40 rounded-full flex items-center justify-center hover:bg-accent/30 transition-all duration-300 hover:scale-110 group z-10"
+                className="absolute right-4 top-1/2 transform -translate-y-1/2 w-14 h-14 bg-accent/20 backdrop-blur-md border border-accent/40 rounded-full flex items-center justify-center hover:bg-accent/30 transition-all duration-300 hover:scale-110 group z-50"
                 aria-label="Next image"
               >
-                <ChevronRight className="h-6 w-6 text-accent group-hover:text-white transition-colors" />
+                <ChevronRight className="h-7 w-7 text-accent group-hover:text-white transition-colors" />
               </button>
             </div>
 
             {/* Image Indicators */}
-            <div className="flex justify-center mt-6 space-x-2">
+            <div className="flex justify-center mt-8 space-x-3">
               {activities.map((_, index) => (
                 <button
                   key={index}
                   onClick={() => setCurrentImageIndex(index)}
-                  className={`w-3 h-3 rounded-full transition-all duration-300 ${
+                  className={`w-4 h-4 rounded-full transition-all duration-300 ${
                     index === currentImageIndex
-                      ? 'bg-accent scale-125'
-                      : 'bg-accent/30 hover:bg-accent/50'
+                      ? 'bg-accent scale-125 shadow-lg shadow-accent/50'
+                      : 'bg-accent/30 hover:bg-accent/50 hover:scale-110'
                   }`}
                   aria-label={`Go to image ${index + 1}`}
                 />
@@ -416,8 +476,8 @@ export default function HomePage() {
             </div>
 
             {/* Image Counter */}
-            <div className="text-center mt-4">
-              <span className="text-sm text-foreground/60 font-medium">
+            <div className="text-center mt-6">
+              <span className="text-sm text-foreground/60 font-medium bg-card/20 backdrop-blur-sm px-4 py-2 rounded-full border border-accent/20">
                 {currentImageIndex + 1} / {activities.length}
               </span>
             </div>
