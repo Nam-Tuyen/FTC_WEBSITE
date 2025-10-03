@@ -353,15 +353,15 @@ export default function CoPage() {
         badgeShadowColor="shadow-emerald-500/10"
       />
 
-      {/* Department Photo Carousel Section */}
-      <section className="py-12 px-4 sm:px-6 lg:px-8 mb-8">
+      {/* Department Photo Carousel Section - Mobile Optimized */}
+      <section className="py-8 sm:py-12 px-3 sm:px-4 lg:px-8 mb-6 sm:mb-8">
         <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-8">
-            <div className="w-16 h-16 mx-auto mb-6 bg-gradient-to-r from-cyan-500 to-blue-600 rounded-2xl flex items-center justify-center shadow-xl">
-              <ImageIcon className="w-8 h-8 text-white" />
+          <div className="text-center mb-6 sm:mb-8">
+            <div className="w-12 h-12 sm:w-16 sm:h-16 mx-auto mb-4 sm:mb-6 bg-gradient-to-r from-cyan-500 to-blue-600 rounded-xl sm:rounded-2xl flex items-center justify-center shadow-xl">
+              <ImageIcon className="w-6 h-6 sm:w-8 sm:h-8 text-white" />
             </div>
-            <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4">HÌNH ẢNH HOẠT ĐỘNG</h2>
-            <p className="text-lg text-white/80 leading-relaxed italic max-w-2xl mx-auto">
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white mb-3 sm:mb-4 px-2">HÌNH ẢNH HOẠT ĐỘNG</h2>
+            <p className="text-base sm:text-lg text-white/80 leading-relaxed italic max-w-2xl mx-auto px-4">
               Khám phá các hoạt động và thành viên của từng ban trong câu lạc bộ
             </p>
           </div>
@@ -370,20 +370,20 @@ export default function CoPage() {
         </div>
       </section>
 
-      {/* Modern Organization Cards */}
-      <section className="py-16 px-4 sm:px-6 lg:px-8">
+      {/* Modern Organization Cards - Mobile Optimized */}
+      <section className="py-8 sm:py-12 lg:py-16 px-3 sm:px-4 lg:px-8">
         <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-12">
-            <div className="w-20 h-20 mx-auto mb-8 bg-gradient-to-r from-blue-500 to-purple-600 rounded-3xl flex items-center justify-center shadow-2xl">
-              <Users className="w-10 h-10 text-white" />
+          <div className="text-center mb-8 sm:mb-12">
+            <div className="w-16 h-16 sm:w-20 sm:h-20 mx-auto mb-6 sm:mb-8 bg-gradient-to-r from-blue-500 to-purple-600 rounded-2xl sm:rounded-3xl flex items-center justify-center shadow-2xl">
+              <Users className="w-8 h-8 sm:w-10 sm:h-10 text-white" />
             </div>
-            <h2 className="text-4xl lg:text-5xl font-bold text-white mb-6">CÁC BAN CHUYÊN MÔN</h2>
-            <p className="text-xl text-white/80 leading-relaxed italic max-w-3xl mx-auto">
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-bold text-white mb-4 sm:mb-6 px-2">CÁC BAN CHUYÊN MÔN</h2>
+            <p className="text-base sm:text-lg lg:text-xl text-white/80 leading-relaxed italic max-w-3xl mx-auto px-4">
               Tìm hiểu chi tiết về vai trò và trách nhiệm của từng ban
             </p>
           </div>
           
-          <div className="grid gap-8 lg:gap-12">
+          <div className="grid gap-6 sm:gap-8 lg:gap-12">
             {organizationData.map((dept, idx) => {
               const IconComponent = dept.icon
               
@@ -395,59 +395,53 @@ export default function CoPage() {
                     {/* Animated Background Overlay */}
                     <div className="absolute inset-0 bg-gradient-to-br from-transparent via-blue-500/5 to-purple-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
                     
-                    <div className="relative z-10 p-6 lg:p-8">
-                      {/* Header Section */}
-                      <div className="flex flex-col lg:flex-row gap-6 mb-8">
-                        
-                        {/* Department Info Section */}
-                        <div className="lg:w-2/5">
-                          <div className="space-y-4">
-                            {/* Category Info */}
-                            <div className="flex flex-wrap items-center gap-3 mb-4">
-                              <div className={`px-4 py-2 rounded-full text-xs font-bold backdrop-blur-xl border shadow-lg text-white bg-gradient-to-r ${dept.cardGradient}`}>
-                                {dept.category}
-                              </div>
-                            </div>
-
-                            {/* Title with Icon */}
-                            <div className="flex items-center gap-4 mb-6">
-                              <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-white/20 to-white/10 backdrop-blur-xl border border-white/30 flex items-center justify-center shadow-xl">
-                                <IconComponent className="w-6 h-6 text-white drop-shadow-lg" />
-                              </div>
-                              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold bg-gradient-to-r from-white via-blue-100 to-white bg-clip-text text-transparent leading-tight">
-                                {dept.title}
-                              </h2>
-                            </div>
-
-                            {/* Quick Features */}
-                            <div className="flex flex-wrap gap-2">
-                              {dept.quickFeatures?.map((feature, index) => {
-                                const IconComponent = feature.icon
-                                return (
-                                  <div key={index} className="flex items-center gap-2 text-xs text-white/80 bg-white/5 backdrop-blur-sm px-2 py-1.5 rounded-full border border-white/20">
-                                    <IconComponent className={`w-3 h-3 ${feature.color}`} />
-                                    <span>{feature.text}</span>
-                                  </div>
-                                )
-                              })}
-                            </div>
+                    <div className="relative z-10 p-4 sm:p-6 lg:p-8">
+                      {/* Header Section - Mobile Optimized */}
+                      <div className="space-y-4 sm:space-y-6 mb-6 sm:mb-8">
+                        {/* Category Info */}
+                        <div className="flex flex-wrap items-center gap-2 sm:gap-3 mb-4">
+                          <div className={`px-3 sm:px-4 py-2 rounded-full text-xs font-bold backdrop-blur-xl border shadow-lg text-white bg-gradient-to-r ${dept.cardGradient}`}>
+                            {dept.category}
                           </div>
+                        </div>
+
+                        {/* Title with Icon - Mobile Layout */}
+                        <div className="flex items-start sm:items-center gap-3 sm:gap-4 mb-4 sm:mb-6">
+                          <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl bg-gradient-to-br from-white/20 to-white/10 backdrop-blur-xl border border-white/30 flex items-center justify-center shadow-xl flex-shrink-0">
+                            <IconComponent className="w-5 h-5 sm:w-6 sm:h-6 text-white drop-shadow-lg" />
+                          </div>
+                          <h2 className="text-lg sm:text-2xl lg:text-3xl xl:text-4xl font-bold bg-gradient-to-r from-white via-blue-100 to-white bg-clip-text text-transparent leading-tight flex-1">
+                            {dept.title}
+                          </h2>
+                        </div>
+
+                        {/* Quick Features - Mobile Optimized */}
+                        <div className="flex flex-wrap gap-2 sm:gap-3">
+                          {dept.quickFeatures?.map((feature, index) => {
+                            const IconComponent = feature.icon
+                            return (
+                              <div key={index} className="flex items-center gap-1.5 sm:gap-2 text-xs sm:text-sm text-white/80 bg-white/5 backdrop-blur-sm px-2 sm:px-3 py-1.5 sm:py-2 rounded-full border border-white/20">
+                                <IconComponent className={`w-3 h-3 sm:w-4 sm:h-4 ${feature.color}`} />
+                                <span className="truncate">{feature.text}</span>
+                              </div>
+                            )
+                          })}
                         </div>
                       </div>
 
-                      {/* Content Section - Responsibilities */}
-                      <div className="bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-xl rounded-2xl p-6 border border-white/20 shadow-xl">
-                        <div className="flex items-center gap-3 mb-6">
+                      {/* Content Section - Responsibilities - Mobile Optimized */}
+                      <div className="bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-xl rounded-xl sm:rounded-2xl p-4 sm:p-6 border border-white/20 shadow-xl">
+                        <div className="flex items-center gap-2 sm:gap-3 mb-4 sm:mb-6">
                           <div className="w-2 h-2 bg-gradient-to-r from-blue-400 to-purple-400 rounded-full animate-pulse" />
-                          <h3 className="text-lg font-bold text-white">Nhiệm vụ và trách nhiệm</h3>
+                          <h3 className="text-base sm:text-lg font-bold text-white">Nhiệm vụ và trách nhiệm</h3>
                         </div>
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div className="grid grid-cols-1 gap-3 sm:gap-4">
                           {dept.responsibilities.map((responsibility, index) => (
-                            <div key={index} className="flex items-start gap-3 p-4 bg-white/5 rounded-xl border border-white/10 hover:bg-white/10 transition-all duration-300">
-                              <div className="w-6 h-6 rounded-lg bg-gradient-to-br from-blue-400/20 to-purple-400/20 border border-blue-400/30 flex items-center justify-center mt-1 flex-shrink-0">
+                            <div key={index} className="flex items-start gap-3 p-3 sm:p-4 bg-white/5 rounded-lg sm:rounded-xl border border-white/10 hover:bg-white/10 transition-all duration-300">
+                              <div className="w-5 h-5 sm:w-6 sm:h-6 rounded-md sm:rounded-lg bg-gradient-to-br from-blue-400/20 to-purple-400/20 border border-blue-400/30 flex items-center justify-center mt-0.5 sm:mt-1 flex-shrink-0">
                                 <span className="text-xs font-bold text-blue-300">{index + 1}</span>
                               </div>
-                              <p className="text-white/90 leading-relaxed text-sm">
+                              <p className="text-white/90 leading-relaxed text-sm sm:text-base">
                                 {responsibility}
                               </p>
                             </div>
@@ -463,43 +457,43 @@ export default function CoPage() {
         </div>
       </section>
 
-      {/* Futuristic Cooperation Principles */}
-      <section className="py-16 px-4 sm:px-6 lg:px-8 mt-8">
+      {/* Futuristic Cooperation Principles - Mobile Optimized */}
+      <section className="py-8 sm:py-12 lg:py-16 px-3 sm:px-4 lg:px-8 mt-6 sm:mt-8">
         <div className="max-w-7xl mx-auto">
-          {/* Futuristic Section Header */}
-          <div className="text-center mb-16">
-            <div className="relative inline-block mb-8">
-              <div className="w-24 h-24 mx-auto bg-gradient-to-r from-cyan-500 via-blue-600 to-purple-600 rounded-3xl flex items-center justify-center shadow-2xl shadow-cyan-500/30 relative overflow-hidden">
+          {/* Futuristic Section Header - Mobile Optimized */}
+          <div className="text-center mb-8 sm:mb-12 lg:mb-16">
+            <div className="relative inline-block mb-6 sm:mb-8">
+              <div className="w-16 h-16 sm:w-20 sm:h-20 lg:w-24 lg:h-24 mx-auto bg-gradient-to-r from-cyan-500 via-blue-600 to-purple-600 rounded-2xl sm:rounded-3xl flex items-center justify-center shadow-2xl shadow-cyan-500/30 relative overflow-hidden">
                 <div className="absolute inset-0 bg-gradient-to-r from-cyan-400/20 via-blue-500/20 to-purple-500/20 animate-pulse" />
-                <Handshake className="w-12 h-12 text-white relative z-10" />
-                <div className="absolute -top-1 -right-1 w-6 h-6 bg-gradient-to-r from-green-400 to-emerald-500 rounded-full animate-ping" />
+                <Handshake className="w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 text-white relative z-10" />
+                <div className="absolute -top-1 -right-1 w-4 h-4 sm:w-5 sm:h-5 lg:w-6 lg:h-6 bg-gradient-to-r from-green-400 to-emerald-500 rounded-full animate-ping" />
               </div>
-              <div className="absolute -inset-4 bg-gradient-to-r from-cyan-500/20 via-blue-500/20 to-purple-500/20 rounded-3xl blur-xl animate-pulse" />
+              <div className="absolute -inset-2 sm:-inset-4 bg-gradient-to-r from-cyan-500/20 via-blue-500/20 to-purple-500/20 rounded-2xl sm:rounded-3xl blur-xl animate-pulse" />
             </div>
-            <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-6 relative">
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl 2xl:text-6xl font-bold text-white mb-4 sm:mb-6 relative px-2">
               <span className="bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-600 bg-clip-text text-transparent">
                 NGUYÊN TẮC PHỐI HỢP
               </span>
-              <div className="absolute -inset-2 bg-gradient-to-r from-cyan-500/10 via-blue-500/10 to-purple-500/10 rounded-2xl blur-lg" />
+              <div className="absolute -inset-1 sm:-inset-2 bg-gradient-to-r from-cyan-500/10 via-blue-500/10 to-purple-500/10 rounded-xl sm:rounded-2xl blur-lg" />
             </h2>
-            <p className="text-xl sm:text-2xl text-white/80 leading-relaxed max-w-4xl mx-auto relative">
+            <p className="text-base sm:text-lg lg:text-xl xl:text-2xl text-white/80 leading-relaxed max-w-4xl mx-auto relative px-4">
               <span className="bg-gradient-to-r from-white/90 to-white/60 bg-clip-text text-transparent">
                 Quy trình phối hợp chuyên nghiệp giữa các ban để đảm bảo hiệu quả tối đa
               </span>
             </p>
           </div>
 
-          {/* Futuristic Process Flow */}
+          {/* Futuristic Process Flow - Mobile Optimized */}
           <div className="relative">
             {/* Animated Background Grid */}
-            <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/5 via-blue-500/5 to-purple-500/5 rounded-3xl blur-3xl" />
+            <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/5 via-blue-500/5 to-purple-500/5 rounded-2xl sm:rounded-3xl blur-3xl" />
             
             {/* Connection Lines - Desktop */}
             <div className="hidden lg:block absolute left-1/2 top-0 bottom-0 w-1 bg-gradient-to-b from-cyan-500 via-blue-500 to-purple-500 transform -translate-x-1/2 opacity-40">
               <div className="absolute inset-0 bg-gradient-to-b from-cyan-500/50 via-blue-500/50 to-purple-500/50 animate-pulse" />
             </div>
             
-            <div className="space-y-8 lg:space-y-12 relative z-10">
+            <div className="space-y-6 sm:space-y-8 lg:space-y-12 relative z-10">
               {cooperationPrinciples.map((principle, index) => {
                 const IconComponent = principle.icon
                 const isEven = index % 2 === 0
@@ -509,57 +503,57 @@ export default function CoPage() {
                     {/* Futuristic Step Circle - Desktop */}
                     <div className="absolute left-1/2 transform -translate-x-1/2 z-20 hidden lg:block">
                       <div className="relative">
-                        <div className="w-20 h-20 bg-gradient-to-br from-white/20 to-white/10 backdrop-blur-xl border-2 border-white/30 rounded-3xl flex items-center justify-center shadow-2xl relative overflow-hidden">
+                        <div className="w-16 h-16 xl:w-20 xl:h-20 bg-gradient-to-br from-white/20 to-white/10 backdrop-blur-xl border-2 border-white/30 rounded-2xl xl:rounded-3xl flex items-center justify-center shadow-2xl relative overflow-hidden">
                           <div className={`absolute inset-0 bg-gradient-to-r ${principle.color} opacity-20 animate-pulse`} />
-                          <span className="text-3xl font-bold bg-gradient-to-r from-white to-cyan-200 bg-clip-text text-transparent relative z-10">
+                          <span className="text-2xl xl:text-3xl font-bold bg-gradient-to-r from-white to-cyan-200 bg-clip-text text-transparent relative z-10">
                             {principle.step}
                           </span>
                         </div>
-                        <div className="absolute -inset-4 bg-gradient-to-r from-cyan-500/20 via-blue-500/20 to-purple-500/20 rounded-3xl blur-xl animate-pulse" />
+                        <div className="absolute -inset-3 xl:-inset-4 bg-gradient-to-r from-cyan-500/20 via-blue-500/20 to-purple-500/20 rounded-2xl xl:rounded-3xl blur-xl animate-pulse" />
                       </div>
                     </div>
 
-                    {/* Futuristic Content Card */}
-                    <div className={`lg:w-5/12 ${isEven ? 'lg:pr-20' : 'lg:pl-20'}`}>
-                      <div className="group relative bg-gradient-to-br from-white/15 to-white/5 backdrop-blur-2xl rounded-3xl border border-white/30 p-8 shadow-2xl hover:scale-105 transition-all duration-700 hover:shadow-cyan-500/20 overflow-hidden">
+                    {/* Futuristic Content Card - Mobile Optimized */}
+                    <div className={`lg:w-5/12 ${isEven ? 'lg:pr-16 xl:pr-20' : 'lg:pl-16 xl:pl-20'}`}>
+                      <div className="group relative bg-gradient-to-br from-white/15 to-white/5 backdrop-blur-2xl rounded-2xl sm:rounded-3xl border border-white/30 p-4 sm:p-6 lg:p-8 shadow-2xl hover:scale-105 transition-all duration-700 hover:shadow-cyan-500/20 overflow-hidden">
                         {/* Animated Background */}
                         <div className={`absolute inset-0 bg-gradient-to-br ${principle.color} opacity-5 group-hover:opacity-10 transition-opacity duration-700`} />
                         <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent animate-shimmer" />
                         
-                        {/* Card Content */}
+                        {/* Card Content - Mobile Optimized */}
                         <div className="relative z-10">
                           {/* Mobile Step Number */}
-                          <div className="lg:hidden flex items-center gap-4 mb-6">
+                          <div className="lg:hidden flex items-center gap-3 sm:gap-4 mb-4 sm:mb-6">
                             <div className="relative">
-                              <div className="w-14 h-14 rounded-2xl bg-gradient-to-r from-cyan-500 to-purple-600 flex items-center justify-center shadow-xl relative overflow-hidden">
+                              <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-xl sm:rounded-2xl bg-gradient-to-r from-cyan-500 to-purple-600 flex items-center justify-center shadow-xl relative overflow-hidden">
                                 <div className="absolute inset-0 bg-gradient-to-r from-cyan-400/20 to-purple-400/20 animate-pulse" />
-                                <span className="text-xl font-bold text-white relative z-10">
+                                <span className="text-lg sm:text-xl font-bold text-white relative z-10">
                                   {principle.step}
                                 </span>
                               </div>
-                              <div className="absolute -inset-2 bg-gradient-to-r from-cyan-500/20 to-purple-500/20 rounded-2xl blur-lg animate-pulse" />
+                              <div className="absolute -inset-1 sm:-inset-2 bg-gradient-to-r from-cyan-500/20 to-purple-500/20 rounded-xl sm:rounded-2xl blur-lg animate-pulse" />
                             </div>
                             <div className="flex-1">
-                              <h3 className="text-2xl font-bold text-white group-hover:text-cyan-200 transition-colors">
+                              <h3 className="text-lg sm:text-xl lg:text-2xl font-bold text-white group-hover:text-cyan-200 transition-colors">
                                 {principle.title}
                               </h3>
                             </div>
                           </div>
 
                           {/* Desktop Header */}
-                          <div className="hidden lg:block mb-6">
-                            <h3 className="text-3xl font-bold text-white group-hover:text-cyan-200 transition-colors mb-2">
+                          <div className="hidden lg:block mb-4 sm:mb-6">
+                            <h3 className="text-2xl xl:text-3xl font-bold text-white group-hover:text-cyan-200 transition-colors mb-2">
                               {principle.title}
                             </h3>
                           </div>
                           
-                          {/* Icon and Description */}
-                          <div className="flex items-start gap-6">
-                            <div className={`w-16 h-16 rounded-2xl bg-gradient-to-r ${principle.color} flex items-center justify-center shadow-2xl flex-shrink-0 relative overflow-hidden group-hover:scale-110 transition-transform duration-500`}>
+                          {/* Icon and Description - Mobile Optimized */}
+                          <div className="flex items-start gap-4 sm:gap-6">
+                            <div className={`w-12 h-12 sm:w-14 sm:h-14 lg:w-16 lg:h-16 rounded-xl sm:rounded-2xl bg-gradient-to-r ${principle.color} flex items-center justify-center shadow-2xl flex-shrink-0 relative overflow-hidden group-hover:scale-110 transition-transform duration-500`}>
                               <div className="absolute inset-0 bg-gradient-to-r from-white/20 to-white/10 animate-pulse" />
-                              <IconComponent className="w-8 h-8 text-white relative z-10" />
+                              <IconComponent className="w-6 h-6 sm:w-7 sm:h-7 lg:w-8 lg:h-8 text-white relative z-10" />
                             </div>
-                            <p className="text-white/90 leading-relaxed text-lg group-hover:text-white transition-colors">
+                            <p className="text-white/90 leading-relaxed text-sm sm:text-base lg:text-lg group-hover:text-white transition-colors">
                               {principle.description}
                             </p>
                           </div>
@@ -567,14 +561,14 @@ export default function CoPage() {
                       </div>
                     </div>
 
-                    {/* Futuristic Connection Arrow - Mobile */}
+                    {/* Futuristic Connection Arrow - Mobile Optimized */}
                     {index < cooperationPrinciples.length - 1 && (
-                      <div className="lg:hidden flex justify-center my-8">
+                      <div className="lg:hidden flex justify-center my-6 sm:my-8">
                         <div className="relative">
-                          <div className="w-12 h-12 bg-gradient-to-r from-cyan-500/20 to-purple-500/20 rounded-2xl flex items-center justify-center border border-cyan-400/30 backdrop-blur-sm">
-                            <ArrowRight className="w-6 h-6 text-cyan-300 rotate-90" />
+                          <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-r from-cyan-500/20 to-purple-500/20 rounded-xl sm:rounded-2xl flex items-center justify-center border border-cyan-400/30 backdrop-blur-sm">
+                            <ArrowRight className="w-5 h-5 sm:w-6 sm:h-6 text-cyan-300 rotate-90" />
                           </div>
-                          <div className="absolute -inset-2 bg-gradient-to-r from-cyan-500/10 to-purple-500/10 rounded-2xl blur-lg animate-pulse" />
+                          <div className="absolute -inset-1 sm:-inset-2 bg-gradient-to-r from-cyan-500/10 to-purple-500/10 rounded-xl sm:rounded-2xl blur-lg animate-pulse" />
                         </div>
                       </div>
                     )}
@@ -586,23 +580,23 @@ export default function CoPage() {
         </div>
       </section>
 
-      {/* Call to Action Section */}
-      <section className="py-16 px-4 sm:px-6 lg:px-8">
+      {/* Call to Action Section - Mobile Optimized */}
+      <section className="py-8 sm:py-12 lg:py-16 px-3 sm:px-4 lg:px-8">
         <div className="max-w-4xl mx-auto text-center">
-          <div className="bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-xl rounded-3xl border border-white/20 p-12 shadow-2xl">
-            <div className="w-20 h-20 mx-auto mb-8 bg-gradient-to-r from-blue-500 to-purple-600 rounded-3xl flex items-center justify-center shadow-xl">
-              <Users className="w-10 h-10 text-white" />
-              </div>
-            <h2 className="text-4xl font-bold text-white mb-6">THAM GIA ĐỘI NGŨ FTC</h2>
-            <p className="text-xl text-white/80 mb-8 leading-relaxed italic">
+          <div className="bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-xl rounded-2xl sm:rounded-3xl border border-white/20 p-6 sm:p-8 lg:p-12 shadow-2xl">
+            <div className="w-16 h-16 sm:w-20 sm:h-20 mx-auto mb-6 sm:mb-8 bg-gradient-to-r from-blue-500 to-purple-600 rounded-2xl sm:rounded-3xl flex items-center justify-center shadow-xl">
+              <Users className="w-8 h-8 sm:w-10 sm:h-10 text-white" />
+            </div>
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white mb-4 sm:mb-6 px-2">THAM GIA ĐỘI NGŨ FTC</h2>
+            <p className="text-base sm:text-lg lg:text-xl text-white/80 mb-6 sm:mb-8 leading-relaxed italic px-4">
               Khám phá cơ hội phát triển bản thân và đóng góp cho cộng đồng FinTech
             </p>
-            <div className="flex flex-wrap justify-center gap-4">
+            <div className="flex flex-wrap justify-center gap-3 sm:gap-4">
               <a 
                 href="https://ftc-websites.vercel.app/ung-tuyen" 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="px-8 py-4 bg-gradient-to-r from-blue-500 to-purple-600 rounded-2xl text-white font-bold hover:shadow-xl hover:scale-105 transition-all cursor-pointer"
+                className="px-6 sm:px-8 py-3 sm:py-4 bg-gradient-to-r from-blue-500 to-purple-600 rounded-xl sm:rounded-2xl text-white font-bold hover:shadow-xl hover:scale-105 transition-all cursor-pointer text-sm sm:text-base"
               >
                 Đăng ký tham gia
               </a>
