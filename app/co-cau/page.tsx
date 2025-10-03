@@ -4,7 +4,52 @@ import { Navigation } from "@/components/navigation"
 import { Footer } from "@/components/footer"
 import { PageHeader } from "@/components/page-header"
 import { Shield, BookOpen, Calendar, Megaphone, Wallet, Users, Handshake, Star, TrendingUp, Target, Sparkles, Zap, ArrowRight, Search, FileText, Settings, Palette, Video, GraduationCap, DollarSign, UserCheck, Calculator, Heart } from "lucide-react"
-import Image from "next/image"
+
+// Department Photos - Using local images from public folder
+const departmentPhotos = [
+  {
+    title: "BAN ĐIỀU HÀNH",
+    photos: [
+      "https://placeholder.com/600x400", // No image available for executive board
+      "https://placeholder.com/600x400"
+    ]
+  },
+  {
+    title: "BAN HỌC THUẬT", 
+    photos: [
+      "/BAN HỌC THUẬT.JPG", // Local image from public folder
+      "/BAN HỌC THUẬT.JPG"  // Same image for both slots
+    ]
+  },
+  {
+    title: "BAN SỰ KIỆN",
+    photos: [
+      "/BAN SỰ KIỆN.JPG", // Local image from public folder
+      "/BAN SỰ KIỆN.JPG"  // Same image for both slots
+    ]
+  },
+  {
+    title: "BAN TRUYỀN THÔNG",
+    photos: [
+      "/BAN TRUYỀN THÔNG.JPG", // Local image from public folder
+      "/BAN TRUYỀN THÔNG.JPG"  // Same image for both slots
+    ]
+  },
+  {
+    title: "BAN TÀI CHÍNH CÁ NHÂN",
+    photos: [
+      "/BAN TÀI CHÍNH CÁ NHÂN.JPG", // Local image from public folder
+      "/BAN TÀI CHÍNH CÁ NHÂN.JPG"  // Same image for both slots
+    ]
+  },
+  {
+    title: "BAN NHÂN SỰ",
+    photos: [
+      "/BAN NHÂN SỰ.JPG", // Local image from public folder
+      "/BAN NHÂN SỰ.JPG"  // Same image for both slots
+    ]
+  }
+]
 
 const organizationData = [
   {
@@ -14,8 +59,8 @@ const organizationData = [
     bgColor: "bg-red-500/10",
     borderColor: "border-red-500/20",
     cardGradient: "from-red-500 to-pink-500",
-    category: "Điều hành câu lạc bộ",
-    image: "/BAN HỌC THUẬT.JPG", // Using placeholder - add actual image later
+    category: "Điều hành câu lạc bộ ",
+    imageAlt: "Ban Điều hành FTC - Lãnh đạo câu lạc bộ",
     quickFeatures: [
       { icon: Target, text: "Chiến lược", color: "text-red-400" },
       { icon: Zap, text: "Lãnh đạo", color: "text-pink-400" },
@@ -36,7 +81,7 @@ const organizationData = [
     borderColor: "border-blue-500/20",
     cardGradient: "from-blue-500 to-cyan-500",
     category: "Phụ trách chuyên môn học thuật",
-    image: "/BAN HỌC THUẬT.JPG",
+    imageAlt: "Ban Học thuật FTC - Chuyên môn FinTech",
     quickFeatures: [
       { icon: Search, text: "Nghiên cứu về lĩnh vực Fintech", color: "text-blue-400" },
       { icon: Target, text: "Đảm bảo chuyên môn", color: "text-cyan-400" },
@@ -57,7 +102,7 @@ const organizationData = [
     borderColor: "border-green-500/20",
     cardGradient: "from-green-500 to-emerald-500",
     category: "Phụ trách xử lý hồ sơ giấy tờ",
-    image: "/BAN SỰ KIỆN.JPG",
+    imageAlt: "Ban Sự kiện FTC - Tổ chức sự kiện",
     quickFeatures: [
       { icon: FileText, text: "Chuẩn bị hồ sơ", color: "text-green-400" },
       { icon: Settings, text: "Xử lý giấy tờ", color: "text-emerald-400" },
@@ -78,7 +123,7 @@ const organizationData = [
     borderColor: "border-purple-500/20",
     cardGradient: "from-purple-500 to-violet-500",
     category: "Phụ trách mảng truyền thông",
-    image: "/BAN TRUYỀN THÔNG.JPG",
+    imageAlt: "Ban Truyền thông FTC - Marketing và Design",
     quickFeatures: [
       { icon: TrendingUp, text: "Phát triển truyền thông", color: "text-purple-400" },
       { icon: Palette, text: "Thiết kế ấn phẩm", color: "text-violet-400" },
@@ -99,7 +144,7 @@ const organizationData = [
     borderColor: "border-amber-700/20",
     cardGradient: "from-amber-700 to-yellow-800",
     category: "Phụ trách chuyên môn về mảng tài chính cá nhân",
-    image: "/BAN TÀI CHÍNH CÁ NHÂN.JPG",
+    imageAlt: "Ban Tài chính cá nhân FTC - Giáo dục tài chính",
     quickFeatures: [
       { icon: GraduationCap, text: "Giáo dục về tài chính cá nhân", color: "text-amber-400" },
       { icon: Wallet, text: "Làm việc với bộ bài MoneyWe", color: "text-yellow-400" },
@@ -120,7 +165,7 @@ const organizationData = [
     borderColor: "border-indigo-500/20",
     cardGradient: "from-indigo-500 to-blue-500",
     category: "Phụ trách quản lý phân công nhân sự",
-    image: "/BAN NHÂN SỰ.JPG",
+    imageAlt: "Ban Nhân sự FTC - Quản lý nhân lực",
     quickFeatures: [
       { icon: UserCheck, text: "Quản lý nhân sự", color: "text-indigo-400" },
       { icon: Calculator, text: "Xây dựng dự trù kinh phí", color: "text-blue-400" },
@@ -191,94 +236,105 @@ export default function CoPage() {
         badgeShadowColor="shadow-emerald-500/10"
       />
 
-      {/* Department Image Gallery - Mobile First */}
-      <section className="py-12 px-4 sm:px-6 lg:px-8">
+      {/* Department Photos Gallery */}
+      <section className="py-16 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-4">
-              Đội Ngũ FTC
-            </h2>
-            <p className="text-lg text-white/80 max-w-2xl mx-auto">
-              Gặp gỡ các ban chuyên môn và đội ngũ điều hành của câu lạc bộ
+          {/* Section Header */}
+          <div className="text-center mb-16">
+            <div className="w-20 h-20 mx-auto mb-8 bg-gradient-to-r from-blue-500 to-purple-600 rounded-3xl flex items-center justify-center shadow-2xl">
+              <Users className="w-10 h-10 text-white" />
+            </div>
+            <h2 className="text-4xl lg:text-5xl font-bold text-white mb-6">HÌNH ẢNH CÁC BAN</h2>
+            <p className="text-xl text-white/80 leading-relaxed italic max-w-3xl mx-auto">
+              Khám phá đội ngũ thành viên năng động và chuyên nghiệp của từng ban
             </p>
           </div>
-          
-          {/* Mobile-First Grid Layout */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
-            {organizationData.map((dept, idx) => {
+
+          {/* Department Photos Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {organizationData.map((dept, index) => {
               const IconComponent = dept.icon
+              const deptPhotos = departmentPhotos.find(d => d.title === dept.title)
               
               return (
                 <div key={dept.title} className="group relative">
-                  <div className="relative bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-xl rounded-2xl lg:rounded-3xl border border-white/20 overflow-hidden transition-all duration-500 group-hover:scale-105 group-hover:shadow-2xl group-hover:shadow-blue-500/20">
+                  {/* Photo Card */}
+                  <div className="relative bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-xl rounded-3xl border border-white/20 overflow-hidden transition-all duration-700 group-hover:scale-105 group-hover:shadow-2xl group-hover:shadow-blue-500/20 group-hover:border-blue-400/30">
                     
-                    {/* Image Section */}
-                    <div className="relative h-48 sm:h-56 lg:h-64 overflow-hidden">
-                      <Image
-                        src={dept.image}
-                        alt={`${dept.title} - ${dept.category}`}
-                        fill
-                        className="object-cover transition-transform duration-700 group-hover:scale-110"
-                        priority={idx < 3}
-                      />
-                      {/* Gradient Overlay */}
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
-                      
-                      {/* Department Info Overlay */}
-                      <div className="absolute bottom-4 left-4 right-4">
-                        <div className="flex items-center gap-3 mb-2">
-                          <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-white/20 to-white/10 backdrop-blur-xl border border-white/30 flex items-center justify-center">
-                            <IconComponent className="w-4 h-4 text-white" />
-                          </div>
-                          <div className="flex-1">
-                            <h3 className="text-lg font-bold text-white drop-shadow-lg">{dept.title}</h3>
-                            <p className="text-xs text-white/90 drop-shadow-lg">{dept.category}</p>
-                          </div>
-                        </div>
-                        
-                        {/* Quick Features */}
-                        <div className="flex flex-wrap gap-1">
-                          {dept.quickFeatures?.slice(0, 2).map((feature, index) => {
-                            const FeatureIcon = feature.icon
-                            return (
-                              <div key={index} className="flex items-center gap-1 text-xs text-white/90 bg-white/10 backdrop-blur-sm px-2 py-1 rounded-full border border-white/20">
-                                <FeatureIcon className={`w-3 h-3 ${feature.color}`} />
-                                <span>{feature.text}</span>
+                    {/* Image Container */}
+                    <div className="aspect-video relative overflow-hidden">
+                      {/* Display first photo or placeholder */}
+                      {deptPhotos && deptPhotos.photos[0] ? (
+                        <div className="relative w-full h-full">
+                          <img 
+                            src={deptPhotos.photos[0]} 
+                            alt={dept.imageAlt || `${dept.title} - Hình ảnh nhóm`}
+                            className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                            onError={(e: React.SyntheticEvent<HTMLImageElement, Event>) => {
+                              // Fallback to placeholder if image fails to load
+                              const target = e.target as HTMLImageElement
+                              target.style.display = 'none'
+                              const nextElement = target.nextElementSibling as HTMLElement
+                              if (nextElement) nextElement.style.display = 'flex'
+                            }}
+                          />
+                          {/* Fallback placeholder */}
+                          <div className="hidden absolute inset-0 bg-gradient-to-br from-white/10 to-white/5 items-center justify-center">
+                            <div className="text-center p-6">
+                              <div className="w-16 h-16 mx-auto mb-4 rounded-2xl bg-white/20 backdrop-blur-xl border border-white/30 flex items-center justify-center shadow-xl">
+                                <IconComponent className="w-8 h-8 text-white drop-shadow-lg" />
                               </div>
-                            )
-                          })}
+                              <h3 className="text-xl font-bold text-white mb-2">{dept.title}</h3>
+                              <p className="text-white/60 text-sm">Hình ảnh sẽ được cập nhật sớm</p>
+                            </div>
+                          </div>
+                          
+                          {/* Image Overlay */}
+                          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+                          
+                          {/* Content Overlay */}
+                          <div className="absolute inset-0 flex items-end justify-center p-6">
+                            <div className="text-center">
+                              <div className="flex items-center justify-center gap-3 mb-3">
+                                <div className="w-12 h-12 rounded-2xl bg-white/20 backdrop-blur-xl border border-white/30 flex items-center justify-center shadow-xl">
+                                  <IconComponent className="w-6 h-6 text-white drop-shadow-lg" />
+                                </div>
+                              </div>
+                              <h3 className="text-xl font-bold text-white drop-shadow-lg">
+                                {dept.title}
+                              </h3>
+                            </div>
+                          </div>
                         </div>
-                      </div>
+                      ) : (
+                        /* Placeholder when no image */
+                        <div className="w-full h-full bg-gradient-to-br from-white/10 to-white/5 flex items-center justify-center relative">
+                          <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 via-purple-500/10 to-pink-500/10 opacity-50" />
+                          
+                          <div className="relative z-10 text-center p-6">
+                            <div className="w-20 h-20 mx-auto mb-6 rounded-3xl bg-gradient-to-br from-white/20 to-white/10 backdrop-blur-xl border border-white/30 flex items-center justify-center shadow-2xl">
+                              <IconComponent className="w-10 h-10 text-white drop-shadow-lg" />
+                            </div>
+                            <h3 className="text-2xl font-bold text-white mb-3">{dept.title}</h3>
+                            <p className="text-white/60 text-sm mb-4">{dept.imageAlt}</p>
+                            <div className="flex items-center justify-center gap-2 text-white/50 text-xs">
+                              <div className="w-2 h-2 bg-white/50 rounded-full animate-pulse" />
+                              <span>Hình ảnh sẽ được cập nhật sớm</span>
+                            </div>
+                          </div>
+                        </div>
+                      )}
                     </div>
                     
-                    {/* Content Section */}
-                    <div className="p-4 lg:p-6">
-                      <div className="space-y-3">
-                        {/* Responsibilities Preview */}
-                        <div className="space-y-2">
-                          {dept.responsibilities.slice(0, 2).map((responsibility, index) => (
-                            <div key={index} className="flex items-start gap-2">
-                              <div className="w-4 h-4 rounded-full bg-gradient-to-r from-blue-400/20 to-purple-400/20 border border-blue-400/30 flex items-center justify-center mt-1 flex-shrink-0">
-                                <span className="text-xs font-bold text-blue-300">{index + 1}</span>
-                              </div>
-                              <p className="text-white/80 text-xs leading-relaxed line-clamp-2">
-                                {responsibility}
-                              </p>
-                            </div>
-                          ))}
-                        </div>
-                        
-                        {/* View More Indicator */}
-                        <div className="pt-2 border-t border-white/10">
-                          <div className="flex items-center justify-between">
-                            <span className="text-xs text-white/60">
-                              +{dept.responsibilities.length - 2} nhiệm vụ khác
-                            </span>
-                            <div className="w-6 h-6 rounded-full bg-gradient-to-r from-blue-500/20 to-purple-500/20 border border-blue-400/30 flex items-center justify-center">
-                              <ArrowRight className="w-3 h-3 text-blue-300" />
-                            </div>
-                          </div>
-                        </div>
+                    {/* Department Badge */}
+                    <div className={`absolute top-4 right-4 w-10 h-10 bg-gradient-to-r ${dept.cardGradient} rounded-full flex items-center justify-center shadow-lg border-2 border-white/20 group-hover:scale-110 transition-transform duration-300`}>
+                      <span className="text-white text-sm font-bold">📸</span>
+                    </div>
+                    
+                    {/* Category Badge */}
+                    <div className="absolute top-4 left-4">
+                      <div className={`px-3 py-1.5 rounded-full text-xs font-bold backdrop-blur-xl border shadow-lg text-white bg-gradient-to-r ${dept.cardGradient}`}>
+                        {dept.category}
                       </div>
                     </div>
                   </div>
@@ -289,21 +345,13 @@ export default function CoPage() {
         </div>
       </section>
 
-      {/* Detailed Organization Cards */}
+      {/* Modern Organization Cards */}
       <section className="py-16 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-4">
-              Chi Tiết Các Ban
-            </h2>
-            <p className="text-lg text-white/80 max-w-2xl mx-auto">
-              Tìm hiểu sâu hơn về vai trò và trách nhiệm của từng ban
-            </p>
-          </div>
-          
           <div className="grid gap-8 lg:gap-12">
             {organizationData.map((dept, idx) => {
               const IconComponent = dept.icon
+              const deptPhotos = departmentPhotos.find(d => d.title === dept.title)
               
               return (
                 <div key={dept.title} className="group relative">
@@ -314,69 +362,98 @@ export default function CoPage() {
                     <div className="absolute inset-0 bg-gradient-to-br from-transparent via-blue-500/5 to-purple-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
                     
                     <div className="relative z-10 p-6 lg:p-8">
-                      {/* Header Section with Image */}
-                      <div className="flex flex-col xl:flex-row gap-6 mb-8">
+                      {/* Header Section */}
+                      <div className="flex flex-col lg:flex-row gap-6 mb-8">
                         
-                        {/* Department Image Section */}
-                        <div className="xl:w-2/5">
-                          <div className="relative group/image">
-                            <div className="relative overflow-hidden rounded-2xl lg:rounded-3xl shadow-2xl">
-                              <Image
-                                src={dept.image}
-                                alt={`${dept.title} - ${dept.category}`}
-                                width={600}
-                                height={400}
-                                className="w-full h-64 sm:h-80 lg:h-96 object-cover transition-transform duration-700 group-hover/image:scale-105"
-                                priority={idx < 2}
-                              />
-                              {/* Image Overlay */}
-                              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover/image:opacity-100 transition-opacity duration-500" />
-                              <div className="absolute bottom-4 left-4 right-4 opacity-0 group-hover/image:opacity-100 transition-opacity duration-500">
-                                <div className="flex items-center gap-3">
-                                  <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-white/20 to-white/10 backdrop-blur-xl border border-white/30 flex items-center justify-center shadow-xl">
-                                    <IconComponent className="w-5 h-5 text-white drop-shadow-lg" />
-                                  </div>
-                                  <div>
-                                    <h3 className="text-lg font-bold text-white drop-shadow-lg">{dept.title}</h3>
-                                    <p className="text-sm text-white/90 drop-shadow-lg">{dept.category}</p>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-
                         {/* Department Info Section */}
-                        <div className="xl:w-3/5">
-                          <div className="space-y-6">
-                            {/* Category Badge */}
-                            <div className="flex flex-wrap items-center gap-3">
+                        <div className="lg:w-2/5">
+              <div className="space-y-4">
+                            {/* Category Info */}
+                            <div className="flex flex-wrap items-center gap-3 mb-4">
                               <div className={`px-4 py-2 rounded-full text-xs font-bold backdrop-blur-xl border shadow-lg text-white bg-gradient-to-r ${dept.cardGradient}`}>
                                 {dept.category}
-                              </div>
-                            </div>
+            </div>
+          </div>
 
                             {/* Title with Icon */}
-                            <div className="flex items-center gap-4 mb-6">
+              <div className="flex items-center gap-4 mb-6">
                               <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-white/20 to-white/10 backdrop-blur-xl border border-white/30 flex items-center justify-center shadow-xl">
                                 <IconComponent className="w-6 h-6 text-white drop-shadow-lg" />
-                              </div>
+                  </div>
                               <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold bg-gradient-to-r from-white via-blue-100 to-white bg-clip-text text-transparent leading-tight">
                                 {dept.title}
-                              </h2>
-                            </div>
+                </h2>
+              </div>
 
                             {/* Quick Features */}
                             <div className="flex flex-wrap gap-2">
                               {dept.quickFeatures?.map((feature, index) => {
-                                const FeatureIcon = feature.icon
+                                const IconComponent = feature.icon
                                 return (
-                                  <div key={index} className="flex items-center gap-2 text-xs text-white/80 bg-white/5 backdrop-blur-sm px-3 py-2 rounded-full border border-white/20 hover:bg-white/10 transition-all duration-300">
-                                    <FeatureIcon className={`w-3 h-3 ${feature.color}`} />
+                                  <div key={index} className="flex items-center gap-2 text-xs text-white/80 bg-white/5 backdrop-blur-sm px-2 py-1.5 rounded-full border border-white/20">
+                                    <IconComponent className={`w-3 h-3 ${feature.color}`} />
                                     <span>{feature.text}</span>
                                   </div>
                                 )
                               })}
+                    </div>
+                        </div>
+
+                        {/* Department Image Section */}
+                        <div className="lg:w-3/5">
+                          <div className="relative group/image">
+                            {/* Image Container */}
+                            <div className="relative overflow-hidden rounded-2xl lg:rounded-3xl shadow-2xl">
+                              {deptPhotos && deptPhotos.photos[1] ? (
+                                <div className="aspect-video">
+                                  <img 
+                                    src={deptPhotos.photos[1]} 
+                                    alt={`${dept.title} - Team photo`}
+                                    className="w-full h-full object-cover transition-transform duration-500 group-hover/image:scale-110"
+                                    onError={(e: React.SyntheticEvent<HTMLImageElement, Event>) => {
+                                      const target = e.target as HTMLImageElement
+                                      target.style.display = 'none'
+                                      const nextElement = target.nextElementSibling as HTMLElement
+                                      if (nextElement) nextElement.style.display = 'flex'
+                                    }}
+                                  />
+                                  {/* Fallback */}
+                                  <div className="hidden aspect-video bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-xl border border-white/20 items-center justify-center">
+                                    <div className="text-center p-4">
+                                      <div className="w-16 h-16 mx-auto mb-4 rounded-2xl bg-gradient-to-br from-white/20 to-white/10 backdrop-blur-xl border border-white/30 flex items-center justify-center shadow-xl">
+                                        <IconComponent className="w-8 h-8 text-white drop-shadow-lg" />
+                                      </div>
+                                      <p className="text-white/60 text-sm font-medium">{dept.imageAlt}</p>
+                                      <p className="text-white/40 text-xs mt-1">Hình ảnh sẽ được cập nhật sớm</p>
+                                    </div>
+                                  </div>
+                                </div>
+                              ) : (
+                                <div className="aspect-video bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-xl border border-white/20 flex items-center justify-center">
+                                  <div className="text-center p-4">
+                                    <div className="w-16 h-16 mx-auto mb-4 rounded-2xl bg-gradient-to-br from-white/20 to-white/10 backdrop-blur-xl border border-white/30 flex items-center justify-center shadow-xl">
+                                      <IconComponent className="w-8 h-8 text-white drop-shadow-lg" />
+                                    </div>
+                                    <p className="text-white/60 text-sm font-medium">{dept.imageAlt}</p>
+                                    <p className="text-white/40 text-xs mt-1">Hình ảnh sẽ được cập nhật sớm</p>
+                                  </div>
+                                </div>
+                              )}
+                              
+                              {/* Overlay with department info */}
+                              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover/image:opacity-100 transition-opacity duration-500">
+                                <div className="absolute bottom-4 left-4 right-4">
+                                  <div className="flex items-center gap-2 text-white text-sm font-medium">
+                                    <div className="w-2 h-2 bg-white rounded-full animate-pulse" />
+                                    <span>Thành viên {dept.title}</span>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            
+                            {/* Image Badge */}
+                            <div className={`absolute -top-2 -right-2 w-8 h-8 bg-gradient-to-r ${dept.cardGradient} rounded-full flex items-center justify-center shadow-lg border-2 border-white/20`}>
+                              <span className="text-white text-xs font-bold">📸</span>
                             </div>
                           </div>
                         </div>
@@ -533,12 +610,6 @@ export default function CoPage() {
         }
         .animate-float-reverse {
           animation: float-reverse 20s ease-in-out infinite;
-        }
-        .line-clamp-2 {
-          display: -webkit-box;
-          -webkit-line-clamp: 2;
-          -webkit-box-orient: vertical;
-          overflow: hidden;
         }
       `}</style>
     </div>
