@@ -91,4 +91,42 @@
 - **AML**: Chống rửa tiền
 - **GDPR**: Bảo vệ dữ liệu cá nhân
 
-#fintech #cơ-bản #kiến-thức #công-nghệ
+## 🌐 FinTech trong Website FTC
+
+### Công nghệ được sử dụng
+- **Next.js**: Framework React hiện đại cho web app
+- **TypeScript**: Type safety cho code JavaScript
+- **Tailwind CSS**: Utility-first CSS framework
+- **Supabase**: Backend-as-a-Service cho database
+- **Vercel**: Platform deployment hiện đại
+
+### AI và Machine Learning
+- **Gemini API**: AI chatbot từ Google
+- **RAG System**: Retrieval-Augmented Generation
+- **Natural Language Processing**: Xử lý ngôn ngữ tự nhiên
+- **Knowledge Base**: Hệ thống quản lý kiến thức thông minh
+
+### Tính năng FinTech trong website
+- **Chatbot tư vấn**: AI trả lời câu hỏi về FinTech
+- **Diễn đàn thảo luận**: Cộng đồng học hỏi kiến thức
+- **Tìm kiếm thông minh**: 6 thuật toán sắp xếp khác nhau
+- **Dashboard analytics**: Thống kê và phân tích dữ liệu
+- **User authentication**: Xác thực người dùng an toàn
+
+### Xu hướng FinTech 2024-2025
+- **AI Integration**: Tích hợp AI vào mọi dịch vụ tài chính
+- **Web3 & DeFi**: Tài chính phi tập trung phát triển mạnh
+- **Green Finance**: Tài chính xanh và bền vững
+- **Embedded Finance**: Tài chính nhúng vào các ứng dụng
+- **Open Banking**: Ngân hàng mở và API banking
+- **RegTech**: Công nghệ hỗ trợ tuân thủ quy định
+
+### Kỹ năng cần thiết cho FinTech
+- **Programming**: Python, JavaScript, Solidity
+- **Data Science**: SQL, R, Python, Machine Learning
+- **Blockchain**: Smart contracts, DeFi protocols
+- **Cloud Computing**: AWS, Azure, Google Cloud
+- **Cybersecurity**: Bảo mật thông tin, encryption
+- **Business Analysis**: Phân tích kinh doanh, UX/UI
+
+#fintech #cơ-bản #kiến-thức #công-nghệ #ai #website #xu-hướng

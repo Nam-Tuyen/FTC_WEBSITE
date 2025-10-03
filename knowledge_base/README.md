@@ -1,30 +1,46 @@
 # 📚 FTC Knowledge Base
 
-Hệ thống quản lý kiến thức cho chatbot FTC. Chỉ cần thêm file vào đây là chatbot sẽ tự động học được!
+Hệ thống quản lý kiến thức cho chatbot FTC và website. Chỉ cần thêm file vào đây là chatbot sẽ tự động học được!
 
-## 🗂️ Cấu trúc thư mục
+## 🗂️ Cấu trúc thư mục hiện tại
 
 ```
 knowledge_base/
 ├── ftc/                    # Thông tin về FTC
-│   ├── general.md         # Thông tin chung
-│   ├── activities.md      # Hoạt động
-│   ├── departments.md     # Các ban
-│   └── recruitment.md     # Tuyển thành viên
+│   ├── general.md         # Thông tin chung về câu lạc bộ
+│   ├── activities.md      # Hoạt động và sự kiện
+│   └── departments.md     # Cơ cấu tổ chức các ban
 ├── fintech/               # Kiến thức FinTech
-│   ├── basics.md         # Kiến thức cơ bản
-│   ├── trends.md         # Xu hướng
-│   └── careers.md        # Nghề nghiệp
-├── events/                # Sự kiện
-│   ├── upcoming.md       # Sự kiện sắp tới
-│   └── past.md          # Sự kiện đã qua
-├── faq/                   # Câu hỏi thường gặp
-│   ├── general.md        # FAQ chung
-│   └── technical.md      # FAQ kỹ thuật
-└── templates/             # Templates mẫu
-    ├── event.md          # Template sự kiện
-    └── faq.md           # Template FAQ
+│   └── basics.md         # Kiến thức cơ bản về FinTech
+└── faq/                   # Câu hỏi thường gặp
+    └── general.md        # FAQ chung về FTC và website
 ```
+
+## 🌐 Tính năng website hiện tại
+
+### 🤖 Chatbot thông minh
+- **Chế độ câu lạc bộ**: Tư vấn về FTC, hoạt động, tuyển thành viên
+- **Chế độ FinTech**: Giải đáp kiến thức công nghệ tài chính
+- **Tích hợp RAG**: Sử dụng kiến thức từ knowledge base
+- **Giao diện thân thiện**: Chat real-time với AI
+
+### 💬 Diễn đàn tương tác
+- **Đăng câu hỏi**: Hỏi đáp về FinTech và FTC
+- **Thảo luận**: Tương tác với cộng đồng
+- **Tìm kiếm thông minh**: 6 cách sắp xếp khác nhau
+- **Phân loại**: Theo danh mục và chủ đề
+- **Hệ thống like**: Đánh giá câu hỏi hay
+
+### 👤 Hệ thống đăng ký/đăng nhập
+- **Đăng ký thành viên**: Form đăng ký chi tiết
+- **Câu hỏi bảo mật**: 3 câu hỏi để khôi phục tài khoản
+- **Bảo mật**: Mã hóa thông tin người dùng
+- **Quản lý profile**: Cập nhật thông tin cá nhân
+
+### 📊 Thống kê và phân tích
+- **Dashboard**: Thống kê câu hỏi, phản hồi, lượt thích
+- **Thành viên hoạt động**: Theo dõi người dùng tích cực
+- **Xu hướng**: Câu hỏi được quan tâm nhất
 
 ## ✍️ Cách thêm kiến thức mới
 

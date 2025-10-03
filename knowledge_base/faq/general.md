@@ -71,11 +71,39 @@ Có! Chúng mình có:
 - **Workshop**: CV, phỏng vấn, soft skills
 - **Job board**: Thông tin việc làm, thực tập
 
+## 🌐 Website và Công nghệ
+
+### Website FTC có những tính năng gì?
+- **Chatbot AI**: Tư vấn thông minh 24/7 về FTC và FinTech
+- **Diễn đàn**: Đăng câu hỏi, thảo luận với cộng đồng
+- **Tìm kiếm**: 6 cách sắp xếp (mới nhất, cũ nhất, nhiều like, nhiều phản hồi, A-Z, xu hướng)
+- **Đăng ký thành viên**: Form đăng ký với câu hỏi bảo mật
+- **Dashboard**: Thống kê hoạt động cộng đồng
+
+### Làm sao để sử dụng chatbot?
+1. Truy cập website FTC
+2. Click vào icon chatbot ở góc màn hình
+3. Chọn chế độ "Câu lạc bộ" hoặc "FinTech"
+4. Đặt câu hỏi và nhận câu trả lời thông minh
+
+### Diễn đàn hoạt động như thế nào?
+- **Đăng câu hỏi**: Chia sẻ thắc mắc về FinTech hoặc FTC
+- **Trả lời**: Thành viên khác có thể trả lời và thảo luận
+- **Like**: Đánh giá câu hỏi hay
+- **Tìm kiếm**: Sử dụng từ khóa hoặc bộ lọc danh mục
+
+### Website có bảo mật không?
+Có! Website sử dụng:
+- **Mã hóa**: Bảo vệ thông tin cá nhân
+- **Xác thực**: Hệ thống đăng nhập an toàn
+- **Câu hỏi bảo mật**: 3 câu hỏi để khôi phục tài khoản
+- **HTTPS**: Kết nối bảo mật
+
 ## 📞 Liên hệ
 
 ### Làm sao để liên hệ với FTC?
+- **Website chính thức**: [FTC Website](https://ftc-website.vercel.app)
 - **Fanpage**: FTC - UEL
-- **Website**: ftc.uel.edu.vn
 - **Email**: ftc@uel.edu.vn
 - **Zalo**: Nhóm FTC Official
 
@@ -85,4 +113,7 @@ FTC có không gian hoạt động tại Khoa Tài chính - Ngân hàng, UEL.
 ### Có thể ghé thăm FTC không?
 Chắc chắn rồi! Bạn có thể đến trong giờ hoạt động hoặc liên hệ trước để hẹn gặp.
 
-#faq #câu-hỏi #ftc #tham-gia
+### Website có hỗ trợ mobile không?
+Có! Website được thiết kế responsive, hoạt động tốt trên mọi thiết bị từ điện thoại đến máy tính.
+
+#faq #câu-hỏi #ftc #tham-gia #website #công-nghệ
