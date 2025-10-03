@@ -4,7 +4,7 @@ import { Navigation } from "@/components/navigation"
 import { Footer } from "@/components/footer"
 import { PageHeader } from "@/components/page-header"
 import { Shield, BookOpen, Calendar, Megaphone, Wallet, Users, Handshake, Star, TrendingUp, Target, Sparkles, Zap, ArrowRight, Search, FileText, Settings, Palette, Video, GraduationCap, DollarSign, UserCheck, Calculator, Heart, Image as ImageIcon, ChevronLeft, ChevronRight, X } from "lucide-react"
-import { useState } from "react"
+import React, { useState, useEffect } from "react"
 
 const organizationData = [
   {
@@ -192,7 +192,7 @@ function DepartmentPhotoCarousel({ departments }: { departments: typeof organiza
   }
 
   // Auto-play functionality
-  React.useEffect(() => {
+  useEffect(() => {
     const interval = setInterval(() => {
       if (!isTransitioning) {
         nextPhoto()
