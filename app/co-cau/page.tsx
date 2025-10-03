@@ -457,103 +457,98 @@ export default function CoPage() {
         </div>
       </section>
 
-      {/* Futuristic Cooperation Principles - Mobile Optimized */}
-      <section className="py-8 sm:py-12 lg:py-16 px-3 sm:px-4 lg:px-8 mt-6 sm:mt-8">
-        <div className="max-w-7xl mx-auto">
-          {/* Futuristic Section Header - Mobile Optimized */}
-          <div className="text-center mb-8 sm:mb-12 lg:mb-16">
-            <div className="relative inline-block mb-6 sm:mb-8">
-              <div className="w-16 h-16 sm:w-20 sm:h-20 lg:w-24 lg:h-24 mx-auto bg-gradient-to-r from-cyan-500 via-blue-600 to-purple-600 rounded-2xl sm:rounded-3xl flex items-center justify-center shadow-2xl shadow-cyan-500/30 relative overflow-hidden">
-                <div className="absolute inset-0 bg-gradient-to-r from-cyan-400/20 via-blue-500/20 to-purple-500/20 animate-pulse" />
-                <Handshake className="w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 text-white relative z-10" />
-                <div className="absolute -top-1 -right-1 w-4 h-4 sm:w-5 sm:h-5 lg:w-6 lg:h-6 bg-gradient-to-r from-green-400 to-emerald-500 rounded-full animate-ping" />
+      {/* Modern Compact Cooperation Principles */}
+      <section className="py-6 sm:py-8 px-3 sm:px-4 lg:px-8 mt-4 sm:mt-6">
+        <div className="max-w-5xl mx-auto">
+          {/* Compact Section Header */}
+          <div className="text-center mb-6 sm:mb-8">
+            <div className="relative inline-block mb-4 sm:mb-6">
+              <div className="w-12 h-12 sm:w-14 sm:h-14 mx-auto bg-gradient-to-r from-emerald-500 via-cyan-500 to-blue-500 rounded-xl sm:rounded-2xl flex items-center justify-center shadow-lg relative overflow-hidden">
+                <div className="absolute inset-0 bg-gradient-to-r from-emerald-400/20 via-cyan-400/20 to-blue-400/20 animate-pulse" />
+                <Handshake className="w-6 h-6 sm:w-7 sm:h-7 text-white relative z-10" />
               </div>
-              <div className="absolute -inset-2 sm:-inset-4 bg-gradient-to-r from-cyan-500/20 via-blue-500/20 to-purple-500/20 rounded-2xl sm:rounded-3xl blur-xl animate-pulse" />
+              <div className="absolute -inset-1 sm:-inset-2 bg-gradient-to-r from-emerald-500/10 via-cyan-500/10 to-blue-500/10 rounded-xl sm:rounded-2xl blur-lg animate-pulse" />
             </div>
-            <h2 className="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl 2xl:text-6xl font-bold text-white mb-4 sm:mb-6 relative px-2">
-              <span className="bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-600 bg-clip-text text-transparent">
+            <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold text-white mb-3 sm:mb-4 relative">
+              <span className="bg-gradient-to-r from-emerald-400 via-cyan-400 to-blue-500 bg-clip-text text-transparent">
                 NGUYÊN TẮC PHỐI HỢP
               </span>
-              <div className="absolute -inset-1 sm:-inset-2 bg-gradient-to-r from-cyan-500/10 via-blue-500/10 to-purple-500/10 rounded-xl sm:rounded-2xl blur-lg" />
             </h2>
-            <p className="text-base sm:text-lg lg:text-xl xl:text-2xl text-white/80 leading-relaxed max-w-4xl mx-auto relative px-4">
-              <span className="bg-gradient-to-r from-white/90 to-white/60 bg-clip-text text-transparent">
-                Quy trình phối hợp chuyên nghiệp giữa các ban để đảm bảo hiệu quả tối đa
-              </span>
+            <p className="text-sm sm:text-base text-white/70 leading-relaxed max-w-2xl mx-auto px-2">
+              Quy trình phối hợp chuyên nghiệp giữa các ban để đảm bảo hiệu quả tối đa
             </p>
           </div>
 
-          {/* Futuristic Process Flow - Mobile Optimized */}
+          {/* Compact Process Flow */}
           <div className="relative">
-            {/* Animated Background Grid */}
-            <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/5 via-blue-500/5 to-purple-500/5 rounded-2xl sm:rounded-3xl blur-3xl" />
+            {/* Subtle Background */}
+            <div className="absolute inset-0 bg-gradient-to-r from-emerald-500/3 via-cyan-500/3 to-blue-500/3 rounded-xl sm:rounded-2xl blur-2xl" />
             
-            {/* Connection Lines - Desktop */}
-            <div className="hidden lg:block absolute left-1/2 top-0 bottom-0 w-1 bg-gradient-to-b from-cyan-500 via-blue-500 to-purple-500 transform -translate-x-1/2 opacity-40">
-              <div className="absolute inset-0 bg-gradient-to-b from-cyan-500/50 via-blue-500/50 to-purple-500/50 animate-pulse" />
+            {/* Connection Line - Desktop */}
+            <div className="hidden lg:block absolute left-1/2 top-0 bottom-0 w-0.5 bg-gradient-to-b from-emerald-500 via-cyan-500 to-blue-500 transform -translate-x-1/2 opacity-30">
+              <div className="absolute inset-0 bg-gradient-to-b from-emerald-500/40 via-cyan-500/40 to-blue-500/40 animate-pulse" />
             </div>
             
-            <div className="space-y-6 sm:space-y-8 lg:space-y-12 relative z-10">
+            <div className="space-y-4 sm:space-y-6 relative z-10">
               {cooperationPrinciples.map((principle, index) => {
                 const IconComponent = principle.icon
                 const isEven = index % 2 === 0
                 
                 return (
                   <div key={index} className={`relative flex items-center ${isEven ? 'lg:flex-row' : 'lg:flex-row-reverse'}`}>
-                    {/* Futuristic Step Circle - Desktop */}
+                    {/* Compact Step Circle - Desktop */}
                     <div className="absolute left-1/2 transform -translate-x-1/2 z-20 hidden lg:block">
                       <div className="relative">
-                        <div className="w-16 h-16 xl:w-20 xl:h-20 bg-gradient-to-br from-white/20 to-white/10 backdrop-blur-xl border-2 border-white/30 rounded-2xl xl:rounded-3xl flex items-center justify-center shadow-2xl relative overflow-hidden">
-                          <div className={`absolute inset-0 bg-gradient-to-r ${principle.color} opacity-20 animate-pulse`} />
-                          <span className="text-2xl xl:text-3xl font-bold bg-gradient-to-r from-white to-cyan-200 bg-clip-text text-transparent relative z-10">
+                        <div className="w-12 h-12 bg-gradient-to-br from-white/25 to-white/15 backdrop-blur-xl border border-white/40 rounded-xl flex items-center justify-center shadow-lg relative overflow-hidden">
+                          <div className={`absolute inset-0 bg-gradient-to-r ${principle.color} opacity-30 animate-pulse`} />
+                          <span className="text-sm font-bold bg-gradient-to-r from-white to-cyan-100 bg-clip-text text-transparent relative z-10">
                             {principle.step}
                           </span>
                         </div>
-                        <div className="absolute -inset-3 xl:-inset-4 bg-gradient-to-r from-cyan-500/20 via-blue-500/20 to-purple-500/20 rounded-2xl xl:rounded-3xl blur-xl animate-pulse" />
+                        <div className="absolute -inset-2 bg-gradient-to-r from-emerald-500/15 via-cyan-500/15 to-blue-500/15 rounded-xl blur-lg animate-pulse" />
                       </div>
                     </div>
 
-                    {/* Futuristic Content Card - Mobile Optimized */}
-                    <div className={`lg:w-5/12 ${isEven ? 'lg:pr-16 xl:pr-20' : 'lg:pl-16 xl:pl-20'}`}>
-                      <div className="group relative bg-gradient-to-br from-white/15 to-white/5 backdrop-blur-2xl rounded-2xl sm:rounded-3xl border border-white/30 p-4 sm:p-6 lg:p-8 shadow-2xl hover:scale-105 transition-all duration-700 hover:shadow-cyan-500/20 overflow-hidden">
-                        {/* Animated Background */}
-                        <div className={`absolute inset-0 bg-gradient-to-br ${principle.color} opacity-5 group-hover:opacity-10 transition-opacity duration-700`} />
-                        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent animate-shimmer" />
+                    {/* Compact Content Card */}
+                    <div className={`lg:w-5/12 ${isEven ? 'lg:pr-12' : 'lg:pl-12'}`}>
+                      <div className="group relative bg-gradient-to-br from-white/12 to-white/8 backdrop-blur-xl rounded-xl sm:rounded-2xl border border-white/25 p-4 sm:p-5 shadow-lg hover:scale-[1.02] transition-all duration-500 hover:shadow-emerald-500/20 overflow-hidden">
+                        {/* Subtle Background */}
+                        <div className={`absolute inset-0 bg-gradient-to-br ${principle.color} opacity-8 group-hover:opacity-12 transition-opacity duration-500`} />
                         
-                        {/* Card Content - Mobile Optimized */}
+                        {/* Card Content */}
                         <div className="relative z-10">
                           {/* Mobile Step Number */}
-                          <div className="lg:hidden flex items-center gap-3 sm:gap-4 mb-4 sm:mb-6">
+                          <div className="lg:hidden flex items-center gap-3 mb-3 sm:mb-4">
                             <div className="relative">
-                              <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-xl sm:rounded-2xl bg-gradient-to-r from-cyan-500 to-purple-600 flex items-center justify-center shadow-xl relative overflow-hidden">
-                                <div className="absolute inset-0 bg-gradient-to-r from-cyan-400/20 to-purple-400/20 animate-pulse" />
-                                <span className="text-lg sm:text-xl font-bold text-white relative z-10">
+                              <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl bg-gradient-to-r from-emerald-500 to-cyan-500 flex items-center justify-center shadow-md relative overflow-hidden">
+                                <div className="absolute inset-0 bg-gradient-to-r from-emerald-400/20 to-cyan-400/20 animate-pulse" />
+                                <span className="text-xs sm:text-sm font-bold text-white relative z-10">
                                   {principle.step}
                                 </span>
                               </div>
-                              <div className="absolute -inset-1 sm:-inset-2 bg-gradient-to-r from-cyan-500/20 to-purple-500/20 rounded-xl sm:rounded-2xl blur-lg animate-pulse" />
+                              <div className="absolute -inset-1 bg-gradient-to-r from-emerald-500/15 to-cyan-500/15 rounded-lg sm:rounded-xl blur-md animate-pulse" />
                             </div>
                             <div className="flex-1">
-                              <h3 className="text-lg sm:text-xl lg:text-2xl font-bold text-white group-hover:text-cyan-200 transition-colors">
+                              <h3 className="text-sm sm:text-base font-bold text-white group-hover:text-emerald-200 transition-colors">
                                 {principle.title}
                               </h3>
                             </div>
                           </div>
 
                           {/* Desktop Header */}
-                          <div className="hidden lg:block mb-4 sm:mb-6">
-                            <h3 className="text-2xl xl:text-3xl font-bold text-white group-hover:text-cyan-200 transition-colors mb-2">
+                          <div className="hidden lg:block mb-3 sm:mb-4">
+                            <h3 className="text-lg sm:text-xl font-bold text-white group-hover:text-emerald-200 transition-colors">
                               {principle.title}
                             </h3>
                           </div>
                           
-                          {/* Icon and Description - Mobile Optimized */}
-                          <div className="flex items-start gap-4 sm:gap-6">
-                            <div className={`w-12 h-12 sm:w-14 sm:h-14 lg:w-16 lg:h-16 rounded-xl sm:rounded-2xl bg-gradient-to-r ${principle.color} flex items-center justify-center shadow-2xl flex-shrink-0 relative overflow-hidden group-hover:scale-110 transition-transform duration-500`}>
-                              <div className="absolute inset-0 bg-gradient-to-r from-white/20 to-white/10 animate-pulse" />
-                              <IconComponent className="w-6 h-6 sm:w-7 sm:h-7 lg:w-8 lg:h-8 text-white relative z-10" />
+                          {/* Icon and Description */}
+                          <div className="flex items-start gap-3 sm:gap-4">
+                            <div className={`w-8 h-8 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl bg-gradient-to-r ${principle.color} flex items-center justify-center shadow-md flex-shrink-0 relative overflow-hidden group-hover:scale-105 transition-transform duration-300`}>
+                              <div className="absolute inset-0 bg-gradient-to-r from-white/25 to-white/15 animate-pulse" />
+                              <IconComponent className="w-4 h-4 sm:w-5 sm:h-5 text-white relative z-10" />
                             </div>
-                            <p className="text-white/90 leading-relaxed text-sm sm:text-base lg:text-lg group-hover:text-white transition-colors">
+                            <p className="text-white/85 leading-relaxed text-xs sm:text-sm group-hover:text-white transition-colors">
                               {principle.description}
                             </p>
                           </div>
@@ -561,14 +556,14 @@ export default function CoPage() {
                       </div>
                     </div>
 
-                    {/* Futuristic Connection Arrow - Mobile Optimized */}
+                    {/* Compact Connection Arrow - Mobile */}
                     {index < cooperationPrinciples.length - 1 && (
-                      <div className="lg:hidden flex justify-center my-6 sm:my-8">
+                      <div className="lg:hidden flex justify-center my-4 sm:my-6">
                         <div className="relative">
-                          <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-r from-cyan-500/20 to-purple-500/20 rounded-xl sm:rounded-2xl flex items-center justify-center border border-cyan-400/30 backdrop-blur-sm">
-                            <ArrowRight className="w-5 h-5 sm:w-6 sm:h-6 text-cyan-300 rotate-90" />
+                          <div className="w-6 h-6 sm:w-8 sm:h-8 bg-gradient-to-r from-emerald-500/20 to-cyan-500/20 rounded-lg flex items-center justify-center border border-emerald-400/30 backdrop-blur-sm">
+                            <ArrowRight className="w-3 h-3 sm:w-4 sm:h-4 text-emerald-300 rotate-90" />
                           </div>
-                          <div className="absolute -inset-1 sm:-inset-2 bg-gradient-to-r from-cyan-500/10 to-purple-500/10 rounded-xl sm:rounded-2xl blur-lg animate-pulse" />
+                          <div className="absolute -inset-1 bg-gradient-to-r from-emerald-500/10 to-cyan-500/10 rounded-lg blur-md animate-pulse" />
                         </div>
                       </div>
                     )}
