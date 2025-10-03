@@ -32,6 +32,7 @@ export default function HomePage() {
   const [isVisible, setIsVisible] = useState(false)
   const [counters, setCounters] = useState({ members: 0, projects: 0, partners: 0, events: 0 })
   const [currentImageIndex, setCurrentImageIndex] = useState(0)
+  const [isHovered, setIsHovered] = useState(false)
 
   useEffect(() => {
     setIsVisible(true)
@@ -118,6 +119,31 @@ export default function HomePage() {
   const goToNext = () => {
     setCurrentImageIndex((prev) => (prev === activities.length - 1 ? 0 : prev + 1))
   }
+
+  // Auto-play functionality
+  useEffect(() => {
+    if (!isHovered) {
+      const autoplay = setInterval(() => {
+        goToNext()
+      }, 4000)
+
+      return () => clearInterval(autoplay)
+    }
+  }, [isHovered])
+
+  // Keyboard navigation
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'ArrowLeft') {
+        goToPrevious()
+      } else if (e.key === 'ArrowRight') {
+        goToNext()
+      }
+    }
+
+    window.addEventListener('keydown', handleKeyDown)
+    return () => window.removeEventListener('keydown', handleKeyDown)
+  }, [])
 
   return (
     <div className="min-h-screen gradient-bg">
@@ -358,117 +384,116 @@ export default function HomePage() {
             </p>
           </div>
 
-          {/* Modern Layered Slide Gallery */}
-          <div className="relative max-w-6xl mx-auto">
-            {/* Slide Container */}
-            <div className="relative h-96 sm:h-[28rem] md:h-[32rem] lg:h-[36rem] overflow-hidden rounded-2xl">
-              {/* Background Images - Layered Effect */}
-              <div className="absolute inset-0 flex">
-                {activities.map((activity, index) => {
-                  const isActive = index === currentImageIndex;
-                  const isPrev = index === (currentImageIndex - 1 + activities.length) % activities.length;
-                  const isNext = index === (currentImageIndex + 1) % activities.length;
-                  const isPrev2 = index === (currentImageIndex - 2 + activities.length) % activities.length;
-                  const isNext2 = index === (currentImageIndex + 2) % activities.length;
-                  
-                  let transformClass = '';
-                  let zIndex = 0;
-                  let opacity = 0;
-                  let scale = 0.8;
-                  
-                  if (isActive) {
-                    transformClass = 'translate-x-0 scale-100';
-                    zIndex = 50;
-                    opacity = 1;
-                    scale = 1;
-                  } else if (isPrev) {
-                    transformClass = '-translate-x-1/2 scale-90';
-                    zIndex = 40;
-                    opacity = 0.7;
-                    scale = 0.9;
-                  } else if (isNext) {
-                    transformClass = 'translate-x-1/2 scale-90';
-                    zIndex = 40;
-                    opacity = 0.7;
-                    scale = 0.9;
-                  } else if (isPrev2) {
-                    transformClass = '-translate-x-full scale-80';
-                    zIndex = 30;
-                    opacity = 0.4;
-                    scale = 0.8;
-                  } else if (isNext2) {
-                    transformClass = 'translate-x-full scale-80';
-                    zIndex = 30;
-                    opacity = 0.4;
-                    scale = 0.8;
-                  } else {
-                    transformClass = 'translate-x-full scale-70';
-                    zIndex = 20;
-                    opacity = 0;
-                    scale = 0.7;
-                  }
+          {/* 3D Carousel Gallery */}
+          <div 
+            className="relative w-full max-w-7xl mx-auto h-[600px] perspective-2000"
+            onMouseEnter={() => setIsHovered(true)}
+            onMouseLeave={() => setIsHovered(false)}
+          >
+            {/* Carousel Wrapper */}
+            <div className="relative w-full h-full transform-style-preserve-3d">
+              {/* Activity Cards */}
+              {activities.map((activity, index) => {
+                const position = (index - currentImageIndex + activities.length) % activities.length;
+                let transformClass = '';
+                let opacity = 1;
+                let zIndex = 1;
 
-                  return (
-                    <div
-                      key={index}
-                      className={`absolute inset-0 transition-all duration-700 ease-out ${transformClass}`}
-                      style={{ zIndex, opacity }}
-                    >
-                      <div className="relative w-full h-full group cursor-pointer" onClick={() => setCurrentImageIndex(index)}>
+                if (position === 0) {
+                  transformClass = 'translate(-50%, -50%) translateX(-650px) translateZ(-200px) rotateY(25deg) scale(0.85)';
+                  opacity = 0.6;
+                  zIndex = 1;
+                } else if (position === 1) {
+                  transformClass = 'translate(-50%, -50%) translateX(-350px) translateZ(-100px) rotateY(15deg) scale(0.92)';
+                  opacity = 0.8;
+                  zIndex = 2;
+                } else if (position === 2) {
+                  transformClass = 'translate(-50%, -50%) translateX(0) translateZ(0) rotateY(0deg) scale(1)';
+                  opacity = 1;
+                  zIndex = 3;
+                } else if (position === 3) {
+                  transformClass = 'translate(-50%, -50%) translateX(350px) translateZ(-100px) rotateY(-15deg) scale(0.92)';
+                  opacity = 0.8;
+                  zIndex = 2;
+                } else if (position === 4) {
+                  transformClass = 'translate(-50%, -50%) translateX(650px) translateZ(-200px) rotateY(-25deg) scale(0.85)';
+                  opacity = 0.6;
+                  zIndex = 1;
+                } else {
+                  transformClass = 'translate(-50%, -50%) translateX(0) translateZ(-300px) rotateY(0deg) scale(0.7)';
+                  opacity = 0;
+                  zIndex = 0;
+                }
+
+                return (
+                  <div
+                    key={index}
+                    className="absolute w-[450px] h-[500px] left-1/2 top-1/2 transform-style-preserve-3d transition-all duration-700 ease-out cursor-pointer group"
+                    style={{
+                      transform: transformClass,
+                      opacity,
+                      zIndex
+                    }}
+                    onClick={() => setCurrentImageIndex(index)}
+                  >
+                    {/* Card Inner */}
+                    <div className="relative w-full h-full rounded-3xl overflow-hidden bg-card/10 backdrop-blur-xl border-2 border-accent/30 shadow-2xl group-hover:shadow-accent/20 transition-all duration-500">
+                      {/* Card Image */}
+                      <div className="relative w-full h-[70%] overflow-hidden">
                         <img
                           src={activity.src}
                           alt={activity.alt}
-                          className="w-full h-full object-cover rounded-2xl shadow-2xl group-hover:scale-105 transition-transform duration-500"
-                          style={{ transform: `scale(${scale})` }}
+                          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
                         />
+                        {/* Shimmer Effect */}
+                        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
+                      </div>
+
+                      {/* Card Content */}
+                      <div className="relative h-[30%] flex items-center justify-center bg-card/5 backdrop-blur-sm overflow-hidden">
+                        {/* Scan Line Effect */}
+                        <div className="absolute top-0 left-0 w-full h-0.5 bg-gradient-to-r from-transparent via-accent to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-2000"></div>
                         
-                        {/* Hover Overlay - Only show on active image */}
-                        {isActive && (
-                          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl">
-                            <div className="absolute bottom-6 left-6 right-6 text-white transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
-                              <h3 className="font-bold text-2xl sm:text-3xl mb-3 text-glow">
-                                {activity.title}
-                              </h3>
-                              <p className="text-lg sm:text-xl opacity-90 leading-relaxed">
-                                {activity.description}
-                              </p>
-                            </div>
-                          </div>
-                        )}
+                        {/* Title */}
+                        <h3 className="text-2xl font-bold text-foreground uppercase tracking-wider text-center px-4 relative">
+                          {activity.title}
+                          {/* Underline Effect */}
+                          <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-16 h-0.5 bg-gradient-to-r from-transparent via-accent to-transparent"></div>
+                        </h3>
                       </div>
                     </div>
-                  );
-                })}
-              </div>
-
-              {/* Navigation Buttons */}
-              <button
-                onClick={goToPrevious}
-                className="absolute left-4 top-1/2 transform -translate-y-1/2 w-14 h-14 bg-accent/20 backdrop-blur-md border border-accent/40 rounded-full flex items-center justify-center hover:bg-accent/30 transition-all duration-300 hover:scale-110 group z-50"
-                aria-label="Previous image"
-              >
-                <ChevronLeft className="h-7 w-7 text-accent group-hover:text-white transition-colors" />
-              </button>
-
-              <button
-                onClick={goToNext}
-                className="absolute right-4 top-1/2 transform -translate-y-1/2 w-14 h-14 bg-accent/20 backdrop-blur-md border border-accent/40 rounded-full flex items-center justify-center hover:bg-accent/30 transition-all duration-300 hover:scale-110 group z-50"
-                aria-label="Next image"
-              >
-                <ChevronRight className="h-7 w-7 text-accent group-hover:text-white transition-colors" />
-              </button>
+                  </div>
+                );
+              })}
             </div>
 
-            {/* Image Indicators */}
-            <div className="flex justify-center mt-8 space-x-3">
+            {/* Navigation Buttons */}
+            <button
+              onClick={goToPrevious}
+              className="absolute left-5 top-1/2 transform -translate-y-1/2 w-16 h-16 bg-accent/15 backdrop-blur-lg border-2 border-accent/30 rounded-full flex items-center justify-center hover:bg-accent/25 transition-all duration-300 hover:scale-110 group z-50"
+              aria-label="Previous image"
+            >
+              <ChevronLeft className="h-8 w-8 text-accent group-hover:text-white transition-colors" />
+            </button>
+
+            <button
+              onClick={goToNext}
+              className="absolute right-5 top-1/2 transform -translate-y-1/2 w-16 h-16 bg-accent/15 backdrop-blur-lg border-2 border-accent/30 rounded-full flex items-center justify-center hover:bg-accent/25 transition-all duration-300 hover:scale-110 group z-50"
+              aria-label="Next image"
+            >
+              <ChevronRight className="h-8 w-8 text-accent group-hover:text-white transition-colors" />
+            </button>
+
+            {/* Indicators */}
+            <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex gap-3 z-50">
               {activities.map((_, index) => (
                 <button
                   key={index}
                   onClick={() => setCurrentImageIndex(index)}
-                  className={`w-4 h-4 rounded-full transition-all duration-300 ${
+                  className={`transition-all duration-300 border-2 border-accent/50 ${
                     index === currentImageIndex
-                      ? 'bg-accent scale-125 shadow-lg shadow-accent/50'
-                      : 'bg-accent/30 hover:bg-accent/50 hover:scale-110'
+                      ? 'w-10 h-3 bg-accent rounded-full shadow-lg shadow-accent/60'
+                      : 'w-3 h-3 bg-accent/30 rounded-full hover:bg-accent/50 hover:scale-110'
                   }`}
                   aria-label={`Go to image ${index + 1}`}
                 />
@@ -476,8 +501,8 @@ export default function HomePage() {
             </div>
 
             {/* Image Counter */}
-            <div className="text-center mt-6">
-              <span className="text-sm text-foreground/60 font-medium bg-card/20 backdrop-blur-sm px-4 py-2 rounded-full border border-accent/20">
+            <div className="absolute top-8 right-8 bg-card/20 backdrop-blur-sm px-4 py-2 rounded-full border border-accent/20 z-50">
+              <span className="text-sm text-foreground/80 font-medium">
                 {currentImageIndex + 1} / {activities.length}
               </span>
             </div>
