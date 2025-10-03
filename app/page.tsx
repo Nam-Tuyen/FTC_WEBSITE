@@ -21,7 +21,9 @@ import {
   MapPin,
   Instagram,
   Facebook,
-  Linkedin
+  Linkedin,
+  ChevronLeft,
+  ChevronRight
 } from "lucide-react"
 import Link from "next/link"
 import { useState, useEffect } from "react"
@@ -29,6 +31,7 @@ import { useState, useEffect } from "react"
 export default function HomePage() {
   const [isVisible, setIsVisible] = useState(false)
   const [counters, setCounters] = useState({ members: 0, projects: 0, partners: 0, events: 0 })
+  const [currentImageIndex, setCurrentImageIndex] = useState(0)
 
   useEffect(() => {
     setIsVisible(true)
@@ -54,6 +57,67 @@ export default function HomePage() {
       animateCounter('events', 100)
     }, 1000)
   }, [])
+
+  // Activities data
+  const activities = [
+    {
+      src: "/Ảnh câu lạc bộ FTC.JPG",
+      alt: "Câu lạc bộ FTC - Group photo",
+      title: "Câu lạc bộ FTC",
+      description: "Tập thể thành viên FTC tại sự kiện"
+    },
+    {
+      src: "/Cuộc thi học thuật ATTACKER.jpg",
+      alt: "Cuộc thi học thuật ATTACKER",
+      title: "Cuộc thi ATTACKER",
+      description: "Cuộc thi fintech và tài sản số 2025"
+    },
+    {
+      src: "/Cuộc thi Web3 Quizzes unlock the future.jpg",
+      alt: "Cuộc thi Web3 Quizzes",
+      title: "Web3 Quizzes",
+      description: "Chung kết cuộc thi Web3"
+    },
+    {
+      src: "/Hoạt động thăm quan doanh nghiệp VNG.jpg",
+      alt: "Thăm quan VNG Campus",
+      title: "Thăm quan VNG",
+      description: "Hoạt động thăm quan doanh nghiệp"
+    },
+    {
+      src: "/Hoạt động tuyển tân thành viên FTC.jpg",
+      alt: "Tuyển tân thành viên FTC",
+      title: "Tuyển tân thành viên",
+      description: "Chương trình tuyển thành viên mới"
+    },
+    {
+      src: "/Talkshow định huống nguồn nhân lực trong bối cảnh chuyển đổi số và tài sản số.jpg",
+      alt: "Talkshow định hướng nguồn nhân lực",
+      title: "Talkshow định hướng",
+      description: "Định hướng nguồn nhân lực số"
+    },
+    {
+      src: "/Talkshow người mới nên tiếp cận thị trường công nghệ tài chính như thế nào.jpg",
+      alt: "Talkshow tiếp cận thị trường fintech",
+      title: "Talkshow fintech",
+      description: "Hướng dẫn tiếp cận thị trường fintech"
+    },
+    {
+      src: "/Talkshow Web3 Carrer Innovation.jpg",
+      alt: "Talkshow Web3 Career Innovation",
+      title: "Web3 Career Innovation",
+      description: "Tương lai nghề nghiệp Web3"
+    }
+  ]
+
+  // Navigation functions
+  const goToPrevious = () => {
+    setCurrentImageIndex((prev) => (prev === 0 ? activities.length - 1 : prev - 1))
+  }
+
+  const goToNext = () => {
+    setCurrentImageIndex((prev) => (prev === activities.length - 1 ? 0 : prev + 1))
+  }
 
   return (
     <div className="min-h-screen gradient-bg">
@@ -287,105 +351,75 @@ export default function HomePage() {
               <span className="text-xs sm:text-sm font-bold text-accent uppercase tracking-wider">Hoạt động nổi bật</span>
             </div>
             <h2 className="font-heading font-black text-3xl sm:text-4xl md:text-5xl text-foreground mb-3 sm:mb-4 text-glow">
-              THÀNH VIÊN NÓI GÌ VỀ FTC?
+              CÁC HOẠT ĐỘNG TẠI CÂU LẠC BỘ FTC
             </h2>
             <p className="text-lg sm:text-xl text-foreground/70 max-w-2xl mx-auto font-medium italic px-4">
               Những hoạt động đa dạng và bổ ích mà FTC tổ chức cho các thành viên
             </p>
           </div>
 
-          {/* Horizontal Scrollable Image Gallery */}
-          <div className="relative">
-            <div className="overflow-x-auto scrollbar-hide">
-              <div className="flex gap-4 sm:gap-6 md:gap-8 pb-4" style={{ scrollSnapType: 'x mandatory' }}>
-                {[
-                  {
-                    src: "/Ảnh câu lạc bộ FTC.JPG",
-                    alt: "Câu lạc bộ FTC - Group photo",
-                    title: "Câu lạc bộ FTC",
-                    description: "Tập thể thành viên FTC tại sự kiện"
-                  },
-                  {
-                    src: "/Cuộc thi học thuật ATTACKER.jpg",
-                    alt: "Cuộc thi học thuật ATTACKER",
-                    title: "Cuộc thi ATTACKER",
-                    description: "Cuộc thi fintech và tài sản số 2025"
-                  },
-                  {
-                    src: "/Cuộc thi Web3 Quizzes unlock the future.jpg",
-                    alt: "Cuộc thi Web3 Quizzes",
-                    title: "Web3 Quizzes",
-                    description: "Chung kết cuộc thi Web3"
-                  },
-                  {
-                    src: "/Hoạt động thăm quan doanh nghiệp VNG.jpg",
-                    alt: "Thăm quan VNG Campus",
-                    title: "Thăm quan VNG",
-                    description: "Hoạt động thăm quan doanh nghiệp"
-                  },
-                  {
-                    src: "/Hoạt động tuyển tân thành viên FTC.jpg",
-                    alt: "Tuyển tân thành viên FTC",
-                    title: "Tuyển tân thành viên",
-                    description: "Chương trình tuyển thành viên mới"
-                  },
-                  {
-                    src: "/Talkshow định huống nguồn nhân lực trong bối cảnh chuyển đổi số và tài sản số.jpg",
-                    alt: "Talkshow định hướng nguồn nhân lực",
-                    title: "Talkshow định hướng",
-                    description: "Định hướng nguồn nhân lực số"
-                  },
-                  {
-                    src: "/Talkshow người mới nên tiếp cận thị trường công nghệ tài chính như thế nào.jpg",
-                    alt: "Talkshow tiếp cận thị trường fintech",
-                    title: "Talkshow fintech",
-                    description: "Hướng dẫn tiếp cận thị trường fintech"
-                  },
-                  {
-                    src: "/Talkshow Web3 Carrer Innovation.jpg",
-                    alt: "Talkshow Web3 Career Innovation",
-                    title: "Web3 Career Innovation",
-                    description: "Tương lai nghề nghiệp Web3"
-                  }
-                ].map((activity, index) => (
-                  <div
-                    key={index}
-                    className="flex-shrink-0 w-80 sm:w-96 md:w-[28rem] lg:w-[32rem] group cursor-pointer"
-                    style={{ scrollSnapAlign: 'start' }}
-                  >
-                    <Card className="relative overflow-hidden bg-card/20 backdrop-blur-sm border-accent/20 hover:border-accent/40 transition-all duration-500 hover:glow h-full">
-                      <div className="relative aspect-[4/3] overflow-hidden">
-                        <img
-                          src={activity.src}
-                          alt={activity.alt}
-                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-                        />
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                        <div className="absolute bottom-4 left-4 right-4 text-white transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
-                          <h3 className="font-bold text-lg sm:text-xl mb-2 text-glow">
-                            {activity.title}
-                          </h3>
-                          <p className="text-sm sm:text-base opacity-90">
-                            {activity.description}
-                          </p>
-                        </div>
-                      </div>
-                    </Card>
+          {/* Image Gallery with Navigation */}
+          <div className="relative max-w-4xl mx-auto">
+            {/* Main Image Display */}
+            <div className="relative group">
+              <Card className="relative overflow-hidden bg-card/20 backdrop-blur-sm border-accent/20 hover:border-accent/40 transition-all duration-500 hover:glow">
+                <div className="relative aspect-[16/10] overflow-hidden">
+                  <img
+                    src={activities[currentImageIndex].src}
+                    alt={activities[currentImageIndex].alt}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
+                  <div className="absolute bottom-4 left-4 right-4 text-white">
+                    <h3 className="font-bold text-xl sm:text-2xl mb-2 text-glow">
+                      {activities[currentImageIndex].title}
+                    </h3>
+                    <p className="text-base sm:text-lg opacity-90">
+                      {activities[currentImageIndex].description}
+                    </p>
                   </div>
-                ))}
-              </div>
+                </div>
+              </Card>
+
+              {/* Navigation Buttons */}
+              <button
+                onClick={goToPrevious}
+                className="absolute left-4 top-1/2 transform -translate-y-1/2 w-12 h-12 bg-accent/20 backdrop-blur-sm border border-accent/40 rounded-full flex items-center justify-center hover:bg-accent/30 transition-all duration-300 hover:scale-110 group z-10"
+                aria-label="Previous image"
+              >
+                <ChevronLeft className="h-6 w-6 text-accent group-hover:text-white transition-colors" />
+              </button>
+
+              <button
+                onClick={goToNext}
+                className="absolute right-4 top-1/2 transform -translate-y-1/2 w-12 h-12 bg-accent/20 backdrop-blur-sm border border-accent/40 rounded-full flex items-center justify-center hover:bg-accent/30 transition-all duration-300 hover:scale-110 group z-10"
+                aria-label="Next image"
+              >
+                <ChevronRight className="h-6 w-6 text-accent group-hover:text-white transition-colors" />
+              </button>
             </div>
-            
-            {/* Scroll indicators */}
+
+            {/* Image Indicators */}
             <div className="flex justify-center mt-6 space-x-2">
-              <div className="w-2 h-2 bg-accent/30 rounded-full"></div>
-              <div className="w-2 h-2 bg-accent/60 rounded-full"></div>
-              <div className="w-2 h-2 bg-accent/30 rounded-full"></div>
-              <div className="w-2 h-2 bg-accent/30 rounded-full"></div>
-              <div className="w-2 h-2 bg-accent/30 rounded-full"></div>
-              <div className="w-2 h-2 bg-accent/30 rounded-full"></div>
-              <div className="w-2 h-2 bg-accent/30 rounded-full"></div>
-              <div className="w-2 h-2 bg-accent/30 rounded-full"></div>
+              {activities.map((_, index) => (
+                <button
+                  key={index}
+                  onClick={() => setCurrentImageIndex(index)}
+                  className={`w-3 h-3 rounded-full transition-all duration-300 ${
+                    index === currentImageIndex
+                      ? 'bg-accent scale-125'
+                      : 'bg-accent/30 hover:bg-accent/50'
+                  }`}
+                  aria-label={`Go to image ${index + 1}`}
+                />
+              ))}
+            </div>
+
+            {/* Image Counter */}
+            <div className="text-center mt-4">
+              <span className="text-sm text-foreground/60 font-medium">
+                {currentImageIndex + 1} / {activities.length}
+              </span>
             </div>
           </div>
 
