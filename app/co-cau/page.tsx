@@ -3,7 +3,7 @@
 import { Navigation } from "@/components/navigation"
 import { Footer } from "@/components/footer"
 import { PageHeader } from "@/components/page-header"
-import { Shield, BookOpen, Calendar, Megaphone, Wallet, Users, Star, TrendingUp, Target, Sparkles, Zap, Search, FileText, Settings, Palette, Video, GraduationCap, DollarSign, UserCheck, Calculator, Heart, Image as ImageIcon, ChevronLeft, ChevronRight, X } from "lucide-react"
+import { Shield, BookOpen, Calendar, Megaphone, Wallet, Users, Handshake, Star, TrendingUp, Target, Sparkles, Zap, ArrowRight, Search, FileText, Settings, Palette, Video, GraduationCap, DollarSign, UserCheck, Calculator, Heart, Image as ImageIcon, ChevronLeft, ChevronRight, X } from "lucide-react"
 import React, { useState, useEffect } from "react"
 
 const organizationData = [
@@ -204,36 +204,12 @@ function DepartmentPhotoCarousel({ departments }: { departments: typeof organiza
 
   return (
     <div className="relative bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-xl rounded-2xl border border-white/20 overflow-hidden group max-w-4xl mx-auto">
-      {/* Compact Header */}
-      <div className="absolute top-0 left-0 right-0 z-20 p-4 bg-gradient-to-b from-black/70 to-transparent">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-white/20 to-white/10 backdrop-blur-xl border border-white/30 flex items-center justify-center shadow-lg transition-all duration-300 group-hover:scale-105">
-              <currentDepartment.icon className="w-4 h-4 text-white drop-shadow-lg" />
-            </div>
-            <div className="overflow-hidden">
-              <h3 className="text-lg sm:text-xl font-bold text-white drop-shadow-lg transition-all duration-300">
-                {currentDepartment.title}
-              </h3>
-              <p className="text-white/80 text-xs sm:text-sm drop-shadow-md transition-all duration-300">
-                {currentDepartment.category}
-              </p>
-            </div>
-          </div>
-          <div className="text-right">
-            <div className="text-white/70 text-xs">
+          {/* Simple Progress Indicator */}
+          <div className="absolute top-4 right-4 z-20">
+            <div className="text-white/70 text-xs bg-black/30 backdrop-blur-sm px-3 py-1 rounded-full">
               {currentIndex + 1} / {departmentsWithPhotos.length}
             </div>
-            {/* Compact progress bar */}
-            <div className="w-16 h-0.5 bg-white/20 rounded-full mt-1 overflow-hidden">
-              <div 
-                className="h-full bg-gradient-to-r from-blue-500 to-purple-600 rounded-full transition-all duration-500 ease-out"
-                style={{ width: `${((currentIndex + 1) / departmentsWithPhotos.length) * 100}%` }}
-              />
-            </div>
           </div>
-        </div>
-      </div>
 
       {/* Compact image display */}
       <div className="relative aspect-[16/10] w-full overflow-hidden">
@@ -280,40 +256,39 @@ function DepartmentPhotoCarousel({ departments }: { departments: typeof organiza
         )}
       </div>
 
-      {/* Modern department indicators with responsive layout */}
-      <div className="p-4 bg-gradient-to-t from-black/70 to-transparent">
-        {/* Department buttons - responsive grid layout */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2 sm:gap-3 mb-4">
-          {departmentsWithPhotos.map((dept, index) => (
-            <button
-              key={dept.title}
-              onClick={() => goToPhoto(index)}
-              disabled={isTransitioning}
-              className={`px-2 sm:px-3 py-2 rounded-lg sm:rounded-xl text-xs sm:text-sm font-semibold transition-all duration-500 ease-out transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed relative overflow-hidden ${
-                index === currentIndex
-                  ? 'bg-gradient-to-r from-cyan-500 via-blue-600 to-purple-600 text-white shadow-lg scale-105 shadow-cyan-500/25'
-                  : 'bg-gradient-to-r from-white/10 to-white/5 text-white/80 hover:from-white/20 hover:to-white/10 hover:text-white hover:shadow-md border border-white/20'
-              }`}
-            >
-              {/* Gradient background animation for active state */}
-              {index === currentIndex && (
-                <div className="absolute inset-0 bg-gradient-to-r from-cyan-400/20 via-blue-500/20 to-purple-500/20 animate-pulse" />
-              )}
-              
-              {/* Shimmer effect for active state */}
-              {index === currentIndex && (
-                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent animate-shimmer" />
-              )}
-              
-              <span className="relative z-10 text-center block truncate">
-                {dept.title}
-              </span>
-            </button>
-          ))}
-        </div>
+          {/* Modern department indicators with responsive grid */}
+          <div className="p-4 bg-gradient-to-t from-black/70 to-transparent">
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2 sm:gap-3">
+              {departmentsWithPhotos.map((dept, index) => (
+                <button
+                  key={dept.title}
+                  onClick={() => goToPhoto(index)}
+                  disabled={isTransitioning}
+                  className={`px-2 sm:px-3 py-2 rounded-lg sm:rounded-xl text-xs font-semibold transition-all duration-500 ease-out transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed relative overflow-hidden ${
+                    index === currentIndex
+                      ? 'bg-gradient-to-r from-cyan-500 via-blue-600 to-purple-600 text-white shadow-lg scale-105 shadow-cyan-500/25'
+                      : 'bg-gradient-to-r from-white/10 to-white/5 text-white/80 hover:from-white/20 hover:to-white/10 hover:text-white hover:shadow-md border border-white/20'
+                  }`}
+                >
+                  {/* Gradient background animation for active state */}
+                  {index === currentIndex && (
+                    <div className="absolute inset-0 bg-gradient-to-r from-cyan-400/20 via-blue-500/20 to-purple-500/20 animate-pulse" />
+                  )}
+
+                  {/* Shimmer effect for active state */}
+                  {index === currentIndex && (
+                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent animate-shimmer" />
+                  )}
+
+                  <span className="relative z-10 text-center block truncate">
+                    {dept.title}
+                  </span>
+                </button>
+              ))}
+            </div>
         
         {/* Modern auto-play indicator with gradient */}
-        <div className="flex items-center justify-center gap-2">
+        <div className="flex items-center justify-center gap-2 mt-4">
           <div className="w-2 h-2 bg-gradient-to-r from-green-400 to-emerald-500 rounded-full animate-pulse shadow-lg shadow-green-500/30" />
           <span className="text-white/70 text-xs font-medium">Tự động chuyển ảnh</span>
         </div>
@@ -322,6 +297,43 @@ function DepartmentPhotoCarousel({ departments }: { departments: typeof organiza
   )
 }
 
+const cooperationPrinciples = [
+  {
+    step: "01",
+    title: "Ban Học thuật",
+    description: "Chuẩn bị và bàn giao nội dung học thuật phù hợp theo yêu cầu của sự kiện",
+    icon: BookOpen,
+    color: "from-blue-500 to-cyan-500"
+  },
+  {
+    step: "02", 
+    title: "Ban Sự kiện",
+    description: "Lập kế hoạch và giải quyết các giấy tờ cần có để tổ chức sự kiện",
+    icon: Calendar,
+    color: "from-green-500 to-emerald-500"
+  },
+  {
+    step: "03",
+    title: "Ban Truyền thông", 
+    description: "Thiết kế ấn phẩm và lên bài truyền thông về sự kiện",
+    icon: Megaphone,
+    color: "from-purple-500 to-violet-500"
+  },
+  {
+    step: "04",
+    title: "Ban Tài chính cá nhân",
+    description: "Phụ trách mảng giáo dục tài chính cá nhân độc lập", 
+    icon: Wallet,
+    color: "from-amber-700 to-yellow-800"
+  },
+  {
+    step: "05",
+    title: "Ban Nhân sự",
+    description: "Bảo đảm nguồn lực được phân công hiệu quả và kịp tiến độ công việc đề ra",
+    icon: Users,
+    color: "from-indigo-500 to-blue-500"
+  }
+]
 
 export default function CoPage() {
   return (
@@ -451,6 +463,68 @@ export default function CoPage() {
         </div>
       </section>
 
+      {/* Modern Cooperation Principles - Mobile Optimized */}
+      <section className="py-12 px-4 sm:px-6 lg:px-8 mt-8">
+        <div className="max-w-6xl mx-auto">
+          {/* Section Header */}
+          <div className="text-center mb-12">
+            <div className="w-16 h-16 mx-auto mb-6 bg-gradient-to-r from-blue-500 to-purple-600 rounded-2xl flex items-center justify-center shadow-xl">
+              <Handshake className="w-8 h-8 text-white" />
+            </div>
+            <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4">NGUYÊN TẮC PHỐI HỢP</h2>
+            <p className="text-lg text-white/80 leading-relaxed italic max-w-2xl mx-auto">
+              Quy trình phối hợp chuyên nghiệp giữa các ban để đảm bảo hiệu quả tối đa
+            </p>
+          </div>
+
+          {/* Mobile-First Cooperation Flow */}
+          <div className="space-y-6">
+            {cooperationPrinciples.map((principle, index) => {
+              const IconComponent = principle.icon
+              
+              return (
+                <div key={index} className="relative">
+                  {/* Mobile Card Design */}
+                  <div className="bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-xl rounded-2xl border border-white/20 p-6 shadow-xl hover:shadow-blue-500/20 transition-all duration-300">
+                    {/* Step Number - Mobile */}
+                    <div className="flex items-center gap-4 mb-4">
+                      <div className="w-10 h-10 rounded-xl bg-gradient-to-r from-blue-500 to-purple-600 flex items-center justify-center shadow-lg">
+                        <span className="text-lg font-bold text-white">
+                          {principle.step}
+                        </span>
+                      </div>
+                      <div className="flex-1">
+                        <h3 className="text-xl font-bold text-white">
+                          {principle.title}
+                        </h3>
+                      </div>
+                    </div>
+                    
+                    {/* Icon and Description */}
+                    <div className="flex items-start gap-4">
+                      <div className={`w-12 h-12 rounded-xl bg-gradient-to-r ${principle.color} flex items-center justify-center shadow-lg flex-shrink-0`}>
+                        <IconComponent className="w-6 h-6 text-white" />
+                      </div>
+                      <p className="text-white/80 leading-relaxed text-sm sm:text-base">
+                        {principle.description}
+                      </p>
+                    </div>
+                  </div>
+                  
+                  {/* Connection Arrow - Mobile */}
+                  {index < cooperationPrinciples.length - 1 && (
+                    <div className="flex justify-center my-4">
+                      <div className="w-8 h-8 bg-gradient-to-r from-blue-500/20 to-purple-500/20 rounded-full flex items-center justify-center border border-blue-400/30">
+                        <ArrowRight className="w-4 h-4 text-blue-300 rotate-90" />
+                      </div>
+                    </div>
+                  )}
+                </div>
+              )
+            })}
+          </div>
+        </div>
+      </section>
 
       {/* Call to Action Section */}
       <section className="py-16 px-4 sm:px-6 lg:px-8">
