@@ -80,7 +80,7 @@ export default function NewResponseForm({ questionId, onCreated }:{ questionId: 
                 : 'border-blue-400/30 hover:border-blue-400/50'
             }`}
             rows={4}
-            placeholder="Chia sẻ suy nghĩ của bạn về câu hỏi này... (Nhấn Enter để gửi, Shift+Enter để xuống dòng)"
+            placeholder="Chia sẻ suy nghĩ của bạn về câu hỏi này..."
             value={content} 
             onChange={e=>setContent(e.target.value)}
             onFocus={() => setIsFocused(true)}
