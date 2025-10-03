@@ -203,29 +203,29 @@ function DepartmentPhotoCarousel({ departments }: { departments: typeof organiza
   }, [currentIndex, isTransitioning])
 
   return (
-    <div className="relative bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-xl rounded-3xl border border-white/20 overflow-hidden group">
-      {/* Header with department name - Animated */}
-      <div className="absolute top-0 left-0 right-0 z-20 p-6 bg-gradient-to-b from-black/60 to-transparent">
+    <div className="relative bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-xl rounded-2xl border border-white/20 overflow-hidden group max-w-4xl mx-auto">
+      {/* Compact Header */}
+      <div className="absolute top-0 left-0 right-0 z-20 p-4 bg-gradient-to-b from-black/70 to-transparent">
         <div className="flex items-center justify-between">
-          <div className="flex items-center gap-4">
-            <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-white/20 to-white/10 backdrop-blur-xl border border-white/30 flex items-center justify-center shadow-xl transition-all duration-500 group-hover:scale-110">
-              <currentDepartment.icon className="w-6 h-6 text-white drop-shadow-lg transition-all duration-500" />
+          <div className="flex items-center gap-3">
+            <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-white/20 to-white/10 backdrop-blur-xl border border-white/30 flex items-center justify-center shadow-lg transition-all duration-300 group-hover:scale-105">
+              <currentDepartment.icon className="w-4 h-4 text-white drop-shadow-lg" />
             </div>
             <div className="overflow-hidden">
-              <h3 className="text-2xl sm:text-3xl font-bold text-white drop-shadow-lg transform transition-all duration-500 ease-out">
+              <h3 className="text-lg sm:text-xl font-bold text-white drop-shadow-lg transition-all duration-300">
                 {currentDepartment.title}
               </h3>
-              <p className="text-white/80 text-sm sm:text-base drop-shadow-md transform transition-all duration-500 ease-out">
+              <p className="text-white/80 text-xs sm:text-sm drop-shadow-md transition-all duration-300">
                 {currentDepartment.category}
               </p>
             </div>
           </div>
           <div className="text-right">
-            <div className="text-white/60 text-sm transition-all duration-300">
+            <div className="text-white/70 text-xs">
               {currentIndex + 1} / {departmentsWithPhotos.length}
             </div>
-            {/* Progress bar */}
-            <div className="w-20 h-1 bg-white/20 rounded-full mt-2 overflow-hidden">
+            {/* Compact progress bar */}
+            <div className="w-16 h-0.5 bg-white/20 rounded-full mt-1 overflow-hidden">
               <div 
                 className="h-full bg-gradient-to-r from-blue-500 to-purple-600 rounded-full transition-all duration-500 ease-out"
                 style={{ width: `${((currentIndex + 1) / departmentsWithPhotos.length) * 100}%` }}
@@ -235,8 +235,8 @@ function DepartmentPhotoCarousel({ departments }: { departments: typeof organiza
         </div>
       </div>
 
-      {/* Main image display with advanced animations */}
-      <div className="relative aspect-video w-full overflow-hidden">
+      {/* Compact image display */}
+      <div className="relative aspect-[16/10] w-full overflow-hidden">
         {/* Image container with slide animation */}
         <div 
           className={`relative w-full h-full transition-all duration-500 ease-out ${
@@ -248,72 +248,65 @@ function DepartmentPhotoCarousel({ departments }: { departments: typeof organiza
           <img
             src={currentPhoto}
             alt={`${currentDepartment.title} - Hoạt động`}
-            className="w-full h-full object-cover transition-all duration-700 ease-out hover:scale-105"
+            className="w-full h-full object-cover transition-all duration-500 ease-out hover:scale-105"
           />
           
-          {/* Animated gradient overlay */}
-          <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent transition-all duration-500" />
-          
-          {/* Floating particles effect */}
-          <div className="absolute inset-0 pointer-events-none">
-            <div className="absolute top-1/4 left-1/4 w-2 h-2 bg-white/20 rounded-full animate-pulse" />
-            <div className="absolute top-3/4 right-1/4 w-1 h-1 bg-blue-400/30 rounded-full animate-pulse delay-1000" />
-            <div className="absolute top-1/2 right-1/3 w-1.5 h-1.5 bg-purple-400/20 rounded-full animate-pulse delay-2000" />
-          </div>
+          {/* Subtle gradient overlay */}
+          <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent" />
         </div>
         
-        {/* Navigation buttons with enhanced animations */}
+        {/* Compact navigation buttons */}
         <button
           onClick={prevPhoto}
           disabled={isTransitioning}
-          className="absolute left-4 top-1/2 -translate-y-1/2 w-14 h-14 bg-white/20 hover:bg-white/30 backdrop-blur-sm rounded-full flex items-center justify-center text-white transition-all duration-300 hover:scale-110 hover:shadow-2xl disabled:opacity-50 disabled:cursor-not-allowed group/btn"
+          className="absolute left-2 top-1/2 -translate-y-1/2 w-10 h-10 bg-white/20 hover:bg-white/30 backdrop-blur-sm rounded-full flex items-center justify-center text-white transition-all duration-300 hover:scale-110 hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed group/btn sm:left-4 sm:w-12 sm:h-12"
         >
-          <ChevronLeft className="w-6 h-6 transition-transform duration-300 group-hover/btn:-translate-x-1" />
+          <ChevronLeft className="w-4 h-4 transition-transform duration-300 group-hover/btn:-translate-x-0.5 sm:w-5 sm:h-5" />
         </button>
         
         <button
           onClick={nextPhoto}
           disabled={isTransitioning}
-          className="absolute right-4 top-1/2 -translate-y-1/2 w-14 h-14 bg-white/20 hover:bg-white/30 backdrop-blur-sm rounded-full flex items-center justify-center text-white transition-all duration-300 hover:scale-110 hover:shadow-2xl disabled:opacity-50 disabled:cursor-not-allowed group/btn"
+          className="absolute right-2 top-1/2 -translate-y-1/2 w-10 h-10 bg-white/20 hover:bg-white/30 backdrop-blur-sm rounded-full flex items-center justify-center text-white transition-all duration-300 hover:scale-110 hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed group/btn sm:right-4 sm:w-12 sm:h-12"
         >
-          <ChevronRight className="w-6 h-6 transition-transform duration-300 group-hover/btn:translate-x-1" />
+          <ChevronRight className="w-4 h-4 transition-transform duration-300 group-hover/btn:translate-x-0.5 sm:w-5 sm:h-5" />
         </button>
 
-        {/* Loading indicator */}
+        {/* Compact loading indicator */}
         {isTransitioning && (
           <div className="absolute inset-0 bg-black/20 flex items-center justify-center">
-            <div className="w-8 h-8 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+            <div className="w-6 h-6 border-2 border-white/30 border-t-white rounded-full animate-spin" />
           </div>
         )}
       </div>
 
-      {/* Department indicators with enhanced animations */}
-      <div className="p-6 bg-gradient-to-t from-black/60 to-transparent">
-        <div className="flex flex-wrap gap-3 justify-center">
+      {/* Compact department indicators */}
+      <div className="p-4 bg-gradient-to-t from-black/70 to-transparent">
+        <div className="flex flex-wrap gap-2 justify-center">
           {departmentsWithPhotos.map((dept, index) => (
             <button
               key={dept.title}
               onClick={() => goToPhoto(index)}
               disabled={isTransitioning}
-              className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-500 ease-out transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed ${
+              className={`px-3 py-1.5 rounded-full text-xs font-medium transition-all duration-300 ease-out transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed ${
                 index === currentIndex
-                  ? 'bg-gradient-to-r from-blue-500 to-purple-600 text-white shadow-lg scale-105 ring-2 ring-white/30'
-                  : 'bg-white/10 text-white/70 hover:bg-white/20 hover:text-white hover:shadow-md'
+                  ? 'bg-gradient-to-r from-blue-500 to-purple-600 text-white shadow-md scale-105 ring-1 ring-white/30'
+                  : 'bg-white/10 text-white/70 hover:bg-white/20 hover:text-white hover:shadow-sm'
               }`}
             >
               <span className="relative">
                 {dept.title}
                 {index === currentIndex && (
-                  <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-white rounded-full animate-pulse" />
+                  <div className="absolute -bottom-0.5 left-1/2 -translate-x-1/2 w-1.5 h-1.5 bg-white rounded-full animate-pulse" />
                 )}
               </span>
             </button>
           ))}
         </div>
         
-        {/* Auto-play indicator */}
-        <div className="flex items-center justify-center gap-2 mt-4">
-          <div className="w-2 h-2 bg-white/40 rounded-full animate-pulse" />
+        {/* Compact auto-play indicator */}
+        <div className="flex items-center justify-center gap-1.5 mt-3">
+          <div className="w-1.5 h-1.5 bg-white/40 rounded-full animate-pulse" />
           <span className="text-white/60 text-xs">Tự động chuyển ảnh</span>
         </div>
       </div>
@@ -378,14 +371,14 @@ export default function CoPage() {
       />
 
       {/* Department Photo Carousel Section */}
-      <section className="py-16 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-12">
-            <div className="w-20 h-20 mx-auto mb-8 bg-gradient-to-r from-cyan-500 to-blue-600 rounded-3xl flex items-center justify-center shadow-2xl">
-              <ImageIcon className="w-10 h-10 text-white" />
+      <section className="py-12 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-8">
+            <div className="w-16 h-16 mx-auto mb-6 bg-gradient-to-r from-cyan-500 to-blue-600 rounded-2xl flex items-center justify-center shadow-xl">
+              <ImageIcon className="w-8 h-8 text-white" />
             </div>
-            <h2 className="text-4xl lg:text-5xl font-bold text-white mb-6">HÌNH ẢNH HOẠT ĐỘNG</h2>
-            <p className="text-xl text-white/80 leading-relaxed italic max-w-3xl mx-auto">
+            <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4">HÌNH ẢNH HOẠT ĐỘNG</h2>
+            <p className="text-lg text-white/80 leading-relaxed italic max-w-2xl mx-auto">
               Khám phá các hoạt động và thành viên của từng ban trong câu lạc bộ
             </p>
           </div>
