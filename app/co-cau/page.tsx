@@ -14,8 +14,8 @@ const organizationData = [
     bgColor: "bg-red-500/10",
     borderColor: "border-red-500/20",
     cardGradient: "from-red-500 to-pink-500",
-    category: "Điều hành câu lạc bộ ",
-    image: null, // No specific image for Ban Điều hành
+    category: "Điều hành câu lạc bộ",
+    image: "/BAN HỌC THUẬT.JPG", // Using placeholder - add actual image later
     quickFeatures: [
       { icon: Target, text: "Chiến lược", color: "text-red-400" },
       { icon: Zap, text: "Lãnh đạo", color: "text-pink-400" },
@@ -191,9 +191,116 @@ export default function CoPage() {
         badgeShadowColor="shadow-emerald-500/10"
       />
 
-      {/* Modern Organization Cards */}
+      {/* Department Image Gallery - Mobile First */}
+      <section className="py-12 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-4">
+              Đội Ngũ FTC
+            </h2>
+            <p className="text-lg text-white/80 max-w-2xl mx-auto">
+              Gặp gỡ các ban chuyên môn và đội ngũ điều hành của câu lạc bộ
+            </p>
+          </div>
+          
+          {/* Mobile-First Grid Layout */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+            {organizationData.map((dept, idx) => {
+              const IconComponent = dept.icon
+              
+              return (
+                <div key={dept.title} className="group relative">
+                  <div className="relative bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-xl rounded-2xl lg:rounded-3xl border border-white/20 overflow-hidden transition-all duration-500 group-hover:scale-105 group-hover:shadow-2xl group-hover:shadow-blue-500/20">
+                    
+                    {/* Image Section */}
+                    <div className="relative h-48 sm:h-56 lg:h-64 overflow-hidden">
+                      <Image
+                        src={dept.image}
+                        alt={`${dept.title} - ${dept.category}`}
+                        fill
+                        className="object-cover transition-transform duration-700 group-hover:scale-110"
+                        priority={idx < 3}
+                      />
+                      {/* Gradient Overlay */}
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+                      
+                      {/* Department Info Overlay */}
+                      <div className="absolute bottom-4 left-4 right-4">
+                        <div className="flex items-center gap-3 mb-2">
+                          <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-white/20 to-white/10 backdrop-blur-xl border border-white/30 flex items-center justify-center">
+                            <IconComponent className="w-4 h-4 text-white" />
+                          </div>
+                          <div className="flex-1">
+                            <h3 className="text-lg font-bold text-white drop-shadow-lg">{dept.title}</h3>
+                            <p className="text-xs text-white/90 drop-shadow-lg">{dept.category}</p>
+                          </div>
+                        </div>
+                        
+                        {/* Quick Features */}
+                        <div className="flex flex-wrap gap-1">
+                          {dept.quickFeatures?.slice(0, 2).map((feature, index) => {
+                            const FeatureIcon = feature.icon
+                            return (
+                              <div key={index} className="flex items-center gap-1 text-xs text-white/90 bg-white/10 backdrop-blur-sm px-2 py-1 rounded-full border border-white/20">
+                                <FeatureIcon className={`w-3 h-3 ${feature.color}`} />
+                                <span>{feature.text}</span>
+                              </div>
+                            )
+                          })}
+                        </div>
+                      </div>
+                    </div>
+                    
+                    {/* Content Section */}
+                    <div className="p-4 lg:p-6">
+                      <div className="space-y-3">
+                        {/* Responsibilities Preview */}
+                        <div className="space-y-2">
+                          {dept.responsibilities.slice(0, 2).map((responsibility, index) => (
+                            <div key={index} className="flex items-start gap-2">
+                              <div className="w-4 h-4 rounded-full bg-gradient-to-r from-blue-400/20 to-purple-400/20 border border-blue-400/30 flex items-center justify-center mt-1 flex-shrink-0">
+                                <span className="text-xs font-bold text-blue-300">{index + 1}</span>
+                              </div>
+                              <p className="text-white/80 text-xs leading-relaxed line-clamp-2">
+                                {responsibility}
+                              </p>
+                            </div>
+                          ))}
+                        </div>
+                        
+                        {/* View More Indicator */}
+                        <div className="pt-2 border-t border-white/10">
+                          <div className="flex items-center justify-between">
+                            <span className="text-xs text-white/60">
+                              +{dept.responsibilities.length - 2} nhiệm vụ khác
+                            </span>
+                            <div className="w-6 h-6 rounded-full bg-gradient-to-r from-blue-500/20 to-purple-500/20 border border-blue-400/30 flex items-center justify-center">
+                              <ArrowRight className="w-3 h-3 text-blue-300" />
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )
+            })}
+          </div>
+        </div>
+      </section>
+
+      {/* Detailed Organization Cards */}
       <section className="py-16 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-4">
+              Chi Tiết Các Ban
+            </h2>
+            <p className="text-lg text-white/80 max-w-2xl mx-auto">
+              Tìm hiểu sâu hơn về vai trò và trách nhiệm của từng ban
+            </p>
+          </div>
+          
           <div className="grid gap-8 lg:gap-12">
             {organizationData.map((dept, idx) => {
               const IconComponent = dept.icon
@@ -207,71 +314,73 @@ export default function CoPage() {
                     <div className="absolute inset-0 bg-gradient-to-br from-transparent via-blue-500/5 to-purple-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
                     
                     <div className="relative z-10 p-6 lg:p-8">
-                      {/* Header Section */}
-                      <div className="flex flex-col lg:flex-row gap-6 mb-8">
+                      {/* Header Section with Image */}
+                      <div className="flex flex-col xl:flex-row gap-6 mb-8">
                         
-                        {/* Department Info Section */}
-                        <div className="lg:w-2/5">
-              <div className="space-y-4">
-                            {/* Category Info */}
-                            <div className="flex flex-wrap items-center gap-3 mb-4">
-                              <div className={`px-4 py-2 rounded-full text-xs font-bold backdrop-blur-xl border shadow-lg text-white bg-gradient-to-r ${dept.cardGradient}`}>
-                                {dept.category}
-            </div>
-          </div>
-
-                            {/* Title with Icon */}
-              <div className="flex items-center gap-4 mb-6">
-                              <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-white/20 to-white/10 backdrop-blur-xl border border-white/30 flex items-center justify-center shadow-xl">
-                                <IconComponent className="w-6 h-6 text-white drop-shadow-lg" />
-                  </div>
-                              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold bg-gradient-to-r from-white via-blue-100 to-white bg-clip-text text-transparent leading-tight">
-                                {dept.title}
-                </h2>
-              </div>
-
-                            {/* Quick Features */}
-                            <div className="flex flex-wrap gap-2">
-                              {dept.quickFeatures?.map((feature, index) => {
-                                const IconComponent = feature.icon
-                                return (
-                                  <div key={index} className="flex items-center gap-2 text-xs text-white/80 bg-white/5 backdrop-blur-sm px-2 py-1.5 rounded-full border border-white/20">
-                                    <IconComponent className={`w-3 h-3 ${feature.color}`} />
-                                    <span>{feature.text}</span>
-                                  </div>
-                                )
-                              })}
-                    </div>
-                    </div>
-                  </div>
-
                         {/* Department Image Section */}
-                        {dept.image && (
-                          <div className="lg:w-3/5">
-                            <div className="relative group">
-                              <div className="relative overflow-hidden rounded-2xl border border-white/20 shadow-2xl">
-                                <Image
-                                  src={dept.image}
-                                  alt={`${dept.title} - ${dept.category}`}
-                                  width={600}
-                                  height={400}
-                                  className="w-full h-64 sm:h-80 lg:h-96 object-cover transition-transform duration-500 group-hover:scale-105"
-                                  priority={false}
-                                />
-                                {/* Overlay gradient */}
-                                <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                                {/* Department name overlay */}
-                                <div className="absolute bottom-4 left-4 right-4">
-                                  <div className="bg-white/10 backdrop-blur-xl rounded-xl p-4 border border-white/20">
-                                    <h3 className="text-lg font-bold text-white mb-1">{dept.title}</h3>
-                                    <p className="text-sm text-white/80">{dept.category}</p>
+                        <div className="xl:w-2/5">
+                          <div className="relative group/image">
+                            <div className="relative overflow-hidden rounded-2xl lg:rounded-3xl shadow-2xl">
+                              <Image
+                                src={dept.image}
+                                alt={`${dept.title} - ${dept.category}`}
+                                width={600}
+                                height={400}
+                                className="w-full h-64 sm:h-80 lg:h-96 object-cover transition-transform duration-700 group-hover/image:scale-105"
+                                priority={idx < 2}
+                              />
+                              {/* Image Overlay */}
+                              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover/image:opacity-100 transition-opacity duration-500" />
+                              <div className="absolute bottom-4 left-4 right-4 opacity-0 group-hover/image:opacity-100 transition-opacity duration-500">
+                                <div className="flex items-center gap-3">
+                                  <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-white/20 to-white/10 backdrop-blur-xl border border-white/30 flex items-center justify-center shadow-xl">
+                                    <IconComponent className="w-5 h-5 text-white drop-shadow-lg" />
+                                  </div>
+                                  <div>
+                                    <h3 className="text-lg font-bold text-white drop-shadow-lg">{dept.title}</h3>
+                                    <p className="text-sm text-white/90 drop-shadow-lg">{dept.category}</p>
                                   </div>
                                 </div>
                               </div>
                             </div>
                           </div>
-                        )}
-                  </div>
+                        </div>
+
+                        {/* Department Info Section */}
+                        <div className="xl:w-3/5">
+                          <div className="space-y-6">
+                            {/* Category Badge */}
+                            <div className="flex flex-wrap items-center gap-3">
+                              <div className={`px-4 py-2 rounded-full text-xs font-bold backdrop-blur-xl border shadow-lg text-white bg-gradient-to-r ${dept.cardGradient}`}>
+                                {dept.category}
+                              </div>
+                            </div>
+
+                            {/* Title with Icon */}
+                            <div className="flex items-center gap-4 mb-6">
+                              <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-white/20 to-white/10 backdrop-blur-xl border border-white/30 flex items-center justify-center shadow-xl">
+                                <IconComponent className="w-6 h-6 text-white drop-shadow-lg" />
+                              </div>
+                              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold bg-gradient-to-r from-white via-blue-100 to-white bg-clip-text text-transparent leading-tight">
+                                {dept.title}
+                              </h2>
+                            </div>
+
+                            {/* Quick Features */}
+                            <div className="flex flex-wrap gap-2">
+                              {dept.quickFeatures?.map((feature, index) => {
+                                const FeatureIcon = feature.icon
+                                return (
+                                  <div key={index} className="flex items-center gap-2 text-xs text-white/80 bg-white/5 backdrop-blur-sm px-3 py-2 rounded-full border border-white/20 hover:bg-white/10 transition-all duration-300">
+                                    <FeatureIcon className={`w-3 h-3 ${feature.color}`} />
+                                    <span>{feature.text}</span>
+                                  </div>
+                                )
+                              })}
+                            </div>
+                          </div>
+                        </div>
+                      </div>
 
                       {/* Content Section - Responsibilities */}
                       <div className="bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-xl rounded-2xl p-6 border border-white/20 shadow-xl">
@@ -291,14 +400,14 @@ export default function CoPage() {
                             </div>
                           ))}
                         </div>
-                    </div>
+                      </div>
                     </div>
                   </div>
                 </div>
               )
             })}
-                    </div>
-                  </div>
+          </div>
+        </div>
       </section>
 
       {/* Modern Cooperation Principles */}
@@ -424,6 +533,12 @@ export default function CoPage() {
         }
         .animate-float-reverse {
           animation: float-reverse 20s ease-in-out infinite;
+        }
+        .line-clamp-2 {
+          display: -webkit-box;
+          -webkit-line-clamp: 2;
+          -webkit-box-orient: vertical;
+          overflow: hidden;
         }
       `}</style>
     </div>
