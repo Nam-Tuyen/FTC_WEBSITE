@@ -57,18 +57,18 @@ function DetailInner({ questionId }: { questionId: string }) {
         .animate-rain { animation: rain linear infinite; }
         .animate-float-particle { animation: float-particle 15s infinite ease-in-out; }
       `}</style>
-      <div className="max-w-5xl mx-auto px-6 py-12">
-        {/* Modern Orange Back Button */}
-        <div className="mb-8">
+      <div className="max-w-5xl mx-auto px-3 sm:px-4 lg:px-6 py-6 sm:py-8 lg:py-12">
+        {/* Modern Orange Back Button - Mobile Optimized */}
+        <div className="mb-4 sm:mb-6 lg:mb-8">
           <button 
             onClick={() => window.history.back()} 
-            className="group inline-flex items-center gap-4 px-8 py-4 bg-gradient-to-r from-orange-500/20 to-red-500/20 backdrop-blur-xl border border-orange-400/30 hover:from-orange-500/30 hover:to-red-500/30 hover:border-orange-400/50 text-orange-200 hover:text-white rounded-2xl font-bold text-lg transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-orange-500/20"
+            className="group inline-flex items-center gap-2 sm:gap-3 lg:gap-4 px-4 py-2 sm:px-6 sm:py-3 lg:px-8 lg:py-4 bg-gradient-to-r from-orange-500/20 to-red-500/20 backdrop-blur-xl border border-orange-400/30 hover:from-orange-500/30 hover:to-red-500/30 hover:border-orange-400/50 text-orange-200 hover:text-white rounded-xl sm:rounded-2xl font-bold text-sm sm:text-base lg:text-lg transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-orange-500/20"
           >
-            <div className="w-8 h-8 bg-gradient-to-r from-orange-500 to-red-600 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-              <span className="text-white text-lg font-bold">←</span>
+            <div className="w-6 h-6 sm:w-7 sm:h-7 lg:w-8 lg:h-8 bg-gradient-to-r from-orange-500 to-red-600 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform duration-300 flex-shrink-0">
+              <span className="text-white text-sm sm:text-base lg:text-lg font-bold">←</span>
             </div>
-            <span className="group-hover:translate-x-1 transition-transform duration-300">Quay lại danh sách</span>
-            <div className="w-2 h-2 bg-gradient-to-r from-orange-400 to-red-400 rounded-full group-hover:scale-150 transition-transform duration-300"></div>
+            <span className="group-hover:translate-x-1 transition-transform duration-300 text-xs sm:text-sm lg:text-base">Quay lại danh sách</span>
+            <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-gradient-to-r from-orange-400 to-red-400 rounded-full group-hover:scale-150 transition-transform duration-300 flex-shrink-0"></div>
           </button>
         </div>
 
@@ -156,26 +156,26 @@ function DetailInner({ questionId }: { questionId: string }) {
             <p className="text-blue-200 text-xl">Không tìm thấy câu hỏi</p>
           </div>
         ) : (
-          <div className="space-y-8">
-            {/* Question Card */}
-            <div className="bg-gradient-to-br from-[#003663]/90 to-[#004a7c]/90 backdrop-blur-xl rounded-3xl border border-blue-400/30 p-8 shadow-2xl">
-              <div className="flex items-start justify-between gap-6 mb-6">
-                <div className="flex-1">
-                  <div className="flex items-center gap-4 mb-4">
-                    <span className="px-4 py-2 rounded-full text-sm font-semibold bg-gradient-to-r from-orange-500/20 to-red-500/20 text-orange-300 border border-orange-400/30">
+          <div className="space-y-4 sm:space-y-6 lg:space-y-8">
+            {/* Question Card - Mobile Optimized */}
+            <div className="bg-gradient-to-br from-[#003663]/90 to-[#004a7c]/90 backdrop-blur-xl rounded-2xl sm:rounded-3xl border border-blue-400/30 p-4 sm:p-6 lg:p-8 shadow-2xl">
+              <div className="flex flex-col sm:flex-row items-start justify-between gap-4 sm:gap-6 mb-4 sm:mb-6">
+                <div className="flex-1 min-w-0">
+                  <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-4 mb-3 sm:mb-4">
+                    <span className="px-2 py-1 sm:px-3 sm:py-1.5 lg:px-4 lg:py-2 rounded-full text-xs sm:text-sm font-semibold bg-gradient-to-r from-orange-500/20 to-red-500/20 text-orange-300 border border-orange-400/30 flex-shrink-0">
                       {q.category || 'Thảo luận'}
                     </span>
-                    <span className="text-sm text-blue-300">
+                    <span className="text-xs sm:text-sm text-blue-300">
                       {new Date(q.createdAt).toLocaleDateString('vi-VN')}
                     </span>
                   </div>
-                  <h2 className="text-3xl font-bold text-white mb-4 leading-tight">{q.title}</h2>
-                  <div className="flex items-center gap-2 text-base text-blue-200">
-                    <span className="w-2 h-2 bg-gradient-to-r from-blue-400 to-cyan-400 rounded-full"></span>
-                    <span>Người đăng: <span className="text-white font-semibold">{q.user}</span></span>
+                  <h2 className="text-lg sm:text-xl lg:text-2xl xl:text-3xl font-bold text-white mb-3 sm:mb-4 leading-tight break-words">{q.title}</h2>
+                  <div className="flex items-center gap-2 text-sm sm:text-base text-blue-200">
+                    <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-gradient-to-r from-blue-400 to-cyan-400 rounded-full flex-shrink-0"></span>
+                    <span className="truncate">Người đăng: <span className="text-white font-semibold">{q.user}</span></span>
                   </div>
                 </div>
-                <div className="flex-shrink-0">
+                <div className="flex-shrink-0 self-start sm:self-auto">
                   <LikeButton 
                     questionId={q.id} 
                     initialLikes={q.like_count} 
@@ -187,15 +187,15 @@ function DetailInner({ questionId }: { questionId: string }) {
                 </div>
               </div>
               
-              <div className="bg-gradient-to-r from-blue-500/5 to-cyan-500/5 border border-blue-400/20 rounded-2xl p-6">
-                <p className="text-blue-100 leading-relaxed whitespace-pre-wrap text-lg">
+              <div className="bg-gradient-to-r from-blue-500/5 to-cyan-500/5 border border-blue-400/20 rounded-xl sm:rounded-2xl p-4 sm:p-6">
+                <p className="text-blue-100 leading-relaxed whitespace-pre-wrap text-sm sm:text-base lg:text-lg break-words">
                   {q.content}
                 </p>
               </div>
             </div>
 
-            {/* Responses Section */}
-            <div className="bg-gradient-to-br from-[#003663]/90 to-[#004a7c]/90 backdrop-blur-xl rounded-3xl border border-blue-400/30 p-8 shadow-2xl">
+            {/* Responses Section - Mobile Optimized */}
+            <div className="bg-gradient-to-br from-[#003663]/90 to-[#004a7c]/90 backdrop-blur-xl rounded-2xl sm:rounded-3xl border border-blue-400/30 p-4 sm:p-6 lg:p-8 shadow-2xl">
               {/* Comment Section */}
               <CommentSection 
                 questionId={q.id} 
@@ -203,11 +203,11 @@ function DetailInner({ questionId }: { questionId: string }) {
                 onCommentAdded={load}
               />
 
-              {/* New Response Form */}
-              <div className="mt-8 pt-8 border-t border-blue-400/30">
-                <h4 className="text-xl font-bold text-white mb-6 flex items-center gap-3">
-                  <span className="text-xl">✍️</span>
-                  Viết phản hồi mới
+              {/* New Response Form - Mobile Optimized */}
+              <div className="mt-4 sm:mt-6 lg:mt-8 pt-4 sm:pt-6 lg:pt-8 border-t border-blue-400/30">
+                <h4 className="text-base sm:text-lg lg:text-xl font-bold text-white mb-4 sm:mb-6 flex items-center gap-2 sm:gap-3">
+                  <span className="text-base sm:text-lg lg:text-xl">✍️</span>
+                  <span className="text-sm sm:text-base lg:text-lg">Viết phản hồi mới</span>
                 </h4>
                 <NewResponseForm questionId={q.id} onCreated={load} />
               </div>

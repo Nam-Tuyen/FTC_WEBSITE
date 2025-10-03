@@ -90,7 +90,7 @@ function ForumHome() {
           animation: float-particle 8s ease-in-out infinite;
         }
       `}</style>
-      <div className="max-w-7xl mx-auto px-6 py-12">
+      <div className="max-w-7xl mx-auto px-3 sm:px-4 lg:px-6 py-6 sm:py-8 lg:py-12">
         {/* Modern Tech-Style Header Section - Mobile Optimized */}
         <section className="relative min-h-[80vh] sm:min-h-screen flex items-center justify-center py-8 sm:py-12 lg:py-16 px-3 sm:px-4 lg:px-6 overflow-hidden">
           {/* Hexagon Pattern Background */}
@@ -146,8 +146,8 @@ function ForumHome() {
             <div className="absolute top-1/6 right-1/6 w-px h-36 bg-cyan-400 shadow-lg shadow-cyan-400/50"></div>
             <div className="absolute bottom-1/4 left-1/5 w-48 h-px bg-cyan-400 shadow-lg shadow-cyan-400/50"></div>
             <div className="absolute bottom-1/5 right-1/10 w-px h-36 bg-cyan-400 shadow-lg shadow-cyan-400/50"></div>
-          </div>
-
+        </div>
+        
           <div className="relative max-w-5xl mx-auto text-center space-y-6 sm:space-y-8 lg:space-y-10 z-10">
             {/* Logo Section - Mobile Optimized */}
             <div className="space-y-4 sm:space-y-6">
@@ -156,9 +156,9 @@ function ForumHome() {
                 <span className="relative animate-glow" style={{
                   textShadow: '0 0 20px rgba(0, 174, 239, 0.6), 0 0 40px rgba(0, 174, 239, 0.4), 0 2px 15px rgba(0, 0, 0, 0.6)'
                 }}>
-                  DIỄN ĐÀN FTC
-                </span>
-              </h1>
+                DIỄN ĐÀN FTC
+              </span>
+            </h1>
               
               {/* Animated Line - Mobile Responsive */}
               <div className="w-32 sm:w-48 h-0.5 bg-gradient-to-r from-transparent via-cyan-400 to-transparent mx-auto animate-line-expand"></div>
@@ -194,7 +194,7 @@ function ForumHome() {
                   <span className="text-xs sm:text-sm lg:text-base">Xu hướng mới nhất</span>
                 </div>
               </button>
-            </div>
+          </div>
 
             {/* Community Badge - Mobile Optimized */}
             <div className="mt-8 sm:mt-12 lg:mt-16 px-2">
@@ -203,18 +203,18 @@ function ForumHome() {
                 <div className="relative flex items-center justify-center gap-2 sm:gap-3">
                   <div className="w-2 h-2 sm:w-3 sm:h-3 bg-green-400 rounded-full animate-pulse shadow-lg shadow-green-400/50"></div>
                   <span className="text-xs sm:text-sm lg:text-base">CỘNG ĐỒNG FINTECH</span>
-                </div>
-              </button>
             </div>
+              </button>
           </div>
-        </section>
+        </div>
+      </section>
 
         {/* Auth Tabs - Mobile Optimized */}
         {!user && (
           <>
             <div className="flex justify-center mb-12 sm:mb-16 lg:mb-20 px-4">
               <div className="flex flex-col sm:flex-row bg-gradient-to-r from-[#003663]/40 to-[#004a7c]/40 backdrop-blur-2xl rounded-2xl sm:rounded-3xl p-2 sm:p-4 border border-blue-400/40 shadow-2xl shadow-blue-500/20 w-full max-w-md sm:max-w-none">
-                <button 
+                <button
                   className={`px-6 py-4 sm:px-12 sm:py-5 lg:px-16 lg:py-6 rounded-xl sm:rounded-2xl font-black text-sm sm:text-base lg:text-xl transition-all duration-500 ${
                     tab==="login" 
                       ? "bg-gradient-to-r from-blue-500 to-cyan-600 text-white shadow-2xl scale-105 sm:scale-110 border-2 border-blue-400/50" 
@@ -227,7 +227,7 @@ function ForumHome() {
                     <span>Đăng nhập</span>
                   </span>
                 </button>
-                <button 
+                    <button
                   className={`px-6 py-4 sm:px-12 sm:py-5 lg:px-16 lg:py-6 rounded-xl sm:rounded-2xl font-black text-sm sm:text-base lg:text-xl transition-all duration-500 ${
                     tab==="register" 
                       ? "bg-gradient-to-r from-green-500 to-emerald-600 text-white shadow-2xl scale-105 sm:scale-110 border-2 border-green-400/50" 
@@ -239,7 +239,7 @@ function ForumHome() {
                     <span className="text-lg sm:text-xl lg:text-2xl">👤</span>
                     <span>Đăng ký</span>
                   </span>
-                </button>
+                    </button>
               </div>
             </div>
 
@@ -254,10 +254,10 @@ function ForumHome() {
                       </div>
                       <h3 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white mb-2 sm:mb-3">Đăng nhập</h3>
                       <p className="text-blue-200 text-sm sm:text-base lg:text-xl">Chào mừng bạn quay trở lại</p>
-                    </div>
-                    <LoginForm />
-                  </div>
                 </div>
+                    <LoginForm />
+                </div>
+              </div>
               )}
               {tab==="register" && (
                 <div className="w-full max-w-sm sm:max-w-md lg:max-w-4xl">
@@ -265,13 +265,13 @@ function ForumHome() {
                     <div className="text-center mb-6 sm:mb-8 lg:mb-10">
                       <div className="w-16 h-16 sm:w-20 sm:h-20 lg:w-24 lg:h-24 bg-gradient-to-r from-green-500 to-emerald-600 rounded-full flex items-center justify-center mx-auto mb-4 sm:mb-6 lg:mb-8">
                         <span className="text-2xl sm:text-3xl lg:text-4xl">👤</span>
-                      </div>
+                </div>
                       <h3 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white mb-2 sm:mb-3">Đăng ký</h3>
                       <p className="text-blue-200 text-sm sm:text-base lg:text-xl">Tham gia cộng đồng FTC</p>
-                    </div>
-                    <RegisterForm />
-                  </div>
                 </div>
+                    <RegisterForm />
+                </div>
+              </div>
               )}
             </div>
           </>
@@ -279,23 +279,23 @@ function ForumHome() {
 
         {/* User Dashboard - Mobile Optimized */}
         {user && (
-          <div className="mt-8 sm:mt-12 lg:mt-16 px-4">
+          <div className="mt-6 sm:mt-8 lg:mt-12">
             {/* User Info Card - Mobile Responsive */}
-            <div className="bg-gradient-to-br from-[#003663]/90 to-[#004a7c]/90 backdrop-blur-xl rounded-2xl sm:rounded-3xl border border-blue-400/30 p-4 sm:p-6 lg:p-8 shadow-2xl mb-6 sm:mb-8">
-              <div className="flex flex-col sm:flex-row items-center justify-between gap-4 sm:gap-6">
-                <div className="flex items-center gap-4 sm:gap-6">
-                  <div className="w-12 h-12 sm:w-14 sm:h-14 lg:w-16 lg:h-16 bg-gradient-to-r from-blue-500 to-cyan-600 rounded-full flex items-center justify-center">
-                    <span className="text-lg sm:text-xl lg:text-2xl">👋</span>
+            <div className="bg-gradient-to-br from-[#003663]/90 to-[#004a7c]/90 backdrop-blur-xl rounded-xl sm:rounded-2xl lg:rounded-3xl border border-blue-400/30 p-3 sm:p-4 lg:p-6 shadow-2xl mb-4 sm:mb-6">
+              <div className="flex flex-col sm:flex-row items-center justify-between gap-3 sm:gap-4">
+                <div className="flex items-center gap-3 sm:gap-4">
+                  <div className="w-10 h-10 sm:w-12 sm:h-12 lg:w-14 lg:h-14 bg-gradient-to-r from-blue-500 to-cyan-600 rounded-full flex items-center justify-center flex-shrink-0">
+                    <span className="text-base sm:text-lg lg:text-xl">👋</span>
                   </div>
-                  <div className="text-center sm:text-left">
-                    <p className="text-sm sm:text-base lg:text-lg text-blue-200">Xin chào,</p>
-                    <p className="text-lg sm:text-xl lg:text-2xl font-bold text-white">{user.full_name}</p>
-                    <p className="text-xs sm:text-sm lg:text-base text-blue-300">({user.mssv})</p>
+                  <div className="text-center sm:text-left min-w-0 flex-1">
+                    <p className="text-xs sm:text-sm lg:text-base text-blue-200">Xin chào,</p>
+                    <p className="text-sm sm:text-base lg:text-lg font-bold text-white truncate">{user.full_name}</p>
+                    <p className="text-xs sm:text-sm lg:text-base text-blue-300 truncate">({user.mssv})</p>
                   </div>
                 </div>
                 <button 
                   onClick={logout}
-                  className="px-4 py-2 sm:px-6 sm:py-3 bg-gradient-to-r from-red-500 to-pink-600 rounded-lg sm:rounded-xl text-white font-semibold text-sm sm:text-base hover:shadow-lg transition-all duration-200"
+                  className="px-3 py-2 sm:px-4 sm:py-2 lg:px-6 lg:py-3 bg-gradient-to-r from-red-500 to-pink-600 rounded-lg text-white font-semibold text-xs sm:text-sm lg:text-base hover:shadow-lg transition-all duration-200 flex-shrink-0"
                 >
                   Đăng xuất
                 </button>
@@ -328,8 +328,8 @@ function ForumHome() {
                       selectedCategory={selectedCategory}
                       selectedSort={selectedSort}
                       stats={stats}
-                    />
-                  </div>
+              />
+            </div>
 
                   {/* Loading State - Mobile Responsive */}
                   {loading ? (
@@ -345,12 +345,12 @@ function ForumHome() {
                           <div className="text-4xl sm:text-6xl lg:text-8xl mb-4 sm:mb-6">💬</div>
                           <p className="text-blue-200 text-lg sm:text-xl lg:text-2xl mb-2">Chưa có câu hỏi nào</p>
                           <p className="text-blue-300 text-sm sm:text-base lg:text-lg">Hãy là người đầu tiên đặt câu hỏi!</p>
-                        </div>
-                      ) : (
+                </div>
+              ) : (
                         <div className="space-y-4 sm:space-y-6">
                           {items.map(q => <QuestionCard key={q.id} q={q} />)}
-                        </div>
-                      )}
+                             </div>
+                           )}
                     </>
                   )}
                         </div>
