@@ -3,7 +3,6 @@ import { useRouter } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
 import { ForumApi } from "@/lib/forumApi";
 import type { QuestionItem } from "@/types/forum";
-import LikeButton from "@/components/forum/LikeButton";
 import NewResponseForm from "@/components/forum/NewResponseForm";
 import CommentSection from "@/components/forum/CommentSection";
 import { AuthProvider } from "@/context/AuthContext";
@@ -159,31 +158,19 @@ function DetailInner({ questionId }: { questionId: string }) {
           <div className="space-y-3 sm:space-y-4 lg:space-y-6">
             {/* Question Card - Mobile Optimized */}
             <div className="bg-gradient-to-br from-[#003663]/90 to-[#004a7c]/90 backdrop-blur-xl rounded-xl sm:rounded-2xl lg:rounded-3xl border border-blue-400/30 p-3 sm:p-4 lg:p-6 shadow-2xl">
-              <div className="flex flex-col sm:flex-row items-start justify-between gap-3 sm:gap-4 lg:gap-6 mb-3 sm:mb-4 lg:mb-6">
-                <div className="flex-1 min-w-0">
-                  <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-3 lg:gap-4 mb-2 sm:mb-3 lg:mb-4">
-                    <span className="px-2 py-1 sm:px-3 sm:py-1.5 lg:px-4 lg:py-2 rounded-full text-xs sm:text-sm font-semibold bg-gradient-to-r from-orange-500/20 to-red-500/20 text-orange-300 border border-orange-400/30 flex-shrink-0">
-                      {q.category || 'Thảo luận'}
-                    </span>
-                    <span className="text-xs sm:text-sm text-blue-300">
-                      {new Date(q.createdAt).toLocaleDateString('vi-VN')}
-                    </span>
-                  </div>
-                  <h2 className="text-base sm:text-lg lg:text-xl xl:text-2xl font-bold text-white mb-2 sm:mb-3 lg:mb-4 leading-tight break-words">{q.title}</h2>
-                  <div className="flex items-center gap-2 text-xs sm:text-sm lg:text-base text-blue-200">
-                    <span className="w-1 h-1 sm:w-1.5 sm:h-1.5 lg:w-2 lg:h-2 bg-gradient-to-r from-blue-400 to-cyan-400 rounded-full flex-shrink-0"></span>
-                    <span className="truncate">Người đăng: <span className="text-white font-semibold">{q.user}</span></span>
-                  </div>
+              <div className="mb-3 sm:mb-4 lg:mb-6">
+                <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-3 lg:gap-4 mb-2 sm:mb-3 lg:mb-4">
+                  <span className="px-2 py-1 sm:px-3 sm:py-1.5 lg:px-4 lg:py-2 rounded-full text-xs sm:text-sm font-semibold bg-gradient-to-r from-orange-500/20 to-red-500/20 text-orange-300 border border-orange-400/30 flex-shrink-0">
+                    {q.category || 'Thảo luận'}
+                  </span>
+                  <span className="text-xs sm:text-sm text-blue-300">
+                    {new Date(q.createdAt).toLocaleDateString('vi-VN')}
+                  </span>
                 </div>
-                <div className="flex-shrink-0 self-start sm:self-auto">
-                  <LikeButton 
-                    questionId={q.id} 
-                    initialLikes={q.like_count} 
-                    onLikeChange={(liked, likeCount) => {
-                      // Update the question's like count in the parent component
-                      setQ(prev => prev ? { ...prev, like_count: likeCount } : null);
-                    }}
-                  />
+                <h2 className="text-base sm:text-lg lg:text-xl xl:text-2xl font-bold text-white mb-2 sm:mb-3 lg:mb-4 leading-tight break-words">{q.title}</h2>
+                <div className="flex items-center gap-2 text-xs sm:text-sm lg:text-base text-blue-200">
+                  <span className="w-1 h-1 sm:w-1.5 sm:h-1.5 lg:w-2 lg:h-2 bg-gradient-to-r from-blue-400 to-cyan-400 rounded-full flex-shrink-0"></span>
+                  <span className="truncate">Người đăng: <span className="text-white font-semibold">{q.user}</span></span>
                 </div>
               </div>
               
