@@ -47,7 +47,7 @@ export default function QuestionCard({ q }: { q: any }) {
           href={`/dien-dan/question/${q.id}`} 
           className="w-full sm:w-auto px-4 py-2.5 sm:px-6 sm:py-3 bg-gradient-to-r from-orange-500 to-red-600 rounded-lg sm:rounded-xl text-white font-semibold hover:shadow-lg hover:scale-105 transition-all duration-200 flex items-center justify-center gap-2 text-sm sm:text-base"
         >
-          <span>Xem chi tiết</span>
+          <span>Trả lời câu hỏi</span>
           <span className="text-sm sm:text-base lg:text-lg">→</span>
         </Link>
       </div>
