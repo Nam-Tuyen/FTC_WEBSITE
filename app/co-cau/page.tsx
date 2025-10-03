@@ -303,35 +303,35 @@ const cooperationPrinciples = [
     title: "Ban Học thuật",
     description: "Chuẩn bị và bàn giao nội dung học thuật phù hợp theo yêu cầu của sự kiện",
     icon: BookOpen,
-    color: "from-blue-500 to-cyan-500"
+    color: "from-blue-600 to-blue-400"
   },
   {
     step: "02", 
     title: "Ban Sự kiện",
     description: "Lập kế hoạch và giải quyết các giấy tờ cần có để tổ chức sự kiện",
     icon: Calendar,
-    color: "from-green-500 to-emerald-500"
+    color: "from-emerald-600 to-emerald-400"
   },
   {
     step: "03",
     title: "Ban Truyền thông", 
     description: "Thiết kế ấn phẩm và lên bài truyền thông về sự kiện",
     icon: Megaphone,
-    color: "from-purple-500 to-violet-500"
+    color: "from-purple-600 to-purple-400"
   },
   {
     step: "04",
     title: "Ban Tài chính cá nhân",
     description: "Phụ trách mảng giáo dục tài chính cá nhân độc lập", 
     icon: Wallet,
-    color: "from-amber-700 to-yellow-800"
+    color: "from-orange-600 to-orange-400"
   },
   {
     step: "05",
     title: "Ban Nhân sự",
     description: "Bảo đảm nguồn lực được phân công hiệu quả và kịp tiến độ công việc đề ra",
     icon: Users,
-    color: "from-indigo-500 to-blue-500"
+    color: "from-rose-600 to-rose-400"
   }
 ]
 
