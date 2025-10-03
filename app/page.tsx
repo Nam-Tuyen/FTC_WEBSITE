@@ -64,50 +64,42 @@ export default function HomePage() {
     {
       src: "/Ảnh câu lạc bộ FTC.JPG",
       alt: "Câu lạc bộ FTC - Group photo",
-      title: "Tập thể câu lạc bộ FTC",
-      description: "Tập thể thành viên FTC tại sự kiện"
+      title: "Tập thể câu lạc bộ FTC"
     },
     {
       src: "/Cuộc thi học thuật ATTACKER.jpg",
       alt: "Cuộc thi học thuật ATTACKER",
-      title: "Cuộc thi học thuật ATTACKER",
-      description: "Cuộc thi fintech và tài sản số 2025"
+      title: "Cuộc thi học thuật ATTACKER"
     },
     {
       src: "/Cuộc thi Web3 Quizzes unlock the future.jpg",
       alt: "Cuộc thi Web3 Quizzes",
-      title: "Cuộc thi học thuật Web3 Quizzes",
-      description: "Chung kết cuộc thi Web3"
+      title: "Cuộc thi học thuật Web3 Quizzes"
     },
     {
       src: "/Hoạt động thăm quan doanh nghiệp VNG.jpg",
       alt: "Thăm quan VNG Campus",
-      title: "Thăm quan doanh nghiệp VNG Campus",
-      description: "Hoạt động thăm quan doanh nghiệp"
+      title: "Thăm quan doanh nghiệp VNG Campus"
     },
     {
       src: "/Hoạt động tuyển tân thành viên FTC.jpg",
       alt: "Tuyển tân thành viên FTC",
-      title: "Tuyển tân thành viên FTC",
-      description: "Chương trình tuyển thành viên mới"
+      title: "Tuyển tân thành viên FTC"
     },
     {
       src: "/Talkshow định huống nguồn nhân lực trong bối cảnh chuyển đổi số và tài sản số.jpg",
       alt: "Talkshow định hướng nguồn nhân lực",
-      title: "Talkshow định huống nguồn nhân lực trong bối cảnh chuyển đổi số và tài sản số",
-      description: "Định hướng nguồn nhân lực số"
+      title: "Talkshow định huống nguồn nhân lực trong bối cảnh chuyển đổi số và tài sản số"
     },
     {
       src: "/Talkshow người mới nên tiếp cận thị trường công nghệ tài chính như thế nào.jpg",
       alt: "Talkshow tiếp cận thị trường fintech",
-      title: "Talkshow người mới nên tiếp cận thị trường công nghệ tài chính như thế nào",
-      description: "Hướng dẫn tiếp cận thị trường fintech"
+      title: "Talkshow người mới nên tiếp cận thị trường công nghệ tài chính như thế nào"
     },
     {
       src: "/Talkshow Web3 Carrer Innovation.jpg",
       alt: "Talkshow Web3 Career Innovation",
-      title: "Talkshow Web3 Carrer Innovation",
-      description: "Tương lai nghề nghiệp Web3"
+      title: "Talkshow Web3 Carrer Innovation"
     }
   ]
 
@@ -379,9 +371,6 @@ export default function HomePage() {
             <h2 className="font-heading font-black text-3xl sm:text-4xl md:text-5xl text-foreground mb-3 sm:mb-4 text-glow">
               CÁC HOẠT ĐỘNG TẠI CÂU LẠC BỘ FTC
             </h2>
-            <p className="text-lg sm:text-xl text-foreground/70 max-w-2xl mx-auto font-medium italic px-4">
-              Những hoạt động đa dạng và bổ ích mà FTC tổ chức cho các thành viên
-            </p>
           </div>
 
           {/* 3D Carousel Gallery */}
@@ -455,7 +444,7 @@ export default function HomePage() {
                         <div className="absolute top-0 left-0 w-full h-0.5 bg-gradient-to-r from-transparent via-accent to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-2000"></div>
                         
                         {/* Title */}
-                        <h3 className="text-2xl font-bold text-foreground uppercase tracking-wider text-center px-4 relative">
+                        <h3 className="text-xl font-bold text-foreground uppercase tracking-wider text-center px-4 relative leading-tight">
                           {activity.title}
                           {/* Underline Effect */}
                           <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-16 h-0.5 bg-gradient-to-r from-transparent via-accent to-transparent"></div>
