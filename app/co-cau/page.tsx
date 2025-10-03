@@ -184,6 +184,104 @@ export default function CoPage() {
         badgeShadowColor="shadow-emerald-500/10"
       />
 
+      {/* Department Images Carousel */}
+      <section className="py-16 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto">
+          {/* Section Header */}
+          <div className="text-center mb-16">
+            <div className="w-20 h-20 mx-auto mb-8 bg-gradient-to-r from-blue-500 to-purple-600 rounded-3xl flex items-center justify-center shadow-2xl">
+              <Users className="w-10 h-10 text-white" />
+            </div>
+            <h2 className="text-4xl lg:text-5xl font-bold text-white mb-6">HÌNH ẢNH CÁC BAN</h2>
+            <p className="text-xl text-white/80 leading-relaxed italic max-w-3xl mx-auto">
+              Khám phá đội ngũ năng động và chuyên nghiệp của từng ban trong câu lạc bộ
+            </p>
+          </div>
+
+          {/* Scrollable Department Images */}
+          <div className="relative">
+            {/* Scroll Container */}
+            <div className="overflow-x-auto scrollbar-hide scroll-smooth">
+              <div className="flex gap-8 pb-4" style={{ width: 'max-content' }}>
+                {organizationData.map((dept, index) => (
+                  <div key={dept.title} className="group relative flex-shrink-0">
+                    {/* Department Image Card */}
+                    <div className="relative w-80 h-96 bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-xl rounded-3xl border border-white/20 overflow-hidden transition-all duration-700 group-hover:scale-105 group-hover:shadow-2xl group-hover:shadow-blue-500/20 group-hover:border-blue-400/30">
+                      
+                      {/* Background Image Placeholder */}
+                      <div className="absolute inset-0 bg-gradient-to-br from-blue-500/20 to-purple-500/20 flex items-center justify-center">
+                        <div className="text-center">
+                          <div className="w-24 h-24 mx-auto mb-4 bg-gradient-to-r from-white/20 to-white/10 backdrop-blur-xl border border-white/30 rounded-2xl flex items-center justify-center shadow-xl">
+                            <dept.icon className="w-12 h-12 text-white drop-shadow-lg" />
+                          </div>
+                          <div className="text-6xl mb-4">📸</div>
+                          <p className="text-white/60 text-sm">Hình ảnh ban {dept.title.toLowerCase()}</p>
+                        </div>
+                      </div>
+
+                      {/* Overlay Gradient */}
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+                      
+                      {/* Department Title */}
+                      <div className="absolute bottom-0 left-0 right-0 p-6">
+                        <div className="flex items-center gap-3 mb-3">
+                          <div className="w-2 h-2 bg-gradient-to-r from-blue-400 to-purple-400 rounded-full animate-pulse" />
+                          <span className="text-xs font-semibold text-blue-200 uppercase tracking-wider">
+                            {dept.category}
+                          </span>
+                        </div>
+                        <h3 className="text-2xl font-bold text-white mb-2 group-hover:text-blue-200 transition-colors">
+                          {dept.title}
+                        </h3>
+                        <p className="text-white/80 text-sm leading-relaxed">
+                          {dept.responsibilities[0]}
+                        </p>
+                      </div>
+
+                      {/* Hover Effect Overlay */}
+                      <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 to-purple-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                    </div>
+
+                    {/* Department Stats */}
+                    <div className="mt-4 flex items-center justify-between">
+                      <div className="flex items-center gap-2 text-sm text-white/60">
+                        <Users className="w-4 h-4" />
+                        <span>Thành viên</span>
+                      </div>
+                      <div className="flex items-center gap-2 text-sm text-white/60">
+                        <Calendar className="w-4 h-4" />
+                        <span>Hoạt động</span>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Scroll Indicators */}
+            <div className="flex justify-center mt-8 gap-3">
+              {organizationData.map((_, index) => (
+                <div 
+                  key={index} 
+                  className="w-3 h-3 bg-white/30 rounded-full transition-all duration-300 hover:bg-white/60 hover:scale-125 cursor-pointer animate-scroll-indicator"
+                  style={{ animationDelay: `${index * 0.2}s` }}
+                />
+              ))}
+            </div>
+
+            {/* Scroll Hint */}
+            <div className="text-center mt-6">
+              <div className="inline-flex items-center gap-2 text-white/60 text-sm">
+                <div className="w-6 h-6 rounded-full border border-white/30 flex items-center justify-center">
+                  <ArrowRight className="w-3 h-3" />
+                </div>
+                <span>Cuộn để xem thêm</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Modern Organization Cards */}
       <section className="py-16 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
@@ -385,11 +483,28 @@ export default function CoPage() {
           0%, 100% { background-position: 0% 50%; }
           50% { background-position: 100% 50%; }
         }
+        @keyframes scroll-indicator {
+          0%, 100% { transform: scale(1); opacity: 0.3; }
+          50% { transform: scale(1.2); opacity: 0.8; }
+        }
         .animate-float {
           animation: float 20s ease-in-out infinite;
         }
         .animate-float-reverse {
           animation: float-reverse 20s ease-in-out infinite;
+        }
+        .scrollbar-hide {
+          -ms-overflow-style: none;
+          scrollbar-width: none;
+        }
+        .scrollbar-hide::-webkit-scrollbar {
+          display: none;
+        }
+        .scroll-smooth {
+          scroll-behavior: smooth;
+        }
+        .animate-scroll-indicator {
+          animation: scroll-indicator 2s ease-in-out infinite;
         }
       `}</style>
     </div>
