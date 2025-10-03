@@ -280,34 +280,41 @@ function DepartmentPhotoCarousel({ departments }: { departments: typeof organiza
         )}
       </div>
 
-      {/* Compact department indicators */}
+      {/* Modern department indicators with gradient design */}
       <div className="p-4 bg-gradient-to-t from-black/70 to-transparent">
-        <div className="flex flex-wrap gap-2 justify-center">
+        <div className="flex flex-wrap gap-3 justify-center">
           {departmentsWithPhotos.map((dept, index) => (
             <button
               key={dept.title}
               onClick={() => goToPhoto(index)}
               disabled={isTransitioning}
-              className={`px-3 py-1.5 rounded-full text-xs font-medium transition-all duration-300 ease-out transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed ${
+              className={`px-4 py-2 rounded-xl text-xs font-semibold transition-all duration-500 ease-out transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed relative overflow-hidden ${
                 index === currentIndex
-                  ? 'bg-gradient-to-r from-blue-500 to-purple-600 text-white shadow-md scale-105 ring-1 ring-white/30'
-                  : 'bg-white/10 text-white/70 hover:bg-white/20 hover:text-white hover:shadow-sm'
+                  ? 'bg-gradient-to-r from-cyan-500 via-blue-600 to-purple-600 text-white shadow-lg scale-105 shadow-cyan-500/25'
+                  : 'bg-gradient-to-r from-white/10 to-white/5 text-white/80 hover:from-white/20 hover:to-white/10 hover:text-white hover:shadow-md border border-white/20'
               }`}
             >
-              <span className="relative">
+              {/* Gradient background animation for active state */}
+              {index === currentIndex && (
+                <div className="absolute inset-0 bg-gradient-to-r from-cyan-400/20 via-blue-500/20 to-purple-500/20 animate-pulse" />
+              )}
+              
+              {/* Shimmer effect for active state */}
+              {index === currentIndex && (
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent animate-shimmer" />
+              )}
+              
+              <span className="relative z-10">
                 {dept.title}
-                {index === currentIndex && (
-                  <div className="absolute -bottom-0.5 left-1/2 -translate-x-1/2 w-1.5 h-1.5 bg-white rounded-full animate-pulse" />
-                )}
               </span>
             </button>
           ))}
         </div>
         
-        {/* Compact auto-play indicator */}
-        <div className="flex items-center justify-center gap-1.5 mt-3">
-          <div className="w-1.5 h-1.5 bg-white/40 rounded-full animate-pulse" />
-          <span className="text-white/60 text-xs">Tự động chuyển ảnh</span>
+        {/* Modern auto-play indicator with gradient */}
+        <div className="flex items-center justify-center gap-2 mt-4">
+          <div className="w-2 h-2 bg-gradient-to-r from-green-400 to-emerald-500 rounded-full animate-pulse shadow-lg shadow-green-500/30" />
+          <span className="text-white/70 text-xs font-medium">Tự động chuyển ảnh</span>
         </div>
       </div>
     </div>
@@ -626,6 +633,14 @@ export default function CoPage() {
           0% { background-position: -200% 0; }
           100% { background-position: 200% 0; }
         }
+        @keyframes gradient-shift {
+          0%, 100% { background-position: 0% 50%; }
+          50% { background-position: 100% 50%; }
+        }
+        @keyframes glow-pulse {
+          0%, 100% { box-shadow: 0 0 5px rgba(6, 182, 212, 0.3); }
+          50% { box-shadow: 0 0 20px rgba(6, 182, 212, 0.6), 0 0 30px rgba(147, 51, 234, 0.4); }
+        }
         .animate-float {
           animation: float 20s ease-in-out infinite;
         }
@@ -654,6 +669,13 @@ export default function CoPage() {
           background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
           background-size: 200% 100%;
           animation: shimmer 2s infinite;
+        }
+        .animate-gradient-shift {
+          background-size: 200% 200%;
+          animation: gradient-shift 3s ease infinite;
+        }
+        .animate-glow-pulse {
+          animation: glow-pulse 2s ease-in-out infinite;
         }
         .carousel-transition {
           transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
