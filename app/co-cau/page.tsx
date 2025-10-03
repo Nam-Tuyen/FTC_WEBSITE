@@ -135,10 +135,11 @@ const organizationData = [
   }
 ]
 
-// Department Photo Carousel Component
+// Department Photo Carousel Component with Advanced Animations
 function DepartmentPhotoCarousel({ departments }: { departments: typeof organizationData }) {
   const [currentIndex, setCurrentIndex] = useState(0)
-  const [isPlaying, setIsPlaying] = useState(false)
+  const [isTransitioning, setIsTransitioning] = useState(false)
+  const [direction, setDirection] = useState<'left' | 'right' | 'none'>('none')
   
   // Get all departments with photos
   const departmentsWithPhotos = departments.filter(dept => dept.photos && dept.photos.length > 0)
@@ -158,86 +159,162 @@ function DepartmentPhotoCarousel({ departments }: { departments: typeof organiza
   const currentPhoto = currentDepartment.photos[0] // Using first photo for now
 
   const nextPhoto = () => {
-    setCurrentIndex((prev) => (prev + 1) % departmentsWithPhotos.length)
+    if (isTransitioning) return
+    setIsTransitioning(true)
+    setDirection('right')
+    setTimeout(() => {
+      setCurrentIndex((prev) => (prev + 1) % departmentsWithPhotos.length)
+      setDirection('none')
+      setTimeout(() => setIsTransitioning(false), 50)
+    }, 300)
   }
 
   const prevPhoto = () => {
-    setCurrentIndex((prev) => (prev - 1 + departmentsWithPhotos.length) % departmentsWithPhotos.length)
+    if (isTransitioning) return
+    setIsTransitioning(true)
+    setDirection('left')
+    setTimeout(() => {
+      setCurrentIndex((prev) => (prev - 1 + departmentsWithPhotos.length) % departmentsWithPhotos.length)
+      setDirection('none')
+      setTimeout(() => setIsTransitioning(false), 50)
+    }, 300)
   }
 
   const goToPhoto = (index: number) => {
-    setCurrentIndex(index)
+    if (isTransitioning || index === currentIndex) return
+    setIsTransitioning(true)
+    setDirection(index > currentIndex ? 'right' : 'left')
+    setTimeout(() => {
+      setCurrentIndex(index)
+      setDirection('none')
+      setTimeout(() => setIsTransitioning(false), 50)
+    }, 300)
   }
 
+  // Auto-play functionality
+  React.useEffect(() => {
+    const interval = setInterval(() => {
+      if (!isTransitioning) {
+        nextPhoto()
+      }
+    }, 5000) // Auto-advance every 5 seconds
+
+    return () => clearInterval(interval)
+  }, [currentIndex, isTransitioning])
+
   return (
-    <div className="relative bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-xl rounded-3xl border border-white/20 overflow-hidden">
-      {/* Header with department name */}
+    <div className="relative bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-xl rounded-3xl border border-white/20 overflow-hidden group">
+      {/* Header with department name - Animated */}
       <div className="absolute top-0 left-0 right-0 z-20 p-6 bg-gradient-to-b from-black/60 to-transparent">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-4">
-            <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-white/20 to-white/10 backdrop-blur-xl border border-white/30 flex items-center justify-center shadow-xl">
-              <currentDepartment.icon className="w-6 h-6 text-white drop-shadow-lg" />
+            <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-white/20 to-white/10 backdrop-blur-xl border border-white/30 flex items-center justify-center shadow-xl transition-all duration-500 group-hover:scale-110">
+              <currentDepartment.icon className="w-6 h-6 text-white drop-shadow-lg transition-all duration-500" />
             </div>
-            <div>
-              <h3 className="text-2xl sm:text-3xl font-bold text-white drop-shadow-lg">
+            <div className="overflow-hidden">
+              <h3 className="text-2xl sm:text-3xl font-bold text-white drop-shadow-lg transform transition-all duration-500 ease-out">
                 {currentDepartment.title}
               </h3>
-              <p className="text-white/80 text-sm sm:text-base drop-shadow-md">
+              <p className="text-white/80 text-sm sm:text-base drop-shadow-md transform transition-all duration-500 ease-out">
                 {currentDepartment.category}
               </p>
             </div>
           </div>
           <div className="text-right">
-            <div className="text-white/60 text-sm">
+            <div className="text-white/60 text-sm transition-all duration-300">
               {currentIndex + 1} / {departmentsWithPhotos.length}
+            </div>
+            {/* Progress bar */}
+            <div className="w-20 h-1 bg-white/20 rounded-full mt-2 overflow-hidden">
+              <div 
+                className="h-full bg-gradient-to-r from-blue-500 to-purple-600 rounded-full transition-all duration-500 ease-out"
+                style={{ width: `${((currentIndex + 1) / departmentsWithPhotos.length) * 100}%` }}
+              />
             </div>
           </div>
         </div>
       </div>
 
-      {/* Main image display */}
-      <div className="relative aspect-video w-full">
-        <img
-          src={currentPhoto}
-          alt={`${currentDepartment.title} - Hoạt động`}
-          className="w-full h-full object-cover transition-all duration-500"
-        />
+      {/* Main image display with advanced animations */}
+      <div className="relative aspect-video w-full overflow-hidden">
+        {/* Image container with slide animation */}
+        <div 
+          className={`relative w-full h-full transition-all duration-500 ease-out ${
+            direction === 'right' ? 'transform translate-x-full opacity-0' :
+            direction === 'left' ? 'transform -translate-x-full opacity-0' :
+            'transform translate-x-0 opacity-100'
+          }`}
+        >
+          <img
+            src={currentPhoto}
+            alt={`${currentDepartment.title} - Hoạt động`}
+            className="w-full h-full object-cover transition-all duration-700 ease-out hover:scale-105"
+          />
+          
+          {/* Animated gradient overlay */}
+          <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent transition-all duration-500" />
+          
+          {/* Floating particles effect */}
+          <div className="absolute inset-0 pointer-events-none">
+            <div className="absolute top-1/4 left-1/4 w-2 h-2 bg-white/20 rounded-full animate-pulse" />
+            <div className="absolute top-3/4 right-1/4 w-1 h-1 bg-blue-400/30 rounded-full animate-pulse delay-1000" />
+            <div className="absolute top-1/2 right-1/3 w-1.5 h-1.5 bg-purple-400/20 rounded-full animate-pulse delay-2000" />
+          </div>
+        </div>
         
-        {/* Gradient overlay */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
-        
-        {/* Navigation buttons */}
+        {/* Navigation buttons with enhanced animations */}
         <button
           onClick={prevPhoto}
-          className="absolute left-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-white/20 hover:bg-white/30 backdrop-blur-sm rounded-full flex items-center justify-center text-white transition-all duration-300 hover:scale-110 shadow-lg"
+          disabled={isTransitioning}
+          className="absolute left-4 top-1/2 -translate-y-1/2 w-14 h-14 bg-white/20 hover:bg-white/30 backdrop-blur-sm rounded-full flex items-center justify-center text-white transition-all duration-300 hover:scale-110 hover:shadow-2xl disabled:opacity-50 disabled:cursor-not-allowed group/btn"
         >
-          <ChevronLeft className="w-6 h-6" />
+          <ChevronLeft className="w-6 h-6 transition-transform duration-300 group-hover/btn:-translate-x-1" />
         </button>
         
         <button
           onClick={nextPhoto}
-          className="absolute right-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-white/20 hover:bg-white/30 backdrop-blur-sm rounded-full flex items-center justify-center text-white transition-all duration-300 hover:scale-110 shadow-lg"
+          disabled={isTransitioning}
+          className="absolute right-4 top-1/2 -translate-y-1/2 w-14 h-14 bg-white/20 hover:bg-white/30 backdrop-blur-sm rounded-full flex items-center justify-center text-white transition-all duration-300 hover:scale-110 hover:shadow-2xl disabled:opacity-50 disabled:cursor-not-allowed group/btn"
         >
-          <ChevronRight className="w-6 h-6" />
+          <ChevronRight className="w-6 h-6 transition-transform duration-300 group-hover/btn:translate-x-1" />
         </button>
+
+        {/* Loading indicator */}
+        {isTransitioning && (
+          <div className="absolute inset-0 bg-black/20 flex items-center justify-center">
+            <div className="w-8 h-8 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+          </div>
+        )}
       </div>
 
-      {/* Department indicators */}
+      {/* Department indicators with enhanced animations */}
       <div className="p-6 bg-gradient-to-t from-black/60 to-transparent">
-        <div className="flex flex-wrap gap-2 justify-center">
+        <div className="flex flex-wrap gap-3 justify-center">
           {departmentsWithPhotos.map((dept, index) => (
             <button
               key={dept.title}
               onClick={() => goToPhoto(index)}
-              className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
+              disabled={isTransitioning}
+              className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-500 ease-out transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed ${
                 index === currentIndex
-                  ? 'bg-gradient-to-r from-blue-500 to-purple-600 text-white shadow-lg scale-105'
-                  : 'bg-white/10 text-white/70 hover:bg-white/20 hover:text-white'
+                  ? 'bg-gradient-to-r from-blue-500 to-purple-600 text-white shadow-lg scale-105 ring-2 ring-white/30'
+                  : 'bg-white/10 text-white/70 hover:bg-white/20 hover:text-white hover:shadow-md'
               }`}
             >
-              {dept.title}
+              <span className="relative">
+                {dept.title}
+                {index === currentIndex && (
+                  <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-white rounded-full animate-pulse" />
+                )}
+              </span>
             </button>
           ))}
+        </div>
+        
+        {/* Auto-play indicator */}
+        <div className="flex items-center justify-center gap-2 mt-4">
+          <div className="w-2 h-2 bg-white/40 rounded-full animate-pulse" />
+          <span className="text-white/60 text-xs">Tự động chuyển ảnh</span>
         </div>
       </div>
     </div>
@@ -528,11 +605,68 @@ export default function CoPage() {
           0%, 100% { background-position: 0% 50%; }
           50% { background-position: 100% 50%; }
         }
+        @keyframes slideInRight {
+          0% { transform: translateX(100%); opacity: 0; }
+          100% { transform: translateX(0); opacity: 1; }
+        }
+        @keyframes slideInLeft {
+          0% { transform: translateX(-100%); opacity: 0; }
+          100% { transform: translateX(0); opacity: 1; }
+        }
+        @keyframes slideOutRight {
+          0% { transform: translateX(0); opacity: 1; }
+          100% { transform: translateX(100%); opacity: 0; }
+        }
+        @keyframes slideOutLeft {
+          0% { transform: translateX(0); opacity: 1; }
+          100% { transform: translateX(-100%); opacity: 0; }
+        }
+        @keyframes fadeInUp {
+          0% { transform: translateY(30px); opacity: 0; }
+          100% { transform: translateY(0); opacity: 1; }
+        }
+        @keyframes pulse-glow {
+          0%, 100% { box-shadow: 0 0 5px rgba(59, 130, 246, 0.5); }
+          50% { box-shadow: 0 0 20px rgba(59, 130, 246, 0.8), 0 0 30px rgba(147, 51, 234, 0.6); }
+        }
+        @keyframes shimmer {
+          0% { background-position: -200% 0; }
+          100% { background-position: 200% 0; }
+        }
         .animate-float {
           animation: float 20s ease-in-out infinite;
         }
         .animate-float-reverse {
           animation: float-reverse 20s ease-in-out infinite;
+        }
+        .animate-slide-in-right {
+          animation: slideInRight 0.5s ease-out;
+        }
+        .animate-slide-in-left {
+          animation: slideInLeft 0.5s ease-out;
+        }
+        .animate-slide-out-right {
+          animation: slideOutRight 0.3s ease-in;
+        }
+        .animate-slide-out-left {
+          animation: slideOutLeft 0.3s ease-in;
+        }
+        .animate-fade-in-up {
+          animation: fadeInUp 0.6s ease-out;
+        }
+        .animate-pulse-glow {
+          animation: pulse-glow 2s ease-in-out infinite;
+        }
+        .animate-shimmer {
+          background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+          background-size: 200% 100%;
+          animation: shimmer 2s infinite;
+        }
+        .carousel-transition {
+          transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .carousel-transition-fast {
+          transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
       `}</style>
     </div>
