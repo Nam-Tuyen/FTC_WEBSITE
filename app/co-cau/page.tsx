@@ -135,81 +135,112 @@ const organizationData = [
   }
 ]
 
-// Photo Gallery Component
-function PhotoGallery({ photos, title }: { photos: string[], title: string }) {
-  const [selectedImage, setSelectedImage] = useState<number | null>(null)
-
-  if (!photos || photos.length === 0) {
+// Department Photo Carousel Component
+function DepartmentPhotoCarousel({ departments }: { departments: typeof organizationData }) {
+  const [currentIndex, setCurrentIndex] = useState(0)
+  const [isPlaying, setIsPlaying] = useState(false)
+  
+  // Get all departments with photos
+  const departmentsWithPhotos = departments.filter(dept => dept.photos && dept.photos.length > 0)
+  
+  if (departmentsWithPhotos.length === 0) {
     return (
-      <div className="flex items-center justify-center p-8 bg-gradient-to-br from-white/5 to-white/10 rounded-2xl border border-white/20">
+      <div className="flex items-center justify-center p-12 bg-gradient-to-br from-white/5 to-white/10 rounded-3xl border border-white/20">
         <div className="text-center">
-          <ImageIcon className="w-12 h-12 text-white/40 mx-auto mb-3" />
-          <p className="text-white/60 text-sm">Chưa có hình ảnh</p>
+          <ImageIcon className="w-16 h-16 text-white/40 mx-auto mb-4" />
+          <p className="text-white/60 text-lg">Chưa có hình ảnh hoạt động</p>
         </div>
       </div>
     )
   }
 
+  const currentDepartment = departmentsWithPhotos[currentIndex]
+  const currentPhoto = currentDepartment.photos[0] // Using first photo for now
+
+  const nextPhoto = () => {
+    setCurrentIndex((prev) => (prev + 1) % departmentsWithPhotos.length)
+  }
+
+  const prevPhoto = () => {
+    setCurrentIndex((prev) => (prev - 1 + departmentsWithPhotos.length) % departmentsWithPhotos.length)
+  }
+
+  const goToPhoto = (index: number) => {
+    setCurrentIndex(index)
+  }
+
   return (
-    <>
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        {photos.map((photo, index) => (
-          <div
-            key={index}
-            className="group relative overflow-hidden rounded-xl cursor-pointer hover:scale-105 transition-all duration-300"
-            onClick={() => setSelectedImage(index)}
-          >
-            <img
-              src={photo}
-              alt={`${title} - Hình ${index + 1}`}
-              className="w-full h-48 sm:h-56 object-cover group-hover:brightness-110 transition-all duration-300"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-            <div className="absolute bottom-3 left-3 right-3 text-white text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-              {title} - Hình {index + 1}
+    <div className="relative bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-xl rounded-3xl border border-white/20 overflow-hidden">
+      {/* Header with department name */}
+      <div className="absolute top-0 left-0 right-0 z-20 p-6 bg-gradient-to-b from-black/60 to-transparent">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-4">
+            <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-white/20 to-white/10 backdrop-blur-xl border border-white/30 flex items-center justify-center shadow-xl">
+              <currentDepartment.icon className="w-6 h-6 text-white drop-shadow-lg" />
+            </div>
+            <div>
+              <h3 className="text-2xl sm:text-3xl font-bold text-white drop-shadow-lg">
+                {currentDepartment.title}
+              </h3>
+              <p className="text-white/80 text-sm sm:text-base drop-shadow-md">
+                {currentDepartment.category}
+              </p>
             </div>
           </div>
-        ))}
-      </div>
-
-      {/* Modal for full-size image viewing */}
-      {selectedImage !== null && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm">
-          <div className="relative max-w-4xl max-h-[90vh] mx-4">
-            <button
-              onClick={() => setSelectedImage(null)}
-              className="absolute -top-12 right-0 text-white hover:text-gray-300 transition-colors"
-            >
-              <X className="w-8 h-8" />
-            </button>
-            <img
-              src={photos[selectedImage]}
-              alt={`${title} - Hình ${selectedImage + 1}`}
-              className="max-w-full max-h-full object-contain rounded-lg"
-            />
-            {photos.length > 1 && (
-              <>
-                <button
-                  onClick={() => setSelectedImage(selectedImage > 0 ? selectedImage - 1 : photos.length - 1)}
-                  className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/20 hover:bg-white/30 text-white p-2 rounded-full transition-all"
-                >
-                  <ChevronLeft className="w-6 h-6" />
-                </button>
-                <button
-                  onClick={() => setSelectedImage(selectedImage < photos.length - 1 ? selectedImage + 1 : 0)}
-                  className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/20 hover:bg-white/30 text-white p-2 rounded-full transition-all"
-                >
-                  <ChevronRight className="w-6 h-6" />
-                </button>
-              </>
-            )}
-            <div className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-white/20 backdrop-blur-sm text-white px-4 py-2 rounded-full text-sm">
-              {selectedImage + 1} / {photos.length}
+          <div className="text-right">
+            <div className="text-white/60 text-sm">
+              {currentIndex + 1} / {departmentsWithPhotos.length}
             </div>
           </div>
         </div>
-      )}
-    </>
+      </div>
+
+      {/* Main image display */}
+      <div className="relative aspect-video w-full">
+        <img
+          src={currentPhoto}
+          alt={`${currentDepartment.title} - Hoạt động`}
+          className="w-full h-full object-cover transition-all duration-500"
+        />
+        
+        {/* Gradient overlay */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
+        
+        {/* Navigation buttons */}
+        <button
+          onClick={prevPhoto}
+          className="absolute left-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-white/20 hover:bg-white/30 backdrop-blur-sm rounded-full flex items-center justify-center text-white transition-all duration-300 hover:scale-110 shadow-lg"
+        >
+          <ChevronLeft className="w-6 h-6" />
+        </button>
+        
+        <button
+          onClick={nextPhoto}
+          className="absolute right-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-white/20 hover:bg-white/30 backdrop-blur-sm rounded-full flex items-center justify-center text-white transition-all duration-300 hover:scale-110 shadow-lg"
+        >
+          <ChevronRight className="w-6 h-6" />
+        </button>
+      </div>
+
+      {/* Department indicators */}
+      <div className="p-6 bg-gradient-to-t from-black/60 to-transparent">
+        <div className="flex flex-wrap gap-2 justify-center">
+          {departmentsWithPhotos.map((dept, index) => (
+            <button
+              key={dept.title}
+              onClick={() => goToPhoto(index)}
+              className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
+                index === currentIndex
+                  ? 'bg-gradient-to-r from-blue-500 to-purple-600 text-white shadow-lg scale-105'
+                  : 'bg-white/10 text-white/70 hover:bg-white/20 hover:text-white'
+              }`}
+            >
+              {dept.title}
+            </button>
+          ))}
+        </div>
+      </div>
+    </div>
   )
 }
 
@@ -269,9 +300,36 @@ export default function CoPage() {
         badgeShadowColor="shadow-emerald-500/10"
       />
 
+      {/* Department Photo Carousel Section */}
+      <section className="py-16 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-12">
+            <div className="w-20 h-20 mx-auto mb-8 bg-gradient-to-r from-cyan-500 to-blue-600 rounded-3xl flex items-center justify-center shadow-2xl">
+              <ImageIcon className="w-10 h-10 text-white" />
+            </div>
+            <h2 className="text-4xl lg:text-5xl font-bold text-white mb-6">HÌNH ẢNH HOẠT ĐỘNG</h2>
+            <p className="text-xl text-white/80 leading-relaxed italic max-w-3xl mx-auto">
+              Khám phá các hoạt động và thành viên của từng ban trong câu lạc bộ
+            </p>
+          </div>
+          
+          <DepartmentPhotoCarousel departments={organizationData} />
+        </div>
+      </section>
+
       {/* Modern Organization Cards */}
       <section className="py-16 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-12">
+            <div className="w-20 h-20 mx-auto mb-8 bg-gradient-to-r from-blue-500 to-purple-600 rounded-3xl flex items-center justify-center shadow-2xl">
+              <Users className="w-10 h-10 text-white" />
+            </div>
+            <h2 className="text-4xl lg:text-5xl font-bold text-white mb-6">CÁC BAN CHUYÊN MÔN</h2>
+            <p className="text-xl text-white/80 leading-relaxed italic max-w-3xl mx-auto">
+              Tìm hiểu chi tiết về vai trò và trách nhiệm của từng ban
+            </p>
+          </div>
+          
           <div className="grid gap-8 lg:gap-12">
             {organizationData.map((dept, idx) => {
               const IconComponent = dept.icon
@@ -290,23 +348,23 @@ export default function CoPage() {
                         
                         {/* Department Info Section */}
                         <div className="lg:w-2/5">
-              <div className="space-y-4">
+                          <div className="space-y-4">
                             {/* Category Info */}
                             <div className="flex flex-wrap items-center gap-3 mb-4">
                               <div className={`px-4 py-2 rounded-full text-xs font-bold backdrop-blur-xl border shadow-lg text-white bg-gradient-to-r ${dept.cardGradient}`}>
                                 {dept.category}
-            </div>
-          </div>
+                              </div>
+                            </div>
 
                             {/* Title with Icon */}
-              <div className="flex items-center gap-4 mb-6">
+                            <div className="flex items-center gap-4 mb-6">
                               <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-white/20 to-white/10 backdrop-blur-xl border border-white/30 flex items-center justify-center shadow-xl">
                                 <IconComponent className="w-6 h-6 text-white drop-shadow-lg" />
-                  </div>
+                              </div>
                               <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold bg-gradient-to-r from-white via-blue-100 to-white bg-clip-text text-transparent leading-tight">
                                 {dept.title}
-                </h2>
-              </div>
+                              </h2>
+                            </div>
 
                             {/* Quick Features */}
                             <div className="flex flex-wrap gap-2">
@@ -319,21 +377,10 @@ export default function CoPage() {
                                   </div>
                                 )
                               })}
-                    </div>
-                    </div>
-                  </div>
-                </div>
-
-                      {/* Photo Gallery Section */}
-                      {dept.photos && dept.photos.length > 0 && (
-                        <div className="mb-8">
-                          <div className="flex items-center gap-3 mb-6">
-                            <div className="w-2 h-2 bg-gradient-to-r from-cyan-400 to-blue-400 rounded-full animate-pulse" />
-                            <h3 className="text-lg font-bold text-white">Hình ảnh hoạt động</h3>
+                            </div>
                           </div>
-                          <PhotoGallery photos={dept.photos} title={dept.title} />
                         </div>
-                      )}
+                      </div>
 
                       {/* Content Section - Responsibilities */}
                       <div className="bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-xl rounded-2xl p-6 border border-white/20 shadow-xl">
@@ -353,14 +400,14 @@ export default function CoPage() {
                             </div>
                           ))}
                         </div>
-                    </div>
+                      </div>
                     </div>
                   </div>
                 </div>
               )
             })}
-                    </div>
-                  </div>
+          </div>
+        </div>
       </section>
 
       {/* Modern Cooperation Principles */}
