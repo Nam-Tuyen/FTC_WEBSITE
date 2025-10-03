@@ -9,15 +9,43 @@ export default function RegisterForm() {
     sec_q2:"", sec_a2:"",
     sec_q3:"", sec_a3:"",
   });
-  const [msg, setMsg] = useState(""); const [err, setErr] = useState("");
+  const [msg, setMsg] = useState(""); 
+  const [err, setErr] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   async function submit(e: React.FormEvent){
-    e.preventDefault(); setMsg(""); setErr("");
+    e.preventDefault(); 
+    setMsg(""); 
+    setErr("");
+    
+    // Prevent multiple submissions
+    if (loading || isSubmitting) return;
+    
+    setLoading(true);
+    setIsSubmitting(true);
+    
     try {
       const res = await ForumApi.registerUser(form);
       if(!res.ok) throw new Error(res.message || "Đăng ký thất bại");
       setMsg("Đăng ký thành công. Hãy đăng nhập.");
-    } catch(e:any){ setErr(e.message); }
+      
+      // Reset form after successful registration
+      setForm({
+        mssv:"", password:"", full_name:"", email:"",
+        sec_q1:"", sec_a1:"",
+        sec_q2:"", sec_a2:"",
+        sec_q3:"", sec_a3:"",
+      });
+    } catch(e:any){ 
+      setErr(e.message); 
+    } finally {
+      setLoading(false);
+      // Add delay to prevent rapid clicking
+      setTimeout(() => {
+        setIsSubmitting(false);
+      }, 2000);
+    }
   }
 
   return (
@@ -216,8 +244,58 @@ export default function RegisterForm() {
           </div>
         </div>
       )}
-      <button className="w-full bg-gradient-to-r from-green-500 to-emerald-600 text-white rounded-xl px-8 py-4 font-semibold hover:shadow-lg transition-all duration-200 text-lg">
-        Đăng ký
+      <button 
+        type="submit"
+        disabled={loading || isSubmitting}
+        className={`group relative w-full rounded-xl px-8 py-4 font-semibold text-lg transition-all duration-300 overflow-hidden ${
+          loading || isSubmitting
+            ? "bg-gradient-to-r from-green-600 to-emerald-700 text-white cursor-not-allowed opacity-90"
+            : "bg-gradient-to-r from-green-500 to-emerald-600 text-white hover:shadow-2xl hover:shadow-green-500/30 hover:scale-[1.02] active:scale-[0.98]"
+        }`}
+      >
+        {/* Button Press Effect */}
+        <div className={`absolute inset-0 bg-gradient-to-r from-white/20 to-transparent transition-transform duration-150 ${
+          loading || isSubmitting ? "translate-x-full" : "translate-x-[-100%] group-active:translate-x-full"
+        }`}></div>
+        
+        {/* Button Content */}
+        <div className="relative flex items-center justify-center gap-3">
+          {loading || isSubmitting ? (
+            <>
+              {/* Enhanced Loading Animation */}
+              <div className="relative">
+                <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
+                <div className="absolute inset-0 w-5 h-5 border-2 border-green-300/50 border-r-transparent rounded-full animate-spin" style={{ animationDirection: 'reverse', animationDuration: '0.8s' }}></div>
+              </div>
+              <span className="animate-pulse">
+                {loading ? "Đang thực hiện đăng ký tài khoản..." : "Đang xử lý..."}
+              </span>
+              
+              {/* Progress Dots */}
+              <div className="flex gap-1">
+                <div className="w-1 h-1 bg-white/60 rounded-full animate-bounce" style={{ animationDelay: '0s' }}></div>
+                <div className="w-1 h-1 bg-white/60 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
+                <div className="w-1 h-1 bg-white/60 rounded-full animate-bounce" style={{ animationDelay: '0.4s' }}></div>
+              </div>
+            </>
+          ) : (
+            <>
+              {/* Success Icon */}
+              <span className="text-xl group-hover:scale-110 transition-transform duration-200">👤</span>
+              <span>Đăng ký</span>
+              
+              {/* Hover Effect */}
+              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-500"></div>
+            </>
+          )}
+        </div>
+        
+        {/* Button Ripple Effect */}
+        <div className={`absolute inset-0 rounded-xl transition-opacity duration-300 ${
+          loading || isSubmitting 
+            ? "bg-gradient-to-r from-green-400/20 to-emerald-400/20 opacity-100" 
+            : "bg-gradient-to-r from-white/10 to-transparent opacity-0 group-active:opacity-100"
+        }`}></div>
       </button>
     </form>
   )
