@@ -8,7 +8,6 @@ from .achievements import ACHIEVEMENTS
 from .departments import DEPARTMENTS
 from .opportunities import OPPORTUNITIES
 from .recruitment import RECRUITMENT
-from .schedule import ACTIVITIES as SCHEDULE
 from .keywords import KEYWORDS
 
 # Combine all knowledge into one dictionary for easy access
