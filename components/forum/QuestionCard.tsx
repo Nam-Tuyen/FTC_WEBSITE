@@ -1,8 +1,27 @@
 "use client";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import LikeButton from "./LikeButton";
+import { useAuth } from "@/context/AuthContext";
 
 export default function QuestionCard({ q }: { q: any }) {
+  const { user } = useAuth();
+  const [likeCount, setLikeCount] = useState(q.like_count || 0);
+  const [isLiked, setIsLiked] = useState(false);
+
+  // Check if current user has liked this question
+  useEffect(() => {
+    if (user && q.liked_by) {
+      const userLiked = q.liked_by.includes(user.mssv);
+      setIsLiked(userLiked);
+    }
+  }, [user, q.liked_by]);
+
+  const handleLikeChange = (liked: boolean, newLikeCount: number) => {
+    setIsLiked(liked);
+    setLikeCount(newLikeCount);
+  };
+
   return (
     <div className="group bg-gradient-to-br from-[#003663]/90 to-[#004a7c]/90 backdrop-blur-xl rounded-xl sm:rounded-2xl lg:rounded-3xl border border-blue-400/30 p-4 sm:p-6 lg:p-8 shadow-2xl hover:shadow-3xl hover:scale-[1.01] transition-all duration-300">
       {/* Header với category badge - Mobile Optimized */}
@@ -33,15 +52,25 @@ export default function QuestionCard({ q }: { q: any }) {
 
       {/* Footer với stats và action button - Mobile Optimized */}
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-4 pt-4 sm:pt-6 border-t border-blue-400/30">
-        <div className="flex items-center gap-4 sm:gap-6 text-xs sm:text-sm lg:text-base text-blue-300">
-          <span className="flex items-center gap-1.5 sm:gap-2">
-            <span className="text-orange-400 text-sm sm:text-base lg:text-lg">💬</span>
-            <span className="text-xs sm:text-sm lg:text-base">{q.responses?.length || 0} phản hồi</span>
-          </span>
-          <span className="flex items-center gap-1.5 sm:gap-2">
-            <span className="text-red-400 text-sm sm:text-base lg:text-lg">❤️</span>
-            <span className="text-xs sm:text-sm lg:text-base">{q.like_count} lượt thích</span>
-          </span>
+        <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-6">
+          <div className="flex items-center gap-4 sm:gap-6 text-xs sm:text-sm lg:text-base text-blue-300">
+            <span className="flex items-center gap-1.5 sm:gap-2">
+              <span className="text-orange-400 text-sm sm:text-base lg:text-lg">💬</span>
+              <span className="text-xs sm:text-sm lg:text-base">{q.responses?.length || 0} phản hồi</span>
+            </span>
+            <span className="flex items-center gap-1.5 sm:gap-2">
+              <span className="text-red-400 text-sm sm:text-base lg:text-lg">❤️</span>
+              <span className="text-xs sm:text-sm lg:text-base">{likeCount} lượt thích</span>
+            </span>
+          </div>
+          {user && (
+            <LikeButton
+              questionId={q.id}
+              initialLikes={likeCount}
+              initialLiked={isLiked}
+              onLikeChange={handleLikeChange}
+            />
+          )}
         </div>
         <Link 
           href={`/dien-dan/question/${q.id}`} 

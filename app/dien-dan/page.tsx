@@ -39,6 +39,12 @@ function ForumHome() {
       
       let questions = res.data?.items || [];
       
+      // Ensure liked_by is an array for each question
+      questions = questions.map(q => ({
+        ...q,
+        liked_by: q.liked_by || []
+      }));
+      
       // Apply client-side sorting
       questions = sortQuestions(questions, selectedSort);
       

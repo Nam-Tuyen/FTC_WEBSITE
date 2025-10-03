@@ -29,6 +29,7 @@ export type QuestionItem = {
   user: string; // "anonymous" hoặc MSSV
   content: string;
   like_count: number;
+  liked_by?: string[]; // Array of MSSVs who liked this question
   createdAt: string | Date;
   responses: ResponseItem[];
 };
