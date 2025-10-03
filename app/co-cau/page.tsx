@@ -14,6 +14,8 @@ const organizationData = [
     borderColor: "border-red-500/20",
     cardGradient: "from-red-500 to-pink-500",
     category: "Điều hành câu lạc bộ ",
+    image: "/images/ban-dieu-hanh.jpg",
+    imageAlt: "Ban Điều hành FTC - Lãnh đạo câu lạc bộ",
     quickFeatures: [
       { icon: Target, text: "Chiến lược", color: "text-red-400" },
       { icon: Zap, text: "Lãnh đạo", color: "text-pink-400" },
@@ -34,6 +36,8 @@ const organizationData = [
     borderColor: "border-blue-500/20",
     cardGradient: "from-blue-500 to-cyan-500",
     category: "Phụ trách chuyên môn học thuật",
+    image: "/images/ban-hoc-thuat.jpg",
+    imageAlt: "Ban Học thuật FTC - Chuyên môn FinTech",
     quickFeatures: [
       { icon: Search, text: "Nghiên cứu về lĩnh vực Fintech", color: "text-blue-400" },
       { icon: Target, text: "Đảm bảo chuyên môn", color: "text-cyan-400" },
@@ -54,6 +58,8 @@ const organizationData = [
     borderColor: "border-green-500/20",
     cardGradient: "from-green-500 to-emerald-500",
     category: "Phụ trách xử lý hồ sơ giấy tờ",
+    image: "/images/ban-su-kien.jpg",
+    imageAlt: "Ban Sự kiện FTC - Tổ chức sự kiện",
     quickFeatures: [
       { icon: FileText, text: "Chuẩn bị hồ sơ", color: "text-green-400" },
       { icon: Settings, text: "Xử lý giấy tờ", color: "text-emerald-400" },
@@ -74,6 +80,8 @@ const organizationData = [
     borderColor: "border-purple-500/20",
     cardGradient: "from-purple-500 to-violet-500",
     category: "Phụ trách mảng truyền thông",
+    image: "/images/ban-truyen-thong.jpg",
+    imageAlt: "Ban Truyền thông FTC - Marketing và Design",
     quickFeatures: [
       { icon: TrendingUp, text: "Phát triển truyền thông", color: "text-purple-400" },
       { icon: Palette, text: "Thiết kế ấn phẩm", color: "text-violet-400" },
@@ -94,6 +102,8 @@ const organizationData = [
     borderColor: "border-amber-700/20",
     cardGradient: "from-amber-700 to-yellow-800",
     category: "Phụ trách chuyên môn về mảng tài chính cá nhân",
+    image: "/images/ban-tai-chinh.jpg",
+    imageAlt: "Ban Tài chính cá nhân FTC - Giáo dục tài chính",
     quickFeatures: [
       { icon: GraduationCap, text: "Giáo dục về tài chính cá nhân", color: "text-amber-400" },
       { icon: Wallet, text: "Làm việc với bộ bài MoneyWe", color: "text-yellow-400" },
@@ -114,6 +124,8 @@ const organizationData = [
     borderColor: "border-indigo-500/20",
     cardGradient: "from-indigo-500 to-blue-500",
     category: "Phụ trách quản lý phân công nhân sự",
+    image: "/images/ban-nhan-su.jpg",
+    imageAlt: "Ban Nhân sự FTC - Quản lý nhân lực",
     quickFeatures: [
       { icon: UserCheck, text: "Quản lý nhân sự", color: "text-indigo-400" },
       { icon: Calculator, text: "Xây dựng dự trù kinh phí", color: "text-blue-400" },
@@ -184,7 +196,7 @@ export default function CoPage() {
         badgeShadowColor="shadow-emerald-500/10"
       />
 
-      {/* Department Images Carousel */}
+      {/* Department Images Gallery */}
       <section className="py-16 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
           {/* Section Header */}
@@ -194,90 +206,95 @@ export default function CoPage() {
             </div>
             <h2 className="text-4xl lg:text-5xl font-bold text-white mb-6">HÌNH ẢNH CÁC BAN</h2>
             <p className="text-xl text-white/80 leading-relaxed italic max-w-3xl mx-auto">
-              Khám phá đội ngũ năng động và chuyên nghiệp của từng ban trong câu lạc bộ
+              Khám phá đội ngũ thành viên năng động và chuyên nghiệp của từng ban
             </p>
           </div>
 
-          {/* Scrollable Department Images */}
-          <div className="relative">
-            {/* Scroll Container */}
-            <div className="overflow-x-auto scrollbar-hide scroll-smooth">
-              <div className="flex gap-8 pb-4" style={{ width: 'max-content' }}>
-                {organizationData.map((dept, index) => (
-                  <div key={dept.title} className="group relative flex-shrink-0">
-                    {/* Department Image Card */}
-                    <div className="relative w-80 h-96 bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-xl rounded-3xl border border-white/20 overflow-hidden transition-all duration-700 group-hover:scale-105 group-hover:shadow-2xl group-hover:shadow-blue-500/20 group-hover:border-blue-400/30">
-                      
-                      {/* Background Image Placeholder */}
-                      <div className="absolute inset-0 bg-gradient-to-br from-blue-500/20 to-purple-500/20 flex items-center justify-center">
-                        <div className="text-center">
-                          <div className="w-24 h-24 mx-auto mb-4 bg-gradient-to-r from-white/20 to-white/10 backdrop-blur-xl border border-white/30 rounded-2xl flex items-center justify-center shadow-xl">
-                            <dept.icon className="w-12 h-12 text-white drop-shadow-lg" />
+          {/* Department Images Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {organizationData.map((dept, index) => {
+              const IconComponent = dept.icon
+              return (
+                <div key={dept.title} className="group relative">
+                  {/* Image Card */}
+                  <div className="relative bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-xl rounded-3xl border border-white/20 overflow-hidden transition-all duration-700 group-hover:scale-105 group-hover:shadow-2xl group-hover:shadow-blue-500/20 group-hover:border-blue-400/30">
+                    
+                    {/* Image Container */}
+                    <div className="aspect-video relative overflow-hidden">
+                      {/* Actual Image (when available) */}
+                      {dept.image ? (
+                        <div className="relative w-full h-full">
+                          <img 
+                            src={dept.image} 
+                            alt={dept.imageAlt || `${dept.title} - Hình ảnh nhóm`}
+                            className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                          />
+                          {/* Image Overlay */}
+                          <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
+                          
+                          {/* Content Overlay */}
+                          <div className="absolute inset-0 flex items-center justify-center">
+                            <div className="text-center p-6">
+                              <div className="w-16 h-16 mx-auto mb-4 rounded-2xl bg-white/20 backdrop-blur-xl border border-white/30 flex items-center justify-center shadow-xl group-hover:scale-110 transition-transform duration-500">
+                                <IconComponent className="w-8 h-8 text-white drop-shadow-lg" />
+                              </div>
+                              <h3 className="text-xl font-bold text-white mb-2 group-hover:text-blue-200 transition-colors">
+                                {dept.title}
+                              </h3>
+                            </div>
                           </div>
-                          <div className="text-6xl mb-4">📸</div>
-                          <p className="text-white/60 text-sm">Hình ảnh ban {dept.title.toLowerCase()}</p>
                         </div>
-                      </div>
-
-                      {/* Overlay Gradient */}
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+                      ) : (
+                        /* Placeholder when no image */
+                        <div className="w-full h-full bg-gradient-to-br from-white/10 to-white/5 flex items-center justify-center relative">
+                          {/* Background Pattern */}
+                          <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 via-purple-500/10 to-pink-500/10 opacity-50" />
+                          
+                          {/* Content */}
+                          <div className="relative z-10 text-center p-6">
+                            <div className="w-20 h-20 mx-auto mb-6 rounded-3xl bg-gradient-to-br from-white/20 to-white/10 backdrop-blur-xl border border-white/30 flex items-center justify-center shadow-2xl group-hover:scale-110 transition-transform duration-500">
+                              <IconComponent className="w-10 h-10 text-white drop-shadow-lg" />
+                            </div>
+                            <h3 className="text-2xl font-bold text-white mb-3 group-hover:text-blue-200 transition-colors">
+                              {dept.title}
+                            </h3>
+                            <p className="text-white/70 text-sm mb-4">
+                              {dept.imageAlt || `${dept.title} - Hình ảnh nhóm`}
+                            </p>
+                            <div className="flex items-center justify-center gap-2 text-white/50 text-xs">
+                              <div className="w-2 h-2 bg-white/50 rounded-full animate-pulse" />
+                              <span>Hình ảnh sẽ được cập nhật sớm</span>
+                            </div>
+                          </div>
+                        </div>
+                      )}
                       
-                      {/* Department Title */}
-                      <div className="absolute bottom-0 left-0 right-0 p-6">
-                        <div className="flex items-center gap-3 mb-3">
-                          <div className="w-2 h-2 bg-gradient-to-r from-blue-400 to-purple-400 rounded-full animate-pulse" />
-                          <span className="text-xs font-semibold text-blue-200 uppercase tracking-wider">
-                            {dept.category}
-                          </span>
+                      {/* Hover Overlay */}
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                        <div className="absolute bottom-4 left-4 right-4">
+                          <div className="flex items-center gap-2 text-white text-sm font-medium">
+                            <div className="w-2 h-2 bg-white rounded-full animate-pulse" />
+                            <span>Thành viên {dept.title}</span>
+                          </div>
                         </div>
-                        <h3 className="text-2xl font-bold text-white mb-2 group-hover:text-blue-200 transition-colors">
-                          {dept.title}
-                        </h3>
-                        <p className="text-white/80 text-sm leading-relaxed">
-                          {dept.responsibilities[0]}
-                        </p>
                       </div>
-
-                      {/* Hover Effect Overlay */}
-                      <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 to-purple-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                     </div>
-
-                    {/* Department Stats */}
-                    <div className="mt-4 flex items-center justify-between">
-                      <div className="flex items-center gap-2 text-sm text-white/60">
-                        <Users className="w-4 h-4" />
-                        <span>Thành viên</span>
-                      </div>
-                      <div className="flex items-center gap-2 text-sm text-white/60">
-                        <Calendar className="w-4 h-4" />
-                        <span>Hoạt động</span>
+                    
+                    {/* Department Badge */}
+                    <div className="absolute top-4 right-4 w-10 h-10 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center shadow-lg border-2 border-white/20 group-hover:scale-110 transition-transform duration-300">
+                      <span className="text-white text-sm font-bold">📸</span>
+                    </div>
+                    
+                    {/* Category Badge */}
+                    <div className="absolute top-4 left-4">
+                      <div className={`px-3 py-1.5 rounded-full text-xs font-bold backdrop-blur-xl border shadow-lg text-white bg-gradient-to-r ${dept.cardGradient}`}>
+                        {dept.category}
                       </div>
                     </div>
                   </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Scroll Indicators */}
-            <div className="flex justify-center mt-8 gap-3">
-              {organizationData.map((_, index) => (
-                <div 
-                  key={index} 
-                  className="w-3 h-3 bg-white/30 rounded-full transition-all duration-300 hover:bg-white/60 hover:scale-125 cursor-pointer animate-scroll-indicator"
-                  style={{ animationDelay: `${index * 0.2}s` }}
-                />
-              ))}
-            </div>
-
-            {/* Scroll Hint */}
-            <div className="text-center mt-6">
-              <div className="inline-flex items-center gap-2 text-white/60 text-sm">
-                <div className="w-6 h-6 rounded-full border border-white/30 flex items-center justify-center">
-                  <ArrowRight className="w-3 h-3" />
                 </div>
-                <span>Cuộn để xem thêm</span>
-              </div>
-            </div>
+              )
+            })}
           </div>
         </div>
       </section>
@@ -335,7 +352,45 @@ export default function CoPage() {
                     </div>
                     </div>
                   </div>
-                </div>
+
+                        {/* Department Image Section */}
+                        <div className="lg:w-3/5">
+                          <div className="relative group/image">
+                            {/* Image Container */}
+                            <div className="relative overflow-hidden rounded-2xl lg:rounded-3xl shadow-2xl">
+                              {/* Placeholder for actual image */}
+                              <div className="aspect-video bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-xl border border-white/20 flex items-center justify-center">
+                                <div className="text-center">
+                                  <div className="w-16 h-16 mx-auto mb-4 rounded-2xl bg-gradient-to-br from-white/20 to-white/10 backdrop-blur-xl border border-white/30 flex items-center justify-center shadow-xl">
+                                    <IconComponent className="w-8 h-8 text-white drop-shadow-lg" />
+                                  </div>
+                                  <p className="text-white/60 text-sm font-medium">
+                                    {dept.imageAlt || `${dept.title} - Hình ảnh nhóm`}
+                                  </p>
+                                  <p className="text-white/40 text-xs mt-1">
+                                    Hình ảnh sẽ được cập nhật sớm
+                                  </p>
+                                </div>
+                              </div>
+                              
+                              {/* Overlay with department info */}
+                              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover/image:opacity-100 transition-opacity duration-500">
+                                <div className="absolute bottom-4 left-4 right-4">
+                                  <div className="flex items-center gap-2 text-white text-sm font-medium">
+                                    <div className="w-2 h-2 bg-white rounded-full animate-pulse" />
+                                    <span>Thành viên {dept.title}</span>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            
+                            {/* Image Badge */}
+                            <div className="absolute -top-2 -right-2 w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center shadow-lg border-2 border-white/20">
+                              <span className="text-white text-xs font-bold">📸</span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
 
                       {/* Content Section - Responsibilities */}
                       <div className="bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-xl rounded-2xl p-6 border border-white/20 shadow-xl">
@@ -483,28 +538,11 @@ export default function CoPage() {
           0%, 100% { background-position: 0% 50%; }
           50% { background-position: 100% 50%; }
         }
-        @keyframes scroll-indicator {
-          0%, 100% { transform: scale(1); opacity: 0.3; }
-          50% { transform: scale(1.2); opacity: 0.8; }
-        }
         .animate-float {
           animation: float 20s ease-in-out infinite;
         }
         .animate-float-reverse {
           animation: float-reverse 20s ease-in-out infinite;
-        }
-        .scrollbar-hide {
-          -ms-overflow-style: none;
-          scrollbar-width: none;
-        }
-        .scrollbar-hide::-webkit-scrollbar {
-          display: none;
-        }
-        .scroll-smooth {
-          scroll-behavior: smooth;
-        }
-        .animate-scroll-indicator {
-          animation: scroll-indicator 2s ease-in-out infinite;
         }
       `}</style>
     </div>
