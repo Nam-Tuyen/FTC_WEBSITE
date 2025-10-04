@@ -588,9 +588,7 @@ export default function CoPage() {
             </p>
             <div className="flex flex-wrap justify-center gap-3 sm:gap-4">
               <a 
-                href="https://ftc-websites.vercel.app/ung-tuyen" 
-                target="_blank" 
-                rel="noopener noreferrer"
+                href="/ung-tuyen" 
                 className="px-6 sm:px-8 py-3 sm:py-4 bg-gradient-to-r from-blue-500 to-purple-600 rounded-xl sm:rounded-2xl text-white font-bold hover:shadow-xl hover:scale-105 transition-all cursor-pointer text-sm sm:text-base"
               >
                 Đăng ký tham gia
