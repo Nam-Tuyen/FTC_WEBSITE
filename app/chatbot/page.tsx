@@ -593,7 +593,7 @@ export default function ChatbotPage() {
                             value={inputValue}
                             onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setInputValue(e.target.value)}
                             onKeyDown={(e: React.KeyboardEvent<HTMLTextAreaElement>) => handleKeyDown(e)}
-                            placeholder={selectedMode === "club" ? "Hãy nhập nội dung câu hỏi của bạn về FTC" : "Hỏi nhập nội dung câu hỏi ccuar bạn về ngành Fintech"}
+                            placeholder={selectedMode === "club" ? "Hãy nhập nội dung câu hỏi của bạn về FTC" : "Hỏi nhập nội dung câu hỏi của bạn về ngành Fintech"}
                             className={`w-full min-h-[48px] max-h-32 resize-none ${BRAND.surfaces.interactive} ${BRAND.borders.primary} border ${BRAND.text.primary} placeholder:${BRAND.text.placeholder} ${BRAND.states.focus} outline-none transition-all rounded-2xl pr-14 text-sm py-3`}
                             disabled={isSending}
                             rows={1}
